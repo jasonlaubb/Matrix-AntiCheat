@@ -85,8 +85,11 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 
 - spammer
 
-(A): block message while moving
+(A): checks message while moving
 
+(B): checks message while gui opened
+
+(C): checks message while head swinging
 - Anti scaffold
 
 (A): check a player place 5 block without looking it in a combo
@@ -133,11 +136,11 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 
 - Anti fucker
 
-(A): checks if a player break core* pass a defensive block* (*bedwar)
+(A): checks if a player break core* with face to a defensive block* (*bedwar)
 
 - Anti gosthand
 
-(A): checks if a player attack a entity between a full block in a combo
+(A): checks if a player attack a entity between any full block
 
 - Anti Void
 
