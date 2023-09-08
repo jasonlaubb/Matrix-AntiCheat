@@ -1,0 +1,21 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.canfly": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"canfly": "query.can_fly == 1"
+					}],
+					"on_entry": ["/tag @s remove anticheat:may_fly"]
+				},
+				"ride": {
+					"transitions": [{
+						"default": "!query.can_fly != 1"
+					}],
+					"on_entry": ["/tag @s add anticheat:may_fly"]
+				}
+			}
+		}
+    }
+}

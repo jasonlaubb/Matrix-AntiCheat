@@ -1,0 +1,33 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "§4§cN§go§ek§aa§qr§sa§tr§uo§ds §l§f| Anti Cheat V1.0.0",
+		"description": "§7This anti cheat made by §ejasonlaubb\n§7The best Anti Cheat for mcpe\n§7Require §eHoilday Creator §7&§eBeta-API",
+		"uuid": "0688af83-b934-45b4-8172-20c63c85ed60",
+		"version": [ 1, 0, 0 ],
+		"min_engine_version": [ 1, 20, 0 ]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "be727431-5074-4811-a656-654ddf18d3a9",
+			"version": [ 1, 0, 0 ]
+		},
+		{
+			"type": "script",
+			"language": "javascript",
+			"entry": "scripts/index.js",
+			"uuid": "85be76c1-40f1-42b3-876d-c38178a13ed0"
+		}
+	],
+	"metadata": {
+		"authors": "jasonlaubb",
+		"url": "https://github.com/jasonlaubb/Nokararos"
+	},
+	"dependencies": [
+		{
+			"module_name": "@minecraft/server",
+			"version": "1.6.0-beta"
+		}
+	]
+}

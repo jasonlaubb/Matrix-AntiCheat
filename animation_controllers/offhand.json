@@ -1,0 +1,35 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.totem": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"totem": "query.get_equipped_item_name('off_hand') !== 'totem_of_undying'"
+					}]
+				},
+				"ride": {
+					"transitions": [{
+						"default": "query.get_equipped_item_name('off_hand') == 'totem_of_undying'"
+					}],
+					"on_entry": ["@s anticheat:wear_totem"]
+				}
+			}
+		},
+		"controller.animation.sheid": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"totem": "query.get_equipped_item_name('off_hand') !== 'shield'"
+					}]
+				},
+				"ride": {
+					"transitions": [{
+						"default": "query.get_equipped_item_name('off_hand') == 'shield'"
+					}],
+					"on_entry": ["@s anticheat:wear_sheid"]
+				}
+			}
+		}
+    }
+}
