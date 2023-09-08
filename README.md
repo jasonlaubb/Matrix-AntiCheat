@@ -1,5 +1,6 @@
 # Nokararos
-The best minecraft bedrock anti cheat...
+
+The best minecraft bedrock anti cheat that have strong protection to against hacker!
 
 <img src="./pack_icon.png" width="300" height="300">
 
