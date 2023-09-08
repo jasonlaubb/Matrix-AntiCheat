@@ -90,9 +90,10 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 (B): checks message while gui opened
 
 (C): checks message while head swinging
+
 - Anti scaffold
 
-(A): check a player place 5 block without looking it in a combo
+(A): check a player place block without looking it
 
 - Anti aura
 
