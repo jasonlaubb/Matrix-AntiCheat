@@ -2,6 +2,12 @@
 
 The best minecraft bedrock anti cheat that have strong protection to against hacker!
 
+Made by: jasonlaubb
+
+Require Hoilday Creator Feature and Beta API to make it work
+
+Change config in ./scripts/data/config.js
+
 <img src="./pack_icon.png" width="300" height="300">
 
 
