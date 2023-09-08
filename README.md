@@ -85,11 +85,13 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 
 - spammer
 
-(A): checks message while moving
+(A): checks message send while moving
 
-(B): checks message while gui opened
+(B): checks message send while gui opened
 
-(C): checks message while head swinging
+(C): checks message send while head swinging
+
+(D): checks message send while using an item
 
 - Anti scaffold
 
