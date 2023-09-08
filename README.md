@@ -1,4 +1,4 @@
-# Nokararos Anti Cheat
+# Nokararos Anti Cheat 諾卡拉羅斯
 
 The best minecraft bedrock anti cheat that have strong protection to against hacker!
 
