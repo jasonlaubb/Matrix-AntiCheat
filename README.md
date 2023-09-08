@@ -143,6 +143,24 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 
 (A): check if player are using anti void
 
+- Auto totem
+
+(A): checks if a player wear a totem while moving
+
+(B): checks if a player wear a totem while swinging their head
+
+- Auto sheid
+
+(A): checks if a player wear sheid while moving
+
+(B): checks if a player wear sheid while swinging their head
+
+
+
+
+
+
+
 - Anti noSlow
 
 (A): check if player high moving speed while using an item
