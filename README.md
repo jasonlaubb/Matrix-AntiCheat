@@ -1,7 +1,7 @@
 # Nokararos
 The best minecraft bedrock anti cheat...
 
-<img src="./pack_icon.png" width="256" height="256">
+<img src="./pack_icon.png" width="300" height="300">
 
 
 # Anti Cheat Engine
