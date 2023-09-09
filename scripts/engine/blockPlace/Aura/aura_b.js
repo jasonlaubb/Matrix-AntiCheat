@@ -11,7 +11,7 @@ const aura_b = () => {
       const container = player.getComponent("inventory").container;
       if(container.getItem(player.selectSlot).typeId == 'minecraft:flint_and_steel') {
         container.setItem(player.selectSlot);
-        addScore(player, 'anticheat:auraBVl');
+        addScore(player, 'anticheat:auraBVl' , 1);
         flag(player, 'aura/B', getScore(player, 'anticheat:auraBVl'));
         if(getScore(player, 'anticheat:auraBVl') > config.modules.auraB.VL) {
           clearScore(player, 'anticheat:auraBVl');

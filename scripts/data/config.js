@@ -138,6 +138,41 @@ export default {
       "state": true,
       "VL": 1,
       "punishment": 'default'
+    },
+    "invaildSprintA": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "invaildSprintB": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "invaildSprintC": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "fastThrowA": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default',
+      "minThrowTime": 150
+    },
+    "crasherA": {
+      "state": true,
+      "punishment": 'default'
+    },
+    "crasherB": {
+      "state": true,
+      "punishment": 'default'
+    },
+    "crasherC": {
+      "state": true,
+      "maxSummonLimitInTick": 32,
+      "writeList": ["minecraft:item","minecraft:player"],
+      "safeCause": ["Spawned","Born"]
     }
   }
 }

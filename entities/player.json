@@ -7,7 +7,7 @@
         "is_summonable": false,
         "is_experimental": false,
         "scripts": {
-          "animate": ["ride","useitem","moving","gui","totem","shield","onTick","mayfly"]
+          "animate": ["ride","useitem","moving","gui","totem","shield","onTick","mayfly","noswing"]
         },
         "animations": {
           "onTick": "animation.onTick",
@@ -17,7 +17,8 @@
           "gui": "controller.animation.openchest",
           "totem": "controller.animation.totem",
           "shield": "controller.animation.shield",
-          "mayfly": "controller.animation.canfly"
+          "mayfly": "controller.animation.canfly",
+          "noswing": "controller.animation.noswing"
         }
       },
   

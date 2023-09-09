@@ -11,7 +11,7 @@ const aura_a = () => {
       const container = player.getComponent("inventory").container;
       if(container.getItem(player.selectSlot).typeId == 'minecraft:ender_crystal') {
         container.setItem(player.selectSlot);
-        addScore(player, 'anticheat:auraAVl');
+        addScore(player, 'anticheat:auraAVl', 1);
         flag(player, 'aura/A', getScore(player, 'anticheat:auraAVl'));
         if(getScore(player, 'anticheat:auraAVl') > config.modules.auraA.VL) {
           clearScore(player, 'anticheat:auraAVl');
