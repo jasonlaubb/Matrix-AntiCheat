@@ -4,7 +4,7 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 
 Made by: jasonlaubb
 
-Require Hoilday Creator Feature and Beta API to make it work
+Require Hoilday Creator Feature and Beta API to make it work!
 
 Change config in ./scripts/data/config.js
 
