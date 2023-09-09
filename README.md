@@ -7,6 +7,8 @@
   <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos?style=for-the-badge" alt="Last Commit"/>
 </div>
 
+Our support server: (Click Here)[https://discord.gg/CqZGXeRKPJ]
+
 The best minecraft bedrock anti cheat that have strong protection to against hacker!
 
 Made by: jasonlaubb
