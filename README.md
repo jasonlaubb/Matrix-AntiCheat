@@ -15,8 +15,9 @@ Require Hoilday Creator Feature and Beta API to make it work!
 
 Change config in ./scripts/data/config.js
 
-<img src="./pack_icon.png" width="300" height="300">
+<img src="./pack_icon.png" width="300" height="300">w
 
+## WARNING: This Anti Cheat is not finished
 
 # Anti Cheat Engine
 
