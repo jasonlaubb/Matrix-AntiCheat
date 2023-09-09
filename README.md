@@ -133,8 +133,6 @@ Change config in ./scripts/data/config.js
 
 (A): invalid select slot check
 
-(B): vanilla fly without mayfly or gamemode
-
 - AimBot
 
 (A): checks for perfect hand rotation move
@@ -145,7 +143,7 @@ Change config in ./scripts/data/config.js
 
 - Anti fucker
 
-(A): checks if a player break core* with face to a defensive block* (*bedwar)
+(A): checks if a player break core* face as a defensive block* (*bedwar)
 
 - Anti gosthand
 
@@ -167,12 +165,10 @@ Change config in ./scripts/data/config.js
 
 (B): checks if a player wear sheid while swinging their head
 
-
-
-
-
-
-
 - Anti noSlow
 
 (A): check if player high moving speed while using an item
+
+- Anti fly
+
+(A): vanilla fly without mayfly or correct gamemode
