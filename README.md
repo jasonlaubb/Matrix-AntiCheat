@@ -77,6 +77,8 @@ Change config in ./scripts/data/config.js
 
 (H): item with can place on or can break tag
 
+(I): ban element block
+
 - Anti surround
 
 (A): checks for block place over 95°
