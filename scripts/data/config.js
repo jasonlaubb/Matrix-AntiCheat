@@ -173,6 +173,65 @@ export default {
       "maxSummonLimitInTick": 32,
       "writeList": ["minecraft:item","minecraft:player"],
       "safeCause": ["Spawned","Born"]
+    },
+    "items": {
+      "overallState": true,
+      "illegalItemA": {
+        "state": true,
+        "punishment": 'default',
+        "illegal": [
+          "minecraft:end_gateway",
+          "minecraft:bubble_column",
+          "minecraft:end_portal",
+          "minecraft:piston_arm_collision",
+          "minecraft:sticky_piston_arm_collision",
+          "minecraft:moving_block",
+          "minecraft:portal",
+          "minecraft:frosted_ice",
+          "minecraft:invisible_bedrock",
+          "minecraft:reserved6",
+          "minecraft:allow",
+          "minecraft:deny",
+          "minecraft:barrier",
+          "minecraft:command_block_minecart",
+          "minecraft:command_block",
+          "minecraft:chain_command_block",
+          "minecraft:repeating_command_block",
+          "minecraft:flowing_water",
+          "minecraft:water",
+          "minecraft:flowing_lava",
+          "minecraft:lava",
+          "minecraft:structure_block",
+          "minecraft:structure_void",
+          "minecraft:chemistry_table",
+          "minecraft:camera",
+          "minecraft:portfolio",
+          "minecraft:chalkboard",
+          "minecraft:photo_item"
+        ]
+      },
+      "illegalItemB": {
+        "state": false,
+        "allowbucket": false,
+        "bucketWhiteList": ['minecraft:water_bucket','minecraft:lava_bucket'],
+        "allowbee": false,
+        "punishment": 'default'
+      },
+      "illegalItemC": {
+        "state": true,
+        "punishment": 'default',
+        "whiteList": ['here to add your white list']
+      },
+      "illegalItemD": {
+        "state": true,
+        "punishment": 'default',
+        "maxLoreLength": 0
+      },
+      "illegalItemE": {
+        "state": true,
+        "punishment": 'default',
+        "removetag": false
+      }
     }
   }
 }
