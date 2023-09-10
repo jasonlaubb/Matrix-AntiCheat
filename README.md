@@ -147,13 +147,21 @@ Change config in ./scripts/data/config.js
 
 (A): invalid select slot check
 
+- Placement
+
+(A): checks if a player place a block with item inside it
+
+(B): checks if a player place a sign with text on it
+
+(C): checks if a player place a illegal piston
+
 - AimBot
 
 (A): checks for perfect hand rotation move
 
 - Anti tower
 
-(A): Check for the tower like placement
+(A): Check for the tower like movement and placement
 
 - Anti fucker
 
@@ -186,3 +194,6 @@ Change config in ./scripts/data/config.js
 - Anti fly
 
 (A): vanilla fly without mayfly or correct gamemode
+
+(B): check for motion by fixed y speed
+
