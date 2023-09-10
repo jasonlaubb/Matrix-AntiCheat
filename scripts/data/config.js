@@ -231,6 +231,76 @@ export default {
         "state": true,
         "punishment": 'default',
         "removetag": false
+      },
+      "illegalItemF": {
+        "state": true,
+        "punishment": 'default',
+        "whiteList": {
+          "offhand": [
+            "minecraft:totem_of_undying",
+            "minecraft:minecraft:shield",
+            "minecraft:arrow",
+            "minecraft:filled_map",
+            "minecraft:nautilus_shell"
+          ],
+          "head": [
+            "minecraft:skull"
+          ],
+          "chest": [
+            "here to add your white list"
+          ],
+          "legs": [
+            "here to add your white list"
+          ],
+          "feet": [
+            "here to add your white list"
+          ]
+        }
+      },
+      "illegalItemG": {
+        "state": true,
+        "punishment": 'default',
+        "deleteName": false,
+        "maxNameLength": 31
+      },
+      "illegalItemH": {
+        "state": true,
+        "punishment": 'default',
+        "allowCanPlace": false,
+        "allowCanBreak": false,
+        "blockType": 0,
+        "cleartag": false
+      },
+      "illegalItemI": {
+        "state": true,
+        "punishment": 'default'
+      },
+      "BadEnchantA": {
+        "state": true,
+        "clearitem": false,
+        "punishment": 'default'
+      },
+      "BadEnchantB": {
+        "state": true,
+        "punishment": 'default',
+        "writeList": [
+          "_helmet",
+          "_chestplate",
+          "_leggings",
+          "_boots",
+          "_sword",
+          "_shovel",
+          "_axe",
+          "_hoe",
+          "fishing_rod",
+          "bow",
+          "trident",
+          "shield",
+          "_on_a_stick",
+          "brush",
+          "compass",
+          "crossbow"
+        ]
       }
     }
   }
