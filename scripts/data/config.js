@@ -302,6 +302,11 @@ export default {
           "crossbow"
         ]
       }
+    },
+    "aimbotA": {
+      "state": true,
+      "punishment": 'default',
+      "VL": 3
     }
   }
 }
