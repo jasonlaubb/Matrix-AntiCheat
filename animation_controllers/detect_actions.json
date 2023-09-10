@@ -64,6 +64,22 @@
 					"on_entry": ["/tag @s add anticheat:hasGUIopen"]
 				}
 			}
+		},
+		"controller.animation.levitate": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"levitate": "query.is_levitating"
+					}],
+					"on_entry": ["/tag @s remove anticheat:levitating"]
+				},
+				"levitate": {
+					"transitions": [{
+						"default": "!query.is_levitating"
+					}],
+					"on_entry": ["/tag @s add anticheat:levitating"]
+				}
+			}
 		}
     }
 }

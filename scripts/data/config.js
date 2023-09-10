@@ -307,6 +307,21 @@ export default {
       "state": true,
       "punishment": 'default',
       "VL": 3
+    },
+    "towerA": {
+      "state": true,
+      "punishment": 'default',
+      "VL": 2,
+      "maxLocationDeff": 0.8
+    },
+    "flyA": {
+      "state": true,
+      "punishment": 'default'
+    },
+    "flyB": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
     }
   }
 }

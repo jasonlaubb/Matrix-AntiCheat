@@ -19,4 +19,6 @@ export const crasher_a = () => {
   if(!config.modules.crasherB.state) {
     system.clearRun(EVENT)
   }
-}
+};
+
+export { crasher_a }

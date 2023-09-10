@@ -5,7 +5,7 @@ import { world, system } from '@minecraft/server';
 export const nofall_a = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()){
-      if(uniqueId(player)) return;
+      if(uniqueId(player)) continue;
       if(player.lastfallingspeed == undefined) player.lastfallingspeed = player.getVelocity().y;
       if(player.lastfallingspeed < 0 && player.getVelocity().y == 0 && !player.isFlying && !player.isOnGround) {
         player.teleport({ x: player.location.x, y: player.location.y, z: player.location.z });

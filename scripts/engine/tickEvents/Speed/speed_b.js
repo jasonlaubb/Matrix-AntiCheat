@@ -5,7 +5,7 @@ import { world, system } from '@minecraft/server';
 export const speed_b = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()) {
-      if(getGamemode(player) == 1 || getGamemode(player) == 3 || uniqueId(player)) return;
+      if(getGamemode(player) == 1 || getGamemode(player) == 3 || uniqueId(player)) continue
       if(player.lastpos == undefined) {
         player.lastpos = { x: player.location.x, y: player.location.z}
       };

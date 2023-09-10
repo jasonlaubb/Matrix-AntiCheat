@@ -5,7 +5,7 @@ import config from '../../../data/config.js';
 export const speed_a = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()) {
-      if(uniqueId(player) || getGamemode(player) == 1 || getGamemode(player) == 3) return;
+      if(uniqueId(player) || getGamemode(player) == 1 || getGamemode(player) == 3) continue;
       const playerSpeed = Math.abs(Math.sqrt(player.getVelocity().x ** 2 + player.getVelocity().y ** 2));
       if(playerSpeed > config.modules.speedA.maxSpeed) {
         if(!player.isGliding && !player.getEffect('speed') && !player.isSwimming) {

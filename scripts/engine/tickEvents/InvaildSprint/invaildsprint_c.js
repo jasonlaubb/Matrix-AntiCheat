@@ -1,10 +1,11 @@
 import { world, system } from '@minecraft/server';
-import { addScore, clearScore, flag, getScore, punish } from '../../../unti/World.js';
+import { addScore, clearScore, flag, getScore, punish, uniqueId } from '../../../unti/World.js';
 import config from '../../../data/config.js';
 
 const invaildSprint_c = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()) {
+      if(uniqueId(player)) continue;
       if(player.isGliding) {
         system.runTimeOut(() => {
           if(player.isSprinting) {
