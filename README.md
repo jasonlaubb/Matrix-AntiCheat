@@ -79,6 +79,8 @@ Change config in ./scripts/data/config.js
 
 (I): ban element block
 
+(J): checks illegal stack
+
 - Anti surround
 
 (A): checks for block place over 95°
