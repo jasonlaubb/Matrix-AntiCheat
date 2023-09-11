@@ -1,4 +1,4 @@
-# Nokararos Anti Cheat
+# Nokararos AntiCheat
 
 <div align="center">
   <img src="https://img.shields.io/github/downloads/jasonlaubb/Nokararos/total?style=for-the-badge" alt="Downloads"/>
