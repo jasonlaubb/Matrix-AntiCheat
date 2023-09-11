@@ -21,6 +21,14 @@ Change config in ./scripts/data/config.js
 
 ## WARNING: This Anti Cheat is not finished
 
+# Molang patched out
+
+AntiCheat will auto-disable some modules that Molang patched,
+
+if really want enabled the checks that Molang patched, go to config
+
+and set "disable-molang-pitched" to false
+
 # Anti Cheat Engine
 
 - Anti AutoClicker
@@ -215,7 +223,7 @@ Change config in ./scripts/data/config.js
 
 (A): vanilla fly without mayfly or correct gamemode
 
-(B): check for motion by fixed y speed
+(B): check for motion by fixed y speed in default
 
 (C): check for negative fall distance
 
