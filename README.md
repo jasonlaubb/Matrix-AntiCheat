@@ -157,6 +157,8 @@ Change config in ./scripts/data/config.js
 
 (C): checks if a player place a illegal piston
 
+(D): ban shulker box placement
+
 - AimBot
 
 (A): checks for perfect hand rotation move
