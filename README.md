@@ -37,6 +37,10 @@ Change config in ./scripts/data/config.js
 
 (A): checks if a player break a block that is unbreakable
 
+- AutoTool
+
+(A): checks if a player hit a block then switch the slot fastly
+
 - Anti Speed
 
 (A): check for high BPT movement
