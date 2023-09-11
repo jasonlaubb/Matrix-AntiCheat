@@ -13,7 +13,7 @@ export const aimbot_a = () => {
           addScore(player, 'anticheat:aimbotAVl', 1);
           flag(player, 'aimbot/A', getScore(player, 'anticheat:aimbotAVl'));
           if(getScore('anticheat:aimbotAVl') > config.modules.aimbotA.VL) {
-            punish(player, 'crasher/A', config.modules.crasherA.punishment)
+            punish(player, 'aimbot/A', config.modules.aimbotA.punishment)
           }
         }
       } else {

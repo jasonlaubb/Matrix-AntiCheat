@@ -322,6 +322,32 @@ export default {
       "state": true,
       "VL": 2,
       "punishment": 'default'
+    },
+    "placementA": {
+      "state": true,
+      "punishment": 'default',
+      "containerblock": [
+        "minecraft:chest",
+        "minecraft:trapped_chest",
+        "minecraft:barrel",
+        "minecraft:hopper",
+        "minecraft:furnace",
+        "minecraft:smoker",
+        "minecraft:blast_furnace"
+      ]
+    },
+    "placementB": {
+      "state": true,
+      "punishment": 'default'
+    },
+    "placementC": {
+      "state": true,
+    },
+    "placementD": {
+      "state": true,
+    },
+    "placementE": {
+      "state": true,
     }
   }
 }
