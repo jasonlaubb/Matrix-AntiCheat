@@ -53,6 +53,8 @@ Change config in ./scripts/data/config.js
 
 (D): check if a player attack while sleeping
 
+(E): check if a player attack while using item
+
 - BadEnchant
 
 (A): Non-vanilla enchantment level
@@ -157,8 +159,6 @@ Change config in ./scripts/data/config.js
 
 (D): ban shulker box placement
 
-(E): call illegalItem detection to check the container block
-
 - AimBot
 
 (A): checks for perfect hand rotation move
@@ -199,9 +199,28 @@ Change config in ./scripts/data/config.js
 
 (A): check if player high moving speed while using an item
 
+- Anti phase
+
+(A): checks for invild movement like phase
+
 - Anti fly
 
 (A): vanilla fly without mayfly or correct gamemode
 
 (B): check for motion by fixed y speed
 
+(C): check for negative fall distance
+
+- Inventory Action
+
+(A): checks for a player move while chest open
+
+(B): checks for a player useitem while chest open
+
+(C): checks for a player swinging their head while chest open
+
+(D): checks for a player break block while chest open
+
+(E): checks for a player place block while chest open
+
+(F): checks for a player changed select slot while chest open
