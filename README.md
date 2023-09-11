@@ -33,6 +33,10 @@ Change config in ./scripts/data/config.js
 
 (A): check for illegal block break in 1 tick
 
+- insteaBreak
+
+(A): checks if a player break a block that is unbreakable
+
 - Anti Speed
 
 (A): check for high BPT movement
