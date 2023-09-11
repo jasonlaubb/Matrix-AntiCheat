@@ -185,11 +185,15 @@ Change config in ./scripts/data/config.js
 
 (B): checks if a player wear a totem while swinging their head
 
-- Auto sheid
+(C): checks if a player wear a totem while chest open
 
-(A): checks if a player wear sheid while moving
+- Auto shleid
 
-(B): checks if a player wear sheid while swinging their head
+(A): checks if a player wear shleid while moving
+
+(B): checks if a player wear shleid while swinging their head
+
+(C): checks if a player wear a shield while chest open
 
 - Anti noSlow
 
