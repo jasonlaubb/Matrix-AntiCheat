@@ -81,6 +81,8 @@ Change config in ./scripts/data/config.js
 
 (J): checks illegal stack
 
+(K): checks player place a block with illegal item
+
 - Anti surround
 
 (A): checks for block place over 95°
