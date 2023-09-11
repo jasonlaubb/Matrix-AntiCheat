@@ -81,8 +81,6 @@ Change config in ./scripts/data/config.js
 
 (J): checks illegal stack
 
-(K): checks player place a block with illegal item
-
 - Anti surround
 
 (A): checks for block place over 95°
@@ -158,6 +156,8 @@ Change config in ./scripts/data/config.js
 (C): checks if a player place a illegal piston
 
 (D): ban shulker box placement
+
+(E): call illegalItem detection to check the container block
 
 - AimBot
 
