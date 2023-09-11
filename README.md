@@ -25,11 +25,21 @@ Change config in ./scripts/data/config.js
 
 AntiCheat will auto-disable some modules that Molang patched,
 
+(Some modules may not be blocked like antiCBE)
+
 if really want enabled the checks that Molang patched, go to config
 
-and set "disable-molang-pitched" to false
+and set "disable-useless-modules" to false
 
 # Anti Cheat Engine
+
+- Anti CBE
+
+(1): instant time kill command block minecarts
+
+(2): stop all illegal entities summoned or spawned
+
+*This modules can't be disabled by config
 
 - Anti AutoClicker
 
@@ -226,6 +236,12 @@ and set "disable-molang-pitched" to false
 (B): check for motion by fixed y speed in default
 
 (C): check for negative fall distance
+
+- Namespoof
+
+(A): checks for illegal player's mame length
+
+(B): checks for player's name including illegal word
 
 - Inventory Action
 
