@@ -24,7 +24,7 @@ const ac_b = () => {
     }, 20);
   });
   if(!config.modules.autoclickerB.state) {
-    world.afterEvents.entityHitEntity.unsubscribe(EVENT);
+    world.afterEvents.entityHitBlock.unsubscribe(EVENT);
   };
 };
 

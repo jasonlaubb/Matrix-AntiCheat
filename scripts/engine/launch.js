@@ -29,8 +29,24 @@ import { items } from './tickEvents/Items/items.js';
 import { aimbot_a } from './tickEvents/AimBot/aimbot_a.js';
 import { fly_a } from './tickEvents/Fly/fly_a.js';
 import { fly_b } from './tickEvents/Fly/fly_b.js';
+import { autototem_a } from './EntityTriggerEvents/AutoTotem/autoTotem_a.js';
+import { autototem_b } from './EntityTriggerEvents/AutoTotem/autoTotem_b.js';
+import { autototem_c } from './EntityTriggerEvents/AutoTotem/autoTotem_c.js';
+import { autoshield_a } from './EntityTriggerEvents/AutoTotem/autoShield_a.js';
+import { autoshield_b } from './EntityTriggerEvents/AutoTotem/autoShield_b.js';
+import { autoshield_c } from './EntityTriggerEvents/AutoTotem/autoShield_c.js';
+import { autotool_a } from './entityHitBlock/AutoTool/autotool_a.js';
+import { insteabreak_a } from './blockBreak/InsteaBreak/insteabreak_a.js';
 
 export function launch() {
+    insteabreak_a();
+    autotool_a();
+    autototem_a();
+    autototem_b();
+    autototem_c();
+    autoshield_a();
+    autoshield_b();
+    autoshield_c();
     aimbot_a();
     items();
     crasher_a();

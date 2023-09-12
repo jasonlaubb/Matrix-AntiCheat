@@ -1,6 +1,7 @@
 export default {
   "system": {
-    "notify": true
+    "notify": true,
+    "default": 'tempkick'
   },
   "modules": {
     "autoclickerA": {
@@ -96,13 +97,13 @@ export default {
       "punishment": 'default'
     },
     "reachB": {
-      "state": true,
+      "state": false,
       "maxdistance": 4.1,
       "VL": 1,
       "punishment": 'default'
     },
     "reachC": {
-      "state": true,
+      "state": false,
       "maxdistance": 4.6,
       "VL": 1,
       "punishment": 'default'
@@ -175,7 +176,7 @@ export default {
       "safeCause": ["Spawned","Born"]
     },
     "items": {
-      "overallState": true,
+      "overallState": false,
       "illegalItemA": {
         "state": true,
         "punishment": 'default',
@@ -315,7 +316,7 @@ export default {
       "maxLocationDeff": 0.8
     },
     "flyA": {
-      "state": true,
+      "state": false,
       "punishment": 'default'
     },
     "flyB": {
@@ -324,7 +325,7 @@ export default {
       "punishment": 'default'
     },
     "placementA": {
-      "state": true,
+      "state": false,
       "punishment": 'default',
       "containerblock": [
         "minecraft:chest",
@@ -337,17 +338,57 @@ export default {
       ]
     },
     "placementB": {
-      "state": true,
+      "state": false,
       "punishment": 'default'
     },
     "placementC": {
-      "state": true,
+      "state": false,
     },
     "placementD": {
-      "state": true,
+      "state": false,
     },
-    "placementE": {
+    "autototemA": {
       "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "autototemB": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "autototemC": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "autoshieldA": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "autoshieldB": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "autoshieldC": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "insteabreakA": {
+      "state": false,
+      "punishment": 'default',
+      "unbreakable": [
+        "minecraft:bedrock",
+        "minecraft:barrier",
+        "minecraft:command_block",
+        "minecraft:chain_command_block",
+        "minecraft:repeating_command_block",
+        "minecraft:structure_block",
+        "minecraft:structure_void"
+      ]
     }
   }
 }
