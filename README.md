@@ -189,7 +189,7 @@ and set "disable-useless-modules" to false
 
 - AimBot
 
-(A): checks for perfect hand rotation move
+(A): checks for perfect head rotation move
 
 - Anti tower
 
