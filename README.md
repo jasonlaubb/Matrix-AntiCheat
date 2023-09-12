@@ -145,6 +145,8 @@ and set "disable-useless-modules" to false
 
 (A): check a player place block without looking it
 
+(B): check the perfect rotation bridging
+
 - Anti aura
 
 (A): check if a player place a obsidian and hold a crystal in a tick
