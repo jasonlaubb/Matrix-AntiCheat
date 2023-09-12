@@ -193,8 +193,6 @@ and set "disable-useless-modules" to false
 
 (A): Check for the tower like movement and placement
 
-(B); check for a player place a block under them over 95°
-
 - Anti fucker
 
 (A): checks if a player break core* face as a defensive block* (*bedwar)
