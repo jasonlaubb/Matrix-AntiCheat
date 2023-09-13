@@ -1,5 +1,6 @@
 import { world, system } from '@minecraft/server';
 import config from '../../../data/config.js';
+import { stop } from '../../../unti/World.js';
 
 const crasher_c = () => {
   const EVENT1 = world.afterEvents.entitySpawn.subscribe(ev => {
@@ -12,7 +13,7 @@ const crasher_c = () => {
         kill.kill()
       };
       world.scoreboard.getObjective('anticheat:crasherEntityList').removeParticipant(entity.typeId);
-      world.sendMessage(`§4§cN§go§ek§aa§qr§sa§tr§uo§ds §l§f|§r §eWorld §7stopped §ecrasher/C §7and killed all §e${entity.typeId}`)
+      stop('Crasher/C', 'typeId', entity.typeId)
     }
   });
   const EVENT2 = system.runInterval(() => {
