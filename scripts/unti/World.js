@@ -1,13 +1,17 @@
 import * as Minecraft from '@minecraft/server';
 
-export function flag (player, modules, VL, punishment) {
+export function flag (player, modules, VL) {
   Minecraft.world.sendMessage(`§e${player.name} §7has failed to use §c${modules} §6VL=${VL}`);
 };
 
 export function punish (player, modules, punishment) {
   Minecraft.system.run(() => {
-    Minecraft.world.sendMessage(`§e${player.name} §7get §c${punishment} §7as he reached the VL limit`)
+    Minecraft.world.sendMessage(`§e${player.name} §7punished by §c${modules} §7 since reached VL limit`)
   })
+};
+
+export function stop (modules, type, value) {
+  world.sendMessage(`§eWorld §7has stopped §c${modules} §8(${type}=${value})`)
 };
 
 export function uniqueId (player) {
