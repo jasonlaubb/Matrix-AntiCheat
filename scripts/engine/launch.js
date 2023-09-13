@@ -7,6 +7,8 @@ import { nofall_a } from './tickEvents/NoFall/nofall_a.js';
 import { killaura_a } from './entityHitEntity/Killaura/killaura_a.js';
 import { killaura_b } from './entityHitEntity/Killaura/killaura_b.js';
 import { killaura_c } from './entityHitEntity/Killaura/killaura_c.js';
+import { killaura_d } from './entityHitEntity/Killaura/killaura_d.js';
+import { killaura_e } from './entityHitEntity/Killaura/killaura_e.js';
 import { surround_a } from './blockBreak/Surround/surround_a.js';
 import { surround_b } from './blockPlace/Surround/surround_b.js';
 import { scaffold_a } from './blockPlace/Scaffold/scaffold_a.js';
@@ -38,7 +40,8 @@ import { autoshield_c } from './EntityTriggerEvents/AutoTotem/autoShield_c.js';
 import { autotool_a } from './entityHitBlock/AutoTool/autotool_a.js';
 import { insteabreak_a } from './blockBreak/InsteaBreak/insteabreak_a.js';
 import { hurt_event } from './entityHurt/hurt_event.js';
-import { knockback_a } from './tickEvents/KnockBack/knockback_a.js'
+import { knockback_a } from './tickEvents/KnockBack/knockback_a.js';
+
 function launch() {
     knockback_a();
     insteabreak_a();
@@ -75,6 +78,8 @@ function launch() {
     killaura_a();
     killaura_b();
     killaura_c();
+    killaura_d();
+    killaura_e();
     surround_a();
     surround_b();
     scaffold_a();

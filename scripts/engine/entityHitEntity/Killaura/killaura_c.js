@@ -9,7 +9,7 @@ export const killaura_c = () => {
     if(player.hasTag('anticheat:hasGuiOpen')) {
       player.kill();
       addScore(player, 'anticheat:killauraCVl');
-      flag(player, 'anticheat:killauraCVl', getScore(player, 'anticheat:killauraCVl'))
+      flag(player, 'Killaura/C', getScore(player, 'anticheat:killauraCVl'))
       if(player.getScore(player, 'anticheat:killauraCVl')) {
         clearScore(player, 'anticheat:killauraCVl');
         punish(player, 'killaura/C', config.modules.killauraC.punishment)

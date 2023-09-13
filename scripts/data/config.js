@@ -343,9 +343,11 @@ export default {
     },
     "placementC": {
       "state": false,
+      "punishment": 'default'
     },
     "placementD": {
       "state": false,
+      "punishment": 'default'
     },
     "autototemA": {
       "state": true,

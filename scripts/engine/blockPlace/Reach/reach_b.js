@@ -7,6 +7,7 @@ const reach_b = () => {
     const player = ev.player;
     if(uniqueId(player) || player.typeId !== 'minecraft:player' || getGamemode(player) == 1) return;
     const hitEntity = ev.hitEntity;
+    const block = ev.block;
     const pos1 = player.getHeadLocation();
     const pos2 = block.location;
     const distance = Math.abs(Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2 + (pos1.z - pos2.z) ** 2)).toFixed(3);
