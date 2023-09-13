@@ -2,7 +2,7 @@ import { flag, uniqueId, getGamemode, addScore, getScore, clearScore, punish } f
 import config from '../../../data/config.js';
 import { world, system } from '@minecraft/server';
 
-export const speed_b = () => {
+const speed_b = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()) {
       if(getGamemode(player) == 1 || getGamemode(player) == 3 || uniqueId(player)) continue
@@ -28,4 +28,6 @@ export const speed_b = () => {
   if(!config.modules.speedB.state) {
     system.clearRun(EVENT);
   }
-}
+};
+
+export { speed_b }

@@ -258,3 +258,7 @@ and set "disable-useless-modules" to false
 (E): checks for a player place block while chest open
 
 (F): checks for a player changed select slot while chest open
+
+- KnockBack
+
+(A): checks for illegal magnitude

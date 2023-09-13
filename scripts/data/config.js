@@ -389,6 +389,12 @@ export default {
         "minecraft:structure_block",
         "minecraft:structure_void"
       ]
+    },
+    "knockbackA": {
+      "state": true,
+      "magnitude": -0.078,
+      "VL": 2,
+      "punishment": 'default'
     }
   }
 }

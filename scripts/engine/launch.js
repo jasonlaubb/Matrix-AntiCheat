@@ -37,8 +37,10 @@ import { autoshield_b } from './EntityTriggerEvents/AutoTotem/autoShield_b.js';
 import { autoshield_c } from './EntityTriggerEvents/AutoTotem/autoShield_c.js';
 import { autotool_a } from './entityHitBlock/AutoTool/autotool_a.js';
 import { insteabreak_a } from './blockBreak/InsteaBreak/insteabreak_a.js';
-
-export function launch() {
+import { hurt_event } from './entityHurt/hurt_event.js';
+import { knockback_a } from './tickEvents/KnockBack/knockback_a.js'
+function launch() {
+    knockback_a();
     insteabreak_a();
     autotool_a();
     autototem_a();
@@ -77,5 +79,8 @@ export function launch() {
     surround_b();
     scaffold_a();
     fly_a();
-    fly_b()
-}
+    fly_b();
+    hurt_event()
+};
+
+export { launch }
