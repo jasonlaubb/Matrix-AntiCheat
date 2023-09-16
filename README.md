@@ -147,6 +147,8 @@ and set "disable-useless-modules" to false
 
 (B): check the perfect rotation bridging
 
+(C): impossible bridging speed
+
 - Anti aura
 
 (A): check if a player place a obsidian and hold a crystal in a tick
