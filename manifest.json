@@ -1,7 +1,7 @@
 {
 	"format_version": 2,
 	"header": {
-		"name": "§4§cN§go§ek§aa§qr§sa§tr§uo§ds §l§f| Anti Cheat V1.0.0",
+		"name": "§4§cN§go§ek§aa§qr§sa§tr§uo§ds §l§f| Anti Cheat V1.0.0-beta",
 		"description": "§7This anti cheat made by §ejasonlaubb\n§7The best Anti Cheat for mcpe\n§7Require §eHoilday Creator §7&§eBeta-API",
 		"uuid": "0688af83-b934-45b4-8172-20c63c85ed60",
 		"version": [ 1, 0, 0 ],
@@ -16,7 +16,7 @@
 		{
 			"type": "script",
 			"language": "javascript",
-			"entry": "scripts/index.js",
+			"entry": "scripts/nokararos.js",
 			"uuid": "85be76c1-40f1-42b3-876d-c38178a13ed0"
 		}
 	],
