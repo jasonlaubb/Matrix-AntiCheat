@@ -61,7 +61,7 @@ and set "disable-useless-modules" to false
 
 - Anti Speed
 
-(A): check for high BPT movement
+(A): check for high moving
 
 (B): check for high location different without teleport action
 
@@ -79,13 +79,13 @@ and set "disable-useless-modules" to false
 
 (D): check if a player attack while sleeping
 
-(E): check if a player attack while using item
+(E): check if a player attack while using an item
 
 - BadEnchant
 
 (A): Non-vanilla enchantment level
 
-(B): Item shouldn't have tag
+(B): Item shouldn't have enchant
 
 - illegal Items
 
