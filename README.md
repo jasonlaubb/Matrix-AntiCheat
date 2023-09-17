@@ -18,6 +18,16 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 Made by: jasonlaubb
 
 <div align="center">
+
+  ## Protection
+
+Our Anti Cheat has strong detection to protect your server
+
+[Click here to view](https://github.com/jasonlaubb/Nokararos-AntiCheat/blob/main/Protection.md)
+
+</div>
+
+<div align="center">
   
   ## How to use?
   
