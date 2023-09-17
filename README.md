@@ -33,7 +33,7 @@ Download the latest release to use (.mcpack), not source code
 
 <div align="center">
   
-  # About molang patched some hack
+  ## About molang patched some hack
   
 </div>
 
