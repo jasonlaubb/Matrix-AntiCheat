@@ -1,6 +1,7 @@
-.distignore
+.gitignore
 tsconfig.json
 README.md
 pack_icon.png
 LICENSE
-!.gitkeep
+dist/scripts/*
+
