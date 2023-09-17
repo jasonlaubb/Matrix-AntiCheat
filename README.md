@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Commits Per Week"/>
   <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Last Commit"/>
 
-  # Info
+  ## Info
 </div>
 
 Our support discord server: [Click Here To Join](https://discord.gg/CqZGXeRKPJ)
@@ -19,7 +19,7 @@ Made by: jasonlaubb
 
 <div align="center">
   
-  # How to use?
+  ## How to use?
   
 </div>
 
