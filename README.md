@@ -9,7 +9,6 @@
   <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Last Commit"/>
 
   ## Info
-</div>
 
 Our support discord server: [Click Here To Join](https://discord.gg/CqZGXeRKPJ)
 
@@ -17,21 +16,13 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 
 Made by: jasonlaubb
 
-<div align="center">
-
   ## Protection
 
 Our Anti Cheat has strong detection to protect your server
 
 [Click here to view](https://github.com/jasonlaubb/Nokararos-AntiCheat/blob/main/Protection.md)
 
-</div>
-
-<div align="center">
-  
   ## How to use?
-  
-</div>
 
 Require Hoilday Creator Feature and Beta API to make it work!
 
@@ -40,15 +31,12 @@ Change config in ./scripts/data/config.js
 Download the latest release to use (.mcpack), not source code
 
 ## WARNING: This Anti Cheat is not finished
-
-<div align="center">
   
   ## About molang patched some hack
-  
-</div>
 
 AntiCheat will disable some modules that Molang patched,
 
+</div>
 (Some modules may not be disabled like antiCBE)
 
 if really want enabled the checks that Molang patched,
