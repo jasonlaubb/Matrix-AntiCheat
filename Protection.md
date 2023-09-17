@@ -32,8 +32,6 @@ This markdown file show all the modules that our anti cheat has.
 
 (A): check for high moving
 
-(B): check for high location different without teleport action
-
 - Anti NoFall
 
 (A): check for a player fall speed turn to 0 while player starting falling
@@ -116,7 +114,7 @@ This markdown file show all the modules that our anti cheat has.
 
 (B): check the perfect rotation bridging
 
-(C): impossible bridging speed
+(C): illegal rotation when bridging
 
 - Anti aura
 
@@ -165,18 +163,6 @@ This markdown file show all the modules that our anti cheat has.
 - Anti tower
 
 (A): Check for the tower like movement and placement
-
-- Anti fucker
-
-(A): checks if a player break core* face as a defensive block* (*bedwar)
-
-- Anti gosthand
-
-(A): checks if a player attack a entity between any full block
-
-- Anti Void
-
-(A): check if player are using anti void
 
 - Auto totem
 
