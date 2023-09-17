@@ -3,5 +3,3 @@ tsconfig.json
 README.md
 pack_icon.png
 LICENSE
-dist/scripts/*
-
