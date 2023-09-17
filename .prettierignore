@@ -8,4 +8,5 @@ tsconfig.json
 .vscode
 .prettierignore
 Protection.md
+README.md
 LICENSE
