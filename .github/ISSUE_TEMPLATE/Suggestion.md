@@ -4,10 +4,6 @@ about: What do you want to add?
 
 ---
 
-# Title
-
-?
-
 # Description
 
 ?
