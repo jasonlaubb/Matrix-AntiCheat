@@ -80,6 +80,22 @@
 					"on_entry": ["/tag @s add anticheat:levitating"]
 				}
 			}
+		},
+		"controller.animation.jump": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"levitate": "query.is_jumping"
+					}],
+					"on_entry": ["/tag @s remove anticheat:jump"]
+				},
+				"levitate": {
+					"transitions": [{
+						"default": "!query.is_jumping"
+					}],
+					"on_entry": ["/tag @s add anticheat:jump"]
+				}
+			}
 		}
     }
 }

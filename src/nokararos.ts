@@ -1,14 +1,16 @@
+export const data = new Map<any, any>(); //This thing is important
+import { clearMapdata } from './util/Map.js';
 import { ac_a } from './core/entityHitEntity/AutoClicker/ac_a.js';
 import { ac_b } from './core/entityHitBlock/AutoClicker/ac_b.js';
 import { nuker_a } from './core/blockBreak/Nuker/nuker_a.js';
 import { speed_a } from './core/tickEvents/Speed/speed_a.js';
-import { speed_b } from './core/tickEvents/Speed/speed_b.js';
 import { nofall_a } from './core/tickEvents/NoFall/nofall_a.js';
 import { killaura_a } from './core/entityHitEntity/Killaura/killaura_a.js';
 import { killaura_b } from './core/entityHitEntity/Killaura/killaura_b.js';
 import { killaura_c } from './core/entityHitEntity/Killaura/killaura_c.js';
 import { killaura_d } from './core/entityHitEntity/Killaura/killaura_d.js';
 import { killaura_e } from './core/entityHitEntity/Killaura/killaura_e.js';
+import { killaura_f } from './core/entityHitEntity/Killaura/killaura_f.js';
 import { surround_a } from './core/blockBreak/Surround/surround_a.js';
 import { surround_b } from './core/blockPlace/Surround/surround_b.js';
 import { scaffold_a } from './core/blockPlace/Scaffold/scaffold_a.js';
@@ -37,11 +39,14 @@ import { autototem_c } from './core/EntityTriggerEvents/AutoTotem/autoTotem_c.js
 import { autoshield_a } from './core/EntityTriggerEvents/AutoShield/autoShield_a.js';
 import { autoshield_b } from './core/EntityTriggerEvents/AutoShield/autoShield_b.js';
 import { autoshield_c } from './core/EntityTriggerEvents/AutoShield/autoShield_c.js';
+import { cbe_a } from './core/EntityTriggerEvents/CBE/cbe_a.js';
 import { autotool_a } from './core/entityHitBlock/AutoTool/autotool_a.js';
 import { insteabreak_a } from './core/blockBreak/InsteaBreak/insteabreak_a.js';
 import { hurt_event } from './core/entityHurt/hurt_event.js';
 import { knockback_a } from './core/tickEvents/KnockBack/knockback_a.js';
+import { phase_a } from './core/tickEvents/Phase/phase_a.js';
 
+clearMapdata();
 knockback_a();
 insteabreak_a();
 autotool_a();
@@ -72,16 +77,18 @@ ac_a();
 ac_b();
 nuker_a();
 speed_a();
-speed_b();
 nofall_a();
 killaura_a();
 killaura_b();
 killaura_c();
 killaura_d();
 killaura_e();
+killaura_f();
 surround_a();
 surround_b();
 scaffold_a();
 fly_a();
 fly_b();
-hurt_event()
+hurt_event();
+cbe_a();
+phase_a()

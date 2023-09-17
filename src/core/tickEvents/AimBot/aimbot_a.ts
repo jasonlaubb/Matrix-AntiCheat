@@ -1,19 +1,17 @@
 import { addScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { world, system, Vector2 } from '@minecraft/server';
+import { lastRotationDeff as lr } from '../../../util/Map.js';
 
 const aimbot_a = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()){
       if(uniqueId(player)) continue;
-//@ts-ignore
-      if(player.lastRotationDeff !== undefined) {
-//@ts-ignore
-        const locationdeff: Vector2 = { x: Math.abs(player.getRotation().x - player.lastRotation.x), y: player.getRotation().y - player.lastRotation.y}
-//@ts-ignore
-        if(locationdeff.x == player.lastRotationDeff.x && locationdeff.x !== 0 && locationdeff.y == player.lastRotationDeff.y) {
-//@ts-ignore
-          player.setRotation({ x: player.lastRotation.x, y: player.lastRotation.y });
+      const lastRotationDeff = lr.get(player.id)
+      if(lastRotationDeff !== undefined) {
+        const locationdeff: Vector2 = { x: Math.abs(player.getRotation().x - lastRotationDeff.x), y: player.getRotation().y - lastRotationDeff.y}
+        if(locationdeff.x == lastRotationDeff.x && locationdeff.x !== 0 && locationdeff.y == lastRotationDeff.y) {
+          player.setRotation({ x: lastRotationDeff.x, y: lastRotationDeff.y });
           addScore(player, 'anticheat:aimbotAVl', 1);
           flag(player, 'aimbot/A', getScore(player, 'anticheat:aimbotAVl'));
           if(getScore(player, 'anticheat:aimbotAVl') > config.modules.aimbotA.VL) {
@@ -21,11 +19,9 @@ const aimbot_a = () => {
           }
         }
       } else {
-//@ts-ignore
-        player.lastRotationDeff = { x: 0, y: 0 };
+        lr.set(player.id, { x: 0, y: 0 })
       };
-//@ts-ignore
-      player.lastRotation = { x: player.getRotation().x, y: player.getRotation().y }
+      lr.set(player.id, { x: player.getRotation().x, y: player.getRotation().y })
     }
   });
   if(!config.modules.aimbotA.state) {

@@ -2,7 +2,7 @@ import { Block, Vector3, world } from '@minecraft/server';
 import { addScore, flag, getGamemode, getScore, punish, revertBlock, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 
-const reach_b = () => {
+const reach_c = () => {
   const EVENT = world.afterEvents.blockBreak.subscribe(ev => {
     const player = ev.player;
     if(uniqueId(player) || player.typeId !== 'minecraft:player' || getGamemode(player) == 1) return;
@@ -11,11 +11,11 @@ const reach_b = () => {
     const pos2: Vector3 = block.location;
     const distance: number = Number(Math.abs(Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2 + (pos1.z - pos2.z) ** 2)).toFixed(3));
     if (distance > config.modules.reachB.maxdistance) {
-      addScore(player, 'anticheat:reachBVl', 1);
-      flag(player, 'reach/B', getScore(player, 'anticheat:reachBVl'));
+      addScore(player, 'anticheat:reachCVl', 1);
+      flag(player, 'reach/C', getScore(player, 'anticheat:reachCVl'));
       revertBlock(ev.block)
-      if (getScore(player, 'anticheat:reachBVl') > config.modules.reachB.VL) {
-        punish(player, 'reach/B', config.modules.reachB.punishment)
+      if (getScore(player, 'anticheat:reachCVl') > config.modules.reachB.VL) {
+        punish(player, 'reach/C', config.modules.reachB.punishment)
       }
     }
   });
@@ -24,4 +24,4 @@ const reach_b = () => {
   }
 };
 
-export { reach_b }
+export { reach_c }

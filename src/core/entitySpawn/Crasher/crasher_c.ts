@@ -5,7 +5,8 @@ import { stop } from '../../../util/World.js';
 const crasher_c = () => {
   const EVENT1 = world.afterEvents.entitySpawn.subscribe(ev => {
     const entity = ev.entity;
-    //if(config.modules.crasherC.writeList.includes(entity.typeId) || config.modules.crasherC.safeCause.includes(ev.cause)) return;
+    if(config.modules.crasherC.writeList.includes(entity.typeId)) return;
+    //if(config.modules.crasherC.safeCause.includes(ev.cause)) return;
     world.scoreboard.getObjective('anticheat:crasherEntityList').setScore(entity.typeId, 1 + world.scoreboard.getObjective('anticheat:crasherEntityList').getScore(entity.typeId));
     if(world.scoreboard.getObjective('anticheat:crasherEntityList').getScore(entity.typeId) > config.modules.crasherC.maxSummonLimitInTick) {
       const kills = world.getDimension('minecraft:overworld').getEntities({type: entity.typeId});

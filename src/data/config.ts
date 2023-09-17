@@ -28,13 +28,6 @@ export default {
       "MaxWarnTime": 3,
       "VL": 2,
     },
-    "speedB": {
-      "state": true,
-      "maxPosDeff": 8,
-      "MaxWarnTime": 3,
-      "VL": 2,
-      "punishment": 'default'
-    },
     "nofallA": {
       "state": true,
       "VL": 1,
@@ -65,6 +58,15 @@ export default {
     "killauraE": {
       "state": true,
       "VL": 0,
+      "punishment": 'default'
+    },
+    "killauraF": {
+      "state": true,
+      "VL": 1,
+      "attackerMove": true,
+      "targetMove": false,
+      "gotCheck": 3,
+      "maxDelay": 1000,
       "punishment": 'default'
     },
     "surroundA": {
@@ -435,6 +437,17 @@ export default {
       "state": true,
       "punishment": 'default',
       "VL": 2,
+    },
+    "phaseA": {
+      "state": true,
+      "VL": 1,
+      "passableBlock": [
+        "sand",
+        "gravel",
+        "concrete_powder",
+        "soul_sand"
+      ],
+      "punishment": 'default'
     }
   }
 }

@@ -94,20 +94,22 @@ const items = () => {
           continue
         };
         if(config.modules.items.illegalItemH.state) {
-//@ts-ignore
-          if(!config.modules.items.illegalItemH.allowCanBreak && item.getCanDestroy().length > config.modules.items.illegalItemH.blockType) {
-            if(config.modules.items.illegalItemH.cleartag) { item.setCanDestroy(undefined) } else { inv.setItem(i) };
-            flag(player, 'illegalItem/H', 0);
-            punish(player, 'illegalItem/H', config.modules.items.illegalItemF.punishment);
-            continue
-          };
-//@ts-ignore
-          if(!config.modules.items.illegalItemH.allowCanPlace && item.getCanPlaceOn().length > config.modules.items.illegalItemH.blockType) {
-            if(config.modules.items.illegalItemH.cleartag) { item.setCanPlaceOn(undefined) } else { inv.setItem(i) };
-            flag(player, 'illegalItem/H', 0);
-            punish(player, 'illegalItem/H', config.modules.items.illegalItemF.punishment);
-            continue
-          }
+          try {
+//@ts-expect-error
+            if(!config.modules.items.illegalItemH.allowCanBreak && item.getCanDestroy().length > config.modules.items.illegalItemH.blockType) {
+              if(config.modules.items.illegalItemH.cleartag) { item.setCanDestroy(undefined) } else { inv.setItem(i) };
+              flag(player, 'illegalItem/H', 0);
+              punish(player, 'illegalItem/H', config.modules.items.illegalItemF.punishment);
+              continue
+            };
+//@ts-expect-error
+            if(!config.modules.items.illegalItemH.allowCanPlace && item.getCanPlaceOn().length > config.modules.items.illegalItemH.blockType) {
+              if(config.modules.items.illegalItemH.cleartag) { item.setCanPlaceOn(undefined) } else { inv.setItem(i) };
+              flag(player, 'illegalItem/H', 0);
+              punish(player, 'illegalItem/H', config.modules.items.illegalItemF.punishment);
+              continue
+            }
+          } catch { }
         };
         if(config.modules.items.illegalItemI.state && item.typeId.startsWith('element_')) {
           inv.setItem(i);

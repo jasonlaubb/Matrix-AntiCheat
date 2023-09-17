@@ -1,4 +1,7 @@
 import { world, system, Player, GameMode, Vector3, Block, Entity } from '@minecraft/server';
+import { data } from '../nokararos.js';
+
+export function tempkick (player: Player) {};
 
 export function flag (player: Player, modules: string, VL: number) {
   world.sendMessage(`§e${player.name} §7has failed to use §c${modules} §6VL=${VL}`);
@@ -10,7 +13,7 @@ export function punish (player: Player, modules: string, punishment: string) {
   })
 };
 
-export function stop (modules: string, type: string, value: String) {
+export function stop (modules: string, type: string, value: string) {
   world.sendMessage(`§eWorld §7has stopped §c${modules} §8(${type}=${value})`)
 };
 
@@ -20,29 +23,16 @@ export function uniqueId (player: Player) {
   } else return false;
 };
 
-function scoreboardDeBug(player: Player, scoreboard: string) {
-  if(world.scoreboard.getObjective(scoreboard) == undefined){
-    world.scoreboard.addObjective(scoreboard, scoreboard);
-  };
-  if(player !== null && !world.scoreboard.getObjective(scoreboard).hasParticipant(player)){
-    world.scoreboard.getObjective(scoreboard).setScore(player, 0);
-  };
-};
-
 export function getScore (player: Player, scoreboard: string) {
-  scoreboardDeBug(player, scoreboard);
-  return world.scoreboard.getObjective(scoreboard).getScore(player);
-};
+  return data.get(`${scoreboard},${player.id}`)
+}
 
 export function addScore (player: Player, scoreboard: string, value: number) {
-  scoreboardDeBug(player, scoreboard);
-  const score = world.scoreboard.getObjective(scoreboard).getScore(player);
-  world.scoreboard.getObjective(scoreboard).setScore(player, score + value);
+  data.set(`${scoreboard},${player.id}`, data.get(`${scoreboard},${player.id}`) + value)
 };
 
 export function clearScore (player: Player, scoreboard: string) {
-  scoreboardDeBug(player, scoreboard);
-  world.scoreboard.getObjective(scoreboard).setScore(player, 0);
+  data.set(`${scoreboard},${player.id}`, 0)
 };
 
 export function getGamemode(player: Player) {
@@ -56,9 +46,9 @@ export function getGamemode(player: Player) {
   for (const gamemode in GameMode) {
     if ([...world.getPlayers({
       name: player.name,
-//@ts-ignore
+//@ts-expect-error
       gameMode: GameMode[gamemode]
-//@ts-ignore
+//@ts-expect-error
     })].length > 0) return Number(gamemodes[GameMode[gamemode]])
   };
   return 0
@@ -91,4 +81,17 @@ export function revertBlock(block: Block) {
     item.kill()
   };
   block.setPermutation(block.permutation.clone());
+};
+
+export function getClosestPlayer(entity: Entity) {
+  try {
+    if(typeof entity !== "object") throw TypeError
+    const nearestPlayer = [...entity.dimension.getPlayers({
+      closest: 1,
+      location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
+    })][0];
+    return nearestPlayer;
+  } catch {
+    return undefined
+  }
 }
