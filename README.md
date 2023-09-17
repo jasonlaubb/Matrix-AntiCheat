@@ -18,7 +18,9 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 Made by: jasonlaubb
 
 <div align="center">
+  
   # How to use?
+  
 </div>
 
 Require Hoilday Creator Feature and Beta API to make it work!
@@ -30,7 +32,9 @@ Download the latest release to use (.mcpack), not source code
 ## WARNING: This Anti Cheat is not finished
 
 <div align="center">
+  
   # About molang patched some hack
+  
 </div>
 
 AntiCheat will disable some modules that Molang patched,
