@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./pack_icon.png" width="200" height="200">
+  <img src="./pack_icon.png" width="150" height="150">
 
   # Nokararos Anti Cheat
   
@@ -8,6 +8,10 @@
   <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Commits Per Week"/>
   <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Last Commit"/>
 </div>
+
+
+
+
 
 Our support discord server: [Click Here To Join](https://discord.gg/CqZGXeRKPJ)
 
