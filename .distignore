@@ -1,4 +1,5 @@
 .gitignore
+.distignore
 tsconfig.json
 README.md
 pack_icon.png
