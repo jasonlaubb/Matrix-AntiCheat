@@ -36,9 +36,10 @@ Download the latest release to use (.mcpack), not source code
 
 AntiCheat will disable some modules that Molang patched,
 
-</div>
 (Some modules may not be disabled like antiCBE)
 
 if really want enabled the checks that Molang patched,
 
 go to config to change the default setting.
+
+</div>
