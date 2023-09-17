@@ -1,6 +1,6 @@
 # Anti Cheat Engine
 
-This markdown file show all the modules that our anti cheat have.
+This markdown file show all the modules that our anti cheat has.
 
 - Anti CBE
 
