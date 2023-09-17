@@ -4,10 +4,6 @@ about: Report the bug
 
 ---
 
-# Title
-
-?
-
 # Description of bug
 
 ?
