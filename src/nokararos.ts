@@ -1,5 +1,6 @@
 export const data = new Map<any, any>(); //This thing is important
 import { clearMapdata } from './util/Map.js';
+import { join_event } from './core/playerSpawn/join_events.js';
 import { ac_a } from './core/entityHitEntity/AutoClicker/ac_a.js';
 import { ac_b } from './core/entityHitBlock/AutoClicker/ac_b.js';
 import { nuker_a } from './core/blockBreak/Nuker/nuker_a.js';
@@ -47,6 +48,7 @@ import { knockback_a } from './core/tickEvents/KnockBack/knockback_a.js';
 import { phase_a } from './core/tickEvents/Phase/phase_a.js';
 
 clearMapdata();
+join_event();
 knockback_a();
 insteabreak_a();
 autotool_a();

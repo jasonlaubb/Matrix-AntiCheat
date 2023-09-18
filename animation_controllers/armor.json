@@ -1,0 +1,69 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.head": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"equip": "query.equipped_item_any_tag('slot.armor.head', 'minecraft:is_helmet')"
+					}],
+                    "on_entry": ["@s[tag=!anticheat:joining] anticheat:un_equip_armor"]
+				},
+				"equip": {
+					"transitions": [{
+						"default": "!query.equipped_item_any_tag('slot.armor.head', 'minecraft:is_helmet')"
+					}],
+					"on_entry": ["@s[tag=!anticheat:joining] anticheat:equip_armor"]
+				}
+			}
+		},
+		"controller.animation.chest": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"equip": "query.equipped_item_any_tag('slot.armor.chest', 'minecraft:is_chestplate')"
+					}],
+                    "on_entry": ["@s[tag=!anticheat:joining] anticheat:un_equip_armor"]
+				},
+				"equip": {
+					"transitions": [{
+						"default": "!query.equipped_item_any_tag('slot.armor.chest', 'minecraft:is_chestplate')"
+					}],
+					"on_entry": ["@s[tag=!anticheat:joining] anticheat:equip_armor"]
+				}
+			}
+		},
+		"controller.animation.legs": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"equip": "query.equipped_item_any_tag('slot.armor.legs', 'minecraft:is_legging')"
+					}],
+                    "on_entry": ["@s[tag=!anticheat:joining] anticheat:un_equip_armor"]
+				},
+				"equip": {
+					"transitions": [{
+						"default": "!query.equipped_item_any_tag('slot.armor.legs', 'minecraft:is_legging')"
+					}],
+					"on_entry": ["@s[tag=!anticheat:joining] anticheat:equip_armor"]
+				}
+			}
+		},
+		"controller.animation.feets": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"equip": "query.equipped_item_any_tag('slot.armor.feets', 'minecraft:is_boots')"
+					}],
+                    "on_entry": ["@s[tag=!anticheat:joining] anticheat:un_equip_armor"]
+				},
+				"equip": {
+					"transitions": [{
+						"default": "!query.equipped_item_any_tag('slot.armor.feets', 'minecraft:is_boots')"
+					}],
+					"on_entry": ["@s[tag=!anticheat:joining] anticheat:equip_armor"]
+				}
+			}
+		}
+    }
+}
