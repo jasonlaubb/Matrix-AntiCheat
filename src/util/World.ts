@@ -1,5 +1,7 @@
 import { world, system, Player, GameMode, Vector3, Block, Entity } from '@minecraft/server';
 import { data } from '../nokararos.js';
+import { ActiveTempkick } from './action/tempkick.js';
+import { Activekick } from './action/kick.js';
 
 export function tempkick (player: Player) {};
 
@@ -9,7 +11,10 @@ export function flag (player: Player, modules: string, VL: number) {
 
 export function punish (player: Player, modules: string, punishment: string) {
   system.run(() => {
-    world.sendMessage(`§e${player.name} §7punished by §c${modules} §7 since reached VL limit`)
+    world.sendMessage(`§e${player.name} §7punished by §c${modules} §7 since reached VL limit`);
+    if(punishment == 'none') return;
+    if(punishment == 'tempkick') return ActiveTempkick(player)
+    if(punishment == 'kick') return Activekick(player)
   })
 };
 

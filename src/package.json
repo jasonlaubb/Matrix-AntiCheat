@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "crypto-es": "^2.0.4"
+  }
+}
