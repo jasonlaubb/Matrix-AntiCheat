@@ -357,7 +357,7 @@ export default {
     },
     "flyD": {
       "state": true,
-      "maxOnAirTime": 4000,
+      "maxAirTime": 4000,
       "VL": 2,
       "punishment": 'default'
     },
