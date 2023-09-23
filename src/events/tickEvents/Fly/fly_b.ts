@@ -14,6 +14,7 @@ const fly_b = () => {
           if(inAirState) {
             addScore(player, 'anticheat:flyBVl', 1);
             flag(player, 'fly/B', getScore(player, 'anticheat:flyBVl'));
+            player.applyDamage(6);
             player.teleport({ x: player.location.x, y: player.location.y, z: player.location.z });
             if(getScore(player, 'anticheat') > config.modules.flyB.VL) {
               clearScore(player, 'anticheat:flyBVl');
