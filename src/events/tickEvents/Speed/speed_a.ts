@@ -9,17 +9,17 @@ const speedData = new Map<string, any>();
 const speed_a = () => {
   const EVENT1 = system.runInterval(() => {
     for (const player of world.getPlayers({ excludeGameModes: ['creative' as GameMode, 'spectator' as GameMode] })) {
-      if (uniqueId(player)) return;
+      if (uniqueId(player)) continue;
       if (player.isGliding || player.getEffect("speed") || player.hasTag("three") || player.hasTag("four")) {
         speedData.set(player.id, { initialLocation: player.location });
-            continue;
+        continue;
       }
       const { x, z } = player.getVelocity();
-      const playerSpeedMph = Math.sqrt(x ** 2 + z ** 2) * 72000 / 1609.34;
+      const playerSpeedMph: number = Math.sqrt(x ** 2 + z ** 2) * 72000 / 1609.34;
       if (playerSpeedMph === 0) {
         speedData.set(player.id, { initialLocation: player.location});
       } else if (playerSpeedMph > config.modules.speedA.maxSpeed && speedData.has(player.id)) {
-        const playerInfo = speedData.get(player.id);
+        const playerInfo: any = speedData.get(player.id);
       if (!playerInfo.highestSpeed) {
         player.teleport(playerInfo, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
         player.applyDamage(6);
