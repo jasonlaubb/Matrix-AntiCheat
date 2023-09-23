@@ -6,7 +6,7 @@
 
 Author: Jasonlaubb
 Contributors: ravriv, hutaotangzhu
-version: 1.0.0
+version: 1.0.0-beta-Test
 license: GPL-v3.0
 */
 
@@ -51,6 +51,7 @@ import { items } from './events/tickEvents/Items/items.js';
 import { aimbot_a } from './events/tickEvents/AimBot/aimbot_a.js';
 import { fly_a } from './events/tickEvents/Fly/fly_a.js';
 import { fly_b } from './events/tickEvents/Fly/fly_b.js';
+import { fly_c } from './events/tickEvents/Fly/fly_c.js';
 import { autototem_a } from './events/EntityTriggerEvents/AutoTotem/autoTotem_a.js';
 import { autototem_b } from './events/EntityTriggerEvents/AutoTotem/autoTotem_b.js';
 import { autototem_c } from './events/EntityTriggerEvents/AutoTotem/autoTotem_c.js';
@@ -116,6 +117,7 @@ scaffold_c();
 scaffold_d();
 fly_a();
 fly_b();
+fly_c();
 hurt_event();
 cbe_a();
 phase_a();

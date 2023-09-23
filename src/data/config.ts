@@ -350,6 +350,17 @@ export default {
       "VL": 2,
       "punishment": 'default'
     },
+    "flyC": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "flyD": {
+      "state": true,
+      "maxOnAirTime": 4000,
+      "VL": 2,
+      "punishment": 'default'
+    },
     "placementA": {
       "state": false,
       "punishment": 'default',

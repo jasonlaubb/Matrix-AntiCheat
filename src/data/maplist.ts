@@ -45,6 +45,8 @@ export default [
   "anticheat:fastThrowAVl",
   "anticheat:aimbotAVl",
   "anticheat:flyBVl",
+  "anticheat:flyCVl",
+  "anticheat:flyDVl",
   "anticheat:invaildSprintAVl",
   "anticheat:invaildSprintBVl",
   "anticheat:invaildSprintCVl",
