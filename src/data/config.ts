@@ -23,10 +23,9 @@ export default {
     },
     "speedA": {
       "state": true,
-      "maxSpeed": 0.55,
+      "maxSpeed": 200,
       "punishment": 'default',
-      "MaxWarnTime": 3,
-      "VL": 2,
+      "VL": 3
     },
     "nofallA": {
       "state": true,
