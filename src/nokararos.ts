@@ -10,7 +10,9 @@ version: 1.0.0
 license: GPL-v3.0
 */
 
-export const data = new Map<any, any>(); //This thing is important
+export const data = new Map<string | boolean, number>();
+
+//import all thing
 import { clearMapdata } from './util/Map.js';
 import { join_event } from './events/playerSpawn/join_events.js';
 import { ac_a } from './events/entityHitEntity/AutoClicker/ac_a.js';
@@ -27,6 +29,9 @@ import { killaura_f } from './events/entityHitEntity/Killaura/killaura_f.js';
 import { surround_a } from './events/playerBreakBlock/Surround/surround_a.js';
 import { surround_b } from './events/playerPlaceBlock/Surround/surround_b.js';
 import { scaffold_a } from './events/playerPlaceBlock/Scaffold/scaffold_a.js';
+import { scaffold_b } from './events/playerPlaceBlock/Scaffold/scaffold_b.js';
+import { scaffold_c } from './events/playerPlaceBlock/Scaffold/scaffold_c.js';
+import { scaffold_d } from './events/playerPlaceBlock/Scaffold/scaffold_d.js';
 import { aura_a } from './events/playerPlaceBlock/Aura/aura_a.js';
 import { reach_a } from './events/entityHitEntity/Reach/reach_a.js';
 import { spam_a } from './events/chatSend/Spam/spam_a.js';
@@ -58,7 +63,12 @@ import { insteabreak_a } from './events/playerBreakBlock/InsteaBreak/insteabreak
 import { hurt_event } from './events/entityHurt/hurt_event.js';
 import { knockback_a } from './events/tickEvents/KnockBack/knockback_a.js';
 import { phase_a } from './events/tickEvents/Phase/phase_a.js';
+import { placement_a } from './events/playerPlaceBlock/Placement/placement_a.js';
+import { placement_b } from './events/playerPlaceBlock/Placement/placement_b.js';
+import { placement_c } from './events/playerPlaceBlock/Placement/placement_c.js';
+import { placement_d } from './events/playerPlaceBlock/Placement/placement_d.js';
 
+//run all code
 clearMapdata();
 join_event();
 knockback_a();
@@ -101,8 +111,15 @@ killaura_f();
 surround_a();
 surround_b();
 scaffold_a();
+scaffold_b();
+scaffold_c();
+scaffold_d();
 fly_a();
 fly_b();
 hurt_event();
 cbe_a();
-phase_a()
+phase_a();
+placement_a();
+placement_b();
+placement_c();
+placement_d()
