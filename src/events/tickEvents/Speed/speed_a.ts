@@ -9,7 +9,7 @@ const speedData = new Map<string, any>();
 const speed_a = () => {
   const EVENT1 = system.runInterval(() => {
     for (const player of world.getPlayers({ excludeGameModes: ['creative' as GameMode, 'spectator' as GameMode] })) {
-      if (uniqueId(player) || speedData.has(`${player.id}-hurtTime`) && Date.now() - speedData.get(`${player.id}-hurtTime`) < 2000) continue;
+      if (uniqueId(player) || player.hasTag('anticheat:damaged')) continue;
       if (player.isGliding || player.getEffect("speed") || player.hasTag("three") || player.hasTag("four")) {
         speedData.set(player.id, { initialLocation: player.location });
         continue;
@@ -40,17 +40,10 @@ const speed_a = () => {
     speedData.delete(ev.playerId);
   });
 
-  const EVENT3 = world.afterEvents.entityHurt.subscribe(ev => {
-    if (ev.hurtEntity instanceof Player && ev.hurtEntity.isValid()) {
-        speedData.set(`${ev.hurtEntity.id}-hurtTime`, Date.now());
-    }
-});
-
   if(!config.modules.speedA.state) {
     speedData.clear();
     system.clearRun(EVENT1);
     world.afterEvents.playerLeave.unsubscribe(EVENT2)
-    world.afterEvents.entityHurt.unsubscribe(EVENT3)
   }
 };
 
