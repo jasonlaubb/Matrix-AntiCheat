@@ -99,8 +99,7 @@ export default {
     "scaffoldD": {
       "state": true,
       "VL": 2,
-      "illegalSpeed": 0.45,
-      "gotcheck": 6,
+      "maxBlockBreakPerSecond": 5,
       "punishment": 'default'
     },
     "auraA": {
