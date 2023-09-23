@@ -21,10 +21,6 @@ export default [
   "anticheat:scaffoldCVl",
   "anticheat:scaffoldDVl",
   "anticheat:towerAVl",
-  "lastMessageSendTime",
-  "lastmessagesent",
-  'lastRotationDeff',
-  'lastfallingspeed',
   "anticheat:spammerAVl",
   "anticheat:spammerBVl",
   "anticheat:spammerCVl",
@@ -40,8 +36,6 @@ export default [
   "anticheat:killauraEVl",
   "anticheat:killaruaFVl",
   "anticheat:killauraFgotCheck",
-  "lastAttackDelayCombo",
-  "lastAttackVector2Angle",
   "anticheat:autosheidAVl",
   "anticheat:autosheidBVl",
   "anticheat:autosheidCVl",
@@ -57,5 +51,5 @@ export default [
   "anticheat:knockbackAVl",
   "anticheat:nofallVl",
   "anticheat:speedAVl",
-  "playerLastPositions"
+  "anticheat:scaffoldDblockPlaced"
 ]
