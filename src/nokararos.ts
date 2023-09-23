@@ -1,3 +1,15 @@
+/*           _                                 
+ _ __   ___ | | ____ _ _ __ __ _ _ __ ___  ___ 
+| '_ \ / _ \| |/ / _` | '__/ _` | '__/ _ \/ __|
+| | | | (_) |   < (_| | | | (_| | | | (_) \__ \
+|_| |_|\___/|_|\_\__,_|_|  \__,_|_|  \___/|___/
+
+Author: Jasonlaubb
+Contributors: ravriv, hutaotangzhu
+version: 1.0.0
+license: GPL-v3.0
+*/
+
 export const data = new Map<any, any>(); //This thing is important
 import { clearMapdata } from './util/Map.js';
 import { join_event } from './events/playerSpawn/join_events.js';
