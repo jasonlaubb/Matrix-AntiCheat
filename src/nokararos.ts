@@ -1,3 +1,4 @@
+const START_LOADING_MS = Date.now();
 /*           _                                 
  _ __   ___ | | ____ _ _ __ __ _ _ __ ___  ___ 
 | '_ \ / _ \| |/ / _` | '__/ _` | '__/ _ \/ __|
@@ -12,7 +13,7 @@ license: GPL-v3.0
 
 export const data = new Map<string | boolean, number>();
 
-//import all thing
+//import all used file
 import { clearMapdata } from './util/Map.js';
 import { join_event } from './events/playerSpawn/join_events.js';
 import { ac_a } from './events/entityHitEntity/AutoClicker/ac_a.js';
@@ -60,6 +61,7 @@ import { autoshield_a } from './events/EntityTriggerEvents/AutoShield/autoShield
 import { autoshield_b } from './events/EntityTriggerEvents/AutoShield/autoShield_b.js';
 import { autoshield_c } from './events/EntityTriggerEvents/AutoShield/autoShield_c.js';
 import { cbe_a } from './events/EntityTriggerEvents/CBE/cbe_a.js';
+import { cbe_b } from './events/entitySpawn/CBE/cbe_b.js';
 import { autotool_a } from './events/entityHitBlock/AutoTool/autotool_a.js';
 import { insteabreak_a } from './events/playerBreakBlock/InsteaBreak/insteabreak_a.js';
 import { hurt_event } from './events/entityHurt/hurt_event.js';
@@ -69,8 +71,10 @@ import { placement_a } from './events/playerPlaceBlock/Placement/placement_a.js'
 import { placement_b } from './events/playerPlaceBlock/Placement/placement_b.js';
 import { placement_c } from './events/playerPlaceBlock/Placement/placement_c.js';
 import { placement_d } from './events/playerPlaceBlock/Placement/placement_d.js';
+import { spider_a } from './events/tickEvents/Spider/spider_a.js';
+import { jesus_a } from './events/tickEvents/Jeues/jesus.js';
 
-//run all code
+//run the code of the files
 clearMapdata();
 join_event();
 knockback_a();
@@ -122,8 +126,13 @@ fly_c();
 fly_d();
 hurt_event();
 cbe_a();
+cbe_b();
 phase_a();
 placement_a();
 placement_b();
 placement_c();
-placement_d()
+placement_d();
+spider_a();
+jesus_a();
+
+console.warn(`Nokararos Activated (${Date.now() - START_LOADING_MS} ms)`)
