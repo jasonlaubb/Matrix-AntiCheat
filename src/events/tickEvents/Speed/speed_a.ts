@@ -2,8 +2,6 @@ import { world, system, GameMode } from "@minecraft/server";
 import config from "../../../data/config.js";
 import { addScore, clearScore, flag, getScore, punish, uniqueId } from "../../../util/World.js";
 
-//Anti Speed from Obsian Anti Cheat
-
 const speedData = new Map<string, any>();
 
 const speed_a = () => {
