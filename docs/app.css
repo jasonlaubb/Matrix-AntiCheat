@@ -1,3 +1,7 @@
 h1{
     text-align: center;
+},
+body{
+    background-image: url('bg-image-small.jpg');
+    background-repeat: no-repeat;
 }
