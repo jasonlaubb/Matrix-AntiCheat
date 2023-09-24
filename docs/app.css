@@ -2,6 +2,7 @@ body{
     background-image: url('background.png');
     background-repeat: no-repeat;
     font-family: Arial, sans-serif;
+    background-size: cover;
 }
 .button-container {
     margin: 20px auto;
