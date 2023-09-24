@@ -9,9 +9,9 @@ const cbe_a = () => {
     if(id !== 'anticheat:wear_totem') return;
     const player: Player = getClosestPlayer(entity);
     stop('commandBlockExploit/A', 'player', player.name);
-    tempkick(player)
+    if(config.modules.cbeA.tempkickNearest) tempkick(player)
   });
-  if(!config.modules.autototemA.state) {
+  if(!config.modules.cbeA.state) {
     world.afterEvents.dataDrivenEntityTriggerEvent.unsubscribe(EVENT)
   }
 };

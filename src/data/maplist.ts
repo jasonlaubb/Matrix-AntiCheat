@@ -53,5 +53,8 @@ export default [
   "anticheat:knockbackAVl",
   "anticheat:nofallVl",
   "anticheat:speedAVl",
-  "anticheat:scaffoldDblockPlaced"
+  "anticheat:scaffoldDblockPlaced",
+  "anticheat:spiderAVl",
+  "anticheat:jesusATimeLength",
+  "anticheat:jesusAVl"
 ]

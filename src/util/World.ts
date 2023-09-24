@@ -5,13 +5,17 @@ import { Activekick } from './action/kick.js';
 
 export function tempkick (player: Player) {};
 
-export function flag (player: Player, modules: string, VL: number) {
-  world.sendMessage(`§e${player.name} §7has failed to use §c${modules} §6VL=${VL}`);
+export function flag (player: Player, modules: string, VL: number, Info?: Array<string>) {
+  if(Info == undefined) {
+    world.sendMessage(`§dNokararos §f> §e${player.name} §7has failed §c${modules} §6VL=${VL}`);
+  } else {
+    world.sendMessage(`§dNokararos §f> §e${player.name} §7has failed §c${modules} §6VL=${VL} §9(${Info.join(', ')})`);
+  }
 };
 
 export function punish (player: Player, modules: string, punishment: string) {
   system.run(() => {
-    world.sendMessage(`§e${player.name} §7punished by §c${modules} §7 since reached VL limit`);
+    world.sendMessage(`§dNokararos §f> §e${player.name} §7is punished §9(${modules})`);
     if(punishment == 'none') return;
     if(punishment == 'tempkick') return ActiveTempkick(player)
     if(punishment == 'kick') return Activekick(player)
@@ -19,7 +23,7 @@ export function punish (player: Player, modules: string, punishment: string) {
 };
 
 export function stop (modules: string, type: string, value: string) {
-  world.sendMessage(`§eWorld §7has stopped §c${modules} §8(${type}=${value})`)
+  world.sendMessage(`§dNokararos §f> §eWorld §7has stopped §c${modules} §8(${type}=${value})`)
 };
 
 export function uniqueId (player: Player) {
@@ -67,6 +71,22 @@ export function isAllBlockAir(player: Player, startpos: Vector3, endpos: Vector3
       for(let iz = 0; iz <= endpos.z - startpos.z; iz++){
         const z = startpos.z + iz;
         if(player.dimension.getBlock({ x: x, y: y, z: z}).typeId !== "minecraft:air") {
+          return false
+        }
+      }
+    }
+  };
+  return true
+};
+
+export function isAllBlockLiquid(player: Player, startpos: Vector3, endpos: Vector3) {
+  for(let ix = 0; ix <= endpos.x - startpos.x; ix++){
+    const x = startpos.x + ix;
+    for(let iy = 0; iy <= endpos.y - startpos.y; iy++){
+      const y = startpos.y + iy;
+      for(let iz = 0; iz <= endpos.z - startpos.z; iz++){
+        const z = startpos.z + iz;
+        if(!player.dimension.getBlock({ x: x, y: y, z: z})?.isLiquid) {
           return false
         }
       }

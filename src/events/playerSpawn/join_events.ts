@@ -3,6 +3,7 @@ import { world, system, Player } from '@minecraft/server';
 const join_event = () => {
   for(const player of world.getAllPlayers()) {
     player.addTag('anticheat:joining');
+    player.removeTag('anticheat:autoclicker-off')
     system.runTimeout(() => {
       player.removeTag('anticheat:joining')
     }, 2)

@@ -6,13 +6,13 @@ export default {
   "modules": {
     "autoclickerA": {
       "state": true,
-      "cpsLimit": 30,
+      "cpsLimit": 22,
       "VL": 3,
       "punishment": 'default'
     },
     "autoclickerB": {
       "state": true,
-      "cpsLimit": 26,
+      "cpsLimit": 22,
       "VL": 3,
       "punishment": 'default'
     },
@@ -20,6 +20,14 @@ export default {
       "state": true,
       "maxBreakInTick": 4,
       "punishment": 'default'
+    },
+    "cbeA": {
+      "state": true,
+      "tempkickNearest": true
+    },
+    "cbeB": {
+      "state": false,
+      "tempkickNearest": true
     },
     "speedA": {
       "state": true,
@@ -62,12 +70,19 @@ export default {
     "killauraF": {
       "state": true,
       "VL": 1,
+      "punishment": 'default'
+    },
+/*
+    "killauraG": {
+      "state": true,
+      "VL": 1,
       "attackerMove": true,
       "targetMove": false,
       "gotCheck": 3,
       "maxDelay": 1000,
       "punishment": 'default'
     },
+*/
     "surroundA": {
       "state": true,
       "maxAngle": 95,
@@ -456,6 +471,17 @@ export default {
         "concrete_powder",
         "soul_sand"
       ],
+      "punishment": 'default'
+    },
+    "spiderA": {
+      "state": true,
+      "VL": 2,
+      "punishment": 'default'
+    },
+    "jesusA": {
+      "state": true,
+      "VL": 2,
+      "maxTimeLength": 15, //Present in Tick
       "punishment": 'default'
     }
   }
