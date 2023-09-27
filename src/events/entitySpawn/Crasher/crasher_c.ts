@@ -1,6 +1,7 @@
 import { world, system } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { stop } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const spawnData = new Map<string, number>();
 
@@ -22,7 +23,7 @@ const crasher_c = () => {
   const EVENT2 = system.runInterval(() => {
     spawnData.clear()
   }, 1);
-  if(!config.modules.crasherC.state) {
+  if(!State('CRASHERC', config.modules.crasherC.state)) {
     spawnData.clear();
     world.afterEvents.entitySpawn.unsubscribe(EVENT1);
     system.clearRun(EVENT2)

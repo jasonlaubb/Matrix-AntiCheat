@@ -1,6 +1,7 @@
 import { Block, Vector3, world } from '@minecraft/server';
 import { addScore, flag, getGamemode, getScore, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const reach_b = () => {
   const EVENT = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -19,7 +20,7 @@ const reach_b = () => {
       }
     }
   });
-  if (!config.modules.reachB.state) {
+  if (!State('REACHB', config.modules.reachB.state)) {
     world.beforeEvents.playerPlaceBlock.unsubscribe(EVENT)
   }
 };

@@ -1,6 +1,7 @@
 import { Entity, Player, world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, uniqueId, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const crasher_b = () => {
   const EVENT = world.afterEvents.entityHitEntity.subscribe(ev => {
@@ -14,7 +15,7 @@ const crasher_b = () => {
       if(!uniqueId(player)) punish(player, 'crasher/B', config.modules.crasherB.punishment)
     }
   });
-  if(!config.modules.autoclickerA.state) {
+  if(!State('CRASHERB', config.modules.autoclickerA.state)) {
     world.afterEvents.entityHitEntity.unsubscribe(EVENT);
   };
 };

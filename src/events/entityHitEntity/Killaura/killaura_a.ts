@@ -1,21 +1,18 @@
-import { Entity, Player, world } from '@minecraft/server';
+import { Entity, Player, world, system } from '@minecraft/server';
 import { addScore, clearScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
+
+const killauraHitList = new Map<string, any>();
 
 export const killaura_a = () => {
-  const EVENT = world.afterEvents.entityHitEntity.subscribe(ev => {
+  const EVENT1 = world.afterEvents.entityHitEntity.subscribe(ev => {
     const player = ev.damagingEntity as Player;
     if(player.typeId !== 'minecraft:player' || uniqueId(player)) return;
     const hitEntity: Entity = ev.hitEntity;
-//@ts-ignore
-    if(player.killauaraHitList == undefined) player.killauraHitList = [];
-//@ts-ignore
-    if(!player.killauraHitList.includes(hitEntity.id)) player.killauraHitList.push(hitEntity.id);
-//@ts-ignore
-    if(player.killauraHitList.length > config.modules.killauraA.maxHit) {
+    if(!killauraHitList.get(player.id).includes(hitEntity.id)) killauraHitList.set(player.id, killauraHitList.get(player.id).push(hitEntity.id));
+    if(killauraHitList.get(player.id) > config.modules.killauraA.maxHit) {
       player.kill();
-//@ts-ignore
-      player.killauaraHitList = [];
       addScore(player, 'anticheat:killauraAVl', 1);
       flag(player, 'killaura/A', getScore(player, 'anticheat:killauraAVl'));
       if(getScore(player, 'anticheat:killauraAVl') > config.modules.killauraA.VL) {
@@ -24,7 +21,17 @@ export const killaura_a = () => {
       }
     } 
   });
-  if(!config.modules.killauraA.state) {
-    world.afterEvents.entityHitEntity.unsubscribe(EVENT)
+  const EVENT2 = world.afterEvents.playerLeave.subscribe(ev => {
+    killauraHitList.delete(ev.playerId)
+  });
+  const EVENT3 = system.runInterval(() => {
+    for(const player of world.getAllPlayers())
+    killauraHitList.set(player.id, [])
+  });
+
+  if(!State('KILLAURAA', config.modules.killauraA.state)) {
+    world.afterEvents.entityHitEntity.unsubscribe(EVENT1);
+    world.afterEvents.playerLeave.unsubscribe(EVENT2);
+    system.clearRun(EVENT3)
   }
 }

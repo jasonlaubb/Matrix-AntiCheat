@@ -2,6 +2,7 @@ import { Container, EntityInventoryComponent, Player, world } from '@minecraft/s
 import { addScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { lastThrowTime } from '../../../util/Map.js';
+import { State } from '../../../util/Toggle.js';
 
 const fastThrow_a = () => {
   const EVENT = world.afterEvents.itemUse.subscribe(ev => {
@@ -18,7 +19,7 @@ const fastThrow_a = () => {
       }
     } else lastThrowTime.set(player.id, Date.now())
   });
-  if(!config.modules.fastThrowA.state) {
+  if(!State('FastThrow', config.modules.fastThrowA.state)) {
     world.afterEvents.itemUse.unsubscribe(EVENT)
   }
 };

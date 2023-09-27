@@ -1,6 +1,7 @@
 import { world, system, Player } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, getScore, addScore, clearScore, uniqueId, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const autotool_a = () => {
   const EVENT = world.afterEvents.entityHitBlock.subscribe(ev => {
@@ -18,7 +19,7 @@ const autotool_a = () => {
       }
     }, 1)
   });
-  if(!config.modules.autotoolA.state) {
+  if(!State('AUTOTOOLA', config.modules.autotoolA.state)) {
     world.afterEvents.entityHitBlock.unsubscribe(EVENT);
   };
 };

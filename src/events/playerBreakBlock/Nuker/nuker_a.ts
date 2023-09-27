@@ -1,6 +1,7 @@
 import { world, system } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, getScore, addScore, clearScore, uniqueId, getGamemode, revertBlock, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const nuker_a = () => {
   const EVENT = world.beforeEvents.playerBreakBlock.subscribe(ev => {
@@ -19,7 +20,7 @@ const nuker_a = () => {
       addScore(player, 'anticheat:blockbreak', -1);
     }, 1);
   });
-  if(!config.modules.nukerA.state) {
+  if(!State('NUKERA', config.modules.nukerA.state)) {
     world.beforeEvents.playerBreakBlock.unsubscribe(EVENT);
   };
 };

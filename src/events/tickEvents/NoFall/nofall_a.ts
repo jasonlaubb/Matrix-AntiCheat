@@ -2,6 +2,7 @@ import { addScore, getScore, flag, clearScore, punish, uniqueId } from '../../..
 import config from '../../../data/config.js';
 import { world, system } from '@minecraft/server';
 import { lastfallingspeed } from '../../../util/Map.js';
+import { State } from '../../../util/Toggle.js';
 
 export const nofall_a = () => {
   const EVENT = system.runInterval(() => {
@@ -20,7 +21,7 @@ export const nofall_a = () => {
     lastfallingspeed.set(player.id, player.getVelocity().y);
     }
   });
-  if(!config.modules.nofallA.state) {
+  if(!State('NOFALLA', config.modules.nofallA.state)) {
     system.clearRun(EVENT)
   }
 }

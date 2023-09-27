@@ -2,6 +2,7 @@ import { addScore, flag, getScore, punish, uniqueId } from '../../../util/World.
 import config from '../../../data/config.js';
 import { world, system, Vector2 } from '@minecraft/server';
 import { lastRotationDeff as lr } from '../../../util/Map.js';
+import { State } from '../../../util/Toggle.js';
 
 const aimbot_a = () => {
   const EVENT = system.runInterval(() => {
@@ -24,7 +25,7 @@ const aimbot_a = () => {
       lr.set(player.id, { x: player.getRotation().x, y: player.getRotation().y })
     }
   });
-  if(!config.modules.aimbotA.state) {
+  if(!State('AIMBOTA', config.modules.aimbotA.state)) {
     system.clearRun(EVENT)
   }
 };

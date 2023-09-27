@@ -1,6 +1,7 @@
 import config from '../../../data/config.js';
 import { getClosestPlayer, stop, tempkick } from '../../../util/World.js';
 import { world, Player, Entity } from '@minecraft/server';
+import { State } from '../../../util/Toggle.js';
 
 const cbe_a = () => {
   const EVENT = world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(ev => {
@@ -11,7 +12,7 @@ const cbe_a = () => {
     stop('commandBlockExploit/A', 'player', player.name);
     if(config.modules.cbeA.tempkickNearest) tempkick(player)
   });
-  if(!config.modules.cbeA.state) {
+  if(!State('CBEA', config.modules.cbeA.state)) {
     world.afterEvents.dataDrivenEntityTriggerEvent.unsubscribe(EVENT)
   }
 };

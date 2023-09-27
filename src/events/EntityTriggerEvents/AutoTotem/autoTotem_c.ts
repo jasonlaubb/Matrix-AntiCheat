@@ -1,6 +1,7 @@
 import config from '../../../data/config.js';
 import { addScore, clearScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
 import { world, Player, EntityEquippableComponent, EquipmentSlot } from '@minecraft/server';
+import { State } from '../../../util/Toggle.js';
 
 const autototem_c = () => {
   const EVENT = world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(ev => {
@@ -17,7 +18,7 @@ const autototem_c = () => {
       }
     }
   });
-  if(!config.modules.autototemC.state) {
+  if(!State('AUTOTOTEMC', config.modules.autototemC.state)) {
     world.afterEvents.dataDrivenEntityTriggerEvent.unsubscribe(EVENT)
   }
 };

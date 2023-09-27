@@ -1,6 +1,7 @@
 import { world, system, GameMode, Vector3 } from "@minecraft/server";
 import config from "../../../data/config.js";
 import { addScore, clearScore, flag, getScore, punish, uniqueId, isAllBlockLiquid } from "../../../util/World.js";
+import { State } from '../../../util/Toggle.js';
 
 const LocationData = new Map<string, Vector3>();
 
@@ -36,7 +37,7 @@ const jesus_a = () => {
     LocationData.delete(ev.playerId);
   });
 
-  if (!config.modules.jesusA.state) {
+  if (!State('JESUSA', config.modules.jesusA.state)) {
     LocationData.clear();
     system.clearRun(EVENT1);
     world.afterEvents.playerLeave.unsubscribe(EVENT2);

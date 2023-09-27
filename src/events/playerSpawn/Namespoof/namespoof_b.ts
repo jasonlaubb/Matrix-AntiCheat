@@ -1,6 +1,7 @@
 import { Player, world } from '@minecraft/server';
 import { stop, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const namespoof_b = () => {
   const EVENT = world.afterEvents.playerSpawn.subscribe(ev => {
@@ -16,7 +17,7 @@ const namespoof_b = () => {
       }
     }
   });
-  if(!config.modules.namespoofA.state) {
+  if(!State('NAMESPOOFB', config.modules.namespoofB.state)) {
     world.afterEvents.playerSpawn.unsubscribe(EVENT)
   }
 };

@@ -1,6 +1,7 @@
 import { getScore, clearScore, uniqueId, flag, addScore, punish } from '../../../util/World.js';
 import { world, system } from '@minecraft/server';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const knockback_a = () => {
   const EVENT = system.runInterval(() => {
@@ -19,7 +20,7 @@ const knockback_a = () => {
       }
     }
   });
-  if(!config.modules.knockbackA.state) {
+  if(!State('KBA', config.modules.knockbackA.state)) {
     system.clearRun(EVENT);
   }
 };

@@ -2,6 +2,7 @@ import { world, system, GameMode, Block, Vector3 } from "@minecraft/server";
 import config from '../../../data/config.js';
 import { addScore, clearScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
 import { playerLastPositions } from '../../../util/Map.js';
+import { State } from '../../../util/Toggle.js';
 
 const passableBlocks = new Set(config.modules.phaseA.passableBlock);
 const lastSafePos = new Map<string, Vector3>();
@@ -36,7 +37,7 @@ const phase_a = () => {
   const EVENT2 = world.afterEvents.playerLeave.subscribe(ev => {
     playerLastPositions.delete(ev.playerId)
   });
-  if(!config.modules.phaseA.state) {
+  if(!State('PHASEA', config.modules.phaseA.state)) {
     system.clearRun(EVENT1);
     world.afterEvents.playerLeave.unsubscribe(EVENT2)
   }

@@ -1,13 +1,13 @@
 import { world, system, EntityEquippableComponent, EquipmentSlot, EntityInventoryComponent, Container, ItemEnchantsComponent, EnchantmentList } from '@minecraft/server';
 import { flag, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const items = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()) {
       if(uniqueId(player)) continue;
-
-      if(config.modules.items.illegalItemF.state) {
+      if(State('ILLEGALITEMF', config.modules.items.illegalItemF.state)) {
         const equipment = player.getComponent("equipment_inventory") as EntityEquippableComponent;
         const offhand = equipment.getEquipment('offhand' as EquipmentSlot);
         const head = equipment.getEquipment('head' as EquipmentSlot);
@@ -45,13 +45,13 @@ const items = () => {
       for(let i = 0; i < inv.size; i++) {
         const item = inv.getItem(i);
         if(!item) continue;
-        if(config.modules.items.illegalItemA.state && config.modules.items.illegalItemA.illegal.includes(item.typeId)) {
+        if(State('ILLEGALITEMA', config.modules.items.illegalItemA.state && config.modules.items.illegalItemA.illegal.includes(item.typeId))) {
           inv.setItem(i);
           flag(player, 'illegalItem/A', 0);
           punish(player, 'illegalItem/A', config.modules.items.illegalItemA.punishment);
           continue
         };
-        if(config.modules.items.illegalItemB.state) {
+        if(State('ILLEGALITEMB', config.modules.items.illegalItemB.state)) {
           if(item.typeId.endsWith('_bucket') && !config.modules.items.illegalItemB.bucketWhiteList.includes(item.typeId) && !config.modules.items.illegalItemB.allowbucket) {
             inv.setItem(i);
             flag(player, 'illegalItem/B', 0);
@@ -67,7 +67,7 @@ const items = () => {
             }
           }
         };
-        if(config.modules.items.illegalItemC.state) {
+        if(State('ILLEGALITEMC', config.modules.items.illegalItemC.state)) {
           if(item.typeId.endsWith('spawn_egg') && !config.modules.items.illegalItemC.whiteList.includes(item.typeId)) {
             inv.setItem(i);
             flag(player, 'illegalItem/C', 0);
@@ -75,25 +75,25 @@ const items = () => {
             continue
           }
         };
-        if(config.modules.items.illegalItemD.state && item.getLore().length > config.modules.items.illegalItemD.maxLoreLength) {
+        if(State('ILLEGALITEMD', config.modules.items.illegalItemD.state) && item.getLore().length > config.modules.items.illegalItemD.maxLoreLength) {
           inv.setItem(i);
           flag(player, 'illegalItem/D', 0);
           punish(player, 'illegalItem/D', config.modules.items.illegalItemD.punishment);
           continue
         };
-        if(config.modules.items.illegalItemE.state && item.keepOnDeath) {
+        if(State('ILLEGALITEME', config.modules.items.illegalItemE.state) && item.keepOnDeath) {
           if(config.modules.items.illegalItemE.removetag) { item.keepOnDeath = false } else { inv.setItem(i) };
           flag(player, 'illegalItem/E', 0);
           punish(player, 'illegalItem/E', config.modules.items.illegalItemE.punishment);
           continue
         };
-        if(config.modules.items.illegalItemG.state && item.nameTag && item.nameTag.length > config.modules.items.illegalItemG.maxNameLength) {
+        if(State('ILLEGALITEMG', config.modules.items.illegalItemG.state) && item.nameTag && item.nameTag.length > config.modules.items.illegalItemG.maxNameLength) {
           if(config.modules.items.illegalItemG.deleteName) { item.nameTag = undefined } else { inv.setItem(i) };
           flag(player, 'illegalItem/G', 0);
           punish(player, 'illegalItem/G', config.modules.items.illegalItemF.punishment);
           continue
         };
-        if(config.modules.items.illegalItemH.state) {
+        if(State('ILLEGALITEMH', config.modules.items.illegalItemH.state)) {
           try {
             if(!config.modules.items.illegalItemH.allowCanBreak && item.getCanDestroy().length > config.modules.items.illegalItemH.blockType) {
               if(config.modules.items.illegalItemH.cleartag) { item.setCanDestroy(undefined) } else { inv.setItem(i) };
@@ -109,13 +109,13 @@ const items = () => {
             }
           } catch { }
         };
-        if(config.modules.items.illegalItemI.state && item.typeId.startsWith('element_')) {
+        if(State('ILLEGALITEMI', config.modules.items.illegalItemI.state && item.typeId.startsWith('element_'))) {
           inv.setItem(i);
           flag(player, 'illegalItem/I', 0);
           punish(player, 'illegalItem/I', config.modules.items.illegalItemI.punishment);
           continue
         };
-        if(config.modules.items.illegalItemJ.state && item.amount > item.maxAmount) {
+        if(State('ILLEGALITEMJ', config.modules.items.illegalItemJ.state && item.amount > item.maxAmount)) {
           inv.setItem(i);
           flag(player, 'illegalItem/I', 0);
           punish(player, 'illegalItem/I', config.modules.items.illegalItemI.punishment);
@@ -124,7 +124,7 @@ const items = () => {
         
         const enchantments: EnchantmentList = (item.getComponent("enchantments") as ItemEnchantsComponent).enchantments;
         if(enchantments !== undefined) {
-          if(config.modules.items.BadEnchantA.state) {
+          if(State('BADENCHANTA', config.modules.items.BadEnchantA.state)) {
             let flagplayer = false;
             for(const enchantment of enchantments) {
               if(enchantment.level > enchantment.type.maxLevel || enchantment.level <= 0) {
@@ -143,7 +143,7 @@ const items = () => {
               continue
             }
           };
-          if(config.modules.items.BadEnchantB.state) {
+          if(State('BADENCHANTB', config.modules.items.BadEnchantB.state)) {
             let inWriteList: boolean = false;
             for(const e of config.modules.items.BadEnchantB.writeList) {
               if(e.endsWith(item.typeId)) {
@@ -162,7 +162,7 @@ const items = () => {
       }
     }
   });
-  if(!config.modules.items.overallState) {
+  if(!State('ITEMS', config.modules.items.overallState)) {
     system.clearRun(EVENT)
   }
 };

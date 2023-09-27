@@ -1,6 +1,7 @@
 import { world, system, EntityInventoryComponent, Container, Block, Player } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, getScore, addScore, clearScore, uniqueId, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const aura_a = () => {
   const EVENT = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -22,7 +23,7 @@ const aura_a = () => {
       }
     }, 1)
   });
-  if(!config.modules.auraA.state) {
+  if(!State('AURAA', config.modules.auraA.state)) {
     world.beforeEvents.playerPlaceBlock.unsubscribe(EVENT);
   }
 };

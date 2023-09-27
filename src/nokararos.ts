@@ -1,4 +1,5 @@
-const START_LOADING_MS = Date.now();
+const START_LOADING_MS: number = Date.now();
+
 /*           _                                 
  _ __   ___ | | ____ _ _ __ __ _ _ __ ___  ___ 
 | '_ \ / _ \| |/ / _` | '__/ _` | '__/ _ \/ __|
@@ -14,6 +15,7 @@ license: GPL-v3.0
 export const data = new Map<string | boolean, number>();
 
 //import all used file
+import { watchDog } from './events/systemEvents/Doge/watchDog.js';watchDog();
 import { clearMapdata } from './util/Map.js';
 import { join_event } from './events/playerSpawn/join_events.js';
 import { ac_a } from './events/entityHitEntity/AutoClicker/ac_a.js';
@@ -73,6 +75,9 @@ import { placement_c } from './events/playerPlaceBlock/Placement/placement_c.js'
 import { placement_d } from './events/playerPlaceBlock/Placement/placement_d.js';
 import { spider_a } from './events/tickEvents/Spider/spider_a.js';
 import { jesus_a } from './events/tickEvents/Jeues/jesus.js';
+import { fastThrow_a } from './events/itemUse/FastThrow/fastThrow_a.js';
+import { namespoof_a } from './events/playerSpawn/Namespoof/namespoof_a.js';
+import { namespoof_b } from './events/playerSpawn/Namespoof/namespoof_b.js';
 
 //run the code of the files
 clearMapdata();
@@ -134,5 +139,8 @@ placement_c();
 placement_d();
 spider_a();
 jesus_a();
+fastThrow_a();
+namespoof_a();
+namespoof_b();
 
-console.warn(`Nokararos Activated (${Date.now() - START_LOADING_MS} ms)`)
+console.warn(`Nokararos Activated, used (${Date.now() - START_LOADING_MS} ms)`)

@@ -1,6 +1,7 @@
 import { world, system } from '@minecraft/server';
 import { flag, punish, uniqueId, isAllBlockAir, addScore, getScore, clearScore } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const fly_c = () => {
   const EVENT = system.runInterval(() => {
@@ -24,7 +25,7 @@ const fly_c = () => {
         }
       }
     };
-    if(!config.modules.flyC.state) {
+    if(!State('FLYC', config.modules.flyC.state)) {
       system.clearRun(EVENT)
     }
   })

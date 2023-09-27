@@ -1,6 +1,7 @@
 import { Block, BlockSignComponent, Player, world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, uniqueId, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const placement_b = () => {
   const EVENT = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -15,7 +16,7 @@ const placement_b = () => {
       punish(player, 'Placement/B', config.modules.placementB.punishment)
     }
   });
-  if(!config.modules.placementB.state) {
+  if(!State('PLACEMENTB', config.modules.placementB.state)) {
     world.beforeEvents.playerPlaceBlock.unsubscribe(EVENT);
   };
 };

@@ -1,6 +1,7 @@
 import { world, system } from '@minecraft/server';
 import { addScore, clearScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const invaildSprint_b = () => {
   const EVENT = system.runInterval(() => {
@@ -20,7 +21,7 @@ const invaildSprint_b = () => {
         }, 1)
       }
     };
-    if(!config.modules.invaildSprintB.state) {
+    if(!State('INVAILDSPRINT', config.modules.invaildSprintB.state)) {
       system.clearRun(EVENT)
     }
   })

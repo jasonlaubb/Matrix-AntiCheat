@@ -1,6 +1,7 @@
 import { world, Player, system } from '@minecraft/server';
 import { addScore, flag, getScore, punish } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const playerClickData = new Map<string, any>();
 
@@ -40,7 +41,7 @@ const ac_b = () => {
     if (!(damagingEntity instanceof Player) || damagingEntity.hasTag("admin")) return;
     detectAutoClicker(damagingEntity);
   });
-  if(!config.modules.autoclickerA.state) {
+  if(!State('ACB', config.modules.autoclickerA.state)) {
     playerClickData.clear();
     world.afterEvents.entityHitBlock.unsubscribe(EVENT)
   }

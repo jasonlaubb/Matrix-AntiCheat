@@ -1,6 +1,7 @@
 import { world, system, Player, Block } from "@minecraft/server";
 import config from "../../../data/config.js";
 import { addScore, clearScore, flag, getGamemode, getScore, punish, uniqueId } from "../../../util/World.js";
+import { State } from '../../../util/Toggle.js';
 
 const lastBlockPlace = new Map<string, number>();
 
@@ -30,7 +31,7 @@ const scaffold_d = () => {
       }
     }
   });
-  if(!config.modules.scaffoldD.state) {
+  if(!State('SCAFFOLDD', config.modules.scaffoldD.state)) {
     world.beforeEvents.playerPlaceBlock.unsubscribe(EVENT1);
     lastBlockPlace.clear()
   }

@@ -1,6 +1,7 @@
 import { world, system } from '@minecraft/server';
 import { flag, punish, uniqueId, getGamemode } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const fly_a = () => {
   const EVENT = system.runInterval(() => {
@@ -12,7 +13,7 @@ const fly_a = () => {
         punish(player, 'fly/A', config.modules.flyA.punishment)
       }
     };
-    if(!config.modules.flyA.state) {
+    if(!State('FLYA', config.modules.flyA.state)) {
       system.clearRun(EVENT)
     }
   })

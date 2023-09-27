@@ -2,6 +2,7 @@ import { Player, world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { uniqueId } from '../../../util/World.js';
 import { lastmessagesent } from '../../../util/Map.js';
+import { State } from '../../../util/Toggle.js';
 
 const spam_b = () => {
   const EVENT = world.beforeEvents.chatSend.subscribe(ev => {
@@ -18,11 +19,11 @@ const spam_b = () => {
     } else newmessage = message;
     if (lastmessagesent.get(player.id) == newmessage) {
       ev.cancel = true;
-      player.sendMessage(`§4§cN§go§ek§aa§qr§sa§tr§uo§ds§l§f |§r§7 Please don't spam message`)
+      player.sendMessage(`§dNokararos §f>§7 Please don't spam message`)
     };
   lastmessagesent.set(player.id, newmessage)
   });
-  if(!config.modules.spamB.state){
+  if(!State('SPAMB', config.modules.spamB.state)){
     world.beforeEvents.chatSend.unsubscribe(EVENT)
   }
 };

@@ -1,6 +1,7 @@
 import { Entity, Player, Vector3, world } from '@minecraft/server';
 import { addScore, flag, getGamemode, getScore, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 const reach_a = () => {
   const EVENT = world.afterEvents.entityHitEntity.subscribe(ev => {
@@ -19,7 +20,7 @@ const reach_a = () => {
       }
     }
   });
-  if (!config.modules.reachA.state) {
+  if (!State('REACHA', config.modules.reachA.state)) {
     world.afterEvents.entityHitEntity.unsubscribe(EVENT)
   }
 };

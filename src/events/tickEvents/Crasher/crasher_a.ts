@@ -1,6 +1,7 @@
 import { flag, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { world, system } from '@minecraft/server';
+import { State } from '../../../util/Toggle.js';
 
 const crasher_a = () => {
   const EVENT = system.runInterval(() => {
@@ -16,7 +17,7 @@ const crasher_a = () => {
       }
     }
   });
-  if(!config.modules.crasherB.state) {
+  if(!State('CRASHERA', config.modules.crasherB.state)) {
     system.clearRun(EVENT)
   }
 };

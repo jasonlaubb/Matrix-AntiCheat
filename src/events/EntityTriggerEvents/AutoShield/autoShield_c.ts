@@ -1,6 +1,7 @@
 import config from '../../../data/config.js';
 import { addScore, clearScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
 import { EntityEquippableComponent, EquipmentSlot, Player, world } from '@minecraft/server';
+import { State } from '../../../util/Toggle.js';
 
 const autoshield_c = () => {
   const EVENT = world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(ev => {
@@ -17,7 +18,7 @@ const autoshield_c = () => {
       }
     }
   });
-  if(!config.modules.autoshieldC.state) {
+  if(!State('AUTOSHIELDC', config.modules.autoshieldC.state)) {
     world.afterEvents.dataDrivenEntityTriggerEvent.unsubscribe(EVENT)
   }
 };

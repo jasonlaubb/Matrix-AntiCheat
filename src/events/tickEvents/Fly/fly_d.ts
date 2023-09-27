@@ -1,6 +1,7 @@
 import { world, system, Vector, Vector3, GameMode, Dimension } from "@minecraft/server";
 import config from "../../../data/config.js";
 import { addScore, clearScore, flag, getScore, punish, uniqueId } from "../../../util/World.js";
+import { State } from '../../../util/Toggle.js';
 
 const flyData = new Map();
 
@@ -58,7 +59,7 @@ const fly_d = () => {
   const EVENT2 = world.afterEvents.playerLeave.subscribe(ev => {
     flyData.delete(ev.playerId);
   });
-  if(!config.modules.flyD.state) {
+  if(!State('FLYD', config.modules.flyD.state)) {
     system.clearRun(EVENT1);
     flyData.clear();
     world.afterEvents.playerLeave.unsubscribe(EVENT2)

@@ -1,6 +1,7 @@
 import { Player, world } from '@minecraft/server';
 import { addScore, clearScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
 import config from '../../../data/config.js';
+import { State } from '../../../util/Toggle.js';
 
 export const killaura_c = () => {
   const EVENT = world.afterEvents.entityHitEntity.subscribe(ev => {
@@ -16,7 +17,7 @@ export const killaura_c = () => {
       }
     }
   });
-  if(!config.modules.killauraC.state) {
+  if(!State('KILLAURAC', config.modules.killauraC.state)) {
     world.afterEvents.entityHitEntity.unsubscribe(EVENT)
   }
 }

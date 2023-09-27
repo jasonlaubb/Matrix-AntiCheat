@@ -1,6 +1,7 @@
 import { world, system, GameMode } from "@minecraft/server";
 import config from "../../../data/config.js";
 import { addScore, clearScore, flag, getScore, punish, uniqueId } from "../../../util/World.js";
+import { State } from '../../../util/Toggle.js';
 
 const LocationData = new Map();
 const DeffData = new Map();
@@ -36,7 +37,7 @@ const spider_a = () => {
     LocationData.delete(ev.playerId);
   });
 
-  if (!config.modules.spiderA.state) {
+  if (!State('SPIDERA', config.modules.spiderA.state)) {
     LocationData.clear();
     DeffData.clear();
     system.clearRun(EVENT1);

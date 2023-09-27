@@ -1,6 +1,7 @@
 import { world, system, GameMode } from "@minecraft/server";
 import config from "../../../data/config.js";
 import { addScore, clearScore, flag, getScore, punish, uniqueId } from "../../../util/World.js";
+import { State } from '../../../util/Toggle.js';
 
 const speedData = new Map<string, any>();
 
@@ -38,7 +39,7 @@ const speed_a = () => {
     speedData.delete(ev.playerId);
   });
 
-  if(!config.modules.speedA.state) {
+  if(!State('SPEEDA', config.modules.speedA.state)) {
     speedData.clear();
     system.clearRun(EVENT1);
     world.afterEvents.playerLeave.unsubscribe(EVENT2)

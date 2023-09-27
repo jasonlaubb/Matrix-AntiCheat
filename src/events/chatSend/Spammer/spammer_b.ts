@@ -1,6 +1,7 @@
 import { Player, world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { uniqueId, addScore, clearScore, getScore, flag, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const spammer_b = () => {
   const EVENT = world.beforeEvents.chatSend.subscribe(ev => {
@@ -16,7 +17,7 @@ const spammer_b = () => {
       }
     }
   });
-  if(!config.modules.spammerB.state){
+  if(!State('SPAMMERB', config.modules.spammerB.state)){
     world.beforeEvents.chatSend.unsubscribe(EVENT)
   }
 };

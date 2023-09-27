@@ -1,6 +1,7 @@
 import { Block, Player, world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, getScore, addScore, clearScore, uniqueId, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const scaffold_b = () => {
     const EVENT = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -18,7 +19,7 @@ const scaffold_b = () => {
         }
       }
     });
-    if(!config.modules.scaffoldB.state) {
+    if(!State('SCAFFOLDB', config.modules.scaffoldB.state)) {
       world.beforeEvents.playerPlaceBlock.unsubscribe(EVENT);
     };
   };

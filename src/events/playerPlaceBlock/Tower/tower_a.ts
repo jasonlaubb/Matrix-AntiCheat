@@ -1,6 +1,7 @@
 import { Block, Player, world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, getScore, addScore, uniqueId, getGamemode, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const tower_a = () => {
   const EVENT = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -20,7 +21,7 @@ const tower_a = () => {
       }
     }
   });
-  if(!config.modules.towerA.state) {
+  if(!State('TOWERA', config.modules.towerA.state)) {
     world.beforeEvents.playerPlaceBlock.unsubscribe(EVENT);
   };
 };

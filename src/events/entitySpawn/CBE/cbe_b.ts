@@ -1,6 +1,7 @@
 import { world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { getClosestPlayer, stop, tempkick } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const cbe_b = () => {
   const EVENT = world.afterEvents.entitySpawn.subscribe(ev => {
@@ -11,7 +12,7 @@ const cbe_b = () => {
     entity.kill();
     if(config.modules.cbeB.tempkickNearest) tempkick(player)
   });
-  if(!config.modules.cbeB.state) {
+  if(!State('CBEB', config.modules.cbeB.state)) {
     world.afterEvents.entitySpawn.unsubscribe(EVENT);
   }
 };

@@ -1,6 +1,7 @@
 import { Block, Player, Vector3, world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, getScore, addScore, clearScore, uniqueId, revertBlock, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const surround_a = () => {
   const EVENT = world.beforeEvents.playerBreakBlock.subscribe(ev => {
@@ -22,7 +23,7 @@ const surround_a = () => {
       }
     }
   });
-  if(!config.modules.surroundA.state) {
+  if(!State('SURROUNDA', config.modules.surroundA.state)) {
     world.beforeEvents.playerBreakBlock.unsubscribe(EVENT);
   };
 };

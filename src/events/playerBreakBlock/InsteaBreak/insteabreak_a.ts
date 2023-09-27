@@ -1,6 +1,7 @@
 import { world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { flag, uniqueId, getGamemode, punish } from '../../../util/World.js';
+import { State } from '../../../util/Toggle.js';
 
 const insteabreak_a = () => {
   const EVENT = world.beforeEvents.playerBreakBlock.subscribe(ev => {
@@ -13,7 +14,7 @@ const insteabreak_a = () => {
       punish(player, 'InsteaBreak/A', config.modules.insteabreakA.punishment);
     }
   });
-  if(!config.modules.insteabreakA.state) {
+  if(!State('INSTEABREAKA', config.modules.insteabreakA.state)) {
     world.beforeEvents.playerBreakBlock.unsubscribe(EVENT);
   };
 };
