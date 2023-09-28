@@ -1,5 +1,6 @@
-import { Player, world } from '@minecraft/server'
-import * as es from '../node_modules/crypto-es/lib/index.js';
+import { Player } from '@minecraft/server'
+
+import { GobalData, changeValue } from './DataBase.js';
 
 //import all modules to restart them when need change
 import { ac_a } from '../events/entityHitEntity/AutoClicker/ac_a.js';
@@ -66,7 +67,7 @@ import { namespoof_a } from '../events/playerSpawn/Namespoof/namespoof_a.js';
 import { namespoof_b } from '../events/playerSpawn/Namespoof/namespoof_b.js';
 
 export function State (module: string, data: boolean) {
-  if(world.scoreboard.getObjective('anticheat:toggle-data').hasParticipant((es.default.SHA256(module)) as unknown as string)) {
+  if(!GobalData.get('Data').toggle.includes(module)) {
     return data
   } else {
     return !data
@@ -75,11 +76,14 @@ export function State (module: string, data: boolean) {
 
 export function changeData (module: string, player?: Player) {
   const string = module.replace('_','').toUpperCase().replace('AUTOCLICKER','AC').replace('KNOCKBACK','KB');
-  if(world.scoreboard.getObjective('anticheat:toggle-data').hasParticipant((es.default.SHA256(string)) as unknown as string)) {
-    world.scoreboard.getObjective('anticheat:toggle-data').removeParticipant((es.default.SHA256(string)) as unknown as string)
+  if (GobalData.get('Data').toggle.includes(module)) {
+    const data = GobalData.get('Data');
+    data.toggle = data.toggle.replace(module, '');
+    changeValue(data);
   } else {
-    const random = Math.random().toFixed(6).replace('.','') as unknown as number;
-    world.scoreboard.getObjective('anticheat:toggle-data').setScore((es.default.SHA256(module)) as unknown as string, random)
+    const data = GobalData.get('Data');
+    data.toggle = data.toggle + module;
+    changeValue(data);
   };
   if(!restart(string)) {
     if(player !== undefined) {
@@ -87,7 +91,9 @@ export function changeData (module: string, player?: Player) {
     } else {
       console.warn(`Failed to toggle module: ${module}`)
     };
-    world.scoreboard.getObjective('anticheat:toggle-data').removeParticipant((es.default.SHA256(string)) as unknown as string);
+    const data = GobalData.get('Data');
+    data.toggle = data.toggle.replace(module, '');
+    changeValue(data);
     return
   }
 };
