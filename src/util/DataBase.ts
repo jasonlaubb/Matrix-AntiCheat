@@ -8,7 +8,7 @@ import version from '../version.js';
 
 const defaultValue = { config: config, toggle: '', version: version }
 
-const WorldOn = () => {
+export const WorldOn = () => {
   let inputValue = '';
   const AllThings = world.scoreboard.getObjectives().filter(scoreboard => scoreboard.displayName.startsWith('NokararosData--'));
   world.afterEvents.worldInitialize.subscribe(ev => {
