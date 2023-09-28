@@ -15,6 +15,8 @@ license: GPL-v3.0
 export const data = new Map<string | boolean, number>();
 
 //import all used file
+import { WorldOn } from './util/DataBase.js';WorldOn();
+
 import { watchDog } from './events/systemEvents/Doge/watchDog.js';watchDog();
 import { clearMapdata } from './util/Map.js';
 import { join_event } from './events/playerSpawn/join_events.js';
