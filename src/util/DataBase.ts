@@ -3,7 +3,7 @@ export const GobalData = new Map<string, any>();
 const RealName = new Map<string, string>();
 
 import { world } from '@minecraft/server';
-import config from '../data/config.js';
+import config from '../data/default-config.js';
 import version from '../version.js';
 
 const defaultValue = { config: config, toggle: '', version: version }
