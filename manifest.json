@@ -1,33 +1,40 @@
 {
-	"format_version": 2,
-	"header": {
-		"name": "§dNokararos Anti Cheat V1.0.0-preview",
-		"description": "§7This anti cheat made by §ejasonlaubb\n§7The best Anti Cheat for mcpe\n§7Require §eHoilday Creator §7&§eBeta-API",
-		"uuid": "0688af83-b934-45b4-8172-20c63c85ed60",
-		"version": [ 1, 0, 0 ],
-		"min_engine_version": [ 1, 20, 0 ]
-	},
-	"modules": [
-		{
-			"type": "data",
-			"uuid": "be727431-5074-4811-a656-654ddf18d3a9",
-			"version": [ 1, 0, 0 ]
-		},
-		{
-			"type": "script",
-			"language": "javascript",
-			"entry": "scripts/nokararos.js",
-			"uuid": "85be76c1-40f1-42b3-876d-c38178a13ed0"
-		}
-	],
-	"metadata": {
-		"authors": "jasonlaubb",
-		"url": "https://github.com/jasonlaubb/Nokararos"
-	},
-	"dependencies": [
-		{
-			"module_name": "@minecraft/server",
-			"version": "1.6.0-beta"
-		}
-	]
+    "format_version": 2,
+    "header": {
+        "name": "Nokararos AntiCheat v1.0.0-alpha",
+        "description": "The best anticheat for minecraft bedrock",
+        "uuid": "ae4f2f22-c80b-4229-8d9d-e78f1be312d0",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 20, 30]
+    },
+    "metadata": {
+        "authors": ["jasonlaubb, Hutao999999, ravriv"],
+        "license": "GPLv3",
+        "url": "https://github.com/jasonlaubb/Nokararos-AntiCheat"
+    },
+    "modules": [
+        {
+            "type": "data",
+            "uuid": "69722624-bde7-46de-8752-51bd0d039c00",
+            "version": [1, 0, 0]
+        },
+        {
+            "description": "Gametest Features",
+            "language": "javascript",
+            "type": "script",
+            "uuid": "a1c99804-90f4-45a8-bb50-1f49d8880ccb",
+            "version": [0, 0, 1],
+            "entry": "scripts/nokararos.js"
+        }
+    ],
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "1.6.0-beta"
+        },
+        {
+            "module_name": "@minecraft/server-ui",
+            "version": "1.2.0-beta"
+        }
+    ]
 }
