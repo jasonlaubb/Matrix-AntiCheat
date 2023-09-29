@@ -15,9 +15,9 @@ license: GPL-v3.0
 export const data = new Map<string | boolean, number>();
 
 //import all used file
-import { WorldOn } from './util/DataBase.js';WorldOn();
 
-import { watchDog } from './events/systemEvents/Doge/watchDog.js';watchDog();
+import { registData } from './events/worldInitialize/register.js';
+import { watchDog } from './events/systemEvents/Doge/watchDog.js';
 import { clearMapdata } from './util/Map.js';
 import { join_event } from './events/playerSpawn/join_events.js';
 import { ac_a } from './events/entityHitEntity/AutoClicker/ac_a.js';
@@ -82,6 +82,8 @@ import { namespoof_a } from './events/playerSpawn/Namespoof/namespoof_a.js';
 import { namespoof_b } from './events/playerSpawn/Namespoof/namespoof_b.js';
 
 //run the code of the files
+watchDog();
+registData();
 clearMapdata();
 join_event();
 knockback_a();

@@ -1,6 +1,6 @@
 import { Player } from '@minecraft/server'
 
-import { GobalData, changeValue } from './DataBase.js';
+import { GobalData, changeData as changeValue } from './DataBase.js';
 
 //import all modules to restart them when need change
 import { ac_a } from '../events/entityHitEntity/AutoClicker/ac_a.js';
@@ -67,7 +67,7 @@ import { namespoof_a } from '../events/playerSpawn/Namespoof/namespoof_a.js';
 import { namespoof_b } from '../events/playerSpawn/Namespoof/namespoof_b.js';
 
 export function State (module: string, data: boolean) {
-  if(!GobalData.get('Data').toggle.includes(module)) {
+  if(!String(GobalData.get('toggle')).includes(module)) {
     return data
   } else {
     return !data
@@ -76,14 +76,12 @@ export function State (module: string, data: boolean) {
 
 export function changeData (module: string, player?: Player) {
   const string = module.replace('_','').toUpperCase().replace('AUTOCLICKER','AC').replace('KNOCKBACK','KB');
-  if (GobalData.get('Data').toggle.includes(module)) {
-    const data = GobalData.get('Data');
-    data.toggle = data.toggle.replace(module, '');
-    changeValue(data);
+  const data = String(GobalData.get('Data'));
+  if (String(GobalData.get('toggle')).includes(module)) {
+    const data = String(GobalData.get('toggle'));
+    changeValue('toggle', data.replace(module, ''))
   } else {
-    const data = GobalData.get('Data');
-    data.toggle = data.toggle + module;
-    changeValue(data);
+    changeValue('toggle', data + module);
   };
   if(!restart(string)) {
     if(player !== undefined) {
@@ -91,9 +89,7 @@ export function changeData (module: string, player?: Player) {
     } else {
       console.warn(`Failed to toggle module: ${module}`)
     };
-    const data = GobalData.get('Data');
-    data.toggle = data.toggle.replace(module, '');
-    changeValue(data);
+    changeValue('toggle', data.replace(module, ''));
     return
   }
 };
