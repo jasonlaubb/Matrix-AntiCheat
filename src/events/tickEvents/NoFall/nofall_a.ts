@@ -1,11 +1,11 @@
 import { addScore, getScore, flag, clearScore, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { world, system } from '@minecraft/server';
-import { lastfallingspeed } from '../../../util/Map.js';
 import { State } from '../../../util/Toggle.js';
 
+const lastfallingspeed = new Map<string, number>();
 export const nofall_a = () => {
-  const EVENT = system.runInterval(() => {
+  const EVENT1 = system.runInterval(() => {
     for(const player of world.getPlayers()){
       if(uniqueId(player)) continue;
       if(lastfallingspeed.get(player.id) == undefined) lastfallingspeed.set(player.id, 0);
@@ -21,7 +21,12 @@ export const nofall_a = () => {
     lastfallingspeed.set(player.id, player.getVelocity().y);
     }
   });
+  const EVENT2 = world.afterEvents.playerLeave.subscribe(ev => {
+    lastfallingspeed.delete(ev.playerId);
+  });
   if(!State('NOFALLA', config.modules.nofallA.state)) {
-    system.clearRun(EVENT)
+    system.clearRun(EVENT1);
+    world.afterEvents.playerLeave.unsubscribe(EVENT2);
+    lastfallingspeed.clear()
   }
 }

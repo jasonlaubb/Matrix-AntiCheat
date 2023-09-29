@@ -13,7 +13,7 @@ const scaffold_c = () => {
         ev.cancel = true;
         addScore(player, 'anticheat:scaffoldCVl', 1);
         flag(player, 'scaffold/C', getScore(player, 'anticheat:scaffoldCVl'));
-        if(getScore(player, 'anticheat:scaffoldCVl') < config.modules.scaffoldC.VL) {
+        if(getScore(player, 'anticheat:scaffoldCVl') > config.modules.scaffoldC.VL) {
           clearScore(player, 'anticheat:scaffoldCVl');
           punish(player, 'scaffold/C', config.modules.scaffoldC.punishment)
         }

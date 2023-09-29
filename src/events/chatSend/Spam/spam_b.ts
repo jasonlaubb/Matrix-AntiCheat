@@ -1,11 +1,12 @@
 import { Player, world } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { uniqueId } from '../../../util/World.js';
-import { lastmessagesent } from '../../../util/Map.js';
 import { State } from '../../../util/Toggle.js';
 
+const lastmessagesent = new Map<string, string>();
+
 const spam_b = () => {
-  const EVENT = world.beforeEvents.chatSend.subscribe(ev => {
+  const EVENT1 = world.beforeEvents.chatSend.subscribe(ev => {
     const player: Player = ev.sender;
     if(uniqueId(player)) return;
     const message: string = ev.message;
@@ -23,8 +24,13 @@ const spam_b = () => {
     };
   lastmessagesent.set(player.id, newmessage)
   });
+  const EVENT2 = world.afterEvents.playerLeave.subscribe(ev => {
+    lastmessagesent.delete(ev.playerId)
+  })
   if(!State('SPAMB', config.modules.spamB.state)){
-    world.beforeEvents.chatSend.unsubscribe(EVENT)
+    world.beforeEvents.chatSend.unsubscribe(EVENT1);
+    world.afterEvents.playerLeave.unsubscribe(EVENT2);
+    lastmessagesent.clear();
   }
 };
 

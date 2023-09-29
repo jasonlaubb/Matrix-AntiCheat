@@ -1,11 +1,11 @@
 import { addScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { world, system, Vector2 } from '@minecraft/server';
-import { lastRotationDeff as lr } from '../../../util/Map.js';
 import { State } from '../../../util/Toggle.js';
 
+const lr = new Map<string, Vector2>();
 const aimbot_a = () => {
-  const EVENT = system.runInterval(() => {
+  const EVENT1 = system.runInterval(() => {
     for(const player of world.getPlayers()){
       if(uniqueId(player)) continue;
       const lastRotationDeff = lr.get(player.id)
@@ -25,8 +25,13 @@ const aimbot_a = () => {
       lr.set(player.id, { x: player.getRotation().x, y: player.getRotation().y })
     }
   });
+  const EVENT2 = world.afterEvents.playerLeave.subscribe(ev => {
+    lr.delete(ev.playerId)
+  });
   if(!State('AIMBOTA', config.modules.aimbotA.state)) {
-    system.clearRun(EVENT)
+    system.clearRun(EVENT1);
+    world.afterEvents.playerLeave.unsubscribe(EVENT2);
+    lr.clear()
   }
 };
 

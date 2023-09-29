@@ -1,14 +1,4 @@
 export default [
-  [
-    'lastMessageSendTime',
-    'lastmessagesent',
-    'lastThrowTime',
-    'lastRotationDeff',
-    'lastfallingspeed',
-    'playerLastPositions',
-    'lastAttackVector2Angle',
-    'lastAttackDelayCombo'
-  ],
   "anticheat:blockbreak",
   "anticheat:ReachAVl",
   "anticheat:reachBVl",
@@ -44,6 +34,7 @@ export default [
   "anticheat:autototemCVl",
   "anticheat:fastThrowAVl",
   "anticheat:aimbotAVl",
+  "anticheat:aimbotBVl",
   "anticheat:flyBVl",
   "anticheat:flyCVl",
   "anticheat:flyDVl",

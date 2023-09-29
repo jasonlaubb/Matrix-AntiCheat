@@ -350,6 +350,12 @@ export default {
       "punishment": 'default',
       "VL": 3
     },
+    "aimbotB": {
+      "state": true,
+      "punishment": 'default',
+      "VL": 1,
+      "buffer": 3
+    },
     "towerA": {
       "state": true,
       "punishment": 'default',
