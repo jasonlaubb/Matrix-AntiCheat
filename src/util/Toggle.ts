@@ -40,6 +40,7 @@ import { crasher_b } from '../events/entityHitEntity/Crasher/crasher_b.js';
 import { crasher_c } from '../events/entitySpawn/Crasher/crasher_c.js';
 import { items } from '../events/tickEvents/Items/items.js';
 import { aimbot_a } from '../events/tickEvents/AimBot/aimbot_a.js';
+import { aimbot_b } from '../events/tickEvents/AimBot/aimbot_b.js';
 import { fly_a } from '../events/tickEvents/Fly/fly_a.js';
 import { fly_b } from '../events/tickEvents/Fly/fly_b.js';
 import { fly_c } from '../events/tickEvents/Fly/fly_c.js';
@@ -255,6 +256,10 @@ function restart (module: string) {
     case "BADENCHANTB": {break};
     case "AIMBOTA": {
       aimbot_a();
+      break
+    };
+    case "AIMBOTB": {
+      aimbot_b();
       break
     };
     case "FLYA": {
