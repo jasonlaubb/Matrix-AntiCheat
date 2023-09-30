@@ -3,13 +3,15 @@ import { Player, world } from '@minecraft/server';
 import maps from '../data/maplist.js';
 
 const clearMapdata = () => {
+  for(const player of world.getAllPlayers()) {
+    for(const map of maps) {
+      data.set(`${map},${player.id}`)
+    }
+  };
   world.afterEvents.playerSpawn.subscribe(ev => {
     if(!ev.initialSpawn) return;
     const player: Player = ev.player;
     for(const map of maps) {
-      if(maps.join().includes(String(map))) {
-        data.delete(`${map},${player}`);
-      };
       data.set(`${map},${player.id}`, 0)
     }
   });
@@ -19,14 +21,6 @@ const clearMapdata = () => {
       data.delete(`${map},${player}`)
     }
   });
-  try {
-    for(const player of world.getAllPlayers()) {
-      for(const map of maps) {
-        if(data.get(`${map},${player}` == undefined)) continue;
-        data.delete(`${map},${player}`)
-      }
-    }
-  } catch { }
 };
 
 export { clearMapdata }
