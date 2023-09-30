@@ -9,7 +9,6 @@ const clearMapdata = () => {
     for(const map of maps) {
       if(maps.join().includes(String(map))) {
         data.delete(`${map},${player}`);
-        continue
       };
       data.set(`${map},${player.id}`, 0)
     }
