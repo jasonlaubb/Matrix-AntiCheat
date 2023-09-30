@@ -34,6 +34,8 @@ Download the latest release to use (.mcpack), not source code
 
   ## Special Thanks / Credit
 
-4ruxa visual1mpact
+4ruxa visual1mpact MrDiamond64
+
+These all are good people!
 
 </div>
