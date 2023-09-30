@@ -16,7 +16,7 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 
 Support Minecraft version: 1.20.30+
 
-Made by: jasonlaubb
+This AntiCheat is made by jasonlaubb mainly
 
   ## Detecting Cheat
 
