@@ -8,8 +8,9 @@ const scaffold_a = () => {
       const player: Player = ev.player;
       if(uniqueId(player)) return;
       const block: Block = ev.block;
-      const block2: Block = player.dimension.getBlock({ x: Math.trunc(player.location.x), y: Math.trunc(player.location.y) - 1, z: Math.trunc(player.location.z)});
-      if (player.getBlockFromViewDirection().block !== block && block == block2) {
+      const block2: Block = player.dimension.getBlock({ x: Math.trunc(player.location.x), y: Math.trunc(player.location.y) - 1, z: Math.trunc(player.location.z) });
+      const blockFromViewDirection = player.getBlockFromViewDirection();
+      if (blockFromViewDirection.block !== block && block == block2) {
         ev.cancel = true;
         clearScore(player, 'anticheat:scaffoldAWarn');
         addScore(player, 'anticheat:scaffoldAVl', 1);

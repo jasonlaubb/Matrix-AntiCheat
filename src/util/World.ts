@@ -2,10 +2,13 @@ import { world, system, Player, GameMode, Vector3, Block, Entity } from '@minecr
 import { data } from '../nokararos.js';
 import { ActiveTempkick } from './action/tempkick.js';
 import { Activekick } from './action/kick.js';
+import { doBanOn } from './action/ban.js';
+import config from '../data/default-config.js';
 
 export function tempkick (player: Player) {};
 
 export function flag (player: Player, modules: string, VL: number, Info?: Array<string>) {
+  if(!config.system.notify.onFlag) return;
   if(Info == undefined) {
     world.sendMessage(`§dNokararos §f> §e${player.name} §7has failed §c${modules} §6VL=${VL}`);
   } else {
@@ -15,19 +18,21 @@ export function flag (player: Player, modules: string, VL: number, Info?: Array<
 
 export function punish (player: Player, modules: string, punishment: string) {
   system.run(() => {
-    world.sendMessage(`§dNokararos §f> §e${player.name} §7is punished §9(${modules})`);
+    if(config.system.notify.onPunishment) world.sendMessage(`§dNokararos §f> §e${player.name} §7is punished since §9(${modules})`);
     if(punishment == 'none') return;
-    if(punishment == 'tempkick') return ActiveTempkick(player)
-    if(punishment == 'kick') return Activekick(player)
+    if(punishment == 'tempkick') return ActiveTempkick(player);
+    if(punishment == 'kick') return Activekick(player);
+    if(punishment == 'ban') return doBanOn(player, config.system.punishment.ban.defaultTime, config.system.punishment.ban.Reason, config.system.punishment.ban.BanBy);
+    console.warn(`undefined punishment: ${punishment} in ${modules} to ${player.name}`)
   })
 };
 
 export function stop (modules: string, type: string, value: string) {
-  world.sendMessage(`§dNokararos §f> §eWorld §7has stopped §c${modules} §8(${type}=${value})`)
+  if(config.system.notify.onStop) world.sendMessage(`§dNokararos §f> §eWorld §7has stopped §c${modules} §8(${type}=${value})`)
 };
 
 export function uniqueId (player: Player) {
-  if(player.isOp()) {
+  if(player.hasTag('admin')) {
     return true;
   } else return false;
 };
@@ -119,4 +124,23 @@ export function getClosestPlayer(entity: Entity) {
   } catch {
     return undefined
   }
+};
+
+export function getTimePeriod(ms: number) {
+  return {
+    days: Math.floor(ms / 86400000),
+    hours: Math.floor((ms % 86400000) / 3600000),
+    minutes: Math.floor((ms % 3600000) / 60000),
+    seconds: Math.floor((ms % 6000) / 1000)
+  };
+};
+
+export function newRandom(length: number) {
+  let index = '';
+  const strings = ("0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM").split('');
+  for(let i = 0; i < length; i++) {
+    const random = Math.trunc(Math.random() * 62);
+    index += strings[random]
+  }
+  return index
 }

@@ -5,7 +5,7 @@ import maps from '../data/maplist.js';
 const clearMapdata = () => {
   for(const player of world.getAllPlayers()) {
     for(const map of maps) {
-      data.set(`${map},${player.id}`)
+      data.set(`${map},${player.id}`, 0)
     }
   };
   world.afterEvents.playerSpawn.subscribe(ev => {

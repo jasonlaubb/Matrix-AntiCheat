@@ -3,6 +3,7 @@ import { world, DynamicPropertiesDefinition } from '@minecraft/server';
 import config from '../../data/default-config.js';
 import version from '../../version.js';
 import { definedString, GobalData } from '../../util/DataBase.js';
+import { newRandom } from '../../util/World.js';
 
 const registData = () => {
   world.afterEvents.worldInitialize.subscribe(ev => {
@@ -12,6 +13,7 @@ const registData = () => {
 
     if(!world.getDynamicProperty('nokararos->config')) world.setDynamicProperty('nokararos->config', JSON.stringify(config));
     if(!world.getDynamicProperty('nokararos->version')) world.setDynamicProperty('nokararos->version', version);
+    if(!world.getDynamicProperty('nokararos->bantoken')) world.setDynamicProperty('nokararos->bantoken', newRandom(512));
     if(world.getDynamicProperty('nokararos->version') !== version) {
       world.setDynamicProperty('nokararos->version', version);
       world.setDynamicProperty('nokararos->config', JSON.stringify(config));

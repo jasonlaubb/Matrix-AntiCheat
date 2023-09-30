@@ -1,7 +1,18 @@
 export default {
   "system": {
-    "notify": true,
-    "default": 'tempkick'
+    "notify": {
+      "onFlag": true,
+      "onPunishment": false,
+      "onStop": true,
+    },
+    "punishment": {
+      "ban": {
+        "defaultTime": 300000,
+        "BanBy": 'nokararos',
+        "Reason": 'Unfair Cheating',
+        "AppealAt": `discord.gg`
+      }
+    }
   },
   "modules": {
     "autoclickerA": {
@@ -448,6 +459,100 @@ export default {
         "minecraft:repeating_command_block",
         "minecraft:structure_block",
         "minecraft:structure_void"
+      ]
+    },
+    "insteabreakB": {
+      "state": true,
+      "punishment": 'default',
+      "minEffect": 1,
+      "minLevelOfAxe": 3,
+      "minLevelOfHoe": 2,
+      "minLevelOfPickaxe": 3,
+      "minLevelOfShovel": 2,
+      "minLevelOfCutter": 1,
+      "miscType": [
+        "_stair",
+        "_slab",
+        "_fence",
+        "_fence_gate",
+        "_door",
+        "_trapdoor",
+        "_button",
+        "_pressure_plate",
+        "_sign",
+        "_table",
+      ],
+      "woodType": [
+        "minecraft:oak",
+        "minecraft:spruce",
+        "minecraft:birch",
+        "minecraft:jungle",
+        "minecraft:dark_oak",
+        "minecraft:mangrove",
+        "minecraft:cherry",
+        "minecraft:bamboo",
+        "minecraft:bamboo_mosaic",
+        "minecraft:crimson",
+        "minecraft:warped"
+      ],
+      "breakByAxe": [
+        //minecraft: *_log *_wood
+        "minecraft:bamboo_block",
+        "minecraft:stripped_bamboo_block",
+        "minecraft:pumpkin",
+        "minecraft:carved_pumpkin",
+        "minecraft:composter",
+        "minecraft:lectern",
+        "minecraft:chest",
+        "minecraft:trapped_chest",
+        "minecraft:noteblock",
+        "minecraft:jukebox",
+        "minecraft:bee_nest",
+        "minecraft:beehive",
+        "minecraft:campfire",
+        "minecraft:soul_campfire",
+        "minecraft:bookshelf",
+        "minecraft:chiseled_bookshelf"
+      ],
+      "breakBySword": [
+        //minecraft: *_leaves
+        "minecraft:pumpkin",
+        "minecraft:carved_pumpkin",
+        "minecraft:lit_pumpkin",
+        "minecraft:melon_block",
+        "minecraft:bamboo",
+        "minecraft:cocoa",
+        "minecraft:hay_block",
+        "minecraft:web"
+      ],
+      "breakByHoe": [
+        //minecraft: *_leaves sculk_*
+        "minecraft:hay_block",
+        "minecraft:dried_kelp_block",
+        "minecraft:target",
+        "minecraft:moss_block",
+        "minecraft:nether_wart_block",
+        "minecraft:warped_wart_block"
+      ],
+      "breakByPickaxe": [
+        //minecraft: *_ore
+        "minecraft:ancient_debris",
+        "minecraft:obsidian",
+        "minecraft:end_stone",
+        "minecraft:stone",
+        "minecraft:diamond_block",
+        "minecraft:gold_block",
+        "minecraft:iron_block",
+        "minecraft:netherite_block",
+        "minecraft:coal_block",
+        "minecraft:copper_block"
+      ],
+      "breakByCutter": [
+        //*_wool
+      ],
+      "breakByShovel": [
+        "minecraft:dirt",
+        "minecraft:sand"
       ]
     },
     "knockbackA": {

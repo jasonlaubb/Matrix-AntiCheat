@@ -8,7 +8,8 @@ import version from '../version.js';
 export const definedString = [
   'nokararos->config',
   'nokararos->toggle',
-  'nokararos->version'
+  'nokararos->version',
+  'nokararos->bantoken'
 ];
 
 function changeData (data: string, value: string | boolean | number | Vector3) {
