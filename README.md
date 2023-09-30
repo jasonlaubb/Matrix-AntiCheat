@@ -8,38 +8,32 @@
   <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Commits Per Week"/>
   <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Last Commit"/>
 
-  ## Info
+  ## Information
 
 Our support discord server: [Click Here To Join](https://discord.gg/CqZGXeRKPJ)
 
 The best minecraft bedrock anti cheat that have strong protection to against hacker!
 
+Support Minecraft version: 1.20.30+
+
 Made by: jasonlaubb
 
-  ## Protection
+  ## Detecting Cheat
 
 Our Anti Cheat has strong detection to protect your server
 
-[Click here to view](https://github.com/jasonlaubb/Nokararos-AntiCheat/blob/main/Protection.md)
+At least... It is difficult to bypass
 
   ## How to use?
 
 Require Hoilday Creator Feature and Beta API to make it work!
 
-Change config in ./scripts/data/config.js
+Change default config in ./scripts/data/default-config.js
 
 Download the latest release to use (.mcpack), not source code
 
-## WARNING: This Anti Cheat is not finished
-  
-  ## About molang patched some hack
+  ## Special Thanks / Credit
 
-AntiCheat will disable some modules that Molang patched,
-
-(Some modules may not be disabled like antiCBE)
-
-if really want enabled the checks that Molang patched,
-
-go to config to change the default setting.
+4ruxa visual1mpact
 
 </div>
