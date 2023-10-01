@@ -8,6 +8,12 @@
   <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Commits Per Week"/>
   <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Last Commit"/>
 
+  ## Introduction
+
+Nokararos is an anticheat for Realm, local world and server.
+
+We provide good detection, auto punishment.
+
   ## Information
 
 Our support discord server: [Click Here To Join](https://discord.gg/CqZGXeRKPJ)
