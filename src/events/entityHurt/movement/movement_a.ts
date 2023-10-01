@@ -1,6 +1,6 @@
 import { world, Player } from '@minecraft/server';
-import { addScore, flag, getScore, punish } from '../../../util/World';
-import config from '../../../data/config.js';
+import { flag } from '../../../util/Flag.js';
+import config from '../../../data/default-config.js';
 
 const movement_a = () => {
   const EVENT = world.afterEvents.entityHurt.subscribe(ev => {
@@ -9,19 +9,17 @@ const movement_a = () => {
     let canntApply = false;
     for(let i = -1; i < 1; i++) {
       for(let i2 = -1; i2 < 1; i++) {
-        if(!player.dimension.getBlock({ x: player.location.x + i, y: player.location.y - 1, z: player.location.z + i }).isAir()) {
+        if(!player.dimension.getBlock({ x: player.location.x + i, y: player.location.y - 1, z: player.location.z + i }).isAir ||
+        !player.dimension.getBlock({ x: player.location.x + i, y: player.location.y - 2, z: player.location.z + i }).isAir
+        ) {
           canntApply = true;
           break;
+        }
       }
       if(canntApply) break
     };
-    if (!player.isOnGround && !canntApply) {
-      
-      addScore(player, 'anticheat:movementAVl', 1);
-      flag(player, 'movement/A', getScore(player, 'anticheat:movementAVl'));
-      if (getScore(player, 'anticheat:movementAVl') > config.modules.movementA.VL) {
-        punish(player, 'movement/A', config.modules.movementA.punishment)
-      }
+    if (!player.isOnGround && (!canntApply || !player.isJumping)) {
+      flag(player, 'Movement/A', config.modules.movementA.punishment, [`applyDamage=true`])
     }
   });
   if (!config.modules.movementA.state) {

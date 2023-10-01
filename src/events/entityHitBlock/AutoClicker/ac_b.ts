@@ -1,11 +1,13 @@
 import { world, Player, system } from '@minecraft/server';
-import { addScore, flag, getScore, punish } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
+import { uniqueId } from '../../../util/World.js';
 
 const playerClickData = new Map<string, any>();
 
 const detectAutoClicker = (player: Player) => {
+    if (uniqueId(player)) return;
     const currentTime = Date.now();
     const { lastClickTime = 0, cpsHistory = [] } = playerClickData.get(player.id) ?? {};
 
@@ -25,11 +27,7 @@ const detectAutoClicker = (player: Player) => {
                 playerClickData.set(player.id, { lastClickTime: currentTime, cpsHistory: [] });
                 player.addTag('anticheat:autoclicker-off');
                 system.runTimeout(() => { player.removeTag('anticheat:autoclicker-off') }, 8)
-                addScore(player, 'anticheat:autoclickerAVL', 1)
-                flag(player, 'AutoClicker/A', getScore(player, 'anticheat:autoclickerAVL'), [`CPS=${averageCPS.toFixed(2)}`]);
-                if(getScore(player, 'anticheat:autoclickerAVL') > config.modules.autoclickerA.VL) {
-                  punish(player, 'AutoClicker/A', config.modules.autoclickerA.punishment)
-                }
+                flag(player, 'AutoClicker/B', config.modules.AutoClicker, [`cps=${averageCPS.toFixed(2)}`])
             }
         }
     }

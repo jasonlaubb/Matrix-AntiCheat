@@ -66,6 +66,9 @@ import { jesus_a } from '../events/tickEvents/Jeues/jesus.js';
 import { fastThrow_a } from '../events/itemUse/FastThrow/fastThrow_a.js';
 import { namespoof_a } from '../events/playerSpawn/Namespoof/namespoof_a.js';
 import { namespoof_b } from '../events/playerSpawn/Namespoof/namespoof_b.js';
+import { movement_a } from '../events/entityHurt/movement/movement_a.js';
+import { autotool_c } from '../events/entityHitBlock/AutoTool/autotool_c.js';
+import { autotool_b } from '../events/entityHitBlock/AutoTool/autotool_b.js';
 
 export function State (module: string, data: boolean) {
   if(!String(GobalData.get('toggle')).includes(module)) {
@@ -314,6 +317,14 @@ function restart (module: string) {
       autotool_a();
       break
     };
+    case "AUTOTOOLB": {
+      autotool_b();
+      break
+    };
+    case "AUTOTOOLC": {
+      autotool_c();
+      break
+    };
     case "INSTEABREAKA": {
       insteabreak_a();
       break
@@ -360,6 +371,10 @@ function restart (module: string) {
     };
     case "NAMESPOOFB": {
       namespoof_b();
+      break
+    };
+    case "MOVEMENTA": {
+      movement_a();
       break
     };
     default: {

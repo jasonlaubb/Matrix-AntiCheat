@@ -18,7 +18,6 @@ export const data = new Map<string | boolean, number>();
 
 import { registData } from './events/worldInitialize/register.js';
 import { watchDog } from './events/systemEvents/Doge/watchDog.js';
-import { clearMapdata } from './util/Map.js';
 import { join_event } from './events/playerSpawn/join_events.js';
 import { ac_a } from './events/entityHitEntity/AutoClicker/ac_a.js';
 import { ac_b } from './events/entityHitBlock/AutoClicker/ac_b.js';
@@ -37,6 +36,7 @@ import { scaffold_a } from './events/playerPlaceBlock/Scaffold/scaffold_a.js';
 import { scaffold_b } from './events/playerPlaceBlock/Scaffold/scaffold_b.js';
 import { scaffold_c } from './events/playerPlaceBlock/Scaffold/scaffold_c.js';
 import { scaffold_d } from './events/playerPlaceBlock/Scaffold/scaffold_d.js';
+import { movement_a } from './events/entityHurt/movement/movement_a.js';
 import { aura_a } from './events/playerPlaceBlock/Aura/aura_a.js';
 import { reach_a } from './events/entityHitEntity/Reach/reach_a.js';
 import { spam_a } from './events/chatSend/Spam/spam_a.js';
@@ -68,6 +68,8 @@ import { autoshield_c } from './events/EntityTriggerEvents/AutoShield/autoShield
 import { cbe_a } from './events/EntityTriggerEvents/CBE/cbe_a.js';
 import { cbe_b } from './events/entitySpawn/CBE/cbe_b.js';
 import { autotool_a } from './events/entityHitBlock/AutoTool/autotool_a.js';
+import { autotool_b } from './events/entityHitBlock/AutoTool/autotool_b.js';
+import { autotool_c } from './events/entityHitBlock/AutoTool/autotool_c.js';
 import { insteabreak_a } from './events/playerBreakBlock/InsteaBreak/insteabreak_a.js';
 import { hurt_event } from './events/entityHurt/hurt_event.js';
 import { knockback_a } from './events/tickEvents/KnockBack/knockback_a.js';
@@ -85,11 +87,12 @@ import { namespoof_b } from './events/playerSpawn/Namespoof/namespoof_b.js';
 //run the code of the files
 watchDog();
 registData();
-clearMapdata();
 join_event();
 knockback_a();
 insteabreak_a();
 autotool_a();
+autotool_b();
+autotool_c();
 autototem_a();
 autototem_b();
 autototem_c();
@@ -148,5 +151,6 @@ jesus_a();
 fastThrow_a();
 namespoof_a();
 namespoof_b();
+movement_a();
 
 console.warn(`Nokararos Activated, used (${Date.now() - START_LOADING_MS} ms)`)

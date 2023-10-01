@@ -1,6 +1,5 @@
 import { world, system } from '@minecraft/server';
 import config from '../../../data/config.js';
-import { stop } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
 
 const spawnData = new Map<string, number>();
@@ -17,7 +16,7 @@ const crasher_c = () => {
         kill.kill()
       };
       spawnData.delete(entity.typeId);
-      stop('Crasher/C', 'typeId', entity.typeId)
+      world.sendMessage(`§dNokararos §f> Stopped §cCrasher/C §9(typeId=${entity.typeId})`)
     }
   });
   const EVENT2 = system.runInterval(() => {

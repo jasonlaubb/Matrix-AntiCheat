@@ -1,7 +1,8 @@
 import { world } from '@minecraft/server';
 import config from '../../../data/config.js';
-import { flag, uniqueId, getGamemode, punish } from '../../../util/World.js';
+import { uniqueId, getGamemode } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const insteabreak_a = () => {
   const EVENT = world.beforeEvents.playerBreakBlock.subscribe(ev => {
@@ -10,8 +11,7 @@ const insteabreak_a = () => {
     const block = ev.block;
     if (config.modules.insteabreakA.unbreakable.includes(block.typeId)) {
       ev.cancel = true;
-      flag(player, 'InsteaBreak/A', 0);
-      punish(player, 'InsteaBreak/A', config.modules.insteabreakA.punishment);
+      flag(player, 'InsteaBreak/A', config.modules.insteaBreakA, [`block=${block.typeId}`])
     }
   });
   if(!State('INSTEABREAKA', config.modules.insteabreakA.state)) {

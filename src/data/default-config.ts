@@ -30,14 +30,19 @@ export default {
     "nukerA": {
       "state": true,
       "maxBreakInTick": 4,
+      "validTime": 1000,
       "punishment": 'default'
     },
     "cbeA": {
       "state": true,
+      "VL": undefined,
+      "punishment": undefined,
       "tempkickNearest": true
     },
     "cbeB": {
       "state": false,
+      "VL": undefined,
+      "punishment": undefined,
       "tempkickNearest": true
     },
     "speedA": {
@@ -105,6 +110,11 @@ export default {
       "maxAngle": 95,
       "VL": 0,
       "punishment": 'default'
+    },
+    "movementA": {
+      "state": true,
+      "punishment": 'default',
+      "VL": 3
     },
     "scaffoldA": {
       "state": true,
@@ -211,11 +221,13 @@ export default {
     },
     "crasherA": {
       "state": true,
-      "punishment": 'default'
+      "punishment": 'default',
+      "VL": undefined
     },
     "crasherB": {
       "state": true,
-      "punishment": 'default'
+      "punishment": 'default',
+      "VL": undefined
     },
     "crasherC": {
       "state": true,
@@ -228,6 +240,7 @@ export default {
       "illegalItemA": {
         "state": true,
         "punishment": 'default',
+        "VL": undefined,
         "illegal": [
           "minecraft:end_gateway",
           "minecraft:bubble_column",
@@ -264,26 +277,31 @@ export default {
         "allowbucket": false,
         "bucketWhiteList": ['minecraft:water_bucket','minecraft:lava_bucket'],
         "allowbee": false,
-        "punishment": 'default'
+        "punishment": 'default',
+        "VL": undefined
       },
       "illegalItemC": {
         "state": false,
         "punishment": 'default',
-        "whiteList": ['here to add your white list']
+        "whiteList": ['here to add your white list'],
+        "VL": undefined
       },
       "illegalItemD": {
         "state": false,
         "punishment": 'default',
-        "maxLoreLength": 0
+        "maxLoreLength": 0,
+        "VL": undefined
       },
       "illegalItemE": {
         "state": false,
         "punishment": 'default',
-        "removetag": false
+        "removetag": false,
+        "VL": undefined
       },
       "illegalItemF": {
         "state": false,
         "punishment": 'default',
+        "VL": undefined,
         "whiteList": {
           "offhand": [
             "minecraft:totem_of_undying",
@@ -310,7 +328,8 @@ export default {
         "state": false,
         "punishment": 'default',
         "deleteName": false,
-        "maxNameLength": 31
+        "maxNameLength": 31,
+        "VL": undefined
       },
       "illegalItemH": {
         "state": false,
@@ -318,15 +337,18 @@ export default {
         "allowCanPlace": false,
         "allowCanBreak": false,
         "blockType": 0,
-        "cleartag": false
+        "cleartag": false,
+        "VL": undefined
       },
       "illegalItemI": {
         "state": false,
-        "punishment": 'default'
+        "punishment": 'default',
+        "VL": undefined
       },
       "illegalItemJ": {
         "state": false,
-        "punishment": 'default'
+        "punishment": 'default',
+        "VL": undefined
       },
       "BadEnchantA": {
         "state": false,
@@ -336,6 +358,7 @@ export default {
       "BadEnchantB": {
         "state": false,
         "punishment": 'default',
+        "VL": undefined,
         "writeList": [
           "_helmet",
           "_chestplate",
@@ -375,6 +398,7 @@ export default {
     },
     "flyA": {
       "state": false,
+      "VL": undefined,
       "punishment": 'default'
     },
     "flyB": {
@@ -396,6 +420,7 @@ export default {
     "placementA": {
       "state": false,
       "punishment": 'default',
+      "VL": undefined,
       "containerblock": [
         "minecraft:chest",
         "minecraft:trapped_chest",
@@ -408,14 +433,17 @@ export default {
     },
     "placementB": {
       "state": false,
+      "VL": undefined,
       "punishment": 'default'
     },
     "placementC": {
       "state": false,
+      "VL": undefined,
       "punishment": 'default'
     },
     "placementD": {
       "state": false,
+      "VL": undefined,
       "punishment": 'default'
     },
     "autototemA": {
@@ -461,6 +489,7 @@ export default {
         "minecraft:structure_void"
       ]
     },
+//invalid module
     "insteabreakB": {
       "state": true,
       "punishment": 'default',
@@ -562,13 +591,28 @@ export default {
       "punishment": 'default'
     },
     "namespoofA": {
-      "state": true
+      "state": true,
+      "punishment": undefined,
+      "VL": undefined
     },
     "namespoofB": {
       "state": true,
-      "strings": /[^\x00-\x7F]|[/:\\*?"<>]|^\.$|\.$/gu
+      "strings": /[^\x00-\x7F]|[/:\\*?"<>]|^\.$|\.$/gu,
+      "punishment": undefined,
+      "VL": undefined
     },
     "autotoolA": {
+      "state": true,
+      "punishment": 'default',
+      "VL": 2,
+    },
+    "autotoolB": {
+      "state": true,
+      "minBuffer": 3,
+      "punishment": 'default',
+      "VL": 2,
+    },
+    "autotoolC": {
       "state": true,
       "punishment": 'default',
       "VL": 2,

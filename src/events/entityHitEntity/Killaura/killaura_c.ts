@@ -1,7 +1,8 @@
 import { Player, world } from '@minecraft/server';
-import { addScore, clearScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 export const killaura_c = () => {
   const EVENT = world.afterEvents.entityHitEntity.subscribe(ev => {
@@ -9,12 +10,7 @@ export const killaura_c = () => {
     if(uniqueId(player) || player.typeId !== 'minecraft:player') return;
     if(player.hasTag('anticheat:hasGuiOpen')) {
       player.kill();
-      addScore(player, 'anticheat:killauraCVl', 1);
-      flag(player, 'Killaura/C', getScore(player, 'anticheat:killauraCVl'))
-      if(getScore(player, 'anticheat:killauraCVl')) {
-        clearScore(player, 'anticheat:killauraCVl');
-        punish(player, 'killaura/C', config.modules.killauraC.punishment)
-      }
+      flag(player, 'KillAura/C', config.modules.killauraC, [`hasGuiOpen=true`])
     }
   });
   if(!State('KILLAURAC', config.modules.killauraC.state)) {

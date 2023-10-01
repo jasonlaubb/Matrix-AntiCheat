@@ -1,12 +1,6 @@
-import { world, system, Player, GameMode, Vector3, Block, Entity } from '@minecraft/server';
-import { data } from '../nokararos.js';
-import { ActiveTempkick } from './action/tempkick.js';
-import { Activekick } from './action/kick.js';
-import { doBanOn } from './action/ban.js';
-import config from '../data/default-config.js';
+import { world, Player, GameMode, Vector3, Block, Entity } from '@minecraft/server';
 
-export function tempkick (player: Player) {};
-
+/*
 export function flag (player: Player, modules: string, VL: number, Info?: Array<string>) {
   if(!config.system.notify.onFlag) return;
   if(Info == undefined) {
@@ -15,38 +9,12 @@ export function flag (player: Player, modules: string, VL: number, Info?: Array<
     world.sendMessage(`§dNokararos §f> §e${player.name} §7has failed §c${modules} §6VL=${VL} §9(${Info.join(', ')})`);
   }
 };
-
-export function punish (player: Player, modules: string, punishment: string) {
-  system.run(() => {
-    if(config.system.notify.onPunishment) world.sendMessage(`§dNokararos §f> §e${player.name} §7is punished since §9(${modules})`);
-    if(punishment == 'none') return;
-    if(punishment == 'tempkick') return ActiveTempkick(player);
-    if(punishment == 'kick') return Activekick(player);
-    if(punishment == 'ban') return doBanOn(player, config.system.punishment.ban.defaultTime, config.system.punishment.ban.Reason, config.system.punishment.ban.BanBy);
-    console.warn(`undefined punishment: ${punishment} in ${modules} to ${player.name}`)
-  })
-};
-
-export function stop (modules: string, type: string, value: string) {
-  if(config.system.notify.onStop) world.sendMessage(`§dNokararos §f> §eWorld §7has stopped §c${modules} §8(${type}=${value})`)
-};
+*/
 
 export function uniqueId (player: Player) {
   if(player.hasTag('admin')) {
     return true;
   } else return false;
-};
-
-export function getScore (player: Player, scoreboard: string) {
-  return data.get(`${scoreboard},${player.id}`)
-}
-
-export function addScore (player: Player, scoreboard: string, value: number) {
-  data.set(`${scoreboard},${player.id}`, data.get(`${scoreboard},${player.id}`) + value)
-};
-
-export function clearScore (player: Player, scoreboard: string) {
-  data.set(`${scoreboard},${player.id}`, 0)
 };
 
 export function getGamemode(player: Player) {

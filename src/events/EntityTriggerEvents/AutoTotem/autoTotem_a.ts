@@ -1,7 +1,8 @@
 import config from '../../../data/config.js';
-import { addScore, clearScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { world, Player, EntityEquippableComponent, EquipmentSlot } from '@minecraft/server';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const autototem_a = () => {
   const EVENT = world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(ev => {
@@ -10,12 +11,7 @@ const autototem_a = () => {
     if((uniqueId(player)) || id !== 'anticheat:wear_totem') return;
     if(player.hasTag('anticheat:moving')) {
       (player.getComponent("equipment_inventory") as EntityEquippableComponent).setEquipment('offhand' as EquipmentSlot);
-      addScore(player, 'anticheat:autototemAVl', 1);
-      flag(player, 'AutoTotem/A', getScore(player, 'anticheat:autototemAVl'));
-      if(getScore(player, 'anticheat:autototemAVl') > config.modules.autototemA.VL) {
-        clearScore(player, 'anticheat:autototemAVl');
-        punish(player, 'AutoTotem/A', config.modules.autototemA.punishment)
-      }
+      flag(player, 'AutoTotem/A', config.modules.autototemA, [`isMoving=true`])
     }
   });
   if(!State('AUTOTOTEMA', config.modules.autototemA.state)) {

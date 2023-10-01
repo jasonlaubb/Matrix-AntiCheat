@@ -1,7 +1,8 @@
 import { Entity, Player, Vector3, world } from '@minecraft/server';
-import { addScore, flag, getGamemode, getScore, punish, uniqueId } from '../../../util/World.js';
+import { getGamemode, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const reach_a = () => {
   const EVENT = world.afterEvents.entityHitEntity.subscribe(ev => {
@@ -12,12 +13,7 @@ const reach_a = () => {
     const pos2: Vector3 = target.getHeadLocation();
     const distance: number = Number(Math.abs(Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2 + (pos1.z - pos2.z) ** 2)).toFixed(3));
     if (distance > config.modules.reachA.maxdistance) {
-      addScore(player, 'anticheat:ReachAVl', 1);
-      flag(player, 'reach/A', getScore(player, 'anticheat:ReachAVl'));
-      player.kill();
-      if (getScore(player, 'anticheat:ReachAVl') > config.modules.reachA.VL) {
-        punish(player, 'reach/A', config.modules.reachA.punishment)
-      }
+      flag(player, 'Reach/A', config.modules.reachA, [`distance=${distance}`])
     }
   });
   if (!State('REACHA', config.modules.reachA.state)) {

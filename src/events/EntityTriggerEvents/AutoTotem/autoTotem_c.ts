@@ -1,7 +1,8 @@
 import config from '../../../data/config.js';
-import { addScore, clearScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { world, Player, EntityEquippableComponent, EquipmentSlot } from '@minecraft/server';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const autototem_c = () => {
   const EVENT = world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(ev => {
@@ -10,12 +11,7 @@ const autototem_c = () => {
     if((uniqueId(player)) || id !== 'anticheat:wear_totem') return;
     if(player.hasTag('anticheat:hasGUIopen')) {
       (player.getComponent("equipment_inventory") as EntityEquippableComponent).setEquipment('offhand' as EquipmentSlot);
-      addScore(player, 'anticheat:autototemCVl', 1);
-      flag(player, 'AutoTotem/C', getScore(player, 'anticheat:autototemCVl'));
-      if(getScore(player, 'anticheat:autototemCVl') > config.modules.autototemC.VL) {
-        clearScore(player, 'anticheat:autototemCVl');
-        punish(player, 'AutoTotem/C', config.modules.autototemC.punishment)
-      }
+      flag(player, 'AutoTotem/C', config.modules.autototemC, ['hasGUIopen=true'])
     }
   });
   if(!State('AUTOTOTEMC', config.modules.autototemC.state)) {

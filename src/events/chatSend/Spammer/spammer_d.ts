@@ -1,7 +1,8 @@
 import { Player, world } from '@minecraft/server';
 import config from '../../../data/config.js';
-import { uniqueId, addScore, clearScore, getScore, flag, punish } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const spammer_d = () => {
   const EVENT = world.beforeEvents.chatSend.subscribe(ev => {
@@ -9,12 +10,7 @@ const spammer_d = () => {
     if(uniqueId(player)) return;
     if(player.hasTag('anticheat:usingItem')) {
       ev.cancel = true;
-      addScore(player, 'anticheat:spammerDVl', 1);
-      flag(player, 'spammer/D', getScore(player, 'anticheat:spammerDVl'));
-      if(getScore(player, 'anticheat:spammerDVl') > config.modules.spammerD.VL) {
-        clearScore(player, 'anticheat:spammerDVl');
-        punish(player, 'spammer/D', config.modules.spammerD.punishment)
-      }
+      flag(player, 'Spammer/D', config.modules.spammerD, ['usingItem=true'])
     }
   });
   if(!State('SPAMMERD', config.modules.spammerD.state)){

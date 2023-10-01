@@ -1,7 +1,8 @@
 import { world, system, Player } from '@minecraft/server';
 import config from '../../../data/config.js';
-import { flag, getScore, addScore, clearScore, uniqueId, punish } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const Buff = new Map<string, number>();
 
@@ -21,12 +22,7 @@ const autotool_b = () => {
         return
       };
       Buff.delete(player.id)
-      addScore(player, 'anticheat:autotoolBVl', 1);
-      flag(player, 'AutoTool/B', getScore(player, 'anticheat:autotoolBVl'));
-      if(getScore(player, 'anticheat:autotoolBVl') > config.modules.autotoolB.VL) {
-        clearScore(player, 'anticheat:autotoolBVl');
-        punish(player, 'anticheat:autotoolBVl', config.modules.autotoolB.punishment)
-      }
+      flag(player, 'AutoTool/B', config.modules.autotoolB, ['buffer=true'])
     }, 1)
   });
   const EVENT2 = world.afterEvents.playerLeave.subscribe(ev => {

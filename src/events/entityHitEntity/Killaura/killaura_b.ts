@@ -1,7 +1,8 @@
 import { Player, world } from '@minecraft/server';
-import { addScore, clearScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 export const killaura_b = () => {
   const EVENT = world.afterEvents.entityHitEntity.subscribe(ev => {
@@ -16,12 +17,7 @@ export const killaura_b = () => {
     if (angle <= -180) angle += 360;
     angle = Math.abs(angle);
     if (angle > config.modules.killauraB.maxAngle && Math.sqrt((pos1.x - pos2.x) ** 2 +(pos1.z - pos2.z) ** 2) > 2) {
-      addScore(player, 'anticheat:killauraBVl', 1);
-      flag(player, 'killaura/B', getScore(player, 'anticheat:killauraBVl'));
-      if(getScore(player, 'anticheat:killauraBVl') > config.modules.killauraB.VL) {
-        clearScore(player, 'anticheat:killauraB');
-        punish(player, 'killaura/B', config.modules.killauraB.punishment)
-      }
+      flag(player, 'KillAura/B', config.modules.killauraB, [`Angle=${angle.toFixed(3)}`])
     }
   });
   if(!State('KILLAURAB', config.modules.killauraB.state)) {

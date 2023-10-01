@@ -1,7 +1,8 @@
 import { Player, world } from '@minecraft/server';
-import { addScore, clearScore, getScore, punish, uniqueId, flag } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 export const killaura_d = () => {
   const EVENT = world.afterEvents.entityHitEntity.subscribe(ev => {
@@ -9,12 +10,7 @@ export const killaura_d = () => {
     if(uniqueId(player) || player.typeId !== 'minecraft:player') return;
     if(ev.damagingEntity.isSleeping) {
       player.kill();
-      addScore(player, 'anticheat:killauraDVl', 1);
-      flag(player, 'killaura/D', getScore(player, 'anticheat:killauraDVl'))
-      if(getScore(player, 'anticheat:killauraDVl')) {
-        clearScore(player, 'anticheat:killauraDVl');
-        punish(player, 'killaura/D', config.modules.killauraC.punishment)
-      }
+      flag(player, 'KillAura/D', config.modules.killauraD, [`isSleeping=true`])
     }
   });
   if(!State('KILLAURAD', config.modules.killauraD.state)) {

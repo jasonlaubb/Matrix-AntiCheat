@@ -1,7 +1,8 @@
 import { world, Player, EntityEquippableComponent, EquipmentSlot, ItemStack } from '@minecraft/server';
-import config from '../../../data/config.js';
-import { flag, uniqueId, punish } from '../../../util/World.js';
+import config from '../../../data/default-config.js';
+import { uniqueId } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const autotool_c = () => {
   const EVENT1 = world.afterEvents.playerBreakBlock.subscribe(ev => {
@@ -12,8 +13,7 @@ const autotool_c = () => {
     const itemStack3: ItemStack = ev.itemStackAfterBreak;
     if ((itemStack2 !== itemStack3 && itemStack3 !== undefined) || (itemStack1 !== itemStack2 && itemStack1 !== undefined) || itemStack1 !== itemStack3) {
       ev.block.setType('minecraft:air');
-      flag(player, 'autoTool/C', 0);
-      punish(player, 'autoTool/C', config.module.autotoolC.punishment)
+      flag(player, 'AutoTool/C', config.modules.autotoolC, [`selectSlot=${player.selectedSlot}`])
     }
   });
   if(!State('AUTOTOOLC', config.modules.autotoolB.state)) {
