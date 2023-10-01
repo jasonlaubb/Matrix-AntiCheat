@@ -10,7 +10,7 @@
         "moduleResolution": "node",
         "rootDir": "./src",
         "outDir": "./dist/scripts",
-        "removeComments": false,
+        "removeComments": true,
         "allowJs": true,
         "checkJs": false,
         "useDefineForClassFields": true,
