@@ -14,7 +14,7 @@ const doBanOn = (player: Player, ms?: number, reason?: string, banby?: string) =
     banby: banby ? banby : 'Unknown',
     token: GobalData.get('bantoken')
   }
-  player.addTag(`nokararosBan:§k${JSON.stringify(banInfo)}`);
+  player.runCommand(`tag @s add "nokararosBan:§k${JSON.stringify(banInfo)}"`);
   player.addTag(`anticheat:isBanned`)
 };
 
