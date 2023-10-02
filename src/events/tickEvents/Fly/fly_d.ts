@@ -1,6 +1,7 @@
 import { world, system, Vector, Vector3, GameMode, Dimension } from "@minecraft/server";
 import config from "../../../data/config.js";
-import { addScore, clearScore, flag, getScore, punish, uniqueId } from "../../../util/World.js";
+import { uniqueId } from "../../../util/World.js";
+import { flag } from "../../util/Flag.js";
 import { State } from '../../../util/Toggle.js';
 
 const flyData = new Map();
@@ -42,13 +43,7 @@ const fly_d = () => {
 
           if (horizontalVelocity.length() > 0.3) {
             player.teleport(prevLoc);
-            addScore(player, 'anticheat:flyDVl', 1)
-            flag(player, 'fly/D', getScore(player, 'anticheat:flyDVl'))
-            player.applyDamage(6);
-            if(getScore(player, 'anticheat:flyDVl') > config.modules.flyD.VL) {
-              clearScore(player, 'anticheat:flyDVl');
-              punish(player, 'fly/D', config.modules.flyD.punishment)
-            }
+            flag(player, "Fly/D", config.modules.flyD, [`hVel=${horizontalVelocity.length}`]);
           }
         }
 
