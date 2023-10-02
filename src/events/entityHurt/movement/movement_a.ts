@@ -9,8 +9,8 @@ const movement_a = () => {
     let canntApply = false;
     for(let i = -1; i < 1; i++) {
       for(let i2 = -1; i2 < 1; i++) {
-        if(!player.dimension.getBlock({ x: player.location.x + i, y: player.location.y - 1, z: player.location.z + i }).isAir ||
-        !player.dimension.getBlock({ x: player.location.x + i, y: player.location.y - 2, z: player.location.z + i }).isAir
+        if(!player.dimension.getBlock({ x: player.location.x + i, y: player.location.y - 1, z: player.location.z + i2 }).isAir ||
+        !player.dimension.getBlock({ x: player.location.x + i, y: player.location.y - 2, z: player.location.z + i2 }).isAir
         ) {
           canntApply = true;
           break;
