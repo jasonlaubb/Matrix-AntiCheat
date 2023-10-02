@@ -12,7 +12,7 @@ version: 1.0.0-alpha
 license: GPL-v3.0
 */
 
-//import all used file
+//import files
 import { registData } from './events/worldInitialize/register.js';
 import { watchDog } from './events/systemEvents/Doge/watchDog.js';
 import { join_event } from './events/playerSpawn/join_events.js';
