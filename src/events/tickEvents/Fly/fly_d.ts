@@ -1,7 +1,7 @@
 import { world, system, Vector, Vector3, GameMode, Dimension } from "@minecraft/server";
 import config from "../../../data/config.js";
 import { uniqueId } from "../../../util/World.js";
-import { flag } from "../../util/Flag.js";
+import { flag } from "../../../util/Flag.js";
 import { State } from '../../../util/Toggle.js';
 
 const flyData = new Map();
