@@ -1,7 +1,8 @@
 import { Block, Player, Vector3, world } from '@minecraft/server';
 import config from '../../../data/config.js';
-import { flag, getScore, addScore, clearScore, uniqueId, punish } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const surround_b = () => {
   const EVENT = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -15,12 +16,7 @@ const surround_b = () => {
     angle = Math.abs(angle);
     if (angle > config.modules.surroundB.maxAngle && Math.sqrt((pos1.x - pos2.x) ** 2 +(pos1.z - pos2.z) ** 2) > 2) {
       ev.cancel = true;
-      addScore(player, 'anticheat:surroundBVl', 1);
-      flag(player, 'surround/B', getScore(player, 'anticheat:surroundBVl'));
-      if(getScore(player, 'anticheat:surroundBVl') > config.modules.surroundB.VL) {
-        clearScore(player, 'anticheat:surroundB');
-        punish(player, 'surround/B', config.modules.surroundB.punishment)
-      }
+      flag(player, 'Surround/B', config.modules.surroundB, [`angle=${angle.toFixed(4)}`])
     }
   });
   if(!State('SURROUNDB', config.modules.surroundB.state)) {

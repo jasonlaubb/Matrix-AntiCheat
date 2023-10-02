@@ -1,7 +1,8 @@
-import { addScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { world, system, Vector2 } from '@minecraft/server';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const lr = new Map<string, Vector2>();
 const aimbot_a = () => {
@@ -13,11 +14,7 @@ const aimbot_a = () => {
         const locationdeff: Vector2 = { x: Math.abs(player.getRotation().x - lastRotationDeff.x), y: player.getRotation().y - lastRotationDeff.y}
         if(locationdeff.x == lastRotationDeff.x && locationdeff.x !== 0 && locationdeff.y == lastRotationDeff.y) {
           player.setRotation({ x: lastRotationDeff.x, y: lastRotationDeff.y });
-          addScore(player, 'anticheat:aimbotAVl', 1);
-          flag(player, 'aimbot/A', getScore(player, 'anticheat:aimbotAVl'));
-          if(getScore(player, 'anticheat:aimbotAVl') > config.modules.aimbotA.VL) {
-            punish(player, 'aimbot/A', config.modules.aimbotA.punishment)
-          }
+          flag(player, 'AimBot/A', config.modules.aimbotA, undefined)
         }
       } else {
         lr.set(player.id, { x: 0, y: 0 })

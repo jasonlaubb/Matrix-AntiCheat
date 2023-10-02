@@ -1,7 +1,7 @@
 import config from "../../../data/config.js";
 import { world, system, Vector2 } from '@minecraft/server';
-import { addScore, clearScore, getScore, punish, uniqueId } from "../../../util/World";
-import { flag } from "../../../util/World";
+import { uniqueId } from "../../../util/World";
+import { flag } from "../../../util/Flag.js";
 
 const PrevLocation = new Map<string, Vector2>();
 const oldDeff = new Map<string, number>();
@@ -18,14 +18,9 @@ const aimbot_b = () => {
       if ((LocationDeff.x > 2 || LocationDeff.y > 2) && Math.abs(currentDeff - OldDeff) <= 0.06 && Math.abs(currentDeff - OldDeff) >= 0) {
         const buffer = Buffer.get(player.id) || 0;
         Buffer.set(player.id, buffer + 1);
-        if (Buffer.get(player.id) > config.modules.aimbotB.buffer) {
+        if (Buffer.get(player.id) || 0 > config.modules.aimbotB.buffer) {
           Buffer.delete(player.id);
-          addScore(player, 'anticheat:aimbotBVl', 1);
-          flag(player, 'AimBot/B', getScore(player, 'anticheat:aimbotBVl'), [`deff=${Math.abs(currentDeff - OldDeff)}`]);
-          if(getScore(player, 'anticheat:aimbotBVl') > config.modules.aimbotB.VL) {
-            clearScore(player, 'anticheat:aimbotBVl');
-            punish(player, 'AimBot/B', config.modules.aimbotB.punishment)
-          }
+          flag(player, 'AimBot/B', config.modules.aimbotB, [`Deff=${currentDeff - OldDeff}`])
         }
       };
       PrevLocation.set(player.id, { x: player.getRotation().x, y: player.getRotation().y });

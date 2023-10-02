@@ -1,7 +1,9 @@
-import { Player, world } from '@minecraft/server';
-import { stop, uniqueId } from '../../../util/World.js';
+import { Player, world, system } from '@minecraft/server';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
+import { ActiveTempkick } from '../../../util/action/tempkick.js';
 
 const namespoof_b = () => {
   const EVENT = world.afterEvents.playerSpawn.subscribe(ev => {
@@ -9,12 +11,13 @@ const namespoof_b = () => {
     if(uniqueId(player) || !ev.initialSpawn) return;
     if(config.modules.namespoofB.strings.test(player.name)) {
       player.nameTag = player.name.replace(config.modules.namespoofB.strings, "");
-      stop('NameSpoof/A','playername', player.name);
-      try {
-        player.runCommand(`kick "${player.name}"`);
-      } catch (e) {
-        player.triggerEvent("anticheat:kick");
-      }
+      flag(player, 'NameSpoof/B', config.modules.namespoofB, undefined);
+      system.run(() => {
+        if (!(world.getPlayers(player)[0] === undefined)) {
+          ActiveTempkick(player);
+          //At least tempkick them
+        }
+      })
     }
   });
   if(!State('NAMESPOOFB', config.modules.namespoofB.state)) {
