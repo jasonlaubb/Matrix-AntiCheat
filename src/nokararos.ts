@@ -8,7 +8,7 @@ const START_LOADING_MS: number = Date.now();
 
 Author: Jasonlaubb
 Contributors: ravriv, hutaotangzhu
-version: 1.0.0-beta-Test
+version: 1.0.0-alpha
 license: GPL-v3.0
 */
 
