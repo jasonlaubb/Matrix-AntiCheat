@@ -1,7 +1,8 @@
 import { world, system, EntityInventoryComponent, Container, Block, Player } from '@minecraft/server';
 import config from '../../../data/config.js';
-import { flag, getScore, addScore, clearScore, uniqueId, punish } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const aura_b = () => {
   const EVENT = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -14,12 +15,7 @@ const aura_b = () => {
       if(container.getItem(player.selectedSlot).typeId == 'minecraft:flint_and_steel') {
         ev.cancel = true;
         container.setItem(player.selectedSlot);
-        addScore(player, 'anticheat:auraBVl' , 1);
-        flag(player, 'aura/B', getScore(player, 'anticheat:auraBVl'));
-        if(getScore(player, 'anticheat:auraBVl') > config.modules.auraB.VL) {
-          clearScore(player, 'anticheat:auraBVl');
-          punish(player, 'aura/B', config.modules.auraB.punishment)
-        }
+        flag(player, 'Aura/B', config.modules.auraB, undefined)
       }
     }, 1)
   });

@@ -1,39 +1,51 @@
-import { world, system, Player, Block } from "@minecraft/server";
+import { Vector3, system, world } from "@minecraft/server";
 import config from "../../../data/config.js";
-import { addScore, clearScore, flag, getGamemode, getScore, punish, uniqueId } from "../../../util/World.js";
-import { State } from '../../../util/Toggle.js';
+import { flag } from "../../../util/Flag.js";
 
-const lastBlockPlace = new Map<string, number>();
+class playerAction {
+  type: string;
+  time: number;
+  position: Vector3
+};
+
+const scaffoldData = new Map<string, Array<playerAction>>();
 
 const scaffold_d = () => {
   const EVENT1 = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
-    const player: Player = ev.player;
-    if(uniqueId(player) || player.getEffect('speed') || player.getEffect('jump_boost') || getGamemode(player) == 1) return;
-    const blockUnder: Block = player.dimension.getBlock({ x: player.location.x, y: player.location.y - 1, z: player.location.z });
-    const block: Block = ev.block;
-    if(blockUnder !== block) return;
-    if(lastBlockPlace.get(player.id) < 0 || Date.now() - lastBlockPlace.get(player.id) > 1) {
-      clearScore(player, 'anticheat:scaffoldDblockPlaced');
-      lastBlockPlace.set(player.id, Date.now() - lastBlockPlace.get(player.id));
-      return
-    };
-    addScore(player, 'anticheat:scaffoldDblockPlaced', 1);
-    system.runTimeout(() => {
-      addScore(player, 'anticheat:scaffoldDblockPlaced', -1);
-    }, 20);
-    if(getScore(player, 'anticheat:scaffoldDblockPlaced') > config.modules.scaffoldD.maxBlockBreakPerSecond) {
-      addScore(player, 'anticheat:scaffoldDVl', 1);
-      flag(player, 'Scaffold/A', getScore(player, 'anticheat:scaffoldDVl'));
-      player.teleport(player.location);
-      if(getScore(player, 'anticheat:scaffoldDVl') > config.modules.scaffoldD.VL) {
-        clearScore(player, 'anticheat:scaffoldDVl');
-        punish(player, 'Scaffold/A', config.modules.scaffoldD.punishment);
-      }
-    }
+    const block = ev.block;
+    const player = ev.player;
+
+        const { location: { x, y, z } } = block;
+        const currentTime: number = Date.now();
+        const playerAction: Array<playerAction> = scaffoldData.get(player.id) || [];
+        const timeThreshold: number = currentTime - config.modules.scaffoldD.timer;
+
+        playerAction.push({ type: 'scaffoldData', time: currentTime, position: { x, y, z } });
+        const updatedActions: Array<playerAction> = playerAction.filter(action => action.time >= timeThreshold);
+
+        scaffoldData.set(player.id, updatedActions);
+
+        if (updatedActions.length < config.modules.scaffoldD.maxBlockPlacePerSecond) return;
+
+        const [lastAction]: Array<playerAction> = updatedActions;
+        const timeDifference: number = currentTime - lastAction.time;
+        const distance: number = Math.sqrt((x - lastAction.position.x) ** 2 + (y - lastAction.position.y) ** 2 + (z - lastAction.position.z) ** 2);
+        const blocksPlacedPerSecond: number = updatedActions.length / (timeDifference / config.modules.scaffoldD.timer);
+        const averageDistance: number = distance / updatedActions.length;
+
+        if (blocksPlacedPerSecond >= config.modules.scaffoldD.maxBlockPlacePerSecond && averageDistance < 1) {
+            ev.cancel = true;
+            system.run(() => player.applyDamage(6));
+            flag(player, 'Scaffold/D', config.modules.scaffoldD as ModuleClass, [`BBPS=${blocksPlacedPerSecond}`])
+        }
   });
-  if(!State('SCAFFOLDD', config.modules.scaffoldD.state)) {
+  const EVENT2 = world.afterEvents.playerLeave.subscribe(ev => {
+    scaffoldData.delete(ev.playerId)
+  });
+
+  if (!config.modules.scaffoldD.state) {
     world.beforeEvents.playerPlaceBlock.unsubscribe(EVENT1);
-    lastBlockPlace.clear()
+    world.afterEvents.playerLeave.unsubscribe(EVENT2);
   }
 };
 

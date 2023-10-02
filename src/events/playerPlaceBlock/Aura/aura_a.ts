@@ -1,7 +1,8 @@
 import { world, system, EntityInventoryComponent, Container, Block, Player } from '@minecraft/server';
 import config from '../../../data/config.js';
-import { flag, getScore, addScore, clearScore, uniqueId, punish } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const aura_a = () => {
   const EVENT = world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -14,12 +15,7 @@ const aura_a = () => {
       if(container.getItem(player.selectedSlot).typeId == 'minecraft:ender_crystal') {
         ev.cancel = true;
         container.setItem(player.selectedSlot);
-        addScore(player, 'anticheat:auraAVl', 1);
-        flag(player, 'aura/A', getScore(player, 'anticheat:auraAVl'));
-        if(getScore(player, 'anticheat:auraAVl') > config.modules.auraA.VL) {
-          clearScore(player, 'anticheat:auraAVl');
-          punish(player, 'aura/A', config.modules.auraA.punishment)
-        }
+        flag(player, 'Aura/A', config.modules.auraA, undefined)
       }
     }, 1)
   });

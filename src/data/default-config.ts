@@ -135,7 +135,8 @@ export default {
     "scaffoldD": {
       "state": true,
       "VL": 2,
-      "maxBlockBreakPerSecond": 5,
+      "maxBlockPlacePerSecond": 5,
+      "timer": 500,
       "punishment": 'default'
     },
     "auraA": {

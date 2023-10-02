@@ -1,7 +1,8 @@
 import { Block, Vector3, world } from '@minecraft/server';
-import { addScore, flag, getGamemode, getScore, punish, revertBlock, uniqueId } from '../../../util/World.js';
+import { getGamemode, uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const reach_c = () => {
   const EVENT = world.beforeEvents.playerBreakBlock.subscribe(ev => {
@@ -12,12 +13,8 @@ const reach_c = () => {
     const pos2: Vector3 = block.location;
     const distance: number = Number(Math.abs(Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2 + (pos1.z - pos2.z) ** 2)).toFixed(3));
     if (distance > config.modules.reachB.maxdistance) {
-      addScore(player, 'anticheat:reachCVl', 1);
-      flag(player, 'reach/C', getScore(player, 'anticheat:reachCVl'));
-      revertBlock(ev.block)
-      if (getScore(player, 'anticheat:reachCVl') > config.modules.reachB.VL) {
-        punish(player, 'reach/C', config.modules.reachB.punishment)
-      }
+      flag(player, 'Reach/C', config.modules.reachC, [`distance=${distance.toFixed(4)}`]);
+      ev.cancel = true;
     }
   });
   if (!State('REACHB', config.modules.reachB.state)) {
