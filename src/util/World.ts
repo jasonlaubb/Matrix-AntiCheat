@@ -12,9 +12,11 @@ export function flag (player: Player, modules: string, VL: number, Info?: Array<
 */
 
 export function uniqueId (player: Player) {
-  if(player.hasTag('admin')) {
-    return true;
-  } else return false;
+  if (player.getDynamicProperty('nokararos->staffState') === true) {
+    return true
+  } else {
+    return false
+  }
 };
 
 export function getGamemode(player: Player) {

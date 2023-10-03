@@ -1,22 +1,18 @@
 import { world, system } from '@minecraft/server';
-import { addScore, clearScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const invaildSprint_c = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()) {
       if(uniqueId(player)) continue;
-      if(player.isGliding) {
+      if(player.isGliding && player.isSprinting) {
         system.runTimeout(() => {
           if(player.isSprinting) {
             player.teleport(player.location);
-            addScore(player, 'anticheat:invaildSprintCVl', 1);
-            flag(player, 'invaildSprint/C', getScore(player, 'anticheat:invaildSprintCVl'));
-            if(getScore(player, 'anticheat:invaildSprintCVl') > config.modules.invaildSprintC.VL) {
-              clearScore(player, 'anticheat:invaildSprintC');
-              punish(player, 'invaildSprint/C', config.modules.invaildSprintC.punishment)
-            }
+            flag(player, 'InvaildSprint/C', config.modules.invaildSprintC, [`isGliding=true`])
           }
         }, 1)
       }

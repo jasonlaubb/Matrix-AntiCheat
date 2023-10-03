@@ -1,7 +1,8 @@
 import { world, system, Vector3 } from '@minecraft/server';
-import { addScore, clearScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const lastLocation = new Map<string, Vector3>();
 
@@ -18,12 +19,7 @@ const invaildSprint_d = () => {
         system.runTimeout(() => {
           if(player.isSprinting) {
             player.teleport(player.location);
-            addScore(player, 'anticheat:invaildSprintDVl', 1);
-            flag(player, 'invaildSprint/D', getScore(player, 'anticheat:invaildSprintDVl'));
-            if(getScore(player, 'anticheat:invaildSprintDVl') > config.modules.invaildSprintD.VL) {
-              clearScore(player, 'anticheat:invaildSprintD');
-              punish(player, 'invaildSprint/D', config.modules.invaildSprintD.punishment)
-            }
+            flag(player, 'InvalidSprint/D', config.modules.invalidSprintD, [`Angle=${angle.toFixed(1)}`])
           }
         }, 1)
       };

@@ -1,8 +1,8 @@
 import { world, system, Vector, Vector3, GameMode, Dimension } from "@minecraft/server";
 import config from "../../../data/config.js";
 import { uniqueId } from "../../../util/World.js";
-import { flag } from "../../../util/Flag.js";
 import { State } from '../../../util/Toggle.js';
+import { flag } from "../../../util/Flag.js";
 
 const flyData = new Map();
 
@@ -43,7 +43,7 @@ const fly_d = () => {
 
           if (horizontalVelocity.length() > 0.3) {
             player.teleport(prevLoc);
-            flag(player, "Fly/D", config.modules.flyD, [`hVel=${horizontalVelocity.length}`]);
+            flag(player, 'Fly/D', config.modules.flyD, [`AirTime=${newAirTime}`])
           }
         }
 

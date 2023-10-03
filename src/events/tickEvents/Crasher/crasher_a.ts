@@ -7,19 +7,9 @@ import { flag } from '../../../util/Flag.js';
 const crasher_a = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()){
-      if (
-        Number.isNaN(player.location.x) ||
-        Number.isNaN(player.location.y) ||
-        Number.isNaN(player.location.z) ||
-        player.location.x > 30000000 ||
-        player.location.y > 30000000 ||
-        player.location.z > 30000000 ||
-        player.location.x < -30000000 ||
-        player.location.y < -30000000 ||
-        player.location.z < -30000000
-      ) {
+      if (isLocationValid(player.location)) {
         player.teleport({ x: 0, y: 0, z: 0});
-        flag(player, 'Crasher/A', config.modules.crasherA, undefined)
+        if (!uniqueId(player)) flag(player, 'Crasher/A', config.modules.crasherA, undefined)
       }
     }
   });
@@ -43,9 +33,9 @@ function isLocationValid (location: Vector3) {
     location.y === undefined ||
     location.z === undefined
   ) {
-    return false;
+    return true;
   } else {
-    return true
+    return false
   }
 }
 

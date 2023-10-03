@@ -1,22 +1,18 @@
 import { world, system } from '@minecraft/server';
-import { addScore, clearScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const invaildsprint_a = () => {
   const EVENT = system.runInterval(() => {
     for(const player of world.getPlayers()) {
       if(uniqueId(player)) continue
-      if(player.getEffect('blindness')) {
+      if(player.getEffect('blindness') && player.isSprinting) {
         system.runTimeout(() => {
           if(player.isSprinting) {
             player.teleport(player.location)
-            addScore(player, 'anticheat:invaildSprintAVl', 1);
-            flag(player, 'invaildSprint/A', getScore(player, 'anticheat:invaildSprintAVl'));
-            if(getScore(player, 'anticheat:invaildSprintAVl') > config.modules.invaildSprintA.VL) {
-              clearScore(player, 'anticheat:invaildSprintA');
-              punish(player, 'invaildSprint/A', config.modules.invaildSprintA.punishment)
-            }
+            flag(player, 'InvalidSprint/A', config.modules.invaildSprintA, [`blindness=true`])
           }
         }, 1)
       }

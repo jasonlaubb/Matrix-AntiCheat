@@ -1,7 +1,8 @@
 import { world, system, GameMode } from "@minecraft/server";
 import config from "../../../data/config.js";
-import { addScore, clearScore, flag, getScore, punish, uniqueId } from "../../../util/World.js";
+import { uniqueId } from "../../../util/World.js";
 import { State } from '../../../util/Toggle.js';
+import { flag } from "../../../util/Flag.js";
 
 const LocationData = new Map();
 const DeffData = new Map();
@@ -22,12 +23,7 @@ const spider_a = () => {
           if (yDeff === DeffData.get(player.id)) {
             player.teleport({ x: player.location.x, y: player.location.y - 2, z: player.location.z });
             player.applyDamage(6);
-            addScore(player, 'anticheat:spiderAVl', 1);
-            flag(player, 'Spider/A', getScore(player, 'anticheat:spiderAVl'));
-            if (getScore(player, 'anticheat:spiderAVl') > config.modules.spiderA.VL) {
-              clearScore(player, 'anticheat:spiderAVl');
-              punish(player, 'spider/A', config.modules.spiderA.punishment);
-            }
+            flag(player, 'Spider/A', config.modules.spiderA, [`Deff=${DeffData.get(player.id)}`])
           }
         }
       }

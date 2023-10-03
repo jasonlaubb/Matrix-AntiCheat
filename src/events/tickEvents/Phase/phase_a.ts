@@ -1,7 +1,8 @@
 import { world, system, GameMode, Block, Vector3 } from "@minecraft/server";
 import config from '../../../data/config.js';
-import { addScore, clearScore, flag, getScore, punish, uniqueId } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from "../../../util/Flag.js";
 
 const passableBlocks = new Set(config.modules.phaseA.passableBlock);
 const lastSafePos = new Map<string, Vector3>();
@@ -21,12 +22,7 @@ const phase_a = () => {
             playerLastPositions.delete(player.id);
             player.teleport(lastSafePos.get(player.id));
             player.applyDamage(6);
-            addScore(player, 'anticheat:phaseAVl', 1);
-            flag(player, 'phase/A', getScore(player, 'anticheat:phaseAVl'));
-            if (getScore(player, 'anticheat:phaseAVl') > config.modules.phaseA.VL) {
-              clearScore(player, 'anticheat:phaseAVl');
-              punish(player, 'phase/A', config.modules.phaseA.punishment)
-            }
+            flag(player, 'Phase/A', config.modules.phaseA, undefined)
           }
         }
       } else {

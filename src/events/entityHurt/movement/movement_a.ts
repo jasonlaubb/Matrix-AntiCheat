@@ -21,7 +21,7 @@ const movement_a = () => {
       }
     };
     if (!player.isOnGround && !canntApply) {
-      flag(player, 'Movement/A', config.modules.movementA.punishment, [`applyDamage=true`])
+      flag(player, 'Movement/A', config.modules.movementA as ModuleClass, [`applyDamage=true`])
     }
   });
   if (!config.modules.movementA.state) {

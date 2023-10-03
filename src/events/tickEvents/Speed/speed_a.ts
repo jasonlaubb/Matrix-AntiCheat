@@ -1,7 +1,8 @@
 import { world, system, GameMode } from "@minecraft/server";
 import config from "../../../data/config.js";
-import { addScore, clearScore, flag, getScore, punish, uniqueId } from "../../../util/World.js";
+import { uniqueId } from "../../../util/World.js";
 import { State } from '../../../util/Toggle.js';
+import { flag } from "../../../util/Flag.js";
 
 const speedData = new Map<string, any>();
 
@@ -22,12 +23,7 @@ const speed_a = () => {
       if (!playerInfo.highestSpeed) {
         player.teleport(playerInfo, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
         playerInfo.highestSpeed = playerSpeedMph;
-        addScore(player, 'anticheat:speedAVl', 1);
-        flag(player, 'Speed/A', getScore(player, 'anticheat:speedAVl'));
-        if(getScore(player, 'anticheat:speedAVl') > config.modules.speedA.VL) {
-          clearScore(player, 'anticheat:speedAVl');
-          punish(player, 'Speed/A', config.modules.speedA.punishment)
-        }
+        flag(player, 'Speed/A', config.modules.speedA ,[`SpeedMph=${playerSpeedMph.toFixed(3)}`])
       }
       } else if (playerSpeedMph <= config.modules.speedA.maxSpeed && speedData.has(player.id)) {
         const playerInfo = speedData.get(player.id);

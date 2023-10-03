@@ -1,7 +1,8 @@
 import { world, system } from '@minecraft/server';
-import { flag, punish, uniqueId, addScore, getScore, clearScore } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const fly_e = () => {
   const EVENT = system.runInterval(() => {
@@ -10,12 +11,7 @@ const fly_e = () => {
       if (player.fallDistance < -1 && !player.isSwimming && !player.isJumping && !player.hasTag('anticheat:trident')) {
         player.applyDamage(6);
         player.teleport(player.location);
-        addScore(player, 'anticheat:flyEVl', 1);
-        flag(player, 'Fly/E', getScore(player, 'anticheat:flyEVl'), [`fallDistance=${player.fallDistance}`]);
-        if (getScore(player, 'anticheat:flyEVl') > config.module.flyE.VL) {
-          clearScore(player, 'anticheat:flyEVl');
-          punish(player, 'Fly/E', config.modules.flyE.punishment)
-        }
+        flag(player, 'Fly/E', config.modules.flyE, [`fallDistance=${player.fallDistance.toFixed(6)}`])
       }
     };
     if(!State('FLYB', config.modules.flyB.state)) {

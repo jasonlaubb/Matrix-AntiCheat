@@ -1,7 +1,8 @@
-import { getScore, clearScore, uniqueId, flag, addScore, punish } from '../../../util/World.js';
+import { uniqueId } from '../../../util/World.js';
 import { world, system } from '@minecraft/server';
 import config from '../../../data/config.js';
 import { State } from '../../../util/Toggle.js';
+import { flag } from '../../../util/Flag.js';
 
 const knockback_a = () => {
   const EVENT = system.runInterval(() => {
@@ -11,12 +12,7 @@ const knockback_a = () => {
       if(magnitude <= config.modules.knockbackA.magnitude) {
         if(player.hasTag('anticheat:damaged') && !player.hasTag('anticheat:dead') && !player.isGliding && !player.hasTag('anticheat:levitating') && !player.isFlying)
         player.teleport(player.location);
-        addScore(player, 'anticheat:knockbackAVl', 1);
-        flag(player, 'KnockBack/A', getScore(player, 'anticheat:knockbackAVl'));
-        if(getScore(player, 'anticheat:knockbackAVl') > config.modules.knockbackA.VL) {
-          clearScore(player, 'anticheat:knockbackAVl')
-          punish(player, 'KnockBack/A', config.modules.knockbackA.punishment)
-        }
+        flag(player, 'KnockBack/A', config.modules.knockbackA, [`magnitude=${magnitude}`])
       }
     }
   });
