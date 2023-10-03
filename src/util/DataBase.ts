@@ -5,6 +5,9 @@ import { world, Vector3 } from '@minecraft/server';
 import config from '../data/default-config.js';
 import version from '../version.js';
 
+import { KEY } from '../events/worldInitialize/register.js';
+import { AES } from 'crypto-es/lib/aes.js';
+
 export const definedString = [
   'nokararos->config',
   'nokararos->toggle',
@@ -18,12 +21,17 @@ function changeData (data: string, value: string | boolean | number | Vector3) {
 };
 
 function clearAllData () {
-  world.setDynamicProperty('nokararos->config', JSON.stringify(config));
-  world.setDynamicProperty('nokararos->version', version);
-  world.setDynamicProperty('nokararos->toggle', '');
-  definedString.forEach(defined => GobalData.set(defined.replace('nokararos->',''), world.getDynamicProperty(defined)));
+  //@ts-expect-error
+  world.setDynamicProperty('nokararos->config', AES.encrypt(JSON.stringify(config), KEY));
+  //@ts-expect-error
+  world.setDynamicProperty('nokararos->version', AES.encrypt(version, KEY));
+  //@ts-expect-error
+  world.setDynamicProperty('nokararos->toggle', AES.encrypt('<placeHolder>', KEY));
+  //@ts-expect-error
+  definedString.forEach(defined => GobalData.set(defined.replace('nokararos->',''), AES.decrypt(world.getDynamicProperty(defined), KEY)));
   GobalData.clear();
-  definedString.forEach(defined => GobalData.set(defined.replace('nokararos->',''), world.getDynamicProperty(defined)));
+  //@ts-expect-error
+  definedString.forEach(defined => GobalData.set(defined.replace('nokararos->',''), AES.decrypt(world.getDynamicProperty(defined), KEY)));
 };
 
 export { changeData, clearAllData }
