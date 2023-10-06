@@ -1,0 +1,121 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.ride": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"ride": "query.is_riding"
+					}],
+					"on_entry": ["/tag @s remove NAC:riding"]
+				},
+				"ride": {
+					"transitions": [{
+						"default": "!query.is_riding"
+					}],
+					"on_entry": ["/tag @s add NAC:riding"]
+				}
+			}
+		},
+		"controller.animation.usingItem": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"useItem": "query.is_using_item && query.get_equipped_item_name != 'fishing_rod'"
+					}],
+					"on_entry": ["/tag @s remove NAC:usingItem"]
+				},
+				"useItem": {
+					"transitions": [{
+						"default": "!query.is_using_item"
+					}],
+					"on_entry": ["/tag @s add NAC:usingItem"]
+				}
+			}
+		},
+		"controller.animation.moving": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"move": "query.is_moving"
+					}],
+					"on_entry": ["/tag @s remove antichat:moving"]
+				},
+				"move": {
+					"transitions": [{
+						"default": "!query.is_moving"
+					}],
+					"on_entry": ["/tag @s add NAC:moving"]
+				}
+			}
+		},
+		"controller.animation.guiOpen": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"guiOpen": "query.variant == 1"
+					}],
+					"on_entry": ["/tag @s remove NAC:hasGUIopen"]
+				},
+				"guiOpen": {
+					"transitions": [{
+						"default": "query.variant != 1"
+					}],
+					"on_entry": ["/tag @s add NAC:hasGUIopen"]
+				}
+			}
+		},
+		"controller.animation.levitate": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"levitate": "query.is_levitating"
+					}],
+					"on_entry": ["/tag @s remove NAC:levitating"]
+				},
+				"levitate": {
+					"transitions": [{
+						"default": "!query.is_levitating"
+					}],
+					"on_entry": ["/tag @s add NAC:levitating"]
+				}
+			}
+		},
+		"controller.animation.canfly": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"canfly": "query.can_fly == 1"
+					}],
+					"on_entry": ["/tag @s remove NAC:canfly"]
+				},
+				"canfly": {
+					"transitions": [{
+						"default": "!query.can_fly != 1"
+					}],
+					"on_entry": ["/tag @s add NAC:canfly"]
+				}
+			}
+		},
+		"controller.animation.trident": {
+			"states": {
+				"default": {
+					"transitions": [{
+						"trident": "query.get_equipped_item_name == 'trident'"
+					}],
+					"on_entry": [
+						"/tag @s remove NAC:trident"
+					]
+				},
+				"trident": {
+					"transitions": [{
+						"default": "query.get_equipped_item_name != 'trident'"
+					}],
+					"on_entry": [
+						"/tag @s add NAC:trident"
+					]
+				}
+			}
+		}
+    }
+}
