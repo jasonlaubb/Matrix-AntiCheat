@@ -3,7 +3,8 @@ import {
   Player,
   world,
   Vector3,
-  GameMode } from '@minecraft/server';
+  GameMode, 
+  Dimension} from '@minecraft/server';
 import { ModuleClass, Console } from '../data/class.js';
 
 const GOBAL_VL = new Map<string, number>();
@@ -69,5 +70,25 @@ export default class {
 
   static getVector2Distance (pos1: Vector3, pos2: Vector3) {
     return (Math.sqrt(pos1.x - pos2.x) ** 2 + (pos2.z - pos2.z) ** 2)
+  };
+
+  static isPlayerOnAir(pos: Vector3, dimension: Dimension) {
+    let playerOnAir = true;
+  
+    [-1, 0, 1].forEach(x => {
+      [-1, 0, 1].forEach(y => {
+        [-1, 0, 1].forEach(z => {
+          if (!dimension.getBlock({
+            x: pos.x + x,
+            y: pos.y + y,
+            z: pos.z + z
+          })?.isAir) {
+            playerOnAir = false;
+          }
+        });
+      });
+    });
+  
+    return playerOnAir;
   }
 };

@@ -7,7 +7,7 @@ export default {
   },
   commands: {
     setting: {
-      prefix: ['-']
+      prefix: '-' //Prefix Length may not higher than 1
     },
     class: {
       OWO: {
@@ -26,7 +26,8 @@ export default {
   moduleTypes: {
     flyChecks: true,
     scaffold: true,
-    killaura: true
+    killaura: true,
+    movement: true,
   },
   modules: {
     /* fly */
@@ -101,6 +102,36 @@ export default {
       setting: {
         maxAttackInTick: 2,
         validTime: 50
+      }
+    },
+    /* movement */
+    fallDamageA: {
+      class: {
+        name: 'FallDamage/A',
+        state: true,
+        minVL: 3,
+        punishment: 'default'
+      }
+    },
+    nofallA: {
+      class: {
+        name: 'NoFall/A',
+        state: true,
+        minVL: 3,
+        punishment: 'default'
+      }
+    },
+    antiVoidA: {
+      class: {
+        name: 'AntiVoid/A',
+        state: true,
+        minVL: 3,
+        punishment: 'default'
+      },
+      setting: {
+        maxYdiff: 5,
+        minYdiff: 0.8,
+        maxDistance: 3.5
       }
     }
   }

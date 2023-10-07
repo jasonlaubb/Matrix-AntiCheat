@@ -4,14 +4,26 @@ import {
   Block,
   world,
   system,
-  Entity
+  Entity,
+  Vector2,
+  Vector3,
+  EntityDamageCause
 } from '@minecraft/server';
 
-import Util from './util/Util.js';
-import { ModuleClass } from './data/class.js';
-import config from './data/config.js';
+import {
+  ModuleClass,
+  Console
+} from './data/class.js';
 
-const hitList = new Map<string, any>();
+import { hitListType } from './data/type.js';
+
+import Util from './util/Util.js';
+import config from './data/config.js';
+import CommandHandler from './util/CommandHandler.js';
+
+const hitList: Map<string, any> = new Map<string, any>();
+const LocationLastTick: Map<string, Vector3> = new Map<string, Vector3>();
+const VelocityLastTick: Map<string, Vector3> = new Map<string, Vector3>();
 
 /* DataBase */
 world.afterEvents.worldInitialize.subscribe(ev => {
@@ -41,7 +53,8 @@ world.afterEvents.playerLeave.subscribe(ev => {
   /* clear leave player VL */
   const player: string = ev.playerId;
   Util.flagClear(player);
-  hitList.delete(player)
+  hitList.delete(player);
+  LocationLastTick.delete(player);
 });
 
 /* Util thing */
@@ -54,11 +67,15 @@ system.runInterval(() => {
   for (const player of world.getAllPlayers()) {
     if (isAdmin(player)) continue;
 
+    const lastLocation: Vector3 = LocationLastTick.get(player.id) ?? player.location;
+    const velocity: Vector3 = player.getVelocity();
+    const lastVelocity: Vector3 = VelocityLastTick.get(player.id) ?? velocity;
+
     /* Fly Checks */
     if (config.moduleTypes.flyChecks) {
       /* FlyA - checks if player flying with incorrect gamemode */
       if (config.modules.flyA.class.state && !player.hasTag('NAC:flyAstop') && player.isFlying && (getGamemode(player) !== 1 && getGamemode(player) !== 3) && !player.hasTag('NAC:canfly')) {
-        player.clearVelocity();
+        player.teleport(lastLocation);
         player.applyDamage(6);
         player.addTag('NAC:flyAstop');
         system.runTimeout(() => player.removeTag('NAC:flyAstop'), 10);
@@ -67,20 +84,55 @@ system.runInterval(() => {
 
       /* FlyB - checks for negative fall distance, Credit to Scythe AntiCheat */
       if (config.modules.flyB.class.state && player.fallDistance < -1 && !player.isFlying && !player.isClimbing && !player.isSwimming && !player.isJumping && !player.hasTag('NAC:trident')) {
-        player.clearVelocity();
+        player.teleport(lastLocation);
         player.applyDamage(6);
         flag(player, config.modules.flyB.class, `fallDistance=${player.fallDistance}`)
       }
-    }
+    };
+
+    /* movement checks */
+    if (config.moduleTypes.movement) {
+      /* NoFallA - checks for player y-velocity */
+      if (config.modules.nofallA.class.state && velocity.y === 0 && Util.isPlayerOnAir(player.location, player.dimension)) {
+        player.teleport(lastLocation);
+        player.applyDamage(6);
+        flag(player, config.modules.nofallA.class, 'undefined')
+      };
+
+      /* AntiVoidA - checks for antivoid-like movement */
+      if (config.modules.antiVoidA.class.state && velocity.y === 0 && lastVelocity.y < 0 && player.isOnGround) {
+        const Ydeff: number = player.location.y - lastLocation.y;
+        const distance: number = Util.getVector2Distance(player.location, lastLocation);
+        if (Ydeff <= config.modules.antiVoidA.setting.maxYdiff && Ydeff >= config.modules.antiVoidA.setting.minYdiff && distance <= config.modules.antiVoidA.setting.maxDistance) {
+          player.teleport(lastLocation);
+          player.applyDamage(6);
+          flag(player, config.modules.antiVoidA.class, `yDeff=${Ydeff},distance=${distance.toFixed(2)}`)
+        }
+      }
+    };
+
+    LocationLastTick.set(player.id, player.location)
   }
 }, 0);
+
+/* ChatSend BeforeEvent */
+world.beforeEvents.chatSend.subscribe(ev => {
+  const message: string = ev.message;
+  const player: Player = ev.sender;
+  if (message.startsWith(config.commands.setting.prefix)) {
+    CommandHandler.commandSelector(CommandHandler.commandHandler(message), isAdmin(player), player);
+    ev.cancel = true;
+    return
+  }
+});
 
 /* BlockPlace AfterEvent */
 world.afterEvents.playerPlaceBlock.subscribe(ev => {
   const player: Player = ev.player;
   if (isAdmin(player)) return;
   const block: Block = ev.block;
-  const roatation = player.getRotation();
+  const roatation: Vector2 = player.getRotation();
+  const veloctiy: Vector3 = player.getVelocity();
 
   /* scaffold checks */
   if (config.moduleTypes.scaffold && player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y) - 1, z: Math.floor(player.location.z)}) === block) {
@@ -100,16 +152,11 @@ world.afterEvents.playerPlaceBlock.subscribe(ev => {
     };
 
     /* scaffoldD - checks for non-human briging action */
-    if (config.modules.scaffoldD.class.state && player.isSprinting && Util.getAngleWithRotation(player, player.location, block.location) > 120) {
+    if (config.modules.scaffoldD.class.state && player.isSprinting && Util.getAngleWithRotation(player, player.location, { x: player.location.x - veloctiy.x, y: 0, z: player.location.z - veloctiy.z}) > 120) {
       flag(player, config.modules.scaffoldD.class, `rotation=${roatation.y}`)
     }
-  }
+  };
 });
-
-class hitListType {
-  id: string;
-  time: number
-};
 
 /* entityHitEntiy Event */
 world.afterEvents.entityHitEntity.subscribe(ev => {
@@ -136,4 +183,18 @@ world.afterEvents.entityHitEntity.subscribe(ev => {
       }
     }
   }
+});
+
+/* EntityHurt Event */
+world.afterEvents.entityHurt.subscribe(ev => {
+  const player: Player = ev.hurtEntity as Player;
+  if (player.typeId !== 'minecraft:player' || isAdmin(player)) return;
+
+  /* fallDamageA - Checks if player apply illegal fall damage */
+  if (config.modules.fallDamageA.class.state && ev.damageSource.cause === EntityDamageCause.fall && (!player.isJumping || Util.isPlayerOnAir(player.location, player.dimension))) {
+    player.clearVelocity();
+    flag(player, config.modules.fallDamageA.class, 'undefined')
+  }
 })
+
+Console.log('(NAC) scripts loaded')
