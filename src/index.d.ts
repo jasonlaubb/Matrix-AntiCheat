@@ -1,1 +1,3 @@
-declare var console: Console;
+/* 
+  nothing here?
+*/

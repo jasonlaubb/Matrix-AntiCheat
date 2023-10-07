@@ -9,15 +9,16 @@
         "sourceMap": false,
         "moduleResolution": "node",
         "rootDir": "./src",
-        "outDir": "./dist/scripts",
-        "removeComments": true,
+        "outDir": "./build/scripts",
+        "removeComments": false,
         "allowJs": true,
         "checkJs": false,
         "useDefineForClassFields": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "noImplicitAny": true,
-        "strict": false
+        "strict": true,
+        "strictPropertyInitialization": false
     },
     "include": ["src"],
     "exclude": ["node_modules"]

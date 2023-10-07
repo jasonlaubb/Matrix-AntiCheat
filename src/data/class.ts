@@ -10,8 +10,18 @@ export class punishmentType {
 /* module type when flag */
 export class ModuleClass {
   name: string;
-  punishment: punishmentType;
+  punishment: string | punishmentType
   minVL: number;
 };
 
-export var console: any;
+export class Console {
+  static log (value: string) {
+    //@ts-expect-error
+    console.log(value);
+  };
+
+  static warn (value: string) {
+    //@ts-expect-error
+    console.warn(value);
+  };
+}
