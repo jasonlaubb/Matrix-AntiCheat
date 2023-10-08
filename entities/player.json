@@ -7,7 +7,7 @@
         "is_summonable": false,
         "is_experimental": false,
         "scripts": {
-          "animate": ["ride","useitem","moving","gui","canfly","noswing","levitate"]
+          "animate": ["ride","useitem","moving","gui","canfly","levitate"]
         },
         "animations": {
           "ride": "controller.animation.ride",

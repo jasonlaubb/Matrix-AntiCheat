@@ -1,27 +1,38 @@
 /* punishment type */
 export class punishmentType {
-  none?: string;
-  tempkick?: string;
-  kick?: string;
-  ban?: string;
-  default?: string;
-};
-
-/* module type when flag */
+    none: string;
+    tempkick: string;
+    kick:string;
+    ban: string;
+    default: string;
+}
+;
+/* module class when flag */
 export class ModuleClass {
-  name: string;
-  punishment: string | punishmentType
-  minVL: number;
-};
-
+    name: string;
+    punishment: punishmentType | string;
+    minVL: number;
+}
+;
+/* command class */
+export class CommandClass {
+    needTag: string[] | null;
+    needAdmin: boolean;
+    needOp: boolean;
+    description: string;
+    usage: string[];
+}
+;
+/* javascript console */
 export class Console {
-  static log (value: string) {
-    //@ts-expect-error
-    console.log(value);
-  };
-
-  static warn (value: string) {
-    //@ts-expect-error
-    console.warn(value);
-  };
+    static log(data: any) {
+        //@ts-expect-error
+        console.log(data);
+    }
+    ;
+    static warn(data: any) {
+        //@ts-expect-error
+        console.warn(data);
+    }
+    ;
 }

@@ -15,12 +15,20 @@ import {
   Console
 } from './data/class.js';
 
-import { hitListType } from './data/type.js';
+/* Gobal ban list*/
+import gA from './data/GobalBan/Paradox_AntiCheat.js';
+import gB from './data/GobalBan/Scythe_AntiCheat.js';
+import gC from './data/GobalBan/MBS_DataBase.js';
+const ParadoxBanned: Set<string> = new Set(gA);
+const ScytheBanned: Set<string> = new Set(gB);
+const MbsBanned: Set<string> = new Set(gC);
 
 import Util from './util/Util.js';
 import config from './data/config.js';
 import CommandHandler from './util/CommandHandler.js';
+import PunishmentController from './util/PunishmentController.js';
 
+export const canTempkickList: Map<string, boolean> = new Map<string, boolean>();
 const hitList: Map<string, any> = new Map<string, any>();
 const LocationLastTick: Map<string, Vector3> = new Map<string, Vector3>();
 const VelocityLastTick: Map<string, Vector3> = new Map<string, Vector3>();
@@ -40,11 +48,55 @@ const definedTempTag = [
 world.afterEvents.playerSpawn.subscribe(ev => {
   const player = ev.player;
   if (ev.initialSpawn) {
+    /* GobalBan */
+    if (config.modules.gobalBan.class.state) {
+      let needKick: true | false = false;
+      if (config.modules.gobalBan.setting.paradox && ParadoxBanned.has(player.name)) {
+        world.sendMessage(`§dNokararos §f> §e${player.name} is gobalbanned §9(data=Paradox)`);
+        needKick = true;
+      };
+      if (config.modules.gobalBan.setting.scythe && ScytheBanned.has(player.name)) {
+        world.sendMessage(`§dNokararos §f> §e${player.name} is gobalbanned §9(data=Scythe)`);
+        needKick = true;
+      };
+      if (config.modules.gobalBan.setting.mbs && MbsBanned.has(player.name)) {
+        world.sendMessage(`§dNokararos §f> §e${player.name} is gobalbanned §9(data=MBS)`);
+        needKick = true;
+      };
+      if (needKick) {
+        PunishmentController.kick(player);
+        Console.log(`(GobalBan) kicked ${player.name}`);
+        return
+      }
+    };
+
+    /* Remove the temp tag for player*/
     definedTempTag.forEach(tag => {
       if (player.hasTag(tag)) {
         player.removeTag(tag)
       }
     })
+  }
+});
+
+/* dataDrivenEntityTriggerEvent BeforeEvents */
+world.beforeEvents.dataDrivenEntityTriggerEvent.subscribe(ev => {
+  const player: Player = ev.entity as Player;
+  if (player.typeId !== 'minecraft:player') return;
+  if (ev.id === 'NAC:tempkick') {
+    if (isAdmin(player) || !(canTempkickList.get(player.id) === true)) {
+      ev.cancel = true;
+      Console.log(`(TempKick) stopped tempkick trigger on ${player.name}`)
+    }
+  }
+});
+
+/* dataDrivenEntityTriggerEvent AfterEvents */
+world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(ev => {
+  const player: Player = ev.entity as Player;
+  if (player.typeId !== 'minecraft:player') return;
+  if (ev.id === 'NAC:tempkick') {
+    canTempkickList.delete(player.id)
   }
 });
 
@@ -75,7 +127,7 @@ system.runInterval(() => {
     if (config.moduleTypes.flyChecks) {
       /* FlyA - checks if player flying with incorrect gamemode */
       if (config.modules.flyA.class.state && !player.hasTag('NAC:flyAstop') && player.isFlying && (getGamemode(player) !== 1 && getGamemode(player) !== 3) && !player.hasTag('NAC:canfly')) {
-        player.teleport(lastLocation);
+        player.teleport(lastLocation, { keepVelocity: true });
         player.applyDamage(6);
         player.addTag('NAC:flyAstop');
         system.runTimeout(() => player.removeTag('NAC:flyAstop'), 10);
@@ -84,7 +136,7 @@ system.runInterval(() => {
 
       /* FlyB - checks for negative fall distance, Credit to Scythe AntiCheat */
       if (config.modules.flyB.class.state && player.fallDistance < -1 && !player.isFlying && !player.isClimbing && !player.isSwimming && !player.isJumping && !player.hasTag('NAC:trident')) {
-        player.teleport(lastLocation);
+        player.teleport(lastLocation, { keepVelocity: true });
         player.applyDamage(6);
         flag(player, config.modules.flyB.class, `fallDistance=${player.fallDistance}`)
       }
@@ -94,7 +146,7 @@ system.runInterval(() => {
     if (config.moduleTypes.movement) {
       /* NoFallA - checks for player y-velocity */
       if (config.modules.nofallA.class.state && velocity.y === 0 && Util.isPlayerOnAir(player.location, player.dimension)) {
-        player.teleport(lastLocation);
+        player.teleport(lastLocation, { keepVelocity: true });
         player.applyDamage(6);
         flag(player, config.modules.nofallA.class, 'undefined')
       };
@@ -104,7 +156,7 @@ system.runInterval(() => {
         const Ydeff: number = player.location.y - lastLocation.y;
         const distance: number = Util.getVector2Distance(player.location, lastLocation);
         if (Ydeff <= config.modules.antiVoidA.setting.maxYdiff && Ydeff >= config.modules.antiVoidA.setting.minYdiff && distance <= config.modules.antiVoidA.setting.maxDistance) {
-          player.teleport(lastLocation);
+          player.teleport(lastLocation, { keepVelocity: true });
           player.applyDamage(6);
           flag(player, config.modules.antiVoidA.class, `yDeff=${Ydeff},distance=${distance.toFixed(2)}`)
         }
@@ -120,7 +172,7 @@ world.beforeEvents.chatSend.subscribe(ev => {
   const message: string = ev.message;
   const player: Player = ev.sender;
   if (message.startsWith(config.commands.setting.prefix)) {
-    CommandHandler.commandSelector(CommandHandler.commandHandler(message), isAdmin(player), player);
+    system.run(() => CommandHandler.Select(message, isAdmin(player), player));
     ev.cancel = true;
     return
   }
@@ -173,13 +225,14 @@ world.afterEvents.entityHitEntity.subscribe(ev => {
 
     /* killauraB - Checks for multi aura */
     if (config.modules.killauraB.class.state) {
-      const HittedEntity: Array<hitListType> = hitList.get(player.id) ?? [];
-      const HitListNow: Array<hitListType> = HittedEntity.filter(f => Date.now() - f.time < config.modules.killauraB.setting.validTime);
-      //@ts-expect-error
-      if (HitListNow.filter(f => f.id === hitEntity.id).length === 0) hitList.set(player.id, hitList.get(HitListNow).push([{id: hitEntity.id, time: Date.now()}]));
-      if (hitList.get(player.id).length > config.modules.killauraB.setting.maxAttackInTick) {
+      const HittedEntity: any[] = hitList.get(player.id) ?? [];
+      const HitListNow: any[] = HittedEntity.filter(f => Date.now() - f.time < config.modules.killauraB.setting.validTime);
+      if (HitListNow.filter(f => f.id === hitEntity.id).length === 0) {
+        hitList.set(player.id, [...HitListNow, { id: hitEntity.id, time: Date.now() }]);
+      };
+      if (hitList.get(player.id)?.length > config.modules.killauraB.setting.maxAttackInTick) {
         hitList.delete(player.id);
-        flag(player, config.modules.killauraB.class, 'undefined')
+        flag(player, config.modules.killauraB.class, 'undefined');
       }
     }
   }
@@ -192,7 +245,6 @@ world.afterEvents.entityHurt.subscribe(ev => {
 
   /* fallDamageA - Checks if player apply illegal fall damage */
   if (config.modules.fallDamageA.class.state && ev.damageSource.cause === EntityDamageCause.fall && (!player.isJumping || Util.isPlayerOnAir(player.location, player.dimension))) {
-    player.clearVelocity();
     flag(player, config.modules.fallDamageA.class, 'undefined')
   }
 })

@@ -5,23 +5,19 @@ import {
   Vector3,
   GameMode, 
   Dimension} from '@minecraft/server';
-import { ModuleClass, Console } from '../data/class.js';
+import { ModuleClass } from '../data/class.js';
 
 const GOBAL_VL = new Map<string, number>();
 const CLEAR_VL = new Map<string, string[]>();
 
 export default class {
   static flag(player: Player, module: ModuleClass, information: string) {
-    if (!(module instanceof ModuleClass)) return Console.warn('(flag system) Module type error');
-    if (!(module instanceof Player)) return Console.warn(`(flag system) player is not Player type`);
-
     let flagVL: number = GOBAL_VL.get(`${player.id}+${module.name}`) ?? 0;
     flagVL += 1;
     GOBAL_VL.set(`${player.id}+${module.name}`, flagVL);
     if (!CLEAR_VL.get(player.id)!.includes(module.name)) {
       const clearvl: Array<string> = CLEAR_VL.get(player.id) ?? [];
-      //@ts-expect-error
-      CLEAR_VL.set(player.id, clearvl.push(module.name))
+      CLEAR_VL.set(player.id, [...clearvl, module.name])
     };
 
     if (config.notify.flagMsg) {
@@ -42,23 +38,25 @@ export default class {
     return player.getDynamicProperty('NAC:admin_data') === true ? true : false
   };
 
-  static getGamemode (player: Player) {
-    const gamemodes = {
+  static getGamemode(player: Player) {
+    const gamemodes: { [key: string]: number } = {
       survival: 0,
       creative: 1,
       adventure: 2,
       spectator: 3
     };
-    
+  
     for (const gamemode in GameMode) {
-      if ([...world.getPlayers({
-        name: player.name,
-      //@ts-expect-error
-        gameMode: GameMode[gamemode]
-      //@ts-expect-error
-      })].length > 0) return Number(gamemodes[GameMode[gamemode]])
-    };
-    return 0
+      if (
+        [...world.getPlayers({
+          name: player.name,
+          gameMode: GameMode[gamemode as GameMode]
+        })].length > 0
+      ) {
+        return Number(gamemodes[GameMode[gamemode as GameMode]]);
+      }
+    }
+    return 0;
   };
 
   static getAngleWithRotation (player: Player, pos1: Vector3, pos2: Vector3) {
@@ -90,5 +88,9 @@ export default class {
     });
   
     return playerOnAir;
+  };
+
+  static showText (player: Player, message: string[]) {
+    player.sendMessage(message.join('\n'))
   }
 };
