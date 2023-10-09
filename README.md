@@ -32,11 +32,11 @@ At least... It is difficult to bypass
 
   ## How to use?
 
-Require Hoilday Creator Feature and Beta API to make it work!
+Require Beta API to make it work!
 
-Change default config in ./scripts/data/default-config.js
+Change default config in (root)/scripts/data/default-config.js
 
-Download the latest release to use (.mcpack), not source code
+Download the latest release and use (.mcpack), not source code
 
   ## Special Thanks / Credit
 
