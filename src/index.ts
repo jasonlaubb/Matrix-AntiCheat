@@ -19,6 +19,7 @@ import {
 import gA from './data/GobalBan/Paradox_AntiCheat.js';
 import gB from './data/GobalBan/Scythe_AntiCheat.js';
 import gC from './data/GobalBan/MBS_DataBase.js';
+
 const ParadoxBanned: Set<string> = new Set(gA);
 const ScytheBanned: Set<string> = new Set(gB);
 const MbsBanned: Set<string> = new Set(gC);
@@ -31,7 +32,7 @@ import PunishmentController from './util/PunishmentController.js';
 export const canTempkickList: Map<string, boolean> = new Map<string, boolean>();
 const hitList: Map<string, any> = new Map<string, any>();
 const LocationLastTick: Map<string, Vector3> = new Map<string, Vector3>();
-const VelocityLastTick: Map<string, Vector3> = new Map<string, Vector3>();
+//const VelocityLastTick: Map<string, Vector3> = new Map<string, Vector3>();
 
 /* DataBase */
 world.afterEvents.worldInitialize.subscribe(ev => {
@@ -41,7 +42,8 @@ world.afterEvents.worldInitialize.subscribe(ev => {
 });
 
 const definedTempTag = [
-  'NAC:flyAstop'
+  'NAC:flyAstop',
+  'NAC:nofallAstop'
 ];
 
 /* player Spawn */
@@ -52,15 +54,15 @@ world.afterEvents.playerSpawn.subscribe(ev => {
     if (config.modules.gobalBan.class.state) {
       let needKick: true | false = false;
       if (config.modules.gobalBan.setting.paradox && ParadoxBanned.has(player.name)) {
-        world.sendMessage(`§dNokararos §f> §e${player.name} is gobalbanned §9(data=Paradox)`);
+        if (config.notify.flagMsg)  world.sendMessage(`§dNokararos §f> §e${player.name} §7is gobalbanned §9[data=Paradox]`);
         needKick = true;
       };
       if (config.modules.gobalBan.setting.scythe && ScytheBanned.has(player.name)) {
-        world.sendMessage(`§dNokararos §f> §e${player.name} is gobalbanned §9(data=Scythe)`);
+        if (config.notify.flagMsg) world.sendMessage(`§dNokararos §f> §e${player.name} §7is gobalbanned §9[data=Scythe]`);
         needKick = true;
       };
       if (config.modules.gobalBan.setting.mbs && MbsBanned.has(player.name)) {
-        world.sendMessage(`§dNokararos §f> §e${player.name} is gobalbanned §9(data=MBS)`);
+        if (config.notify.flagMsg) world.sendMessage(`§dNokararos §f> §e${player.name} §7is gobalbanned §9[data=MBS]`);
         needKick = true;
       };
       if (needKick) {
@@ -121,45 +123,35 @@ system.runInterval(() => {
 
     const lastLocation: Vector3 = LocationLastTick.get(player.id) ?? player.location;
     const velocity: Vector3 = player.getVelocity();
-    const lastVelocity: Vector3 = VelocityLastTick.get(player.id) ?? velocity;
+    //const lastVelocity: Vector3 = VelocityLastTick.get(player.id) ?? velocity;
 
     /* Fly Checks */
     if (config.moduleTypes.flyChecks) {
       /* FlyA - checks if player flying with incorrect gamemode */
       if (config.modules.flyA.class.state && !player.hasTag('NAC:flyAstop') && player.isFlying && (getGamemode(player) !== 1 && getGamemode(player) !== 3) && !player.hasTag('NAC:canfly')) {
-        player.teleport(lastLocation, { keepVelocity: true });
+        player.teleport(lastLocation);
         player.applyDamage(6);
         player.addTag('NAC:flyAstop');
-        system.runTimeout(() => player.removeTag('NAC:flyAstop'), 10);
+        system.runTimeout(() => player.removeTag('NAC:flyAstop'), 40);
         flag(player, config.modules.flyA.class, `GameMode=${getGamemode(player)}`)
       };
 
       /* FlyB - checks for negative fall distance, Credit to Scythe AntiCheat */
       if (config.modules.flyB.class.state && player.fallDistance < -1 && !player.isFlying && !player.isClimbing && !player.isSwimming && !player.isJumping && !player.hasTag('NAC:trident')) {
-        player.teleport(lastLocation, { keepVelocity: true });
+        flag(player, config.modules.flyB.class, `fallDistance=${player.fallDistance}`);
+        player.teleport(lastLocation);
         player.applyDamage(6);
-        flag(player, config.modules.flyB.class, `fallDistance=${player.fallDistance}`)
       }
     };
 
     /* movement checks */
     if (config.moduleTypes.movement) {
       /* NoFallA - checks for player y-velocity */
-      if (config.modules.nofallA.class.state && velocity.y === 0 && Util.isPlayerOnAir(player.location, player.dimension)) {
-        player.teleport(lastLocation, { keepVelocity: true });
-        player.applyDamage(6);
+      if (config.modules.nofallA.class.state && velocity.y === 0 && !player.hasTag('NAC:nofallAstop') && !player.hasTag('NAC:levitating') && Util.isPlayerOnAir(player.location, player.dimension) && !player.isFlying && !player.hasTag('NAC:riding')) {
+        player.teleport(lastLocation);
+        player.addTag('NAC:nofallAstop');
+        system.runTimeout(() => player.removeTag('NAC:nofallAstop'), 60);
         flag(player, config.modules.nofallA.class, 'undefined')
-      };
-
-      /* AntiVoidA - checks for antivoid-like movement */
-      if (config.modules.antiVoidA.class.state && velocity.y === 0 && lastVelocity.y < 0 && player.isOnGround) {
-        const Ydeff: number = player.location.y - lastLocation.y;
-        const distance: number = Util.getVector2Distance(player.location, lastLocation);
-        if (Ydeff <= config.modules.antiVoidA.setting.maxYdiff && Ydeff >= config.modules.antiVoidA.setting.minYdiff && distance <= config.modules.antiVoidA.setting.maxDistance) {
-          player.teleport(lastLocation, { keepVelocity: true });
-          player.applyDamage(6);
-          flag(player, config.modules.antiVoidA.class, `yDeff=${Ydeff},distance=${distance.toFixed(2)}`)
-        }
       }
     };
 
@@ -187,14 +179,10 @@ world.afterEvents.playerPlaceBlock.subscribe(ev => {
   const veloctiy: Vector3 = player.getVelocity();
 
   /* scaffold checks */
-  if (config.moduleTypes.scaffold && player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y) - 1, z: Math.floor(player.location.z)}) === block) {
-    /* scaffoldA - checks if player place block without looking at it */
-    if (config.modules.scaffoldA.class.state && !(player.getBlockFromViewDirection()?.block === block)) {
-      flag(player, config.modules.scaffoldA.class, 'undefined');
-    };
-
-    /* scaffoldB - checks for bypass-like placement, Credit to Isolate AntiCheat */
-    if (config.modules.scaffoldB.class.state && roatation.x === 60) {
+  const blockBelow: Block = player.dimension.getBlock({x: Math.floor(player.location.x), y: Math.floor(player.location.y) - 1, z: Math.floor(player.location.z)})!;
+  if (config.moduleTypes.scaffold && blockBelow.x === block.x && blockBelow.y === block.y && blockBelow.z === block.z) {
+    /* scaffoldB - checks for bypass */
+    if (config.modules.scaffoldB.class.state && roatation.x == 60) {
       flag(player, config.modules.scaffoldB.class, `roatation=${roatation.x}`)
     };
 
@@ -242,9 +230,8 @@ world.afterEvents.entityHitEntity.subscribe(ev => {
 world.afterEvents.entityHurt.subscribe(ev => {
   const player: Player = ev.hurtEntity as Player;
   if (player.typeId !== 'minecraft:player' || isAdmin(player)) return;
-
   /* fallDamageA - Checks if player apply illegal fall damage */
-  if (config.modules.fallDamageA.class.state && ev.damageSource.cause === EntityDamageCause.fall && (!player.isJumping || Util.isPlayerOnAir(player.location, player.dimension))) {
+  if (config.modules.fallDamageA.class.state && ev.damageSource.cause === EntityDamageCause.fall && Util.isPlayerOnAir(player.location, player.dimension)) {
     flag(player, config.modules.fallDamageA.class, 'undefined')
   }
 })

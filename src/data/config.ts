@@ -6,7 +6,7 @@ export default {
         flagMsg: true
     },
     encryption: {
-        password: 'Password123',
+        password: 'Password123', //set it to undefined when no need
         TwoFA: true //Need to enter password before setop or setdeop
     },
     commands: {
@@ -95,14 +95,14 @@ export default {
             }
         },
         /* scaffold */
-        scaffoldA: {
+        /*scaffoldA: {
             class: {
                 name: 'Scaffold/A',
                 state: true,
                 minVL: 3,
                 punishment: 'default'
             }
-        },
+        },*/
         scaffoldB: {
             class: {
                 name: 'Scaffold/B',
@@ -168,7 +168,7 @@ export default {
                 punishment: 'default'
             }
         },
-        antiVoidA: {
+        /*antiVoidA: {
             class: {
                 name: 'AntiVoid/A',
                 state: true,
@@ -180,7 +180,7 @@ export default {
                 minYdiff: 0.8,
                 maxDistance: 3.5
             }
-        },
+        },*/
         /* misc */
         nukerA: {
             class: {

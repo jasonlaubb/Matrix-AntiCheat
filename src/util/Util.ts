@@ -4,8 +4,10 @@ import {
   world,
   Vector3,
   GameMode, 
-  Dimension} from '@minecraft/server';
-import { ModuleClass } from '../data/class.js';
+  Dimension,
+  Vector} from '@minecraft/server';
+import { Console, ModuleClass } from '../data/class.js';
+import PunishmentController from './PunishmentController.js';
 
 const GOBAL_VL = new Map<string, number>();
 const CLEAR_VL = new Map<string, string[]>();
@@ -15,7 +17,8 @@ export default class {
     let flagVL: number = GOBAL_VL.get(`${player.id}+${module.name}`) ?? 0;
     flagVL += 1;
     GOBAL_VL.set(`${player.id}+${module.name}`, flagVL);
-    if (!CLEAR_VL.get(player.id)!.includes(module.name)) {
+    const clearvl: string[] = CLEAR_VL.get(player.id) ?? [];
+    if (clearvl.includes(module.name)) {
       const clearvl: Array<string> = CLEAR_VL.get(player.id) ?? [];
       CLEAR_VL.set(player.id, [...clearvl, module.name])
     };
@@ -24,6 +27,21 @@ export default class {
       const showingInformation: string = information === "undefined" ? '' : ` §9[${information}]`;
       world.sendMessage(`§dNokararos §f> §e${player.name} §7failed §e${module.name}${showingInformation} §7VL=${flagVL}`);
     };
+
+    if (flagVL >= module.minVL) {
+      switch (module.punishment == 'default' ? config.settings.defaultPunishment : module.punishment) {
+        case "none": { };
+        case "kick": {
+          PunishmentController.kick(player);
+        };
+        case "tempkick": {
+          PunishmentController.tempkick(player);
+        };
+        default: {
+          Console.log('(Flag) invalid punishment')
+        }
+      }
+    }
   };
 
   static flagClear (player: string) {
@@ -35,7 +53,11 @@ export default class {
   };
 
   static isAdmin (player: Player) {
-    return player.getDynamicProperty('NAC:admin_data') === true ? true : false
+    try {
+      return player.getDynamicProperty('NAC:admin_data') === true ? true : false
+    } catch {
+      return false
+    }
   };
 
   static getGamemode(player: Player) {
@@ -67,14 +89,14 @@ export default class {
   };
 
   static getVector2Distance (pos1: Vector3, pos2: Vector3) {
-    return (Math.sqrt(pos1.x - pos2.x) ** 2 + (pos2.z - pos2.z) ** 2)
+    return Vector.distance({ x: pos1.x, y: 0, z: pos1.z},{ x: pos2.x, y: 0, z: pos2.z })
   };
 
   static isPlayerOnAir(pos: Vector3, dimension: Dimension) {
     let playerOnAir = true;
   
     [-1, 0, 1].forEach(x => {
-      [-1, 0, 1].forEach(y => {
+      [-2, -1, 0, 1, 2].forEach(y => {
         [-1, 0, 1].forEach(z => {
           if (!dimension.getBlock({
             x: pos.x + x,

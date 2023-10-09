@@ -22,9 +22,11 @@
       "component_groups": {
         "NAC:tempkick": {
           "minecraft:explode": {
-            "breaks_blocks": false,
+            "fuse_length": 0,
+            "fuse_lit": true,
             "power": 0,
-            "fuse_lit": true
+            "causes_fire": false,
+            "breaks_blocks": false
           }
         },
         "minecraft:add_bad_omen": {
@@ -188,7 +190,6 @@
           }
         }
       },
-  
       "events": {
         "minecraft:gain_bad_omen": {
           "add": {
@@ -218,7 +219,14 @@
           "remove": {
             "component_groups": [ "minecraft:raid_trigger" ]
           }
+        },
+        "NAC:tempkick": {
+          "add": {
+            "component_groups": [
+              "scythe:kick"
+            ]
+          }
         }
       }
-    }
   }
+}

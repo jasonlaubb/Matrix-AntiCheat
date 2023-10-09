@@ -1,6 +1,9 @@
 import { Player, world } from "@minecraft/server";
 import config from "../data/config";
 import { CommandClass, Console } from "../data/class";
+import Util from './Util.js';
+
+const isAdmin = Util.isAdmin;
 
 export default class {
   static Turn (input: string) {
@@ -38,7 +41,7 @@ export default class {
   };
 
   static Help (isHelp: boolean, command: CommandClass, player: Player, Admin: boolean) {
-    if (!isHelp || Admin) return;
+    if (!isHelp) return;
     player.sendMessage(`§dNokararos §f> §b-- command help --`);
     player.sendMessage(`§gDescription: §f${command.description ?? 'No description found'}`);
     if (command.usage !== undefined) {
@@ -77,9 +80,9 @@ export default class {
 
         if (!(config.encryption.password === undefined)) {
           if (config.encryption.password === regex[1]) {
-            player.sendMessage('§dNokararos §f> §cIncorrect password');
-          } else {
             sucess = true
+          } else {
+            player.sendMessage('§dNokararos §f> §cIncorrect password');
           }
         } else {
           sucess = true
@@ -113,7 +116,7 @@ export default class {
         const target: Player = world.getPlayers({ name: regex[1] })[0];
         if (!target) return player.sendMessage('§dNokararos §f> §cPlayer is not online or player is invalid');
         if (target.id === player.id) return player.sendMessage(`§dNokararos §f> §cYou cannot use this command to yourself`);
-        if (target.getDynamicProperty('NAC:admin_data') === true) return player.sendMessage(`§dNokararos §f> §c${target.name} is admin!`);
+        if (isAdmin(target) === true) return player.sendMessage(`§dNokararos §f> §c${target.name} is admin!`);
         if (config.encryption.TwoFA && !regex[2]) return player.sendMessage(`§dNokararos §f> §c2FA-mode enabled, please enter password`);
 
         let sucess: boolean = false;
@@ -126,9 +129,9 @@ export default class {
         } else sucess = true;
 
         if (sucess) {
-          world.sendMessage(`§dNokararos §f> §e${target.name} is setted to NAC-admin by ${player.name}`);
+          world.sendMessage(`§dNokararos §f> §e${target.name} §7is setted to NAC-admin by §水${player.name}`);
           Console.log(`(Admin) New admin: ${target.name} | Setted by ${player.name}`);
-          player.setDynamicProperty('NAC:admin_data', true);
+          target.setDynamicProperty('NAC:admin_data', true);
         };
 
         break
@@ -141,7 +144,7 @@ export default class {
         const target: Player = world.getPlayers({ name: regex[1] })[0];
         if (!target) return player.sendMessage('§dNokararos §f> §cPlayer is not online or player is invalid');
         if (target.id === player.id) return player.sendMessage(`§dNokararos §f> §cYou cannot use this command to yourself`);
-        if (!(target.getDynamicProperty('NAC:admin_data') === true)) return player.sendMessage(`§dNokararos §f> §c${target.name} is not admin!`);
+        if (isAdmin(target) === false) return player.sendMessage(`§dNokararos §f> §c${target.name} is not admin!`);
         if (config.encryption.TwoFA && !regex[2]) return player.sendMessage(`§dNokararos §f> §c2FA-mode enabled, please enter password`);
 
         let sucess: boolean = false;
@@ -154,9 +157,9 @@ export default class {
         } else sucess = true;
 
         if (sucess) {
-          world.sendMessage(`§dNokararos §f> §e${target.name} is removed NAC-admin by ${player.name}`);
+          world.sendMessage(`§dNokararos §f> §e${target.name} §7is removed NAC-admin by §e${player.name}`);
           Console.log(`(Admin) Removed admin: ${target.name} | Removed by ${player.name}`);
-          player.removeDynamicProperty('NAC:admin_data');
+          target.removeDynamicProperty('NAC:admin_data');
         };
 
         break

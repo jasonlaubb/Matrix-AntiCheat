@@ -1,9 +1,9 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Nokararos AntiCheat v1.0.0-alpha",
+        "name": "Nokararos AntiCheat v1.0.0",
         "description": "The best anticheat for minecraft bedrock",
-        "uuid": "ae4f2f22-c80b-4229-8d9d-e78f1be312d0",
+        "uuid": "20f028ff-1126-4aa0-86ef-ef50a160558a",
         "version": [1, 0, 0],
         "min_engine_version": [1, 20, 30]
     },
@@ -15,16 +15,16 @@
     "modules": [
         {
             "type": "data",
-            "uuid": "69722624-bde7-46de-8752-51bd0d039c00",
+            "uuid": "7cc346da-ee80-4fbe-a8fa-693b6701b62c",
             "version": [1, 0, 0]
         },
         {
-            "description": "Gametest Features",
+            "description": "Gametest API",
             "language": "javascript",
             "type": "script",
-            "uuid": "a1c99804-90f4-45a8-bb50-1f49d8880ccb",
+            "uuid": "e744509e-727f-41f3-8239-94ab8b322423",
             "version": [0, 0, 1],
-            "entry": "scripts/nokararos.js"
+            "entry": "scripts/index.js"
         }
     ],
     "dependencies": [

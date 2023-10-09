@@ -27,12 +27,12 @@ export class CommandClass {
 export class Console {
     static log(data: any) {
         //@ts-expect-error
-        console.log(data);
+        console.log(`${data}`);
     }
     ;
     static warn(data: any) {
         //@ts-expect-error
-        console.warn(data);
+        console.warn(`${data}`);
     }
     ;
 }
