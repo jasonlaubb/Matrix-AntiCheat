@@ -40,8 +40,6 @@ Download the latest release and use (.mcpack), not source code
 
   ## Special Thanks / Credit
 
-4urxra visual1mpact MrDiamond64
-
-These all are good people!
+only the devs are good people!
 
 </div>
