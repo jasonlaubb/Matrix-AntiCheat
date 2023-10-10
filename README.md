@@ -3,39 +3,45 @@
 
   # Matrix Anti Cheat
   
-  <img src="https://img.shields.io/github/downloads/jasonlaubb/Nokararos-AntiCheat/total?style=for-the-badge" alt="Downloads"/>
-  <img src="https://img.shields.io/github/issues/jasonlaubb/Nokararos-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open"/>
-  <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Commits Per Week"/>
-  <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Last Commit"/>
+  <p align="center">
+    <img src="https://img.shields.io/github/downloads/jasonlaubb/Nokararos-AntiCheat/total?style=for-the-badge" alt="Downloads">
+    <img src="https://img.shields.io/github/issues/jasonlaubb/Nokararos-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open">
+    <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Commits Per Week">
+    <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Last Commit">
+  </p>
 
   ## Introduction
 
-Matrix is an anticheat for Realm, local world and server.
+  Matrix Anti Cheat is your solution for a cheat-free Minecraft experience, whether you're playing in the Realm, local world, or on a server.
 
-We provide best detection, auto punishment.
+  We offer best cheat detection and automated punishment systems.
+
+  ---
 
   ## Information
 
-Our support discord server: [Click Here To Join](https://discord.gg/CqZGXeRKPJ)
+  Join our support Discord server: [Click Here To Join](https://discord.gg/CqZGXeRKPJ)
 
-The best minecraft bedrock anti cheat that have strong protection to against hacker!
+  Matrix Anti Cheat is the ultimate Minecraft Bedrock Edition anti-cheat, providing strong protection against hackers.
 
-Support Minecraft version: 1.20.30+
+  Supported Minecraft version: 1.20.30+
 
-This AntiCheat is made by jasonlaubb, ravriv and Rami Gamer
+  Developed by jasonlaubb, ravriv, and Rami Gamer
 
-  ## Detecting Cheat
+  ---
 
-Our Anti Cheat has strong detection to protect your server
+  ## Cheat Detection
 
-At least... It is unbypassable
+  Our Anti Cheat features powerful detection capabilities to protect your server. It's designed to be unbypassable.
 
-  ## How to use?
+  ---
 
-Require Beta API to make it work!
+  ## How to Use
 
-Change default config in (root)/scripts/data/default-config.js
+  To make Matrix Anti Cheat work, you'll need the Beta API.
 
-Download the latest release and use (.mcpack), not source code
+  Modify the default configuration in (root)/scripts/data/default-config.js to suit your needs.
+
+  Download the latest release and use the .mcpack file, not the source code.
 
 </div>
