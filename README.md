@@ -1,7 +1,7 @@
 <div align="center">
   <img src="./pack_icon.png" width="150" height="150">
 
-  # Nokararos Anti Cheat
+  # Matrix Anti Cheat
   
   <img src="https://img.shields.io/github/downloads/jasonlaubb/Nokararos-AntiCheat/total?style=for-the-badge" alt="Downloads"/>
   <img src="https://img.shields.io/github/issues/jasonlaubb/Nokararos-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open"/>
@@ -10,9 +10,9 @@
 
   ## Introduction
 
-Nokararos is an anticheat for Realm, local world and server.
+Matrix is an anticheat for Realm, local world and server.
 
-We provide good detection, auto punishment.
+We provide best detection, auto punishment.
 
   ## Information
 
@@ -22,13 +22,13 @@ The best minecraft bedrock anti cheat that have strong protection to against hac
 
 Support Minecraft version: 1.20.30+
 
-This AntiCheat is made by jasonlaubb mainly
+This AntiCheat is made by jasonlaubb and Rami Gamer mainly
 
   ## Detecting Cheat
 
 Our Anti Cheat has strong detection to protect your server
 
-At least... It is difficult to bypass
+At least... It is unbypassable
 
   ## How to use?
 
