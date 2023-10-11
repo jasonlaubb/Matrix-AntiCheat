@@ -177,11 +177,15 @@ world.afterEvents.playerPlaceBlock.subscribe(ev => {
   const roatation: Vector2 = player.getRotation();
   const veloctiy: Vector3 = player.getVelocity();
 
+  const playerSpeed: number = Math.sqrt(veloctiy.x ** 2 + veloctiy.z ** 2);
+  const walkingSpeed: number = 0.10000000149011612;
+
   /* scaffold checks */
   const blockBelow: Block = player.dimension.getBlock({x: Math.floor(player.location.x), y: Math.floor(player.location.y) - 1, z: Math.floor(player.location.z)})!;
-  if (config.moduleTypes.scaffold && blockBelow.x === block.x && blockBelow.y === block.y && blockBelow.z === block.z) {
+  if (config.moduleTypes.scaffold) {
+    const isBlockUnder: boolean = (blockBelow.x === block.x && blockBelow.y === block.y && blockBelow.z === block.z)
     /* scaffoldA - checks if player place block without view */
-    if (config.modules.scaffoldA.class.state) {
+    if (config.modules.scaffoldA.class.state && isBlockUnder) {
       const blockView: Block = player.getBlockFromViewDirection()?.block!;
       if (block.location.x !== blockView.location.x || block.location.y !== blockView.location.y || block.location.z !== blockView.location.z) {
         flag(player, config.modules.scaffoldA.class, 'undefined');
@@ -189,18 +193,21 @@ world.afterEvents.playerPlaceBlock.subscribe(ev => {
     };
 
     /* scaffoldB - checks for bypass */
-    if (config.modules.scaffoldB.class.state && roatation.x === 60) {
+    if (config.modules.scaffoldB.class.state && isBlockUnder && roatation.x === 60) {
       flag(player, config.modules.scaffoldB.class, `roatation=${roatation.x}`)
     };
 
     /* scaffoldC - checks for player rotation, Credit to Isolate AntiCheat */
-    if (config.modules.scaffoldC.class.state && roatation.x <= 45) {
+    if (config.modules.scaffoldC.class.state && isBlockUnder && roatation.x <= 45 && playerSpeed >= walkingSpeed) {
       flag(player, config.modules.scaffoldC.class, `rotation=${roatation.x}`)
     };
 
-    /* scaffoldD - checks for non-human briging action */
-    if (config.modules.scaffoldD.class.state && player.isSprinting && Util.getAngleWithRotation(player, player.location, { x: player.location.x - veloctiy.x, y: 0, z: player.location.z - veloctiy.z}) > 120) {
-      flag(player, config.modules.scaffoldD.class, `rotation=${roatation.y}`)
+    /* scaffoldD - checks for cubecraft bypass */
+    if (config.modules.scaffoldD.class.state && Util.getVector2Distance(player.location, block.location) > config.modules.scaffoldD.setting.distance) {
+      const Angle: number = Util.getAngleWithRotation(player, player.location, block.location);
+      if (Angle > config.modules.scaffoldD.setting.maxPlaceAngle) {
+        flag(player, config.modules.scaffoldD.class, `angle=${Angle}`);
+      }
     }
   };
 });

@@ -125,6 +125,10 @@ export default {
                 state: true,
                 minVL: 3,
                 punishment: 'default'
+            },
+            setting: {
+                maxPlaceAngle: 95,
+                distance: 2
             }
         },
         /* killaura */
