@@ -1,10 +1,10 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Nokararos AntiCheat v1.0.0",
+        "name": "Matrix AntiCheat v1.0.1",
         "description": "The best anticheat for minecraft bedrock",
-        "uuid": "20f028ff-1126-4aa0-86ef-ef50a160558a",
-        "version": [1, 0, 0],
+        "uuid": "f4d7e953-d572-43af-a3b7-7e05842cbd74",
+        "version": [1, 0, 1],
         "min_engine_version": [1, 20, 30]
     },
     "metadata": {

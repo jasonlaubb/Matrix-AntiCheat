@@ -54,15 +54,15 @@ world.afterEvents.playerSpawn.subscribe(ev => {
     if (config.modules.gobalBan.class.state) {
       let needKick: true | false = false;
       if (config.modules.gobalBan.setting.paradox && ParadoxBanned.has(player.name)) {
-        if (config.notify.flagMsg)  world.sendMessage(`§dNokararos §f> §e${player.name} §7is gobalbanned §9[data=Paradox]`);
+        if (config.notify.flagMsg)  world.sendMessage(`§dMatrix §f> §e${player.name} §7is gobalbanned §9[data=Paradox]`);
         needKick = true;
       };
       if (config.modules.gobalBan.setting.scythe && ScytheBanned.has(player.name)) {
-        if (config.notify.flagMsg) world.sendMessage(`§dNokararos §f> §e${player.name} §7is gobalbanned §9[data=Scythe]`);
+        if (config.notify.flagMsg) world.sendMessage(`§dMatrix §f> §e${player.name} §7is gobalbanned §9[data=Scythe]`);
         needKick = true;
       };
       if (config.modules.gobalBan.setting.mbs && MbsBanned.has(player.name)) {
-        if (config.notify.flagMsg) world.sendMessage(`§dNokararos §f> §e${player.name} §7is gobalbanned §9[data=MBS]`);
+        if (config.notify.flagMsg) world.sendMessage(`§dMatrix §f> §e${player.name} §7is gobalbanned §9[data=MBS]`);
         needKick = true;
       };
       if (needKick) {
@@ -120,7 +120,6 @@ const getGamemode: (player: Player) => number = Util.getGamemode;
 system.runInterval(() => {
   for (const player of world.getAllPlayers()) {
     if (isAdmin(player)) continue;
-
     const lastLocation: Vector3 = LocationLastTick.get(player.id) ?? player.location;
     const velocity: Vector3 = player.getVelocity();
     //const lastVelocity: Vector3 = VelocityLastTick.get(player.id) ?? velocity;

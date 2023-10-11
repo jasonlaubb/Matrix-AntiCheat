@@ -35,14 +35,14 @@ export default class {
       Accept = false
     };
     if (Accept === false) {
-      player.sendMessage("§dNokararos §f> §cYou don't have enough permisson to use this command!")
+      player.sendMessage("§dMatrix §f> §cYou don't have enough permisson to use this command!")
     };
     return Accept
   };
 
   static Help (isHelp: boolean, command: CommandClass, player: Player, Admin: boolean) {
     if (!isHelp) return;
-    player.sendMessage(`§dNokararos §f> §b-- command help --`);
+    player.sendMessage(`§dMatrix §f> §b-- command help --`);
     player.sendMessage(`§gDescription: §f${command.description ?? 'No description found'}`);
     if (command.usage !== undefined) {
       player.sendMessage(`§gUsage: §f${command.usage.join(`\n${config.commands.setting.prefix}`)}`)
@@ -59,7 +59,7 @@ export default class {
         this.Help(isHelp, config.commands.class.OWO, player, Admin);
         if (isHelp || !this.Accept(player, config.commands.class.OWO, Admin)) return;
 
-        player.sendMessage('§dNokararos §f> §7OWO! you got me!');
+        player.sendMessage('§dMatrix §f> §7OWO! you got me!');
         break
       };
 
@@ -67,14 +67,14 @@ export default class {
         this.Help(isHelp, config.commands.class.OWO2, player, Admin);
         if (isHelp || !this.Accept(player, config.commands.class.OWO2, Admin)) return;
 
-        player.sendMessage('§dNokararos §f> §7OWO! you got me twice!!');
+        player.sendMessage('§dMatrix §f> §7OWO! you got me twice!!');
         break
       };
 
       case "op": {
         this.Help(isHelp, config.commands.class.op, player, Admin);
         if (isHelp || !this.Accept(player, config.commands.class.op, Admin)) return;
-        if (Admin) return player.sendMessage('§dNokararos §f> §cYou are admin!');
+        if (Admin) return player.sendMessage('§dMatrix §f> §cYou are admin!');
 
         let sucess: boolean = false;
 
@@ -82,14 +82,14 @@ export default class {
           if (config.encryption.password === regex[1]) {
             sucess = true
           } else {
-            player.sendMessage('§dNokararos §f> §cIncorrect password');
+            player.sendMessage('§dMatrix §f> §cIncorrect password');
           }
         } else {
           sucess = true
         };
 
         if (sucess) {
-          world.sendMessage(`§dNokararos §f> §e${player.name} §7is NAC-admin now!`);
+          world.sendMessage(`§dMatrix §f> §e${player.name} §7is NAC-admin now!`);
           Console.log(`(Admin) New admin: ${player.name}`);
           player.setDynamicProperty('NAC:admin_data', true);
         };
@@ -101,8 +101,8 @@ export default class {
         this.Help(isHelp, config.commands.class.deop, player, Admin);
         if (isHelp || !this.Accept(player, config.commands.class.deop, Admin)) return;
 
-        if (!Admin) return player.sendMessage('§dNokararos §f> §cYou are not admin!');
-        world.sendMessage(`§dNokararos §f> §e${player.name} §7is no longer been NAC-admin`);
+        if (!Admin) return player.sendMessage('§dMatrix §f> §cYou are not admin!');
+        world.sendMessage(`§dMatrix §f> §e${player.name} §7is no longer been NAC-admin`);
         Console.log(`(Admin) Removed admin: ${player.name}`);
         player.removeDynamicProperty('NAC:admin_data');
 
@@ -114,22 +114,22 @@ export default class {
         if (isHelp || !this.Accept(player, config.commands.class.setop, Admin)) return;
 
         const target: Player = world.getPlayers({ name: regex[1] })[0];
-        if (!target) return player.sendMessage('§dNokararos §f> §cPlayer is not online or player is invalid');
-        if (target.id === player.id) return player.sendMessage(`§dNokararos §f> §cYou cannot use this command to yourself`);
-        if (isAdmin(target) === true) return player.sendMessage(`§dNokararos §f> §c${target.name} is admin!`);
-        if (config.encryption.TwoFA && !regex[2]) return player.sendMessage(`§dNokararos §f> §c2FA-mode enabled, please enter password`);
+        if (!target) return player.sendMessage('§dMatrix §f> §cPlayer is not online or player is invalid');
+        if (target.id === player.id) return player.sendMessage(`§dMatrix §f> §cYou cannot use this command to yourself`);
+        if (isAdmin(target) === true) return player.sendMessage(`§dMatrix §f> §c${target.name} is admin!`);
+        if (config.encryption.TwoFA && !regex[2]) return player.sendMessage(`§dMatrix §f> §c2FA-mode enabled, please enter password`);
 
         let sucess: boolean = false;
         if (config.encryption.TwoFA) {
           if (regex[2] === config.encryption.password) {
             sucess = true
           } else {
-            return player.sendMessage(`§dNokararos §f> §cIncorrect password!`);
+            return player.sendMessage(`§dMatrix §f> §cIncorrect password!`);
           }
         } else sucess = true;
 
         if (sucess) {
-          world.sendMessage(`§dNokararos §f> §e${target.name} §7is setted to NAC-admin by §水${player.name}`);
+          world.sendMessage(`§dMatrix §f> §e${target.name} §7is setted to NAC-admin by §水${player.name}`);
           Console.log(`(Admin) New admin: ${target.name} | Setted by ${player.name}`);
           target.setDynamicProperty('NAC:admin_data', true);
         };
@@ -142,22 +142,22 @@ export default class {
         if (isHelp || !this.Accept(player, config.commands.class.setdeop, Admin)) return;
 
         const target: Player = world.getPlayers({ name: regex[1] })[0];
-        if (!target) return player.sendMessage('§dNokararos §f> §cPlayer is not online or player is invalid');
-        if (target.id === player.id) return player.sendMessage(`§dNokararos §f> §cYou cannot use this command to yourself`);
-        if (isAdmin(target) === false) return player.sendMessage(`§dNokararos §f> §c${target.name} is not admin!`);
-        if (config.encryption.TwoFA && !regex[2]) return player.sendMessage(`§dNokararos §f> §c2FA-mode enabled, please enter password`);
+        if (!target) return player.sendMessage('§dMatrix §f> §cPlayer is not online or player is invalid');
+        if (target.id === player.id) return player.sendMessage(`§dMatrix §f> §cYou cannot use this command to yourself`);
+        if (isAdmin(target) === false) return player.sendMessage(`§dMatrix §f> §c${target.name} is not admin!`);
+        if (config.encryption.TwoFA && !regex[2]) return player.sendMessage(`§dMatrix §f> §c2FA-mode enabled, please enter password`);
 
         let sucess: boolean = false;
         if (config.encryption.TwoFA) {
           if (regex[2] === config.encryption.password) {
             sucess = true
           } else {
-            return player.sendMessage(`§dNokararos §f> §cIncorrect password!`);
+            return player.sendMessage(`§dMatrix §f> §cIncorrect password!`);
           }
         } else sucess = true;
 
         if (sucess) {
-          world.sendMessage(`§dNokararos §f> §e${target.name} §7is removed NAC-admin by §e${player.name}`);
+          world.sendMessage(`§dMatrix §f> §e${target.name} §7is removed NAC-admin by §e${player.name}`);
           Console.log(`(Admin) Removed admin: ${target.name} | Removed by ${player.name}`);
           target.removeDynamicProperty('NAC:admin_data');
         };
@@ -166,7 +166,7 @@ export default class {
       };
 
       default: {
-        player.sendMessage(`§dNokararos §f> §ccommand not found: ${regex}`)
+        player.sendMessage(`§dMatrix §f> §ccommand not found: ${regex}`)
       }
     };
   }

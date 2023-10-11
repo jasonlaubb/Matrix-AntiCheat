@@ -25,7 +25,7 @@ export default class {
 
     if (config.notify.flagMsg) {
       const showingInformation: string = information === "undefined" ? '' : ` §9[${information}]`;
-      world.sendMessage(`§dNokararos §f> §e${player.name} §7failed §e${module.name}${showingInformation} §7VL=${flagVL}`);
+      world.sendMessage(`§dMatrix §f> §e${player.name} §7failed §e${module.name}${showingInformation} §7VL=${flagVL}`);
     };
 
     if (flagVL >= module.minVL) {
