@@ -180,8 +180,16 @@ world.afterEvents.playerPlaceBlock.subscribe(ev => {
   /* scaffold checks */
   const blockBelow: Block = player.dimension.getBlock({x: Math.floor(player.location.x), y: Math.floor(player.location.y) - 1, z: Math.floor(player.location.z)})!;
   if (config.moduleTypes.scaffold && blockBelow.x === block.x && blockBelow.y === block.y && blockBelow.z === block.z) {
+    /* scaffoldA - checks if player place block without view */
+    if (config.modules.scaffoldA.class.state) {
+      const blockView: Block = player.getBlockFromViewDirection()?.block!;
+      if (block.location.x !== blockView.location.x || block.location.y !== blockView.location.y || block.location.z !== blockView.location.z) {
+        flag(player, config.modules.scaffoldA.class, 'undefined');
+      }
+    };
+
     /* scaffoldB - checks for bypass */
-    if (config.modules.scaffoldB.class.state && roatation.x == 60) {
+    if (config.modules.scaffoldB.class.state && roatation.x === 60) {
       flag(player, config.modules.scaffoldB.class, `roatation=${roatation.x}`)
     };
 

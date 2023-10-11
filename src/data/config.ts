@@ -95,14 +95,14 @@ export default {
             }
         },
         /* scaffold */
-        /*scaffoldA: {
+        scaffoldA: {
             class: {
                 name: 'Scaffold/A',
                 state: true,
                 minVL: 3,
                 punishment: 'default'
             }
-        },*/
+        },
         scaffoldB: {
             class: {
                 name: 'Scaffold/B',
