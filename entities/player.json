@@ -1,0 +1,1445 @@
+{
+  "format_version": "1.17.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "minecraft:player",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false,
+		"scripts": {
+				"animate": [
+				    "ground", 
+				    "levitate", 
+					"is_alive",
+					"is_moving",
+					"is_sleeping",
+					"is_jumping",
+					"is_on_fire",
+					"is_sneaking",
+					"is_sprinting",
+					"is_swimming",
+					"is_using_item", 
+					"sleep", 
+					"is_riding"
+				]
+			},
+			"animations": {
+			    "sleep":"controller.animation.sleep", 
+			    "levitate":"controller.animation.levitate", 
+			    "ground":"controller.animation.ground", 
+				"is_alive": "controller.animation.player.is_alive",
+				"is_moving": "controller.animation.player.is_moving",
+				"is_sleeping": "controller.animation.player.is_sleeping",
+				"is_jumping": "controller.animation.player.is_jumping",
+				"is_on_fire": "controller.animation.player.is_on_fire",
+				"is_sneaking": "controller.animation.player.is_sneaking",
+				"is_sprinting": "controller.animation.player.is_sprinting",
+				"is_swimming": "controller.animation.player.is_swimming",
+				"is_using_item": "controller.animation.player.is_using_item", 
+				"is_riding":"controller.animation.ride" 
+			} 
+    },
+
+    "component_groups": {
+    "minecraft:knockback_resistance": {
+                "minecraft:knockback_resistance": {
+                    "value": 0
+                }
+            }, 
+      "minecraft:add_bad_omen": {
+        "minecraft:spell_effects": {
+          "add_effects": [
+            {
+              "effect": "bad_omen",
+              "duration": 3,
+              "display_on_screen_animation": true
+            }
+          ]
+        } 
+      }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [ "player" ]
+      },
+      "minecraft:is_hidden_when_invisible": {
+      },
+      "minecraft:physics": {},
+      "minecraft:can_climb": {},
+      "minecraft:loot": {
+        "table": "loot_tables/empty.json"
+      },
+      "minecraft:collision_box": {
+        "width": 0.7,
+        "height": 1.8
+      },
+      "minecraft:can_climb": {
+      },
+      "minecraft:movement": {
+        "value": 0.1
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "filters": { "test": "in_lava", "subject": "self", "operator": "==", "value": true },
+            "cause": "lava",
+            "damage_per_tick": 15
+          }
+        ]
+      },
+      "minecraft:attack": {
+      "damage": 1
+      },
+    "minecraft:exhaustion_values": {
+        "heal": 6,
+        "jump": 0.05,
+        "sprint_jump": 0.2,
+        "mine": 0.005,
+        "attack": 0.0,
+        "damage": 0.0,
+        "walk": 0.0,
+        "sprint": 0.1,
+        "swim": 0.01
+      },
+      "minecraft:player.saturation": {
+        "value": 20
+      },
+      "minecraft:player.exhaustion": {
+        "value": 0,
+        "max": 4
+      },
+      "minecraft:player.level": {
+        "value": 0,
+        "max": 24791
+      },
+      "minecraft:player.experience": {
+        "value": 0,
+        "max": 1
+      },
+      "minecraft:breathable": {
+        "totalSupply": 15,
+        "suffocateTime": -1,
+        "inhaleTime": 3.75,
+        "generatesBubbles": false
+      },
+      "minecraft:nameable": {
+        "alwaysShow": true,
+        "allowNameTagRenaming": true
+      },
+      "minecraft:scaffolding_climber": {},
+	"minecraft:environment_sensor": {
+				"triggers": [
+					{
+						"filters": {
+							"any_of": [
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:movingBlock"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:bee_nest"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:mob_spawner" 
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:moving_block"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:movingblock"
+								}
+							],
+							"all_of": [
+								{
+									"test": "has_tag",
+									"value": "babf43df",
+									"operator": "!="
+								}
+							]
+						},
+						"event": "sp:fjjgfgdihu"
+					},
+					{
+						"filters": {
+							"any_of": [
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:end_portal"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:portal"
+								}, 
+							   {
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:command_block"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Repeating_command_block"
+								},
+							    {
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:chain_command_block"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:command_block"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:barrier"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:border_block"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:structure_block"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:structure_void"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:command_block_minecart"
+							    },
+							   {
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:bedrock" 
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:allow"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:deny"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:end_portal_frame"
+								},
+							   {
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Warden_spawn_egg"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Zombie_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Zombie_villager_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:skeleton_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:wither_skeleton_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:cat_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:bee_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:bat_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:chicken_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:pig_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:sheep_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:cow_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Wolf_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:ocelot_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:polar_Bear_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:villager_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:pillager_spawn _egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:agent_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:blaze_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:evoker_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:phantom_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:vindicator_spawn_egg"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:vex_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Mooshroom_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Donkey_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Zombie_horse_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:creeper_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:shulker_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Ravager_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Frog_spawn_egg" 
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:wandering_traider_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:CACrrot_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Rabbit_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:llama_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:horse_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:mule_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:skeleton_horse_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:tropical_fish_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:cod_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:pufferfish_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:salmon_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Dolphin_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:turtle_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:CACnda_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:fox_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:enderman_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:silverfish_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:stray_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:slime_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:spider_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:zombie_pigman_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:piglin_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:husk_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:piglin_brute_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Ghast_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:zoglin_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:allay_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Hoglin_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Goat_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:elder_guardian_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:magma_cube_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:tadpole_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:strider_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:glow_squid_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:drowned_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:witch_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:trader_llama_spawn_egg"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:light_block"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lit_furnace"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lit_smoker"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:camel_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:axolotl_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:pillager_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:cave_spider_spawn_egg"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:endermite_spawn_egg"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:squid_spawn_egg"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Wandering_trader_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:Guardian_spawn_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:jigsaw"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:daylight_detector_inverted"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:powered_comCACrator"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lit_blast_furnace"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lit_furnace"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:camera"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:end_gateway"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:fire"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:soul_fire"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:frosted_ice"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:flowing_lava"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:unknown"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:flowing_water"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:chemistry_table"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:debug_stick"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:spawn_egg"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:info_update"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:info_update2"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:reserved3"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:reserved4"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:reserved6"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:invisiblebedrock"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:invisible_bedrock"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:glowingobsidian"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:compoundcreator"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:underwater_torch"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:chemical_heat"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:colored_torch"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:hard_stained_glass_CACne"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:hard_glass_CACne"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:allow"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:client_request_placeholder_block"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:npc_spawn"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:stickyPistonArmCollision"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:piston_arm_collision"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:bubble_column"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:pumpkin_stem"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:melon_stem"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lava"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:water"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lit_redstonelamp"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:powered_repeater"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lit_redstone_ore"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lit_deepslate_redstone_ore"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:standing_sign"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:wall_sign"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:pistonarmcollision"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:stickypistonarmcollision"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:chalkboard"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lava_cauldron"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:border"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:glow_stick"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:reeds"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:double_stone_slab"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:double_wooden_slab"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:monster_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:stone_monster_egg"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:farmland"
+								}
+							],
+							"all_of": [
+								{
+									"test": "has_tag",
+									"value": "babf43df",
+									"operator": "!="
+								}
+							]
+						},
+						"event": "sp:gdihuhackeditems"
+					},
+					{
+						"filters": {
+							"any_of": [
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:crossbow"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:lingering_potion"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:spruce_sign"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:crimson_sign"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:dark_oak_sign"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:jungle_sign"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:warped_sign"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:oak_sign"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:birch_sign"
+							    }, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:pufferfish_bucket"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:axolotl_bucket"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:salmon_bucket"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:cod_bucket"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:tropical_fish_bucket"
+								}, 
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:beehive"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "any",
+									"value": "minecraft:tadpole_bucket"
+								}
+							],
+							"all_of": [
+								{
+									"test": "has_tag",
+									"value": "babf43df",
+									"operator": "!="
+								}
+							]
+						},
+						"event": "sp:clearhand"
+					},
+					{
+						"filters": {
+							"any_of": [
+								{
+									"test": "has_mob_effect",
+									"domain": "any",
+									"value": "levitation"
+								},
+								{
+									"test": "has_mob_effect",
+									"domain": "any",
+									"value": "jump_boost"
+								},
+								{
+									"test": "has_mob_effect",
+									"domain": "any",
+									"value": "slow_falling"
+								}
+							],
+							"all_of": [
+								{
+									"test": "has_tag",
+									"value": "babf43df",
+									"operator": "!="
+								}
+							]
+						},
+						"event": "sp:effect"
+					}, 
+				    {
+						"filters": {
+							"any_of": [
+								{
+									"test": "has_mob_effect",
+									"domain": "any",
+									"value": "haste"
+								}
+							],
+							"all_of": [
+								{
+									"test": "has_tag",
+									"value": "babf43df",
+									"operator": "!="
+								}
+							]
+						},
+						"event": "CAC:haste"
+					}, 
+					{
+						"filters": {
+							"any_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihu"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihuhacking"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihuhackeditems"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihuduping"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihufjjgf"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihucp"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihu32k"
+								}
+							]
+						},
+						"event": "sp:gdihu"
+					}
+				]
+			},
+			"minecraft:damage_sensor": {
+				"triggers": [
+					{
+						"on_damage": {
+							"filters": {
+								"any_of": [
+									{
+										"all_of": [
+											{
+												"test": "has_tag",
+												"value": "32kable",
+												"subject": "self"
+											}
+										]
+									}
+								]
+							}
+						},
+						"event": "CAC:falldamage"
+					}
+				]
+			}
+		},
+		"events": {
+		"add_knockback_resistance": {
+                "add": {
+                    "component_groups": ["minecraft:knockback_resistance"]
+                }
+            },
+            "remove_knockback_resistance": {
+                "remove": {
+                    "component_groups": ["minecraft:knockback_resistance"]
+                }
+            }, 
+			"sp:fjjgfgdihu": {
+				"run_command": {
+					"command": [
+						"tag @s[tag=!CACOP] add fjjgf" 
+					],
+					"target": "self"
+				}
+			},
+			"sp:gdihuhacking": {
+				"run_command": {
+					"command": [
+						"tag @s[tag=!CACOP] add gdihu"
+					],
+					"target": "self"
+				}
+			},
+			"CAC:haste": {
+				"run_command": {
+					"command": [
+						"scoreboard players set @s speedmine 0"
+					],
+					"target": "self"
+				}
+			}, 
+			"sp:gdihuhackeditems": {
+				"run_command": {
+					"command": [
+						" execute as @s[tag=!CACOP] run tag @s add gdihu"
+					],
+					"target": "self"
+				} 
+			}, 
+			"sp:clearhand": {
+				"run_command": {
+					"command": [
+						"execute as @s run function anti_fjjgf"
+					],
+					"target": "self"
+				}
+			}, 
+			"sp:fjjgfgdihu": {
+				"run_command": {
+					"command": [
+						"execute as @s[tag=!CACOP] run tag @s add fjjgf" 
+					],
+					"target": "self"
+				} 
+			},
+			"antiCheat:antiFly": {
+				"sequence": [
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_mob_effect",
+									"subject": "self",
+									"value": "speed",
+									"operator": "not"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "tpr",
+									"operator": "not"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"execute as @s[m=!c,tag=!CACOP] run tag @s add gdihu" 
+							],
+							"target": "self"
+						}
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "tpr"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"tag @s remove tpr"
+							],
+							"target": "self"
+						}
+					}
+				]
+			},
+					"sp:effect": {
+				"sequence": [
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "hhfy"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"scoreboard players set @s fly 0"
+							],
+							"target": "self"
+						}
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihuhackeditems"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"tag @s[tag=!CACOP] add gdihu"
+							],
+							"target": "self"
+						}
+					},
+				    {
+					"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "CAC:haste"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"scoreboard players set @s speedmine 0"
+							],
+							"target": "self"
+				        }
+				    }, 
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihuduping"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"tag @s[tag=!CACOP] add gdihu"
+							],
+							"target": "self"
+						}
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "sp:effect"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"scoreboard players set @s fly 0"
+							],
+							"target": "self"
+						}
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihufjjgf"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"tag @s[tag=!CACOP] add fjjgf"
+							],
+							"target": "self"
+						}
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihucp"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"tag @s[tag=!CACOP] add gdihu"
+							],
+							"target": "self"
+						}
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihu32k"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"tag @s[tag=!CACOP] add gdihu"
+							],
+							"target": "self"
+						}
+					},
+					{
+						"filters": {
+							"none_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihuhacking"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihu32k"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihucp"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihufjjgf"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihusCACmming"
+								},
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihuhacking"
+								}
+							],
+							"all_of": [
+								{
+									"test": "has_tag",
+									"subject": "self",
+									"value": "gdihu"
+								}
+							]
+						},
+						"run_command": {
+							"command": [
+								"tag @s[tag=!CACOP] add gdihu"
+							],
+							"target": "self"
+						}
+					}
+				]
+			}
+		
+		}
+	}
+}
