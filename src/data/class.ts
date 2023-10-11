@@ -35,4 +35,4 @@ export class Console {
         console.warn(`${data}`);
     }
     ;
-}
+};

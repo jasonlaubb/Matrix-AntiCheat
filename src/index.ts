@@ -33,6 +33,7 @@ export const canTempkickList: Map<string, boolean> = new Map<string, boolean>();
 const hitList: Map<string, any> = new Map<string, any>();
 const LocationLastTick: Map<string, Vector3> = new Map<string, Vector3>();
 //const VelocityLastTick: Map<string, Vector3> = new Map<string, Vector3>();
+const breakRecord: Map<string, number[]> = new Map<string, number[]>();
 
 /* DataBase */
 world.afterEvents.worldInitialize.subscribe(ev => {
@@ -43,7 +44,8 @@ world.afterEvents.worldInitialize.subscribe(ev => {
 
 const definedTempTag = [
   'NAC:flyAstop',
-  'NAC:nofallAstop'
+  'NAC:nofallAstop',
+  'NAC:stopNukerFlag'
 ];
 
 /* player Spawn */
@@ -109,6 +111,7 @@ world.afterEvents.playerLeave.subscribe(ev => {
   Util.flagClear(player);
   hitList.delete(player);
   LocationLastTick.delete(player);
+  breakRecord.delete(player)
 });
 
 /* Util thing */
@@ -166,6 +169,30 @@ world.beforeEvents.chatSend.subscribe(ev => {
     system.run(() => CommandHandler.Select(message, isAdmin(player), player));
     ev.cancel = true;
     return
+  }
+});
+
+/* BlockBreak BeforeEvent */
+world.beforeEvents.playerBreakBlock.subscribe(ev => {
+  const player: Player = ev.player;
+  if (isAdmin(player)) return;
+
+  /* nukerA - checks if player break too many block in a tick */
+  if (config.modules.nukerA.class.state) {
+    if (player.hasTag('NAC:stopNukerFlag')) {
+      ev.cancel = true;
+      return
+    };
+
+    const blockBreak: number[] = breakRecord.get(player.id)! ?? [];
+    breakRecord.set(player.id, [...blockBreak, Date.now()].filter(index => Date.now() - index > config.modules.nukerA.setting.validTime));
+
+    if (breakRecord.get(player.id)!.length > config.modules.nukerA.setting.maxBreakInTick) {
+      breakRecord.delete(player.id);
+      player.addTag('NAC:stopNukerFlag');
+      system.runTimeout(() => player.removeTag('NAC:stopNukerFlag'), 100);
+      system.run(() => flag(player, config.modules.nukerA.class, 'undefined'))
+    }
   }
 });
 
@@ -237,7 +264,7 @@ world.afterEvents.entityHitEntity.subscribe(ev => {
         flag(player, config.modules.killauraB.class, 'undefined');
       }
     }
-  }
+  };
 });
 
 /* EntityHurt Event */

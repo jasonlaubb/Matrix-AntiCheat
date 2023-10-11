@@ -190,7 +190,12 @@ export default {
             class: {
                 name: 'Nuker/A',
                 state: true,
-                minVL: 3
+                minVL: 1,
+                punishment: 'default'
+            },
+            setting: {
+                maxBreakInTick: 6,
+                validTime: 50,
             }
         }
     }
