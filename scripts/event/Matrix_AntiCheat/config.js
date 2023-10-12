@@ -1,4 +1,3 @@
-
 //*Thank you to use our antiCheat!
 //*the prefix here
 let prefix = "#" 
@@ -18,7 +17,7 @@ let antiCrasherEnabled = true
 let antiPhaseEnabled = true
 //*methods
 //*this is maximum cps can player reach 
-let maximumCps = 12
+let maximumCps = 20
 let maximumCpsPlace = 12
 //*this is how much player wait to can break second block like if nukerTimer = 2 its mean 2 ticks
 //* 1 second = 20 ticks
