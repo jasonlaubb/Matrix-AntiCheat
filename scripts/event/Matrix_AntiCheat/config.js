@@ -18,7 +18,7 @@ let antiCrasherEnabled = true
 let antiPhaseEnabled = true
 //*methods
 //*this is maximum cps can player reach 
-let maximumCps = 1
+let maximumCps = 12
 let maximumCpsPlace = 12
 //*this is how much player wait to can break second block like if nukerTimer = 2 its mean 2 ticks
 //* 1 second = 20 ticks
@@ -54,7 +54,7 @@ let toolsNames = [ "minecraft:netherite_hoe",
 	"minecraft:wooden_pickaxe"
 	] 
 //*list of xray blocks 
-let xray =[ "minecraft:diamond_ore", 
+let xray = [ "minecraft:diamond_ore", 
 "minecraft:deepslate_diamond_ore", 
 "minecraft:emerald_ore", 
 "minecraft:deepslate_emerald_ore", 
@@ -62,7 +62,7 @@ let xray =[ "minecraft:diamond_ore",
 "minecraft:deepslate_gold_ore", 
 "minecraft:ancient_debris" 
 ] 
-try{
+try {
 let modules = {
   speed: {
     maximumDistance: 9.5,
@@ -116,10 +116,8 @@ punishmentKickMessage:"§cunNatural clicking §8(§gA§8) §8(§g"+cps+"§8/§g"
 punishment:"none",
 punishmentKickMessage:"§cscaffold §8(§gA§8)",
   },
-}}catch {
-  
-}
-function detect(player,punishment,punishmentKickMessage,Pos,notifyMessageBollean,notifyMessage){
+}} catch { };
+function detect (player,punishment,punishmentKickMessage,Pos,notifyMessageBollean,notifyMessage){
   if(punishment == "kick"){
     player.runCommand(`kick "${player.name}" ${punishmentKickMessage}`)
   } if(punishment == "ban"){
