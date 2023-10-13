@@ -60,7 +60,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
       player.runCommand(`scoreboard objectives remove "${player.name.toLowerCase()}"`)
       world.sendMessage(`§e[§cMatrix§e] §b${player.name} §ahas been unbanned!`)
     }
-  } catch (error) {}
+  } catch {}
   player.addTag(`skip_check`)
   player.runCommand(`scoreboard players set @s skip_check 100`)
   player.runCommand(`scoreboard players set @s cps2 0`)
