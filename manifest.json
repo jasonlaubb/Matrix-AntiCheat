@@ -24,7 +24,7 @@
             "type": "script",
             "uuid": "e744509e-727f-41f3-8239-94ab8b322423",
             "version": [0, 0, 1],
-            "entry": "scripts/index.js"
+            "entry": "scripts/event/Matrix_AntiCheat/index.js"
         }
     ],
     "dependencies": [
