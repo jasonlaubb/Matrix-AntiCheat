@@ -1,16 +1,16 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Matrix AntiCheat v1.0.1",
+        "name": "Matrix AntiCheat v1.0.1-beta",
         "description": "The best anticheat for minecraft bedrock",
-        "uuid": "f4d7e953-d572-43af-a3b7-7e05842cbd74",
+        "uuid": "f4d7e953-d572-43af-a3b7-7e05842cbd75",
         "version": [1, 0, 1],
         "min_engine_version": [1, 20, 30]
     },
     "metadata": {
         "authors": ["jasonlaubb, Hutao999999, ravriv"],
-        "license": "GPLv3",
-        "url": "https://github.com/jasonlaubb/Nokararos-AntiCheat"
+        "license": "AGPLv3",
+        "url": "https://github.com/jasonlaubb/Matrix-AntiCheat"
     },
     "modules": [
         {
