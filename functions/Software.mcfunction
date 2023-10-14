@@ -1,4 +1,19 @@
-##script by RaMiGamer
+##script by Matrix Team
+scoreboard objectives add PosYS dummy y
+scoreboard objectives add PosXS dummy X
+scoreboard objectives add PosZS dummy z
+scoreboard players add @s PosYS 0
+scoreboard players add @s PosXS 0
+scoreboard players add @s PosZS 0
+scoreboard objectives add PosYC dummy y
+scoreboard objectives add PosXC dummy X
+scoreboard objectives add PosZC dummy z
+scoreboard objectives add startMovingUp dummy y
+scoreboard players add @s PosYC 0
+scoreboard players add @s PosXC 0
+scoreboard players add @s PosZC 0
+scoreboard players add @s startMovingUp 0
+scoreboard players remove @s[scores={startMovingUp=1..}] startMovingUp 1
 scoreboard objectives add countOfTargets dummy
 scoreboard players add @s countOfTargets 0 
 scoreboard players remove @s[scores={countOfTargets=1..}] countOfTargets 1 
