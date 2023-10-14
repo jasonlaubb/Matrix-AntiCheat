@@ -39,7 +39,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   try {
     const tags = player.getTags();
     const oldReason = (tags.filter(tag => tag.startsWith("Reason:"))[0] ?? "nothing").replace("Reason:","")
-    const oldBy = (tags.filter(tag => tag.startsWith("By;"))[0] ?? "nothing").replace("Reason:","")
+    const oldBy = (tags.filter(tag => tag.startsWith("By:"))[0] ?? "nothing").replace("Reason:","")
     
     let unban = world.scoreboard.getObjective(player.name.toLowerCase()).displayName
     if (unban == player.name.toLowerCase()) {
