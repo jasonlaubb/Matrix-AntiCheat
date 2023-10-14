@@ -78,7 +78,7 @@ if(antiNukerEnabled == true) {
       })
       event.cancel = true
     }
-    if(checkEfficiency != null && getNukeTime >= 1 || player.getEffect("haste") && getNukeTime >= 1 ||
+    if(checkEfficiency > 0 && getNukeTime >= 1 || player.getEffect("haste") && getNukeTime >= 1 ||
       fastBrokenBlocks.includes(block.type.id) && getNukeTime >= 1) {
       system.run(() => {
         player.runCommand(`scoreboard players set @s nukeLength 0`)
