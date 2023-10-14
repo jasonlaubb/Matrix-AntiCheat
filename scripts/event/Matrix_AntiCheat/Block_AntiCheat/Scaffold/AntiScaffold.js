@@ -113,20 +113,6 @@ if (antiScaffoldEnabled == true) {
         })
       }
     } else {
-      if (checkSelectedSlot == block.typeId) return
-      if (disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ || disXZ > limitOfReachX || block
-        .typeId == "minecraft:air") return
-      if (player.hasTag("MatrixOP")) return
-      try {
-        player.runCommand(`give @s ${blockId}`)
-      } catch {}
-      if (scaffoldBToggle != true) return
-      event.cancel = true
-      system.run(() => {
-        player.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§gB§8) §chas been detected from §b${player.name}\n§cItem in selected slot §8 = §8(§g${checkSelectedSlot.replaceAll("minecraft:","")}§8)"}]}`
-          )
-      })
     }
   })
 }
