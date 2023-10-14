@@ -99,7 +99,7 @@ if (antiSpeedMineEnabled == true) {
     if (woodTools.includes(item)) {
       breakSpeed = 13
     }
-    if (checkEfficiency != null || player.getEffect("haste") || fastBrokenBlocks.includes(block.type.id)) {
+    if (checkEfficiency > 0 || player.getEffect("haste") || fastBrokenBlocks.includes(block.type.id)) {
       breakSpeed = 0
     }
     if (breakTimer < 1) {
