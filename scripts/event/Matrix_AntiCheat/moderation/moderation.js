@@ -32,16 +32,17 @@ import {
   antiFlyEnabled,
   antiCrasherEnabled
 } from "../config"
-let world = Minecraft.world
+const world = Minecraft.world
+
 world.afterEvents.playerSpawn.subscribe((event) => {
   let player = event.player
   player.runCommand(`function Software`)
   try {
     const tags = player.getTags();
     const oldReason = (tags.filter(tag => tag.startsWith("Reason:"))[0] ?? "nothing").replace("Reason:","")
-    const oldBy = (tags.filter(tag => tag.startsWith("By:"))[0] ?? "nothing").replace("Reason:","")
+    const oldBy = (tags.filter(tag => tag.startsWith("By:"))[0] ?? "nothing").replace("By:","")
     
-    let unban = world.scoreboard.getObjective(player.name.toLowerCase()).displayName
+    const unban = world.scoreboard.getObjective(player.name.toLowerCase()).displayName
     if (unban == player.name.toLowerCase()) {
       player.runCommand(`tag @s remove ban`)
       player.runCommand(`tag @s remove "Reason:${oldReason}"`)
@@ -49,7 +50,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
       player.runCommand(`scoreboard objectives remove "${player.name.toLowerCase()}"`)
       world.sendMessage(`§e[§cMatrix§e] §b${player.name} §ahas been unbanned!`)
     }
-  } catch {}
+  } catch { }
   player.addTag(`skip_check`)
   player.runCommand(`scoreboard players set @s skip_check 100`)
   player.runCommand(`scoreboard players set @s cps2 0`)
@@ -58,23 +59,17 @@ world.afterEvents.playerSpawn.subscribe((event) => {
 system.runInterval(() => {
   for (let player of world.getPlayers()) {
     player.runCommand(`function Software`)
-    let banTimer = world.scoreboard.getObjective("bantimer").getScore(player.scoreboardIdentity)
-    let cps = world.scoreboard.getObjective("trueCps").getScore(player.scoreboardIdentity)
-    let reason;
-    let by;
-    let tags = player.getTags()
-    for (let tag of tags) {
-      if (tag.startsWith("Reason:")) {
-        reason = tag.replaceAll("Reason:", "")
-      }
-      if (tag.startsWith("By:")) {
-        by = tag.replaceAll("By:", "")
-      }
-    }
+    const banTimer = world.scoreboard.getObjective("bantimer").getScore(player.scoreboardIdentity)
+    const cps = world.scoreboard.getObjective("trueCps").getScore(player.scoreboardIdentity)
+    const tags = player.getTags()
+    const reason = (tags.filter(tag => tag.startsWith("Reason:"))[0] ?? "nothing").replace("Reason:","")
+    const by = (tags.filter(tag => tag.startsWith("By:"))[0] ?? "nothing").replace("By:","")
+    
     if (player.hasTag("freeze")) {
-      let freezeX = world.scoreboard.getObjective("freezeX").getScore(player.scoreboardIdentity)
-      let freezeZ = world.scoreboard.getObjective("freezeZ").getScore(player.scoreboardIdentity)
-      let freezeY = world.scoreboard.getObjective("freezeY").getScore(player.scoreboardIdentity)
+      const freezeX = world.scoreboard.getObjective("freezeX").getScore(player.scoreboardIdentity)
+      const freezeZ = world.scoreboard.getObjective("freezeZ").getScore(player.scoreboardIdentity)
+      const freezeY = world.scoreboard.getObjective("freezeY").getScore(player.scoreboardIdentity)
+      
       player.runCommand(`tp @s ${freezeX} ${freezeY} ${freezeZ}`)
     }
     if (banTimer == 0 && player.hasTag("ban")) {
