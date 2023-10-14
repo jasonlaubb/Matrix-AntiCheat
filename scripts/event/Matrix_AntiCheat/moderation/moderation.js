@@ -37,21 +37,10 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   let player = event.player
   player.runCommand(`function Software`)
   try {
-    let oldReason;
-    let oldBy;
-    try {
-      for (let tag of getTags) {
-        if (tag.startsWith("Reason:")) {
-          oldReason = tag.replaceAll("Reason:", "")
-        }
-        if (tag.startsWith("By:")) {
-          oldBy = tag.replaceAll("By:", "")
-        }
-      }
-    } catch {
-      oldReason = "nothing"
-      oldBy = "nothing"
-    }
+    const tags = player.getTags();
+    const oldReason = (tags.filter(tag => tag.startsWith("Reason:"))[0] ?? "nothing").replace("Reason:","")
+    const oldBy = (tags.filter(tag => tag.startsWith("By;"))[0] ?? "nothing").replace("Reason:","")
+    
     let unban = world.scoreboard.getObjective(player.name.toLowerCase()).displayName
     if (unban == player.name.toLowerCase()) {
       player.runCommand(`tag @s remove ban`)
