@@ -1,14 +1,14 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Matrix AntiCheat v1.0.1-beta",
+        "name": "Matrix AntiCheat v1.0.3-beta",
         "description": "The best anticheat for minecraft bedrock",
-        "uuid": "f4d7e953-d572-43af-a3b7-7e05842cbd75",
+        "uuid": "37eb3e50-1a8b-41b2-9742-202250067b1b",
         "version": [1, 0, 1],
         "min_engine_version": [1, 20, 30]
     },
     "metadata": {
-        "authors": ["jasonlaubb, Hutao999999, ravriv"],
+        "authors": ["jasonlaubb, Hutao999999, ravriv", "RaMiGamerDev"],
         "license": "AGPLv3",
         "url": "https://github.com/jasonlaubb/Matrix-AntiCheat"
     },
@@ -19,12 +19,12 @@
             "version": [1, 0, 0]
         },
         {
-            "description": "Gametest API",
+            "description": "Gametest-API",
             "language": "javascript",
             "type": "script",
             "uuid": "e744509e-727f-41f3-8239-94ab8b322423",
             "version": [0, 0, 1],
-            "entry": "scripts/event/Matrix_AntiCheat/index.js"
+            "entry": "scripts/index.js"
         }
     ],
     "dependencies": [
