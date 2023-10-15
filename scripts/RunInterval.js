@@ -1,4 +1,8 @@
 import {
+  system,
+  world
+} from "@minecraft/server"
+import {
   antiSpeed
 } from "./Movement_checks/antiSpeed"
 import {
