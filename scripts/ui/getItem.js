@@ -6,9 +6,8 @@ function getUIItem (player, type) {
   //Create a custom item by a defined item
   item.setLore(['§r§7(Right click to open Matrix UI)', `§0§k${world.getDynamicProperty('Matrix:UI-key')}`])
   item.keepOnDeath = true
-  item.maxAmount = 1
   item.nameTag = '§r§g§lMatrix UI'
-  item.getComponent('minecraft:enchantments').enchantments.addEnchantment(new Enchantment('minecraft:unbreaking', 1))
+  item.getComponent('minecraft:enchantments').enchantments.addEnchantment(new Enchantment('unbreaking', 1))
 
   player.getComponent('inventory').container.addItem(item.clone());
 };
