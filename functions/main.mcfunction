@@ -132,16 +132,16 @@ scoreboard objectives add normalS dummy normalSpeed
 scoreboard players add @a normalS 0
 scoreboard objectives add speedFlags dummy speedFlags
 scoreboard players add @a speedFlags 0
-execute as @a at @s if block ~~-1~ ice run tag @a add skip_checkS
-execute as @a at @s if block ~~-1~ blue_ice run tag @a add skip_checkS
-execute as @a at @s if block ~~-1~ frosted_ice run tag @a add skip_checkS
-execute as @a at @s if block ~~-1~ packed_ice run tag @a add skip_checkS
-execute as @a at @s if block ~~-1~ end_portal run tag @a add skip_checkS
-execute as @a at @s if block ~~-1~ portal run tag @a add skip_checkS
-execute as @a at @s if block ~~1~ end_portal run tag @a add skip_checkS
-execute as @a at @s if block ~~1~ portal run tag @a add skip_checkS
-execute as @a at @s if block ~~~ end_portal run tag @a add skip_checkS
-execute as @a at @s if block ~~~ portal run tag @a add skip_checkS
+execute as @a at @s if block ~~-1~ ice run tag @s add skip_checkS
+execute as @a at @s if block ~~-1~ blue_ice run tag @s add skip_checkS
+execute as @a at @s if block ~~-1~ frosted_ice run tag @s add skip_checkS
+execute as @a at @s if block ~~-1~ packed_ice run tag @s add skip_checkS
+execute as @a at @s if block ~~-1~ end_portal run tag @s add skip_checkS
+execute as @a at @s if block ~~-1~ portal run tag @s add skip_checkS
+execute as @a at @s if block ~~1~ end_portal run tag @s add skip_checkS
+execute as @a at @s if block ~~1~ portal run tag @s add skip_checkS
+execute as @a at @s if block ~~~ end_portal run tag @s add skip_checkS
+execute as @a at @s if block ~~~ portal run tag @s add skip_checkS
 scoreboard objectives add speedtimer dummy speedtimer
 scoreboard players add @a speedtimer 1
 gamemode s @a[m=c,tag=!gmc,tag=!OveraOP]
