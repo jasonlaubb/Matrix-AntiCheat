@@ -5,7 +5,7 @@ world.afterEvents.worldInitialize.subscribe(ev => {
   ev.propertyRegistry.registerWorldDynamicProperties(new DynamicPropertiesDefinition().defineString('Matrix:UI-key'))
 
   if (!world.getDynamicProperty('Matrix:UI-key')) {
-    const random = Math.floor(Math.random() * 32 + 1)
+    const random = String(Math.random()) + String(Math.random())
     world.setDynamicProperty('Matrix:UI-key', random)
   }
 })
