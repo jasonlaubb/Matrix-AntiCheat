@@ -43,13 +43,13 @@ let firstPosZ = world.scoreboard.getObjective("PosZS").getScore(player.scoreboar
       let velocityX = velocity.x
       let head = player.dimension.getBlock({ x: Math.floor(player.location.x) , y: Math.floor(player.location.y+1), z: Math.floor(player.location.z) }).typeId;
       let body = player.dimension.getBlock({ x: Math.floor(player.location.x) , y: Math.floor(player.location.y), z: Math.floor(player.location.z) }).typeId;
-if(head.includes("web") || body.includes("web") || player.hasTag("is_using_item")){
+if(head.includes("web") || body.includes("web")){
         if(velocityZ<0.040 || velocityX<0.040|| velocityX>-0.040 || velocityZ>-0.040){
           player.runCommand(`scoreboard players set @s PosXS ${playerX}`)
 player.runCommand(`scoreboard players set @s PosYS ${playerY}`)
 player.runCommand(`scoreboard players set @s PosZS ${playerZ}`)
         }}
-      if(head.includes("web") || body.includes("web") || player.hasTag("is_using_item")){
+      if(head.includes("web") || body.includes("web")){
         if(velocityZ>0.040 || velocityX>0.040|| velocityX<-0.040 || velocityZ<-0.040){
           
           detect(player,"tp",null,firstPosX+" "+firstPosY+" "+firstPosZ,true,"§e[§cMatrix§e] §can unNatural Movement §gNoSlow §8(§gA§8)")
