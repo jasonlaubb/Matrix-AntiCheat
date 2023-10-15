@@ -152,9 +152,9 @@ world.beforeEvents.chatSend.subscribe((data) => {
 
   if (!msg.startsWith(prefix + "ui")) return;
   if(!player.hasTag("MatrixOP")) return player.sendMessage(`§e[§cMatrix§e] §cyou dont have permission to use this command!`)
-
+system.run(()=>{
   getUIItem(player, UiItemPrefix)
-})
+}})
 world.beforeEvents.chatSend.subscribe((data) => {
   let player = data.sender
   let msg = data.message
