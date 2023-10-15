@@ -2,6 +2,8 @@
 //*the prefix here
 let prefix = "#"
 let password = "passwordHere"
+//*UI
+let UiItemPrefix = 'minecraft:diamond'
 //*toggles: 
 let antiReachBlockEnabled = true
 let antiReachAttackEnabled = true
@@ -133,5 +135,6 @@ export {
   maximumCpsPlace,
   password,
   prefix,
-  detect
+  detect,
+  UiItemPrefix
 }

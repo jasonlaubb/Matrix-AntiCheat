@@ -12,10 +12,12 @@ import {
   ActionFormData
 } from "@minecraft/server-ui"
 import {
+  UiItemPrefix,
   password,
   prefix
 } from "../config"
 import { moderateAction } from "../Moderation/moderation"
+import { getUIItem } from "../ui/getItem"
 const world = Minecraft.world
 let checkExistPlayer;
 let target;
@@ -61,7 +63,8 @@ let commands = [prefix + "unban",
   prefix + "spawn",
   prefix + "inventoryCheck",
   prefix + "kit",
-  prefix + "toggles"
+  prefix + "toggles",
+  prefix + "ui"
 ]
 world.beforeEvents.chatSend.subscribe((data) => {
   let player = data.sender
@@ -142,6 +145,15 @@ world.beforeEvents.chatSend.subscribe((data) => {
     }
     player.sendMessage(`§e[§cMatrix§e] §cthis command doesnt exist >> §g${word[0].replaceAll("!","")} §c<<`)
   }
+})
+world.beforeEvents.chatSend.subscribe((data) => {
+  const player = data.sender
+  const msg = data.message
+
+  if (!msg.startsWith(prefix + "ui")) return;
+  if(player.hasTag("MatrixOP")) return player.sendMessage(`§e[§cMatrix§e] §cyou dont have permission to use this command!`)
+
+  getUIItem(player, UiItemPrefix)
 })
 world.beforeEvents.chatSend.subscribe((data) => {
   let player = data.sender
