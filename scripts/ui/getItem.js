@@ -4,7 +4,7 @@ function getUIItem (player, type) {
   const item = new ItemStack(type, 1)
 
   //Create a custom item by a defined item
-  item.setLore(['§r§7(Right click to open Matrix UI)', '§0§k' + world.getDynamicProperty('Matrix:UI-key')])
+  item.setLore(['§r§7(Right click to open Matrix UI)', `§0§k${world.getDynamicProperty('Matrix:UI-key')}`])
   item.keepOnDeath = true
   item.maxAmount = 1
   item.nameTag = '§r§g§lMatrix UI'
