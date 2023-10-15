@@ -151,7 +151,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
   const msg = data.message
 
   if (!msg.startsWith(prefix + "ui")) return;
-  if(player.hasTag("MatrixOP")) return player.sendMessage(`§e[§cMatrix§e] §cyou dont have permission to use this command!`)
+  if(!player.hasTag("MatrixOP")) return player.sendMessage(`§e[§cMatrix§e] §cyou dont have permission to use this command!`)
 
   getUIItem(player, UiItemPrefix)
 })
