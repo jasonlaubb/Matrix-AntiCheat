@@ -15,7 +15,7 @@ world.afterEvents.itemUse.subscribe(ev => {
   if (player.typeId !== 'minecraft:player' || !player.hasTag('MatrixOP')) return;
   const item = ev.itemStack.getLore()
   try {
-    if (item[1].replace("§0§k","") !== world.getDynamicProperty('Matrix:UI-key')) return;
+    if (Number(item[1].replace("§0§k","")) !== world.getDynamicProperty('Matrix:UI-key')) return;
   } catch { return }
 
   //open the ui for player
