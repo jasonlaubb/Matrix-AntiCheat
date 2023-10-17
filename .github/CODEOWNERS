@@ -3,7 +3,7 @@ scripts/* @ravriv
 scripts/* @RaMiGamerDev
 
 pack_icon.png @RaMiGamerDev
-animation\ controller/* @RaMiGamerDev
+animation\ controllers/* @RaMiGamerDev
 functions/* @RaMiGamerDev
 entities/* @RaMiGamerDev
 docs/* @Hutao999999
