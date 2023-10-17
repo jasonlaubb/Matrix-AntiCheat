@@ -1,4 +1,21 @@
-animation\ controller/* @RaMiGamerDev
+scripts/* @jasonlaubb
 scripts/* @ravriv
 scripts/* @RaMiGamerDev
-* @jasonlaubb
+
+pack_icon.png @RaMiGamerDev
+animation\ controller/* @RaMiGamerDev
+functions/* @RaMiGamerDev
+entities/* @RaMiGamerDev
+docs/* @Hutao999999
+jsconfig.json @jasonlaubb
+tsconfig.json @jasonlaubb
+manifest.json @jasonlaubb
+
+README.md @jasonlaubb
+README.md @ravriv
+README.md @RaMiGamerDev
+
+.mcattributes @jasonlaubb
+.github/* @jasonlaubb
+
+LICENSE @jasonlaubb
