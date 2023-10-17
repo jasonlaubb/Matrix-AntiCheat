@@ -135,6 +135,44 @@ export class moderateAction {
     world.sendMessage(`§e[§cMatrix§e] §b${player.name} §ahas been unfreeze\n§gBy§8:§b${admin.name}`)
     player.removeTag('freeze')
   }
+
+  seeInv () {
+    const player = this.player
+    const admin = this.admin
+    const inventory = player.getComponent('inventory').container
+
+    for (let i = 0; i < inventory.size; i++) {
+      const item = inventory.getItem(i) ?? { typeId: "air", amount: 1 }
+      admin.sendMessage(`§e[§cMatrix§e] §gslot number §8(§g${i}§8) §gincluding §c${item.typeId} §gamount §c${item.amount}`)
+    }
+  }
+  seachInv (seach) {
+    const player = this.player
+    const admin = this.admin
+    const inventory = player.getComponent('inventory').container
+
+    for (let i = 0; i < inventory.size; i++) {
+      const item = inventory.getItem(i) ?? { typeId: "minecraft:air", amount: 1 }
+      if (item.typeId === seach) {
+        player.sendMessage(`§g[§cMatrix§g] §aSuccessfully found §8(§g${seach}§8) §gamount §8(§g${item.amount}§8) §gin slot §8(§g${i}§8)`)
+      }
+    }
+  }
+  copyInv () {
+    const player = this.player
+    const admin = this.admin
+    const inventory1 = player.getComponent('inventory').container
+    const inventory2 = admin.getComponent('inventory').container
+
+    for (let i = 0; i < inventory.size; i++) {
+      const item = inventory1.getItem(i) ?? { typeId: "air", amount: 1 }
+      if (item.typeId === "air") {
+        inventory2.setItem(i)
+      } else {
+        inventory2.setItem(i, item.clone())
+      }
+    }
+  }
 }
 
 export { moderation }
