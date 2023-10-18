@@ -5,11 +5,11 @@
 			"states": {
 				"default": {
 					"transitions": [ { "zooming": "(1.0)" } ],
-					"on_entry": [ "/function Software" ]
+					"on_entry": [ "/function main" ]
 				},
 				"zooming": {
 					"transitions": [ { "default": "(1.0)" } ],
-              "on_entry": [ "/function Software" ]
+              "on_entry": [ "/function main" ]
 		   	  	}
 	 		  }
        }
