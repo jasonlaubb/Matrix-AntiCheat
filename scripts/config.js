@@ -19,6 +19,8 @@ const antiCrasherEnabled = true
 const antiPhaseEnabled = true
 const antiBadPacketEnabled = true
 const antiInvalidSrpintEnabled = true
+//*modules
+const antiCombatLogEnabled = true
 //*methods
 //*this is maximum cps can player reach 
 const maximumCps = 20
@@ -96,7 +98,7 @@ try {
     scaffold: {
       punishment: "none",
       punishmentKickMessage: "§cscaffold §8(§gA§8)",
-    },
+    }
   }
 } catch {};
 
@@ -132,6 +134,7 @@ export {
   antiSpeedEnabled,
   antiBadPacketEnabled,
   antiInvalidSrpintEnabled,
+  antiCombatLogEnabled,
   maximumCps,
   nukerTimer,
   toolsNames,
