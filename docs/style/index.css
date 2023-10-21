@@ -1,178 +1,666 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 html,
 body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 100vh;
+  min-height: 100vh;
+  overflow-x: hidden;
   flex-direction: column;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("../pictures/background.png");
-  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.toSmall {
+  display: none;
 }
 
 header {
-  left: 0;
-  top: 0;
   position: fixed;
+  top: 0;
+  left: 0;
+  padding: 30px 70px;
   width: 100%;
-  padding: 20px 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 100;
-  backdrop-filter: blur(50px);
-  border-bottom: 5px solid white;
+  backdrop-filter: blur(100px);
+  border-bottom: 1px solid white;
+  z-index: 1000;
 }
 
 header .logo {
   font-size: 40px;
-  cursor: pointer;
   color: white;
-  transition: 0.2s;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 header .logo:hover {
   color: rgb(200, 200, 200);
 }
 
-header .logo .logoIcon {
-  width: 30px;
-  margin-right: 30px;
-}
-
-header .navigation button {
+header .navbar button {
   font-size: 20px;
-  padding: 5px;
+  margin-left: 30px;
   background-color: transparent;
   outline: none;
   border: 0;
-  margin-left: 20px;
-  position: relative;
-  font-weight: 500;
   cursor: pointer;
   color: white;
-  transition: 0.2s;
+  padding: 10px;
+  border-radius: 20px;
+  transition: 0.3s;
+  position: relative;
 }
 
-header .navigation button:hover {
+header .navbar button:hover {
   color: rgb(220, 220, 220);
 }
 
-header .navigation button::after {
+header .navbar button::after {
   content: '';
-  width: 100%;
-  height: 3px;
-  background-color: yellow;
   position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(255, 255, 0);
   left: 0;
   bottom: 0;
-  transition: 0.2s;
+  transition: 0.3s;
   transform: scaleX(0);
+}
+
+header .navbar button:nth-child(1)::after {
   transform-origin: left;
 }
 
-header .navigation button:hover::after {
+header .navbar button:nth-child(2)::after {
+  transform-origin: 25%;
+}
+
+header .navbar button:nth-child(3)::after {
+  transform-origin: 50%;
+}
+
+header .navbar button:nth-child(4)::after {
+  transform-origin: 75%;
+}
+
+header .navbar button:nth-child(5)::after {
+  transform-origin: right;
+}
+
+header .navbar button:hover::after {
   transform: scaleX(1);
 }
 
-main .page1,
-main .page2,
-main .page3,
-main .page4,
-main .page5,
-main .page6 {
+header .menu {
+  display: none;
+}
+
+header .menu .menuIcon {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+header .menu .menuIcon .line {
+  width: 90%;
+  height: 6px;
+  background-color: white;
+  transition: 0.3s;
+}
+
+header .menu:hover .menuIcon .line {
+  background-color: rgb(200, 200, 200);
+}
+
+section.home {
+  min-width: 200vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 160px 30px;
-  backdrop-filter: blur(50px);
-  border-radius: 20px;
-  border: 1px solid white;
-  transition: 0.5s;
+  background-image: url(../pictures/backgrounds/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+section.downloadRelease {
+  min-width: 200vh;
+  min-height: 100vh;
+  background-image: url(../pictures/backgrounds/background2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+section.discord {
+  min-width: 200vh;
+  min-height: 100vh;
+  background-image: url(../pictures/backgrounds/background3.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+section.home .allParagraph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200vh;
+  min-height: 100vh;
   position: absolute;
-  left: 50%;
   top: 50%;
-  transform: translate(calc(-2000px - 50%), calc(-50% + 40px));
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-main .page1.selected,
-main .page2.selected,
-main .page3.selected,
-main .page4.selected,
-main .page5.selected,
-main .page6.selected {
-  transition-delay: 0.5s;
-  transform: translate(calc(0px - 50%), calc(-50% + 40px));
+section.downloadRelease .board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200vh;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-main .page1 .title,
-main .page2 .title,
-main .page3 .title,
-main .page4 .title,
-main .page5 .title,
-main .page6 .title {
-  font-size: 50px;
+section.discord .board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200vh;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+section.downloadRelease .board .downloadRelease {
+  width: 400px;
+  height: 200px;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid white;
+  border-radius: 30px;
+  color: white;
+  transition: 0.3s;
+  position: absolute;
+  backdrop-filter: blur(50px);
+}
+
+section.downloadRelease .board .title {
+  font-size: 30px;
   font-weight: 600;
-  color: white;
 }
 
-main .page1 .description,
-main .page2 .description,
-main .page3 .description,
-main .page4 .description,
-main .page5 .description,
-main .page6 .description {
-  font-size: 25px;
-  color: white;
-  margin-top: 80px;
+section.downloadRelease .board .subtitle {
+  font-size: 20px;
+  font-weight: 400;
 }
 
-main .page1 .buttons,
-main .page2 .buttons,
-main .page3 .buttons,
-main .page4 .buttons,
-main .page5 .buttons,
-main .page6 .buttons {
-  width: 100%;
-  height: 40px;
+section.downloadRelease .board .goToDownloadRelease {
+  width: 200px;
+  height: 30px;
+  background-color: transparent;
+  transition: 0.3s;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid white;
+}
+
+section.downloadRelease .board .goToDownloadRelease:hover {
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  color: black;
+}
+
+section.home .environment,
+section.home .hackerDetection,
+section.home .openSource,
+section.home .githubContributors,
+section.home .specialThanks {
+  backdrop-filter: blur(50px);
+  padding: 80px;
+  border: 1px solid white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-direction: column;
+  position: absolute;
+  transition: 0.3s;
+  transform: scaleY(0);
+}
+
+section.home .environment.selected,
+section.home .hackerDetection.selected,
+section.home .openSource.selected,
+section.home .githubContributors.selected,
+section.home .specialThanks.selected {
+  transition-delay: 0.3s;
+  transform: scaleY(1);
+}
+
+section.home .environment .title,
+section.home .hackerDetection .title,
+section.home .openSource .title,
+section.home .githubContributors .title,
+section.home .specialThanks .title {
+  font-size: 40px;
+  color: white;
+  font-weight: 600;
+}
+
+section.home .environment .subtitle,
+section.home .hackerDetection .subtitle,
+section.home .openSource .subtitle,
+section.home .githubContributors .subtitle,
+section.home .specialThanks .subtitle {
+  font-size: 20px;
+  color: white;
+  font-weight: 400;
+  text-align: center;
+}
+
+section.home .environment .pageChanger,
+section.home .hackerDetection .pageChanger,
+section.home .openSource .pageChanger,
+section.home .githubContributors .pageChanger,
+section.home .specialThanks .pageChanger {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  width: 80%;
+  height: 30px;
   position: absolute;
   bottom: 20px;
 }
 
-main .page1 .buttons .arrow,
-main .page2 .buttons .arrow,
-main .page3 .buttons .arrow,
-main .page4 .buttons .arrow,
-main .page5 .buttons .arrow,
-main .page6 .buttons .arrow {
-  width: 40px;
+section.home .environment .pageChanger img,
+section.home .hackerDetection .pageChanger img,
+section.home .openSource .pageChanger img,
+section.home .githubContributors .pageChanger img,
+section.home .specialThanks .pageChanger img {
   cursor: pointer;
   color: white;
-  transition: 0.2s;
 }
 
-main .page1 .buttons .arrow:hover,
-main .page2 .buttons .arrow:hover,
-main .page3 .buttons .arrow:hover,
-main .page4 .buttons .arrow:hover,
-main .page5 .buttons .arrow:hover,
-main .page6 .buttons .arrow:hover {
-  filter: brightness(0.8);
+section.github {
+  min-width: 200vh;
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(20, 20, 20);
+  position: relative;
+}
+
+section.developers {
+  min-width: 200vh;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(20, 20, 20);
+  position: relative;
+}
+
+section.github .board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200vh;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+section.developers .board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200vh;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+section.github .board .github {
+  width: 400px;
+  height: 200px;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid white;
+  border-radius: 30px;
+  color: white;
+  transition: 0.3s;
+  position: absolute;
+}
+
+section.developers .board .developers {
+  min-width: 200vh;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+section.github .board .github:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+section.github .board .title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+section.github .board .subtitle {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+section.github .board .goToGithub {
+  width: 100px;
+  height: 30px;
+  background-color: transparent;
+  transition: 0.3s;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid white;
+}
+
+section.github .board .goToGithub:hover {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+section.developers .board .developers .title {
+  font-size: 50px;
+  color: white;
+}
+
+section.developers .board .developers .subtitle {
+  font-size: 20px;
+  color: white;
+}
+
+section.developers .board .developers .players {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+  gap: 30px;
+}
+
+section.developers .board .developers .players .submain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  min-width: 200vh;
+  height: 50%;
+}
+
+section.developers .board .developers .players .player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+section.developers .board .developers .players .main .player .minecraftId,
+section.developers .board .developers .players .main .player .discordId {
+  font-size: 25px;
+  font-weight: 500;
+  color: white;
+}
+
+section.developers .board .developers .players .submain .player .minecraftId,
+section.developers .board .developers .players .submain .player .discordId {
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+}
+
+section.developers .board .developers .players .main .player .description {
+  font-size: 15px;
+  color: white;
+  text-align: center;
+}
+
+section.developers .board .developers .players .submain .player .description {
+  font-size: 15px;
+  color: white;
+  text-align: center;
+}
+
+section.developers .board .developers .players .main .player .avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+}
+
+section.developers .board .developers .players .submain .player .avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+}
+
+section.discord .board .discord {
+  width: 400px;
+  height: 250px;
+  background-color: rgb(35, 39, 42);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+section.discord .board .discord .serverAvatar .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5em;
+  margin-top: 10px;
+}
+
+section.discord .board .discord .invite .text {
+  color: rgb(150, 150, 150);
+}
+
+section.discord .board .discord .title .text {
+  font-size: 30px;
+  color: white;
+  font-weight: 600;
+}
+
+section.discord .board .discord .join {
+  color: white;
+  margin-top: 30px;
+  width: 90%;
+  height: 30px;
+  background-color: rgb(88, 101, 242);
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+section.discord .board .discord .join:hover {
+  color: rgb(200, 200, 200);
+  background-color: rgb(68, 81, 222);
+}
+
+section.footer .board .footer {
+  min-width: 200vh;
+  min-height: 20vh;
+  background-color: rgb(20, 20, 20);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+section.footer .board .footer .title {
+  font-size: 30px;
+  text-decoration: underline;
+  font-weight: 800;
+}
+
+@media (max-width: 1100px) {
+  header {
+    padding: 10px 30px;
+  }
+}
+
+@media (max-width: 975px) {
+  header .navbar {
+    display: none;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 80px;
+    width: 100%;
+    backdrop-filter: blur(100px);
+  }
+
+  header .navbar.opened {
+    display: flex;
+  }
+
+  header .menu {
+    display: flex;
+  }
+
+  header .navbar button::after {
+    display: none;
+  }
+
+  section.home .environment,
+  section.home .hackerDetection,
+  section.home .openSource,
+  section.home .githubContributors,
+  section.home .specialThanks {
+    padding: 30px;
+  }
+
+  section.home .environment .title,
+  section.home .hackerDetection .title,
+  section.home .openSource .title,
+  section.home .githubContributors .title,
+  section.home .specialThanks .title {
+    font-weight: 400;
+    font-size: 30px;
+  }
+
+  section.home .environment .subtitle,
+  section.home .hackerDetection .subtitle,
+  section.home .openSource .subtitle,
+  section.home .githubContributors .subtitle,
+  section.home .specialThanks .subtitle {
+    font-weight: 200;
+    font-size: 15px;
+  }
+
+  section.home .environment .pageChanger,
+  section.home .hackerDetection .pageChanger,
+  section.home .openSource .pageChanger,
+  section.home .githubContributors .pageChanger,
+  section.home .specialThanks .pageChanger {
+    bottom: 0;
+  }
+}
+
+@media (max-width: 300px) {
+  header .logo {
+    font-size: 30px;
+  }
+
+  header .navbar {
+    top: 50px;
+  }
+
+  header .menu .menuIcon {
+    width: 20px;
+    height: 20px;
+    top: 15px;
+  }
+
+  header .menu .menuIcon .line {
+    height: 3px;
+  }
+}
+
+@media (max-width: 230px) {
+  header {
+    display: none;
+  }
+
+  section {
+    display: none;
+  }
+
+  .toSmall {
+    display: block;
+  }
 }
