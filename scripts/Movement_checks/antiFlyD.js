@@ -11,6 +11,7 @@ const GamemodeOf = (player) => {
   
   for (const gamemode of GameMode) {
     if ([...world.getPlayers({
+        name: player.name,
         gameMOde: gamemode[GameMode]
     })].length > 0) return gamemode[gamemodes]
   }
