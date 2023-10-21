@@ -323,6 +323,31 @@
           ]
         }
       }
+    },
+    "controller.animation.player.can_fly": {
+      "initial_state": "not_canfly",
+      "states": {
+        "not_canfly": {
+          "on_entry": [
+            "/tag @s remove canfly"
+          ],
+          "transitions": [
+            {
+              "canfly": "query.can_fly"
+            }
+          ]
+        },
+        "canfly": {
+          "on_entry": [
+            "/tag @s add canfly"
+          ],
+          "transitions": [
+            {
+              "not_canfly": "!query.can_fly"
+            }
+          ]
+        }
+      }
     }
   }
 }

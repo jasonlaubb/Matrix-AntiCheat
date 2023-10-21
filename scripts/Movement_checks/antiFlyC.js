@@ -12,7 +12,7 @@ export async function antiFlyC(player){
 		flyToggle = true 
 			} 
 	if(antiFlyEnabled == true){
-		if (flyToggle != true || player.hasTag("MatrixOP")) return
+		if (flyToggle != true || player.isFlying || player.hasTag("MatrixOP")) return
 	
 	let maximumDisMovement;
 	maximumDisMovement = 1

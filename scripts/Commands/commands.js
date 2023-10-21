@@ -79,7 +79,7 @@ function Commands(player, message) {
       if (target === undefined) return new Error(player).Target()
       system.run(() => {
         player.removeTag('MatrixOP')
-        world.sendMessage(`§e[§cMatrix§e] §b${target.name} §chis op has been removed\n§gBy§8:§b${player.name} `)
+        world.sendMessage(`§e[§cMatrix§e] §b${target.name} §chis op has been removed\n§gBy§8:§b${player.name}`)
       })
       break
     }
@@ -230,7 +230,7 @@ function Commands(player, message) {
     }
     case "toggles": {
       if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
-      system.run(() => player.sendMessage(`§c§lToggles§8:§r\n§ganti speed toggle §8(§cantiSpeed§8)\n§ganti reach toggle§8 (§cantiReach§8<§greach_type§8>§8) §greach types§8:\n§gbreak§8:§cB\n§gplace§8:§cP\n§gAttack§8:§cA\n§ganti nuker toggle§8 (§cantiNuker§8)\n§ganti speed mine toggle§8 (§cantiSpeedMine§8)\n§ganti xray toggle §8(§cantiXray§8)\n§ganti scaffold toggle §8(§cantiScaffold§8<§cscaffold_type§8>)\n§gscaffold types§8:\n§gwhen the player eyes is looking up and placing blocks under him§8:§cA\n§gwhen player is placing blocks and item in hand of player doesnt block was placed§8:§cB\n§ganti auto clicker toggle §8(§cantiAuto§8<§cAuto clicker type§8>)§g\nauto clicker types§8:\n§gAuto clicker attack§8:§cA\n§gAuto clicker place§8:§cP\n§ganti crasher toggle §8(§cantiCrasher§8)\n§ganti fly toggle §8(§cantiFly§8)`))
+      system.run(() => player.sendMessage(`§c§lToggles§8:§r\n§ganti speed toggle §8(§cantiSpeed§8)\n§ganti reach toggle§8 (§cantiReach§8<§greach_type§8>§8) §greach types§8:\n§gbreak§8:§cB\n§gplace§8:§cP\n§gAttack§8:§cA\n§ganti nuker toggle§8 (§cantiNuker§8)\n§ganti speed mine toggle§8 (§cantiSpeedMine§8)\n§ganti xray toggle §8(§cantiXray§8)\n§ganti scaffold toggle §8(§cantiScaffold§8<§cscaffold_type§8>)\n§gscaffold types§8:\n§gwhen the player eyes is looking up and placing blocks under him§8:§cA\n§gwhen player is placing blocks and item in hand of player doesnt block was placed§8:§cB\n§ganti auto clicker toggle §8(§cantiAuto§8<§cAuto clicker type§8>)§g\nauto clicker types§8:\n§gAuto clicker attack§8:§cA\n§gAuto clicker place§8:§cP\n§ganti crasher toggle §8(§cantiCrasher§8)\n§ganti fly toggle §8(§cantiFly§8)\n§gabadpacket toggle §8(§cantiBadpacket§8)\n§gainvalidSprint toggle §8(§cantiInvalidsprint§8)`))
       break
     }
 
@@ -535,6 +535,53 @@ function Commands(player, message) {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti fly has disabled§r\n§gBy§8:§b${player.name} `)
             world.scoreboard.addObjective('toggle:fly', '')
+          })
+          break
+        }
+        default:
+          new Error(player).NotTurner()
+      }
+      break
+    }
+    default: {
+      new Error(player).None(regax[0])
+    }
+    case "antiBadpacket": {
+      if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
+      switch (regax[1]) {
+        case "enable": {
+          system.run(() => {
+            world.sendMessage(`§e[§cMatrix§e] §aanti badpacket has enabled§r\n§gBy§8:§b${player.name} `)
+            world.scoreboard.removeObjective('toggle:badpacket')
+          })
+          break
+        }
+        case "disable": {
+          system.run(() => {
+            world.sendMessage(`§e[§cMatrix§e] §aanti badpacket has disabled§r\n§gBy§8:§b${player.name} `)
+            world.scoreboard.addObjective('toggle:badpacket', '')
+          })
+          break
+        }
+        default:
+          new Error(player).NotTurner()
+      }
+      break
+    }
+    case "antiInvalidSprint": {
+      if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
+      switch (regax[1]) {
+        case "enable": {
+          system.run(() => {
+            world.sendMessage(`§e[§cMatrix§e] §aanti InvalidSprint has enabled§r\n§gBy§8:§b${player.name} `)
+            world.scoreboard.removeObjective('toggle:invalidsrpint')
+          })
+          break
+        }
+        case "disable": {
+          system.run(() => {
+            world.sendMessage(`§e[§cMatrix§e] §aanti InvalidSprint has disabled§r\n§gBy§8:§b${player.name} `)
+            world.scoreboard.addObjective('toggle:invalidsrpint', '')
           })
           break
         }

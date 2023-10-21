@@ -286,3 +286,5 @@ scoreboard objectives add combat_time dummy combat_timer
 scoreboard players add @a lockdown 0 
 scoreboard players remove @a[scores={lockdown=!..0}] lockdown 1
 scoreboard players add @a bantimer 0
+scoreboard objectives add fly_coldown_timer dummy fly_coldown_timer
+scoreboard players remove @a[scores={fly_coldown_timer=!..0}] fly_coldown_timer 1

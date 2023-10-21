@@ -21,9 +21,21 @@ import {
   Player,
   BlockInventoryComponent
 } from "@minecraft/server"
+
 let world = Minecraft.world
 let scaffoldBToggle;
 let scaffoldAToggle;
+
+const isUnderPlayer = (pos1, pos2) => {
+  const p = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) }
+  if (p.y - 1 !== pos2.y) return false
+  return [-1, 0, 1].some(x => 
+    [-1, 0, 1].some(z =>
+      (p.z + x === pos2.x && p.z + z === pos2.z)
+    )
+  )
+}
+
 if (antiScaffoldEnabled == true) {
   world.beforeEvents.playerPlaceBlock.subscribe((event) => {
     try {
@@ -47,26 +59,14 @@ if (antiScaffoldEnabled == true) {
     let blockId = block.type.id.replaceAll("minecraft:", "");
     blockName = blockId.replaceAll("_", " ")
     let tryScaffold = world.scoreboard.getObjective("tryScaffold").getScore(player.scoreboardIdentity)
-    let {
-      x: playerx,
-      y: playery,
-      z: playerz
-    } = player.location;
-    let playerX = playerx.toFixed(0)
-    let playerZ = playerz.toFixed(0)
-    let playerY = playery.toFixed(0)
+
     let block2 = player.dimension.getBlock({
       x: Math.floor(player.location.x),
       y: Math.floor(player.location.y + 1),
       z: Math.floor(player.location.z)
     }).typeId;
-    let checkSelectedSlot = player.getComponent("inventory").container.getItem(player.selectedSlot).typeId;
     if (block2 == "minecraft:air" && player.hasTag("looking_up")) {
-      if (x == playerX && z == playerZ && y == playerY - 1 || x == playerX - 1 && z == playerZ && y == playerY -
-        1 || x == playerX + 1 && z == playerZ && y == playerY - 1 || x == playerX && z == playerZ + 1 && y ==
-        playerY - 1 || x == playerX && z == playerZ - 1 && y == playerY - 1 || x == playerX + 1 && z == playerZ +
-        1 && y == playerY - 1 || x == playerX - 1 && z == playerZ - 1 && y == playerY - 1 || x == playerX + 1 &&
-        z == playerZ - 1 && y == playerY - 1 || x == playerX - 1 && z == playerZ + 1 && y == playerY - 1) {
+      if (isUnderPlayer(player.location, block.location) === true) {
         if (player.hasTag("MatrixOP")) return
         if (scaffoldAToggle != true) return
         system.run(() => {
@@ -75,11 +75,7 @@ if (antiScaffoldEnabled == true) {
       }
     }
     if (tryScaffold == 2 && block2 == "minecraft:air" && player.hasTag("looking_up")) {
-      if (x == playerX && z == playerZ && y == playerY - 1 || x == playerX - 1 && z == playerZ && y == playerY -
-        1 || x == playerX + 1 && z == playerZ && y == playerY - 1 || x == playerX && z == playerZ + 1 && y ==
-        playerY - 1 || x == playerX && z == playerZ - 1 && y == playerY - 1 || x == playerX + 1 && z == playerZ +
-        1 && y == playerY - 1 || x == playerX - 1 && z == playerZ - 1 && y == playerY - 1 || x == playerX + 1 &&
-        z == playerZ - 1 && y == playerY - 1 || x == playerX - 1 && z == playerZ + 1 && y == playerY - 1) {
+      if (isUnderPlayer(player) === true) {
         event.cancel = true
         system.run(() => {
           player.runCommand(
@@ -89,11 +85,7 @@ if (antiScaffoldEnabled == true) {
       }
     }
     if (tryScaffold > 2 && block2 == "minecraft:air" && player.hasTag("looking_up")) {
-      if (x == playerX && z == playerZ && y == playerY - 1 || x == playerX - 1 && z == playerZ && y == playerY -
-        1 || x == playerX + 1 && z == playerZ && y == playerY - 1 || x == playerX && z == playerZ + 1 && y ==
-        playerY - 1 || x == playerX && z == playerZ - 1 && y == playerY - 1 || x == playerX + 1 && z == playerZ +
-        1 && y == playerY - 1 || x == playerX - 1 && z == playerZ - 1 && y == playerY - 1 || x == playerX + 1 &&
-        z == playerZ - 1 && y == playerY - 1 || x == playerX - 1 && z == playerZ + 1 && y == playerY - 1) {
+      if (isUnderPlayer(player) === true) {
         event.cancel = true
         system.run(() => {
           player.runCommand(
@@ -103,11 +95,7 @@ if (antiScaffoldEnabled == true) {
       }
     }
     if (block2 == "minecraft:air" && !player.hasTag("looking_up")) {
-      if (x == playerX && z == playerZ && y == playerY - 1 || x == playerX - 1 && z == playerZ && y == playerY -
-        1 || x == playerX + 1 && z == playerZ && y == playerY - 1 || x == playerX && z == playerZ + 1 && y ==
-        playerY - 1 || x == playerX && z == playerZ - 1 && y == playerY - 1 || x == playerX + 1 && z == playerZ +
-        1 && y == playerY - 1 || x == playerX - 1 && z == playerZ - 1 && y == playerY - 1 || x == playerX + 1 &&
-        z == playerZ - 1 && y == playerY - 1 || x == playerX - 1 && z == playerZ + 1 && y == playerY - 1) {
+      if (isUnderPlayer(player) === true) {
         system.run(() => {
           player.runCommand(`scoreboard players set @s tryScaffold 0`)
         })

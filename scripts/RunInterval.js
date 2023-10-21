@@ -32,6 +32,11 @@ import {
 import {
   moderation
 } from "./Moderation/moderation"
+import {
+  antiBadPacket,
+  antiInvalidSprint
+} from "./Misc_checks/BadPacket/BadPacket"
+import { antiFlyD } from "./Movement_checks/antiFlyD"
 
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
@@ -40,10 +45,13 @@ system.runInterval(() => {
     antiFlyA(player)
     antiFlyB(player)
     antiFlyC(player)
+    antiFlyD(player)
     antiNoSlow(player)
     antiPhase(player)
     antiCrasherA(player)
     antiCrasherB(player)
     antiCrasherC(player)
+    antiBadPacket(player)
+    antiInvalidSprint(player)
   }
 })
