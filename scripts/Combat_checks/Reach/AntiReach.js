@@ -180,7 +180,7 @@ if (antiReachAttackEnabled == true) {
       }
       attacker.runCommand(`scoreboard players add @s countOfTargets 2`)
       if (TargetsCount > 1) {
-        detect(player,"kick","§ckillaura §8(§gC§8)",null,true,"§e[§cMatrix§e] §ckillaura §8(§gC§8)")
+        detect(attacker,"kick","§e[§cMatrix§e] §gkillaura §8(§gC§8) §chas been detected from§b "+attacker.name,null,true,"§e[§cMatrix§e] §ckillaura §8(§gC§8)")
       }
       if (disXZ >= 2) {
         if (attacker.hasTag("MatrixOP")) return
