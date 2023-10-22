@@ -35,6 +35,15 @@ world.afterEvents.playerSpawn.subscribe((event) => {
 })
 
 function moderation (player) {
+  let getItemInSlot = player.getComponent("inventory").container.getItem(player.selectedSlot)
+let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchantments
+  if(getItemInSlot.typeId.includes("trident") && player.hasTag("is_using_item")){
+   
+    let  checkRipTide = getEnchantment.hasEnchantment("riptide")
+      if(checkRipTide>0){
+        setScore(world,player,"skip_check",30)
+      }
+  }
   const banTimer = world.scoreboard.getObjective("bantimer").getScore(player.scoreboardIdentity)
   //const cps = world.scoreboard.getObjective("trueCps").getScore(player.scoreboardIdentity)
   const tags = player.getTags()
