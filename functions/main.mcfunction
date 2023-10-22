@@ -144,7 +144,6 @@ execute as @a at @s if block ~~~ end_portal run tag @s add skip_checkS
 execute as @a at @s if block ~~~ portal run tag @s add skip_checkS
 scoreboard objectives add speedtimer dummy speedtimer
 scoreboard players add @a speedtimer 1
-gamemode s @a[m=c,tag=!gmc,tag=!MatrixOP]
 scoreboard objectives add speedX dummy speedX 
 scoreboard players add @a speedX 0
 scoreboard objectives add speedZ dummy speedX 
