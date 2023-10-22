@@ -1,7 +1,9 @@
 import * as Minecraft from "@minecraft/server"
 import {
   antiAutoClickerEnabled,
-  maximumCps
+  maximumCps,
+  setScore,
+  addScore
 } from "../../config"
 import {
   system,
@@ -67,13 +69,13 @@ system.runInterval(() => {
       player.runCommand(
         `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §gNuker §8(§gA§8) §chas been detected from §b${player.name}\n§cBlocks §8= §8(§g${nukerLength+1}§8/§gBlocks§8)"}]}`
         )
-      player.runCommand(`scoreboard players set @s nukeLength 0`)
+      setScore(world,player,"nukeLength",0)
     }
     cps = world.scoreboard.getObjective("Seccps").getScore(player.scoreboardIdentity)
     if (cps2 >= cps) {
       cps = cps2
     }
-    player.runCommand(`scoreboard players set @s trueCps ${cps}`)
+    setScore(world,player,"trueCps",cps)
     let cps3 = world.scoreboard.getObjective("cps3").getScore(player.scoreboardIdentity)
     let cps4;
     cps4 = world.scoreboard.getObjective("Seccps2").getScore(player.scoreboardIdentity)
@@ -81,8 +83,8 @@ system.runInterval(() => {
       cps4 = cps3
     }
     if (cps4 > maximumCps / 2) {
-      player.runCommand(`scoreboard players set @s cps2 ${cps4*2}`)
-      player.runCommand(`scoreboard players add @s tryAutoClicker 1`)
+      setScore(world,player,"cps2",cps4*2)
+      addScore(world,player,"tryAutoClicker",1)
     }
     if (tryAutoClicker == 1) {
       if (autoToggle != true) return
@@ -90,7 +92,7 @@ system.runInterval(() => {
       player.runCommand(`title @s subtitle §gPlease slow your cps`)
     }
     if (rescps == 9) {
-      player.runCommand(`scoreboard players set @s Seccps2 ${cps3}`)
+      setScore(world,player,"Seccps2",cps3)
     }
   }
 })
