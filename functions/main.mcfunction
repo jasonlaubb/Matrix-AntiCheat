@@ -288,3 +288,15 @@ scoreboard players remove @a[scores={lockdown=!..0}] lockdown 1
 scoreboard players add @a bantimer 0
 scoreboard objectives add fly_coldown_timer dummy fly_coldown_timer
 scoreboard players remove @a[scores={fly_coldown_timer=!..0}] fly_coldown_timer 1
+scoreboard objectives add combatingTime dummy combatingTime
+scoreboard players add @a combatingTime 0
+scoreboard players remove @a[scores={combatingTime=!..0}] combatingTime 1
+scoreboard objectives add inCombat dummy inCombat
+tag @a[scores={combatingTime=!..0}] add combating
+tag @a[scores={combatingTime=0}] remove combating
+scoreboard objectives add protectionTime dummy combatingTime
+scoreboard players add @a protectionTime 0
+tellraw @a[tag=protecting,scores={protectionTime=1}] {"rawtext":[{"text":"§r§eYour are §ano longer §espawn-protected§r"}]}
+scoreboard players remove @a[scores={combatingTime=!..0}] protectionTime 1
+tag @a[scores={protectionTime=!..0}] add protecting
+tag @a[scores={protectionTime=0}] remove protecting
