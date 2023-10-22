@@ -67,16 +67,13 @@ if (antiReachAttackEnabled == true) {
       let disZ;
       let disX;
       let velocityZ;
-      velocityZ = Math.abs(target.getVelocity().z) + Math.abs(attacker.getVelocity().z) * 2
+            velocityZ = Math.abs(target.getVelocity().z) + Math.abs(attacker.getVelocity().z) * 2
       let velocityX;
       velocityX = Math.abs(target.getVelocity().x) + Math.abs(attacker.getVelocity().x) * 2
       disY = Math.abs(y - attackerY)
-      disX = Math.abs(x - attackerX) 
-      disZ = Math.abs(z - attackerZ)
-       disXZ = Math.sqrt(disX * disX + disZ * disZ) - (velocityX + velocityZ)*1.5
-      disX = disX - velocityX
-      disZ = disZ- velocityZ
-     
+      disX = Math.abs(x - attackerX) - velocityX
+      disZ = Math.abs(z - attackerZ) - velocityZ
+      disXZ = Math.sqrt(disX * disX + disZ * disZ) - (velocityX + velocityZ)
       disXZ = disXZ.toFixed(2)
       let generalDis;
       if (attackerY > y + 3) {
