@@ -41,7 +41,7 @@ world.afterEvents.entityHurt.subscribe(ev => {
 })
 
 async function antiInvalidSprint (player) {
-  if (!antiInvalidSrpintEnabled || world.scoreboard.getObjective('toggle:invalidsrpint') || player.hasTag('MatrixOP')) return
+  if (!antiInvalidSrpintEnabled || world.scoreboard.getObjective('toggle:invalidsrpint') || player.hasTag('MatrixOP') || player.isGliding == true) return
 
   if (player.isSprinting) {
     try {
