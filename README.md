@@ -77,4 +77,10 @@
 
   > The world should enabled Beta-API
 
+  > server.properties should add this to prevent bug
+
+  ```properties
+  op-permission-level=2
+  ```
+
 </div>
