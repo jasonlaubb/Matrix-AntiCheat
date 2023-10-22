@@ -33,7 +33,7 @@ let firstPosY = world.scoreboard.getObjective("groundY").getScore(player.scorebo
 let firstPosX = world.scoreboard.getObjective("groundX").getScore(player.scoreboardIdentity)/100
 let firstPosZ = world.scoreboard.getObjective("groundZ").getScore(player.scoreboardIdentity)/100
 	let skip_check = world.scoreboard.getObjective("skip_check").getScore(player.scoreboardIdentity)
-	let tp = world.scoreboard.getObjective("cooldownTpFB").getScore(player.scoreboardIdentity)
+	
     let playerY; 
     let playerX; 
     let playerZ; 
