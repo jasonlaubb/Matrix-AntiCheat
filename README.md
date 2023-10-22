@@ -40,10 +40,41 @@
 
   To make Matrix Anti Cheat work, you'll need the Beta API.
 
-  Modify the default configuration in (root)/scripts/data/default-config.js to suit your needs.
+  Modify the default configuration in (root)/scripts/config.js to suit your needs.
 
   Download the latest release and use the .mcpack file, not the source code.
 
   ***#op (password) #help for commands***
+
+  ---
+  ## Install AntiCheat
+
+  - Local World:
+
+  1. install the pack (.mcpack) to game
+
+  2. enabled the pack in the world settings
+
+  3. set it to the top
+
+  4. Enable Beta-API
+
+  - Realm:
+
+  1. install the pack to realm
+
+  2. set it to the top
+
+  3. Make sure the world enabled Beta-API
+
+  - Server:
+
+  1. unzip the pack (.mcpack => .zip)
+
+  2. move the pack to the server file
+
+  3. Edit the world settings, enable Beta-API
+
+  4. The world should enabled Beta-API
 
 </div>
