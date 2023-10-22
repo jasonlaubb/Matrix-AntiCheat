@@ -137,10 +137,7 @@ if (antiReachAttackEnabled == true) {
       }
       limitOfReachX = 3.7
       limitOfReachZ = 3.7
-      if(attacker.getEffect("speed").amplifier>1 && Math.abs(target.getVelocity().z) >0.5 &&  Math.abs(target.getVelocity().z) > 0.5){
-        limitOfReachX = 4.3
-      limitOfReachZ = 4.3
-      }
+      
       let x1 = x + (disX * 2)
       let z1 = z + (disZ * 2)
       let y1 = y + (disY * 2)
