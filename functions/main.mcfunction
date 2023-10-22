@@ -92,7 +92,7 @@ scoreboard players remove @a[scores={antiKbTimer=!..0}] antiKbTimer 1
 scoreboard players set @a[scores={antiKbTimer=..0}] antiKb 0
 scoreboard objectives add antiKb dummy antiKnockback 
 scoreboard players add @a antiKb 0
-scoreboard objectives add kitClaim dummy 
+scoreboard objectives add kitClaim dummy
 scoreboard players add @a kitClaim 0
 scoreboard players remove @a[scores={kitClaim=1..}] kitClaim 1
 tag @a[scores={kitClaim=1..}] add claimedKit
@@ -212,6 +212,10 @@ scoreboard players remove @a[scores={nukerTimer=!0}] nukerTimer 1
 scoreboard players set @a[scores={nukerTimer=!0..}] nukerTimer 0
 scoreboard objectives add nukeLength dummy nukeLength
 scoreboard players add @a nukeLength 0
+scoreboard objectives add stop_break_timer dummy stop_break_timer
+scoreboard players add @a stop_break_timer 0
+scoreboard players remove @a[scores={stop_break_timer=!..0}] stop_break_timer 1
+tag @a[tag=stopBreakingBlock,scores={stop_break_timer=..0}] remove stopBreakingBlock
 scoreboard objectives add sendMsgT dummy sendMsg
 scoreboard players add @a sendMsgT 0
 scoreboard players remove @a[scores={sendMsgT=!0}] sendMsgT 1
@@ -286,6 +290,7 @@ scoreboard players add @a lockdown 0
 scoreboard players remove @a[scores={lockdown=!..0}] lockdown 1
 scoreboard players add @a bantimer 0
 scoreboard objectives add fly_coldown_timer dummy fly_coldown_timer
+scoreboard players add @a fly_coldown_timer 0
 scoreboard players remove @a[scores={fly_coldown_timer=!..0}] fly_coldown_timer 1
 scoreboard objectives add combatingTime dummy combatingTime
 scoreboard players add @a combatingTime 0
@@ -299,3 +304,5 @@ tellraw @a[tag=protecting,scores={protectionTime=1}] {"rawtext":[{"text":"§r§e
 scoreboard players remove @a[scores={combatingTime=!..0}] protectionTime 1
 tag @a[scores={protectionTime=!..0}] add protecting
 tag @a[scores={protectionTime=0}] remove protecting
+scoreboard objectives add scaffold_buff dummy scaffold_buff
+scoreboard players add @a scaffold_buff 0
