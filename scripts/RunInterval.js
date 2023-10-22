@@ -26,9 +26,6 @@ import {
 import { 
   antiFlyB 
 } from "./Movement_checks/antiFlyB"
-import { 
-  antiFlyC
-} from "./Movement_checks/antiFlyC"
 import {
   moderation
 } from "./Moderation/moderation"
@@ -44,7 +41,6 @@ system.runInterval(() => {
     antiSpeed(player)
     antiFlyA(player)
     antiFlyB(player)
-    antiFlyC(player)
     antiFlyD(player)
     antiNoSlow(player)
     antiPhase(player)
