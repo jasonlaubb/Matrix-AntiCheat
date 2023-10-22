@@ -47,7 +47,7 @@ let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchan
    
     let  checkRipTide = getEnchantment.hasEnchantment("riptide")
       if(checkRipTide>0){
-        setScore(world,player,"skip_check",30)
+        setScore(world,player,"skip_check",40)
       }
   }
   const banTimer = world.scoreboard.getObjective("bantimer").getScore(player.scoreboardIdentity)
