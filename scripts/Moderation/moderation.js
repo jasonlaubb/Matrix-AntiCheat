@@ -41,6 +41,7 @@ function moderation (player) {
   if(player.isGliding == true){
     setScore(world,player,"skip_check",15)
   }
+  try{
   let getItemInSlot = player.getComponent("inventory").container.getItem(player.selectedSlot)
 let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchantments
   if(getItemInSlot.typeId.includes("trident") && player.hasTag("is_using_item")){
@@ -49,6 +50,7 @@ let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchan
       if(checkRipTide>0){
         setScore(world,player,"skip_check",40)
       }
+  }}catch{
   }
   const banTimer = world.scoreboard.getObjective("bantimer").getScore(player.scoreboardIdentity)
   //const cps = world.scoreboard.getObjective("trueCps").getScore(player.scoreboardIdentity)
