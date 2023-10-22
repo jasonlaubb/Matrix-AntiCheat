@@ -88,12 +88,12 @@ if(Math.abs(distanceX)>Math.abs(distanceZ)){
           if (Math.abs(distanceX) > maximumDisMovement || Math.abs(distanceZ) > maximumDisMovement) {
 if( skipCheck>0 || player.hasTag("riding")) return
             
-            system.runTimeout(() => {
+            
                          
             detect(player, "tp", null, firstPosX + " " + firstPosY + " " + firstPosZ, true,
               "§e[§cMatrix§e] §can unNatural Movement §gSpeed §8(§gA§8) §chas been detected from §b" + player.name +
               " §8(§g" + distance + "§8/§g" + maximumDisMovement + "§8) §gblocks")
-            },10)
+          
           }
         }
     } catch (error) {
