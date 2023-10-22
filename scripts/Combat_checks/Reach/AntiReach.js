@@ -1,7 +1,8 @@
 import * as Minecraft from "@minecraft/server"
 import {
   antiReachAttackEnabled,
-  setScore
+  setScore,
+  detect
 } from "../../config"
 import {
   system,
@@ -70,9 +71,12 @@ if (antiReachAttackEnabled == true) {
       let velocityX;
       velocityX = Math.abs(target.getVelocity().x) + Math.abs(attacker.getVelocity().x) * 2
       disY = Math.abs(y - attackerY)
-      disX = Math.abs(x - attackerX) - velocityX
-      disZ = Math.abs(z - attackerZ) - velocityZ
-      disXZ = Math.sqrt(disX * disX + disZ * disZ) - (velocityX + velocityZ)
+      disX = Math.abs(x - attackerX) 
+      disZ = Math.abs(z - attackerZ)
+       disXZ = Math.sqrt(disX * disX + disZ * disZ) - (velocityX + velocityZ)*1.5
+      disX = disX - velocityX
+      disZ = disZ- velocityZ
+     
       disXZ = disXZ.toFixed(2)
       let generalDis;
       if (attackerY > y + 3) {
@@ -136,6 +140,10 @@ if (antiReachAttackEnabled == true) {
       }
       limitOfReachX = 3.7
       limitOfReachZ = 3.7
+      if(attacker.getEffect("speed").amplifier>1 && Math.abs(target.getVelocity().z) >0.5 &&  Math.abs(target.getVelocity().z) > 0.5){
+        limitOfReachX = 4.3
+      limitOfReachZ = 4.3
+      }
       let x1 = x + (disX * 2)
       let z1 = z + (disZ * 2)
       let y1 = y + (disY * 2)
@@ -178,7 +186,7 @@ if (antiReachAttackEnabled == true) {
       }
       attacker.runCommand(`scoreboard players add @s countOfTargets 2`)
       if (TargetsCount > 1) {
-        attacker.sendMessage("you are using killaura noob")
+        detect(player,"kick","§ckillaura §8(§gC§8)",null,true,"§e[§cMatrix§e] §ckillaura §8(§gC§8)")
       }
       if (disXZ >= 2) {
         if (attacker.hasTag("MatrixOP")) return
