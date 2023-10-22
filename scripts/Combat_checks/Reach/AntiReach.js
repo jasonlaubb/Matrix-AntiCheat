@@ -1,6 +1,7 @@
 import * as Minecraft from "@minecraft/server"
 import {
-  antiReachAttackEnabled
+  antiReachAttackEnabled,
+  setScore
 } from "../../config"
 import {
   system,
@@ -220,6 +221,16 @@ if (antiReachAttackEnabled == true) {
     }
   })
 }
+world.afterEvents.entityHurt.subscribe((event) => {
+   const explode = event.damageSource.cause
+   const attacker = event.damageSource.damagingEntity
+    const target = event.hurtEntity
+    if(target.typeId == "minecraft:player" && attacker != undefined){
+    setScore(world,target,"skip_check",40)
+    }if(explode == "entityExplosion"){
+      setScore(world,target,"skip_check",60)
+    }
+})
 export {
   disXZ
 }
