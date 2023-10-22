@@ -9,7 +9,10 @@ import {
   Player,
   Enchantment
 } from "@minecraft/server"
-
+import {
+  setScore,
+  addScore
+} from "../config.js"
 const world = Minecraft.world
 
 world.afterEvents.playerSpawn.subscribe((event) => {
@@ -35,6 +38,9 @@ world.afterEvents.playerSpawn.subscribe((event) => {
 })
 
 function moderation (player) {
+  if(player.isGliding == true){
+    setScore(world,player,"skip_check",15)
+  }
   let getItemInSlot = player.getComponent("inventory").container.getItem(player.selectedSlot)
 let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchantments
   if(getItemInSlot.typeId.includes("trident") && player.hasTag("is_using_item")){
