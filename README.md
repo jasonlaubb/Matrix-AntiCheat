@@ -49,32 +49,32 @@
   ---
   ## Install AntiCheat
 
-  - Local World:
+  ### Local World:
 
-  1. install the pack (.mcpack) to game
+  > install the pack (.mcpack) to game
 
-  2. enabled the pack in the world settings
+  > enabled the pack in the world settings
 
-  3. set it to the top
+  > set it to the top
 
-  4. Enable Beta-API
+  > Enable Beta-API
 
-  - Realm:
+  ### Realm:
 
-  1. install the pack to realm
+  > install the pack to realm
 
-  2. set it to the top
+  > set it to the top
 
-  3. Make sure the world enabled Beta-API
+  > Make sure the world enabled Beta-API
 
-  - Server:
+  ### Server:
 
-  1. unzip the pack (.mcpack => .zip)
+  > unzip the pack (.mcpack => .zip)
 
-  2. move the pack to the server file
+  > move the pack to the server file
 
-  3. Edit the world settings, enable Beta-API
+  > Edit the world settings, enable Beta-API
 
-  4. The world should enabled Beta-API
+  > The world should enabled Beta-API
 
 </div>
