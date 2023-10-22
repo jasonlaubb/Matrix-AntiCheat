@@ -101,7 +101,15 @@ try {
     }
   }
 } catch {};
-
+function setScore(world,player,scoreboard,amount){
+  const score = world.scoreboard.getObjective(scoreboard)
+  score.setScore(player.scoreboardIdentity,amount)
+}
+  
+function addScore(world,player,scoreboard,amount){
+  let score = world.scoreboard.getObjective(scoreboard)
+  score.setScore(player.scoreboardIdentity,score.getScore(player.scoreboardIdentity)+amount)
+}
 function detect(player, punishment, punishmentKickMessage, Pos, notifyMessageBollean, notifyMessage) {
   if(punishment == "kick") {
     player.runCommand(`kick "${player.name}" ${punishmentKickMessage}`)
@@ -147,5 +155,7 @@ export {
   detect,
   UiItemPrefix,
   HELP_LIST,
-  modules
+  modules,
+  setScore,
+  addScore
 }
