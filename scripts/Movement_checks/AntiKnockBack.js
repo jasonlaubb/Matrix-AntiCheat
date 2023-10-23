@@ -1,5 +1,10 @@
 import { world, Vector } from "@minecraft/server"
 
+/*
+  this detection don't work
+  it need development...
+*/
+
 const LastVelocity = new Map()
 
 const antiKnockBackEnabled = true
