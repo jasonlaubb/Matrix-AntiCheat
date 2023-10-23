@@ -103,7 +103,13 @@ if (antiScaffoldEnabled == true) {
     }
 
     //scaffold/B - the god of false positive
-    const blockView = player.getBlockFromViewDirection().block
+    let blockView
+    try {
+      blockView = player.getBlockFromViewDirection().block
+    } catch {
+      blockView = { id: null }
+    }
+    
     const buff = world.scoreboard.getObjective('scaffold_buff').getScore(player)
     if (blockView.id !== block.id && isUnderPlayer(player.location, block.location)) {
       system.run(() => world.scoreboard.getObjective('scaffold_buff').addScore(player, 1))
@@ -122,6 +128,30 @@ if (antiScaffoldEnabled == true) {
       system.run(() =>
         player.runCommand(
           `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§gC§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
+        )
+      )
+    }
+
+    //scaffold/D - block place out of their view (cubecraft bypasses)
+    const pos1 = player.location
+    const pos2 = { x: block.location.x - 0.5, z: block.location.z - 0.5 }
+    let angle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - rotation.y - 90;
+    if (angle <= -180) angle += 360;
+    angle = Math.abs(angle);
+
+    if (angle > 95 && Vector.distance({ x: pos1.x, y: 0, z: pos1.z}, { x: pos2.x, y: 0, z: pos2.z }) > 2.1) {
+      system.run(() =>
+        player.runCommand(
+          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§gE§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
+        )
+      )
+    }
+
+    //scaffold/E - low x rotation
+    if (rotation.x < 34.98 && isUnderPlayer(player.location, block.location)) {
+      system.run(() =>
+        player.runCommand(
+          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§g§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
         )
       )
     }
