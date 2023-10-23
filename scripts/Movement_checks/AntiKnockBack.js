@@ -3,6 +3,7 @@ import { world, Vector } from "@minecraft/server"
 const LastVelocity = new Map()
 
 const antiKnockBackEnabled = true
+
 if (antiKnockBackEnabled) {
   world.afterEvents.playerLeave.subscribe(ev => {
     try {
@@ -14,8 +15,13 @@ if (antiKnockBackEnabled) {
     
     const player = ev.hurtEntity
     if (player.typeId !== "minecraft:player" || player.hasTag("MatrixOP")) return
-
-    //hurt timer
+    if (ev.damageSource.cause === "entityAttack") {
+      try {
+        player.addTag("getAttacked")
+      } catch { }
+      world.scoreboard.getObjective("attacked_timer").setScore(player, 15)
+    }
+    
   })
 }
 
@@ -41,7 +47,7 @@ async function antiKnockBack (player) {
     player.removeTag("lastIsOnGround")
   } catch { }
   if (player.isOnGround) player.addTag("lastIsOnGround")
-  //return if player is on ground last tick
+  //skip check if player is on ground last tick
   if (lastIsOnGround) return
   
   const testPos = {
@@ -49,16 +55,19 @@ async function antiKnockBack (player) {
     y: lastPos.y + velocity.y,
     z: lastPos.z + velocity.z
   }
-  
+
+  //if player didn't get knockBacked, skip
   const prevDis = Vector.distance(testPos, player.location)
   const testDis = Vector.distance(testPos, lastPos)
-  if (Math.abs(prevDis - testDis) < 0.1) return
-  
+  if (Math.abs(prevDis - testDis) < 0.051) return
+
+  //if player speed last tick is low, skip check
   const playerSpeed = Math.abs(Math.sqrt(lastVelocity.x ** 2 + lastVelocity.y ** 2 + lastVelocity.z ** 2))
   if (playerSpeed < 0.05) return
-  
-  if (player.hasTag("getAttacked") && Math.min(testPos, lastPos) === prevDis && velocity.x === 0 && velocity.z === 0) {
+
+  //if player location "lagged back" flag
+  if (player.hasTag("getAttacked") && Math.min(testPos, lastPos) === prevDis && velocity.x.toFixed(4) === 0.0000 && velocity.z.toFixed(4) === 0.0000) {
     player.teleport(lastPos)
-    //flag them
+    //detected
   }
 }
