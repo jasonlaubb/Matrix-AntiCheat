@@ -2,7 +2,8 @@ import { world, Vector } from "@minecraft/server"
 
 const LastVelocity = new Map()
 
-if (true) {
+const antiKnockBackEnabled = true
+if (antiKnockBackEnabled) {
   world.afterEvents.playerLeave.subscribe(ev => {
     try {
       lastSpeed.delete(ev.playerId)
@@ -15,11 +16,11 @@ if (true) {
     if (player.typeId !== "minecraft:player" || player.hasTag("MatrixOP")) return
 
     //hurt timer
-  }
+  })
 }
 
 async function antiKnockBack (player) {
-  if (!true || !!world.scoreboard.getObjective("toggle:noKB") === true)
+  if (!antiKnockBackEnabled || !!world.scoreboard.getObjective("toggle:noKB") === true) return
   const lastPos = {
       x: world.scoreboard.getObjective("KBposX").getScore(player) / 100,
       y: world.scoreboard.getObjective("KBposY").getScore(player) / 100,
