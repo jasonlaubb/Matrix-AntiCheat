@@ -3,24 +3,11 @@ import {
   antiScaffoldEnabled
 } from "../../config"
 import {
-  disX,
-  disY,
-  disZ,
-  disXZ,
-  limitOfReachX,
-  limitOfReachY,
-  limitOfReachZ
-} from "../Reach/AntiBreak&PlaceReach"
-import {
   system,
-  ItemStack,
   world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
-  Player,
-  BlockInventoryComponent
+  Vector
 } from "@minecraft/server"
+import { Detect, Util } from "../../Util/Util"
 
 let world = Minecraft.world
 let scaffoldBToggle;
@@ -70,7 +57,7 @@ if (antiScaffoldEnabled == true) {
         if (player.hasTag("MatrixOP")) return
         if (scaffoldAToggle != true) return
         system.run(() => {
-          player.runCommand(`scoreboard players add @s tryScaffold 1`)
+          Util.addScore(player, 'tryScaffold', 1)
         })
       }
     }
@@ -78,9 +65,7 @@ if (antiScaffoldEnabled == true) {
       if (isUnderPlayer(player.location, block.location) === true) {
         event.cancel = true
         system.run(() => {
-          player.runCommand(
-            `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§gA§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
-            )
+          Detect.flag(player, 'Scaffold', 'A', 'none', [['Block', blockName]], false)
         })
       }
     }
@@ -88,16 +73,14 @@ if (antiScaffoldEnabled == true) {
       if (isUnderPlayer(player.location, block.location) === true) {
         event.cancel = true
         system.run(() => {
-          player.runCommand(
-            `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§gA§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
-            )
+          Detect.flag(player, 'Scaffold', 'A', 'none', [['Block', blockName]], false)
         })
       }
     }
     if (block2 == "minecraft:air" && !player.hasTag("looking_up")) {
       if (isUnderPlayer(player.location, block.location) === true) {
         system.run(() => {
-          player.runCommand(`scoreboard players set @s tryScaffold 0`)
+          Util.setScore(player, 'tryScaffold', 0)
         })
       }
     }
@@ -115,9 +98,7 @@ if (antiScaffoldEnabled == true) {
       system.run(() => world.scoreboard.getObjective('scaffold_buff').addScore(player, 1))
       if (buff + 1 >= 5) {
         system.run(() =>
-          player.runCommand(
-            `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§gB§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
-          )
+        Detect.flag(player, 'Scaffold', 'B', 'none', [['Block', blockName]])
         )
       }
     } else system.run(() => world.scoreboard.getObjective('scaffold_buff').setScore(player, 0))
@@ -125,11 +106,7 @@ if (antiScaffoldEnabled == true) {
     //scaffold/C
     const rotation = player.getRotation()
     if (Math.trunc(rotation.x) === rotation.x || Math.trunc(rotation.y) === rotation.y) {
-      system.run(() =>
-        player.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§gC§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
-        )
-      )
+      system.run(() => Detect.flag(player, 'Scaffold', 'C', 'none', [['Block', blockName]], false))
     }
 
     //scaffold/D - block place out of their view (cubecraft bypasses)
@@ -140,20 +117,12 @@ if (antiScaffoldEnabled == true) {
     angle = Math.abs(angle);
 
     if (angle > 95 && Vector.distance({ x: pos1.x, y: 0, z: pos1.z}, { x: pos2.x, y: 0, z: pos2.z }) > 2.1) {
-      system.run(() =>
-        player.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§gE§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
-        )
-      )
+      system.run(() => Detect.flag(player, 'Scaffold', 'D', 'none', [['Block', blockName]], false))
     }
 
     //scaffold/E - low x rotation
     if (rotation.x < 34.98 && isUnderPlayer(player.location, block.location)) {
-      system.run(() =>
-        player.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gScaffold §8(§g§8) §chas been detected from §b${player.name}\n§cBlock§8 = §8(§g${blockName}§8)"}]}`
-        )
-      )
+      system.run(() => Detect.flag(player, 'Scaffold', 'E', 'none', [['Block', blockName]], false))
     }
   })
 }

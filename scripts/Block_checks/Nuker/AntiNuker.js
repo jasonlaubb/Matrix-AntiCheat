@@ -1,46 +1,20 @@
-import * as Minecraft from "@minecraft/server"
 import {
   antiNukerEnabled,
   nukerTimer
 } from "../../config"
 import {
   system,
-  ItemStack,
   world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
-  Player,
-  BlockInventoryComponent,
-  GameMode
 } from "@minecraft/server"
-let nukerToggle;
+import { 
+  Util,
+  Detect
+} from '../../Util/Util'
+let nukerToggle
 
-const GamemodeOf = (player) => {
-  const gamemodes = {
-    survival: 0,
-    creative: 1,
-    adventure: 2,
-    spectator: 3
-  }
-  
-  for (const gamemode in GameMode) {
-    if ([...world.getPlayers({
-        name: player.name,
-        gameMode: GameMode[gamemode]
-    })].length > 0) return gamemodes[gamemode]
-  }
-}
+const RecoverBlock = Util.RecoverBlock
+const GamemodeOf = Util.GamemodeOf
 
-function RecoverBlock (dimenson, pos, block) {
-  dimenson.getEntities({
-    minDistance: 0,
-    maxDistance: 2,
-    location: pos,
-    type: 'minecraft:item'
-  }).forEach(item => item.kill())
-  block.setPermutation(block.clone())
-}
 if(antiNukerEnabled == true) {
   world.afterEvents.playerBreakBlock.subscribe((event) => {
     try {
@@ -55,16 +29,6 @@ if(antiNukerEnabled == true) {
       RecoverBlock(player.dimension, block.location, block)
       return
     }
-    let {
-      x,
-      y,
-      z
-    } = block.location;
-    let {
-      x: playerx,
-      y: playery,
-      z: playerz
-    } = player.location;
     let nukerLength = world.scoreboard.getObjective("nukeLength").getScore(player.scoreboardIdentity)
     let fastBrokenBlocks = ["minecraft:yellow_flower", "minecraft:red_flower", "minecraft:double_plant",
       "minecraft:wither_rose", "minecraft:tallgrass", "minecraft:hanging_roots", "minecraft:leaves",
@@ -98,22 +62,22 @@ if(antiNukerEnabled == true) {
     let getNukeTime = world.scoreboard.getObjective("nukerTimer").getScore(player.scoreboardIdentity)
     if(getNukeTime <= 0) {
       system.run(() => {
-        player.runCommand(`scoreboard players set @s nukerTimer ${nukerTimer}`)
+        Util.setScore(player, 'nukerTimer', nukerTimer)
       })
     }
     if(getNukeTime >= 1) {
       system.run(() => {
         if(nukerToggle != true || player.hasTag("MatrixOP")) return
-        player.runCommand(`scoreboard players add @s nukeLength 1`)
-        player.runCommand(`scoreboard players set @s sendMsgT 6`)
+        Util.addScore(player, 'nukeLength', 1)
+        Util.setScore(player, 'sendMsgT', 6)
       })
       RecoverBlock(player.dimension, block.location, block)
     }
     if(checkEfficiency > 0 && getNukeTime >= 1 || player.getEffect("haste") && getNukeTime >= 1 ||
       fastBrokenBlocks.includes(block.type.id) && getNukeTime >= 1 || GamemodeOf(player) === 1) {
       system.run(() => {
-        player.runCommand(`scoreboard players set @s nukeLength 0`)
-        player.runCommand(`scoreboard players set @s sendMsgT 0`)
+        Util.setScore(player, 'nukeLength', 0)
+        Util.setScore(player, 'sendMsgT', 0)
       })
     }
     if(nukerLength > 15) {
@@ -123,17 +87,8 @@ if(antiNukerEnabled == true) {
       RecoverBlock(player.dimension, block.location, block)
       if(player.hasTag("ban")) return
       system.run(() => {
-        player.runCommand(`tag "${player.name}" add ban`)
-        player.runCommand(`tag "${player.name}" add "Reason:§cNuker §8(§gA§8)§r" `)
-        player.runCommand(`tag "${player.name}" add "By:§cMatrix§r" `)
-        player.runCommand(`scoreboard players set "${player.name}" bantimer 40`)
-        player.runCommand(
-          `kick "${player.name}" .\n§8 >> §c§lYou are banned bad boy\n§r§8 >> §gReason§8:§cNuker §8(§gA§8)\n§8 >> §gBy§8:§cMatrix`
-          )
-        world.sendMessage(
-          `§e[§cMatrix§e] §b${player.name} §chas been banned!§r\n§gBy§8:§cMatrix\n§gReason§8:§cNuker §8(§gA§8)`
-          )
+        Detect.flag(player, 'Nuker', 'A', 'ban', null, false)
       })
     }
   })
-    }
+}

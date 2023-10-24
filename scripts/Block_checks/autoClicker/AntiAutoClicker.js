@@ -4,24 +4,11 @@ import {
   maximumCpsPlace
 } from "../../config"
 import {
-  disX,
-  disY,
-  disZ,
-  disXZ,
-  limitOfReachX,
-  limitOfReachY,
-  limitOfReachZ
-} from "../Reach/AntiBreak&PlaceReach"
-import {
   system,
-  ItemStack,
-  world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
-  Player,
-  BlockInventoryComponent
+  world
 } from "@minecraft/server"
+import { Detect, Util } from "../../Util/Util"
+
 let world = Minecraft.world
 let autoAToggle;
 if (antiAutoClickerEnabled == true) {
@@ -57,13 +44,9 @@ if (antiAutoClickerEnabled == true) {
       system.run(() => {
         if (autoAToggle != true) return
         if (player.hasTag("MatrixOP")) return
-        player.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gClicking §8(§gB§8) §chas been detected from §b${player.name}\n§cCps §8= §8(§g${getCps}§8/§g${maximumCpsPlace}§8)\n§cBlock §8 = §8(§g${blockName}§8)"}]}`
-          )
-        player.runCommand(`scoreboard players set @s placeCps 0`)
-        player.runCommand(
-          `kick "${player.name}" .\n§8>> §cYou have been kicked!\n§8>> §gReason§r§8:§can unNatural §gClicking §8(§gB§8)§c Cps §8= §8(§g${getCps}§8/§g${maximumCpsPlace}§8)\n§8>> §gBy§8:§cMatrix`
-          )
+
+        Detect.flag(player, 'AutoClicker', 'B', 'kick', [['Cps', getCps, maximumCps]], false)
+        Util.setScore(player, 'placeCps', 0)
       })
     }
   })

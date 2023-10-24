@@ -1,4 +1,3 @@
-import * as Minecraft from "@minecraft/server"
 import {
   antiSpeedMineEnabled,
   toolsNames,
@@ -8,32 +7,13 @@ import {
 import {
   system,
   GameMode,
-  ItemStack,
-  world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
-  Player,
-  BlockInventoryComponent
+  world
 } from "@minecraft/server"
-let world = Minecraft.world
+import { Detect, Util } from "../../Util/Util";
+
 let speedMineToggle;
 
-const GamemodeOf = (player) => {
-  const gamemodes = {
-    survival: 0,
-    creative: 1,
-    adventure: 2,
-    spectator: 3
-  }
-  
-  for (const gamemode in GameMode) {
-    if ([...world.getPlayers({
-        name: player.name,
-        gameMode: GameMode[gamemode]
-    })].length > 0) return gamemodes[gamemode]
-  }
-}
+const GamemodeOf = Util.GamemodeOf
 
 //* check toggle if enabled
 if (antiSpeedMineEnabled == true) {
@@ -67,17 +47,7 @@ if (antiSpeedMineEnabled == true) {
     //*speedMine Break value 
     let breakTimer = world.scoreboard.getObjective("mineTimer").getScore(player.scoreboardIdentity)
     let breakFlags = world.scoreboard.getObjective("mineFlags").getScore(player.scoreboardIdentity)
-    let {
-      x,
-      y,
-      z
-    } = block.location;
-    //* block location and player location (doesn't matter) 
-    let {
-      x: playerx,
-      y: playery,
-      z: playerz
-    } = player.location;
+
     //* clone block before broken
     let checkSelectedSlot;
     let getItemInSlot;
@@ -125,8 +95,8 @@ if (antiSpeedMineEnabled == true) {
       if (player.hasTag("MatrixOP")) return
       if (fastBrokenBlocks.includes(block.type.id)) return
       system.run(() => {
-        player.runCommand(`scoreboard players set @s mineFlags 0`)
-        player.runCommand(`scoreboard players set @s mineTimer ${breakSpeed}`)
+        Util.setScore(player, 'mineFlags', 0)
+        Util.setScore(player, 'mineTimer', breakSpeed)
       })
     }
     if (breakTimer > 0) {
@@ -136,7 +106,7 @@ if (antiSpeedMineEnabled == true) {
       })
       event.cancel = true
       system.run(() => {
-        player.runCommand(`scoreboard players add @s mineFlags 1`)
+        Util.addScore(player, 'mineFlags', 1)
       })
     }
     if (player.hasTag("hitBlock")) {
@@ -149,10 +119,8 @@ if (antiSpeedMineEnabled == true) {
         if (getNuke >= 2 || breakTimer > breakSpeed || breakSpeed == 0 || player.hasTag("MatrixOP") ||
           speedMineToggle != true || fastBrokenBlocks.includes(block.type.id) || GamemodeOf(player) === 1) return
           event.cancel = true
-        player.runCommand(`scoreboard players set @s mineFlags 0`)
-        player.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §gSpeed mine §8(§gA§8) §chas been detected from §b${player.name}\n§cBlocks §8= §8(§g${breakFlags} blocks§8/§gsecond§8)"}]}`
-          )
+        Util.setScore(player, 'mineFlags', 0)
+        Detect.flag(player, 'Speed Mine', 'A', 'none', [['Blocks', breakFlags + ' blocks', 'second']], false)
       })
     }
   })

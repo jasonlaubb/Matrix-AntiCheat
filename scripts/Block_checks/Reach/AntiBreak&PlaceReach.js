@@ -4,15 +4,9 @@ import {
 } from "../../config"
 import {
   system,
-  ItemStack,
-  world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
-  Player,
-  BlockInventoryComponent
+  world
 } from "@minecraft/server"
-let world = Minecraft.world
+import { Detect, Util } from "../../Util/Util";
 let reachBToggle;
 let reachPToggle;
 if (antiReachBlockEnabled == true) {
@@ -25,7 +19,7 @@ if (antiReachBlockEnabled == true) {
       reachBToggle = true
     }
     system.run(() => {
-      player.runCommand(`scoreboard players set @s block 1`)
+      Util.setScore(player, 'block', 1)
     })
     let {
       x,
@@ -155,20 +149,16 @@ if (antiReachBlockEnabled == true) {
     }
     if (disX < limitOfReachX && disY < limitOfReachY && disZ < limitOfReachZ) {
       system.run(() => {
-        player.runCommand(`scoreboard players set @s tryReachB 0`)
+        Util.setScore(player, 'tryReachB', 0)
       })
     }
     if (disXZ > limitOfReachX || disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ) {
       if (player.hasTag("MatrixOP")) return
       if (reachBToggle != true) return
-      system.run(() => {
-        player.runCommand(`execute  positioned ${x} ${y} ${z} run kill @e[r=1.5,type=item,name="${blockName}"]`)
-      })
+
       event.cancel = true
       system.run(() => {
-        player.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gReach §8(§gB§8) §chas been detected from §b${player.name}\n§cDistance §8= §8(§g${distance}§8/§gBlocks§8)\n§cBlock§8 = §8(§g${blockName}§8)\n§cReach type §8= (§g${reachType}§8)"}]}`
-          )
+        Detect.flag(player, 'Reach', 'B', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
       })
     }
   })
@@ -190,7 +180,7 @@ if (antiReachBlockEnabled == true) {
     let player = event.player
     let block = event.block
     system.run(() => {
-      player.runCommand(`scoreboard players set @s block 1`)
+      Util.setScore(player, 'block', 1)
     })
     let {
       x,
@@ -312,7 +302,7 @@ if (antiReachBlockEnabled == true) {
     }
     if (disX < limitOfReachX && disY < limitOfReachY && disZ < limitOfReachZ) {
       system.run(() => {
-        player.runCommand(`scoreboard players set @s tryReachB 0`)
+        Util.setScore(player, 'tryReachB', 0)
       })
     }
     if (disXZ > limitOfReachX || disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ) {
@@ -320,10 +310,8 @@ if (antiReachBlockEnabled == true) {
       if (reachPToggle != true) return
       event.cancel = true
       system.run(() => {
-        player.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gReach §8(§gP§8) §chas been detected from §b${player.name}\n§cDistance §8= §8(§g${distance}§8/§gBlocks§8)\n§cBlock§8 = §8(§g${blockName}§8)\n§cReach type §8= (§g${reachType}§8)"}]}`
-          )
-        player.runCommand(`scoreboard players add @s tryReachB 1`)
+        Detect.flag(player, 'Reach', 'P', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
+        Util.addScore(player, 'tryReachB', 1)
       })
     }
   })
@@ -336,4 +324,4 @@ export {
   limitOfReachX,
   limitOfReachY,
   limitOfReachZ
-  }
+}

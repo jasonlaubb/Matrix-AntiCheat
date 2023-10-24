@@ -33,7 +33,12 @@ import {
   antiBadPacket,
   antiInvalidSprint
 } from "./Misc_checks/BadPacket/BadPacket"
-import { antiFlyD } from "./Movement_checks/antiFlyD"
+import {
+  antiFlyD
+} from "./Movement_checks/antiFlyD"
+import {
+  nukerCPS
+} from "./Combat_checks/AutoClicker/AntiAutoClicker"
 
 system.runInterval(() => {
   for (const player of world.getAllPlayers()) {
@@ -49,5 +54,6 @@ system.runInterval(() => {
     antiCrasherC(player)
     antiBadPacket(player)
     antiInvalidSprint(player)
+    nukerCPS(player)
   }
 })

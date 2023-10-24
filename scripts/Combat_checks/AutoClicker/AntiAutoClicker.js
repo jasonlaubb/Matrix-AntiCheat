@@ -1,24 +1,18 @@
-import * as Minecraft from "@minecraft/server"
+import { Detect, Util } from "../../Util/Util";
 import {
   antiAutoClickerEnabled,
-  maximumCps,
-  setScore,
-  addScore
+  maximumCps
 } from "../../config"
 import {
   system,
-  ItemStack,
-  world,
-  ItemEnchantsComponent,
-  EffectTypes,
-  Vector,
-  Container,
-  Player
+  world
 } from "@minecraft/server"
-let world = Minecraft.world
+
+const { setScore, addScore } = Util
+
 let autoToggle;
 if (antiAutoClickerEnabled == true) {
-  world.afterEvents.entityHitEntity.subscribe((event, entity, hitBlock, hitEntity) => {
+  world.afterEvents.entityHitEntity.subscribe((event) => {
     try {
       autoToggle = world.scoreboard.getObjective("toggle:auto").displayName
     } catch {
@@ -41,58 +35,52 @@ if (antiAutoClickerEnabled == true) {
         cps = cps2
       }
       let tryAutoClicker = world.scoreboard.getObjective("tryAutoClicker").getScore(attacker.scoreboardIdentity)
-      attacker.runCommand(`scoreboard players add "${attacker.name}" cps 1`)
-      attacker.runCommand(`scoreboard players add "${attacker.name}" cps3 1`)
+      addScore(attacker, 'cps', 1)
+      addScore(attacker, 'cps3', 1)
       if (tryAutoClicker >= 5) {
         if (autoToggle != true) return
         if (attacker.hasTag("MatrixOP")) return
-        attacker.runCommand(
-          `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gClicking §8(§gA§8) §chas been detected from §b${attacker.name}\n§cCps §8= §8(§g${illegalCps}§8/§g${maximumCps}§8)\n§cTarget§8 = §8(§g${targetName.replaceAll("minecraft:","").replaceAll("_"," ")}§8)"}]}`
-          )
-        attacker.runCommand(`scoreboard players set @s tryAutoClicker 0`)
-        attacker.runCommand(
-          `kick "${attacker.name}" .\n§8>> §cYou have been kicked!\n§8>> §gReason§r§8:§cplease Slow your clicking §8(§g${illegalCps}§8/§g${maximumCps}§8)\n§8>> §gBy§8:§cMatrix`
-          )
+        Detect.flag(attacker, 'AutoClicker', 'A', 'kick', [['Cps', illegalCps, maximumCps],['Target', targetName.replace("minecraft:","").replaceAll("_"," ")]], false)
+        setScore(attacker, 'tryAutoClicker', 0)
       }
     }
   })
 }
-system.runInterval(() => {
-  for (let player of world.getAllPlayers()) {
-    let tryAutoClicker = world.scoreboard.getObjective("tryAutoClicker").getScore(player.scoreboardIdentity)
-    let nukerFlag = world.scoreboard.getObjective("sendMsgT").getScore(player.scoreboardIdentity)
-    let nukerLength = world.scoreboard.getObjective("nukeLength").getScore(player.scoreboardIdentity)
-    let rescps = world.scoreboard.getObjective("rescps4").getScore(player.scoreboardIdentity)
-    let cps2 = world.scoreboard.getObjective("cps").getScore(player.scoreboardIdentity)
-    let cps;
-    if (nukerFlag == 1) {
-      player.runCommand(
-        `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §gNuker §8(§gA§8) §chas been detected from §b${player.name}\n§cBlocks §8= §8(§g${nukerLength+1}§8/§gBlocks§8)"}]}`
-        )
-      setScore(world,player,"nukeLength",0)
-    }
-    cps = world.scoreboard.getObjective("Seccps").getScore(player.scoreboardIdentity)
-    if (cps2 >= cps) {
-      cps = cps2
-    }
-    setScore(world,player,"trueCps",cps)
-    let cps3 = world.scoreboard.getObjective("cps3").getScore(player.scoreboardIdentity)
-    let cps4;
-    cps4 = world.scoreboard.getObjective("Seccps2").getScore(player.scoreboardIdentity)
-    if (cps3 >= cps4) {
-      cps4 = cps3
-    }
-    if (cps4 > maximumCps / 2) {
-      setScore(world,player,"cps2",cps4*2)
-      addScore(world,player,"tryAutoClicker",1)
-    }
-    if (tryAutoClicker == 1) {
-      if (autoToggle != true) return
-      player.runCommand(`title @s title §cdoubel Clicking`)
-      player.runCommand(`title @s subtitle §gPlease slow your cps`)
-    }
+async function nukerCPS (player) {
+  let tryAutoClicker = world.scoreboard.getObjective("tryAutoClicker").getScore(player.scoreboardIdentity)
+  let nukerFlag = world.scoreboard.getObjective("sendMsgT").getScore(player.scoreboardIdentity)
+  let nukerLength = world.scoreboard.getObjective("nukeLength").getScore(player.scoreboardIdentity)
+  let rescps = world.scoreboard.getObjective("rescps4").getScore(player.scoreboardIdentity)
+  let cps2 = world.scoreboard.getObjective("cps").getScore(player.scoreboardIdentity)
+  let cps;
+  if (nukerFlag == 1) {
+    Detect.flag(player, 'Nuker', 'A', 'none', [['Blocks', nukerLength + 1, 'Blocks']], false)
+    setScore(world,player,"nukeLength",0)
+  }
+  cps = world.scoreboard.getObjective("Seccps").getScore(player.scoreboardIdentity)
+  if (cps2 >= cps) {
+    cps = cps2
+  }
+  setScore(world,player,"trueCps",cps)
+
+  let cps3 = world.scoreboard.getObjective("cps3").getScore(player.scoreboardIdentity)
+  let cps4;
+  cps4 = world.scoreboard.getObjective("Seccps2").getScore(player.scoreboardIdentity)
+  if (cps3 >= cps4) {
+    cps4 = cps3
+  }
+  if (cps4 > maximumCps / 2) {
+    setScore(world,player,"cps2",cps4*2)
+    addScore(world,player,"tryAutoClicker",1)
+  }
+  if (tryAutoClicker == 1) {
+    if (autoToggle != true) return
+      player.onScreenDisplay.setTitle('§cdoubel Clicking')
+      player.onScreenDisplay.updateSubtitle('§gPlease slow your cps')
     if (rescps == 9) {
       setScore(world,player,"Seccps2",cps3)
     }
   }
-})
+}
+
+export { nukerCPS }
