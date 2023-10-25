@@ -98,13 +98,17 @@ class Detect {
         player.addTag(`By:Matrix§r`)
         world.scoreboard.getObjective('bantimer').setScore(player, 40)
       }
-
-      if (teleportState === true) {
-        player.teleport(teleportPos)
+      default: {
+        console.warn("Invalid punishment on " + module + type)
+        return false
       }
+    }  
+    if (teleportState === true) {
+      player.teleport(teleportPos)
     }
-
+    
     this.notify(`§g${module} §8(§g${type}§8) §chas been detected from §b${player.name}${infromation2}`)
+    return true
   }
 }
 
