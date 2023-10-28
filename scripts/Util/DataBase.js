@@ -5,6 +5,13 @@ world.afterEvents.worldInitialize.subscribe(() => {
     world.setDynamicProperty(dym, undefined)
   })
 })
+
+world.afterEvents.playerLeave.subscribe(ev => {
+  world.getDynamicPropertyIds().filter(dym => dym.startsWith(`LocalData:${ev.playerId}`)).forEach(dym => {
+    world.setDynamicProperty(dym, undefined)
+  })
+})
+
 class LocalData {
   id
   constructor (id) {
