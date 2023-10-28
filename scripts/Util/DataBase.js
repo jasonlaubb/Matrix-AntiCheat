@@ -1,5 +1,10 @@
 import { world } from "@minecraft/server"
 
+world.afterEvents.worldInitialize.subscribe(() => {
+  world.getDynamicPropertyIds().filter(dym => dym.startsWith("LocalData:")).forEach(dym => {
+    world.setDynamicProperty(dym, undefined)
+  })
+})
 class LocalData {
   id
   constructor (id) {
