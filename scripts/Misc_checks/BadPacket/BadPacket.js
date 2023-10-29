@@ -2,17 +2,14 @@ import { world, system } from '@minecraft/server';
 import {
   antiBadPacketEnabled, antiInvalidSrpintEnabled,
 } from '../../config';
+import { LocalData } from "../../Util/DataBase"
 
 const isBadPacket = (player, a) => {
-  world.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas been kicked!§r\n§gBy§8:§cMatrix\n§gReason§8:§cbadpacket §8(§g${a}§8)§r`)
-  player.runCommand(`tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §gbadpacket §8(§g${a}§8) §chas been detected from §b${player.name}"}]}`)
-  player.runCommand(`kick "${player.name}" .\n§8 >> §c§lYou are kicked bad boy\n§r§8 >> §gReason§8:§cbadpacket §8(§g${a}§8)§r\n§8 >> §gBy§8:§cMatrix`)
+  Detect.flag(player, "BadPacket", a, "kick", null, false)
 }
 
 const detect2 = (player, a, module) => {
-  world.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas been kicked!§r\n§gBy§8:§cMatrix\n§gReason§8:§c${module} §8(§g${a}§8)§r`)
-  player.runCommand(`tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §g${module} §8(§g${a}§8) §chas been detected from §b${player.name}"}]}`)
-  player.runCommand(`kick "${player.name}" .\n§8 >> §c§lYou are kicked bad boy\n§r§8 >> §gReason§8:§c${module} §8(§g${a}§8)§r\n§8 >> §gBy§8:§cMatrix`)
+  Detect.flag(player, module, a, "kick", null, false)
 }
 
 async function antiBadPacket (player) {
@@ -24,10 +21,12 @@ async function antiBadPacket (player) {
     isBadPacket (player, 'A')
   }
 
+  /* This check is no longer been used
   if (selectedSlot < 0 || selectedSlot > 8 || Number.isNaN(selectedSlot)) {
     player.selectedSlot = 0
     isBadPacket (player, 'B')
   }
+  */
 
   if (player.isJumping && player.fallDistance === 0) {
     const pos = { x: Math.floor(player.location.x), y: Math.floor(player.location.y) + 2, z: Math.floor(player.location.z) }
@@ -43,15 +42,17 @@ world.afterEvents.entityHurt.subscribe(ev => {
   if (player.getEffect('weakness')?.amplifier >= 255) return
   if (player.id === ev.damageSource.damagingEntity.id) {
     player.addEffect('weakness', 60, { amplifier: 255, showParticles: false })
-    isBadPacket (player, 'C')
+    isBadPacket (player, 'D')
   }
 })
 
+const InvalidSprintBuff = new LocalData("InvalidSprintBuff")
 async function antiInvalidSprint (player) {
   if (!antiInvalidSrpintEnabled || world.scoreboard.getObjective('toggle:invalidsrpint') || player.hasTag('MatrixOP') || player.isGliding == true) return
 
   if (player.isSprinting) {
     try {
+      const buff = InvalidSprintBuff.get(player) ?? 0
       const velocity = player.getVelocity()
       const pos1 = player.location
       const pos2 = { x: pos1.x + velocity.x, z: pos1.z + velocity.z }
@@ -62,16 +63,19 @@ async function antiInvalidSprint (player) {
 
       if (angle > 180 && !player.isFlying && !player.isSwimming) {
         //this modules is on beta
-        player.teleport(player.location)
-        player.runCommand(`tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §gInvalidSprint §chas been detected from §b${player.name}\n§cSprintAngle§8 = §8(§g${angle.toFixed(2)}§8)"}]}`)
-      }
+        if (buff <= 0) return InvalidSprintBuff.set(player, buff + 1)
+        InvalidSprintBuff.set(player, undefined)
+        Detect.flag(player, "InvalidSprint", "A", "none", [["SprintAngle",angle,"180"]], true, player.location)
+      } else InvalidSprintBuff.set(player, undefined)
     } catch { }
     
     //Other small checking
+    /* This checks is no longer been used
     if (player.isGliding) {
       player.teleport(player.location)
       detect2 (player, 'A', 'AutoSprint')
     }
+    */
 
     if (player.getEffect('blindness')) {
       system.run(() => {
