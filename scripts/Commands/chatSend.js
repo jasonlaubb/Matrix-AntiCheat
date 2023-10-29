@@ -5,6 +5,9 @@ import {
 
 import { prefix } from '../config'
 import { Commands } from "./commands"
+import { spammer } from "../Misc_checks/Spammer/Spammer"
+
+const AntiSpammerEnabled = true
 
 world.beforeEvents.chatSend.subscribe(data => {
 try {
@@ -21,6 +24,13 @@ try {
   if(player.hasTag("mute")) {
     data.cancel = true
     return system.run(() => player.sendMessage(`§e[§cMatrix§e]§c You're muted!`))
+  }
+
+  if (AntiSpammerEnabled && !player.hasTag("MatrixOP") {
+    if (spammer(player) === true) {
+      data.cancel = true
+      return
+    }
   }
 
   if(spam > 0) {
