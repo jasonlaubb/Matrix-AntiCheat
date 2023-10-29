@@ -324,7 +324,32 @@
         }
       }
     },
-    "controller.animation.player.can_fly": {
+    "controller.animation.player.gui": {
+      "initial_state": "not_gui",
+      "states": {
+        "not_gui": {
+          "on_entry": [
+            "/tag @s remove gui"
+          ],
+          "transitions": [
+            {
+              "gui": "query.variant == 1"
+            }
+          ]
+        },
+        "gui": {
+          "on_entry": [
+            "/tag @s add gui"
+          ],
+          "transitions": [
+            {
+              "not_canfly": "query.variant != 1"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.canfly": {
       "initial_state": "not_canfly",
       "states": {
         "not_canfly": {
