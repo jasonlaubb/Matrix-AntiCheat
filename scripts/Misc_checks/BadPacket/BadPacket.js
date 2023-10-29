@@ -28,6 +28,13 @@ async function antiBadPacket (player) {
     player.selectedSlot = 0
     isBadPacket (player, 'B')
   }
+
+  if (player.isJumping && player.fallDistance === 0) {
+    const pos = { x: Math.floor(player.location.x), y: Math.floor(player.location.y) + 2, z: Math.floor(player.location.z) }
+    if ([-1,0,1].every(x => [-1,0,1].every(z => player.dimension.getBlock({ location: { x: pos.x + x, y: pos.y, z: pos.z }})?.isAir))) {
+      isBadPacket (player, 'C')
+    }  
+  }
 }
 
 world.afterEvents.entityHurt.subscribe(ev => {
