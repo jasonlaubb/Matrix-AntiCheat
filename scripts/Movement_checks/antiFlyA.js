@@ -39,7 +39,7 @@ let flyTimer = world.scoreboard.getObjective("flyTimer").getScore(player.scorebo
         setScore(world,player,"groundY",playerY)
           setScore(world,player,"groundX",playerX)
     	}
-    if(player.isOnGround == true || skip_check>0){
+    if(player.isOnGround == true && velocityY == 0 || skip_check>0){
     	setScore(world,player,"groundZ",playerZ)
         setScore(world,player,"groundY",playerY)
           setScore(world,player,"groundX",playerX)
