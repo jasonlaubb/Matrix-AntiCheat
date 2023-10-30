@@ -172,13 +172,13 @@ if (antiReachAttackEnabled == true) {
       target.addTag(`skip_check`)
       target.runCommand(`scoreboard players set @s skip_check 20`)
       if (disXZ > limitOfReachX || disY > limitOfReachY) {
-        attacker.runCommand(`scoreboard players set @s reachDis ${Math.floor(distance*100)}`)
-        attacker.runCommand(`scoreboard players add @s tryReachA 1`)
+setScore(world,attacker,"reachDis",Math.floor(distance*100)) 
+addScore(world,attacker,"tryReachA",1)
       }
       if (disX < limitOfReachX && disY < limitOfReachY && disZ < limitOfReachZ) {
-        attacker.runCommand(`scoreboard players set @s tryReachA 0`)
+        setScore(world,attacker,"tryReachA",0)
       }
-      attacker.runCommand(`scoreboard players add @s countOfTargets 2`)
+      addScore(world,attacker,"countOfTargets",1)
       if (TargetsCount > 1) {
         detect(attacker,"kick","§e[§cMatrix§e] §gkillaura §8(§gC§8) §chas been detected from§b "+attacker.name,null,true,"§e[§cMatrix§e] §ckillaura §8(§gC§8)")
       }
@@ -212,7 +212,7 @@ if (antiReachAttackEnabled == true) {
         attacker.runCommand(
           `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §can unNatural §gReach §8(§gA§8) §chas been detected from §b${attacker.name}\n§cDistance §8= §8(§g${lastReachDis/100}§8/§gBlocks§8)\n§cTarget§8 = §8(§g${targetName}§8)\n§cReach type §8= (§g${reachType}§8)"}]}`
           )
-        attacker.runCommand(`scoreboard players set @s tryReachA 0`)
+        setScore(world,attacker,"tryReachA",0)
         attacker.runCommand(
           `kick "${attacker.name}" .\n§8 >> §c§lYou are kicked bad boy\n§r§8 >> §gReason§8:§can unNatural §gReach §8(§gA§8) §cDistance §8= §8(§g${lastReachDis/100}§8/§gBlocks§8)\n§8 >> §gBy§8:§cMatrix`
           )
