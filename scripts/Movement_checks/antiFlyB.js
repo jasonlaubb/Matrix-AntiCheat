@@ -64,7 +64,7 @@ if(player.hasTag("slime") && velocityY<=0){
       player.addTag(`slime`)
     }
     
-    if(velocityY<0 || skip_check>0 || player.hasTag("slime") && velocityY>0){
+    if(velocityY<0 && player.location.y<groundY| skip_check>0 || player.hasTag("slime") && velocityY>0){
     setScore(world,player,"groundZ",playerZ)
         setScore(world,player,"groundY",playerY)
           setScore(world,player,"groundX",playerX)
