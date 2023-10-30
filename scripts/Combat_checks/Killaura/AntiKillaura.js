@@ -1,6 +1,8 @@
 import * as Minecraft from "@minecraft/server"
 import {
-  antiKillauraEnabled
+  antiKillauraEnabled, 
+  setScore, 
+  addScore
 } from "../../config"
 import {
   disXZ
