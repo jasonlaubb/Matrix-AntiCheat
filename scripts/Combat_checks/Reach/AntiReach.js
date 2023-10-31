@@ -79,68 +79,8 @@ if (antiReachAttackEnabled == true) {
       if (attackerY > y + 3) {
         limitOfReachY = 3
       }
-      if (Math.round(attackerY) <= Math.round(y) - 4.5) {
-        limitOfReachX = 2.5
-        limitOfReachZ = 2.5
-        if (attacker.hasTag("is_jumping")) {
-          limitOfReachX = 3.5
-          limitOfReachZ = 3.5
-        }
-      }
-      if (Math.round(attackerY) == Math.round(y) - 1) {
-        limitOfReachX = 3.7
-        limitOfReachZ = 3.7
-        if (attacker.hasTag("is_jumping")) {
-          limitOfReachX = 4
-          limitOfReachZ = 4
-        }
-      }
-      if (Math.round(attackerY) == Math.round(y) - 2) {
-        limitOfReachX = 3.5
-        limitOfReachZ = 3.5
-        if (attacker.hasTag("is_jumping")) {
-          limitOfReachX = 4
-          limitOfReachZ = 4
-        }
-      }
-      if (Math.round(attackerY) == Math.round(y) - 3) {
-        limitOfReachX = 3.1
-        limitOfReachZ = 3.1
-        if (attacker.hasTag("is_jumping")) {
-          limitOfReachX = 3.7
-          limitOfReachZ = 3.7
-        }
-      }
-      if (Math.round(attackerY) == Math.round(y) - 4) {
-        limitOfReachX = 2.5
-        limitOfReachZ = 2.5
-        if (attacker.hasTag("is_jumping")) {
-          limitOfReachX = 3.5
-          limitOfReachZ = 3.5
-        }
-      }
-      if (Math.round(attackerY) == Math.round(y)) {
-        limitOfReachX = 3.7
-        limitOfReachZ = 3.7
-      }
-      if (Math.round(attackerY) == Math.round(y) + 3) {
-        limitOfReachX = 2.6
-        limitOfReachZ = 2.6
-      }
-      if (Math.round(attackerY) == Math.round(y) + 2) {
-        limitOfReachX = 3.7
-        limitOfReachZ = 3.7
-      }
-      if (Math.round(attackerY) == Math.round(y) + 1) {
-        limitOfReachX = 3.7
-        limitOfReachZ = 3.7
-      }
-      limitOfReachX = 3.7
-      limitOfReachZ = 3.7
       
-      let x1 = x + (disX * 2)
-      let z1 = z + (disZ * 2)
-      let y1 = y + (disY * 2)
+      
       let disY2 = Math.abs(y1 - attackerY)
       let disZ2 = Math.abs(z1 - attackerZ)
       let disX2 = Math.abs(x1 - attackerX)
