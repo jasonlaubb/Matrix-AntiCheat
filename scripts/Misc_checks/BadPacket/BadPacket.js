@@ -3,7 +3,7 @@ import {
   antiBadPacketEnabled, antiInvalidSrpintEnabled,
 } from '../../config';
 import { LocalData } from "../../Util/DataBase"
-try{
+
 const isBadPacket = (player, a) => {
   Detect.flag(player, "BadPacket", a, "kick", null, false)
 }
@@ -13,6 +13,7 @@ const detect2 = (player, a, module) => {
 }
 
 async function antiBadPacket (player) {
+  try{
   if (!antiBadPacketEnabled || world.scoreboard.getObjective('toggle:badpacket') || player.hasTag('MatrixOP')) return
   const rotation = player.getRotation()
   const selectedSlot = player.selectedSlot
@@ -33,7 +34,7 @@ async function antiBadPacket (player) {
     if ([-1,0,1].every(x => [-1,0,1].every(z => player.dimension.getBlock({ location: { x: pos.x + x, y: pos.y, z: pos.z }})?.isAir))) {
       isBadPacket (player, 'C')
     }  
-  }
+  }} catch {} 
 }
 
 world.afterEvents.entityHurt.subscribe(ev => {
@@ -48,6 +49,7 @@ world.afterEvents.entityHurt.subscribe(ev => {
 
 const InvalidSprintBuff = new LocalData("InvalidSprintBuff")
 async function antiInvalidSprint (player) {
+try{
   if (!antiInvalidSrpintEnabled || world.scoreboard.getObjective('toggle:invalidsrpint') || player.hasTag('MatrixOP') || player.isGliding == true) return
 
   if (player.isSprinting) {
@@ -91,7 +93,8 @@ async function antiInvalidSprint (player) {
       player.teleport(player.location)
       detect2 (player, 'A', 'AutoMove')
     }
-  }
+  }} catch{
+  } 
 }
 
 world.beforeEvents.playerPlaceBlock.subscribe(ev => {
@@ -117,6 +120,5 @@ world.beforeEvents.playerPlaceBlock.subscribe(ev => {
     })
   }
 })
-} catch {
-  } 
+}
 export { antiBadPacket, antiInvalidSprint }
