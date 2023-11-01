@@ -62,22 +62,22 @@ if(antiNukerEnabled == true) {
     let getNukeTime = world.scoreboard.getObjective("nukerTimer").getScore(player.scoreboardIdentity)
     if(getNukeTime <= 0) {
       system.run(() => {
-        Util.setScore(player, 'nukerTimer', nukerTimer)
+        Util.setScore(world, player, 'nukerTimer', nukerTimer)
       })
     }
     if(getNukeTime >= 1) {
       system.run(() => {
         if(nukerToggle != true || player.hasTag("MatrixOP")) return
-        Util.addScore(player, 'nukeLength', 1)
-        Util.setScore(player, 'sendMsgT', 6)
+        Util.addScore(world, player, 'nukeLength', 1)
+        Util.setScore(world, player, 'sendMsgT', 6)
       })
       RecoverBlock(player.dimension, block.location, block)
     }
     if(checkEfficiency > 0 && getNukeTime >= 1 || player.getEffect("haste") && getNukeTime >= 1 ||
       fastBrokenBlocks.includes(block.type.id) && getNukeTime >= 1 || GamemodeOf(player) === 1) {
       system.run(() => {
-        Util.setScore(player, 'nukeLength', 0)
-        Util.setScore(player, 'sendMsgT', 0)
+        Util.setScore(world, player, 'nukeLength', 0)
+        Util.setScore(world, player, 'sendMsgT', 0)
       })
     }
     if(nukerLength > 15) {
