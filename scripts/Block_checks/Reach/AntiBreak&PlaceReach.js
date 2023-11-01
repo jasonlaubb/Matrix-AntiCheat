@@ -147,11 +147,7 @@ if (antiReachBlockEnabled == true) {
       distance = disXZ;
       reachType = "x§8,§gz"
     }
-    if (disX < limitOfReachX && disY < limitOfReachY && disZ < limitOfReachZ) {
-      system.run(() => {
-        Util.setScore(world, player, 'tryReachB', 0)
-      })
-    }
+    
     if (disXZ > limitOfReachX || disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ) {
       if (player.hasTag("MatrixOP")) return
       if (reachBToggle != true) return
@@ -300,18 +296,14 @@ if (antiReachBlockEnabled == true) {
       distance = disXZ;
       reachType = "x§8,§gz"
     }
-    if (disX < limitOfReachX && disY < limitOfReachY && disZ < limitOfReachZ) {
-      system.run(() => {
-        Util.setScore(world, player, 'tryReachB', 0)
-      })
-    }
+    
     if (disXZ > limitOfReachX || disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ) {
       if (player.hasTag("MatrixOP")) return
       if (reachPToggle != true) return
       event.cancel = true
       system.run(() => {
         Detect.flag(player, 'Reach', 'P', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
-        Util.addScore(world, player, 'tryReachB', 1)
+        
       })
     }
   })
