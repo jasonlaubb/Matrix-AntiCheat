@@ -35,13 +35,13 @@ if (antiAutoClickerEnabled == true) {
         cps = cps2
       }
       let tryAutoClicker = world.scoreboard.getObjective("tryAutoClicker").getScore(attacker.scoreboardIdentity)
-      addScore(attacker, 'cps', 1)
-      addScore(attacker, 'cps3', 1)
+      addScore(world, attacker, 'cps', 1)
+      addScore(world, attacker, 'cps3', 1)
       if (tryAutoClicker >= 5) {
         if (autoToggle != true) return
         if (attacker.hasTag("MatrixOP")) return
         Detect.flag(attacker, 'AutoClicker', 'A', 'kick', [['Cps', illegalCps, maximumCps],['Target', targetName.replace("minecraft:","").replaceAll("_"," ")]], false)
-        setScore(attacker, 'tryAutoClicker', 0)
+        setScore(world, attacker, 'tryAutoClicker', 0)
       }
     }
   })
