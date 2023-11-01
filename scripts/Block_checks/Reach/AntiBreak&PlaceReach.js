@@ -19,7 +19,7 @@ if (antiReachBlockEnabled == true) {
       reachBToggle = true
     }
     system.run(() => {
-      Util.setScore(player, 'block', 1)
+      Util.setScore(world, player, 'block', 1)
     })
     let {
       x,
@@ -149,7 +149,7 @@ if (antiReachBlockEnabled == true) {
     }
     if (disX < limitOfReachX && disY < limitOfReachY && disZ < limitOfReachZ) {
       system.run(() => {
-        Util.setScore(player, 'tryReachB', 0)
+        Util.setScore(world, player, 'tryReachB', 0)
       })
     }
     if (disXZ > limitOfReachX || disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ) {
@@ -158,7 +158,7 @@ if (antiReachBlockEnabled == true) {
 
       event.cancel = true
       system.run(() => {
-        Detect.flag(player, 'Reach', 'B', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
+        Detect.flag(world, player, 'Reach', 'B', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
       })
     }
   })
@@ -180,7 +180,7 @@ if (antiReachBlockEnabled == true) {
     let player = event.player
     let block = event.block
     system.run(() => {
-      Util.setScore(player, 'block', 1)
+      Util.setScore(world, player, 'block', 1)
     })
     let {
       x,
@@ -302,7 +302,7 @@ if (antiReachBlockEnabled == true) {
     }
     if (disX < limitOfReachX && disY < limitOfReachY && disZ < limitOfReachZ) {
       system.run(() => {
-        Util.setScore(player, 'tryReachB', 0)
+        Util.setScore(world, player, 'tryReachB', 0)
       })
     }
     if (disXZ > limitOfReachX || disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ) {
@@ -311,7 +311,7 @@ if (antiReachBlockEnabled == true) {
       event.cancel = true
       system.run(() => {
         Detect.flag(player, 'Reach', 'P', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
-        Util.addScore(player, 'tryReachB', 1)
+        Util.addScore(world, player, 'tryReachB', 1)
       })
     }
   })
