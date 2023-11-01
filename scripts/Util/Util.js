@@ -146,7 +146,7 @@ class Util {
  * @param {string} scoreboard 
  * @param {number} amount
  */
-  static setScore (player, scoreboard, amount) {
+  static setScore (world, player, scoreboard, amount) {
     world.scoreboard.getObjective(scoreboard).setScore(player.scoreboardIdentity, amount)
   }
 
@@ -158,7 +158,7 @@ class Util {
  * @param {string} scoreboard 
  * @param {number} amount
  */
-  static addScore (player, scoreboard, amount) {
+  static addScore (world, player, scoreboard, amount) {
     world.scoreboard.getObjective(scoreboard).addScore(player.scoreboardIdentity, amount)
   }
 /**
