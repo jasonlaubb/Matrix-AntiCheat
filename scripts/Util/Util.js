@@ -83,12 +83,13 @@ class Detect {
     if (!!player === false || !!module === false || !!type === false || !!punishment === false) return false
     if (player.hasTag('MatrixOP')) return false
 
+    const infromation2 = infromationHandler(infromation, false)
+
     switch (punishment) {
       case "none": {
         break
       }
       case "kick": {
-        const infromation2 = infromationHandler(infromation, false)
         world.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas been kicked!§r\n§gBy§8:§cMatrix\n§gReason§8:§c${module} §8(§g${type}§8)§r`)
         player.runCommand(`kick "${player.name}" \n§8 >> §c§lYou are kicked!\n§r§8 >> §gReason§8:§c${module} §8(§g${type}§8)${infromationHandler(infromation, true)}\n§r§8 >> §gBy§8:§cMatrix`)
         break
