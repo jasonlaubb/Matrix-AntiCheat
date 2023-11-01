@@ -95,8 +95,8 @@ if (antiSpeedMineEnabled == true) {
       if (player.hasTag("MatrixOP")) return
       if (fastBrokenBlocks.includes(block.type.id)) return
       system.run(() => {
-        Util.setScore(player, 'mineFlags', 0)
-        Util.setScore(player, 'mineTimer', breakSpeed)
+        Util.setScore(world, player, 'mineFlags', 0)
+        Util.setScore(world, player, 'mineTimer', breakSpeed)
       })
     }
     if (breakTimer > 0) {
@@ -106,7 +106,7 @@ if (antiSpeedMineEnabled == true) {
       })
       event.cancel = true
       system.run(() => {
-        Util.addScore(player, 'mineFlags', 1)
+        Util.addScore(world, player, 'mineFlags', 1)
       })
     }
     if (player.hasTag("hitBlock")) {
@@ -119,7 +119,7 @@ if (antiSpeedMineEnabled == true) {
         if (getNuke >= 2 || breakTimer > breakSpeed || breakSpeed == 0 || player.hasTag("MatrixOP") ||
           speedMineToggle != true || fastBrokenBlocks.includes(block.type.id) || GamemodeOf(player) === 1) return
           event.cancel = true
-        Util.setScore(player, 'mineFlags', 0)
+        Util.setScore(world, player, 'mineFlags', 0)
         Detect.flag(player, 'Speed Mine', 'A', 'none', [['Blocks', breakFlags + ' blocks', 'second']], false)
       })
     }
