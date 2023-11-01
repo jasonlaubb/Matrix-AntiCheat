@@ -26,7 +26,7 @@ try {
     return system.run(() => player.sendMessage(`§e[§cMatrix§e]§c You're muted!`))
   }
 
-  if (AntiSpammerEnabled && !player.hasTag("MatrixOP") {
+  if (AntiSpammerEnabled && !player.hasTag("MatrixOP")) {
     if (spammer(player) === true) {
       data.cancel = true
       return
