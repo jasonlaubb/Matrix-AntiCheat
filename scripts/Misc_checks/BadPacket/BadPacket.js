@@ -120,5 +120,4 @@ world.beforeEvents.playerPlaceBlock.subscribe(ev => {
     })
   }
 })
-}
 export { antiBadPacket, antiInvalidSprint }
