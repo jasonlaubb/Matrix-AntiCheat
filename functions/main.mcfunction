@@ -1,4 +1,7 @@
 ##script by Matrix Team
+scoreboard  objectives add block dummy block
+scoreboard players add @s block 0
+scoreboard  players remove @s[scores={block=1..}] block 1
 scoreboard objectives add cooldownTpS dummy 
 scoreboard objectives add cooldownTpFA dummy 
 scoreboard objectives add cooldownTpFB dummy
