@@ -16,7 +16,7 @@ import {
 } from "../config"
 import {
   LocalData 
-  } from "./Util/DataBase"
+  } from "../Util/DataBase"
 let world = Minecraft.world
 
 let speedToggle;
@@ -59,9 +59,7 @@ export async function antiSpeed(player) {
       let velocityY = velocity.y
       let velocityZ = velocity.z
       let velocityX = velocity.x
-      let distanceX = velocityX
-      let distanceZ = velocityZ
-      
+      let distanceXZ = Math.sqrt(velocityX*velocityX+velocityZ*velocityZ)
       if (player.isGliding == true || player.hasTag("sleeping") || player.hasTag("riding") || player
         .getEffect("speed") || player.hasTag("MatrixOP")) {
         distanceX = 0
