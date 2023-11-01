@@ -38,7 +38,7 @@ if (antiAutoClickerEnabled == true) {
     let playerZ = playerz.toFixed(0)
     let playerY = playery.toFixed(0)
     system.run(() => {
-      player.runCommand(`scoreboard players add @s placeCps 1`)
+      Util.addScore(world,player,'placeCps', 1)
     })
     if (getCps >= maximumCpsPlace) {
       system.run(() => {
@@ -46,7 +46,7 @@ if (antiAutoClickerEnabled == true) {
         if (player.hasTag("MatrixOP")) return
 
         Detect.flag(player, 'AutoClicker', 'B', 'kick', [['Cps', getCps, maximumCps]], false)
-        Util.setScore(player, 'placeCps', 0)
+        Util.setScore(world, player, 'placeCps', 0)
       })
     }
   })
