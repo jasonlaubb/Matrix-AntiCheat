@@ -2,8 +2,9 @@ import {
   Block,
   Dimension,
   Player,
-  Vector3,
-  world
+  Vector,
+  world, 
+  GameMode 
 } from '@minecraft/server'
 
 /**
@@ -70,7 +71,7 @@ class Detect {
  * True if need teleport (Boolean)
  * false when no need
  * 
- * @param {Vector3} teleportPos
+ * @param {Vector} teleportPos
  * The pos that should lagged back the player (Vector3)
  * 
  * @returns
@@ -166,7 +167,7 @@ class Util {
  * recover the block of the location of dimenson without beforeEvents
  * 
  * @param {Dimension} dimenson 
- * @param {Vector3} pos 
+ * @param {Vector} pos 
  * @param {Block} block 
  */
   static RecoverBlock (dimenson, pos, block) {
