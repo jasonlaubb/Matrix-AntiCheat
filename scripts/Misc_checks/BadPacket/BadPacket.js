@@ -3,7 +3,7 @@ import {
   antiBadPacketEnabled, antiInvalidSrpintEnabled,
 } from '../../config';
 import { LocalData } from "../../Util/DataBase"
-
+try{
 const isBadPacket = (player, a) => {
   Detect.flag(player, "BadPacket", a, "kick", null, false)
 }
@@ -117,5 +117,6 @@ world.beforeEvents.playerPlaceBlock.subscribe(ev => {
     })
   }
 })
-
+} catch {
+  } 
 export { antiBadPacket, antiInvalidSprint }
