@@ -57,7 +57,7 @@ if (antiScaffoldEnabled == true) {
         if (player.hasTag("MatrixOP")) return
         if (scaffoldAToggle != true) return
         system.run(() => {
-          Util.addScore(player, 'tryScaffold', 1)
+          Util.addScore(world, player, 'tryScaffold', 1)
         })
       }
     }
@@ -80,7 +80,7 @@ if (antiScaffoldEnabled == true) {
     if (block2 == "minecraft:air" && !player.hasTag("looking_up")) {
       if (isUnderPlayer(player.location, block.location) === true) {
         system.run(() => {
-          Util.setScore(player, 'tryScaffold', 0)
+          Util.setScore(world, player, 'tryScaffold', 0)
         })
       }
     }
