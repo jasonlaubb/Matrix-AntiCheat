@@ -190,5 +190,5 @@ scoreboard objectives add scaffold_buff dummy scaffold_buff
 scoreboard players add @a scaffold_buff 0
 scoreboard objectives add attacked_timer dummy attacked_timer
 scoreboard players add @a attacked_timer 0
-scoreboard players remove @a[scores={attacked_timer=!..0}] 1
+scoreboard players remove @a[scores={attacked_timer=!..0}] attacker_timer 1
 tag @a[scores={attacked_timer=..0}] remove getAttacked
