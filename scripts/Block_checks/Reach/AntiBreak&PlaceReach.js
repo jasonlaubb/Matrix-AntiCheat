@@ -158,7 +158,7 @@ if (antiReachBlockEnabled == true) {
 
       event.cancel = true
       system.run(() => {
-        Detect.flag(world, player, 'Reach', 'B', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
+        Detect.flag(player, 'Reach', 'B', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
       })
     }
   })
