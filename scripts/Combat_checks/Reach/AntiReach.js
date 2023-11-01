@@ -2,6 +2,7 @@ import * as Minecraft from "@minecraft/server"
 import {
   antiReachAttackEnabled,
   setScore,
+  addScore, 
   detect
 } from "../../config"
 import {
