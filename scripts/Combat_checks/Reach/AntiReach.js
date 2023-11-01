@@ -82,9 +82,7 @@ if (antiReachAttackEnabled == true) {
       }
       
       
-      let disY2 = Math.abs(y1 - attackerY)
-      let disZ2 = Math.abs(z1 - attackerZ)
-      let disX2 = Math.abs(x1 - attackerX)
+      
       disX = disX.toFixed(2)
       disY = disY.toFixed(2)
       disZ = disZ.toFixed(2)
