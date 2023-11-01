@@ -13,7 +13,7 @@ import {
  * @returns
  */
 const infromationHandler = (input, sameline) => {
-  if (input === null) return ''
+  if (input === undefined) return ''
 
   let output = ''
   const index = sameline === false ? '\n' : ' '
