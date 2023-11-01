@@ -14,12 +14,14 @@ import {
   setScore,
   addScore
 } from "../config"
-
+import {
+  LocalData 
+  } from "./Util/DataBase"
 let world = Minecraft.world
 
 let speedToggle;
 let distance;
-
+let wasAttacked  = new LocalData("attack") 
 export async function antiSpeed(player) {
   try {
     try {
@@ -30,7 +32,15 @@ export async function antiSpeed(player) {
     if (antiSpeedEnabled == true) {
       if (speedToggle != true || player.hasTag("MatrixOP")) return
       let maximumDisMovement;
+      if(wasAttacked.get(player) == undefined){
+      	wasAttacked.set(player,0)
+      	} 
+      if(wasAttacked.get(player)  >= 1){
+      wasAttacked.set(player,wasAttacked.get(player)-1)
       maximumDisMovement = 2.5
+      } if(wasAttacked.get(player)  < 1){
+ 	maximumDisMovement = 0.7
+      	} 
       
       let firstPosX = world.scoreboard.getObjective("speedX").getScore(player.scoreboardIdentity) / 100
        let firstPosY = world.scoreboard.getObjective("speedY").getScore(player.scoreboardIdentity) / 100
@@ -65,7 +75,7 @@ export async function antiSpeed(player) {
           setScore(world,player,"speedX",playerX)
       }
       
-        if (Math.abs(distanceX) < maximumDisMovement || Math.abs(distanceZ) < maximumDisMovement) {
+        if (distanceXZ < maximumDisMovement && Math.abs(velocityX) < maximumDisMovement && Math.abs(velocityZ) < maximumDisMovement) {
          setScore(world,player,"speedZ",playerZ)
         setScore(world,player,"speedY",playerY)
           setScore(world,player,"speedX",playerX)
@@ -79,13 +89,17 @@ if (player.isGliding == true || player.hasTag("sleeping") || player.hasTag("ridi
           setScore(world,player,"speedX",playerX)
       }
 let distance;
-if(Math.abs(distanceX)>Math.abs(distanceZ)){
-  distance = Math.abs(distanceX)+" X"
-}if(Math.abs(distanceX)<Math.abs(distanceZ)){
-  distance = Math.abs(distanceZ)+" Z"
-}
+if(distanceXZ > Math.abs(velocityX) && distanceXZ > Math.abs(velocityZ)){
+	distance = distanceXZ 
+	} 
+if(distanceXZ < Math.abs(velocityX) && Math.abs(velocityX) > Math.abs(velocityZ)){
+	distance = Math.abs(velocityX) 
+	} 
+	if(distanceXZ < Math.abs(velocityZ) && Math.abs(velocityZ) > Math.abs(velocityX)){
+	distance = Math.abs(velocityZ) 
+	} 
 
-          if (Math.abs(distanceX) > maximumDisMovement || Math.abs(distanceZ) > maximumDisMovement) {
+          if (distanceXZ > maximumDisMovement || Math.abs(velocityX) > maximumDisMovement || Math.abs(velocityZ) > maximumDisMovement) {
 if( skipCheck>0 || player.hasTag("riding")) return
             
             
@@ -100,6 +114,11 @@ if( skipCheck>0 || player.hasTag("riding")) return
     player.runCommand(`title @s actionbar §c${error} speed`)
   }
 }
+world.afterEvents.entityHurt.subscribe((event) => {
+   const attacker = event.damageSource.damagingEntity
+    const target = event.hurtEntity
+    wasAttacked.set(attacker,30)
+    }) 
 export {
   distance
 }
