@@ -37,7 +37,7 @@ if (antiXrayEnabled == true) {
           `§gXray notification:\n§b${player.name} §chas found  §8(§g${brokenBlock.type.id.replaceAll("minecraft:","").replaceAll("_"," ")}§8)`,
           'notifyXray'
         )
-        Util.setScore(player, 'xray', 0)
+        Util.setScore(world, player, 'xray', 0)
       })
     }
   })
