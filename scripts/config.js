@@ -127,6 +127,28 @@ function detect(player, punishment, punishmentKickMessage, Pos, notifyMessageBol
     player.runCommand(`tellraw @a[tag=notify] {"rawtext":[{"text":"${notifyMessage}"}]}`)
   }
 }
+/**
+ * @remarks
+ * Contains a description of a vector.
+ * @param x {number} X component of this vector
+ * @param y {number} Y component of this vector
+ * @param z {number} Z component of this vector
+*/
+class Vector3 {
+  x
+  y
+  z
+}
+/**
+ * @remarks
+ Represents a two-directional vector.
+ * @param x {number} X component of this vector
+ * @param y {number} Y component of this vector
+*/
+class Vector2 {
+  x
+  y
+}
 export {
   antiReachBlockEnabled,
   antiCrasherEnabled,
@@ -157,5 +179,7 @@ export {
   HELP_LIST,
   modules,
   setScore,
-  addScore
+  addScore,
+  Vector3,
+  Vector2
 }
