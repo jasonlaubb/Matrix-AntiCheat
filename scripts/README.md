@@ -77,3 +77,43 @@ This is a check can prevent scaffold client
 > (D) => Checks if players place a block out of their view
 >
 > (E) => Checks if players bridge with low x rotation
+
+### Anti speedMine
+
+This is a check prevent the client increase the mining speed like insteaBreak or timer
+
+> (A) => Checks if player break block and touch the next block with short delay
+
+### Anti Xray
+
+This is a notification for staff to show who mine the rare ore
+
+### AutoClicker (Scaffold)
+
+This is check that to detect player place block
+
+> (B) => Checks if player place block with high cps
+
+## Misc Checks
+
+### Anti BadPacket
+
+Detect something bad and "impossible" to happen
+
+> (A) => Checks for invalid rotation
+>
+> (B) => Checks if player press jump but didn't jump
+>
+> (C) => Checks if player place block without any block support
+> 
+> (D) => Checks for self-attack behaviour
+
+### Anti InvalidSprint
+
+Some clients sprint but not possible to sprint
+
+> (A) => Checks if players sprint out of their direction
+>
+> (AutoSprint) => Checks if player sprint with blindness effect
+>
+> (AutoMove) => Checks if player sprinting while sneaking
