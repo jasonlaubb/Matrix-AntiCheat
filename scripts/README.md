@@ -55,3 +55,25 @@ This is a advanced check to detect a low range of reach
 > (B) => Checks if players break block with a high reach
 >
 > (P) => Checks if players place block with a high reach
+
+## Block Checks
+
+### Anti Nuker
+
+A check that prevent someone nuke your world
+
+> (A) => Checks if players break too many block in a tick
+
+### Anti Scaffold
+
+This is a check can prevent scaffold client
+
+> (A) => Checks if players bridge when looking up
+>
+> (B) => Checks if the block of player view is not same as the block placed
+>
+> (C) => Checks if players place block with interger rotation
+>
+> (D) => Checks if players place a block out of their view
+>
+> (E) => Checks if players bridge with low x rotation
