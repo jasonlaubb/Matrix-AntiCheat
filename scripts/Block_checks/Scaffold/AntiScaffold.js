@@ -9,7 +9,6 @@ import {
 } from "@minecraft/server"
 import { Detect, Util } from "../../Util/Util"
 
-let world = Minecraft.world
 let scaffoldBToggle;
 let scaffoldAToggle;
 
@@ -103,10 +102,12 @@ if (antiScaffoldEnabled == true) {
       }
     } else system.run(() => world.scoreboard.getObjective('scaffold_buff').setScore(player, 0))
 
-    //scaffold/C
+    //scaffold/C - rotation is interger when placing block
     const rotation = player.getRotation()
     if (Math.trunc(rotation.x) === rotation.x || Math.trunc(rotation.y) === rotation.y) {
-      system.run(() => Detect.flag(player, 'Scaffold', 'C', 'none', [['Block', blockName]], false))
+      if (Math.abs(rotation.x) !== 90) {
+        system.run(() => Detect.flag(player, 'Scaffold', 'C', 'none', [['Block', blockName]], false))
+      }
     }
 
     //scaffold/D - block place out of their view (cubecraft bypasses)
@@ -116,7 +117,7 @@ if (antiScaffoldEnabled == true) {
     if (angle <= -180) angle += 360;
     angle = Math.abs(angle);
 
-    if (angle > 95 && Vector.distance({ x: pos1.x, y: 0, z: pos1.z}, { x: pos2.x, y: 0, z: pos2.z }) > 2.1) {
+    if (angle > 95 && Vector.distance({ x: pos1.x, y: 0, z: pos1.z}, { x: pos2.x, y: 0, z: pos2.z }) > 1.5 && rotation.x < 78.5) {
       system.run(() => Detect.flag(player, 'Scaffold', 'D', 'none', [['Block', blockName]], false))
     }
 
