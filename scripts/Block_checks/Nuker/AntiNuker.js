@@ -12,10 +12,9 @@ import {
 } from '../../Util/Util'
 let nukerToggle
 
-const RecoverBlock = Util.RecoverBlock
-const GamemodeOf = Util.GamemodeOf
+const { RecoverBlock, GamemodeOf } = Util
 
-if(antiNukerEnabled == true) {
+if(antiNukerEnabled === true) {
   world.afterEvents.playerBreakBlock.subscribe((event) => {
     try {
       nukerToggle = world.scoreboard.getObjective("toggle:nuker").displayName
@@ -29,8 +28,8 @@ if(antiNukerEnabled == true) {
       RecoverBlock(player.dimension, block.location, block)
       return
     }
-    let nukerLength = world.scoreboard.getObjective("nukeLength").getScore(player.scoreboardIdentity)
-    let fastBrokenBlocks = ["minecraft:yellow_flower", "minecraft:red_flower", "minecraft:double_plant",
+    const nukerLength = world.scoreboard.getObjective("nukeLength").getScore(player.scoreboardIdentity)
+    const fastBrokenBlocks = ["minecraft:yellow_flower", "minecraft:red_flower", "minecraft:double_plant",
       "minecraft:wither_rose", "minecraft:tallgrass", "minecraft:hanging_roots", "minecraft:leaves",
       "minecraft:leaves2", "minecraft:azalea_leaves", "minecraft:azalea_leaves_flowered", "minecraft:deadbush",
       "minecraft:cocoa", "minecraft:chorus_plant", "minecraft:chorus_flower", "minecraft:cave_vines",
@@ -59,7 +58,7 @@ if(antiNukerEnabled == true) {
       getEnchantment = null
       checkEfficiency = null
     }
-    let getNukeTime = world.scoreboard.getObjective("nukerTimer").getScore(player.scoreboardIdentity)
+    const getNukeTime = world.scoreboard.getObjective("nukerTimer").getScore(player.scoreboardIdentity)
     if(getNukeTime <= 0) {
       system.run(() => {
         Util.setScore(world, player, 'nukerTimer', nukerTimer)
