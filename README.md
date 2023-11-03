@@ -34,6 +34,8 @@
 
   Our Anti Cheat features powerful detection capabilities to protect your server. It's designed to be unbypassable.
 
+  Check what detection we have! [Click Here](https://github.com/jasonlaubb/Matrix-AntiCheat/blob/main/scripts/README.md)
+
   ---
 
   ## How to Use
