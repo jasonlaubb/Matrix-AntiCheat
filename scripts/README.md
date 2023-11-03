@@ -29,3 +29,29 @@ This detection can detect some hacker passing web etc without slow down
 This speed check can detect very low speed that is powerful
 
 > (A) => Checks if players moves with high velocity
+
+## Combat Checks
+
+### Anti AutoClicker
+
+This check can stop AutoClicker that is annoying
+
+> (A) => Checks for high cps
+
+### Anti Killaura
+
+This check can help to detect killaura that is unfair
+
+> (A) => Checks if players attack player when placing block or using item
+>
+> (B) => Checks if players attack out of their view (>90°)
+
+### Anti Reach
+
+This is a advanced check to detect a low range of reach
+
+> (A) => Checks if players attack more than 3.7 block reach
+>
+> (B) => Checks if players break block with a high reach
+>
+> (P) => Checks if players place block with a high reach
