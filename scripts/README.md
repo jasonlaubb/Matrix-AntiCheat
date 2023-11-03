@@ -117,3 +117,13 @@ Some clients sprint but not possible to sprint
 > (AutoSprint) => Checks if player sprint with blindness effect
 >
 > (AutoMove) => Checks if player sprinting while sneaking
+
+### Anti Crasher
+
+Crasher has already get patched by Molang, maybe something work
+
+> (A) => Checks if players location is too big
+>
+> (B) => Checks if players location is too low
+>
+> (C) => Cancel watch dog \:doge\:
