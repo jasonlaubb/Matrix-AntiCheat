@@ -30,8 +30,17 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   world.scoreboard.getObjective('tryAutoClicker').setScore(player, 0);
 })
 
+world.beforeEvents.itemUse.subscribe((event) => {
+  const player = event.source
+  if (player.hasTag("freeze")) {
+    ev.cancel = true
+    system.run(() => player.sendMessage("§e[§cMatrix§e] §cYou can't use item. You're freezed"))
+  }
+})
+
 system.runInterval(() => {
   world.getPlayers({ tags: ["freeze"] }).forEach(player => {
+    //cancel the move permission per 2 second
     player.runCommand(`inputpermission set @s movement disabled`)
   }
 }, 40)
