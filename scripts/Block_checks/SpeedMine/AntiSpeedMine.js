@@ -1,3 +1,4 @@
+//@ts-check
 import {
   antiSpeedMineEnabled,
   toolsNames,
@@ -49,12 +50,14 @@ if (antiSpeedMineEnabled == true) {
     let checkEfficiency;
     //* checkSelectedSlot if is a item or a tool
     try {
+      //@ts-expect-error
       checkSelectedSlot = player.getComponent("inventory").container.getItem(player.selectedSlot).typeId
     } catch {
       //*if value is undefined its mean the item is air
       checkSelectedSlot = "minecraft:air"
     }
     try {
+      //@ts-expect-error
       getItemInSlot = player.getComponent("inventory").container.getItem(player.selectedSlot)
       getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchantments
       checkEfficiency = getEnchantment.hasEnchantment("efficiency")
@@ -68,6 +71,7 @@ if (antiSpeedMineEnabled == true) {
     //* 30 ticks
     let item;
     try {
+      //@ts-expect-error
       item = player.getComponent("inventory").container.getItem(player.selectedSlot).typeId
     } catch {
       item = "minecraft:air"
@@ -114,7 +118,7 @@ if (antiSpeedMineEnabled == true) {
           speedMineToggle != true || fastBrokenBlocks.includes(block.type.id) || GamemodeOf(player) === 1) return
           event.cancel = true
         Util.setScore(world, player, 'mineFlags', 0)
-        Detect.flag(player, 'Speed Mine', 'A', 'none', [['Blocks', breakFlags + ' blocks', 'second']], false)
+        Detect.flag(player, 'Speed Mine', 'A', 'none', [['Blocks', breakFlags + ' blocks', 'second']], false, null)
       })
     }
   })

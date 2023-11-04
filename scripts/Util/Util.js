@@ -2,7 +2,6 @@ import {
   Block,
   Dimension,
   Player,
-  Vector,
   world, 
   GameMode 
 } from '@minecraft/server'
@@ -71,7 +70,7 @@ class Detect {
  * True if need teleport (Boolean)
  * false when no need
  * 
- * @param {Vector} teleportPos
+ * @param {import('@minecraft/server').Vector3} teleportPos
  * The pos that should lagged back the player (Vector3)
  * 
  * @returns
@@ -144,11 +143,11 @@ class Util {
  * @remarks
  * set the score of a player on a scoreboard
  * 
- * @param {Player} player 
- * @param {string} scoreboard 
+ * @param {Player} player
+ * @param {string} scoreboard
  * @param {number} amount
  */
-  static setScore (world, player, scoreboard, amount) {
+  static setScore (player, scoreboard, amount) {
     world.scoreboard.getObjective(scoreboard).setScore(player.scoreboardIdentity, amount)
   }
 
@@ -160,7 +159,7 @@ class Util {
  * @param {string} scoreboard 
  * @param {number} amount
  */
-  static addScore (world, player, scoreboard, amount) {
+  static addScore (player, scoreboard, amount) {
     world.scoreboard.getObjective(scoreboard).addScore(player.scoreboardIdentity, amount)
   }
 /**
@@ -168,7 +167,7 @@ class Util {
  * recover the block of the location of dimenson without beforeEvents
  * 
  * @param {Dimension} dimenson 
- * @param {Vector} pos 
+ * @param {import('@minecraft/server').Vector3} pos 
  * @param {Block} block 
  */
   static RecoverBlock (dimenson, pos, block) {

@@ -1,3 +1,4 @@
+//@ts-check
 import {
   antiNukerEnabled,
   nukerTimer
@@ -42,6 +43,7 @@ if(antiNukerEnabled === true) {
     let getEnchantment;
     let checkEfficiency;
     try {
+      //@ts-expect-error
       getItemInSlot = player.getComponent("inventory").container.getItem(player.selectedSlot)
       getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchantments
       checkEfficiency = getEnchantment.hasEnchantment("efficiency")
@@ -78,7 +80,7 @@ if(antiNukerEnabled === true) {
       event.cancel = true
       if(player.hasTag("ban")) return
       system.run(() => {
-        Detect.flag(player, 'Nuker', 'A', 'ban', null, false)
+        Detect.flag(player, 'Nuker', 'A', 'ban', null, false, null)
       })
     }
   })

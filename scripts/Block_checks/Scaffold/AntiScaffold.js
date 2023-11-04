@@ -1,3 +1,4 @@
+//@ts-check
 import * as Minecraft from "@minecraft/server"
 import {
   antiScaffoldEnabled
@@ -52,7 +53,7 @@ if (antiScaffoldEnabled == true) {
       if (isUnderPlayer(player.location, block.location) === true) {
         event.cancel = true
         system.run(() => {
-          Detect.flag(player, 'Scaffold', 'A', 'none', [['Block', blockName]], false)
+          Detect.flag(player, 'Scaffold', 'A', 'none', [['Block', blockName]], false,null)
         })
       }
     }
@@ -60,7 +61,7 @@ if (antiScaffoldEnabled == true) {
       if (isUnderPlayer(player.location, block.location) === true) {
         event.cancel = true
         system.run(() => {
-          Detect.flag(player, 'Scaffold', 'A', 'none', [['Block', blockName]], false)
+          Detect.flag(player, 'Scaffold', 'A', 'none', [['Block', blockName]], false,null)
         })
       }
     }
@@ -73,19 +74,14 @@ if (antiScaffoldEnabled == true) {
     }
 
     //scaffold/B - the god of false positive
-    let blockView
-    try {
-      blockView = player.getBlockFromViewDirection().block
-    } catch {
-      blockView = { id: null }
-    }
+    const blockView = player.getBlockFromViewDirection()?.block
     
     const buff = world.scoreboard.getObjective('scaffold_buff').getScore(player)
-    if (blockView.id !== block.id && isUnderPlayer(player.location, block.location)) {
+    if ((blockView?.x !== block.x || blockView?.y !== block.y || blockView?.z !== block.z) && isUnderPlayer(player.location, block.location)) {
       system.run(() => world.scoreboard.getObjective('scaffold_buff').addScore(player, 1))
       if (buff + 1 >= 5) {
         system.run(() =>
-        Detect.flag(player, 'Scaffold', 'B', 'none', [['Block', blockName]])
+        Detect.flag(player, 'Scaffold', 'B', 'none', [['Block', blockName]],false,null)
         )
       }
     } else system.run(() => world.scoreboard.getObjective('scaffold_buff').setScore(player, 0))
@@ -94,7 +90,7 @@ if (antiScaffoldEnabled == true) {
     const rotation = player.getRotation()
     if (Math.trunc(rotation.x) === rotation.x || Math.trunc(rotation.y) === rotation.y) {
       if (Math.abs(rotation.x) !== 90) {
-        system.run(() => Detect.flag(player, 'Scaffold', 'C', 'none', [['Block', blockName]], false))
+        system.run(() => Detect.flag(player, 'Scaffold', 'C', 'none', [['Block', blockName]], false, null))
       }
     }
 
@@ -106,12 +102,12 @@ if (antiScaffoldEnabled == true) {
     angle = Math.abs(angle);
 
     if (angle > 95 && Vector.distance({ x: pos1.x, y: 0, z: pos1.z}, { x: pos2.x, y: 0, z: pos2.z }) > 1.5 && rotation.x < 78.5) {
-      system.run(() => Detect.flag(player, 'Scaffold', 'D', 'none', [['Block', blockName]], false))
+      system.run(() => Detect.flag(player, 'Scaffold', 'D', 'none', [['Block', blockName]], false, null))
     }
 
     //scaffold/E - low x rotation
     if (rotation.x < 34.98 && isUnderPlayer(player.location, block.location)) {
-      system.run(() => Detect.flag(player, 'Scaffold', 'E', 'none', [['Block', blockName]], false))
+      system.run(() => Detect.flag(player, 'Scaffold', 'E', 'none', [['Block', blockName]], false, null))
     }
   })
 }

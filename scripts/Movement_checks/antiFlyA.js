@@ -1,16 +1,11 @@
-import * as Minecraft from "@minecraft/server"
-import { system, ItemStack, world, ItemEnchantsComponent, Vector, Container,Player } from "@minecraft/server"
-import { antiFlyEnabled,detect,setScore,addScore}  from "../config"
-let world = Minecraft.world
+//@ts-check
+import { world, Player } from "@minecraft/server"
+import { antiFlyEnabled,detect,setScore,addScore }  from "../config"
 
-let flyToggle;
+/** @param {Player} player */
 export async function antiFlyA(player){
 	try{
-	try{
-		flyToggle = world.scoreboard.getObjective("toggle:fly").displayName 
-		} catch {
-		flyToggle = true 
-			} 
+  const flyToggle = !world.getDynamicProperty('toggle:fly')
 	if(antiFlyEnabled == true){
 		if (flyToggle != true || player.hasTag("MatrixOP")) return
 
@@ -25,14 +20,12 @@ let flyTimer = world.scoreboard.getObjective("flyTimer").getScore(player.scorebo
     let playerX; 
     let playerZ; 
     
-    playerZ = player.location.z.toFixed(2)*100
-    playerX = player.location.x.toFixed(2)*100
-    playerY = player.location.y.toFixed(2)*100
+    playerZ = Number(player.location.z.toFixed(2))*100
+    playerX = Number(player.location.x.toFixed(2))*100
+    playerY = Number(player.location.y.toFixed(2))*100
     
     let velocity = player.getVelocity(); 
     let velocityY = velocity.y
-    let velocityZ = velocity.z
-    let velocityX = velocity.x
     if (groundX == 0 && groundZ == 0 && groundY == 0){
     	if (playerY == 0 && playerZ == 0 && playerX == 0) return 
     setScore(world,player,"groundZ",playerZ)

@@ -1,24 +1,20 @@
+//@ts-check
 import {
   system,
   world
 } from "@minecraft/server"
 
-import { prefix } from '../config'
+import { prefix, antiSpammerEnabled } from '../config'
 import { Commands } from "./commands"
 import { spammer } from "../Misc_checks/Spammer/Spammer"
 
-const AntiSpammerEnabled = true
-let chatRanksToggle; 
 world.beforeEvents.chatSend.subscribe(data => {
 try {
   const player = data.sender
   const msg = data.message
   const spam = world.scoreboard.getObjective("spam").getScore(player.scoreboardIdentity)
-try{
-		chatRanksToggle = world.scoreboard.getObjective("toggle:fly").displayName 
-		} catch {
-		chatRanksToggle = true 
-			} 
+  const chatRanksToggle = !world.getDynamicProperty('toggle:chatrank')
+
   if (msg.startsWith(prefix)) {
     Commands(player, msg)
     data.cancel = true
@@ -30,7 +26,7 @@ try{
     return system.run(() => player.sendMessage(`§e[§cMatrix§e]§c You're muted!`))
   }
 
-  if (AntiSpammerEnabled && !player.hasTag("MatrixOP")) {
+  if (antiSpammerEnabled && !player.hasTag("MatrixOP")) {
     if (spammer(player) === true) {
       data.cancel = true
       return
@@ -58,8 +54,7 @@ try{
     if(chatRanksToggle == true) return 
     world.sendMessage(`§8[§7${rank}§r§8] §r§7${player.name}§7: §r${MESSAGE}`)
   })
-} catch (e) {
-  player.runCommand(`title @a[tag=notify] actionbar §c${e}`)
+} catch {
 } finally {
   data.cancel = true
 }

@@ -1,11 +1,10 @@
-import * as Minecraft from "@minecraft/server"
-import { system, ItemStack, world, ItemEnchantsComponent, Vector, Container,Player } from "@minecraft/server"
-import { antiFlyEnabled,detect,setScore,addScore }  from "../config"
-let world = Minecraft.world
+//@ts-check
+import { Player, world } from "@minecraft/server"
+import { antiFlyEnabled,detect,setScore }  from "../config"
 
-let flyToggle;
 world.afterEvents.itemUse.subscribe((event)=>{
   let player = event.source
+  //@ts-expect-error
   let getItemInSlot = player.getComponent("inventory").container.getItem(player.selectedSlot)
 let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchantments
   if(getItemInSlot.typeId.includes("trident")){
@@ -16,13 +15,11 @@ let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchan
       }
   }
 })
+
+/** @param {Player} player */
 export async function antiFlyB(player){
 	try{
-	try{
-		flyToggle = world.scoreboard.getObjective("toggle:fly").displayName 
-		} catch {
-		flyToggle = true 
-			} 
+  const flyToggle = !world.getDynamicProperty("toggle:fly")
 	if(antiFlyEnabled == true){
 		if (flyToggle != true || player.hasTag("MatrixOP")) return
 	
@@ -38,15 +35,13 @@ let firstPosZ = world.scoreboard.getObjective("groundZ").getScore(player.scorebo
     let playerX; 
     let playerZ; 
     
-    playerZ = player.location.z.toFixed(2)*100
-    playerX = player.location.x.toFixed(2)*100
-    playerY = player.location.y.toFixed(2)*100
+    playerZ = Number(player.location.z.toFixed(2))*100
+    playerX = Number(player.location.x.toFixed(2))*100
+    playerY = Number(player.location.y.toFixed(2))*100
     
     
     let velocity = player.getVelocity(); 
     let velocityY = velocity.y
-    let velocityZ = velocity.z
-    let velocityX = velocity.x
     let checkBlock = [ player.dimension.getBlock({ x: Math.floor(player.location.x) , y: Math.floor(player.location.y-1), z: Math.floor(player.location.z) }).typeId, 
 player.dimension.getBlock({ x: Math.floor(player.location.x+1) , y: Math.floor(player.location.y-1), z: Math.floor(player.location.z) }).typeId,
 player.dimension.getBlock({ x: Math.floor(player.location.x-1) , y: Math.floor(player.location.y-1), z: Math.floor(player.location.z) }).typeId,
@@ -64,7 +59,7 @@ if(player.hasTag("slime") && velocityY<=0){
       player.addTag(`slime`)
     }
     
-    if(velocityY<0 && player.location.y<firstPosY| skip_check>0 || player.hasTag("slime") && velocityY>0){
+    if(velocityY<0 && player.location.y<firstPosY || skip_check>0 || player.hasTag("slime") && velocityY>0){
     setScore(world,player,"groundZ",playerZ)
         setScore(world,player,"groundY",playerY)
           setScore(world,player,"groundX",playerX)

@@ -1,11 +1,6 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
-  system,
-  ItemStack,
   world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
   Player
 } from "@minecraft/server"
 import {
@@ -17,28 +12,22 @@ import {
 import {
   LocalData 
   } from "../Util/DataBase"
-let world = Minecraft.world
 
-let speedToggle;
 let distance;
-let wasAttacked  = new LocalData("attack") 
+let wasAttacked = new LocalData("attack") 
 export async function antiSpeed(player) {
   try {
-    try {
-      speedToggle = world.scoreboard.getObjective("toggle:speed").displayName
-    } catch {
-      speedToggle = true
-    }
+    const speedToggle = !world.getDynamicProperty('toggle:speed')
     if (antiSpeedEnabled == true) {
       if (speedToggle != true || player.hasTag("MatrixOP")) return
       let maximumDisMovement;
       if(wasAttacked.get(player) == undefined){
       	wasAttacked.set(player,0)
       	} 
-      if(wasAttacked.get(player)  >= 1){
-      wasAttacked.set(player,wasAttacked.get(player)-1)
+      if(Number(wasAttacked.get(player))  >= 1){
+      wasAttacked.set(player, Number(wasAttacked.get(player)) - 1)
       maximumDisMovement = 2.5
-      } if(wasAttacked.get(player)  < 1){
+      } if(Number(wasAttacked.get(player))  < 1){
  	maximumDisMovement = 0.7
       	} 
       
@@ -62,8 +51,7 @@ export async function antiSpeed(player) {
       let distanceXZ = Math.sqrt(velocityX*velocityX+velocityZ*velocityZ)
       if (player.isGliding == true || player.hasTag("sleeping") || player.hasTag("riding") || player
         .getEffect("speed") || player.hasTag("MatrixOP")) {
-        distanceX = 0
-        distanceZ = 0
+        distanceXZ = 0
       }
 
       if (firstPosX == 0 || firstPosZ == 0) {

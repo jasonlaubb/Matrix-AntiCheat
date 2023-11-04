@@ -1,4 +1,4 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
   antiReachAttackEnabled,
   setScore,
@@ -6,14 +6,10 @@ import {
   detect
 } from "../../config"
 import {
-  system,
-  ItemStack,
-  world,
-  ItemEnchantsComponent,
-  Vector,
-  Container
+  Player,
+  world
 } from "@minecraft/server"
-let world = Minecraft.world
+
 let reachAToggle;
 let disXZ;
 if (antiReachAttackEnabled == true) {
@@ -41,12 +37,13 @@ if (antiReachAttackEnabled == true) {
     if (target.hasTag("lobby:Matrix")) {
       target.runCommand(`tp ${x} ${y} ${z}`)
     }
-    if (attacker.typeId == "minecraft:player") {
+    if (attacker instanceof Player) {
       let TargetsCount = world.scoreboard.getObjective("countOfTargets").getScore(attacker.scoreboardIdentity)
       let lastReachDis = world.scoreboard.getObjective("reachDis").getScore(attacker.scoreboardIdentity)
       let tryReachA = world.scoreboard.getObjective("tryReachA").getScore(attacker.scoreboardIdentity)
       let reachType;
       let targetName;
+      //@ts-expect-error
       targetName = target.name;
       if (targetName == undefined) {
         targetName = target.typeId.replaceAll("minecraft:", "");
@@ -61,31 +58,30 @@ if (antiReachAttackEnabled == true) {
       if (attacker.hasTag("is_jumping")) {
         limitOfReachY = 5.7;
       }
-      let attackerX = attackerx.toFixed(2)
-      let attackerZ = attackerz.toFixed(2)
-      let attackerY = attackery.toFixed(2)
+      let attackerX = Number(attackerx.toFixed(2))
+      let attackerZ = Number(attackerz.toFixed(2))
+      let attackerY = Number(attackery.toFixed(2))
       let disY;
       let disZ;
       let disX;
-      let velocityZ;
-            velocityZ = Math.abs(target.getVelocity().z) + Math.abs(attacker.getVelocity().z) * 2
+      let velocityZ = Math.abs(target.getVelocity().z) + Math.abs(attacker.getVelocity().z) * 2
       let velocityX;
       velocityX = Math.abs(target.getVelocity().x) + Math.abs(attacker.getVelocity().x) * 2
       disY = Math.abs(y - attackerY)
       disX = Math.abs(x - attackerX) - velocityX
       disZ = Math.abs(z - attackerZ) - velocityZ
       disXZ = Math.sqrt(disX * disX + disZ * disZ) - (velocityX + velocityZ)
-      disXZ = disXZ.toFixed(2)
-      let generalDis;
+      disXZ = Number(disXZ.toFixed(2))
+
       if (attackerY > y + 3) {
         limitOfReachY = 3
       }
       
       
       
-      disX = disX.toFixed(2)
-      disY = disY.toFixed(2)
-      disZ = disZ.toFixed(2)
+      disX = Number(disX.toFixed(2))
+      disY = Number(disY.toFixed(2))
+      disZ = Number(disZ.toFixed(2))
       if (target.typeId.includes("dragon")) {
         limitOfReachX = 4.2
         limitOfReachY = 4.7

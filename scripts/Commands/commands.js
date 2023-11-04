@@ -1,3 +1,4 @@
+//@ts-check
 import {
   world,
   system
@@ -97,6 +98,7 @@ function Commands(player, message) {
     }
     case "unban": {
       if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
+      const target = Real(regax[1], player)
       if (regax[1] === undefined) return new Error(player).Target()
       system.run(() => new moderateAction(target, player).unban())
       break

@@ -19,6 +19,7 @@ const antiCrasherEnabled = true
 const antiPhaseEnabled = true
 const antiBadPacketEnabled = true
 const antiInvalidSrpintEnabled = true
+const antiSpammerEnabled = true
 //*modules
 const antiCombatLogEnabled = true
 //*methods
@@ -165,6 +166,7 @@ export {
   antiBadPacketEnabled,
   antiInvalidSrpintEnabled,
   antiCombatLogEnabled,
+  antiSpammerEnabled,
   maximumCps,
   nukerTimer,
   toolsNames,

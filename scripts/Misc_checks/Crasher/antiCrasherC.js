@@ -1,26 +1,16 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
-  system,
-  ItemStack,
-  world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
-  Player
+  Player,
+  world
 } from "@minecraft/server"
 import {
   antiCrasherEnabled
 } from "../../config"
-let world = Minecraft.world
-let crasherToggle;
+
+/** @param {Player} player */
 export async function antiCrasherC(player) {
   if (antiCrasherEnabled == true) {
-    let crasherToggle;
-    try {
-      crasherToggle = world.scoreboard.getObjective("toggle:crasher").displayName
-    } catch {
-      crasherToggle = true
-    }
+    const crasherToggle = world.getDynamicProperty('toggle:crasher')
     if (crasherToggle != true) return
     try {
       let playerZ = player.location.z

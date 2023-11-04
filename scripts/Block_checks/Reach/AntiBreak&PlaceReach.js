@@ -1,3 +1,4 @@
+//@ts-check
 import * as Minecraft from "@minecraft/server"
 import {
   antiReachBlockEnabled
@@ -40,9 +41,9 @@ if (antiReachBlockEnabled == true) {
       y: playery,
       z: playerz
     } = player.location;
-    let playerX = playerx.toFixed(2)
-    let playerZ = playerz.toFixed(2)
-    let playerY = playery.toFixed(2)
+    let playerX = Number(playerx.toFixed(2))
+    let playerZ = Number(playerz.toFixed(2))
+    let playerY = Number(playery.toFixed(2))
     let disY;
     let disZ;
     let disX;
@@ -120,12 +121,11 @@ if (antiReachBlockEnabled == true) {
     if (disX > disX2) {
       disX = disX - 1
     }
-    disX = disX.toFixed(2)
-    disY = disY.toFixed(2)
-    disZ = disZ.toFixed(2)
+    disX = Number(disX.toFixed(2))
+    disY = Number(disY.toFixed(2))
+    disZ = Number(disZ.toFixed(2))
     let disXZ;
-    disXZ = Math.sqrt(disX * disX + disZ * disZ);
-    disXZ = disXZ.toFixed(2)
+    disXZ = Number(Math.sqrt(disX * disX + disZ * disZ).toFixed(2))
     let distance;
     if (disX > limitOfReachX == true) {
       distance = disX;
@@ -150,9 +150,10 @@ if (antiReachBlockEnabled == true) {
 
       event.cancel = true
       system.run(() => {
-        Detect.flag(player, 'Reach', 'B', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
+        Detect.flag(player, 'Reach', 'B', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false,null)
       })
     }
+  } catch {}
   })
 }
 let limitOfReachX;
@@ -190,9 +191,9 @@ if (antiReachBlockEnabled == true) {
       y: playery,
       z: playerz
     } = player.location;
-    let playerX = playerx.toFixed(2)
-    let playerZ = playerz.toFixed(2)
-    let playerY = playery.toFixed(2)
+    let playerX = Number(playerx.toFixed(2))
+    let playerZ = Number(playerz.toFixed(2))
+    let playerY = Number(playery.toFixed(2))
     disY = Math.abs(y - playerY)
     disX = Math.abs(x - playerX) - 0.2
     disZ = Math.abs(z - playerZ) - 0.2
@@ -266,11 +267,11 @@ if (antiReachBlockEnabled == true) {
     if (disX > disX2) {
       disX = disX - 1
     }
-    disX = disX.toFixed(2)
-    disY = disY.toFixed(2)
-    disZ = disZ.toFixed(2)
-    disXZ = Math.sqrt(disX * disX + disZ * disZ);
-    disXZ = disXZ.toFixed(2)
+    disX = Number(disX.toFixed(2))
+    disY = Number(disY.toFixed(2))
+    disZ = Number(disZ.toFixed(2))
+    disXZ = Number(Math.sqrt(disX * disX + disZ * disZ).toFixed(2))
+
     let distance;
     if (disX > limitOfReachX == true) {
       distance = disX;
@@ -294,7 +295,7 @@ if (antiReachBlockEnabled == true) {
       if (reachPToggle === false) return
       event.cancel = true
       system.run(() => {
-        Detect.flag(player, 'Reach', 'P', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
+        Detect.flag(player, 'Reach', 'P', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false,null)
         
       })
     }

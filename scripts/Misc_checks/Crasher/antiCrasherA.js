@@ -1,32 +1,21 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
   system,
-  ItemStack,
   world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
   Player
 } from "@minecraft/server"
 import {
   antiCrasherEnabled
 } from "../../config"
-let world = Minecraft.world
+
+/** @param {Player} player */
 export async function antiCrasherA(player) {
   if (antiCrasherEnabled == true) {
-    let crasherToggle;
-    let playerY;
-    let playerX;
-    let playerZ;
-    try {
-      crasherToggle = world.scoreboard.getObjective("toggle:crasher").displayName
-    } catch {
-      crasherToggle = true
-    }
+    const crasherToggle = !world.getDynamicProperty('toggle:crasher')
     if (crasherToggle != true) return
-    playerZ = player.location.z
-    playerX = player.location.x
-    playerY = player.location.y
+    const playerZ = player.location.z
+    const playerX = player.location.x
+    const playerY = player.location.y
     if (playerX > 30000000 || playerY > 30000000 || playerZ > 30000000) {
       if (player.hasTag("MatrixOP")) return
       player.addTag(`ban`)

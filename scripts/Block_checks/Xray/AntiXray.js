@@ -1,4 +1,4 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
   antiXrayEnabled,
   xray
@@ -8,7 +8,7 @@ import {
   world
 } from "@minecraft/server"
 import { Detect, Util } from "../../Util/Util";
-let world = Minecraft.world
+
 //* check toggle if enabled 
 if (antiXrayEnabled == true) {
   world.beforeEvents.playerBreakBlock.subscribe((event) => {
@@ -29,10 +29,10 @@ if (antiXrayEnabled == true) {
         if (xrayToggle != true) return
         if (player.hasTag("MatrixOP")) return
         Detect.notifyToTag(
-          `§gXray notification:\n§b${player.name} §chas found  §8(§g${brokenBlock.type.id.replaceAll("minecraft:","").replaceAll("_"," ")}§8)`,
+          `§gXray notification:\n§b${player.name} §chas found  §8(§g${block.type.id.replaceAll("minecraft:","").replaceAll("_"," ")}§8)`,
           'notifyXray'
         )
-        Util.setScore(world, player, 'xray', 0)
+        Util.setScore(player, 'xray', 0)
       })
     }
   })

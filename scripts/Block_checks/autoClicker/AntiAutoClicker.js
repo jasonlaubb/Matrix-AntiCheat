@@ -1,4 +1,4 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
   antiAutoClickerEnabled,
   maximumCpsPlace
@@ -9,8 +9,6 @@ import {
 } from "@minecraft/server"
 import { Detect, Util } from "../../Util/Util"
 
-let world = Minecraft.world
-let autoAToggle;
 if (antiAutoClickerEnabled == true) {
   world.afterEvents.playerPlaceBlock.subscribe((event) => {
     const autoAToggle = !world.getDynamicProperty("toggle:autoA")
@@ -41,7 +39,7 @@ if (antiAutoClickerEnabled == true) {
         if (autoAToggle === false) return
         if (player.hasTag("MatrixOP")) return
 
-        Detect.flag(player, 'AutoClicker', 'B', 'kick', [['Cps', getCps, maximumCps]], false)
+        Detect.flag(player, 'AutoClicker', 'B', 'kick', [['Cps', getCps, maximumCpsPlace]], false, null)
         Util.setScore(world, player, 'placeCps', 0)
       })
     }

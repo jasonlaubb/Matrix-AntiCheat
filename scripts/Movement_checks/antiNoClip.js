@@ -1,27 +1,18 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
-  system,
-  ItemStack,
   world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
   Player
 } from "@minecraft/server"
 import {
   antiPhaseEnabled,
   detect,
   setScore,
-  addScore
 } from "../config"
-let world = Minecraft.world
-let phaseToggle;
+
+
+/** @param {Player} player */
 export async function antiPhase(player) {
-  try {
-    phaseToggle = world.scoreboard.getObjective("toggle:phase").displayName
-  } catch {
-    phaseToggle = true
-  }
+  const phaseToggle = !world.getDynamicProperty('toggle:phase')
   if (antiPhaseEnabled == true) {
     if (phaseToggle != true || player.hasTag("MatrixOP")) return
     let firstPosX = world.scoreboard.getObjective("phaseX").getScore(player.scoreboardIdentity) / 100
@@ -31,14 +22,11 @@ export async function antiPhase(player) {
     let playerY;
     let playerX;
     let playerZ;
-    playerZ = player.location.z.toFixed(2) * 100
-    playerX = player.location.x.toFixed(2) * 100
-    playerY = player.location.y.toFixed(2) * 100
+    playerZ = Number(player.location.z.toFixed(2)) * 100
+    playerX = Number(player.location.x.toFixed(2)) * 100
+    playerY = Number(player.location.y.toFixed(2)) * 100
     
     let velocity = player.getVelocity();
-    let velocityY = velocity.y
-    let velocityZ = velocity.z
-    let velocityX = velocity.x
     let head = player.dimension.getBlock({
       x: Math.floor(player.location.x),
       y: Math.floor(player.location.y + 1),

@@ -1,19 +1,11 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
-  system,
-  ItemStack,
   world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
-  Player,
-  Enchantment
+  Player
 } from "@minecraft/server"
 import {
   setScore,
-  addScore
 } from "../config.js"
-const world = Minecraft.world
 
 world.afterEvents.playerSpawn.subscribe((event) => {
   let player = event.player
@@ -37,11 +29,14 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   world.scoreboard.getObjective('tryAutoClicker').setScore(player, 0);
 })
 
+
+/** @param {Player} player */
 function moderation (player) {
   if(player.isGliding == true){
     setScore(world,player,"skip_check",15)
   }
   try{
+  //@ts-expect-error
   let getItemInSlot = player.getComponent("inventory").container.getItem(player.selectedSlot)
 let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchantments
   if(getItemInSlot.typeId.includes("trident") && player.hasTag("is_using_item")){
@@ -90,25 +85,31 @@ export class moderateAction {
     }
   }
 
+  /** @param {string} reason */
   ban (reason) {
     const player = this.player
     const admin = this.admin
-    world.sendMessage(`§e[§cMatrix§e] §b${target.name} §chas been banned from server\n§gBy§8:§b${admin.name ?? 'System'}\n§gReason§8:§c${reason ?? 'no reason specific'}`)
+    world.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas been banned from server\n§gBy§8:§b${admin.name ?? 'System'}\n§gReason§8:§c${reason ?? 'no reason specific'}`)
     player.addTag("ban")
     player.addTag(`Reason:${reason ?? 'no reason specific'}§r`)
     player.addTag(`By:${admin.name ?? 'System'}§r`)
     world.scoreboard.getObjective('bantimer').setScore(player, 40)
-    player.runCommand(`kick "${target}" .\n§8 >> §c§lYou are banned!\n§r§8 >> §gReason§8:§c${reason}\n§8 >> §gBy§8:§c${admin.name}`)
+    player.runCommand(`kick "${player.name}" .\n§8 >> §c§lYou are banned!\n§r§8 >> §gReason§8:§c${reason}\n§8 >> §gBy§8:§c${admin.name}`)
   }
 
+  /** @param {string} reason */
   kick (reason) {
     const player = this.player
     const admin = this.admin
 
-    world.sendMessage(`§e[§cMatrix§e] §b${target.name} §chas been kicked from server\n§gBy§8:§b${admin.name ?? 'System'}\n§gReason§8:§c${reason ?? 'no reason specific'}`)
+    world.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas been kicked from server\n§gBy§8:§b${admin.name ?? 'System'}\n§gReason§8:§c${reason ?? 'no reason specific'}`)
     player.runCommand(`kick "${player.name}" .\n§8 >> §c§lYou are kicked!\n§r§8 >> §gReason§8:§c${reason ?? 'no reason specific'}\n§8 >> §gBy§8:§c${admin.name ?? 'System'}`)
   }
 
+  /** 
+   * @param {string} reason
+   * @param {import("@minecraft/server").Vector3} pos
+  */
   freeze (reason, pos) {
     const player = this.player
     const admin = this.admin
@@ -120,6 +121,7 @@ export class moderateAction {
     world.scoreboard.getObjective('freezeZ').setScore(player, Math.floor(pos.z))
   }
 
+  /** @param {string} reason */
   mute (reason) {
     const player = this.player
     const admin = this.admin
@@ -163,6 +165,8 @@ export class moderateAction {
       admin.sendMessage(`§e[§cMatrix§e] §gslot number §8(§g${i}§8) §gincluding §c${item.typeId} §gamount §c${item.amount}`)
     }
   }
+
+  /** @param {string} seach */
   seachInv (seach) {
     const player = this.player
     const admin = this.admin
@@ -181,7 +185,7 @@ export class moderateAction {
     const inventory1 = player.getComponent('inventory').container
     const inventory2 = admin.getComponent('inventory').container
 
-    for (let i = 0; i < inventory.size; i++) {
+    for (let i = 0; i < inventory1.size; i++) {
       const item = inventory1.getItem(i) ?? { typeId: "air", amount: 1 }
       if (item.typeId === "air") {
         inventory2.setItem(i)

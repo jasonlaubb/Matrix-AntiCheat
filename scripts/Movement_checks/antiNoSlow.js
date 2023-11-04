@@ -1,29 +1,21 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
-  system,
-  ItemStack,
   world,
-  ItemEnchantsComponent,
-  Vector,
-  Container,
   Player
 } from "@minecraft/server"
 import {
   antiSpeedEnabled,
   detect,
-  setScore,
-  addScore
+  setScore
 } from "../config"
-let world = Minecraft.world
+
 let speedToggle;
 let distance;
+
+/** @param {Player} player */
 export async function antiNoSlow(player) {
   try {
-    try {
-      speedToggle = world.scoreboard.getObjective("toggle:NoSlow").displayName
-    } catch {
-      speedToggle = true
-    }
+    const speedToggle = !world.getDynamicProperty('toggle:NoSlow')
     if (antiSpeedEnabled == true) {
       if (speedToggle != true || player.hasTag("MatrixOP")) return
 let firstPosY = world.scoreboard.getObjective("PosYS").getScore(player.scoreboardIdentity)/100
@@ -33,9 +25,9 @@ let firstPosZ = world.scoreboard.getObjective("PosZS").getScore(player.scoreboar
       let playerY;
       let playerX;
       let playerZ;
-      playerZ = player.location.z.toFixed(2) * 100
-      playerX = player.location.x.toFixed(2) * 100
-      playerY = player.location.y.toFixed(2) * 100
+      playerZ = Number(player.location.z.toFixed(2)) * 100
+      playerX = Number(player.location.x.toFixed(2)) * 100
+      playerY = Number(player.location.y.toFixed(2)) * 100
       
       
       let velocity = player.getVelocity();

@@ -1,6 +1,8 @@
-import { world, GameMode } from "@minecraft/server";
+//@ts-check
+import { world, GameMode, Player } from "@minecraft/server";
 import { antiFlyEnabled, detect } from "../config";
 
+/** @param {Player} player */
 const GamemodeOf = (player) => {
   const gamemodes = {
     survival: 0,
@@ -17,9 +19,10 @@ const GamemodeOf = (player) => {
   }
 }
 
+/** @param {Player} player */
 async function antiFlyD (player) {
 try {
-  if (!antiFlyEnabled || world.scoreboard.getObjective('toggle:fly') || player.hasTag('MatrixOP')) return
+  if (!antiFlyEnabled || world.getDynamicProperty('toggle:fly') || player.hasTag('MatrixOP')) return
 
   const gamemode = GamemodeOf(player)
   if (player.isFlying && world.scoreboard.getObjective('fly_coldown_timer').getScore(player) <= 0 && gamemode !== 1 && gamemode !== 3 && !player.hasTag('canfly')) {

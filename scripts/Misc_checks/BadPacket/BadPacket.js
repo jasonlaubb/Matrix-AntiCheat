@@ -1,20 +1,32 @@
-import { world, system } from '@minecraft/server';
+//@ts-check
+import { world, system, Player } from '@minecraft/server';
 import {
   antiBadPacketEnabled, antiInvalidSrpintEnabled,
 } from '../../config';
 import { LocalData } from "../../Util/DataBase"
+import { Detect } from '../../Util/Util';
 
+/**
+ * @param {Player} player
+ * @param {string} a
+ */
 const isBadPacket = (player, a) => {
-  Detect.flag(player, "BadPacket", a, "kick", null, false)
+  Detect.flag(player, "BadPacket", a, "kick", null, false, null)
 }
 
+/**
+ * @param {Player} player
+ * @param {string} a
+ * @param {string} module
+ */
 const detect2 = (player, a, module) => {
-  Detect.flag(player, module, a, "kick", null, false)
+  Detect.flag(player, module, a, "kick", null, false, null)
 }
 
+/** @param {Player} player */
 async function antiBadPacket (player) {
   try{
-  if (!antiBadPacketEnabled || world.scoreboard.getObjective('toggle:badpacket') || player.hasTag('MatrixOP')) return
+  if (!antiBadPacketEnabled || world.getDynamicProperty('toggle:badpacket') || player.hasTag('MatrixOP')) return
   const rotation = player.getRotation()
   const selectedSlot = player.selectedSlot
   if (rotation.x > 90 || rotation.x < -90 || rotation.y > 180 || rotation.y < -180) {
@@ -31,6 +43,7 @@ async function antiBadPacket (player) {
 
   if (player.isJumping && player.fallDistance === 0) {
     const pos = { x: Math.floor(player.location.x), y: Math.floor(player.location.y) + 2, z: Math.floor(player.location.z) }
+    //@ts-expect-error
     if ([-1,0,1].every(x => [-1,0,1].every(z => player.dimension.getBlock({ location: { x: pos.x + x, y: pos.y, z: pos.z }})?.isAir))) {
       isBadPacket (player, 'C')
     }  
@@ -39,7 +52,8 @@ async function antiBadPacket (player) {
 
 world.afterEvents.entityHurt.subscribe(ev => {
   const player = ev.hurtEntity
-  if (!antiBadPacketEnabled || world.scoreboard.getObjective('toggle:badpacket') || player.typeId !== 'minecraft:player' || player.hasTag('MatrixOP') || ev.damageSource.cause !== 'entityAttack') return
+  if (!(player instanceof Player)) return
+  if (!antiBadPacketEnabled || world.getDynamicProperty('toggle:badpacket') || player.hasTag('MatrixOP') || ev.damageSource.cause !== 'entityAttack') return
   if (player.getEffect('weakness')?.amplifier >= 255) return
   if (player.id === ev.damageSource.damagingEntity.id) {
     player.addEffect('weakness', 60, { amplifier: 255, showParticles: false })
@@ -48,13 +62,15 @@ world.afterEvents.entityHurt.subscribe(ev => {
 })
 
 const InvalidSprintBuff = new LocalData("InvalidSprintBuff")
+
+/** @param {Player} player */
 async function antiInvalidSprint (player) {
 try{
-  if (!antiInvalidSrpintEnabled || world.scoreboard.getObjective('toggle:invalidsrpint') || player.hasTag('MatrixOP') || player.isGliding == true) return
+  if (!antiInvalidSrpintEnabled || world.getDynamicProperty('toggle:invalidsrpint') || player.hasTag('MatrixOP') || player.isGliding == true) return
 
   if (player.isSprinting) {
     try {
-      const buff = InvalidSprintBuff.get(player) ?? 0
+      const buff = Number(InvalidSprintBuff.get(player) ?? 0)
       const velocity = player.getVelocity()
       const pos1 = player.location
       const pos2 = { x: pos1.x + velocity.x, z: pos1.z + velocity.z }
@@ -101,7 +117,7 @@ world.beforeEvents.playerPlaceBlock.subscribe(ev => {
   const player = ev.player
   const block = ev.block
 
-  if (!antiBadPacketEnabled || player.hasTag('MatrixOP')) return
+  if (!antiBadPacketEnabled || player.hasTag('MatrixOP') || world.getDynamicProperty('toggle:badpacket')) return
 
   const p = block.location
   const isAroundAir =

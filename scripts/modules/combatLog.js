@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { antiCombatLogEnabled } from "../config";
 import { world } from "@minecraft/server"
 

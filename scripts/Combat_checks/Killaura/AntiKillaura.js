@@ -1,52 +1,30 @@
-import * as Minecraft from "@minecraft/server"
+//@ts-check
 import {
   antiKillauraEnabled, 
-  setScore, 
-  addScore
 } from "../../config"
+
 import {
-  disXZ
-} from "../Reach/AntiReach"
-import {
-  system,
-  ItemStack,
-  world,
-  ItemEnchantsComponent,
-  Vector,
-  Container
+  Player,
+  world
 } from "@minecraft/server"
-let world = Minecraft.world
-let killauraToggle;
+
 if (antiKillauraEnabled == true) {
   world.afterEvents.entityHitEntity.subscribe((event) => {
-    try {
-      killauraToggle = world.scoreboard.getObjective("toggle:killaura").displayName
-    } catch {
-      killauraToggle = true
-    }
+    const killauraToggle = !world.getDynamicProperty('toggle:killaura')
     if (killauraToggle != true) return
     let attacker = event.damagingEntity
     let target = event.hitEntity
-    let targetName;
-    if (attacker == undefined) return
-    if (attacker.typeId == "minecraft:player") {
+
+    if (attacker instanceof Player) {
       let is_using_block = world.scoreboard.getObjective("block").getScore(attacker.scoreboardIdentity)
       let targetName;
+      //@ts-expect-error
       targetName = target.name;
       if (targetName == undefined) {
         targetName = target.typeId.replaceAll("minecraft:", "");
         targetName = targetName.replaceAll("_", "");
       }
-      let {
-        x,
-        y,
-        z
-      } = target.location;
-      let {
-        x: attackerx,
-        y: attackery,
-        z: attackerz
-      } = attacker.location;
+
       if (attacker.hasTag("is_using_item") || is_using_block > 0) {
         if (attacker.hasTag("MatrixOP")) return
         world.sendMessage(
