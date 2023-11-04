@@ -15,7 +15,7 @@ let nukerToggle
 const { RecoverBlock, GamemodeOf } = Util
 
 if(antiNukerEnabled === true) {
-  world.afterEvents.playerBreakBlock.subscribe((event) => {
+  world.beforeEvents.playerBreakBlock.subscribe((event) => {
     try {
       nukerToggle = world.scoreboard.getObjective("toggle:nuker").displayName
     } catch {
@@ -23,15 +23,13 @@ if(antiNukerEnabled === true) {
     }
     let player = event.player
     let block = event.block
-
     if (player.hasTag('stopBreakingBlock')) {
-      RecoverBlock(player.dimension, block.location, block)
-      return
+      event.cancel = true
     }
     const nukerLength = world.scoreboard.getObjective("nukeLength").getScore(player.scoreboardIdentity)
     const fastBrokenBlocks = ["minecraft:yellow_flower", "minecraft:red_flower", "minecraft:double_plant",
       "minecraft:wither_rose", "minecraft:tallgrass", "minecraft:hanging_roots", "minecraft:leaves",
-      "minecraft:leaves2", "minecraft:azalea_leaves", "minecraft:azalea_leaves_flowered", "minecraft:deadbush",
+     "minecraft:leaves2", "minecraft:azalea_leaves", "minecraft:azalea_leaves_flowered", "minecraft:deadbush",
       "minecraft:cocoa", "minecraft:chorus_plant", "minecraft:chorus_flower", "minecraft:cave_vines",
       "minecraft:cave_vines_body_with_berries", "minecraft:cave_vines_head_with_berries",
       "minecraft:glow_berries", "minecraft:carrots", "minecraft:cactus", "minecraft:big_dripleaf",
@@ -70,7 +68,7 @@ if(antiNukerEnabled === true) {
         Util.addScore(world, player, 'nukeLength', 1)
         Util.setScore(world, player, 'sendMsgT', 6)
       })
-      RecoverBlock(player.dimension, block.location, block)
+      event.cancel = true
     }
     if(checkEfficiency > 0 && getNukeTime >= 1 || player.getEffect("haste") && getNukeTime >= 1 ||
       fastBrokenBlocks.includes(block.type.id) && getNukeTime >= 1 || GamemodeOf(player) === 1) {
@@ -83,7 +81,7 @@ if(antiNukerEnabled === true) {
       //prevent the destroy
       player.addTag('stopBreakingBlock')
       world.scoreboard.getObjective('stop_break_timer').setScore(player, 120)
-      RecoverBlock(player.dimension, block.location, block)
+      event.cancel = true
       if(player.hasTag("ban")) return
       system.run(() => {
         Detect.flag(player, 'Nuker', 'A', 'ban', null, false)
