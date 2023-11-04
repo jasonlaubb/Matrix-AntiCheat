@@ -42,7 +42,7 @@ system.runInterval(() => {
   world.getPlayers({ tags: ["freeze"] }).forEach(player => {
     //cancel the move permission per 2 second
     player.runCommand(`inputpermission set @s movement disabled`)
-  }
+  })
 }, 40)
 
 /** @param {Player} player */
