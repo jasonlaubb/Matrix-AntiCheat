@@ -1,3 +1,4 @@
+//@ts-check
 import { world, system } from "@minecraft/server";
 import { openTheUI } from "./ui";
 

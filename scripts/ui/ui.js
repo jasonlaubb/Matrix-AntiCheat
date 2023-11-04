@@ -1,3 +1,4 @@
+//@ts-check
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { world } from "@minecraft/server";
 import { moderateAction } from "../Moderation/moderation";
@@ -106,7 +107,7 @@ class inputManageUI {
           getReasonForm.show(admin).then(res => {
             if (res.canceled) return;
             if (!isPlayerOnline(player)) return admin.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas left the game!`);
-            new moderateAction(player, admin).ban(res.formValues[0])
+            new moderateAction(player, admin).ban(String(res.formValues[0]))
             return
           })
           return
@@ -115,7 +116,7 @@ class inputManageUI {
           getReasonForm.show(admin).then(res => {
             if (res.canceled) return;
             if (!isPlayerOnline(player)) return admin.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas left the game!`);
-            new moderateAction(player, admin).kick(res.formValues[0])
+            new moderateAction(player, admin).kick(String(res.formValues[0]))
             return
           })
           return
@@ -124,7 +125,7 @@ class inputManageUI {
           getReasonForm.show(admin).then(res => {
             if (res.canceled) return;
             if (!isPlayerOnline(player)) return admin.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas left the game!`);
-            new moderateAction(player, admin).freeze(res.formValues[0], player)
+            new moderateAction(player, admin).freeze(String(res.formValues[0]), player)
             return
           })
           return
@@ -133,7 +134,7 @@ class inputManageUI {
           getReasonForm.show(admin).then(res => {
             if (res.canceled) return;
             if (!isPlayerOnline(player)) return admin.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas left the game!`);
-            new moderateAction(player, admin).mute(res.formValues[0])
+            new moderateAction(player, admin).mute(String(res.formValues[0]))
             return
           })
           return
