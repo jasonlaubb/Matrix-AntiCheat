@@ -11,8 +11,6 @@ import {
 } from "@minecraft/server"
 import { Detect, Util } from "../../Util/Util";
 
-let speedMineToggle;
-
 const GamemodeOf = Util.GamemodeOf
 
 //* check toggle if enabled
@@ -20,11 +18,7 @@ if (antiSpeedMineEnabled == true) {
   world.beforeEvents.playerBreakBlock.subscribe((event) => {
     let player = event.player
     let block = event.block
-    try {
-      speedMineToggle = world.scoreboard.getObjective("toggle:speedMine").displayName
-    } catch {
-      speedMineToggle = true
-    }
+    const speedMineToggle = !world.getDynamicProperty("toggle:speedMine")
     let breakSpeed;
     let getNuke = world.scoreboard.getObjective("nukerTimer").getScore(player.scoreboardIdentity)
     let fastBrokenBlocks = ["minecraft:yellow_flower", "minecraft:red_flower", "minecraft:double_plant",
