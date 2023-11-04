@@ -591,6 +591,28 @@ function Commands(player, message) {
       }
       break
     }
+      case "chatRanks": {
+      if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
+      switch (regax[1]) {
+        case "enable": {
+          system.run(() => {
+            world.sendMessage(`§e[§cMatrix§e] §aanti chat ranks has enabled§r\n§gBy§8:§b${player.name} `)
+            world.scoreboard.removeObjective('toggle:chatRanks')
+          })
+          break
+        }
+        case "disable": {
+          system.run(() => {
+            world.sendMessage(`§e[§cMatrix§e] §aanti chat ranks has disabled§r\n§gBy§8:§b${player.name} `)
+            world.scoreboard.addObjective('toggle:chatRanks', '')
+          })
+          break
+        }
+        default:
+          new Error(player).NotTurner()
+      }
+      break
+              }
     default: {
       new Error(player).None(regax[0])
     }
