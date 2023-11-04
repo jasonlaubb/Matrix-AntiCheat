@@ -66,15 +66,22 @@ function Commands(player, message) {
   switch (regax[0]) {
     //Op and deop
     case "op": {
-      if (password === regax[1]) {
-        system.run(() => {
-          player.addTag('MatrixOP')
-          world.sendMessage(`§e[§cMatrix§e] §b${player.name} §ais opped Matrix`)
-        })
+      if (!player.hasTag("MatrixOP") {
+        if (password === regax[1]) {
+          system.run(() => {
+            player.addTag('MatrixOP')
+            world.sendMessage(`§e[§cMatrix§e] §b${player.name} §ais opped Matrix`)
+          })
+        } else {
+          system.run(() => {
+            player.sendMessage(`§e[§cMatrix§e] §cIncorrect password`)
+          })
+        }
       } else {
-        system.run(() => {
-          player.sendMessage(`§e[§cMatrix§e] §cIncorrect password`)
-        })
+        const target = Real(regax[1], player, false, false)
+        if (target === undefined) return new Error(player).Target()
+        target.addTag("MatrixOP")
+        world.sendMessage(`§e[§cMatrix§e] §b${target.name} §ais opped Matrix\n§gBy:§c${player.name}`)
       }
       break
     }
