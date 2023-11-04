@@ -1,3 +1,4 @@
+//@ts-check
 import {
   Block,
   Dimension,
@@ -32,7 +33,7 @@ class Detect {
  * @param {string} message
  */
   static notify (message) {
-    [...world.getPlayers({ tag: 'notify' })].forEach(player => player.sendMessage('§e[§cMatrix§e] ' + message))
+    [...world.getPlayers({ tags: ['notify'] })].forEach(player => player.sendMessage('§e[§cMatrix§e] ' + message))
   }
 /**
  * @remarks
@@ -42,7 +43,7 @@ class Detect {
  * @param {string} tag
  */
   static notifyToTag (message, tag) {
-    [...world.getPlayers({ tag: tag })].forEach(player => player.sendMessage('§e[§cMatrix§e] ' + message))
+    [...world.getPlayers({ tags: [tag] })].forEach(player => player.sendMessage('§e[§cMatrix§e] ' + message))
   }
 /**
  * @remarks
@@ -60,7 +61,7 @@ class Detect {
  * @param {string} punishment
  * The punishment here
  * 
- * @param {string[[]]} infromation
+ * @param {string[]} infromation
  * Input the value that anticheat detect
  * [[<class>,<value>,<max value?>]]
  * Like [['SprintAngle','203.15'],['isSprinting','true']]
@@ -177,7 +178,7 @@ class Util {
       location: pos,
       type: 'minecraft:item'
     }).forEach(item => item.kill())
-    block.setPermutation(block.clone())
+    block.setPermutation(block.permutation.clone())
   }
 }
 
