@@ -8,13 +8,17 @@ import { Commands } from "./commands"
 import { spammer } from "../Misc_checks/Spammer/Spammer"
 
 const AntiSpammerEnabled = true
-
+let chatRanksToggle; 
 world.beforeEvents.chatSend.subscribe(data => {
 try {
   const player = data.sender
   const msg = data.message
   const spam = world.scoreboard.getObjective("spam").getScore(player.scoreboardIdentity)
-
+try{
+		chatRanksToggle = world.scoreboard.getObjective("toggle:fly").displayName 
+		} catch {
+		chatRanksToggle = true 
+			} 
   if (msg.startsWith(prefix)) {
     Commands(player, msg)
     data.cancel = true
@@ -51,6 +55,7 @@ try {
   data.cancel = true
   const MESSAGE = player.hasTag('MatrixOP') ? msg : msg.replace(/§./g, '')
   system.run(() => {
+    if(chatRanksToggle == true) return 
     world.sendMessage(`§8[§7${rank}§r§8] §r§7${player.name}§7: §r${MESSAGE}`)
   })
 } catch (e) {
