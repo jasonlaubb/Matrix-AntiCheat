@@ -90,7 +90,7 @@ function Commands(player, message) {
       const target = Real(regax[1], player, true, true)
       if (target === undefined) return new Error(player).Target()
       system.run(() => {
-        player.removeTag('MatrixOP')
+        target.removeTag('MatrixOP')
         world.sendMessage(`§e[§cMatrix§e] §b${target.name} §chis op has been removed\n§gBy§8:§b${player.name}`)
       })
       break
