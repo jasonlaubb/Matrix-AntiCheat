@@ -1,10 +1,10 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Matrix AntiCheat v1.0.6-beta",
+        "name": "Matrix AntiCheat v1.0.7-beta",
         "description": "The best anticheat for minecraft bedrock",
-        "uuid": "66e64b8e-b048-4a68-b561-d0f9965a5268",
-        "version": [1, 0, 6],
+        "uuid": "e316e6a0-a91a-4be0-843f-022b03d142cd",
+        "version": [1, 0, 7],
         "min_engine_version": [1, 20, 40]
     },
     "metadata": {
