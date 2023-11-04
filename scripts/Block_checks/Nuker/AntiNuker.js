@@ -10,13 +10,12 @@ import {
   Util,
   Detect
 } from '../../Util/Util'
-let nukerToggle
 
 const { GamemodeOf } = Util
 
 if(antiNukerEnabled === true) {
   world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    const toggle = !world.getDynamicProperty("toggle:fly")
+    const nukerToggle = !world.getDynamicProperty("toggle:fly")
     const { player, block } = event
     if (player.hasTag('stopBreakingBlock')) {
       event.cancel = true
