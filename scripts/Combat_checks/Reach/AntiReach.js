@@ -105,30 +105,6 @@ tryReachA.set(attacker,tryReachA.get(player)+1)
       if (TargetsCount > 1) {
         detect(attacker,"kick","§e[§cMatrix§e] §gkillaura §8(§gC§8) §chas been detected from§b "+attacker.name,null,true,"§e[§cMatrix§e] §ckillaura §8(§gC§8)")
       }
-      if (disXZ >= 2) {
-        if (attacker.hasTag("MatrixOP")) return
-        const getVector (p1, p2) => ({
-          x: p2.x - p1.x,
-          y: p2.y - p1.y,
-          z: p2.z - p1.z
-        });
-        const getNDP = (v1, v2) => (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z) / (Math.sqrt(v2.x ** 2 + v2.y ** 2 + v2
-          .z ** 2) * Math.sqrt(v1.x ** 2 + v1.y ** 2 + v1.z ** 2));
-        const angle = Math.acos(getNDP(attacker.getViewDirection(), getVector(attacker.location, target.location))) *
-          (180 / Math.PI);
-        if (angle > 90) {
-          //this anti killaura by obsidian antiCheat ravrvir i set your copyrights dont worry about that
-          world.sendMessage(
-            `§e[§cMatrix§e] §b${attacker.name} §chas been kicked!§r\n§gBy§8:§cMatrix\n§gReason§8:§ckillaura §8(§gB§8)§r`
-            )
-          attacker.runCommand(
-            `tellraw @a[tag=notify]{"rawtext":[{"text":"§g[§cMatrix§g] §gkillaura §8(§gB§8) §chas been detected from §b${attacker.name}\n§cangle §8= §8(§g${angle}§8/§g90§8)\n§cTarget§8 = §8(§g${targetName}§8)"}]}`
-            )
-          attacker.runCommand(
-            `kick "${attacker.name}" .\n§8 >> §c§lYou are kicked bad boy\n§r§8 >> §gReason§8:§ckillaura §8(§gB§8) §cangle §8= §8(§g${angle}§8/§g90§8)§r\n§8 >> §gBy§8:§cMatrix`
-            )
-        }
-      }
       if (tryReachA == 1 && disXZ > limitOfReachX || tryReachA == 1 && disX > limitOfReachX || tryReachA == 1 &&
         disY > limitOfReachY || tryReachA == 1 && disZ > limitOfReachZ || tryReachA >= 2) {
         if (attacker.hasTag("MatrixOP")) return
