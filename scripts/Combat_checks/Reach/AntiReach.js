@@ -22,14 +22,14 @@ if (antiReachAttackEnabled == true) {
     if (reachAToggle != true) return
     const attacker = event.damageSource.damagingEntity
     const target = event.hurtEntity
-    let projectilHit = event.damageSource.damagingProjectile
+    const projectilHit = event.damageSource.damagingProjectile
     if (projectilHit || attacker == undefined || target == undefined) return
-    let {
+    const {
       x,
       y,
       z
     } = target.location;
-    let {
+    const {
       x: attackerx,
       y: attackery,
       z: attackerz
@@ -57,9 +57,9 @@ if (antiReachAttackEnabled == true) {
       if (attacker.hasTag("is_jumping")) {
         limitOfReachY = 5.7;
       }
-      let attackerX = Number(attackerx.toFixed(2))
-      let attackerZ = Number(attackerz.toFixed(2))
-      let attackerY = Number(attackery.toFixed(2))
+      const attackerX = Number(attackerx.toFixed(2))
+      const attackerZ = Number(attackerz.toFixed(2))
+      const attackerY = Number(attackery.toFixed(2))
       let disY;
       let disZ;
       let disX;
@@ -107,14 +107,14 @@ tryReachA.set(attacker,tryReachA.get(player)+1)
       }
       if (disXZ >= 2) {
         if (attacker.hasTag("MatrixOP")) return
-        let getVector = (p1, p2) => ({
+        const getVector (p1, p2) => ({
           x: p2.x - p1.x,
           y: p2.y - p1.y,
           z: p2.z - p1.z
         });
-        let getNDP = (v1, v2) => (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z) / (Math.sqrt(v2.x ** 2 + v2.y ** 2 + v2
+        const getNDP = (v1, v2) => (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z) / (Math.sqrt(v2.x ** 2 + v2.y ** 2 + v2
           .z ** 2) * Math.sqrt(v1.x ** 2 + v1.y ** 2 + v1.z ** 2));
-        let angle = Math.acos(getNDP(attacker.getViewDirection(), getVector(attacker.location, target.location))) *
+        const angle = Math.acos(getNDP(attacker.getViewDirection(), getVector(attacker.location, target.location))) *
           (180 / Math.PI);
         if (angle > 90) {
           //this anti killaura by obsidian antiCheat ravrvir i set your copyrights dont worry about that
