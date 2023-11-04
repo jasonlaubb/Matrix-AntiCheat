@@ -22,7 +22,7 @@ class LocalData {
     return world.getDynamicProperty(`LocalData:${player.id}:${this.id}`)
   }
   set (player, value) {
-    world.setDynamicProperty(`LocalData:${player.id}:${this.id}}`, value)
+    world.setDynamicProperty(`LocalData:${player.id}:${this.id}`, value)
   }
 }
 
