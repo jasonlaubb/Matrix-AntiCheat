@@ -7,17 +7,13 @@ import {
   world
 } from "@minecraft/server"
 import { Detect, Util } from "../../Util/Util";
-let reachBToggle;
-let reachPToggle;
+
 if (antiReachBlockEnabled == true) {
   world.beforeEvents.playerBreakBlock.subscribe((event) => {
     let player = event.player
     let block = event.block
     try {
-      reachBToggle = world.scoreboard.getObjective("toggle:reachB").displayName
-    } catch {
-      reachBToggle = true
-    }
+    const reachBToggle = !world.getDynamicProperty("toggle:reachB")
     system.run(() => {
       Util.setScore(world, player, 'block', 1)
     })
@@ -150,7 +146,7 @@ if (antiReachBlockEnabled == true) {
     
     if (disXZ > limitOfReachX || disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ) {
       if (player.hasTag("MatrixOP")) return
-      if (reachBToggle != true) return
+      if (reachBToggle === false) return
 
       event.cancel = true
       system.run(() => {
@@ -168,13 +164,9 @@ let disX;
 let disXZ;
 if (antiReachBlockEnabled == true) {
   world.beforeEvents.playerPlaceBlock.subscribe((event) => {
-    try {
-      reachPToggle = world.scoreboard.getObjective("toggle:reachP").displayName
-    } catch {
-      reachPToggle = true
-    }
-    let player = event.player
-    let block = event.block
+    const reachPToggle = !world.getDynamicProperty("toggle:reachP")
+    const player = event.player
+    const block = event.block
     system.run(() => {
       Util.setScore(world, player, 'block', 1)
     })
@@ -299,7 +291,7 @@ if (antiReachBlockEnabled == true) {
     
     if (disXZ > limitOfReachX || disX > limitOfReachX || disY > limitOfReachY || disZ > limitOfReachZ) {
       if (player.hasTag("MatrixOP")) return
-      if (reachPToggle != true) return
+      if (reachPToggle === false) return
       event.cancel = true
       system.run(() => {
         Detect.flag(player, 'Reach', 'P', 'none', [['Distance',distance,'Block'],['Block',blockName],['ReachType',reachType]],false)
