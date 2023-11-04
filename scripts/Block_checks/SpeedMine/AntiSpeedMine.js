@@ -96,7 +96,7 @@ if (antiSpeedMineEnabled == true) {
     if (breakTimer > 0) {
       system.run(() => {
         if (player.hasTag("MatrixOP") || getNuke >= 2 || breakTimer > breakSpeed || breakSpeed == 0 ||
-          speedMineToggle != true) return
+          speedMineToggle === false) return
       })
       event.cancel = true
       system.run(() => {
