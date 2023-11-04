@@ -13,11 +13,7 @@ let world = Minecraft.world
 let autoAToggle;
 if (antiAutoClickerEnabled == true) {
   world.afterEvents.playerPlaceBlock.subscribe((event) => {
-    try {
-      autoAToggle = world.scoreboard.getObjective("toggle:autoA").displayName
-    } catch {
-      autoAToggle = true
-    }
+    const autoAToggle = !world.getDynamicProperty("toggle:autoA")
     let player = event.player
     let block = event.block
     let {
@@ -42,7 +38,7 @@ if (antiAutoClickerEnabled == true) {
     })
     if (getCps >= maximumCpsPlace) {
       system.run(() => {
-        if (autoAToggle != true) return
+        if (autoAToggle === false) return
         if (player.hasTag("MatrixOP")) return
 
         Detect.flag(player, 'AutoClicker', 'B', 'kick', [['Cps', getCps, maximumCps]], false)
