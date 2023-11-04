@@ -34,13 +34,14 @@ if (antiReachAttackEnabled == true) {
       y: attackery,
       z: attackerz
     } = attacker.location;
-    if (target.hasTag("lobby:Matrix")) {
-      target.runCommand(`tp ${x} ${y} ${z}`)
-    }
     if (attacker instanceof Player) {
-      let TargetsCount = world.scoreboard.getObjective("countOfTargets").getScore(attacker.scoreboardIdentity)
-      let lastReachDis = world.scoreboard.getObjective("reachDis").getScore(attacker.scoreboardIdentity)
-      let tryReachA = world.scoreboard.getObjective("tryReachA").getScore(attacker.scoreboardIdentity)
+      const TargetsCount = world.scoreboard.getObjective("countOfTargets").getScore(attacker.scoreboardIdentity)
+      const lastReachDis = new Map()
+      const tryReachA = new Map()
+      if(tryReachA.get(attacker) == undefined &&  lastReachDis.get(attacker) == undefined){
+         tryReachA.set(attacker,0) 
+         lastReachDis.set(attacker,0)
+        }
       let reachType;
       let targetName;
       //@ts-expect-error
@@ -49,10 +50,8 @@ if (antiReachAttackEnabled == true) {
         targetName = target.typeId.replaceAll("minecraft:", "");
         targetName = targetName.replaceAll("_", "");
       }
-      let limitOfReachX;
-      limitOfReachX = 3.5;
-      let limitOfReachZ;
-      limitOfReachZ = 3.5;
+      const limitOfReachX = 3.7
+      const limitOfReachZ = 3.7
       let limitOfReachY;
       limitOfReachY = 4.7;
       if (attacker.hasTag("is_jumping")) {
@@ -72,21 +71,12 @@ if (antiReachAttackEnabled == true) {
       disZ = Math.abs(z - attackerZ) - velocityZ
       disXZ = Math.sqrt(disX * disX + disZ * disZ) - (velocityX + velocityZ)
       disXZ = Number(disXZ.toFixed(2))
-
       if (attackerY > y + 3) {
         limitOfReachY = 3
       }
-      
-      
-      
       disX = Number(disX.toFixed(2))
       disY = Number(disY.toFixed(2))
       disZ = Number(disZ.toFixed(2))
-      if (target.typeId.includes("dragon")) {
-        limitOfReachX = 4.2
-        limitOfReachY = 4.7
-        limitOfReachZ = 4.2
-      }
       let distance;
       if (disX > limitOfReachX == true) {
         distance = disX;
@@ -104,16 +94,14 @@ if (antiReachAttackEnabled == true) {
         distance = disXZ;
         reachType = "x§8,§gz"
       }
-      target.addTag(`skip_check`)
-      target.runCommand(`scoreboard players set @s skip_check 20`)
       if (disXZ > limitOfReachX || disY > limitOfReachY) {
-setScore(world,attacker,"reachDis",Math.floor(distance*100)) 
-addScore(world,attacker,"tryReachA",1)
+lastReachDis.set(attacker,distance)
+tryReachA.set(attacker,tryReachA.get(player)+1)
       }
       if (disX < limitOfReachX && disY < limitOfReachY && disZ < limitOfReachZ) {
-        setScore(world,attacker,"tryReachA",0)
+        tryReachA.set(attacker,0)
       }
-      addScore(world,attacker,"countOfTargets",1)
+      addScore(world,attacker,"countOfTargets",2)
       if (TargetsCount > 1) {
         detect(attacker,"kick","§e[§cMatrix§e] §gkillaura §8(§gC§8) §chas been detected from§b "+attacker.name,null,true,"§e[§cMatrix§e] §ckillaura §8(§gC§8)")
       }
