@@ -126,4 +126,4 @@ Crasher has already get patched by Molang, maybe something work
 >
 > (B) => Checks if players location is too low
 >
-> (C) => Cancel watch dog \:doge\:
+> (C) => Cancel watch dog \:doge\: and patch invalid location
