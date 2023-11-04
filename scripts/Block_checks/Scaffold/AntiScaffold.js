@@ -24,16 +24,8 @@ const isUnderPlayer = (pos1, pos2) => {
 
 if (antiScaffoldEnabled == true) {
   world.beforeEvents.playerPlaceBlock.subscribe((event) => {
-    try {
-      scaffoldBToggle = world.scoreboard.getObjective("toggle:scaffoldB").displayName
-    } catch {
-      scaffoldBToggle = true
-    }
-    try {
-      scaffoldAToggle = world.scoreboard.getObjective("toggle:scaffoldA").displayName
-    } catch {
-      scaffoldAToggle = true
-    }
+    const scaffoldToggle = !world.getDynamicProperty("toggle:scaffold")
+    if (scaffoldToggle === false) return
     let player = event.player
     let block = event.block
     let {
@@ -54,7 +46,6 @@ if (antiScaffoldEnabled == true) {
     if (block2 == "minecraft:air" && player.hasTag("looking_up")) {
       if (isUnderPlayer(player.location, block.location) === true) {
         if (player.hasTag("MatrixOP")) return
-        if (scaffoldAToggle != true) return
         system.run(() => {
           Util.addScore(world, player, 'tryScaffold', 1)
         })
