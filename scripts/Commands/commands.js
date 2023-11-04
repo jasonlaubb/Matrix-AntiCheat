@@ -243,7 +243,7 @@ function Commands(player, message) {
     }
     case "toggles": {
       if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
-      system.run(() => player.sendMessage(`§c§lToggles§8:§r\n§ganti speed toggle §8(§cantiSpeed§8)\n§ganti reach toggle§8 (§cantiReach§8<§greach_type§8>§8) §greach types§8:\n§gbreak§8:§cB\n§gplace§8:§cP\n§gAttack§8:§cA\n§ganti nuker toggle§8 (§cantiNuker§8)\n§ganti speed mine toggle§8 (§cantiSpeedMine§8)\n§ganti xray toggle §8(§cantiXray§8)\n§ganti scaffold toggle §8(§cantiScaffold§8<§cscaffold_type§8>)\n§gscaffold types§8:\n§gwhen the player eyes is looking up and placing blocks under him§8:§cA\n§gwhen player is placing blocks and item in hand of player doesnt block was placed§8:§cB\n§ganti auto clicker toggle §8(§cantiAuto§8<§cAuto clicker type§8>)§g\nauto clicker types§8:\n§gAuto clicker attack§8:§cA\n§gAuto clicker place§8:§cP\n§ganti crasher toggle §8(§cantiCrasher§8)\n§ganti fly toggle §8(§cantiFly§8)\n§gabadpacket toggle §8(§cantiBadpacket§8)\n§gainvalidSprint toggle §8(§cantiInvalidSprint§8)`))
+      system.run(() => player.sendMessage(`§c§lToggles§8:§r\n§ganti speed toggle §8(§cantiSpeed§8)\n§ganti reach toggle§8 (§cantiReach§8<§greach_type§8>§8) §greach types§8:\n§gbreak§8:§cB\n§gplace§8:§cP\n§gAttack§8:§cA\n§ganti nuker toggle§8 (§cantiNuker§8)\n§ganti speed mine toggle§8 (§cantiSpeedMine§8)\n§ganti xray toggle §8(§cantiXray§8)\n§ganti scaffold toggle §8(§cantiScaffold)\n§ganti auto clicker toggle §8(§cantiAuto§8<§cAuto clicker type§8>)§g\nauto clicker types§8:\n§gAuto clicker attack§8:§cA\n§gAuto clicker place§8:§cP\n§ganti crasher toggle §8(§cantiCrasher§8)\n§ganti fly toggle §8(§cantiFly§8)\n§gabadpacket toggle §8(§cantiBadpacket§8)\n§gainvalidSprint toggle §8(§cantiInvalidSprint§8)`))
       break
     }
 
@@ -254,14 +254,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti xray has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:xray')
+            world.setDynamicProperty("toggle:xray", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti xray has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:xray', '')
+            world.setDynamicProperty("toggle:xray", true)
           })
           break
         }
@@ -276,14 +276,15 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti nuker has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:nuker')
+            world.setDynamicProperty("toggle:nuker", undefined)
+            
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti nuker has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:nuker', '')
+            world.setDynamicProperty("toggle:nuker", true)
           })
           break
         }
@@ -298,14 +299,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti auto clicker has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:auto')
+            world.setDynamicProperty("toggle:auto", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti auto clicker has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:auto', '')
+            world.setDynamicProperty("toggle:auto", true)
           })
           break
         }
@@ -320,14 +321,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti Killaura has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:killaura')
+            world.setDynamicProperty("toggle:killaura", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti Killaura has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:killaura', '')
+            world.setDynamicProperty("toggle:killaura", true)
           })
           break
         }
@@ -342,14 +343,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti reachA has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:reachA')
+            world.setDynamicProperty("toggle:reachA", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti reachA has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:reachA', '')
+            world.setDynamicProperty("toggle:reachA", true)
           })
           break
         }
@@ -364,14 +365,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti reachB has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:reachB')
+            world.setDynamicProperty("toggle:reachB", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti reachA has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:reachB', '')
+            world.setDynamicProperty("toggle:reachB", true)
           })
           break
         }
@@ -386,14 +387,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti reach place has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:reachP')
+            world.setDynamicProperty("toggle:reachP", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti reach place has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:reachP', '')
+            world.setDynamicProperty("toggle:reachP", true)
           })
           break
         }
@@ -402,42 +403,20 @@ function Commands(player, message) {
       }
       break
     }
-    case "antiScaffoldA": {
+    case "antiScaffold": {
       if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
       switch (regax[1]) {
         case "enable": {
           system.run(() => {
-            world.sendMessage(`§e[§cMatrix§e] §aanti scaffoldA has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:scaffoldA')
+            world.sendMessage(`§e[§cMatrix§e] §aanti scaffold has enabled§r\n§gBy§8:§b${player.name} `)
+            world.setDynamicProperty("toggle:scaffold", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti scaffoldA has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:scaffoldA', '')
-          })
-          break
-        }
-        default:
-          new Error(player).NotTurner()
-      }
-      break
-    }
-    case "antiScaffoldB": {
-      if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
-      switch (regax[1]) {
-        case "enable": {
-          system.run(() => {
-            world.sendMessage(`§e[§cMatrix§e] §aanti scaffoldB has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:scaffoldB')
-          })
-          break
-        }
-        case "disable": {
-          system.run(() => {
-            world.sendMessage(`§e[§cMatrix§e] §aanti scaffoldB has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:scaffoldB', '')
+            world.setDynamicProperty("toggle:scaffold", true)
           })
           break
         }
@@ -452,14 +431,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti auto place has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:autoA')
+            world.setDynamicProperty("toggle:autoP", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti auto place has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:autoA', '')
+            world.setDynamicProperty("toggle:autoP", true)
           })
           break
         }
@@ -473,15 +452,15 @@ function Commands(player, message) {
       switch (regax[1]) {
         case "enable": {
           system.run(() => {
-            world.sendMessage(`§e[§cMatrix§e] §aanti auto place has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:autoP')
+            world.sendMessage(`§e[§cMatrix§e] §aanti speed mine has enabled§r\n§gBy§8:§b${player.name} `)
+            world.setDynamicProperty("toggle:speedMine", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
-            world.sendMessage(`§e[§cMatrix§e] §aanti auto place has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:autoP', '')
+            world.sendMessage(`§e[§cMatrix§e] §aanti speed mine has disabled§r\n§gBy§8:§b${player.name} `)
+            world.setDynamicProperty("toggle:speedMine", true)
           })
           break
         }
@@ -496,14 +475,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti speed has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:speed')
+            world.setDynamicProperty("toggle:speed", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti auto place has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:speed', '')
+            world.setDynamicProperty("toggle:speed", true)
           })
           break
         }
@@ -518,14 +497,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti crasher has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:crasher')
+            world.setDynamicProperty("toggle:crasher", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti crasher has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:crasher', '')
+            world.setDynamicProperty("toggle:crasher", true)
           })
           break
         }
@@ -540,14 +519,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti fly has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:fly')
+            world.setDynamicProperty("toggle:fly", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti fly has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:fly', '')
+            world.setDynamicProperty("toggle:fly", true)
           })
           break
         }
@@ -562,14 +541,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti badpacket has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:badpacket')
+            world.setDynamicProperty("toggle:badpacket", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti badpacket has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:badpacket', '')
+            world.setDynamicProperty("toggle:badpacket", true)
           })
           break
         }
@@ -584,14 +563,14 @@ function Commands(player, message) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti InvalidSprint has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:invalidsrpint')
+            world.setDynamicProperty("toggle:invalidsprint", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti InvalidSprint has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:invalidsrpint', '')
+            world.setDynamicProperty("toggle:invalidsprint", true)
           })
           break
         }
@@ -600,20 +579,20 @@ function Commands(player, message) {
       }
       break
     }
-      case "chatRanks": {
+    case "chatRanks": {
       if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
       switch (regax[1]) {
         case "enable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti chat ranks has enabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.removeObjective('toggle:chatRanks')
+            world.setDynamicProperty("toggle:chatrank", undefined)
           })
           break
         }
         case "disable": {
           system.run(() => {
             world.sendMessage(`§e[§cMatrix§e] §aanti chat ranks has disabled§r\n§gBy§8:§b${player.name} `)
-            world.scoreboard.addObjective('toggle:chatRanks', '')
+            world.setDynamicProperty("toggle:chatrank", true)
           })
           break
         }
@@ -621,7 +600,7 @@ function Commands(player, message) {
           new Error(player).NotTurner()
       }
       break
-              }
+    }
     default: {
       new Error(player).None(regax[0])
     }
