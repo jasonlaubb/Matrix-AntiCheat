@@ -9,5 +9,6 @@
     "noEmit": true,
     "strict": false,
     "alwaysStrict": true,
+    "typeRoots": ["./node_modules"]
   }
 }
