@@ -9,9 +9,6 @@ import {
 } from "@minecraft/server"
 import { Detect, Util } from "../../Util/Util"
 
-let scaffoldBToggle;
-let scaffoldAToggle;
-
 const isUnderPlayer = (pos1, pos2) => {
   const p = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) }
   if (p.y - 1 !== pos2.y) return false
