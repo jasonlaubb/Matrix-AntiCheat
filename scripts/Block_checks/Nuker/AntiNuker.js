@@ -12,17 +12,12 @@ import {
 } from '../../Util/Util'
 let nukerToggle
 
-const { RecoverBlock, GamemodeOf } = Util
+const { GamemodeOf } = Util
 
 if(antiNukerEnabled === true) {
   world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    try {
-      nukerToggle = world.scoreboard.getObjective("toggle:nuker").displayName
-    } catch {
-      nukerToggle = true
-    }
-    let player = event.player
-    let block = event.block
+    const toggle = !world.getDynamicProperty("toggle:fly")
+    const { player, block } = event
     if (player.hasTag('stopBreakingBlock')) {
       event.cancel = true
     }
@@ -64,7 +59,7 @@ if(antiNukerEnabled === true) {
     }
     if(getNukeTime >= 1) {
       system.run(() => {
-        if(nukerToggle != true || player.hasTag("MatrixOP")) return
+        if(nukerToggle === false || player.hasTag("MatrixOP")) return
         Util.addScore(world, player, 'nukeLength', 1)
         Util.setScore(world, player, 'sendMsgT', 6)
       })
