@@ -10,21 +10,16 @@ import {
 import { Detect, Util } from "../../Util/Util";
 let world = Minecraft.world
 //* check toggle if enabled 
-let xrayToggle;
 if (antiXrayEnabled == true) {
   world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    try {
-      xrayToggle = world.scoreboard.getObjective("toggle:xray").displayName
-    } catch {
-      xrayToggle = true
-    }
+    const xrayToggle = !world.getDynamicProperty("toggle:xray")
     let player = event.player
     let block = event.block
     let xrayFlags = world.scoreboard.getObjective("xray").getScore(player.scoreboardIdentity)
 
     //* clone block before broken
     if (xray.includes(block.type.id)) {
-      if (xrayToggle != true) return
+      if (xrayToggle === false) return
       system.run(() => {
         Util.addScore(player, 'xray', 1)
       })
