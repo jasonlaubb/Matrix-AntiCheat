@@ -1,7 +1,8 @@
 //@ts-check
 import {
   world,
-  Player
+  Player,
+  system
 } from "@minecraft/server"
 import {
   setScore,
@@ -29,6 +30,11 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   world.scoreboard.getObjective('tryAutoClicker').setScore(player, 0);
 })
 
+system.runInterval(() => {
+  world.getPlayers({ tags: ["freeze"] }).forEach(player => {
+    player.runCommand(`inputpermission set @s movement disabled`)
+  }
+}, 40)
 
 /** @param {Player} player */
 function moderation (player) {
@@ -53,15 +59,6 @@ let getEnchantment = getItemInSlot.getComponent("minecraft:enchantments").enchan
   const reason = (tags.filter(tag => tag.startsWith("Reason:"))[0] ?? "nothing").replace("Reason:","")
   const by = (tags.filter(tag => tag.startsWith("By:"))[0] ?? "nothing").replace("By:","")
   
-  if (player.hasTag("freeze")) {
-    const freezePos = {
-      x: world.scoreboard.getObjective("freezeX").getScore(player.scoreboardIdentity),
-      y: world.scoreboard.getObjective("freezeZ").getScore(player.scoreboardIdentity),
-      z: world.scoreboard.getObjective("freezeY").getScore(player.scoreboardIdentity)
-    }
-    
-    player.teleport(freezePos)
-  }
   if (banTimer == 0 && player.hasTag("ban")) {
     world.scoreboard.getObjective('bantimer').setScore(player, 40);
     player.runCommand(`kick "${player.name}" .\n§8 >> §c§lYou are banned!\n§r§8 >> §gReason§8:§c${reason}\n§8 >> §gBy§8:§c${by}`)
@@ -116,9 +113,7 @@ export class moderateAction {
 
     world.sendMessage(`§e[§cMatrix§e] §b${player.name} §chas been frozen \n§gBy§8:§b${admin.name ?? 'System'}\n§gReason§8:§c${reason ?? 'no reason specific'}`)
     player.addTag('freeze')
-    world.scoreboard.getObjective('freezeX').setScore(player, Math.floor(pos.x))
-    world.scoreboard.getObjective('freezeY').setScore(player, Math.floor(pos.y))
-    world.scoreboard.getObjective('freezeZ').setScore(player, Math.floor(pos.z))
+    player.runCommand(`inputpermission set @s movement disabled`)
   }
 
   /** @param {string} reason */
@@ -145,6 +140,7 @@ export class moderateAction {
 
     world.sendMessage(`§e[§cMatrix§e] §b${player.name} §ais currently unmuted!\n§gBy§8:§b${admin.name ?? 'System'}`)
     player.removeTag('mute')
+    player.runCommand(`inputpermission set @s movement enabled`)
   }
   
   unfreeze () {
