@@ -33,7 +33,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
 world.beforeEvents.itemUse.subscribe((event) => {
   const player = event.source
   if (player.hasTag("freeze")) {
-    ev.cancel = true
+    event.cancel = true
     system.run(() => player.sendMessage("§e[§cMatrix§e] §cYou can't use item. You're freezed"))
   }
 })
