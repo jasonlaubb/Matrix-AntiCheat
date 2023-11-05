@@ -2,6 +2,8 @@
 //*the prefix here
 const prefix = "#"
 const password = "passwordHere"
+const allowClearingPassword = false
+//Set it to true to enable clearPassword command
 //*UI
 const UiItemPrefix = 'minecraft:diamond'
 //*toggles: 
@@ -176,6 +178,7 @@ export {
   maximumCpsPlace,
   password,
   prefix,
+  allowClearingPassword,
   detect,
   UiItemPrefix,
   HELP_LIST,
