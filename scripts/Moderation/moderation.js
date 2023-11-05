@@ -47,6 +47,22 @@ system.runInterval(() => {
 
 /** @param {Player} player */
 function moderation (player) {
+  if (player.hasTag("MatrixOP") !== !!player.getDynamicProperty("isAdmin")) {
+    console.log("Non-matched opped state from " + player.name)
+    switch (!!player.getDynamicProperty("isAdmin")) {
+      case true: {
+        player.addTag("MatrixOP")
+        break
+      }
+      case false: {
+        player.removeTag("MatrixOP")
+        break
+      }
+      default:
+        break
+    }
+  }
+  
   if(player.isGliding == true){
     setScore(world,player,"skip_check",15)
   }
