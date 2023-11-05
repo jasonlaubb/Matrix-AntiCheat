@@ -48,7 +48,7 @@ world.afterEvents.entityHurt.subscribe((event) => {
     const target = event.hurtEntity
   if (disXZ >= 2) {
         if (attacker.hasTag("MatrixOP")) return
-        const getVector (p1, p2) => ({
+        const getVector = (p1, p2) => ({
           x: p2.x - p1.x,
           y: p2.y - p1.y,
           z: p2.z - p1.z
