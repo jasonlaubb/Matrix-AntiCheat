@@ -72,7 +72,7 @@ if (antiScaffoldEnabled == true) {
         })
       }
     }
-
+/* As ravriv is kidding, this check is no longer in use
     //scaffold/B - the god of false positive
     const blockView = player.getBlockFromViewDirection()?.block
     
@@ -85,7 +85,7 @@ if (antiScaffoldEnabled == true) {
         )
       }
     } else system.run(() => world.scoreboard.getObjective('scaffold_buff').setScore(player, 0))
-
+*/
     //scaffold/C - rotation is interger when placing block
     const rotation = player.getRotation()
     if (Math.trunc(rotation.x) === rotation.x || Math.trunc(rotation.y) === rotation.y) {
