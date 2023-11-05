@@ -7,7 +7,8 @@ import {
   HELP_LIST,
   password,
   prefix,
-  UiItemPrefix
+  UiItemPrefix,
+  allowClearingPassword
 } from "../config"
 import {
   moderateAction
@@ -67,9 +68,10 @@ function Commands(player, message) {
     //Op and deop
     case "op": {
       if (!player.hasTag("MatrixOP") {
-        if (password === regax[1]) {
+        if (world.getDynamicProperty("password") ?? password === regax[1]) {
           system.run(() => {
             player.addTag('MatrixOP')
+            player.setDynamicProperty("isAdmin", true)
             world.sendMessage(`§e[§cMatrix§e] §b${player.name} §ais opped Matrix`)
           })
         } else {
@@ -80,10 +82,38 @@ function Commands(player, message) {
       } else {
         const target = Real(regax[1], player, false, false)
         if (target === undefined) return new Error(player).Target()
-        target.addTag("MatrixOP")
-        world.sendMessage(`§e[§cMatrix§e] §b${target.name} §ais opped Matrix\n§gBy:§c${player.name}`)
+        system.run(() => {
+          target.addTag("MatrixOP")
+          target.setDynamicProperty("isAdmin", true)
+          world.sendMessage(`§e[§cMatrix§e] §b${target.name} §ais opped Matrix\n§gBy:§c${player.name}`)
+        })
       }
       break
+    }
+    case "setPassword": {
+      if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
+      const passwordNow = world.getDynamicProperty("password") ?? password
+      if (regax[1] !== passwordNow) return system.run(() => player.sendMessage(`§e[§cMatrix§e] §cIncorrect password`))
+      if (regax[2] === undefined || regax[2].length <= 3) return system.run(() => player.sendMessage(`§e[§cMatrix§e] §cYour password too short! At least 4 charter!`))
+
+      system.run(() => {
+        world.setDynamicProperty("password", regax[2])
+        world.sendMessage(`§e[§cMatrix§e] §bPassword has been changed!\n§cBy:§g${player.name}`)
+        player.sendMessage(`§e[§cMatrix§e] §cPassword has been changed to >>§g ${regax[2]} §c<<`)
+      }
+    }
+    case "clearPassword": {
+      if (allowClearingPassword !== true) return system.run(() => player.sendMessage(`§e[§cMatrix§e] §cThis command is disabled.\nPlease edit config file and set "allowClearingPassword" to true`)
+      if (regax[1] === password) {
+        system.run(() => {
+          world.sendMessage(`§e[§cMatrix§e] §bPassword has been cleared!\n§cBy:§g${player.name}`)
+          world.setDynamicProperty("password", undefined)
+        })
+      } else {
+        system.run(() => {
+          player.sendMessage(`§e[§cMatrix§e] §cIncorrect password`)
+        })
+      }
     }
     case "deop": {
       if (!player.hasTag('MatrixOP')) return new Error(player).NoOp()
@@ -91,6 +121,7 @@ function Commands(player, message) {
       if (target === undefined) return new Error(player).Target()
       system.run(() => {
         target.removeTag('MatrixOP')
+        target.setDynamicProperty("isAdmin", undefined)
         world.sendMessage(`§e[§cMatrix§e] §b${target.name} §chis op has been removed\n§gBy§8:§b${player.name}`)
       })
       break
