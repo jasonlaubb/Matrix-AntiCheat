@@ -33,7 +33,7 @@ system.runInterval(() => {
           new ActionFromData ()
             .title ("AFK kick")
             .body ("You will be kicked soon!")
-            .button ("-- click here to verify you are not afk!")
+            .button ("-- click here to verify you are not afk --")
             .then (res => {
               player.removeTag ("afk:checking")
               if (res.cancelled) timerClear (player)
