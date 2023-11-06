@@ -24,6 +24,7 @@ const antiInvalidSrpintEnabled = true
 const antiSpammerEnabled = true
 //*modules
 const antiCombatLogEnabled = true
+const antiAFKEnabled = true
 //*methods
 //*this is maximum cps can player reach 
 const maximumCps = 20
@@ -169,6 +170,7 @@ export {
   antiInvalidSrpintEnabled,
   antiCombatLogEnabled,
   antiSpammerEnabled,
+  antiAFKEnabled,
   maximumCps,
   nukerTimer,
   toolsNames,
