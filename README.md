@@ -46,7 +46,10 @@
 
   Download the latest release and use the .mcpack file, not the source code.
 
-  ***#op (password) #help for commands***
+  ***#op (password)***
+  
+  ***#help for commands***
+  
 
   ---
   ## Install AntiCheat
