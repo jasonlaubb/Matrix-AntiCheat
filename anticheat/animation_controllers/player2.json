@@ -1,0 +1,378 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.is_alive": {
+      "initial_state": "alive",
+      "states": {
+        "alive": {
+          "on_entry": [
+            "/tag @s remove is_dead"
+          ],
+          "transitions": [
+            {
+              "dead": "!query.is_alive"
+            }
+          ]
+        },
+        "dead": {
+          "on_entry": [
+            "/tag @s add is_dead"
+          ],
+          "transitions": [
+            {
+              "alive": "query.is_alive"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.levitate": {
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "levitate": "query.is_levitating"
+            }
+          ],
+          "on_entry": [
+            "/tag @s remove levitation"
+          ]
+        },
+        "levitate": {
+          "transitions": [
+            {
+              "default": "!query.is_levitating"
+            }
+          ],
+          "on_entry": [
+            "/tag @s add levitation"
+          ]
+        }
+      }
+    },
+    "controller.animation.ride": {
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "ride": "query.is_riding"
+            }
+          ],
+          "on_entry": [
+            "/tag @s remove riding"
+          ]
+        },
+        "ride": {
+          "transitions": [
+            {
+              "default": "!query.is_riding"
+            }
+          ],
+          "on_entry": [
+            "/tag @s add riding"
+          ]
+        }
+      }
+    },
+    "controller.animation.player.is_moving": {
+      "initial_state": "not_moving",
+      "states": {
+        "not_moving": {
+          "on_entry": [
+            "/tag @s remove is_moving"
+          ],
+          "transitions": [
+            {
+              "moving": "query.is_moving"
+            }
+          ]
+        },
+        "moving": {
+          "on_entry": [
+            "/tag @s add is_moving"
+          ],
+          "transitions": [
+            {
+              "not_moving": "!query.is_moving"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.is_sleeping": {
+      "initial_state": "not_sleeping",
+      "states": {
+        "not_sleeping": {
+          "on_entry": [
+            "/tag @s remove is_sleeping"
+          ],
+          "transitions": [
+            {
+              "sleeping": "query.is_sleeping"
+            }
+          ]
+        },
+        "sleeping": {
+          "on_entry": [
+            "/tag @s add is_sleeping"
+          ],
+          "transitions": [
+            {
+              "not_sleeping": "!query.is_sleeping"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.is_jumping": {
+      "initial_state": "not_jumping",
+      "states": {
+        "not_jumping": {
+          "on_entry": [
+            "/tag @s remove is_jumping"
+          ],
+          "transitions": [
+            {
+              "jumping": "query.is_jumping"
+            }
+          ]
+        },
+        "jumping": {
+          "on_entry": [
+            "/tag @s add is_jumping"
+          ],
+          "transitions": [
+            {
+              "not_jumping": "!query.is_jumping"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.is_on_fire": {
+      "initial_state": "not_on_fire",
+      "states": {
+        "not_on_fire": {
+          "on_entry": [
+            "/tag @s remove is_on_fire"
+          ],
+          "transitions": [
+            {
+              "on_fire": "query.is_on_fire"
+            }
+          ]
+        },
+        "on_fire": {
+          "on_entry": [
+            "/tag @s add is_on_fire"
+          ],
+          "transitions": [
+            {
+              "not_on_fire": "!query.is_on_fire"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.ground": {
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "ground": "query.is_on_ground"
+            }
+          ],
+          "on_entry": [
+            "/tag @s remove on_ground",
+            "/tellraw @a[tag=packetlogger] {\"rawtext\":[{\"text\":\"§߈§r§4[§6Paradox§4]§r §bRecieved §6GROUND§r packet from: §g\"},{\"selector\":\"@s\"},{\"text\":\" §7(type=stop)\"}]}"
+          ]
+        },
+        "ground": {
+          "transitions": [
+            {
+              "default": "!query.is_on_ground"
+            }
+          ],
+          "on_entry": [
+            "/tag @s add on_ground",
+            "/tellraw @a[tag=packetlogger] {\"rawtext\":[{\"text\":\"§߈§r§4[§6Paradox§4]§r §bRecieved §6GROUND§r packet from: §g\"},{\"selector\":\"@s\"},{\"text\":\" §7(type=start)\"}]}"
+          ]
+        }
+      }
+    },
+    "controller.animation.player.is_sneaking": {
+      "initial_state": "not_sneaking",
+      "states": {
+        "not_sneaking": {
+          "on_entry": [
+            "/tag @s remove is_sneaking"
+          ],
+          "transitions": [
+            {
+              "sneaking": "query.is_sneaking"
+            }
+          ]
+        },
+        "sneaking": {
+          "on_entry": [
+            "/tag @s add is_sneaking"
+          ],
+          "transitions": [
+            {
+              "not_sneaking": "!query.is_sneaking"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.is_sprinting": {
+      "initial_state": "not_sprinting",
+      "states": {
+        "not_sprinting": {
+          "on_entry": [
+            "/tag @s remove is_sprinting"
+          ],
+          "transitions": [
+            {
+              "sprinting": "query.is_sprinting"
+            }
+          ]
+        },
+        "sprinting": {
+          "on_entry": [
+            "/tag @s add is_sprinting"
+          ],
+          "transitions": [
+            {
+              "not_sprinting": "!query.is_sprinting"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.is_swimming": {
+      "initial_state": "not_swimming",
+      "states": {
+        "not_swimming": {
+          "on_entry": [
+            "/tag @s remove is_swimming"
+          ],
+          "transitions": [
+            {
+              "swimming": "query.is_swimming"
+            }
+          ]
+        },
+        "swimming": {
+          "on_entry": [
+            "/tag @s add is_swimming"
+          ],
+          "transitions": [
+            {
+              "not_swimming": "!query.is_swimming"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.sleep": {
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "sleep": "query.is_sleeping"
+            }
+          ],
+          "on_entry": [
+            "/tag @s remove sleeping"
+          ]
+        },
+        "sleep": {
+          "transitions": [
+            {
+              "default": "!query.is_sleeping"
+            }
+          ],
+          "on_entry": [
+            "/tag @s add sleeping"
+          ]
+        }
+      }
+    },
+    "controller.animation.player.is_using_item": {
+      "initial_state": "not_using_item",
+      "states": {
+        "not_using_item": {
+          "on_entry": [
+            "/tag @s remove is_using_item"
+          ],
+          "transitions": [
+            {
+              "using_item": "query.is_using_item"
+            }
+          ]
+        },
+        "using_item": {
+          "on_entry": [
+            "/tag @s add is_using_item"
+          ],
+          "transitions": [
+            {
+              "not_using_item": "!query.is_using_item"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.gui": {
+      "initial_state": "not_gui",
+      "states": {
+        "not_gui": {
+          "on_entry": [
+            "/tag @s remove gui"
+          ],
+          "transitions": [
+            {
+              "gui": "query.variant == 1"
+            }
+          ]
+        },
+        "gui": {
+          "on_entry": [
+            "/tag @s add gui"
+          ],
+          "transitions": [
+            {
+              "not_canfly": "query.variant != 1"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.canfly": {
+      "initial_state": "not_canfly",
+      "states": {
+        "not_canfly": {
+          "on_entry": [
+            "/tag @s remove canfly"
+          ],
+          "transitions": [
+            {
+              "canfly": "query.can_fly"
+            }
+          ]
+        },
+        "canfly": {
+          "on_entry": [
+            "/tag @s add canfly"
+          ],
+          "transitions": [
+            {
+              "not_canfly": "!query.can_fly"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

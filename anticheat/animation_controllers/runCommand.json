@@ -1,0 +1,17 @@
+{
+	"format_version": "1.17.0",
+	"animation_controllers": {
+		"controller.animation.hardcore-mode": {
+			"states": {
+				"default": {
+					"transitions": [ { "zooming": "(1.0)" } ],
+					"on_entry": [ "/function main" ]
+				},
+				"zooming": {
+					"transitions": [ { "default": "(1.0)" } ],
+              "on_entry": [ "/function main" ]
+		   	  	}
+	 		  }
+       }
+    }
+}

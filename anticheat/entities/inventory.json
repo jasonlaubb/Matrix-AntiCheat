@@ -1,0 +1,136 @@
+{
+  "format_version": "1.17.10",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "mcbehub:inventory",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "component_groups": {
+      "despawn": {
+        "minecraft:instant_despawn": {},
+        "minecraft:explode": {}
+      },
+      "size_27": {
+        "minecraft:inventory": {
+          "container_type": "inventory",
+          "inventory_size": 27,
+          "restrict_to_owner": true
+        }
+      },
+      "size_36": {
+        "minecraft:inventory": {
+          "container_type": "inventory",
+          "inventory_size": 36,
+          "private": true,
+          "restrict_to_owner": true
+        }
+      },
+      "size_45": {
+        "minecraft:inventory": {
+          "container_type": "inventory",
+          "inventory_size": 45,
+          "restrict_to_owner": true
+        }
+      },
+      "size_54": {
+        "minecraft:inventory": {
+          "container_type": "inventory",
+          "inventory_size": 54,
+          "restrict_to_owner": true
+        }
+      },
+      "size_81": {
+        "minecraft:inventory": {
+          "container_type": "inventory",
+          "inventory_size": 81,
+          "restrict_to_owner": true
+        }
+      },
+      "size_108": {
+        "minecraft:inventory": {
+          "container_type": "inventory",
+          "inventory_size": 108,
+          "restrict_to_owner": true
+        }
+      }
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "width": 1,
+        "height": 2
+      },
+      "minecraft:movement": {
+        "value": 0
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": false
+      },
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:inventory": {
+        "container_type": "inventory",
+        "inventory_size": 54,
+        "restrict_to_owner": true
+      },
+      "minecraft:damage_sensor": {
+        "triggers": {
+          "cause": "all",
+          "deals_damage": false
+        }
+      },
+      "minecraft:fire_immune": true,
+      "minecraft:tameable": true
+    },
+    "events": {
+      "minecraft:on_tame": {},
+      "despawn": {
+        "add": {
+          "component_groups": ["despawn"]
+        }
+      },
+      "size_reset": {
+        "remove": {
+          "component_groups": [
+            "size_27",
+            "size_36",
+            "size_54",
+            "size_81",
+            "size_108"
+          ]
+        }
+      },
+      "size_27": {
+        "trigger": "size_reset",
+        "add": {
+          "component_groups": ["size_27"]
+        }
+      },
+      "size_36": {
+        "trigger": "size_reset",
+        "add": {
+          "component_groups": ["size_36"]
+        }
+      },
+      "size_54": {
+        "trigger": "size_reset",
+        "add": {
+          "component_groups": ["size_54"]
+        }
+      },
+      "size_81": {
+        "trigger": "size_reset",
+        "add": {
+          "component_groups": ["size_81"]
+        }
+      },
+      "size_108": {
+        "trigger": "size_reset",
+        "add": {
+          "component_groups": ["size_108"]
+        }
+      }
+    }
+  }
+}

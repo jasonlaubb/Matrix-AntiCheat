@@ -1,0 +1,13 @@
+{
+  "include": ["scripts"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "nodenext",
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": false,
+    "alwaysStrict": true,
+  }
+}
