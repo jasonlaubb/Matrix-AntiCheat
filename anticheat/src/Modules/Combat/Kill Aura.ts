@@ -86,6 +86,8 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
     KillAura(damagingEntity, hitEntity);
 });
 
+system.runInterval(() => world.getAllPlayers().filter(player => hitLength.get(player.id) !== undefined).forEach(player => hitLength.delete(player.id)), 2)
+
 world.afterEvents.playerLeave.subscribe(({ playerId }) => {
     hitLength.delete(playerId);
 })

@@ -1,20 +1,7 @@
-import {
-    world,
-    system,
-    Player,
-    EntityDamageCause,
-    Vector3,
-    Dimension
-} from "@minecraft/server";
+import { world, system, Vector3, Dimension } from "@minecraft/server";
 
 import config from "../../Data/Config";
 
-class FallData {
-    count: number;
-    lastFallDamageTime: number;
-}
-
-const fallData = new Map<string, FallData>();
 const previousLocations = new Map<string, Vector3>();
 import { flag, isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -32,7 +19,7 @@ system.runInterval(() => {
         if (isAdmin(player)) return;
         const { id, isOnGround }: any = player;
         const velocityY: number = player.getVelocity().y;
-        if (player.isFlying || player.isInWater) return
+        if (player.isFlying || player.isInWater || player.hasTag("matrix:joined")) return
 
         if (!isOnGround && velocityY === 0) {
             const prevLoc = previousLocations.get(id);
@@ -89,8 +76,8 @@ system.runInterval(() => {
             player.removeTag("matrix:slime")
         }
 
-        if (velocityY > 0.7 && !player.hasTag("matrix:slime")) {
-            if (velocityY % 0 === 0) return;
+        if (velocityY > config.antiFly.maxVelocityY && !player.hasTag("matrix:slime")) {
+            if (velocityY % 1 === 0) return;
             const prevLoc = previousLocations.get(id);
             flag (player, "Fly", config.antiFly.punishment, [`velocityY:${velocityY.toFixed(2)}`])
             player.teleport(prevLoc);
@@ -98,42 +85,13 @@ system.runInterval(() => {
     }
 })
 
-world.afterEvents.entityHurt.subscribe(({ hurtEntity, damageSource }) => {
-    const toggle: boolean = (world.getDynamicProperty("antiFly") ?? config.antiFly.enabled) as boolean;
-    if (toggle !== true) return;
-
-    const player = hurtEntity;
-    const damageCause = damageSource.cause;
-
-    if (!(player instanceof Player)) return
-    if (isAdmin(player)) return
-
-    if (player.isFalling && damageCause === EntityDamageCause.fall) {
-        const { id } = player;
-
-        const currentfallData = fallData.get(id) || { count: 0, lastFallDamageTime: 0 };
-        const currentTime = Date.now();
-        if (currentTime - currentfallData.lastFallDamageTime < config.antiFly.minFallInterval) {
-            currentfallData.count++;
-        } else {
-            currentfallData.count = 1;
-        }
-        currentfallData.lastFallDamageTime = currentTime;
-        fallData.set(id, currentfallData);
-
-        if (currentfallData.count >= config.antiFly.maxFallCount) {
-            const prevLoc = previousLocations.get(id);
-            if (prevLoc) {
-                player.teleport(prevLoc);
-                flag(player, "Fly", config.antiFly.punishment, ["type:Invalid Fall Damage"])
-                fallData.delete(id);
-            }
-        }
-    }
-});
-
 world.afterEvents.playerLeave.subscribe(({ playerId }) => {
     const id = playerId;
-    fallData.delete(id);
     previousLocations.delete(id);
+})
+
+world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
+    if (!initialSpawn) return;
+    player.addTag("matrix:joined")
+    system.runTimeout(() => player.removeTag("matrix:joined"), config.antiFly.skipCheck)
 })

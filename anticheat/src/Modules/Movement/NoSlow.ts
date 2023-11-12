@@ -20,6 +20,8 @@ async function antiNoSlow(player: Player) {
     const playerLastPos = lastPosition.get(player) ?? player.location;
     const velocity = player.getVelocity();
     const { x: velocityX, z: velocityZ } = velocity
+    //@ts-expect-error
+    const buffer: number = (player.noSlowBuffer ?? 0) as number;
 
     const headWeb: boolean = player.dimension.getBlock({
         x: Math.floor(player.location.x),
@@ -44,9 +46,17 @@ async function antiNoSlow(player: Player) {
         if (playerSpeed <= (0.04 + limitIncrease)) {
             lastPosition.set(player, playerLocation);
         } else {
+            //@ts-expect-error
+            player.noSlowBuffer += 1
+            if (buffer + 1 <= config.antiNoSlow.maxNoSlowBuff) return
             if (player.getEffect(MinecraftEffectTypes.Speed)) return
             flag (player, "NoSlow", config.antiNoSlow.punishment, [`playerSpeed:${playerSpeed.toFixed(2)}`])
             player.teleport(playerLastPos)
+        }
+    } else {
+        if (buffer > 0) {
+            //@ts-expect-error
+            player.noSlowBuffer = 0
         }
     }
 }

@@ -1,4 +1,4 @@
-import { system, world } from "@minecraft/server";
+import { system, world, Player } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
 import { MinecraftBlockTypes } from "@minecraft/vanilla-data";
@@ -28,18 +28,14 @@ const blockBreakData = new Map<string, number[]>();
  * it detects if a player breaks more than 5 blocks in a tick.
  */
 
-//@ts-ignore
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
+world.afterEvents.playerBreakBlock.subscribe((event) => {
     const toggle: boolean = (world.getDynamicProperty("antiNuker") ?? config.antiNuker.enabled) as boolean;
     if (toggle !== true) return;
 
     const { player, block } = event;
     if (isAdmin (player) || !toggle) return;
 
-    if (player.hasTag("matrix-break-disabled")) {
-        event.cancel = true;
-        return;
-    }
+    if (player.hasTag("matrix:break-disabled")) return
 
     const timeNow = Date.now();
 
@@ -53,18 +49,23 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     blockBreakData.set(player.id, blockBreakCount);
 
     if (blockBreakCount.length > config.antiNuker.maxBreakPerTick) {
-        event.cancel = true;
-        system.run(() => {
-            player.addTag("matrix:break-disabled");
+        player.addTag("matrix:break-disabled");
+        block.setPermutation(block.permutation.clone())
 
         //prevent the player from breaking blocks for 3 seconds
-            system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
+        system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
 
-            blockBreakData.delete(player.id);
-            flag(player, "Nuker", config.antiNuker.punishment, ["block:" + block.typeId]);
-        })
+        blockBreakData.delete(player.id);
+        flag(player, "Nuker", config.antiNuker.punishment, ["block:" + block.typeId.replace("minecraft:","")]);
     }
 });
+
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+    const player: Player = event.player;
+    if (player.hasTag("matrix:break-disabled")) {
+        event.cancel = true
+    }
+})
 
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (!initialSpawn) return;

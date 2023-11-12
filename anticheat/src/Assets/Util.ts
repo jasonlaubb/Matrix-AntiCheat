@@ -4,6 +4,7 @@ import {
     GameMode
 } from "@minecraft/server"
 import { ban } from "../Functions/moderateModel/banHandler";
+import config from "../Data/Config";
 
 export function kick (player: Player, reason?: string, by?: string) {
     player.runCommand(`kick "${player.name}" \n§2§l§¶Matrix >§4 ${player.name} §mYou have been kicked\n§fReason: §c${reason ?? 'No reason provided'}\n§fBy: §c${by ?? 'Unknown'}`)
@@ -25,11 +26,11 @@ export function flag (player: Player, modules: string, punishment?: string, info
     if (punishment !== undefined) {
         switch (punishment) {
             case "kick": {
-                kick (player, 'Unfair advantage', 'Matrix')
+                kick (player, config.punishment_kick.reason, 'Matrix')
                 break
             }
             case "ban": {
-                ban (player, "Unfair advantage", "Matrix", Date.now() + (30 * 60 * 1000))
+                ban (player, config.punishment_ban.reason, "Matrix", Date.now() + (config.punishment_ban.minutes * 60000))
                 break
             }
             default: {
