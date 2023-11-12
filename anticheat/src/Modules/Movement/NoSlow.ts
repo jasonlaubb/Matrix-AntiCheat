@@ -50,6 +50,8 @@ async function antiNoSlow(player: Player) {
             player.noSlowBuffer += 1
             if (buffer + 1 <= config.antiNoSlow.maxNoSlowBuff) return
             if (player.getEffect(MinecraftEffectTypes.Speed)) return
+            //@ts-expect-error
+            player.noSlowBuffer = 0
             flag (player, "NoSlow", config.antiNoSlow.punishment, [`playerSpeed:${playerSpeed.toFixed(2)}`])
             player.teleport(playerLastPos)
         }
