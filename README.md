@@ -26,7 +26,7 @@
 
   Supported Minecraft version: 1.20.30+
 
-  Developed by jasonlaubb, ravriv, and Rami Gamer
+  Developed by jasonlaubb, ravriv, nottinghere, Hutao999999, and Rami Gamer
 
   ---
 
