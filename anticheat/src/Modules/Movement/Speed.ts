@@ -26,7 +26,8 @@ class PlayerInfo {
 
 function getSpeedIncrease (speedEffect: Effect | undefined) {
     if (speedEffect === undefined) return 0;
-    return (speedEffect?.amplifier + 1) * 0.056;
+    if (speedEffect.amplifier < 2) return 0;
+    return (speedEffect?.amplifier - 2) * 0.056 * 72000 / 1609.34;
 }
 
 system.runInterval(() => {
