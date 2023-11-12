@@ -12,16 +12,16 @@ import { flag, isAdmin } from "../../Assets/Util.js";
  * it will detect if the player is hitting another player from a impossible angle.
  */
 
-const hitLength = new Map<string, string[]>();
+const hitLength = new Map<string, any[]>();
 
 function KillAura(damagingEntity: Player, hitEntity: Player) {
     let playerHitEntity = hitLength.get(damagingEntity.name) ?? [];
     const direction: Vector3 = calculateVector(damagingEntity.location, hitEntity.location) as Vector3;
     const distance: number = calculateMagnitude(direction);
 
-    if (!playerHitEntity.includes(hitEntity.name)) {
-        playerHitEntity.push(hitEntity.name);
-        hitLength.set(damagingEntity.name, playerHitEntity);
+    if (!playerHitEntity.includes(hitEntity.id)) {
+        playerHitEntity.push(hitEntity.id);
+        hitLength.set(damagingEntity.id, playerHitEntity);
     }
 
     if (playerHitEntity.length > config.antiKillAura.maxEntityHit && !damagingEntity.hasTag("matrix:pvp-disabled")) {
@@ -29,7 +29,7 @@ function KillAura(damagingEntity: Player, hitEntity: Player) {
         damagingEntity.addTag("matrix:pvp-disabled");
         flag (damagingEntity, 'Kill Aura', config.antiKillAura.punishment, [`HitLength:${playerHitEntity.length}`])
         system.runTimeout(() => {
-            damagingEntity.removeTag("pvp-disabled");
+            damagingEntity.removeTag("matrix:pvp-disabled");
         }, config.antiKillAura.timeout);
     }
 

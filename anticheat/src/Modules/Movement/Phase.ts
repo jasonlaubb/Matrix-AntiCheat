@@ -48,7 +48,7 @@ system.runInterval(() => {
         data.lastSolid = isSolid;
 
         if (data.lastSolid && isSolid) {
-            if(bodyBlock.typeId.includes("soul_sand") && headBlock.isSolid == false) return
+            if(bodyBlock.typeId === MinecraftBlockTypes.SoulSand && headBlock.isSolid == false) return
             flag (player, 'Phase', config.antiPhase.punishment, undefined)
             player.teleport(data.lastSafePos);
         }

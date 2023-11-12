@@ -17,7 +17,7 @@ function checksBan (player: Player): void {
 
     const baninfo: BanInfo | any = info === undefined ? undefined : JSON.parse(info as string)
 
-    const unbanListing: string[] = JSON.parse(world.getDynamicProperty("unbanListing") as string)
+    const unbanListing: string[] = JSON.parse(world.getDynamicProperty("unbanListing") as string ?? JSON.stringify([]))
 
     if (unbanListing.includes(player.name)) {
         world.setDynamicProperty("unbanListing", JSON.stringify(unbanListing.filter(name => name !== player.name)))

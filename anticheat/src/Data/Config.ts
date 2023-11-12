@@ -156,6 +156,11 @@ export default {
         punishment: undefined
     },
 
+    antiNofall: {
+        enabled: true,
+        punishment: undefined
+    },
+
     antiPhase: {
         enabled: true,
         punishment: undefined

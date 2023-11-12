@@ -4,7 +4,7 @@ import config from "../../Data/Config";
 
 const previousLocations = new Map<string, Vector3>();
 import { flag, isAdmin } from "../../Assets/Util";
-import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
  * @author ravriv & RaMiGamerDev
@@ -12,18 +12,18 @@ import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/
  */
 
 system.runInterval(() => {
-    const toggle: boolean = (world.getDynamicProperty("antiFly") ?? config.antiFly.enabled) as boolean;
+    const toggle: boolean = (world.getDynamicProperty("antiNofall") ?? config.antiNofall.enabled) as boolean;
     if (toggle !== true) return;
 
     for (const player of world.getAllPlayers()) {
         if (isAdmin(player)) return;
         const { id, isOnGround }: any = player;
-        const velocityY: number = player.getVelocity().y;
+        const velocity: Vector3 = player.getVelocity();
         if (player.isFlying || player.isInWater || player.hasTag("matrix:joined")) return
 
-        if (!isOnGround && velocityY === 0) {
+        if (!isOnGround && velocity.y === 0 && Math.hypot(velocity.x, velocity.z) > 0) {
             const prevLoc = previousLocations.get(id);
-            flag (player, "Fly", config.antiFly.punishment, ["velocityY:0"])
+            flag (player, "NoFall", config.antiNofall.punishment, ["velocityY:0"])
             player.teleport(prevLoc);
         }
     }
@@ -38,11 +38,11 @@ function seachForSlimeBlock (dimension: Dimension, location: Vector3) {
         z: Math.floor(location.z)
     } as Vector3
 
-    return index.some(x => index.some(y => index.some(z => {
+    return index.some(x => index.some(y => index.some(z => 
         dimension.getBlock({
             x: floorPos.x + x, y: floorPos.y + y, z: floorPos.z + z
-        }).typeId === MinecraftBlockTypes.Slime
-    })))
+        })?.typeId === MinecraftBlockTypes.Slime
+    )))
     
 }
 
@@ -60,20 +60,27 @@ system.runInterval(() => {
         if (playerPrevPos === undefined || player.isOnGround && velocityY === 0 || velocityY < 0 && player.location.y < previousLocations.get(id)?.y) {
             previousLocations.set(id, player.location);
         }
+
+        if (player.hasTag("matrix:knockback") && velocityY <= 0) {
+            player.removeTag("matrix:knockback")
+        }
+
         //@ts-expect-error
         if ((player.threwTridentAt && now - player.threwTridentAt < 2000) || (player.lastExplosionTime && now - player.lastExplosionTime < 2000)) return;
-        if (player.isInWater || player.isGliding) return;
+        if (player.hasTag("matrix:knockback") || player.isInWater || player.isGliding || (player.isOnGround && velocityY === 0)) return;
+
+        const jumpBoostEffect = player.getEffect(MinecraftEffectTypes.JumpBoost)?.amplifier ?? 0
+
+        if (jumpBoostEffect >= 4) return;
 
         const didFindSlime: boolean = seachForSlimeBlock (player.dimension, player.location)
 
         if (didFindSlime) {
             player.addTag("matrix:slime")
         } else {
-            player.removeTag("matrix:slime")
-        }
-
-        if (didFindSlime && player.isFalling) {
-            player.removeTag("matrix:slime")
+            if (velocityY <= 0) {
+                player.removeTag("matrix:slime")
+            }
         }
 
         if (velocityY > config.antiFly.maxVelocityY && !player.hasTag("matrix:slime")) {

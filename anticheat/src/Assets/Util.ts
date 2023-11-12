@@ -18,9 +18,9 @@ function formatInformation (arr: string[]) {
     return formattedArr.join("\n");
 }
 export function flag (player: Player, modules: string, punishment?: string, infos?: string[]) {
-    world.sendMessage(`§2§l§¶Matrix >§4 ${player.name}§m has been detected using ${modules}`);
+    world.getPlayers({ tags: ["matrix:notify"]}).forEach(players => players.sendMessage(`§2§l§¶Matrix >§4 ${player.name}§m has been detected using ${modules}`));
     if (infos !== undefined) {
-        world.sendMessage(`${formatInformation(infos)}`)
+        world.getPlayers({ tags: ["matrix:notify"]}).forEach(players => players.sendMessage(`${formatInformation(infos)}`))
     }
 
     if (punishment !== undefined) {

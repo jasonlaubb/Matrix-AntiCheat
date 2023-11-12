@@ -28,7 +28,7 @@ const AutoClicker = (player: Player) => {
 
     const cps: number = filteredClicks.length;
 
-    if (cps > config.antiAutoClicker.maxClicksPerSecond && !player.hasTag("matrix:pvp-disabled")) {
+    if (!player.hasTag("matrix:pvp-disabled") && cps > config.antiAutoClicker.maxClicksPerSecond) {
         flag (player, 'Auto Clicker', config.antiAutoClicker.punishment, [`Click Per Second:${cps.toFixed(0)}`])
         player.applyDamage(6);
         player.addTag("matrix:pvp-disabled");
@@ -52,6 +52,12 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity }) => {
     AutoClicker(damagingEntity);
 });
 
+world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
+    if (!initialSpawn) return;
+    if (player.hasTag("matrix:pvp-disabled")) {
+        player.removeTag("matrix:pvp-disabled");
+    }
+})
 world.afterEvents.playerLeave.subscribe(({ playerId }) => {
     clickData.delete(playerId);
 })

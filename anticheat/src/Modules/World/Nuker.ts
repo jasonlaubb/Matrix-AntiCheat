@@ -1,7 +1,7 @@
 import { system, world, Player } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
-import { MinecraftBlockTypes } from "@minecraft/vanilla-data";
+import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 const fastBrokenBlocks = new Set(["minecraft:yellow_flower", "minecraft:red_flower", "minecraft:double_plant",
 "minecraft:wither_rose", "minecraft:tallgrass", "minecraft:hanging_roots", "minecraft:leaves",
@@ -35,7 +35,11 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
     const { player, block } = event;
     if (isAdmin (player) || !toggle) return;
 
-    if (player.hasTag("matrix:break-disabled")) return
+    if (player.hasTag("matrix:break-disabled")) {
+        block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => { item.kill() })
+        block.setPermutation(block.permutation.clone())
+        return
+    }
 
     const timeNow = Date.now();
 
@@ -50,6 +54,7 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
 
     if (blockBreakCount.length > config.antiNuker.maxBreakPerTick) {
         player.addTag("matrix:break-disabled");
+        block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => { item.kill() })
         block.setPermutation(block.permutation.clone())
 
         //prevent the player from breaking blocks for 3 seconds
