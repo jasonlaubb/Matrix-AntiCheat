@@ -10,7 +10,7 @@ import config from "../../Data/Config";
 
 function getSpeedIncrease (speedEffect: Effect | undefined) {
     if (speedEffect === undefined) return 0;
-    return (speedEffect?.amplifier + 1) * 0.056 * 0.85;
+    return (speedEffect?.amplifier + 1) * 0.0476;
 }
 
 const lastPosition = new Map();
