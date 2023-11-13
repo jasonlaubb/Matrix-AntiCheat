@@ -1,4 +1,9 @@
-import { system, world, Player } from "@minecraft/server";
+import {
+    Block,
+    Player,
+    system,
+    world
+} from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -28,18 +33,8 @@ const blockBreakData = new Map<string, number[]>();
  * it detects if a player breaks more than 5 blocks in a tick.
  */
 
-world.afterEvents.playerBreakBlock.subscribe((event) => {
-    const toggle: boolean = (world.getDynamicProperty("antiNuker") ?? config.antiNuker.enabled) as boolean;
-    if (toggle !== true) return;
-
-    const { player, block } = event;
-    if (isAdmin (player) || !toggle) return;
-
-    if (player.hasTag("matrix:break-disabled")) {
-        block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => { item.kill() })
-        block.setPermutation(block.permutation.clone())
-        return
-    }
+async function antiNuker (player: Player, block: Block) {
+    if (player.hasTag("matrix:break-disabled")) return;
 
     const timeNow = Date.now();
 
@@ -63,10 +58,29 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
         blockBreakData.delete(player.id);
         flag(player, "Nuker", config.antiNuker.punishment, ["block:" + block.typeId.replace("minecraft:","")]);
     }
+}
+
+world.afterEvents.playerBreakBlock.subscribe((event) => {
+    const toggle: boolean = (world.getDynamicProperty("antiNuker") ?? config.antiNuker.enabled) as boolean;
+    if (toggle !== true) return;
+
+    const { player, block } = event;
+    if (isAdmin (player)) return;
+
+    antiNuker (player, block)
 });
 
+world.afterEvents.playerBreakBlock.subscribe((event) => {
+    const { player, block } = event
+
+    if (player.hasTag("matrix:break-disabled")) {
+        block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => { item.kill() })
+        block.setPermutation(block.permutation.clone())
+    }
+})
+
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    const player: Player = event.player;
+    const { player } = event
     if (player.hasTag("matrix:break-disabled")) {
         event.cancel = true
     }

@@ -11,6 +11,7 @@ export default {
      * @description
      * The setting for our functions
      */
+    flagMode: "tag",
     commands: {
         password: "password", // The password for op command
         prefix: "-", // The prefix of commands
@@ -49,7 +50,17 @@ export default {
             adminOnly: true,
             requireTag: undefined
         },
+        flagmode: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
         rank: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        rankclear: {
             enabled: true,
             adminOnly: true,
             requireTag: undefined
@@ -202,6 +213,20 @@ export default {
         maxCharacterLimit: 200,
         kickThreshold: 3,
         timeout: 200,
+        punishment: undefined
+    },
+
+    antiBlockReach: {
+        enabled: true,
+        maxPlaceDistance: 6.3,
+        maxBreakDistance: 5.8,
+        timeout: 60
+    },
+
+    antiAim: {
+        enabled: true,
+        maxRotSpeed: 15,
+        timeout: 50,
         punishment: undefined
     },
 

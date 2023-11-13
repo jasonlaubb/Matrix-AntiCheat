@@ -18,7 +18,7 @@ const clickData: Map<string, ClickData> = new Map<string, ClickData>();
  * it will detect if the player is clicking more than 22 times per second.
  */
 
-const AutoClicker = (player: Player) => {
+async function AutoClicker (player: Player) {
     const currentTime: number = Date.now();
     const { id } = player;
     const { clicks } = clickData.get(id) || { clicks: [] };
@@ -45,10 +45,8 @@ const AutoClicker = (player: Player) => {
 world.afterEvents.entityHitEntity.subscribe(({ damagingEntity }) => {
     const toggle: boolean = (world.getDynamicProperty("antiAutoClicker") ?? config.antiAutoClicker.enabled) as boolean;
 
-    if (!(damagingEntity instanceof Player) || toggle !== true) {
-        return;
-    }
-    if (isAdmin (damagingEntity)) return
+    if ( toggle !== true || !(damagingEntity instanceof Player) || isAdmin (damagingEntity as Player)) return;
+
     AutoClicker(damagingEntity);
 });
 

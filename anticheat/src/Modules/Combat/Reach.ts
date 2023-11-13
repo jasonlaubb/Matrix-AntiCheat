@@ -33,13 +33,7 @@ function calculateDistance(b1: Entity, b2: Entity) {
     return distance;
 }
 
-world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity }) => {
-    const toggle: boolean = (world.getDynamicProperty("antiReach") ?? config.antiReach.enabled) as boolean;
-    if (toggle !== true) return;
-    if (damageSource.cause !== EntityDamageCause.entityAttack) return
-    const damagingEntity = damageSource.damagingEntity;
-    if (!(damagingEntity instanceof Player) || !(hurtEntity instanceof Player)) return;
-    if (isAdmin (damagingEntity)) return
+async function AntiReach (hurtEntity: Player, damagingEntity: Player) {
     const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y)
 
     let maximumYReach: number = config.antiReach.maxYReach
@@ -65,10 +59,20 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity }) => {
     }
 
     if (reachData.get(damagingEntity.id) >= 2) {
-        flag(damagingEntity, 'Reach', config.antiReach.punishment, ["distance:" + distance, "yReach:" + yReach])
+        flag(damagingEntity, 'Reach', config.antiReach.punishment, ["distance:" + distance.toFixed(2), "yReach:" + yReach.toFixed(2)])
         damagingEntity.applyDamage(6);
         reachData.delete(damagingEntity.id);
     }
+}
+
+world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity }) => {
+    const toggle: boolean = (world.getDynamicProperty("antiReach") ?? config.antiReach.enabled) as boolean;
+    if (toggle !== true) return;
+
+    const damagingEntity: Entity = damageSource.damagingEntity;
+    if (damageSource.cause !== EntityDamageCause.entityAttack || !(damagingEntity instanceof Player) || !(hurtEntity instanceof Player) || isAdmin (damagingEntity)) return;
+
+    AntiReach(hurtEntity, damagingEntity);
 });
 
 world.afterEvents.playerLeave.subscribe(({ playerId }) => {

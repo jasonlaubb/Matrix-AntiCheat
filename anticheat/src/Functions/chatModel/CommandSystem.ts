@@ -110,6 +110,14 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             world.setDynamicProperty("password", newPassword)
             break
         }
+        case "flagmode": {
+            if (!Command.new(player, config.commands.flagmode as Cmds)) return
+            const mode: string = regax[1]
+            if (mode === undefined || !(new Set(["all", "tag", "bypass", "admin"]).has(mode))) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown action, please use all/tag/bypass/admin only`))
+            world.setDynamicProperty("flagMode", mode)
+            system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Flag mode has been set to ${mode}`))
+            break
+        }
         case "rank": {
             if (!Command.new(player, config.commands.rank as Cmds)) return
             if (regax[1] === undefined || !(new Set(["set", "add", "remove"]).has(regax[1]))) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown action, please use set/add/remove only`))
@@ -154,6 +162,23 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                     }
                     break
                 }
+            }
+            break
+        }
+        case "rankclear": {
+            if (!Command.new(player, config.commands.rankclear as Cmds)) return
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please specify the player`))
+            const target = world.getPlayers({ name: regax[1] })[0]
+            if (target === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown player`))
+
+            const ranks: string[] = target.getTags().filter(tag => tag.startsWith("rank:"))
+            if (ranks.length > 0) {
+                system.run(() => {
+                    ranks.forEach(rank => target.removeTag(rank))
+                    player.sendMessage(`§2§l§¶Matrix >§4 ${target.name}'s rank has been cleared`)
+                })
+            } else {
+                system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 ${target.name} doesn't have any rank`))
             }
             break
         }

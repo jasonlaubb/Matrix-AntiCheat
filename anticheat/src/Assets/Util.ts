@@ -13,17 +13,35 @@ export function kick (player: Player, reason?: string, by?: string) {
 function formatInformation (arr: string[]) {
     const formattedArr: string[] = arr.map(item => {
       const [key, value] = item.split(":");
-      return `§l§¶${key}:§c ${value}`;
+      return `§l§¶${key}:§c ${value}§r`;
     });
     return formattedArr.join("\n");
 }
 export function flag (player: Player, modules: string, punishment?: string, infos?: string[]) {
-    world.getPlayers({ tags: ["matrix:notify"]}).forEach(players => players.sendMessage(`§2§l§¶Matrix >§4 ${player.name}§m has been detected using ${modules}`));
-    if (infos !== undefined) {
-        world.getPlayers({ tags: ["matrix:notify"]}).forEach(players => players.sendMessage(`${formatInformation(infos)}`))
-    }
+    let flagMsg = `§2§l§¶Matrix >§4 ${player.name}§m has failed to use ${modules}`
+    if (infos !== undefined) flagMsg = flagMsg + "\n" + formatInformation(infos)
 
-    if (punishment !== undefined) {
+    const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode
+    switch (flagMode) {
+        case "tag": {
+            world.getPlayers({ tags: ["matrix:notify"]}).forEach(players => players.sendMessage(flagMsg))
+            break
+        }
+        case "bypass": {
+            world.getPlayers({ excludeNames: [player.name] }).forEach(players => players.sendMessage(flagMsg))
+            break
+        }
+        case "admin": {
+            world.getAllPlayers().filter(players => isAdmin(players)).forEach(players => players.sendMessage(flagMsg))
+            break
+        }
+        default: {
+            world.sendMessage(flagMsg)
+            break
+        }
+    }
+    
+    if (punishment) {
         switch (punishment) {
             case "kick": {
                 kick (player, config.punishment_kick.reason, 'Matrix')
@@ -34,17 +52,17 @@ export function flag (player: Player, modules: string, punishment?: string, info
                 break
             }
             default: {
-                //nothing here :p
+                break
             }
         }
     }
 }
 
 export function msToTime (ms: number) {
-    const seconds = Math.floor((ms / 1000) % 60);
-    const minutes = Math.floor((ms / (1000 * 60)) % 60);
-    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    const seconds = Math.trunc((ms / 1000) % 60);
+    const minutes = Math.trunc((ms / 60000) % 60);
+    const hours = Math.trunc((ms / 3600000) % 24);
+    const days = Math.trunc(ms / 86400000);
 
     return { days, hours, minutes, seconds };
 }
@@ -66,9 +84,9 @@ export function isAdmin (player: Player) {
 
 export function timeToMs(timeStr: string) {
     const timeUnits = {
-        d: 24 * 60 * 60 * 1000,
-        h: 60 * 60 * 1000,
-        m: 60 * 1000,
+        d: 86400000,
+        h: 3600000,
+        m: 60000,
         s: 1000
     };
 

@@ -5,12 +5,12 @@ import {
     Effect
 } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { flag } from "../../Assets/Util";
+import { flag, isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
 
 function getSpeedIncrease (speedEffect: Effect | undefined) {
     if (speedEffect === undefined) return 0;
-    return (speedEffect?.amplifier + 1) * 0.0476;
+    return (speedEffect?.amplifier + 1) * 0.0476
 }
 
 const lastPosition = new Map();
@@ -68,6 +68,7 @@ system.runInterval(() => {
     if (toggle !== true) return;
 
     for (const player of world.getAllPlayers()) {
+        if (isAdmin (player)) continue;
         antiNoSlow(player);
     }
-})
+}, 1)

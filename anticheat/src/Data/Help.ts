@@ -6,10 +6,12 @@ export function helpList (p: string): string {
         `§g${p}op <player> - Give player admin permission`,
         `§g${p}deop <player> - Remove player's admin permission`,
         `§g${p}passwords <oldPassword> <newPassword> - Change the password`,
+        `§g${p}flagmode <all/tag/bypass/admin> - Change the flag mode`,
         `§g${p}rank <set/add/remove> <player> <rank> - Change the rank on a player`,
+        `§g${p}rankclear <player> - Clear all rank on a player`,
         `§g${p}defaultrank <rank> - Change the default rank`,
         `§g${p}showallrank <true/false> - Show all rank in chat`,
-        `§g${p}ban <player> <time> <reason> - Ban a player`,
+        `§g${p}ban <player> <reason> <timeRegax/forever> - Ban a player`,
         `§g${p}unban <player> - Unban a player`,
         `§g${p}unbanremove <player> - Remove a player from unban queue`,
         `§g${p}unbanlist - Show all player in unban queue`,
@@ -37,5 +39,7 @@ export const validModules: string[] = [
     "antiSpeed",
     "antiNuker",
     "antiNoSlow",
-    "antiNofall"
+    "antiNofall",
+    "antiBlockReach",
+    "antiAim"
 ]

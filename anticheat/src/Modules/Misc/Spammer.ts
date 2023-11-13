@@ -1,7 +1,8 @@
 import {
     world,
     system,
-    Player
+    Player,
+    ChatSendBeforeEvent
 } from "@minecraft/server";
 import config from "../../Data/Config.js";
 import { flag, isAdmin, kick } from "../../Assets/Util.js";
@@ -21,11 +22,11 @@ class Data {
 const previousMessage: Map<string, string> = new Map<string, string>();
 const spamData: Map<string, Data> = new Map<string, Data>();
 
-const checkSpam = (player: Player, behavior: string) => {
+function checkSpam (player: Player, behavior: string) {
     system.run(() => flag (player, "Spammer", config.antiSpam.punishment, [`behavior:${behavior}`]));
 };
 
-const antiSpam = (player: Player, data: Data) => {
+async function antiSpam (player: Player, data: Data) {
     data.warnings++;
 
     if (data.warnings <= config.antiSpam.kickThreshold) {
@@ -67,14 +68,28 @@ function antiSpamModule (message: string, player: Player) {
     return isSpamming;
 };
 
-world.beforeEvents.chatSend.subscribe(({
-    message,
-    sender: player
-}) => {
+async function AntiSpam (event: ChatSendBeforeEvent, player: Player, message: string) {
+    if (config.blacklistedMessages.some((word) => message.includes(word))) {
+        event.cancel = true;
+        //@ts-expect-error
+        let warningTime: number = player.blacklistMsgWarn ?? 0;
+        warningTime++
+        //@ts-expect-error
+        player.blacklistMsgWarn = warningTime;
+        if (warningTime < 2) {
+            system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Blacklisted message, warning (${warningTime}/2)`));
+            return;
+        }
+        system.run(() => {
+          kick(player, 'blacklisted message', 'Matrix')
+          world.sendMessage(`§2§l§¶Matrix >§4 ${player.name}§m has been kicked for saying ${message} a blacklisted message`);
+        })
+        return;
+    } else {
+        //@ts-expect-error
+        player.blacklistMsgWarn = 0;
+    }
     system.run(() => {
-        const toggle: boolean = (world.getDynamicProperty("antiSpam") ?? config.antiSpam.enabled) as boolean;
-        if (toggle !== true || isAdmin (player)) return;
-
         const data: Data = spamData.get(player.id) || {
             lastMessageTimes: [],
             warnings: 0
@@ -82,12 +97,6 @@ world.beforeEvents.chatSend.subscribe(({
 
         if (player.hasTag('matrix:attack_time') && !player.getEffect("mining_fatigue")) checkSpam(player, "sending messages while swinging their hand");
         if (player.hasTag('matrix:using_item')) checkSpam(player, "sending messages while using an item");
-
-        if (config.blacklistedMessages.some((word) => message.includes(word))) {
-            kick(player, 'blacklisted message', 'Matrix')
-            world.sendMessage(`§2§l§¶Matrix >§4 ${player.name}§m has been kicked for saying ${message} a blacklisted message`);
-            return;
-        }
 
         const currentTime: number = Date.now();
         data.lastMessageTimes.push(currentTime);
@@ -103,6 +112,15 @@ world.beforeEvents.chatSend.subscribe(({
 
         spamData.set(player.id, data);
     })
+}
+
+world.beforeEvents.chatSend.subscribe(event => {
+    const { sender: player, message } = event;
+
+    const toggle: boolean = (world.getDynamicProperty("antiSpam") ?? config.antiSpam.enabled) as boolean;
+    if (toggle !== true || isAdmin (player)) return;
+
+    AntiSpam (event, player, message)
 });
 
 world.afterEvents.playerLeave.subscribe(({ playerId }) => {
