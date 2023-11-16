@@ -12,6 +12,7 @@ export default {
      * The setting for our functions
      */
     flagMode: "tag",
+    lockdowncode: "AbCdEfGh",
     commands: {
         password: "password", // The password for op command
         prefix: "-", // The prefix of commands
@@ -114,6 +115,46 @@ export default {
             enabled: true,
             adminOnly: true,
             requireTag: undefined
+        },
+        vanish: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        unvanish: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        invcopy: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        invsee: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        echestwipe: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        lockdowncode: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        lockdown: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        unlock: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
         }
     },
     /** 
@@ -134,15 +175,19 @@ export default {
     },
     chatRank: {
         enabled: true,
-        defaultRank: "§gMember",
+        defaultRank: "§pMember",
         showAllRank: true
+    },
+    dimensionLock: {
+        enabled: false
     },
 
     antiAutoClicker: {
         enabled: true,
         maxClicksPerSecond: 22,
         timeout: 200,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 4
     },
 
     antiKillAura: {
@@ -150,44 +195,51 @@ export default {
         minAngle: 120,
         timeout: 200,
         maxEntityHit: 1,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 1
     },
 
     antiReach: {
         enabled: true,
         maxReach: 3.7,
         maxYReach: 4.8,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 1
     },
 
     antiFly: {
         enabled: true,
         maxVelocityY: 0.7,
         skipCheck: 100,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 4
     },
 
     antiNofall: {
         enabled: true,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 4
     },
 
     antiPhase: {
         enabled: true,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 2
     },
 
     antiSpeed: {
         enabled: true,
         mphThreshold: 150,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 2
     },
 
     antiNuker: {
         enabled: true,
         maxBreakPerTick: 5,
         timeout: 100,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 2
     },
 
     antiScaffold: {
@@ -196,14 +248,16 @@ export default {
         maxAngle: 95,
         factor: 1,
         minRotation: 34.98,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 2
     },
 
     antiNoSlow: {
         enabled: true,
         maxSpeedTherehold: 0.04,
         maxNoSlowBuff: 1,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 2
     },
 
     antiSpam: {
@@ -213,21 +267,33 @@ export default {
         maxCharacterLimit: 200,
         kickThreshold: 3,
         timeout: 200,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 4
     },
 
     antiBlockReach: {
         enabled: true,
         maxPlaceDistance: 6.3,
         maxBreakDistance: 5.8,
-        timeout: 60
+        timeout: 60,
+        punishment: undefined,
+        maxVL: 2,
     },
 
     antiAim: {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: undefined
+        punishment: undefined,
+        maxVL: 2
+    },
+
+    antiTower: {
+        enabled: true,
+        minDelay: 200,
+        timeout: 60,
+        punishment: undefined,
+        maxVL: 2
     },
 
     chatFilter: [
@@ -249,6 +315,7 @@ export default {
         "https://",
         "http://",
         "the best minecraft bedrock utility mod",
+        "horion",
         "disepi/ambrosial"
     ]
 }

@@ -29,7 +29,7 @@ async function AutoClicker (player: Player) {
     const cps: number = filteredClicks.length;
 
     if (!player.hasTag("matrix:pvp-disabled") && cps > config.antiAutoClicker.maxClicksPerSecond) {
-        flag (player, 'Auto Clicker', config.antiAutoClicker.punishment, [`Click Per Second:${cps.toFixed(0)}`])
+        flag (player, 'Auto Clicker', config.antiAutoClicker.maxVL,config.antiAutoClicker.punishment, [`Click Per Second:${cps.toFixed(0)}`])
         player.applyDamage(6);
         player.addTag("matrix:pvp-disabled");
 

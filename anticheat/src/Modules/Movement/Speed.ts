@@ -4,12 +4,11 @@ import {
     Vector3,
     GameMode,
     Player,
-    EntityDamageCause,
     Effect
 } from "@minecraft/server";
 import config from "../../Data/Config.js";
 import { flag, isAdmin } from "../../Assets/Util.js";
-import { MinecraftEffectTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index.js";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index.js";
 
 const speedData = new Map();
 
@@ -38,7 +37,7 @@ async function antiSpeed (player: Player, now: number) {
     } else if (isSpeeding) {
         if (!playerInfo.highestSpeed) {
             player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
-            flag (player, 'Speed', config.antiSpeed.punishment, [`Miles Per Hour:${playerSpeedMph.toFixed(2)}`])
+            flag (player, 'Speed', config.antiSpeed.maxVL,config.antiSpeed.punishment, [`Mph:${playerSpeedMph.toFixed(2)}`])
             player.applyDamage(6);
             playerInfo.highestSpeed = playerSpeedMph;
         }
@@ -69,22 +68,6 @@ system.runInterval(() => {
         antiSpeed (player, now);
     }
 }, 2);
-
-world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
-    if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
-        //@ts-expect-error
-        player.threwTridentAt = Date.now();
-    }
-});
-
-world.afterEvents.entityHurt.subscribe(event => {
-    const player = event.hurtEntity;
-    if (player instanceof Player && (event.damageSource.cause == EntityDamageCause.blockExplosion || event.damageSource.cause == EntityDamageCause.entityExplosion || event.damageSource.cause === EntityDamageCause.entityAttack)) {
-        player.addTag("matrix:knockback");
-        //@ts-expect-error
-        player.lastExplosionTime = Date.now();
-    }
-});
 
 world.afterEvents.playerLeave.subscribe(({ playerId }) => {
     speedData.delete(playerId);

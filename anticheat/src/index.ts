@@ -2,7 +2,7 @@
  * @author jasonlaubb
  * @contributors ravriv, Hutao999999, RaMiGamerDev, notthinghere
  * @license AGPLv3
- * @github https://github.com/jasonlaubb/Matrix-AntiCheat
+ * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
 
 import "./Modules/Combat/Auto Clicker"
@@ -20,6 +20,7 @@ import "./Modules/Movement/NoSlow"
 
 import "./Modules/World/Nuker"
 import "./Modules/World/Scaffold"
+import "./Modules/World/Tower"
 
 import "./Modules/Player/BlockReach"
 
@@ -27,3 +28,6 @@ import "./Functions/chatModel/ChatHandler"
 
 import "./Functions/moderateModel/banHandler"
 import "./Functions/moderateModel/freezeHandler"
+import "./Functions/moderateModel/eventHandler"
+import "./Functions/moderateModel/dimensionLock"
+import "./Functions/moderateModel/lockDown"

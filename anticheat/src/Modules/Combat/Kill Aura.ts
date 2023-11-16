@@ -1,4 +1,5 @@
-import { world,
+import {
+    world,
     system,
     Player,
     Vector3
@@ -27,7 +28,7 @@ async function KillAura(damagingEntity: Player, hitEntity: Player) {
     if (playerHitEntity.length > config.antiKillAura.maxEntityHit && !damagingEntity.hasTag("matrix:pvp-disabled")) {
         hitLength.delete(damagingEntity.name);
         damagingEntity.addTag("matrix:pvp-disabled");
-        flag (damagingEntity, 'Kill Aura', config.antiKillAura.punishment, [`HitLength:${playerHitEntity.length}`])
+        flag (damagingEntity, 'Kill Aura', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`HitLength:${playerHitEntity.length}`])
         system.runTimeout(() => {
             damagingEntity.removeTag("matrix:pvp-disabled");
         }, config.antiKillAura.timeout);
@@ -38,7 +39,7 @@ async function KillAura(damagingEntity: Player, hitEntity: Player) {
     const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getRotation().y);
 
     if (angle > config.antiKillAura.minAngle) {
-        flag (damagingEntity, 'Kill Aura', config.antiKillAura.punishment, [`Angle:${angle.toFixed(2)}°`])
+        flag (damagingEntity, 'Kill Aura', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`Angle:${angle.toFixed(2)}°`])
 
         damagingEntity.addTag("matrix:pvp-disabled");
         system.runTimeout(() => {
@@ -62,7 +63,11 @@ function calculateMagnitude({ x, y, z }: Vector3) {
     return Math.sqrt(x ** 2 + y ** 2 + z ** 2);
 }
 
-const calculateAngle = (pos1: Vector3, pos2: Vector3, rotation: number = -90) => (Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - rotation - 90 + 360) % 360;
+function calculateAngle (pos1: Vector3, pos2: Vector3, rotation = -90) {
+    let angle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - rotation - 90;
+    angle = angle <= -180 ? angle += 360 : angle
+    return Math.abs(angle)
+}
 
 world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
     const toggle = (world.getDynamicProperty("antiKillAura") ?? config.antiKillAura.enabled) as boolean;

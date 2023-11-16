@@ -1,24 +1,79 @@
 import {
     world,
     Player,
-    GameMode
+    GameMode,
+    EntityInventoryComponent,
+    ItemEnchantsComponent,
+    EntityDamageCause
 } from "@minecraft/server"
 import { ban } from "../Functions/moderateModel/banHandler";
 import config from "../Data/Config";
+import { triggerEvent } from "../Functions/moderateModel/eventHandler";
+import { MinecraftItemTypes, MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+
+world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
+    if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
+        const getItemInSlot = (
+            player.getComponent(
+                EntityInventoryComponent.componentId
+            ) as EntityInventoryComponent
+        ).container.getItem(player.selectedSlot);
+        if (getItemInSlot === undefined) return;
+        const getEnchantment = (
+            getItemInSlot.getComponent(
+                ItemEnchantsComponent.componentId
+            ) as ItemEnchantsComponent
+        ).enchantments;
+        if (getItemInSlot.typeId == MinecraftItemTypes.Trident) {
+            const checkRipTide = getEnchantment.hasEnchantment(
+                MinecraftEnchantmentTypes.Riptide
+            );
+            if (checkRipTide) {
+                //@ts-expect-error
+                player.threwTridentAt = Date.now();
+            }
+        }
+    }
+});
+
+world.afterEvents.entityHurt.subscribe(event => {
+    const player = event.hurtEntity;
+    if (player instanceof Player && (event.damageSource.cause == EntityDamageCause.blockExplosion || event.damageSource.cause == EntityDamageCause.entityExplosion || event.damageSource.cause === EntityDamageCause.entityAttack)) {
+        //@ts-expect-error
+        player.lastExplosionTime = Date.now();
+    }
+});
 
 export function kick (player: Player, reason?: string, by?: string) {
-    player.runCommand(`kick "${player.name}" \n§2§l§¶Matrix >§4 ${player.name} §mYou have been kicked\n§fReason: §c${reason ?? 'No reason provided'}\n§fBy: §c${by ?? 'Unknown'}`)
+    try {
+        player.runCommand(`kick "${player.name}" \n§2§l§¶Matrix >§4 ${player.name} §mYou have been kicked\n§fReason: §c${reason ?? 'No reason provided'}\n§fBy: §c${by ?? 'Unknown'}`)
+    } catch {
+        triggerEvent (player, "matrix:kick")
+    }
 }
 
 function formatInformation (arr: string[]) {
     const formattedArr: string[] = arr.map(item => {
       const [key, value] = item.split(":");
-      return `§l§¶${key}:§c ${value}§r`;
+      return `§r§l§¶${key}:§c ${value}§r`;
     });
     return formattedArr.join("\n");
 }
-export function flag (player: Player, modules: string, punishment?: string, infos?: string[]) {
-    let flagMsg = `§2§l§¶Matrix >§4 ${player.name}§m has failed to use ${modules}`
+
+let Vl: any = {};
+
+export function flag (player: Player, modules: string, maxVL: number,  punishment?: string, infos?: string[]) {
+    if (Vl[player.id] === undefined) {
+        Vl[player.id] = {}
+    }
+    if (Vl[player.id][modules] === undefined) {
+        Vl[player.id][modules] = 0
+    }
+
+    let vl = ++Vl[player.id][modules]
+    if (vl > 99) vl = 99
+
+    let flagMsg = `§2§l§¶Matrix >§4 ${player.name}§m has failed ${modules}§r §7[§cx${vl}§7]§r`
     if (infos !== undefined) flagMsg = flagMsg + "\n" + formatInformation(infos)
 
     const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode
@@ -41,19 +96,25 @@ export function flag (player: Player, modules: string, punishment?: string, info
         }
     }
     
-    if (punishment) {
+    if (punishment && vl > maxVL) {
+        let punishmentDone = false
         switch (punishment) {
             case "kick": {
+                punishmentDone = true
                 kick (player, config.punishment_kick.reason, 'Matrix')
                 break
             }
             case "ban": {
+                punishmentDone = true
                 ban (player, config.punishment_ban.reason, "Matrix", Date.now() + (config.punishment_ban.minutes * 60000))
                 break
             }
             default: {
                 break
             }
+        }
+        if (punishmentDone) {
+            Vl[player.id][modules] = 0
         }
     }
 }
@@ -76,6 +137,24 @@ export function isTargetGamemode (player: Player, gamemode: number) {
     ]
 
     return world.getPlayers({ name: player.name, gameMode: gamemodes[gamemode] }).length > 0
+}
+
+export function getGamemode (playerName: string) {
+    const gamemodes: GameMode[] = [
+        GameMode.survival,
+        GameMode.creative,
+        GameMode.adventure,
+        GameMode.spectator
+    ]
+
+    for (let i = 0; i < 4; i++) {
+        if (world.getPlayers({
+            name: playerName,
+            gameMode: gamemodes[i]
+        }).length > 0) return i
+    }
+
+    return 0
 }
 
 export function isAdmin (player: Player) {

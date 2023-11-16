@@ -31,17 +31,17 @@ async function antiScaffold (player: Player, block: Block) {
 
     if ((rotation.x % factor === 0 || rotation.y % factor === 0) && Math.abs(rotation.x) !== 90) {
         detected = true
-        flag (player, 'Scaffold', config.antiScaffold.punishment, [`RotationX:${rotation.x.toFixed(2)}°`, `RotationY:${rotation.y.toFixed(2)}°`])
+        flag (player, 'Scaffold', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`RotationX:${rotation.x.toFixed(2)}°`, `RotationY:${rotation.y.toFixed(2)}°`])
     }
 
     if (angle > config.antiScaffold.maxAngle && Vector.distance({ x: pos1.x, y: 0, z: pos1.z }, { x: pos2.x, y: 0, z: pos2.z }) > 1.5 && Math.abs(rotation.x) < 69.5) {
         detected = true;
-        flag (player, 'Scaffold', config.antiScaffold.punishment, [`Angle:${angle.toFixed(2)}°`])
+        flag (player, 'Scaffold', config.antiScaffold.maxVL,  config.antiScaffold.punishment, [`Angle:${angle.toFixed(2)}°`])
     }
 
     if (rotation.x < config.antiScaffold.minRotation && isUnderPlayer(player.location, block.location)) {
         detected = true;
-        flag (player, 'Scaffold', config.antiScaffold.punishment, [`RotationX:${rotation.x.toFixed(2)}°`])
+        flag (player, 'Scaffold', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`RotationX:${rotation.x.toFixed(2)}°`])
     }
 
     if (detected) {
@@ -67,7 +67,11 @@ world.afterEvents.playerPlaceBlock.subscribe(({ block, player }) => {
     antiScaffold (player, block)
 });
 
-const calculateAngle = (pos1: Vector3, pos2: Vector3, rotation: number = -90) => (Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - rotation - 90 + 360) % 360;
+function calculateAngle (pos1: Vector3, pos2: Vector3, rotation = -90) {
+    let angle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - rotation - 90;
+    angle = angle <= -180 ? angle += 360 : angle
+    return Math.abs(angle);
+}
 
 world.beforeEvents.playerPlaceBlock.subscribe(event => {
     const { player } = event;

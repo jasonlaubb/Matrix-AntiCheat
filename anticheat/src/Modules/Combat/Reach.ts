@@ -59,7 +59,7 @@ async function AntiReach (hurtEntity: Player, damagingEntity: Player) {
     }
 
     if (reachData.get(damagingEntity.id) >= 2) {
-        flag(damagingEntity, 'Reach', config.antiReach.punishment, ["distance:" + distance.toFixed(2), "yReach:" + yReach.toFixed(2)])
+        flag(damagingEntity, 'Reach', config.antiReach.maxVL,config.antiReach.punishment, ["distance:" + distance.toFixed(2), "yReach:" + yReach.toFixed(2)])
         damagingEntity.applyDamage(6);
         reachData.delete(damagingEntity.id);
     }

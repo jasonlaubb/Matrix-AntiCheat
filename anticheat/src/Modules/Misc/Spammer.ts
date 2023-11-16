@@ -23,7 +23,7 @@ const previousMessage: Map<string, string> = new Map<string, string>();
 const spamData: Map<string, Data> = new Map<string, Data>();
 
 function checkSpam (player: Player, behavior: string) {
-    system.run(() => flag (player, "Spammer", config.antiSpam.punishment, [`behavior:${behavior}`]));
+    system.run(() => flag (player, "Spammer", config.antiSpam.maxVL, config.antiSpam.punishment, [`behavior:${behavior}`]));
 };
 
 async function antiSpam (player: Player, data: Data) {

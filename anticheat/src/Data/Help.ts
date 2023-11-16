@@ -16,7 +16,15 @@ export function helpList (p: string): string {
         `§g${p}unbanremove <player> - Remove a player from unban queue`,
         `§g${p}unbanlist - Show all player in unban queue`,
         `§g${p}freeze <player> - Freeze a player`,
-        `§g${p}unfreeze <player> - Unfreeze a player`
+        `§g${p}unfreeze <player> - Unfreeze a player`,
+        `§g${p}vanish - Vanish yourself`,
+        `§g${p}unvanish - Unvanish yourself`,
+        `§g${p}invcopy <player> - Copy a player's inventory to yours`,
+        `§g${p}invsee <player> - View a player's inventory in a ui`,
+        `§g${p}echestwipe <player> - Wipe a player's ender chest`,
+        `§g${p}lockdowncode <get/set/random> <set: code>/[random: length] - Do with the lockdown code`,
+        `§g${p}lockdown <code> - Lockdown the server with a code`,
+        `§g${p}unlock <code> - Unlock the server`,
     ].join("\n")
 }
 
@@ -30,6 +38,7 @@ export function toggleList (p: string): string {
 
 export const validModules: string[] = [
     "chatRank",
+    "dimensionLock",
     "antiReach",
     "antiKillAura",
     "antiAutoClicker",
@@ -38,8 +47,9 @@ export const validModules: string[] = [
     "antiPhase",
     "antiSpeed",
     "antiNuker",
+    "antiTower",
     "antiNoSlow",
-    "antiNofall",
     "antiBlockReach",
-    "antiAim"
+    "antiAim",
+    "antiScaffold"
 ]

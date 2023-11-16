@@ -1,21 +1,27 @@
 import {
+    EntityInventoryComponent,
+    ItemStack,
     Player,
     system,
     world
 } from "@minecraft/server";
 import { helpList, toggleList, validModules } from "../../Data/Help"
-import { isAdmin, isTimeStr, timeToMs } from "../../Assets/Util";
+import { isAdmin, isTimeStr, kick, timeToMs } from "../../Assets/Util";
 import config from "../../Data/Config";
 import { ban, unban, unbanList, unbanRemove } from "../moderateModel/banHandler";
 import { freeze, unfreeze } from "../moderateModel/freezeHandler";
+import { triggerEvent } from "../moderateModel/eventHandler";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { ActionFormData } from "@minecraft/server-ui";
+import version from "../../version";
 
 export { inputCommand }
 
-const turnRegax = (message: string, prefix: string) => {
+function turnRegax (message: string, prefix: string) {
     const regex = /(["'])(.*?)\1|\S+/g
     const matches = message.match(regex)
     const command = matches.shift().slice(prefix.length)
-    const args = matches.map(arg => arg.replace(/^[@"]/g, '').replace(/"$/, ''))
+    const args = matches.map(arg => arg.replace(/[@"]/g, '').replace(/"$/, ''))
     return [command, ...args]
 }
 
@@ -46,6 +52,12 @@ async function inputCommand (player: Player, message: string, prefix: string): P
     const regax = turnRegax(message, prefix)
 
     switch (regax[0]) {
+        case "about": {
+            system.run(() =>
+                player.sendMessage(`§2§l§¶Matrix >§4 Matrix is a minecraft bedrock anticheat that is based on @minecraft API\n§4Version: §cV${version.join('.')}\n§4Author: §cjasonlaubb\n§4GitHub: §chttps://github.com/jasonlaubb/Matrix-AntiCheat`)
+            )
+            break
+        }
         case "help": {
             if (!Command.new(player, config.commands.help as Cmds)) return
             const helpMessage: string = helpList(prefix)
@@ -90,6 +102,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
         }
         case "deop": {
             if (!Command.new(player, config.commands.deop as Cmds)) return
+            if (world.getDynamicProperty("lockdown") === true) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 The server is in lockdown mode`))
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please specify the player`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown player`))
@@ -302,10 +315,177 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             system.run(() => world.sendMessage(`§2§l§¶Matrix >§4 ${target.name} has been unmuted by ${player.name}`))
             break
         }
-
-        default: {
-            system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown command, try ${prefix}help`))
+        case "vanish": {
+            if (!Command.new(player, config.commands.vanish as Cmds)) return
+            system.run(() => {
+                triggerEvent(player, "matrix:vanish")
+                player.addEffect(MinecraftEffectTypes.Invisibility, 19999999, { showParticles: false, amplifier: 2 })
+                player.sendMessage(`§2§l§¶Matrix >§4 You are now vanished`)
+            })
             break
+        }
+        case "unvanish": {
+            if (!Command.new(player, config.commands.unvanish as Cmds)) return
+            system.run(() => {
+                triggerEvent(player, "matrix:unvanish")
+                player.removeEffect(MinecraftEffectTypes.Invisibility)
+                player.sendMessage(`§2§l§¶Matrix >§4 You are now no longer vanished`)
+            })
+            break
+        }
+        case "invcopy": {
+            if (!Command.new(player, config.commands.invcopy as Cmds)) return
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please enter the player`))
+            const target = world.getPlayers({ name: regax[1] })[0]
+            if (target === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown player`))
+            if (target.id === player.id) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 You can't copy yourself`))
+
+            const inputInv = ((target.getComponent(EntityInventoryComponent.componentId)) as EntityInventoryComponent).container;
+            const outputInv = ((player.getComponent(EntityInventoryComponent.componentId)) as EntityInventoryComponent).container;
+
+            for (let i = 0; i < inputInv.size; i++) {
+                const item: ItemStack | undefined = inputInv.getItem(i);
+
+                system.run(() => outputInv.setItem(i, item))
+            }
+
+            system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Copied inventory from ${target.name}`))
+            break
+        }
+        case "invsee": {
+            if (!Command.new(player, config.commands.invsee as Cmds)) return
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please enter the player`))
+            const target = world.getPlayers({ name: regax[1] })[0]
+            if (target === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown player`))
+            if (target.id === player.id) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 You can't invsee yourself`))
+
+            const inv = ((target.getComponent(EntityInventoryComponent.componentId)) as EntityInventoryComponent).container;
+
+            let itemArray = []
+
+            for (let i = 0; i < inv.size; i++) {
+                const item: ItemStack | undefined = inv.getItem(i);
+
+                if (item) {
+                    itemArray.push(`§eSlot: §c${i} | §eItem: §c${item.typeId}`)
+                } else {
+                    itemArray.push(`§eSlot: §c${i} | §eItem: §cEmpty`)
+                }
+            }
+
+            const invseeUI = new ActionFormData ()
+                .title("inventory of " + player.name)
+                .body(itemArray.join("\n"))
+                .button("close")
+
+            system.run(() => {
+                invseeUI.show(player).then(res => {
+                    if (res.canceled) return;
+                    player.sendMessage(`§2§l§¶Matrix >§4 Closed inventory of ${target.name}`)
+                })
+            })
+            break
+        }
+        case "echestwipe": {
+            if (!Command.new(player, config.commands.echestwipe as Cmds)) return
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please enter the player`))
+            const target = world.getPlayers({ name: regax[1] })[0]
+            if (target === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown player`))
+            if (target.id === player.id) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 You can't wipe yourself`))
+            if (isAdmin (player)) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 You can't wipe admin's enderchest`))
+
+            for (let i = 0; i < 27; i++) {
+                player.runCommandAsync(`replaceitem entity @s slot.enderchest ${i} air`)
+            }
+
+            system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Wiped enderchest from ${target.name}`))
+            break
+        }
+        case "lockdowncode": {
+            if (!Command.new(player, config.commands.lockdowncode as Cmds)) return
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please enter the action you want`))
+
+            switch (regax[1]) {
+                case "get": {
+                    const code = world.getDynamicProperty("lockdowncode") ?? config.lockdowncode
+                    system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Lockdown code is ${code}`))
+                    break
+                }
+                case "set": {
+                    if (regax[2] === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please enter the code you want`))
+                    system.run(() => {
+                        world.setDynamicProperty("lockdowncode", regax[2])
+                        player.sendMessage(`§2§l§¶Matrix >§4 Sucessfully changed lockdown code to ${regax[2]}`)
+                    })
+                    break
+                }
+                case "random": {
+                    const codeLength = regax[2] ?? 6
+
+                    if (Number.isNaN(codeLength)) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 The code length should be a number`))
+                    if (Number(codeLength) < 1 || Number(codeLength) > 128) {
+                        system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please enter the code length between 1 and 128`))
+                        return
+                    }
+
+                    const candidate = [
+                        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+                        'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                        'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+                        'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+                        'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                        'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                        'w', 'x', 'y', 'z'
+                    ]
+
+                    let code = ''
+                    for (let i = 0; i < Number(codeLength); i++) {
+                        code += candidate[Math.floor(Math.random() * candidate.length)]
+                    }
+
+                    system.run(() => {
+                        world.setDynamicProperty("lockdowncode", code)
+                        player.sendMessage(`§2§l§¶Matrix >§4 Sucessfully random a lockdown code - ${code}`)
+                    })
+                    break
+                }
+                default: {
+                    system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown action, please use get/set/random only`))
+                
+                }
+            }
+            break
+        }
+        case "lockdown": {
+            if (!Command.new(player, config.commands.lockdown as Cmds)) return
+            const code = world.getDynamicProperty("lockdowncode") ?? config.lockdowncode
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Please enter the code`))
+            if (regax[1] !== code) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Wrong code`))
+            if (world.getDynamicProperty("lockdown") === true) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Lockdown has been enabled already`))
+
+            system.run(() => {
+                world.setDynamicProperty("lockdown", true)
+                world.sendMessage(`§2§l§¶Matrix >§4 Lockdown has been enabled by ${player.name}`)
+                world.getAllPlayers().filter(players => isAdmin(players) === false).forEach(players => kick(players, "LockDown", 'Matrix'))
+            })
+            break
+        }
+        case "unlock": {
+            if (!Command.new(player, config.commands.unlock as Cmds)) return
+            if (!world.getDynamicProperty("lockdown")) return system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Lockdown hasn't enabled`))
+
+            system.run(() => {
+                world.setDynamicProperty("lockdown", undefined)
+                world.sendMessage(`§2§l§¶Matrix >§4 Lockdown has been disabled by ${player.name}`)
+            })
+            break
+        }
+        default: {
+            if (isAdmin (player)) {
+                system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown command, try ${prefix}help`))
+            } else {
+                system.run(() => player.sendMessage(`§2§l§¶Matrix >§4 Unknown command, try ${prefix}help\n§r§7§o(Use -about to see more information)`))
+            }
         }
     }
 }

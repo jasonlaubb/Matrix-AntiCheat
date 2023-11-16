@@ -15,6 +15,11 @@ function getSpeedIncrease (speedEffect: Effect | undefined) {
 
 const lastPosition = new Map();
 
+/**
+ * @author RaMiGamerDev
+ * @description A strong check for no slow, it detect no slow in a high accuracy
+ */
+
 async function antiNoSlow(player: Player) {
     const playerLocation = player.location;
     const playerLastPos = lastPosition.get(player) ?? player.location;
@@ -47,12 +52,12 @@ async function antiNoSlow(player: Player) {
             lastPosition.set(player, playerLocation);
         } else {
             //@ts-expect-error
-            player.noSlowBuffer += 1
+            player.noSlowBuffer++
             if (buffer + 1 <= config.antiNoSlow.maxNoSlowBuff) return
             if (player.getEffect(MinecraftEffectTypes.Speed)) return
             //@ts-expect-error
             player.noSlowBuffer = 0
-            flag (player, "NoSlow", config.antiNoSlow.punishment, [`playerSpeed:${playerSpeed.toFixed(2)}`])
+            flag (player, "NoSlow", config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`playerSpeed:${playerSpeed.toFixed(2)}`])
             player.teleport(playerLastPos)
         }
     } else {
