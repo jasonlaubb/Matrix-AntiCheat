@@ -4,6 +4,8 @@ import {
     system
 } from "@minecraft/server";
 import { msToTime } from "../../Assets/Util";
+import lang from "../../Data/Languages/lang";
+import { triggerEvent } from "./eventHandler";
 
 class BanInfo {
     isBanned: boolean;
@@ -45,7 +47,11 @@ function checksBan (player: Player): void {
         timeTherShold = `${d} days, ${h} hours, ${m} minutes, ${s} seconds`
     }
 
-    player.runCommand(`kick "${player.name}" \n§c§lYou have been banned!\n§r§7Time Left:§c ${timeTherShold}\n§7Reason: §c${reason}§r\n§7By: §c${by}`)
+    try {
+        player.runCommand(`kick "${player.name}" "\n§c§l${lang(".banHandler.banned")}${lang(".banHandler.format").replace("%a", timeTherShold).replace("%b", reason).replace("%c", by)}\n§r§7${lang(".Util.reason")}: §c${reason}\n§7${lang(".Util.by")}: §c${by}\n§7${lang(".Util.timeLeft")}: §c${timeTherShold}\n§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")})}`)
+    } catch {
+        triggerEvent (player, "matrix:kick")
+    }
 }
 
 function ban (player: Player, reason: string, by: string, time: number | "forever") {

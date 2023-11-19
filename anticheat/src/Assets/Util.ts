@@ -4,12 +4,15 @@ import {
     GameMode,
     EntityInventoryComponent,
     ItemEnchantsComponent,
-    EntityDamageCause
+    EntityDamageCause,
+    Vector3,
+    Dimension
 } from "@minecraft/server"
 import { ban } from "../Functions/moderateModel/banHandler";
 import config from "../Data/Config";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
-import { MinecraftItemTypes, MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+import lang from "../Data/Languages/lang";
 
 world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
     if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
@@ -29,7 +32,6 @@ world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
                 MinecraftEnchantmentTypes.Riptide
             );
             if (checkRipTide) {
-                //@ts-expect-error
                 player.threwTridentAt = Date.now();
             }
         }
@@ -39,25 +41,50 @@ world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
 world.afterEvents.entityHurt.subscribe(event => {
     const player = event.hurtEntity;
     if (player instanceof Player && (event.damageSource.cause == EntityDamageCause.blockExplosion || event.damageSource.cause == EntityDamageCause.entityExplosion || event.damageSource.cause === EntityDamageCause.entityAttack)) {
-        //@ts-expect-error
         player.lastExplosionTime = Date.now();
+
+        if (world.getDynamicProperty("antiFly") ?? config.antiFly.enabled) {
+            if (!player.hasTag("matrix:knockback")) {
+                player.addTag("matrix:knockback")
+            } else if (player.getVelocity().y <= 0) {
+                player.removeTag("matrix:knockback")
+            }
+        }
     }
 });
 
 export function kick (player: Player, reason?: string, by?: string) {
     try {
-        player.runCommand(`kick "${player.name}" \n§2§l§¶Matrix >§4 ${player.name} §mYou have been kicked\n§fReason: §c${reason ?? 'No reason provided'}\n§fBy: §c${by ?? 'Unknown'}`)
+        player.runCommand(`kick "${player.name}" \n§bMatrix §7> §b ${player.name} §m${lang(".Util.kicked")}\n§f${lang(".Util.reason")}: §c${reason ?? lang(".Util.noreason")}\n§fBy: §c${by ?? lang(".Util.unknown")})}`)
     } catch {
         triggerEvent (player, "matrix:kick")
     }
 }
 
-function formatInformation (arr: string[]) {
+export function formatInformation (arr: string[]) {
     const formattedArr: string[] = arr.map(item => {
-      const [key, value] = item.split(":");
-      return `§r§l§¶${key}:§c ${value}§r`;
+      const [key, value, id] = item.split(":");
+      return `§r§c» §7${key}:§9 ${value}${id == undefined ? '' : ':' + id}§r`;
     });
     return formattedArr.join("\n");
+}
+
+export function checkBlockAround (location: Vector3, blockType: MinecraftBlockTypes, dimension: Dimension): boolean {
+    const floorPos: Vector3 = {
+        x: Math.floor(location.x),
+        y: Math.floor(location.y) - 1,
+        z: Math.floor(location.z)
+    } as Vector3
+
+    let blocks: string[] = []
+
+    for (let x = -1; x <= 1; x++) {
+        for (let z = -1; z <= 1; z++) {
+            blocks.push(dimension.getBlock({ x: floorPos.x + x, y: floorPos.y, z: floorPos.z + z } as Vector3)?.typeId)
+        }
+    }
+
+    return new Set(blocks).has(blockType)
 }
 
 let Vl: any = {};
@@ -73,7 +100,7 @@ export function flag (player: Player, modules: string, maxVL: number,  punishmen
     let vl = ++Vl[player.id][modules]
     if (vl > 99) vl = 99
 
-    let flagMsg = `§2§l§¶Matrix >§4 ${player.name}§m has failed ${modules}§r §7[§cx${vl}§7]§r`
+    let flagMsg = `§bMatrix §7> §c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§dx${vl}§7]§r`
     if (infos !== undefined) flagMsg = flagMsg + "\n" + formatInformation(infos)
 
     const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode
@@ -162,7 +189,7 @@ export function isAdmin (player: Player) {
 }
 
 export function timeToMs(timeStr: string) {
-    const timeUnits = {
+    const timeUnits: { [key: string]: number } = {
         d: 86400000,
         h: 3600000,
         m: 60000,
@@ -175,7 +202,6 @@ export function timeToMs(timeStr: string) {
     for (const unit in timeUnits) {
         match = timeStr.match(new RegExp(`(\\d+)${unit}`));
         if (match) {
-            //@ts-expect-error
             ms += parseInt(match[1]) * timeUnits[unit];
         }
     }

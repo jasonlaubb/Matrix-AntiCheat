@@ -17,6 +17,8 @@ export async function triggerEvent (player: Player, id: string) {
         data.push(id)
         eventData.set(player.id, data)
         player.triggerEvent(id)
+    } else {
+        player.triggerEvent(id)
     }
 }
 
@@ -35,6 +37,9 @@ world.beforeEvents.dataDrivenEntityTriggerEvent.subscribe((event) => {
 
 world.afterEvents.dataDrivenEntityTriggerEvent.subscribe((event) => {
     const { entity: player, id } = event
+
+    if (id === "matrix:containerOpen") player.addTag("matrix:container")
+    if (id === "matrix:containerClose") player.removeTag("matrix:container")
 
     if (!(player instanceof Player) || !eventList.includes(id)) return;
 

@@ -282,7 +282,7 @@
                                 }
                             ]
                         },
-                        "event": "matrix:has_container_open"
+                        "event": "matrix:containerOpen"
                     },
                     {
                         "filters": {
@@ -295,22 +295,16 @@
                                 }
                             ]
                         },
-                        "event": "matrix:!has_container_open"
+                        "event": "matrix:containerClose"
                     }
                 ]
             }
         },
         "events": {
-            "matrix:has_container_open": {
-                "run_command": {
-                    "command": ["tag @s add matrix:has_container_open"]
-                }
-            },
-            "matrix:!has_container_open": {
-                "run_command": {
-                    "command": ["tag @s remove matrix:has_container_open"]
-                }
-            },
+            "matrix:containerOpen": {},
+            "matrix:containerClose": {},
+            "matrix:totem": {},
+            "matrix:shield": {},
             "matrix:kick": {
                 "add": {
                     "component_groups": ["matrix:kick"]

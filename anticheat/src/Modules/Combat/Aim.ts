@@ -1,17 +1,18 @@
 import { world, system, Player } from "@minecraft/server";
 import config from "../../Data/Config";
 import { flag, isAdmin } from "../../Assets/Util";
+import lang from "../../Data/Languages/lang";
 
 /**
  * @author notthinghere
  * @description A advanced checks for aim, detect illegal aimming of aimbot clients
  */
 
-class LastAction {
+interface LastAction {
     rotation: Record<string, { x: number; y: number; rotationSpeed: { x: number; y: number }; averageSpeed: number }>;
 }
 
-class QueueFlag {
+interface QueueFlag {
     [key: string]: { date: number };
 }
 
@@ -34,7 +35,7 @@ async function AntiAim (player: Player) {
             const delay: number = Date.now() - queueFlag[player.id].date
             if (delay < 50) {
                 isFlagged = true
-                flag (player, "Aim", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeed:" + averageSpeed.toFixed(2), "Delay:" + delay.toFixed(2)])
+                flag (player, "Aim", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeed") + ":" + averageSpeed.toFixed(2), "Delay:" + delay.toFixed(2)])
             }
         }
 
@@ -43,7 +44,7 @@ async function AntiAim (player: Player) {
             timer.set(`aim-b:${player.id}`, timerSet + 1);
             if (timerSet > 30) {
                 isFlagged = true
-                flag (player, "Aim", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX:" + rotationSpeed.x.toFixed(2), "RotSpeedY:" + rotationSpeed.y.toFixed(2)])
+                flag (player, "Aim", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotationSpeed.x.toFixed(2), lang(">RotSpeedY") + ":" + rotationSpeed.y.toFixed(2)])
             }
         } else timer.set(`aim-b:${player.id}`, 0);
         
@@ -53,7 +54,7 @@ async function AntiAim (player: Player) {
                 timer.set(`aim-c:${player.id}`, (timer.get(`aim-c:${player.id}`) || 0) + 1);
                 if ((timer.get(`aim-c:${player.id}`) || 0) > 25) {
                     isFlagged = true
-                    flag (player, "Aim", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeed:" + averageSpeed.toFixed(2)])
+                    flag (player, "Aim", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeed") + ":" + averageSpeed.toFixed(2)])
                 }
             } else if (Math.abs(averageSpeed - lastAction.rotation[player.id].averageSpeed) > 0) {
                 timer.set(`aim-c:${player.id}`, 0);
@@ -85,13 +86,6 @@ world.afterEvents.itemStartUse.subscribe((event) => {
     const toggle: boolean = (world.getDynamicProperty("antiAim") ?? config.antiAim.enabled) as boolean;
     if (toggle !== true) return;
     const player = event.source;
-    queueFlag[player.id] = {date: Date.now()};
-});
-
-world.afterEvents.entityHitEntity.subscribe((event) => {
-    const toggle: boolean = (world.getDynamicProperty("antiAim") ?? config.antiAim.enabled) as boolean;
-    if (toggle !== true) return;
-    const {damagingEntity: player} = event;
     queueFlag[player.id] = {date: Date.now()};
 });
 

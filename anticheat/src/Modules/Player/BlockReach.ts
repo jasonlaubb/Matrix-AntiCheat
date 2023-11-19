@@ -10,6 +10,7 @@ import {
 import { flag, isAdmin } from "../../Assets/Util"
 import { isTargetGamemode } from "../../Assets/Util"
 import config from "../../Data/Config.js"
+import lang from "../../Data/Languages/lang.js"
 
 /**
  * @author jasonlaubb
@@ -20,13 +21,14 @@ async function antiBlockReachA (event: PlayerBreakBlockBeforeEvent, player: Play
     if (player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
     const distance = Vector.distance(player.getHeadLocation(), block.location);
 
+    //if the distance is higher than the max distance, flag the player
     if (distance > config.antiBlockReach.maxBreakDistance) {
         event.cancel = true;
         system.run(() => {
             if (player.hasTag("matrix:break-disabled")) return;
             player.addTag("matrix:break-disabled")
             system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBlockReach.timeout)
-            flag (player, "BlockReach", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, ["reach:" + distance.toFixed(2), "mode:break"])
+            flag (player, "BlockReach", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + distance.toFixed(2), lang(">Mode") + lang(">Break")])
         })
     }
 }
@@ -35,13 +37,14 @@ async function antiBlockReachB (event: PlayerPlaceBlockBeforeEvent, player: Play
     if (player.hasTag("matrix:place-disabled") || isTargetGamemode(player, 1)) return;
     const distance = Vector.distance(player.getHeadLocation(), block.location);
 
+    //if the distance is higher than the max distance, flag the player
     if (distance > config.antiBlockReach.maxPlaceDistance) {
         event.cancel = true;
         system.run(() => {
             if (player.hasTag("matrix:place-disabled")) return;
             player.addTag("matrix:place-disabled")
             system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiBlockReach.timeout)
-            flag (player, "BlockReach", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, ["reach:" + distance.toFixed(2), "mode:place"])
+            flag (player, "BlockReach", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + distance.toFixed(2), lang(">Mode") + lang(">Place")])
         })
     }
 }

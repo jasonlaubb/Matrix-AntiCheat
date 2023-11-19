@@ -45,8 +45,8 @@ function freeze(player: Player) {
 
 function unfreeze (player: Player) {
     if (player.getDynamicProperty("freeze") === undefined) return false
-    player.runCommand("inputpermission set @s movement enabled");
-    player.runCommand("inputpermission set @s camera enabled");
+    player.runCommandAsync("inputpermission set @s movement enabled");
+    player.runCommandAsync("inputpermission set @s camera enabled");
     system.run(() => player.setDynamicProperty("freeze", undefined))
     return true
 }

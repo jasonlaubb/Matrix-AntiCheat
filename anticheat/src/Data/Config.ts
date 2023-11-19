@@ -1,5 +1,5 @@
 /**
- * @author ravriv & jasonlaubb & RaMiGamerDev
+ * @author Matrix Team
  * @description The config json of the AntiCheat
  * 
  * @warning
@@ -11,6 +11,7 @@ export default {
      * @description
      * The setting for our functions
      */
+    language: "en_US",
     flagMode: "tag",
     lockdowncode: "AbCdEfGh",
     commands: {
@@ -155,6 +156,21 @@ export default {
             enabled: true,
             adminOnly: true,
             requireTag: undefined
+        },
+        adminchat: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        lang: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
+        },
+        langlist: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: undefined
         }
     },
     /** 
@@ -186,7 +202,7 @@ export default {
         enabled: true,
         maxClicksPerSecond: 22,
         timeout: 200,
-        punishment: undefined,
+        punishment: "kick",
         maxVL: 4
     },
 
@@ -195,16 +211,16 @@ export default {
         minAngle: 120,
         timeout: 200,
         maxEntityHit: 1,
-        punishment: undefined,
-        maxVL: 1
+        punishment: "kick",
+        maxVL: 4
     },
 
     antiReach: {
         enabled: true,
         maxReach: 3.7,
         maxYReach: 4.8,
-        punishment: undefined,
-        maxVL: 1
+        punishment: "kick",
+        maxVL: 2
     },
 
     antiFly: {
@@ -215,31 +231,25 @@ export default {
         maxVL: 4
     },
 
-    antiNofall: {
-        enabled: true,
-        punishment: undefined,
-        maxVL: 4
-    },
-
     antiPhase: {
         enabled: true,
-        punishment: undefined,
-        maxVL: 2
+        punishment: "kick",
+        maxVL: 10
     },
 
     antiSpeed: {
         enabled: true,
         mphThreshold: 150,
-        punishment: undefined,
-        maxVL: 2
+        punishment: "kick",
+        maxVL: 4
     },
 
     antiNuker: {
         enabled: true,
         maxBreakPerTick: 5,
         timeout: 100,
-        punishment: undefined,
-        maxVL: 2
+        punishment: "kick",
+        maxVL: 0
     },
 
     antiScaffold: {
@@ -248,7 +258,7 @@ export default {
         maxAngle: 95,
         factor: 1,
         minRotation: 34.98,
-        punishment: undefined,
+        punishment: "kick",
         maxVL: 2
     },
 
@@ -256,8 +266,8 @@ export default {
         enabled: true,
         maxSpeedTherehold: 0.04,
         maxNoSlowBuff: 1,
-        punishment: undefined,
-        maxVL: 2
+        punishment: "kick",
+        maxVL: 4
     },
 
     antiSpam: {
@@ -266,34 +276,130 @@ export default {
         timer: 500,
         maxCharacterLimit: 200,
         kickThreshold: 3,
-        timeout: 200,
-        punishment: undefined,
-        maxVL: 4
+        timeout: 200
+    },
+
+    antiSpammer: {
+        enabled: true,
+        punishment: "kick",
+        maxVL: 2
     },
 
     antiBlockReach: {
         enabled: true,
         maxPlaceDistance: 6.3,
-        maxBreakDistance: 5.8,
+        maxBreakDistance: 6.1,
         timeout: 60,
-        punishment: undefined,
-        maxVL: 2,
+        punishment: "kick",
+        maxVL: 0,
     },
 
     antiAim: {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: undefined,
-        maxVL: 2
+        punishment: "kick",
+        maxVL: 10
     },
 
     antiTower: {
         enabled: true,
         minDelay: 200,
         timeout: 60,
-        punishment: undefined,
+        punishment: "kick",
         maxVL: 2
+    },
+
+    antiNameSpoof: {
+        enabled: true,
+        punishment: "kick"
+    },
+
+    antiIllegalItem: {
+        enabled: false,
+        illegalItem: [
+            "minecraft:barrier",
+            "minecraft:command_block",
+            "minecraft:repeating_command_block",
+            "minecraft:chain_command_block",
+            "minecraft:structure_block",
+            "minecraft:structure_void",
+            "minecraft:bedrock",
+            "minecraft:end_portal_frame",
+            "minecraft:end_portal",
+            "minecraft:end_gateway",
+            "minecraft:barrier",
+            "minecraft:moving_block",
+            "minecraft:invisible_bedrock",
+            "minecraft:water",
+            "minecraft:lava",
+            "minecraft:deny",
+            "minecraft:allow",
+            "minecraft:border_block",
+            "minecraft:light_block"
+        ],
+        state: {
+            typeCheck: {
+                enabled: true,
+                punishment: "kick"
+            },
+            nameLength: {
+                enabled: true,
+                punishment: undefined,
+                maxItemNameLength: 32
+            },
+            itemTag: {
+                enabled: true,
+                punishment: "kick",
+                maxAllowedTag: 0
+            },
+            loreCheck: {
+                enabled: true,
+                punishment: "kick"
+            },
+            enchantLevel: {
+                enabled: true,
+                punishment: "kick",
+                whiteList: [], //example: ["knockback:4"] than knockback enchantment with level 4 will not be punished
+
+            },
+            enchantConflict: {
+                enabled: true,
+                punishment: "kick",
+                whitList: [], //example: ["mending","infinity"] than mending and infinity will not be punished
+            },
+            enchantAble: {
+                enabled: true,
+                punishment: "kick",
+                whiteList: [], //example: ["superItem:super_sword"] for bypass super_word's enchantment
+
+            },
+            enchantRepeat: {
+                enabled: true,
+                punishment: "kick"
+            }
+        },
+        checkCreativeMode: true,
+        timeout: 60
+    },
+
+    antiSurrond: {
+        enabled: true,
+        maxBlocksPer2Tick: 4,
+        timeout: 100,
+        punishment: "kick",
+        maxVL: 0
+    },
+
+    antiAutoTotem: {
+        enabled: true,
+        punishment: "kick",
+        maxVL: 4
+    },
+
+    antiOperator: {
+        enabled: false, // this thing can't work on Realm
+        punishment: undefined
     },
 
     chatFilter: [

@@ -1,6 +1,7 @@
 import { world } from "@minecraft/server";
 import { isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
+import lang from "../../Data/Languages/lang";
 
 world.afterEvents.playerDimensionChange.subscribe(event => {
     const { player, toDimension, fromDimension } = event;
@@ -13,7 +14,7 @@ world.afterEvents.playerDimensionChange.subscribe(event => {
             checkForBlocks: false
         })
     } else if (fromDimension.id !== "minecraft:overworld") {
-        player.sendMessage("§2§l§¶Matrix >§4 You are not allowed to go to other dimensions!§r")
+        player.sendMessage("§bMatrix §7>§c " + lang(".dimensionLock.stop"))
     }
 })
 
