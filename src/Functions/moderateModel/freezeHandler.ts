@@ -20,20 +20,11 @@ system.runInterval(() => {
         freezeInfo = JSON.parse(freezeInfo as string);
 
         const freeze = freezeInfo as any as Freeze;
-
-        try {
-            player.teleport(freeze.location, {
+    
+        player.teleport(freeze.location, {
                 dimension: world.getDimension(freeze.dimension),
                 rotation: { x: 0, y: 0 }
-            });
-        } catch {
-            player.teleport(freeze.location, {
-                dimension: player.dimension,
-                rotation: { x: 0, y: 0 }
-            });
-            freeze.dimension = player.dimension.id;
-            player.setDynamicProperty("freeze", JSON.stringify(freeze));
-        }
+        });
         player.runCommand("inputpermission set @s movement disabled");
         player.runCommand("inputpermission set @s camera disabled");
     }
