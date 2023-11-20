@@ -21,10 +21,19 @@ system.runInterval(() => {
 
         const freeze = freezeInfo as any as Freeze;
 
-        player.teleport(freeze.location, {
-            dimension: world.getDimension(freeze.dimension),
-            rotation: { x: 0, y: 0 }
-        });
+        try {
+            player.teleport(freeze.location, {
+                dimension: world.getDimension(freeze.dimension),
+                rotation: { x: 0, y: 0 }
+            });
+        } catch {
+            player.teleport(freeze.location, {
+                dimension: player.dimension,
+                rotation: { x: 0, y: 0 }
+            });
+            freeze.dimension = player.dimension.id;
+            player.setDynamicProperty("freeze", JSON.stringify(freeze));
+        }
         player.runCommand("inputpermission set @s movement disabled");
         player.runCommand("inputpermission set @s camera disabled");
     }
@@ -38,7 +47,7 @@ function freeze(player: Player) {
     } as Vector3;
     if (player.getDynamicProperty("freeze") !== undefined) return false;
     system.run(() => {
-        player.setDynamicProperty("freeze", JSON.stringify({ location: floorPos, dimension: player.dimension }));
+        player.setDynamicProperty("freeze", JSON.stringify({ location: floorPos, dimension: player.dimension.id }));
     });
     return true;
 }
