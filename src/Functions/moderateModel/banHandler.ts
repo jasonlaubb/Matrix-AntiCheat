@@ -7,7 +7,7 @@ import { msToTime } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 import { triggerEvent } from "./eventHandler";
 
-class BanInfo {
+interface BanInfo {
     isBanned: boolean;
     reason: string;
     by: string;
@@ -19,7 +19,8 @@ function checksBan (player: Player): void {
 
     const baninfo: BanInfo | any = info === undefined ? undefined : JSON.parse(info as string)
 
-    const unbanListing: string[] = JSON.parse(world.getDynamicProperty("unbanListing") as string ?? JSON.stringify([]))
+    const unbanListingString = world.getDynamicProperty("unbanListing") as string;
+    const unbanListing: string[] = unbanListingString ? JSON.parse(unbanListingString) : [];
 
     if (unbanListing.includes(player.name)) {
         world.setDynamicProperty("unbanListing", JSON.stringify(unbanListing.filter(name => name !== player.name)))
@@ -29,7 +30,18 @@ function checksBan (player: Player): void {
 
     if (baninfo === undefined) return;
 
-    const { reason, by, time }: BanInfo = baninfo
+    let reason;
+    let by;
+    let time;
+
+    try {
+        reason = baninfo.reason;
+        by = baninfo.by;
+        time = baninfo.time;
+    } catch {
+        console.log("Error: banHandler.ts: checksBan: baninfo is not a BanInfo object, unbanned")
+        player.setDynamicProperty("isBanned", undefined)
+    }
 
     if (time !== "forever") {
         if (Date.now() > time) {
@@ -39,7 +51,7 @@ function checksBan (player: Player): void {
     }
 
     const timeLeft = time === "forever" ? "forever" : msToTime(time - Date.now())
-    let timeTherShold;
+    let timeTherShold: any;
     if (timeLeft === "forever") {
         timeTherShold = "forever"
     } else {
@@ -58,9 +70,9 @@ function ban (player: Player, reason: string, by: string, time: number | "foreve
     system.run(() => {
         player.setDynamicProperty("isBanned", JSON.stringify({
             isBanned: true,
-            reason,
-            by,
-            time
+            reason: reason,
+            by: by,
+            time: time
         }))
         checksBan (player)
     })

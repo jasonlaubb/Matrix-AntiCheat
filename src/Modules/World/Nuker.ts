@@ -30,7 +30,7 @@ async function antiNuker (player: Player, block: Block) {
 
     //if the block not the fast broken block, push the block right now
     if (!fastBrokenBlocks.includes(block.typeId as MinecraftBlockTypes)) {
-        blockBreakCount.push(Date.now());
+        blockBreakCount.push(timeNow);
     };
 
     blockBreakData.set(player.id, blockBreakCount);

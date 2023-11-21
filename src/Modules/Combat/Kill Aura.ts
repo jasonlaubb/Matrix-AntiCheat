@@ -38,10 +38,10 @@ async function KillAura(damagingEntity: Player, hitEntity: Player) {
     }
 
     //stop false positive
-    if (distance < 2 || damagingEntity.hasTag("matrix:pvp-disabled")) return;
+    if (distance <= 2 || damagingEntity.hasTag("matrix:pvp-disabled")) return;
 
     //get the angle
-    const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getRotation().y);
+    const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(),damagingEntity.getRotation().y);
 
     //if the angle is higher than the max angle, flag the player
     if (angle > config.antiKillAura.minAngle) {
@@ -69,7 +69,18 @@ function calculateMagnitude({ x, y, z }: Vector3) {
     return Math.sqrt(x ** 2 + y ** 2 + z ** 2);
 }
 
-function calculateAngle (pos1: Vector3, pos2: Vector3, rotation = -90) {
+function calculateAngle (attacker: Vector3, target: Vector3, attackerV: Vector3, targetV: Vector3, rotation: number = -90) {
+    const pos1 = {
+        x: attacker.x - attackerV.x,
+        y: 0,
+        z: attacker.z - attackerV.z
+    } as Vector3
+    const pos2 = {
+        x: target.x - targetV.x,
+        y: 0,
+        z: target.z - targetV.z
+    } as Vector3
+
     let angle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - rotation - 90;
     angle = angle <= -180 ? angle += 360 : angle
     return Math.abs(angle)

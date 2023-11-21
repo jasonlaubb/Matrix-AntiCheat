@@ -20,16 +20,20 @@ import "./Modules/Movement/Fly"
 import "./Modules/Movement/Phase"
 import "./Modules/Movement/Speed"
 import "./Modules/Movement/NoSlow"
+import "./Modules/Movement/Motion"
 
 import "./Modules/World/Nuker"
 import "./Modules/World/Scaffold"
 import "./Modules/World/Tower"
 import "./Modules/World/Surround"
+import "./Modules/World/CommandBlockExplolit"
 
 import "./Modules/Player/BlockReach"
 import "./Modules/Player/Illegal Item"
 import "./Modules/Player/NameSpoof"
 import "./Modules/Player/Operator"
+import "./Modules/Player/Auto"
+import "./Modules/Player/FastUse"
 
 import "./Functions/chatModel/ChatHandler"
 

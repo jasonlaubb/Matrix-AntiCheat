@@ -96,9 +96,9 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 if (password === undefined || password.length <= 0) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.please")}`))
                 if (password == correctPassword) {
                     player.setDynamicProperty("isAdmin", true)
-                    system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang(".CommandSystem.now")}`))
+                    system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-op.now")}`))
                 } else {
-                    system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.wrong")}`))
+                    system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-op.wrong")}`))
                 }
             }
             break      
@@ -290,7 +290,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (unfreezed) {
                 system.run(() => world.sendMessage(`§bMatrix §7> §g ${lang("-unfreeze.has").replace("%a", target.name).replace("%b", player.name)}`))
             } else {
-                system.run(() => world.sendMessage(`§bMatrix §7> §c ${lang("-unfreeze.not").replace("%a", target.name)}`))
+                system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unfreeze.not").replace("%a", target.name)}`))
             }
             break
         }

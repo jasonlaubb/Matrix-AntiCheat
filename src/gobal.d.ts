@@ -9,5 +9,6 @@ declare module "@minecraft/server" {
         noSlowBuffer: number;
         blockData: any[];
         blacklistMsgWarn: number;
+        lastTouchWater: number;
     }
 }

@@ -41,7 +41,7 @@ async function antiSurround (player: Player, block: Block) {
 
     //check if the block is obsidian and the deff is less than 1, than push the block right now
     if (block.typeId === MinecraftBlockTypes.Obsidian && xDeff <= 1 && zDeff <= 1 && floorPos.y === block.location.y && yChange <= 2 && yChange >= -1) {
-        blockPlaceCount.push(Date.now());
+        blockPlaceCount.push(timeNow);
     };
 
     blockPlaceData.set(player.id, blockPlaceCount);

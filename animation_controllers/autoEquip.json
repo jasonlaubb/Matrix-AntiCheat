@@ -1,35 +1,35 @@
 {
-	"format_version": "1.10.0",
-	"animation_controllers": {
-		"controller.animation.autototem": {
-			"states": {
-				"default": {
-					"transitions": [{
-						"totem": "query.get_equipped_item_name(\"off_hand\") == \"totem_of_undying\""
-					}]
-				},
-				"totem": {
-					"on_entry": ["@s matrix:totem"],
-					"transitions": [{
-						"default": "query.get_equipped_item_name(\"off_hand\") != \"totem_of_undying\""
-					}]
-				}
-			}
-		},
+    "format_version": "1.10.0",
+    "animation_controllers": {
+        "controller.animation.autototem": {
+            "states": {
+                "default": {
+                    "transitions": [{
+                        "totem": "query.get_equipped_item_name('off_hand') == 'totem_of_undying'"
+                    }]
+                },
+                "totem": {
+                    "on_entry": ["@s matrix:totem"],
+                    "transitions": [{
+                        "default": "query.get_equipped_item_name('off_hand') != 'totem_of_undying'"
+                    }]
+                }
+            }
+        },
         "controller.animation.autoshield": {
-			"states": {
-				"default": {
-					"transitions": [{
-						"shield": "query.get_equipped_item_name(\"off_hand\") == \"shield\""
-					}]
-				},
-				"shield": {
-					"on_entry": ["@s matrix:shield"],
-					"transitions": [{
-						"default": "query.get_equipped_item_name(\"off_hand\") != \"shield\""
-					}]
-				}
-			}
-		}
+            "states": {
+                "default": {
+                    "transitions": [{
+                        "shield": "query.get_equipped_item_name('off_hand') == 'shield'"
+                    }]
+                },
+                "shield": {
+                    "on_entry": ["@s matrix:shield"],
+                    "transitions": [{
+                        "default": "query.get_equipped_item_name('off_hand') != 'shield'"
+                    }]
+                }
+            }
+        }
     }
 }

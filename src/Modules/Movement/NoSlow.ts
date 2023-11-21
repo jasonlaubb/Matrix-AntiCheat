@@ -21,7 +21,7 @@ const lastPosition = new Map();
  * @description A strong check for no slow, it detect no slow in a high accuracy
  */
 
-async function antiNoSlow(player: Player) {
+async function antiNoSlow (player: Player) {
     //get the player location
     const playerLocation = player.location;
 
@@ -64,15 +64,28 @@ async function antiNoSlow(player: Player) {
         } else {
             //flag the player, if the buffer is higher than the max buffer, teleport the player back
             player.noSlowBuffer++
-            if (buffer + 1 <= config.antiNoSlow.maxNoSlowBuff) return
-            if (player.getEffect(MinecraftEffectTypes.Speed)) return
-            player.noSlowBuffer = 0
-            flag (player, "NoSlow", config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
-            player.teleport(playerLastPos)
+            if (buffer + 1 > config.antiNoSlow.maxNoSlowBuff) {
+                player.noSlowBuffer = 0
+                flag (player, "NoSlow", config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
+                player.teleport(playerLastPos)
+            }
         }
     } else {
         if (buffer > 0) {
             player.noSlowBuffer = 0
+        }
+    }
+
+    if (player.hasTag("matrix:charging") && playerSpeed > 0.1618875 && player.isOnGround) {
+        const isIceBelow = player.dimension.getBlock({
+            x: Math.floor(player.location.x),
+            y: Math.floor(player.location.y) - 1,
+            z: Math.floor(player.location.z)
+        })?.typeId === MinecraftBlockTypes.Ice
+
+        if (!isIceBelow) {
+            player.teleport(player.location)
+            flag (player, "NoSlow", config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
         }
     }
 }
@@ -86,3 +99,12 @@ system.runInterval(() => {
         antiNoSlow(player);
     }
 }, 1)
+
+world.afterEvents.itemStartUse.subscribe(({ source: player }) => player.addTag("matrix:charging"))
+world.afterEvents.itemStopUse.subscribe(({ source: player }) => player.removeTag("matrix:charging"))
+world.afterEvents.itemReleaseUse.subscribe(({ source: player }) => player.removeTag("matrix:charging"))
+
+world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
+    if (!initialSpawn) return;
+    player.removeTag("matrix:charging");
+})

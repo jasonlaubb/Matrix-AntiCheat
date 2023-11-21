@@ -7,7 +7,8 @@
             "is_summonable": false,
             "is_experimental": false,
             "scripts": {
-                "animate": [ 
+                "animate": [
+                    "tick_speed",
                     "may_fly",
                     "alive",
                     "gliding",
@@ -28,6 +29,7 @@
                 ]
             },
             "animations": {
+                "tick_speed": "animation.tickSpeed",
                 "may_fly": "controller.animation.may_fly",
                 "alive": "controller.animation.alive",
                 "attack_time": "controller.animation.attack_time",

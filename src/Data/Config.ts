@@ -231,6 +231,14 @@ export default {
         maxVL: 4
     },
 
+    antiMotion: {
+        enabled: true,
+        maxrelativeY: 0.6,
+        minrelativeY: 0.1,
+        punishment: "kick",
+        maxVL: 4
+    },
+
     antiPhase: {
         enabled: true,
         punishment: "kick",
@@ -391,7 +399,15 @@ export default {
         maxVL: 0
     },
 
-    antiAutoTotem: {
+    antiFastUse: {
+        enabled: true,
+        minUseTime: 200,
+        timeout: 60,
+        punishment: "kick",
+        maxVL: 2
+    },
+
+    antiAuto: {
         enabled: true,
         punishment: "kick",
         maxVL: 4
@@ -400,6 +416,12 @@ export default {
     antiOperator: {
         enabled: false, // this thing can't work on Realm
         punishment: undefined
+    },
+
+    antiCommandBlockExplolit: {
+        enabled: false,
+        punishment: "kick",
+        maxVL: 4
     },
 
     chatFilter: [

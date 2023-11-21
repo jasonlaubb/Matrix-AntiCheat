@@ -6,7 +6,7 @@ import {
 } from "@minecraft/server";
 import { isAdmin } from "../../Assets/Util";
 
-class Freeze {
+interface Freeze {
     location: Vector3;
     dimension: string;
 }
@@ -20,11 +20,20 @@ system.runInterval(() => {
         freezeInfo = JSON.parse(freezeInfo as string);
 
         const freeze = freezeInfo as any as Freeze;
-    
-        player.teleport(freeze.location, {
+
+        try {
+            player.teleport(freeze.location, {
                 dimension: world.getDimension(freeze.dimension),
                 rotation: { x: 0, y: 0 }
-        });
+            });
+        } catch {
+            player.teleport(freeze.location, {
+                dimension: player.dimension,
+                rotation: { x: 0, y: 0 }
+            });
+            freeze.dimension = player.dimension.id;
+            player.setDynamicProperty("freeze", JSON.stringify(freeze));
+        }
         player.runCommand("inputpermission set @s movement disabled");
         player.runCommand("inputpermission set @s camera disabled");
     }
@@ -45,9 +54,11 @@ function freeze(player: Player) {
 
 function unfreeze (player: Player) {
     if (player.getDynamicProperty("freeze") === undefined) return false
-    player.runCommandAsync("inputpermission set @s movement enabled");
-    player.runCommandAsync("inputpermission set @s camera enabled");
-    system.run(() => player.setDynamicProperty("freeze", undefined))
+    system.run(() => {
+        player.runCommand("inputpermission set @s movement enabled");
+        player.runCommand("inputpermission set @s camera enabled");
+        player.setDynamicProperty("freeze", undefined)
+    })
     return true
 }
 

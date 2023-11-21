@@ -45,16 +45,19 @@ export const validModules: string[] = [
     "antiAutoClicker",
     "antiSpam",
     "antiFly",
+    "antiMotion",
     "antiPhase",
     "antiSpeed",
     "antiNuker",
     "antiSurround",
     "antiTower",
+    "antiFastUse",
     "antiNoSlow",
     "antiBlockReach",
     "antiAim",
     "antiScaffold",
     "antiIllegalItem",
     "antiNameSpoof",
-    "antiOperator"
+    "antiOperator",
+    "antiCBE"
 ]

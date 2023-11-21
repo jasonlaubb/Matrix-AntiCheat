@@ -1,11 +1,11 @@
 {
-  "include": ["src"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "lib": ["esnext"],
+    "lib": ["DOM", "ESNext"],
     "noEmit": false,
     "strict": true,
     "allowJs": true,
