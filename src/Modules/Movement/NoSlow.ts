@@ -2,7 +2,8 @@ import {
     Player,
     system,
     world,
-    Effect
+    Effect,
+    Vector3
 } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { flag, isAdmin } from "../../Assets/Util";
@@ -14,7 +15,7 @@ function getSpeedIncrease (speedEffect: Effect | undefined) {
     return (speedEffect?.amplifier + 1) * 0.0476
 }
 
-const lastPosition = new Map();
+const lastPosition = new Map<string, Vector3>();
 
 /**
  * @author RaMiGamerDev
@@ -26,7 +27,7 @@ async function antiNoSlow (player: Player) {
     const playerLocation = player.location;
 
     //get the last position
-    const playerLastPos = lastPosition.get(player) ?? player.location;
+    const playerLastPos = lastPosition.get(player.id) ?? player.location;
 
     //get the velocity
     const { x: velocityX, z: velocityZ } = player.getVelocity();
@@ -48,7 +49,7 @@ async function antiNoSlow (player: Player) {
 
     //if the player isn't in the web, set the last position
     if (!headWeb && !bodyWeb) {
-        lastPosition.set(player, playerLocation);
+        lastPosition.set(player.id, playerLocation);
     }
 
     //get the player speed
@@ -59,8 +60,9 @@ async function antiNoSlow (player: Player) {
 
     //check if the player is in the web and the player speed is lower than the max speed
     if (headWeb === true || bodyWeb === true) {
-        if (playerSpeed <= (0.04 + limitIncrease)) {
-            lastPosition.set(player, playerLocation);
+        if (playerSpeed <= (0.09 + limitIncrease)) {
+            lastPosition.set(player.id, playerLocation);
+            player.noSlowBuffer = 0
         } else {
             //flag the player, if the buffer is higher than the max buffer, teleport the player back
             player.noSlowBuffer++
@@ -73,10 +75,19 @@ async function antiNoSlow (player: Player) {
     } else {
         if (buffer > 0) {
             player.noSlowBuffer = 0
+            lastPosition.set(player.id, playerLocation);
         }
     }
 
-    if (player.hasTag("matrix:charging") && playerSpeed > 0.1618875 && player.isOnGround) {
+    //log down the player's last item used
+    if (player.hasTag("matrix:using_item") && player.lastItemUsed === undefined) {
+        player.lastItemUsed = Date.now();
+    } else if (!player.hasTag("matrix:using_item")) {
+        player.lastItemUsed = undefined;
+    }
+
+    //check if player speed while using item is too high
+    if (!player.getEffect(MinecraftEffectTypes.Speed) && player.lastItemUsed && Date.now() - player.lastItemUsed >= config.antiNoSlow.itemUseTime && playerSpeed > config.antiNoSlow.maxUsingItemTherehold && player.isOnGround) {
         const isIceBelow = player.dimension.getBlock({
             x: Math.floor(player.location.x),
             y: Math.floor(player.location.y) - 1,
@@ -85,6 +96,8 @@ async function antiNoSlow (player: Player) {
 
         if (!isIceBelow) {
             player.teleport(player.location)
+            player.addTag("matrix:item-disabled")
+            system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiNoSlow.timeout)
             flag (player, "NoSlow", config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
         }
     }
@@ -93,18 +106,9 @@ async function antiNoSlow (player: Player) {
 system.runInterval(() => {
     const toggle = (world.getDynamicProperty("antiNoSlow") ?? config.antiNoSlow.enabled) as boolean;
     if (toggle !== true) return;
-
-    for (const player of world.getAllPlayers()) {
+    const players = world.getAllPlayers()
+    for (const player of players) {
         if (isAdmin (player)) continue;
         antiNoSlow(player);
     }
 }, 1)
-
-world.afterEvents.itemStartUse.subscribe(({ source: player }) => player.addTag("matrix:charging"))
-world.afterEvents.itemStopUse.subscribe(({ source: player }) => player.removeTag("matrix:charging"))
-world.afterEvents.itemReleaseUse.subscribe(({ source: player }) => player.removeTag("matrix:charging"))
-
-world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-    if (!initialSpawn) return;
-    player.removeTag("matrix:charging");
-})

@@ -14,7 +14,7 @@ const lastSafePosition = new Map<string, Vector3>();
 
 async function antiMotion (player: Player) {
     let distribution: number[] = velocityList.get(player.id) ?? [];
-    const { y } = player.getVelocity();
+    const { x, y, z } = player.getVelocity();
 
     const lastPos = lastSafePosition.get(player.id) ?? player.location;
 
@@ -24,13 +24,14 @@ async function antiMotion (player: Player) {
     }
 
     //end the movement calculation if player is on ground
-    if (player.isOnGround) {
+    if (player.isOnGround || player.isFlying || player.isClimbing || (!player.isOnGround && y === 0 && x === 0 && z === 0)) {
         velocityList.delete(player.id)
+        player.lastTouchGround = Date.now()
         return
     }
 
     //If the distribution data is not enough for calucation, push the velocity and return
-    if (distribution.length <= 10) {
+    if (distribution.length <= 15) {
         distribution.push(y);
         velocityList.set(player.id, distribution);
         return;
@@ -45,8 +46,8 @@ async function antiMotion (player: Player) {
     const relativeVelocity = distribution.filter(velocity => velocity >= 0).length / distribution.length;
 
     //if the player is falling, and the last 3 velocity is negative, keep falling
-    const keepFalling = (y < 0 && distribution[distribution.length - 2] < 0 && distribution[distribution.length - 3] < 0) && player.isFalling
-
+    const keepFalling = y < 0 && distribution.slice(-5).every(v => v < 0) && player.isFalling;
+    
     //log player touch water time
     if (player.isInWater || player.isSwimming || findWater(player)) {
         player.lastTouchWater = Date.now()
@@ -59,7 +60,7 @@ async function antiMotion (player: Player) {
     }
 
     //if the relative velocity is lower than 0.6, flag the player
-    if (relativeVelocity >= 0.1 && relativeVelocity <= 0.6 && !keepFalling && !player.isClimbing && !player.hasTag("matrix:levitating")) {
+    if (relativeVelocity <= 0.4 && !keepFalling && !player.hasTag("matrix:levitating")) {
         flag (player, "Motion", config.antiMotion.maxVL, config.antiMotion.punishment, [lang(">relative") + ":" + relativeVelocity.toFixed(1)])
         player.teleport(lastPos)
         velocityList.delete(player.id)
@@ -74,8 +75,8 @@ function findWater (player: Player) {
 system.runInterval(() => {
     const toggle: boolean = Boolean(world.getDynamicProperty("antiMotion")) ?? config.antiMotion.enabled;
     if (toggle !== true) return;
-
-    for (const player of world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative]})) {
+    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative]})
+    for (const player of players) {
         if (isAdmin (player)) continue;
         antiMotion (player)
     }

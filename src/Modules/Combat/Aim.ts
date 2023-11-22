@@ -75,7 +75,8 @@ async function AntiAim (player: Player) {
 system.runInterval(() => {
     const toggle: boolean = (world.getDynamicProperty("antiAim") ?? config.antiAim.enabled) as boolean;
     if (toggle !== true) return;
-    for (const player of world.getAllPlayers()) {
+    const players = world.getAllPlayers();
+    for (const player of players) {
         if (isAdmin (player)) continue;
         AntiAim (player)
     }

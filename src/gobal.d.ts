@@ -10,5 +10,7 @@ declare module "@minecraft/server" {
         blockData: any[];
         blacklistMsgWarn: number;
         lastTouchWater: number;
+        lastItemUsed: number;
+        lastTouchGround: number;
     }
 }

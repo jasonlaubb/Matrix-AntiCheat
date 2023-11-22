@@ -3,7 +3,7 @@ import en_US from "./en_US";
 import config from "../Config";
 import zh_TW from "./zh_TW";
 
-let languageNow = "en_US"
+let languageNow = config.language
 
 export const langs: { [key: string]: { [key: string]: string } } = {
     "en_US": en_US,
@@ -11,7 +11,9 @@ export const langs: { [key: string]: { [key: string]: string } } = {
 }
 
 world.afterEvents.worldInitialize.subscribe(() => {
-    const language = world.getDynamicProperty("matrix:language") as string ?? config.language
+    const language = world.getDynamicProperty("matrix:language") as string
+    if (language === undefined) return
+    
     languageNow = language
 })
 

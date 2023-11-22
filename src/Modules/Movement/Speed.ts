@@ -8,7 +8,7 @@ import {
 } from "@minecraft/server";
 import config from "../../Data/Config.js";
 import { flag, isAdmin } from "../../Assets/Util.js";
-import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index.js";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang.js";
 
 const speedData = new Map();
@@ -89,7 +89,8 @@ system.runInterval(() => {
 
     const now: number = Date.now();
 
-    for (const player of world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })) {
+    const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
+    for (const player of players) {
         if (isAdmin(player)) {
             continue;
         }

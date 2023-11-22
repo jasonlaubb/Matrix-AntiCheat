@@ -21,6 +21,7 @@ async function operator (player: Player) {
 
     //if the player isn't op and is admin, add the op
     if (!playerIsOp && isadmin) {
+        //prevent some host open Anti-op and deop
         player.setOp(true)
     }
 }
@@ -28,8 +29,8 @@ async function operator (player: Player) {
 system.runInterval(() => {
     const toggle: boolean = (world.getDynamicProperty("antiOperator") ?? config.antiOperator.enabled) as boolean;
     if (toggle !== true) return
-
-    for (const player of world.getAllPlayers()) {
+    const players = world.getAllPlayers()
+    for (const player of players) {
         operator (player)
     }
 }, 20)

@@ -12,16 +12,16 @@ import lang from "../../Data/Languages/lang";
 async function antiNameSpoof (player: Player, playerName: string) {
 
     //check if the player name is too long or too short
-    if (playerName.length < 3 || playerName.length > 16) {
+    if (playerName?.length < 3 || playerName?.length > 16) {
         flag (player, "NameSpoof", 0, config.antiNameSpoof.punishment, [lang(">Type") + ":" + lang(">illegalLength"), lang(">Length") + ":" + playerName.length])
         return
     }
 
     //get the non-ASCII characters in player name
-    const nonASCII = playerName.match(/[^\x00-\x7F]/g);
+    const nonASCII = playerName?.match(/[^\x00-\x7F]/g);
 
     //if the player name contains non-ASCII characters, check if the non-ASCII characters are illegal
-    if (nonASCII.length > 0) {
+    if (nonASCII?.length > 0) {
         let illegalName = false;
 
         //check for each non-ASCII characters
@@ -42,7 +42,7 @@ async function antiNameSpoof (player: Player, playerName: string) {
     }
 }
 
-world.afterEvents.playerSpawn.subscribe(({ player }): any => {
+world.afterEvents.playerSpawn.subscribe(({ player }) => {
     const toggle: boolean = (world.getDynamicProperty("antiNameSpoof") ?? config.antiNameSpoof.enabled) as boolean;
     if (toggle !== true || isAdmin(player)) return
 

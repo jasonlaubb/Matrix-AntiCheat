@@ -93,7 +93,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             } else {
                 const password: string = regax[1]
                 const correctPassword = (world.getDynamicProperty("password") ?? config.commands.password) as string
-                if (password === undefined || password.length <= 0) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.please")}`))
+                if (password === undefined || password.length <= 0) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-op.please")}`))
                 if (password == correctPassword) {
                     player.setDynamicProperty("isAdmin", true)
                     system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-op.now")}`))

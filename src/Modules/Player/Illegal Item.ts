@@ -112,7 +112,8 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
 }
 
 system.runInterval(() => {
-    for (const player of world.getAllPlayers()) {
+    const players = world.getAllPlayers()
+    for (const player of players) {
         const toggle: boolean = Boolean(world.getDynamicProperty("antiIllegalItem")) ?? config.antiIllegalItem.enabled
         if (toggle !== true || isAdmin(player)) continue
 
@@ -128,7 +129,7 @@ world.afterEvents.playerPlaceBlock.subscribe(event => {
     if (toggle !== true || isAdmin(player) || player.hasTag("matrix:place-disabled")) return
 
     const container: Container = (block.getComponent(BlockInventoryComponent.componentId) as BlockInventoryComponent)?.container
-    if (container === undefined) return;
+    if (container.size === 0) return;
 
     const checkingState = ItemCheck (player, container)
 

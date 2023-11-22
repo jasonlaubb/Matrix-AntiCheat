@@ -18,14 +18,16 @@ const towerData = new Map<string, TowerData>();
  */
 
 async function antiTower(player: Player, block: Block) {
+    const data = towerData.get(player.id)
     //get the two value from Map
-    const { towerBlock, lastBlockPlace: lastTime } = towerData.get(player.id)
+    const towerBlock = data?.towerBlock
+    const lastTime = data?.lastBlockPlace
 
     //set the value to Map
     towerData.set(player.id, { towerBlock: block.location, lastBlockPlace: Date.now() });
 
     //skip check for first block place
-    if (towerData === undefined) return;
+    if (data === undefined) return;
 
     //prevent false positive and disable check when player has tag
     if (player.hasTag("matrix:place-disabled") || player.isOnGround || !player.isJumping || player.isFlying || player.isInWater || player.getEffect(MinecraftEffectTypes.JumpBoost)) return;
@@ -64,7 +66,7 @@ async function antiTower(player: Player, block: Block) {
 
         //remove the tag after timeout
         system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiTower.timeout);
-        flag(player, "Tower", config.antiTower.maxVL, config.antiTower.punishment, [lang("Delay") + ":" + delay.toFixed(2), lang(">PosDeff") + ":" + playerPosDeff.toFixed(2), lang("CentreDis") + ":" + playerCentreDis.toFixed(2)]);
+        flag(player, "Tower", config.antiTower.maxVL, config.antiTower.punishment, [lang(">Delay") + ":" + delay.toFixed(2), lang(">PosDeff") + ":" + playerPosDeff.toFixed(2), lang(">CentreDis") + ":" + playerCentreDis.toFixed(2)]);
     }
 }
 world.afterEvents.playerPlaceBlock.subscribe(({ player, block }) => {

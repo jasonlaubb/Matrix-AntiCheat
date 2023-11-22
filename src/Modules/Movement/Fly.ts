@@ -76,7 +76,8 @@ system.runInterval(() => {
     if (toggle !== true) return;
 
     const now = Date.now();
-    for (const player of world.getPlayers({ excludeGameModes: [GameMode.spectator] })) {
+    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator] })
+    for (const player of players) {
         if (isAdmin(player)) continue;
 
         antiFly (player, now)

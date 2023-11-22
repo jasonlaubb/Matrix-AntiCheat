@@ -34,6 +34,7 @@ import "./Modules/Player/NameSpoof"
 import "./Modules/Player/Operator"
 import "./Modules/Player/Auto"
 import "./Modules/Player/FastUse"
+import "./Modules/Player/GameMode"
 
 import "./Functions/chatModel/ChatHandler"
 

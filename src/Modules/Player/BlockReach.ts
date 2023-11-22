@@ -5,7 +5,8 @@ import {
     PlayerBreakBlockBeforeEvent,
     Player,
     Block,
-    PlayerPlaceBlockBeforeEvent
+    PlayerPlaceBlockBeforeEvent,
+    Vector3
 } from "@minecraft/server"
 import { flag, isAdmin } from "../../Assets/Util"
 import { isTargetGamemode } from "../../Assets/Util"
@@ -19,7 +20,7 @@ import lang from "../../Data/Languages/lang.js"
 
 async function antiBlockReachA (event: PlayerBreakBlockBeforeEvent, player: Player, block: Block) {
     if (player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
-    const distance = Vector.distance(player.getHeadLocation(), block.location);
+    const distance = Vector.distance(player.getHeadLocation(), absCentrePos(block.location));
 
     //if the distance is higher than the max distance, flag the player
     if (distance > config.antiBlockReach.maxBreakDistance) {
@@ -28,14 +29,14 @@ async function antiBlockReachA (event: PlayerBreakBlockBeforeEvent, player: Play
             if (player.hasTag("matrix:break-disabled")) return;
             player.addTag("matrix:break-disabled")
             system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBlockReach.timeout)
-            flag (player, "BlockReach", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + distance.toFixed(2), lang(">Mode") + lang(">Break")])
+            flag (player, "BlockReach", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + ":" + distance.toFixed(2), lang(">Mode") + ":" + lang(">Break")])
         })
     }
 }
 
 async function antiBlockReachB (event: PlayerPlaceBlockBeforeEvent, player: Player, block: Block) {
     if (player.hasTag("matrix:place-disabled") || isTargetGamemode(player, 1)) return;
-    const distance = Vector.distance(player.getHeadLocation(), block.location);
+    const distance = Vector.distance(player.getHeadLocation(), absCentrePos(block.location));
 
     //if the distance is higher than the max distance, flag the player
     if (distance > config.antiBlockReach.maxPlaceDistance) {
@@ -44,9 +45,13 @@ async function antiBlockReachB (event: PlayerPlaceBlockBeforeEvent, player: Play
             if (player.hasTag("matrix:place-disabled")) return;
             player.addTag("matrix:place-disabled")
             system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiBlockReach.timeout)
-            flag (player, "BlockReach", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + distance.toFixed(2), lang(">Mode") + lang(">Place")])
+            flag (player, "BlockReach", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + ":" + distance.toFixed(2), lang(">Mode") + ":" + lang(">Place")])
         })
     }
+}
+
+function absCentrePos (pos: Vector3) {
+    return { x: pos.x - 0.5, y: pos.y - 0.5, z: pos.z - 0.5 } as Vector3
 }
 
 world.beforeEvents.playerBreakBlock.subscribe(event => {

@@ -106,15 +106,18 @@ export function flag (player: Player, modules: string, maxVL: number,  punishmen
     const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode
     switch (flagMode) {
         case "tag": {
-            world.getPlayers({ tags: ["matrix:notify"]}).forEach(players => players.sendMessage(flagMsg))
+            const targets = world.getPlayers({ tags: ["matrix:notify"]})
+            targets.forEach(players => players.sendMessage(flagMsg))
             break
         }
         case "bypass": {
-            world.getPlayers({ excludeNames: [player.name] }).forEach(players => players.sendMessage(flagMsg))
+            const targets = world.getPlayers({ excludeNames: [player.name] })
+            targets.forEach(players => players.sendMessage(flagMsg))
             break
         }
         case "admin": {
-            world.getAllPlayers().filter(players => isAdmin(players)).forEach(players => players.sendMessage(flagMsg))
+            const targets = world.getAllPlayers().filter(players => isAdmin(players))
+            targets.forEach(players => players.sendMessage(flagMsg))
             break
         }
         default: {

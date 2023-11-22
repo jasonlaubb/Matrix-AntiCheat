@@ -225,7 +225,7 @@ export default {
 
     antiFly: {
         enabled: true,
-        maxVelocityY: 0.7,
+        maxVelocityY: 0.85,
         skipCheck: 100,
         punishment: undefined,
         maxVL: 4
@@ -273,7 +273,10 @@ export default {
     antiNoSlow: {
         enabled: true,
         maxSpeedTherehold: 0.04,
+        maxUsingItemTherehold: 0.1618875,
+        itemUseTime: 250,
         maxNoSlowBuff: 1,
+        timeout: 60,
         punishment: "kick",
         maxVL: 4
     },
@@ -295,8 +298,8 @@ export default {
 
     antiBlockReach: {
         enabled: true,
-        maxPlaceDistance: 6.3,
-        maxBreakDistance: 6.1,
+        maxPlaceDistance: 6.46,
+        maxBreakDistance: 6.45,
         timeout: 60,
         punishment: "kick",
         maxVL: 0,
@@ -314,6 +317,15 @@ export default {
         enabled: true,
         minDelay: 200,
         timeout: 60,
+        punishment: "kick",
+        maxVL: 2
+    },
+
+    antiGameMode: {
+        enabled: false,
+        bannedGameMode: [1], //example [1,3] creative mode and spectator mode will be punished
+        returnDefault: true, // if true, player will be return to default game mode
+        returnGameMode: 0, // use when returnDefault is false
         punishment: "kick",
         maxVL: 2
     },
@@ -396,15 +408,15 @@ export default {
         maxBlocksPer2Tick: 4,
         timeout: 100,
         punishment: "kick",
-        maxVL: 0
+        maxVL: 1
     },
 
     antiFastUse: {
         enabled: true,
-        minUseTime: 200,
+        minUseTime: 20,
         timeout: 60,
         punishment: "kick",
-        maxVL: 2
+        maxVL: 4
     },
 
     antiAuto: {

@@ -76,8 +76,8 @@ async function antiPhase (player: Player) {
 system.runInterval(() => {
     const toggle: boolean = (world.getDynamicProperty("antiPhase") ?? config.antiPhase.enabled) as boolean;
     if (toggle !== true) return;
-    
-    for (const player of world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })) {
+    const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
+    for (const player of players) {
         if (isAdmin (player)) continue;
 
         antiPhase (player);
