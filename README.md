@@ -4,10 +4,10 @@
   # Matrix Anti Cheat
   
   <p align="center">
-    <img src="https://img.shields.io/github/downloads/jasonlaubb/Nokararos-AntiCheat/total?style=for-the-badge" alt="Downloads">
-    <img src="https://img.shields.io/github/issues/jasonlaubb/Nokararos-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open">
-    <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Commits Per Week">
-    <img src="https://img.shields.io/github/last-commit/jasonlaubb/Nokararos-AntiCheat?style=for-the-badge" alt="Last Commit">
+    <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="Downloads">
+    <img src="https://img.shields.io/github/issues/jasonlaubb/Matrix-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open">
+    <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Matrix-AntiCheat?style=for-the-badge" alt="Commits Per Week">
+    <img src="https://img.shields.io/github/last-commit/jasonlaubb/Matrix-AntiCheat?style=for-the-badge" alt="Last Commit">
   </p>
 
   ## Introduction
@@ -40,11 +40,13 @@
 
   To make Matrix Anti Cheat work, you'll need the Beta API.
 
-  Modify the default configuration in (root)/scripts/config.js to suit your needs.
+  Modify the default configuration in (root)/scripts/Data/Config.js to suit your needs.
 
   Download the latest release and use the .mcpack file, not the source code.
 
   ***#op (password)***
+
+  > The default password is "password"
   
   ***#help for commands***
   
