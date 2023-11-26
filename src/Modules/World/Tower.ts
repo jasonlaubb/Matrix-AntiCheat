@@ -47,7 +47,7 @@ async function antiTower(player: Player, block: Block) {
     const playerPosDeff: number = player.location.y - y;
 
     //check if player is towering
-    const playerTowering: boolean = playerPosDeff < 0.4 && y - towerBlock.y == 1;
+    const playerTowering: boolean = playerPosDeff > 0.14 && playerPosDeff < 0.4 && y - towerBlock.y == 1;
 
     //check if all state is true
     const locationState: boolean = playerTowering && towerNearBlock && playerNearBlock;

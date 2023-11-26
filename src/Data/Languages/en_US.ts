@@ -224,5 +224,6 @@ export default {
     ">ItemEnchantRepeat": "ItemEnchantRepeat",
     ">ItemAmount": "ItemAmount",
     ">ItemTag": "ItemTag",
-    ">Amount": "Amount"
+    ">Amount": "Amount",
+    ">Ratio": "Ratio"
 }

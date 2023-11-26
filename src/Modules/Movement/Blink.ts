@@ -1,10 +1,12 @@
 import { world, system, Vector3, Player } from "@minecraft/server"
 import { isAdmin, flag } from "../../Assets/Util"
-import { MinecraftItemTypes } from "@minecraft/vanilla-data"
+import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
 import lang from "../../Data/Languages/lang"
+import config from "../../Data/Config"
 
 interface BlinkData {
     lastPos: Vector3
+    lastlastpos: Vector3
     lastSpeed: number
 }
 
@@ -41,9 +43,13 @@ async function antiBlink (player: Player) {
     if (x2 % 1 === 0 && x2 % 1 === 0 && x2 % 1 === 0 && speed == 0) return
     if (player.hasTag("matrix:useTP") && speed == 0) return
 
-    if (distance > speed && lastSpeed === 0) {
-        flag(player, "Blink", "A", 1, "kick", [lang(">distance") + ":" + distance.toFixed(2)])
+    if (distance / speed > 2.5 && lastSpeed === 0) {
+        flag(player, "Blink", "A", config.antiBlink.maxVL, "kick", [lang(">Ratio") + ":" + distance / speed])
         player.teleport(lastPos)
+        player.addTag("matrix:useTP")
+        system.runTimeout(() => {
+            player.removeTag("matrix:useTP")
+        }, 100)
     }
 }
 
@@ -60,10 +66,20 @@ system.runInterval(() => {
 }, 0)
 
 world.afterEvents.itemUse.subscribe(({ source: player, itemStack: item }) => {
+    if (player.hasTag("matrix:useTP")) return
     if (item.typeId === MinecraftItemTypes.EnderPearl || item.typeId === MinecraftItemTypes.ChorusFruit) {
         player.addTag("useTP")
         system.runTimeout(() => {
             player.removeTag("matrix:useTP")
         }, 120)
     }
+})
+
+world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+    blinkData.delete(playerId)
+})
+
+world.afterEvents.playerSpawn.subscribe(({ player: { id }, initialSpawn }) => {
+    if (!initialSpawn) return
+    blinkData.delete(id)
 })

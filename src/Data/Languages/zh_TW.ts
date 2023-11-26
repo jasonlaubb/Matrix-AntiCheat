@@ -225,4 +225,5 @@ export default {
     ">ItemEnchantRepeat": "附魔重疊",
     ">ItemAmount": "物品數量",
     ">Amount": "數量",
+    ">Ratio": "比率"
 }

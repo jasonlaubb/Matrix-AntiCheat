@@ -1,6 +1,8 @@
 import { world, system, Player, Vector3 } from "@minecraft/server";
 import config from "../../Data/Config";
 import { flag, isAdmin } from "../../Assets/Util";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import lang from "../../Data/Languages/lang";
 
 interface TimerData {
     lastPos: Vector3;
@@ -35,7 +37,8 @@ async function antiTimer (player: Player): Promise<any> {
     velocities.push(totalSpeed)
 
     if (velocities.length <= 10) {
-        return timerData.set(player.id, { lastPos: player.location, velocities } as TimerData)
+        timerData.set(player.id, { lastPos: player.location, velocities } as TimerData)
+        return
     } else {
         velocities.shift()
         timerData.set(player.id, { lastPos: player.location, velocities } as TimerData)
@@ -44,13 +47,17 @@ async function antiTimer (player: Player): Promise<any> {
     if (lastPos === undefined || velocities.some((v) => v == 0)) return
 
     //calculate block per tick
-    const blockPerTick = Math.hypot(lastPos.x - player.location.x, lastPos.z - player.location.z)
+    const blockPerTick = Math.hypot(lastPos.x - player.location.x, lastPos.y - player.location.y, lastPos.z - player.location.z)
     const speedLimit = Math.max(...velocities)
 
+    const timeNow = Date.now()
+
     // flag the player
-    if (blockPerTick > speedLimit * config.antiTimer.absError && !velocities.some((v) => v == 0)) {
+    if (blockPerTick / speedLimit > 2.6 && !velocities.some((v) => v == 0)) {
+        if (player.lastExplosionTime && player.lastExplosionTime - timeNow < 2000) return
+        if (player.isFlying || player.getEffect(MinecraftEffectTypes.JumpBoost) || player.getEffect(MinecraftEffectTypes.Speed)) return
         player.teleport(lastPos)
-        flag (player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["BlockPerTick:" + blockPerTick.toFixed(2)])
+        flag (player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, [lang(">Ratio") + ":" + blockPerTick / speedLimit])
     }
 }
 

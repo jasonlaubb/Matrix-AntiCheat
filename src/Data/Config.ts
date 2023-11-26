@@ -301,8 +301,8 @@ export default {
 
     antiBlockReach: {
         enabled: true,
-        maxPlaceDistance: 6.46,
-        maxBreakDistance: 6.45,
+        maxPlaceDistance: 6.9,
+        maxBreakDistance: 6.85,
         timeout: 60,
         punishment: "kick",
         maxVL: 0,
