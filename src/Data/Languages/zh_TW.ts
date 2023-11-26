@@ -224,5 +224,5 @@ export default {
     ">ItemEnchantAble": "附魔應用",
     ">ItemEnchantRepeat": "附魔重疊",
     ">ItemAmount": "物品數量",
-    ">Amount": "數量"
+    ">Amount": "數量",
 }

@@ -60,7 +60,7 @@ function checksBan (player: Player): void {
     }
 
     try {
-        player.runCommand(`kick "${player.name}" "\n§c§l${lang(".banHandler.banned")}${lang(".banHandler.format").replace("%a", timeTherShold).replace("%b", reason).replace("%c", by)}\n§r§7${lang(".Util.reason")}: §c${reason}\n§7${lang(".Util.by")}: §c${by}\n§7${lang(".Util.timeLeft")}: §c${timeTherShold}\n§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")}\n§r§7${lang(".Util.unknown")}: §c${lang(".Util.has_failed")})}`)
+        player.runCommand(`kick "${player.name}" "\n§c§l${lang(".banHandler.banned")}${lang(".banHandler.format").replace("%a", timeTherShold).replace("%b", reason).replace("%c", by)}`)
     } catch {
         triggerEvent (player, "matrix:kick")
     }

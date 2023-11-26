@@ -92,7 +92,7 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
                     const isConflict = tester.canAddEnchantment(enchantment)
                     if (isConflict === false) {
                         patchedEnchantment.push(enchantment.type.id + ":" + enchantment.level)
-                        mode = lang("EnchantConflict")
+                        mode = lang(">EnchantConflict")
                     } else {
                         tester.addEnchantment(enchantment)
                     }

@@ -223,5 +223,6 @@ export default {
     ">ItemEnchantAble": "ItemEnchantAble",
     ">ItemEnchantRepeat": "ItemEnchantRepeat",
     ">ItemAmount": "ItemAmount",
-    ">ItemTag": "ItemTag"
+    ">ItemTag": "ItemTag",
+    ">Amount": "Amount"
 }
