@@ -18,6 +18,8 @@ import lang from "../../Data/Languages/lang";
  * This checks check the invalid rotation, angle and postion
  */
 
+let blockPlace: { [key: string]: number[] } = {}
+
 async function antiScaffold (player: Player, block: Block) {
     //constant the infomation
     const rotation: Vector2 = player.getRotation();
@@ -44,10 +46,25 @@ async function antiScaffold (player: Player, block: Block) {
         flag (player, 'Scaffold', 'B', config.antiScaffold.maxVL,  config.antiScaffold.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
     }
 
+    const isUnder = isUnderPlayer(player.location, block.location)
+    
     //check if the rotation is lower than the min rotation and the block is under the player
-    if (rotation.x < config.antiScaffold.minRotation && isUnderPlayer(player.location, block.location)) {
+    if (rotation.x < config.antiScaffold.minRotation && isUnder) {
         detected = true;
         flag (player, 'Scaffold', 'C', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`])
+    }
+
+    //check if the player is placing block too fast
+    if (isUnder) {
+        if (!blockPlace[player.id]) blockPlace[player.id] = []
+        const timeNow = Date.now()
+        blockPlace[player.id] = [...blockPlace[player.id].filter(time => timeNow - time <= 1000), timeNow]
+
+        if (blockPlace[player.id].length > config.antiScaffold.maxBPS) {
+            detected = true;
+            blockPlace[player.id] = []
+            flag (player, 'Scaffold', 'D', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`])
+        }
     }
 
     //if detected, flag the player and set the block to the air
@@ -102,3 +119,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         player.removeTag("matrix:place-disabled")
     }
 });
+
+world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+    delete blockPlace[playerId]
+})

@@ -225,16 +225,18 @@ export default {
 
     antiFly: {
         enabled: true,
-        maxVelocityY: 0.85,
-        skipCheck: 100,
+        flyY: 0.7,
+        flyXZ: 0.7,
+        maxFlyY: 3.5,
+        fallXZ: 0.15,
         punishment: undefined,
         maxVL: 4
     },
 
     antiMotion: {
         enabled: true,
-        maxrelativeY: 0.6,
-        minrelativeY: 0.1,
+        minRelativeY: 0.4,
+        fallingDuration: 5,
         punishment: "kick",
         maxVL: 4
     },
@@ -266,6 +268,7 @@ export default {
         maxAngle: 95,
         factor: 1,
         minRotation: 34.98,
+        maxBPS: 6,
         punishment: "kick",
         maxVL: 2
     },
@@ -413,6 +416,19 @@ export default {
         timeout: 100,
         punishment: "kick",
         maxVL: 1
+    },
+
+    antiTimer: {
+        enabled: true,
+        punishment: "kick",
+        absError: 1.05,
+        maxVL: 4,
+    },
+
+    antiBlink: {
+        enabled: false,
+        punishment: "kick",
+        maxVL: 4
     },
 
     antiFastUse: {

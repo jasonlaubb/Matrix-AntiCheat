@@ -46,7 +46,7 @@ async function antiMotion (player: Player) {
     const relativeVelocity = distribution.filter(velocity => velocity >= 0).length / distribution.length;
 
     //if the player is falling, and the last 3 velocity is negative, keep falling
-    const keepFalling = y < 0 && distribution.slice(-5).every(v => v < 0) && player.isFalling;
+    const keepFalling = y < 0 && distribution.slice(-config.antiMotion.fallingDuration).every(v => v < 0) && player.isFalling;
     
     //log player touch water time
     if (player.isInWater || player.isSwimming || findWater(player)) {
@@ -60,7 +60,7 @@ async function antiMotion (player: Player) {
     }
 
     //if the relative velocity is lower than 0.6, flag the player
-    if (relativeVelocity <= 0.4 && !keepFalling && !player.hasTag("matrix:levitating")) {
+    if (relativeVelocity <= config.antiMotion.minRelativeY && !keepFalling && !player.hasTag("matrix:levitating")) {
         flag (player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, [lang(">relative") + ":" + relativeVelocity.toFixed(1)])
         player.teleport(lastPos)
         velocityList.delete(player.id)
