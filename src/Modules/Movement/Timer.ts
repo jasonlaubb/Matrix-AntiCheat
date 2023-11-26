@@ -54,7 +54,7 @@ async function antiTimer (player: Player): Promise<any> {
 
     // flag the player
     const ratio = blockPerTick / speedLimit
-    if (ratio > 2.6 && !velocities.some((v) => v == 0)) {
+    if (ratio > 2.6 && totalSpeed > 0.23 && !velocities.some((v) => v == 0)) {
         if (player.lastExplosionTime && player.lastExplosionTime - timeNow < 2000) return
         if (player.isFlying || player.getEffect(MinecraftEffectTypes.JumpBoost) || player.getEffect(MinecraftEffectTypes.Speed)) return
         player.teleport(lastPos)
