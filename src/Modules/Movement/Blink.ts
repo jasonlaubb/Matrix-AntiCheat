@@ -43,8 +43,9 @@ async function antiBlink (player: Player) {
     if (x2 % 1 === 0 && x2 % 1 === 0 && x2 % 1 === 0 && speed == 0) return
     if (player.hasTag("matrix:useTP") && speed == 0) return
 
-    if (distance / speed > 2.5 && lastSpeed === 0) {
-        flag(player, "Blink", "A", config.antiBlink.maxVL, "kick", [lang(">Ratio") + ":" + distance / speed])
+    const ratio = distance / speed
+    if (ratio > 2.5 && lastSpeed === 0) {
+        flag(player, "Blink", "A", config.antiBlink.maxVL, "kick", [lang(">Ratio") + ":" + ratio.toFixed(2)])
         player.teleport(lastPos)
         player.addTag("matrix:useTP")
         system.runTimeout(() => {
