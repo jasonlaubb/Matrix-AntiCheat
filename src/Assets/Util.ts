@@ -131,6 +131,9 @@ export function flag (player: Player, modules: string, type: Type, maxVL: number
     if (punishment && vl > maxVL) {
         let punishmentDone = false
         switch (punishment) {
+            case "none": {
+                break
+            }
             case "kick": {
                 punishmentDone = true
                 kick (player, config.punishment_kick.reason, 'Matrix')
@@ -142,7 +145,7 @@ export function flag (player: Player, modules: string, type: Type, maxVL: number
                 break
             }
             default: {
-                break
+                console.error("Non matched punishment: " + punishment)
             }
         }
         if (punishmentDone) {
