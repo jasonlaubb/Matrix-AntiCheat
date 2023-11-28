@@ -2,7 +2,8 @@ import {
     world,
     system,
     Player,
-    Vector3
+    Vector3,
+    Entity
 } from "@minecraft/server";
 import config from "../../Data/Config.js";
 import { flag, isAdmin } from "../../Assets/Util.js";
@@ -15,7 +16,7 @@ import lang from "../../Data/Languages/lang.js";
 
 const hitLength = new Map<string, any[]>();
 
-async function KillAura(damagingEntity: Player, hitEntity: Player) {
+async function KillAura(damagingEntity: Player, hitEntity: Entity) {
     //constant the infomation
     let playerHitEntity = hitLength.get(damagingEntity.name) ?? [];
     const direction: Vector3 = calculateVector(damagingEntity.location, hitEntity.location) as Vector3;
@@ -30,15 +31,18 @@ async function KillAura(damagingEntity: Player, hitEntity: Player) {
     //if the player hit more than 1 targets in 2 ticks, flag the player
     if (playerHitEntity.length > config.antiKillAura.maxEntityHit && !damagingEntity.hasTag("matrix:pvp-disabled")) {
         hitLength.delete(damagingEntity.name);
-        damagingEntity.addTag("matrix:pvp-disabled");
         flag (damagingEntity, 'Kill Aura', "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`])
-        system.runTimeout(() => {
-            damagingEntity.removeTag("matrix:pvp-disabled");
-        }, config.antiKillAura.timeout);
+        
+        if (!config.slient) {
+            damagingEntity.addTag("matrix:pvp-disabled");
+            system.runTimeout(() => {
+                damagingEntity.removeTag("matrix:pvp-disabled");
+            }, config.antiKillAura.timeout);
+        }
     }
 
     //stop false positive
-    if (distance <= 2 || damagingEntity.hasTag("matrix:pvp-disabled")) return;
+    if (!(hitEntity instanceof Player) || distance <= 2 || damagingEntity.hasTag("matrix:pvp-disabled")) return;
 
     //get the angle
     const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(),damagingEntity.getRotation().y);
@@ -47,10 +51,12 @@ async function KillAura(damagingEntity: Player, hitEntity: Player) {
     if (angle > config.antiKillAura.minAngle) {
         flag (damagingEntity, 'Kill Aura', 'A', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
 
-        damagingEntity.addTag("matrix:pvp-disabled");
-        system.runTimeout(() => {
-            damagingEntity.removeTag("matrix:pvp-disabled");
-        }, config.antiKillAura.timeout);
+        if (!config.slient) {
+            damagingEntity.addTag("matrix:pvp-disabled");
+            system.runTimeout(() => {
+                damagingEntity.removeTag("matrix:pvp-disabled");
+            }, config.antiKillAura.timeout);
+        }
     }
 }
 
@@ -90,7 +96,7 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
     const toggle = (world.getDynamicProperty("antiKillAura") ?? config.antiKillAura.enabled) as boolean;
     if (toggle !== true) return;
 
-    if (!(damagingEntity instanceof Player) || !(hitEntity instanceof Player) || isAdmin (damagingEntity)) return;
+    if (!(damagingEntity instanceof Player) || isAdmin (damagingEntity)) return;
 
     KillAura(damagingEntity, hitEntity);
 });

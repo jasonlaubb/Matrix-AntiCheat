@@ -27,8 +27,10 @@ async function antiBlockReachA (event: PlayerBreakBlockBeforeEvent, player: Play
         event.cancel = true;
         system.run(() => {
             if (player.hasTag("matrix:break-disabled")) return;
-            player.addTag("matrix:break-disabled")
-            system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBlockReach.timeout)
+            if (!config.slient) {
+                player.addTag("matrix:break-disabled")
+                system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBlockReach.timeout)
+            }
             flag (player, "BlockReach", "A", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + ":" + distance.toFixed(2), lang(">Mode") + ":" + lang(">Break")])
         })
     }
@@ -43,8 +45,10 @@ async function antiBlockReachB (event: PlayerPlaceBlockBeforeEvent, player: Play
         event.cancel = true;
         system.run(() => {
             if (player.hasTag("matrix:place-disabled")) return;
-            player.addTag("matrix:place-disabled")
-            system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiBlockReach.timeout)
+            if (!config.slient) {
+                player.addTag("matrix:place-disabled")
+                system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiBlockReach.timeout)
+            }
             flag (player, "BlockReach", "B", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + ":" + distance.toFixed(2), lang(">Mode") + ":" + lang(">Place")])
         })
     }

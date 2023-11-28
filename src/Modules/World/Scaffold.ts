@@ -68,7 +68,7 @@ async function antiScaffold (player: Player, block: Block) {
     }
 
     //if detected, flag the player and set the block to the air
-    if (detected) {
+    if (detected && !config.slient) {
         block.setType(MinecraftBlockTypes.Air);
         player.addTag("matrix:place-disabled");
         system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiScaffold.timeout);

@@ -44,6 +44,7 @@ export default {
     "-op.please": "請輸入密碼",
     "-op.now": "您現在是管理者",
     "-op.wrong": "密碼錯誤",
+    "-op.wait": "請你在 %a 秒後再次嘗試",
 
     "-deop.lockdown": "伺服器處於鎖定模式",
     "-deop.notadmin": "%a 不是管理者",

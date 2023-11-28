@@ -14,163 +14,165 @@ export default {
     language: "en_US",
     flagMode: "tag",
     lockdowncode: "AbCdEfGh",
+    passwordCold: 5000,
+    slient: false, // No action. This will cause spam message in some Modules
     commands: {
         password: "password", // The password for op command
         prefix: "-", // The prefix of commands
         example: {
             enabled: true, // true mearns the example command will be enabled, false means the example command will be disabled
             adminOnly: true, // true means only admin can use the command, false means everyone can use the command
-            requireTag: ["mod","manager"] // The tag that the player must have 1 of the tag to use the command, undefined means no tag is required
+            requireTag: ["mod","manager"] // The tag that the player must have 1 of the tag to use the command, "none" means no tag is required
         },
         help: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         toggles: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         toggle: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         op: {
             enabled: true,
             adminOnly: false,
-            requireTag: undefined
+            requireTag: "none"
         },
         deop: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         passwords: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         flagmode: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         rank: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         rankclear: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         defaultrank: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         showallrank: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         ban: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         unban: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         unbanremove: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         unbanlist: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         freeze: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         unfreeze: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         mute: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         unmute: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         vanish: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         unvanish: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         invcopy: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         invsee: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         echestwipe: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         lockdowncode: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         lockdown: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         unlock: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         adminchat: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         lang: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         },
         langlist: {
             enabled: true,
             adminOnly: true,
-            requireTag: undefined
+            requireTag: "none"
         }
     },
     /** 
@@ -186,7 +188,7 @@ export default {
     },
     example_anticheat_module: {
         enabled: true, // true mearns the module will be enabled, false means the module will be disabled
-        punishment: "ban" // The punishment of the module, undefined means no punishment
+        punishment: "ban" // The punishment of the module, "none" means no punishment
         //punishmentType: "ban", "kick"
     },
     chatRank: {
@@ -229,7 +231,7 @@ export default {
         flyXZ: 0.7,
         maxFlyY: 3.5,
         fallXZ: 0.15,
-        punishment: undefined,
+        punishment: "none",
         maxVL: 4
     },
 
@@ -368,7 +370,7 @@ export default {
             },
             nameLength: {
                 enabled: true,
-                punishment: undefined,
+                punishment: "none",
                 maxItemNameLength: 32
             },
             itemTag: {
@@ -418,17 +420,25 @@ export default {
         maxVL: 1
     },
 
+    antiMovement: {
+        enabled: true,
+        maxDifferent: 0.1,
+        maxHorizontalVelocity: 1,
+        maxVL: 1,
+        punishment: "kick"
+    },
+
     antiTimer: {
         enabled: true,
         punishment: "kick",
         absError: 1.05,
-        maxVL: 4,
+        maxVL: 7,
     },
 
     antiBlink: {
         enabled: false,
         punishment: "kick",
-        maxVL: 4
+        maxVL: 7
     },
 
     antiFastUse: {
@@ -447,7 +457,7 @@ export default {
 
     antiOperator: {
         enabled: false, // this thing can't work on Realm
-        punishment: undefined
+        punishment: "none"
     },
 
     antiCommandBlockExplolit: {

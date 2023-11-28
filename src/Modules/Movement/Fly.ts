@@ -47,12 +47,11 @@ async function antiFly (player: Player, now: number) {
 
         //velocity is higher than the max velocity, flag the player
         if ((velocity > config.antiFly.flyY && xz > config.antiFly.flyXZ) || velocity > config.antiFly.maxFlyY) {
-            player.teleport(prevLoc);
+            if (!config.slient) player.teleport(prevLoc);
             lastFlag.set(id, now);
 
             if (playerFlag === undefined) return
             if (playerFlag - now < 1200) {
-                player.applyDamage(0);
                 flag (player, "Fly", "A",config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + velocity.toFixed(2)])
             }
         }
@@ -73,8 +72,7 @@ async function antiNoFall (player: Player, now: number) {
 
     //velocityY is 0 and velocityXZ is higher than 0.15, flag the player
     if (y === 0 && xz > 0.15){
-        player.teleport(prevLoc);
-        player.applyDamage(0);
+        if (!config.slient) player.teleport(prevLoc);
         flag (player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + y.toFixed(2), lang(">velocityXZ") + ":" + + xz.toFixed(2)])
     }
 }

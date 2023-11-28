@@ -12,5 +12,6 @@ declare module "@minecraft/server" {
         lastTouchWater: number;
         lastItemUsed: number;
         lastTouchGround: number;
+        lastOpTry: number;
     }
 }

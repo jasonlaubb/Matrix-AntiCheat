@@ -62,10 +62,12 @@ async function AntiAim (player: Player) {
         } else timer.set(`aim-c:${player.id}`, 0);
 
         if (isFlagged) {
-            player.applyDamage(6)
-            if (!player.hasTag("matrix:pvp-disabled")) {
-                player.addTag("matrix:pvp-disabled")
-                system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiAim.timeout)
+            if (!config.slient) {
+                player.applyDamage(6)
+                if (!player.hasTag("matrix:pvp-disabled")) {
+                    player.addTag("matrix:pvp-disabled")
+                    system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiAim.timeout)
+                }
             }
         }
     }

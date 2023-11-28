@@ -33,13 +33,16 @@ async function AutoClicker (player: Player) {
     //if the clicks per second is higher than the max clicks per second, flag the player
     if (!player.hasTag("matrix:pvp-disabled") && cps > config.antiAutoClicker.maxClicksPerSecond) {
         flag (player, 'Auto Clicker', "A", config.antiAutoClicker.maxVL,config.antiAutoClicker.punishment, [`${lang(">Click Per Second")}:${cps.toFixed(0)}`])
-        player.applyDamage(6);
-        player.addTag("matrix:pvp-disabled");
 
-        system.runTimeout(() => {
-            player.removeTag("matrix:pvp-disabled");
-            clickData.delete(id);
-        }, config.antiAutoClicker.timeout);
+        if (!config.slient) {
+            player.applyDamage(6);
+            player.addTag("matrix:pvp-disabled");
+
+            system.runTimeout(() => {
+                player.removeTag("matrix:pvp-disabled");
+                clickData.delete(id);
+            }, config.antiAutoClicker.timeout);
+        }
     }
 
     //set the clicks to the map
@@ -47,6 +50,13 @@ async function AutoClicker (player: Player) {
 };
 
 world.afterEvents.entityHitEntity.subscribe(({ damagingEntity }) => {
+    const toggle: boolean = (world.getDynamicProperty("antiAutoClicker") ?? config.antiAutoClicker.enabled) as boolean;
+
+    if ( toggle !== true || !(damagingEntity instanceof Player) || isAdmin (damagingEntity as Player)) return;
+
+    AutoClicker(damagingEntity);
+});
+world.afterEvents.entityHitBlock.subscribe(({ damagingEntity }) => {
     const toggle: boolean = (world.getDynamicProperty("antiAutoClicker") ?? config.antiAutoClicker.enabled) as boolean;
 
     if ( toggle !== true || !(damagingEntity instanceof Player) || isAdmin (damagingEntity as Player)) return;

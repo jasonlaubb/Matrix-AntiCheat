@@ -17,6 +17,7 @@ import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data
 import version from "../../version";
 import lang from "../../Data/Languages/lang";
 import { changeLanguage, getAllLang } from "../../Data/Languages/lang";
+import { SHA256 } from "../../node_modules/crypto-es/lib/sha256"
 
 export { inputCommand }
 
@@ -31,7 +32,7 @@ function turnRegax (message: string, prefix: string) {
 class Cmds {
     enabled: boolean;
     adminOnly: boolean;
-    requireTag: undefined | string[]
+    requireTag: "none" | string[]
 }
 
 class Command {
@@ -44,7 +45,7 @@ class Command {
             system.run(() => player.sendMessage(`§bMatrix §7> §g `+lang(".CommandSystem.command_disabled_reason")))
             return false
         }
-        if (setting.requireTag !== undefined && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
+        if (setting.requireTag !== "none" && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
             system.run(() => player.sendMessage(`§bMatrix §7> §g `+lang(".CommandSystem.no_permisson")))
             return false
         }
@@ -91,10 +92,21 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 target.setDynamicProperty("isAdmin", true)
                 system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-op.hasbeen").replace("%a", target.name).replace("%b", player.name)}`))
             } else {
+                const now = Date.now()
+                const lastTry = player.lastOpTry ?? now - config.passwordCold
+
+                if (now - lastTry <= config.passwordCold) {
+                    const wait = ((config.passwordCold - (now - lastTry)) / 1000).toFixed(1)
+                    system.run(() => player.sendMessage(`§bMatrix §7> §c ` + lang("-op.wait").replace("%a", wait)))
+                    return
+                }
+
                 const password: string = regax[1]
-                const correctPassword = (world.getDynamicProperty("password") ?? config.commands.password) as string
+                const correctPassword: string = world.getDynamicProperty("sha_password") as string ?? String(SHA256(config.commands.password))
+
                 if (password === undefined || password.length <= 0) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-op.please")}`))
-                if (password == correctPassword) {
+
+                if (String(SHA256(password)) == correctPassword) {
                     player.setDynamicProperty("isAdmin", true)
                     system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-op.now")}`))
                 } else {
@@ -123,7 +135,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (oldPassword !== correctPassword) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-passwords.wrong")}`))
 
             world.sendMessage(`§bMatrix §7> §g ${player.name} ${lang("-passwords.changed")}`)
-            world.setDynamicProperty("password", newPassword)
+            world.setDynamicProperty("sha_password", String(SHA256(newPassword)))
             break
         }
         case "flagmode": {

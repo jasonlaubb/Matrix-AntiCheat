@@ -57,15 +57,17 @@ async function antiTower(player: Player, block: Block) {
 
     //if delay is less than the min delay and all state is true, flag the player
     if (delay < config.antiTower.minDelay && locationState) {
+        if (!config.slient) {
+            //set the block to the air
+            block.setType(MinecraftBlockTypes.Air);
 
-        //set the block to the air
-        block.setType(MinecraftBlockTypes.Air);
+            //stop player place block
+            player.addTag("matrix:place-disabled");
 
-        //stop player place block
-        player.addTag("matrix:place-disabled");
-
-        //remove the tag after timeout
-        system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiTower.timeout);
+            //remove the tag after timeout
+            system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiTower.timeout);
+        }
+        
         flag(player, "Tower", "A", config.antiTower.maxVL, config.antiTower.punishment, [lang(">Delay") + ":" + delay.toFixed(2), lang(">PosDeff") + ":" + playerPosDeff.toFixed(2), lang(">CentreDis") + ":" + playerCentreDis.toFixed(2)]);
     }
 }

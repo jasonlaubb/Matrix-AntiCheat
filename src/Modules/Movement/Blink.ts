@@ -41,12 +41,14 @@ async function antiBlink (player: Player) {
 
     //check for interger location (teleport)
     if (x2 % 1 === 0 && x2 % 1 === 0 && x2 % 1 === 0 && speed == 0) return
+
+    //check for item use or detection teleport
     if (player.hasTag("matrix:useTP") && speed == 0) return
 
     const ratio = distance / speed
     if (ratio > 2.5 && lastSpeed === 0) {
         flag(player, "Blink", "A", config.antiBlink.maxVL, config.antiBlink.punishment, [lang(">Ratio") + ":" + ratio.toFixed(2)])
-        player.teleport(lastPos)
+        if (!config.slient) player.teleport(lastPos)
         player.addTag("matrix:useTP")
         system.runTimeout(() => {
             player.removeTag("matrix:useTP")
@@ -69,7 +71,7 @@ system.runInterval(() => {
 world.afterEvents.itemUse.subscribe(({ source: player, itemStack: item }) => {
     if (player.hasTag("matrix:useTP")) return
     if (item.typeId === MinecraftItemTypes.EnderPearl || item.typeId === MinecraftItemTypes.ChorusFruit) {
-        player.addTag("useTP")
+        player.addTag("matrix:useTP")
         system.runTimeout(() => {
             player.removeTag("matrix:useTP")
         }, 120)
@@ -80,7 +82,10 @@ world.afterEvents.playerLeave.subscribe(({ playerId }) => {
     blinkData.delete(playerId)
 })
 
-world.afterEvents.playerSpawn.subscribe(({ player: { id }, initialSpawn }) => {
+world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (!initialSpawn) return
-    blinkData.delete(id)
+    
+    if (player.hasTag("matrix:useTP")) {
+        player.removeTag("matrix:useTP")
+    }
 })

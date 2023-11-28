@@ -62,7 +62,7 @@ async function antiMotion (player: Player) {
     //if the relative velocity is lower than 0.6, flag the player
     if (relativeVelocity <= config.antiMotion.minRelativeY && !keepFalling && !player.hasTag("matrix:levitating")) {
         flag (player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, [lang(">relative") + ":" + relativeVelocity.toFixed(1)])
-        player.teleport(lastPos)
+        if (!config.slient) player.teleport(lastPos)
         velocityList.delete(player.id)
     }
 }

@@ -15,8 +15,10 @@ async function antiFastUse (player: Player) {
 
     if (delay < config.antiFastUse.minUseTime && !player.hasTag("matrix:item-disabled")) {
         flag(player, "FastUse", "A", config.antiFastUse.maxVL, config.antiFastUse.punishment, [lang(">Delay") + ":" + delay.toFixed(2)])
-        player.addTag("matrix:item-disabled")
-        system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiFastUse.timeout)
+        if (!config.slient) {
+            player.addTag("matrix:item-disabled")
+            system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiFastUse.timeout)
+        }
     }
 }
 world.afterEvents.itemUse.subscribe(({ source: player }) => {

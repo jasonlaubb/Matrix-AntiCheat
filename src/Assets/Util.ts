@@ -89,7 +89,7 @@ export function checkBlockAround (location: Vector3, blockType: MinecraftBlockTy
 
 let Vl: any = {};
 
-type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I"
+type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H"
 
 export function flag (player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
     if (Vl[player.id] === undefined) {

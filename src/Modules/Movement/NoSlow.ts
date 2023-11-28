@@ -69,7 +69,7 @@ async function antiNoSlow (player: Player) {
             if (buffer + 1 > config.antiNoSlow.maxNoSlowBuff) {
                 player.noSlowBuffer = 0
                 flag (player, "NoSlow", "A" ,config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
-                player.teleport(playerLastPos)
+                if (!config.slient) player.teleport(playerLastPos)
             }
         }
     } else {

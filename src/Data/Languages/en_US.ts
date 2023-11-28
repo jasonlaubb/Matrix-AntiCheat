@@ -44,6 +44,7 @@ export default {
     "-op.please": "Please enter the password",
     "-op.now": "You are now admin",
     "-op.wrong": "Wrong password",
+    "-op.wait": "Please wait %a more seconds before you try again",
 
     "-deop.lockdown": "The server is in lockdown mode",
     "-deop.notadmin": "%a is not admin",

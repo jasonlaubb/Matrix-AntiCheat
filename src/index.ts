@@ -23,11 +23,11 @@ import "./Modules/Movement/NoSlow"
 import "./Modules/Movement/Motion"
 import "./Modules/Movement/Blink"
 import "./Modules/Movement/Timer"
+import "./Modules/Movement/Movement"
 
 import "./Modules/World/Nuker"
 import "./Modules/World/Scaffold"
 import "./Modules/World/Tower"
-import "./Modules/World/Surround"
 import "./Modules/World/CommandBlockExplolit"
 
 import "./Modules/Player/BlockReach"
