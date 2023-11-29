@@ -22,7 +22,7 @@ async function antiSpammer (player: Player) {
     } else
 
     //check if the player send message while moving
-    if (player.hasTag("matrix:moving") && player.hasTag("matrix:riding") && player.isOnGround && !player.isJumping && !player.isInWater && !player.isGliding) {
+    if (player.hasTag("matrix:moving") && !player.hasTag("matrix:riding") && player.isOnGround && !player.isJumping && !player.isInWater && !player.isGliding) {
         flag (player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type")+":"+lang(">Moving")])
         if (!config.slient) player.applyDamage(6)
     }
