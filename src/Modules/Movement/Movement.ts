@@ -39,7 +39,7 @@ async function Movement (player: Player, now: number) {
 
     //check if player get damamged
     const damaged = player.lastExplosionTime && now - player.lastExplosionTime >= 2000
-    if (player.isJumping /*|| player.hasTag("nostrafe")*/ || damaged ||player.isFlying) return;
+    if (player.isJumping || damaged || player.isFlying) return;
 
     //state the difference of X and Z
     const difference: Horizontal = {
