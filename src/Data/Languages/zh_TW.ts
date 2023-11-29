@@ -54,7 +54,7 @@ export default {
     "-passwords.wrong": "密碼錯誤",
     "-passwords.changed": "密碼已更改",
 
-    "-flagmode.unknown": "未知操作，請僅使用 all/bypass/admin/tag",
+    "-flagmode.unknown": "未知操作，請僅使用 all/bypass/admin/tag/none",
     "-flagmode.changed": "標誌模式已變更為 %a",
 
     "-rank.unknownAction": "未知操作，請僅使用 set/add/remove",
@@ -163,6 +163,8 @@ export default {
     ".Util.noreason": "未提供原因",
     ".Util.unknown": "未知",
     ".Util.has_failed": "已被攔截",
+    ".Util.formkick": "%a 已被自動踢出",
+    ".Util.formban": "%a 已被自動封禁",
 
     ".banHandler.banned": "你已被禁止！",
     ".banHandler.format": "§c§l您已被禁止! \n§r§7剩餘時間: §c %a\n§7理由: §c%b§r\n§7由: §c %c",

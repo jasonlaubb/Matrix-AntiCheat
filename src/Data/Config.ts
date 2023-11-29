@@ -227,10 +227,6 @@ export default {
 
     antiFly: {
         enabled: true,
-        flyY: 0.7,
-        flyXZ: 0.7,
-        maxFlyY: 3.5,
-        fallXZ: 0.15,
         punishment: "none",
         maxVL: 4
     },
@@ -284,6 +280,17 @@ export default {
         timeout: 60,
         punishment: "kick",
         maxVL: 4
+    },
+
+    antiInvalidBreak: {
+        enabled: false,
+        timeout: 60,
+        writeList: [
+            "minecraft:cake",
+            "minecraft:dragon_egg"
+        ],
+        punishment: "kick",
+        maxVL: 2
     },
 
     antiSpam: {

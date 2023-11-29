@@ -47,7 +47,10 @@ async function antiNuker (player: Player, block: Block) {
         player.runCommand('gamemode @s ' + GameMode.adventure)
         blockBreakData.delete(player.id);
         flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, [lang(">Block") + ":" + block.typeId]);
+        return
     }
+
+
 }
 
 world.afterEvents.playerBreakBlock.subscribe((event) => {

@@ -54,7 +54,7 @@ export default {
     "-passwords.wrong": "Wrong password",
     "-passwords.changed": "Password has been changed",
 
-    "-flagmode.unknown": "Unknown action, please use all/bypass/admin/tag only",
+    "-flagmode.unknown": "Unknown action, please use all/bypass/admin/tag/none only",
     "-flagmode.changed": "Flag mode has been changed to %a",
 
     "-rank.unknownAction": "Unknown action, please use set/add/remove only",
@@ -163,6 +163,8 @@ export default {
     ".Util.noreason": "No reason provided",
     ".Util.unknown": "Unknown",
     ".Util.has_failed": "has failed",
+    ".Util.formkick": "%a is automatically kicked from the game",
+    ".Util.formban": "%a is automatically banned from the game",
 
     ".banHandler.banned": "You have been banned!",
     ".banHandler.format": "§c§lYour have been banned!\n§r§7Time Left:§c %a\n§7Reason: §c%b§r\n§7By: §c%c",

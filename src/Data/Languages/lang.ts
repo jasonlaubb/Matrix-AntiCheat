@@ -29,5 +29,5 @@ export function changeLanguage (lang: string) {
 export const getAllLang = () => Object.keys(langs)
 
 export default function (key: LangType): string {
-    return langs[languageNow][key]
+    return langs[languageNow][key] ?? "[???]"
 }

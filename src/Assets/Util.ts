@@ -102,8 +102,32 @@ export function flag (player: Player, modules: string, type: Type, maxVL: number
     let vl = ++Vl[player.id][modules]
     if (vl > 99) vl = 99
 
-    let flagMsg = `§bMatrix §7> §c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${vl}§7]§r`
+    let flagMsg = `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${vl}§7]§r`
     if (infos !== undefined) flagMsg = flagMsg + "\n" + formatInformation(infos)
+    
+    if (punishment && vl > maxVL) {
+        let punishmentDone = false
+        switch (punishment) {
+            case "kick": {
+                punishmentDone = true
+                kick (player, config.punishment_kick.reason, 'Matrix')
+                flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name)
+                break
+            }
+            case "ban": {
+                punishmentDone = true
+                ban (player, config.punishment_ban.reason, "Matrix", config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
+                flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
+                break
+            }
+            default: {
+                break
+            }
+        }
+        if (punishmentDone) {
+            Vl[player.id][modules] = 0
+        }
+    }
 
     const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode
     switch (flagMode) {
@@ -122,34 +146,12 @@ export function flag (player: Player, modules: string, type: Type, maxVL: number
             targets.forEach(players => players.sendMessage(flagMsg))
             break
         }
+        case "none": {
+            break
+        }
         default: {
             world.sendMessage(flagMsg)
             break
-        }
-    }
-    
-    if (punishment && vl > maxVL) {
-        let punishmentDone = false
-        switch (punishment) {
-            case "none": {
-                break
-            }
-            case "kick": {
-                punishmentDone = true
-                kick (player, config.punishment_kick.reason, 'Matrix')
-                break
-            }
-            case "ban": {
-                punishmentDone = true
-                ban (player, config.punishment_ban.reason, "Matrix", Date.now() + (config.punishment_ban.minutes * 60000))
-                break
-            }
-            default: {
-                console.error("Non matched punishment: " + punishment)
-            }
-        }
-        if (punishmentDone) {
-            Vl[player.id][modules] = 0
         }
     }
 }

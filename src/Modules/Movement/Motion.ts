@@ -1,4 +1,4 @@
-import { world, system, Player, GameMode, Vector3 } from "@minecraft/server";
+import { world, system, Player, GameMode, Vector3, Dimension } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
 import lang from "../../Data/Languages/lang";
@@ -24,7 +24,7 @@ async function antiMotion (player: Player) {
     }
 
     //end the movement calculation if player is on ground
-    if (player.isOnGround || player.isFlying || player.isClimbing || (!player.isOnGround && y === 0 && x === 0 && z === 0)) {
+    if (player.isOnGround || player.isFlying || player.isClimbing || (!player.isOnGround && y === 0 && x === 0 && z === 0) || inAir(player.dimension, player.location)) {
         velocityList.delete(player.id)
         player.lastTouchGround = Date.now()
         return
@@ -86,3 +86,18 @@ world.afterEvents.playerLeave.subscribe(({ playerId }) => {
     velocityList.delete(playerId)
     lastSafePosition.delete(playerId)
 })
+
+function inAir (dimension: Dimension, location: Vector3) {
+    location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z)}
+    const offset = [-1, 0, 1]
+    const offsetY = [-1, 0, 1, 2]
+    let allBlock = []
+
+    return offset.some(x => offsetY.some(y => offset.some(z => allBlock.push(
+        dimension.getBlock({
+            x: location.x + x,
+            y: location.y + y,
+            z: location.z + z
+        })?.isAir
+    ))))
+}

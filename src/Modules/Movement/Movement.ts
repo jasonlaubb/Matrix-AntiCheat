@@ -1,4 +1,4 @@
-import { world, Player, system, GameMode } from "@minecraft/server";
+import { world, Player, system, GameMode, Vector3 } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
 import lang from "../../Data/Languages/lang";
@@ -9,6 +9,7 @@ interface Horizontal {
 }
 
 const lastXZ = new Map<string, Horizontal>()
+const lastLocation = new Map<string, Vector3>()
 
 /**
  * @author 4urxa
@@ -24,6 +25,10 @@ async function Movement (player: Player, now: number) {
     //get and set the new data
     const lastVelocity = lastXZ.get(player.id)
     lastXZ.set(player.id, velocity)
+
+    //last location
+    const lastPos = lastLocation.get(player.id) ?? player.location
+    lastLocation.set(player.id, player.location)
 
     //to prevent bug, stop check in first tick
     if (lastVelocity === undefined) return;
@@ -44,8 +49,8 @@ async function Movement (player: Player, now: number) {
 
     //flag the player
     if(hVelocity > config.antiMovement.maxHorizontalVelocity && (difference.x > config.antiMovement.maxDifferent || difference.z > config.antiMovement.maxDifferent)) {
-        flag (player, "Movement", "A", config.antiMovement.maxVL, config.antiMovement.punishment, [lang(">velocityXZ") + ":" + hVelocity])
-        if (!config.slient) player.teleport(player.location)
+        flag (player, "Movement", "A", config.antiMovement.maxVL, config.antiMovement.punishment, [lang(">velocityXZ") + ":" + hVelocity.toFixed(2)])
+        if (!config.slient) player.teleport(lastPos)
     }
 }
 
@@ -61,3 +66,8 @@ system.runInterval(() => {
         Movement (player, DateNow)
     }
 }, 0)
+
+world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+    lastXZ.delete(playerId)
+    lastLocation.delete(playerId)
+})

@@ -6,6 +6,7 @@
  */
 
 import "./Data/Languages/lang"
+import "./Assets/Util"
 
 import "./Modules/Combat/Auto Clicker"
 import "./Modules/Combat/Kill Aura"
@@ -29,6 +30,7 @@ import "./Modules/World/Nuker"
 import "./Modules/World/Scaffold"
 import "./Modules/World/Tower"
 import "./Modules/World/CommandBlockExplolit"
+import "./Modules/World/InvalidBreak"
 
 import "./Modules/Player/BlockReach"
 import "./Modules/Player/Illegal Item"

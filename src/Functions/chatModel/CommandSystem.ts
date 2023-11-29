@@ -95,11 +95,12 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 const now = Date.now()
                 const lastTry = player.lastOpTry ?? now - config.passwordCold
 
-                if (now - lastTry <= config.passwordCold) {
+                if (now - lastTry < config.passwordCold) {
                     const wait = ((config.passwordCold - (now - lastTry)) / 1000).toFixed(1)
                     system.run(() => player.sendMessage(`§bMatrix §7> §c ` + lang("-op.wait").replace("%a", wait)))
                     return
                 }
+                player.lastOpTry = now
 
                 const password: string = regax[1]
                 const correctPassword: string = world.getDynamicProperty("sha_password") as string ?? String(SHA256(config.commands.password))
@@ -141,7 +142,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
         case "flagmode": {
             if (!Command.new(player, config.commands.flagmode as Cmds)) return
             const mode: string = regax[1]
-            if (mode === undefined || !(new Set(["all", "tag", "bypass", "admin"]).has(mode))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-flagmode.unknown")}`))
+            if (mode === undefined || !(new Set(["all", "tag", "bypass", "admin", "none"]).has(mode))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-flagmode.unknown")}`))
             world.setDynamicProperty("flagMode", mode)
             system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-flagmode.changed").replace("%a", mode)}`))
             break
