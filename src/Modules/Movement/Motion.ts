@@ -24,7 +24,7 @@ async function antiMotion (player: Player) {
     }
 
     //end the movement calculation if player is on ground
-    if (player.isOnGround || player.isFlying || player.isClimbing || (!player.isOnGround && y === 0 && x === 0 && z === 0) || inAir(player.dimension, player.location)) {
+    if (player.isOnGround || player.isFlying || player.isClimbing || (!player.isOnGround && y === 0 && x === 0 && z === 0)) {
         velocityList.delete(player.id)
         player.lastTouchGround = Date.now()
         return
@@ -60,7 +60,7 @@ async function antiMotion (player: Player) {
     }
 
     //if the relative velocity is lower than 0.6, flag the player
-    if (relativeVelocity <= config.antiMotion.minRelativeY && !keepFalling && !player.hasTag("matrix:levitating")) {
+    if (relativeVelocity <= config.antiMotion.minRelativeY && !keepFalling && !player.hasTag("matrix:levitating") && !inAir(player.dimension, player.location)) {
         flag (player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, [lang(">relative") + ":" + relativeVelocity.toFixed(1)])
         if (!config.slient) player.teleport(lastPos)
         velocityList.delete(player.id)
