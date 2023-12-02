@@ -11,6 +11,7 @@ let vl: { [key: string]: number } = {}
 /**
  * @author jasonlaubb
  * @description check if player keep a same speed without location movement
+ * It will detect when player open blink while moving
  */
 
 async function AntiBlink (player: Player) {
