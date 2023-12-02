@@ -35,9 +35,9 @@ async function AntiBlink (player: Player) {
 
     if (speed > 0 && speed == lastSpeed && isLocationSame) {
         ++vl[player.id]
-        if (vl[player.id] > 10) {
+        if (vl[player.id] > config.antiBlink.flagVL) {
             if (!config.slient) player.teleport(player.location)
-            flag (player, "Blink", "A", 4, "kick", undefined)
+            flag (player, "Blink", "A", config.antiBlink.maxVL, config.antiBlink.punishment, undefined)
         }
     } else vl[player.id] = 0
 }
