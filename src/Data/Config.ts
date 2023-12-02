@@ -422,14 +422,6 @@ export default {
         timeout: 60
     },
 
-    antiSurrond: {
-        enabled: true,
-        maxBlocksPer2Tick: 4,
-        timeout: 100,
-        punishment: "kick",
-        maxVL: 1
-    },
-
     antiMovement: {
         enabled: true,
         maxDifferent: 0.1,
@@ -448,6 +440,7 @@ export default {
     antiBlink: {
         enabled: true,
         punishment: "kick",
+        flagVL: 10,
         maxVL: 4
     },
 
