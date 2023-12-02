@@ -105,7 +105,7 @@ const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
 let id: number
 export default {
     enable () {
-        id = system.runInterval(antiSpeed, 2)
+        id = system.runInterval(antiSpeed, 1)
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {

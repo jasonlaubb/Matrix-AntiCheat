@@ -32,7 +32,7 @@ function turnRegax (message: string, prefix: string) {
 class Cmds {
     enabled: boolean;
     adminOnly: boolean;
-    requireTag: "none" | string[]
+    requireTag: string[]
 }
 
 class Command {
@@ -45,7 +45,7 @@ class Command {
             system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.command_disabled_reason")))
             return false
         }
-        if (setting.requireTag !== "none" && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
+        if (setting.requireTag.length <= 0 && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
             system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.no_permission")))
             return false
         }
