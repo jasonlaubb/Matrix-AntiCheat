@@ -1,16 +1,17 @@
 import { world, system, GameMode, Player, Vector3, Dimension } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
 const previousLocations = new Map<string, Vector3>();
+
 /**
  * @author RaMiGamerDev & ravriv
  * @description This checks if a player velocity is too high.
  */
 
-async function antiFly (player: Player, now: number) {
+async function AntiFly (player: Player, now: number) {
+    const config = c()
     //constant the infomation
     const { id, isOnGround, threwTridentAt } = player;
 
@@ -48,7 +49,8 @@ async function antiFly (player: Player, now: number) {
         }
     }
 }
-async function antiNoFall (player: Player, now: number) {
+async function AntiNoFall (player: Player, now: number) {
+    const config = c()
     const { id, isFlying, isClimbing, isOnGround, isInWater, isGliding, threwTridentAt, lastExplosionTime } = player;
     const jumpEffect = player.getEffect(MinecraftEffectTypes.JumpBoost)
     const prevLoc = previousLocations.get(id);
@@ -67,28 +69,22 @@ async function antiNoFall (player: Player, now: number) {
     }
 }
 
-system.runInterval(() => {
-    const toggle: boolean = Boolean(world.getDynamicProperty("antiFly")) ?? config.antiFly.enabled;
-    if (toggle !== true) return;
-
+const antiFly = () => {
     const now = Date.now();
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator] })
     for (const player of players) {
         if (isAdmin(player)) continue;
 
-        antiFly (player, now)
+        AntiFly (player, now)
     }
-}, 1);
+}
 
-system.runInterval(() => {
-    const toggle: boolean = Boolean(world.getDynamicProperty("antiFly")) ?? config.antiFly.enabled;
-    if (toggle !== true) return;
-
+const antiNofall = () => {
     const now = Date.now();
     for (const player of world.getPlayers({ excludeGameModes: [GameMode.spectator] })) {
-        antiNoFall (player, now)
+        AntiNoFall (player, now)
     }
-}, 10)
+}
 
 function inAir (dimension: Dimension, location: Vector3) {
     location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z)}
@@ -118,4 +114,20 @@ function findSlime (dimension: Dimension, location: Vector3) {
         y: pos.y,
         z: pos.z + z
     })?.typeId === MinecraftBlockTypes.Slime))
+}
+
+let id: { [key: string]: number }
+
+export default {
+    enable () {
+        id = {
+            a: system.runInterval(antiFly, 1),
+            b: system.runInterval(antiNofall, 10)
+        }
+    },
+    disable () {
+        previousLocations.clear()
+        system.clearRun(id.a)
+        system.clearRun(id.b)
+    }
 }

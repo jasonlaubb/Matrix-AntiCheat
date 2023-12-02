@@ -1,7 +1,7 @@
-import { world, Player } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { world, Player, DataDrivenEntityTriggerAfterEvent, EntityDataDrivenTriggerEventOptions } from "@minecraft/server";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
+import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
  * @author jasonlaubb
@@ -9,7 +9,8 @@ import lang from "../../Data/Languages/lang";
  * which can detect some hackers that use auto totem and auto shield to cheat
  */
 
-async function antiAuto (player: Player) {
+async function AntiAutoTotem (player: Player) {
+    const config = c()
     if (player.hasTag("matrix:moving") && player.isOnGround && !player.isJumping && !player.isGliding && !player.hasTag("matrix:riding")) {
         flag (player, "Auto Totem", "A",config.antiAuto.maxVL, config.antiAuto.punishment, [lang(">Type") + ":" + lang(">Moving")])
     } else
@@ -23,7 +24,8 @@ async function antiAuto (player: Player) {
     }
 }
 
-async function antiAutoShield (player: Player) {
+async function AntiAutoShield (player: Player) {
+    const config = c()
     if (player.hasTag("matrix:moving") && player.isOnGround && !player.isJumping && !player.isGliding && !player.hasTag("matrix:riding")) {
         flag (player, "Auto Shield", "A", config.antiAuto.maxVL, config.antiAuto.punishment, [lang(">Type") + ":" + lang(">Moving")])
     } else
@@ -37,19 +39,19 @@ async function antiAutoShield (player: Player) {
     }
 }
 
-world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(({ id, entity: player }) => {
-    if (!(player instanceof Player) || isAdmin (player)) return;
+const antiAuto = (({ id, entity: player }: DataDrivenEntityTriggerAfterEvent) => {
+    if (isAdmin (player as Player)) return;
     if (id === "matrix:totem") {
-        const toggle: boolean = world.getDynamicProperty("matrix:antiAuto") as boolean ?? config.antiAuto.enabled;
-        if (!toggle) return;
-
-        antiAuto(player);
-    } else
-    
-    if (id === "matrix:shield") {
-        const toggle: boolean = world.getDynamicProperty("matrix:antiAutoShield") as boolean ?? config.antiAuto.enabled;
-        if (!toggle) return;
-
-        antiAutoShield(player);
-    }
+        AntiAutoTotem (player as Player);
+    } else AntiAutoShield (player as Player);
 })
+const data = { eventTypes: ["matrix:totem","matrix:shield"], entityTypes: [MinecraftEntityTypes.Player] } as EntityDataDrivenTriggerEventOptions
+
+export default {
+    enable () {
+        world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(antiAuto, data)
+    },
+    disable () {
+        world.afterEvents.dataDrivenEntityTriggerEvent.unsubscribe(antiAuto)
+    }
+}

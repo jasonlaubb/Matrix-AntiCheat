@@ -6,9 +6,10 @@ import config from "../../Data/Config";
  * @author jasonlaubb
  * @description Remove the op from non-admin players
  * @warning This check don't work on Realm or BDS without server properties setting right
+ * @warning This will let /setmaxplayers be invalid if detected (this is very important, very very important)
  */
 
-async function operator (player: Player) {
+async function AntiOperator (player: Player) {
     const isadmin = isAdmin(player)
 
     const playerIsOp = player.isOp();
@@ -26,11 +27,20 @@ async function operator (player: Player) {
     }
 }
 
-system.runInterval(() => {
-    const toggle: boolean = (world.getDynamicProperty("antiOperator") ?? config.antiOperator.enabled) as boolean;
-    if (toggle !== true) return
+const antiOperator = () => {
     const players = world.getAllPlayers()
     for (const player of players) {
-        operator (player)
+        AntiOperator (player)
     }
-}, 20)
+}
+
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(antiOperator)
+    },
+    disable () {
+        system.clearRun(id)
+    }
+}

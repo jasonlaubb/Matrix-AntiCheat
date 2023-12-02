@@ -1,6 +1,5 @@
-import { world, system, Player, GameMode, Vector3, Dimension } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { world, system, Player, GameMode, Vector3, Dimension, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
 const velocityList = new Map<string, number[]>();
@@ -12,7 +11,8 @@ const lastSafePosition = new Map<string, Vector3>();
  * This check tracking player with un-natural falling movement
 */
 
-async function antiMotion (player: Player) {
+async function AntiMotion (player: Player) {
+    const config = c()
     let distribution: number[] = velocityList.get(player.id) ?? [];
     const { x, y, z } = player.getVelocity();
 
@@ -72,20 +72,18 @@ function findWater (player: Player) {
     return [-1,0,1].some(x => [-1,0,1].some(z => [-1,0,1].some(y => player.dimension.getBlock({ x: pos.x + x, y: pos.y + y, z: pos.z + z})?.isLiquid)))
 }
 
-system.runInterval(() => {
-    const toggle: boolean = Boolean(world.getDynamicProperty("antiMotion")) ?? config.antiMotion.enabled;
-    if (toggle !== true) return;
+const antiMotion = () => {
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative]})
     for (const player of players) {
         if (isAdmin (player)) continue;
-        antiMotion (player)
+        AntiMotion (player)
     }
-}, 1)
+}
 
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     velocityList.delete(playerId)
     lastSafePosition.delete(playerId)
-})
+}
 
 function inAir (dimension: Dimension, location: Vector3) {
     location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z)}
@@ -100,4 +98,19 @@ function inAir (dimension: Dimension, location: Vector3) {
             z: location.z + z
         })?.isAir
     ))))
+}
+
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(antiMotion, 1)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        velocityList.clear()
+        lastSafePosition.clear()
+        system.clearRun(id)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
 }

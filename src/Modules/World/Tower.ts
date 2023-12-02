@@ -1,7 +1,6 @@
-import { world, system, Player, Block, Vector3 } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
+import { world, system, Player, Block, Vector3, PlayerPlaceBlockAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import config from "../../Data/Config";
 import lang from "../../Data/Languages/lang";
 
 interface TowerData {
@@ -17,7 +16,8 @@ const towerData = new Map<string, TowerData>();
  * It work by patching a very small delay between player towering and with a high velocity
  */
 
-async function antiTower(player: Player, block: Block) {
+async function AntiTower(player: Player, block: Block) {
+    const config = c()
     const data = towerData.get(player.id)
     //get the two value from Map
     const towerBlock = data?.towerBlock
@@ -71,11 +71,22 @@ async function antiTower(player: Player, block: Block) {
         flag(player, "Tower", "A", config.antiTower.maxVL, config.antiTower.punishment, [lang(">Delay") + ":" + delay.toFixed(2), lang(">PosDeff") + ":" + playerPosDeff.toFixed(2), lang(">CentreDis") + ":" + playerCentreDis.toFixed(2)]);
     }
 }
-world.afterEvents.playerPlaceBlock.subscribe(({ player, block }) => {
-    const toggle: boolean = (world.getDynamicProperty("antiTower") as boolean ?? config.antiTower.enabled);
-    if (toggle !== true || isAdmin(player)) return;
-    antiTower(player, block);
+const antiTower = (({ player, block }: PlayerPlaceBlockAfterEvent) => {
+    if (isAdmin(player)) return
+    AntiTower(player, block);
 });
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
     towerData.delete(playerId);
 });
+
+export default {
+    enable () {
+        world.afterEvents.playerPlaceBlock.subscribe(antiTower)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        towerData.clear()
+        world.afterEvents.playerPlaceBlock.subscribe(antiTower)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    }
+}

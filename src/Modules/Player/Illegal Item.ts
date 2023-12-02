@@ -7,10 +7,10 @@ import {
     ItemEnchantsComponent,
     EntityInventoryComponent,
     BlockInventoryComponent,
-    EnchantmentList
+    EnchantmentList,
+    PlayerPlaceBlockBeforeEvent
 } from "@minecraft/server"
-import config from "../../Data/Config"
-import { flag, isAdmin, isTargetGamemode } from "../../Assets/Util"
+import { flag, isAdmin, isTargetGamemode, c } from "../../Assets/Util"
 import { MinecraftBlockTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
 import enchantableItem from "../../Data/ItemCanEnchant"
 import lang from "../../Data/Languages/lang"
@@ -21,6 +21,7 @@ import lang from "../../Data/Languages/lang"
  */
 
 function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
+    const config = c()
     if (!config.antiIllegalItem.checkCreativeMode && isTargetGamemode(player, 1)) return "Safe"
     let state: "Safe" | "Unsafe" = "Safe"
 
@@ -124,22 +125,21 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
     return state
 }
 
-system.runInterval(() => {
+const illegalItemA = () => {
     const players = world.getAllPlayers()
     for (const player of players) {
-        const toggle: boolean = Boolean(world.getDynamicProperty("antiIllegalItem")) ?? config.antiIllegalItem.enabled
-        if (toggle !== true || isAdmin(player)) continue
+        if (isAdmin(player)) continue
 
         const container: Container = (player.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent).container
         ItemCheck (player, container)
     }
-}, 20)
+}
 
-world.afterEvents.playerPlaceBlock.subscribe(event => {
-    const toggle: boolean = Boolean(world.getDynamicProperty("antiIllegalItem")) ?? config.antiIllegalItem.enabled
+const illegalItemB = (event: PlayerPlaceBlockBeforeEvent) => {
+    const config = c()
     const { player, block } = event
 
-    if (toggle !== true || isAdmin(player) || player.hasTag("matrix:place-disabled")) return
+    if (isAdmin(player) || player.hasTag("matrix:place-disabled")) return
 
     const container: Container = (block.getComponent(BlockInventoryComponent.componentId) as BlockInventoryComponent)?.container
     if (container.size === 0) return;
@@ -151,12 +151,24 @@ world.afterEvents.playerPlaceBlock.subscribe(event => {
         player.addTag("matrix:place-disabled")
         system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiIllegalItem.timeout)
     }
-})
+}
 
 function truncateString(str: string) {
     if (str.length <= 8) {
         return str;
     } else {
         return str.slice(0, 8) + "...";
+    }
+}
+
+let id: number
+export default {
+    enable () {
+        id = system.runInterval(illegalItemA)
+        world.beforeEvents.playerPlaceBlock.subscribe(illegalItemB)
+    },
+    disable () {
+        system.clearRun(id)
+        world.beforeEvents.playerPlaceBlock.subscribe(illegalItemB)
     }
 }

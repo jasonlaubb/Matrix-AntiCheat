@@ -1,10 +1,12 @@
 import {
     world,
     system,
-    Player
+    Player,
+    EntityHitEntityAfterEvent,
+    EntityHitBlockAfterEvent,
+    PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import config from "../../Data/Config.js";
-import { flag, isAdmin } from "../../Assets/Util.js";
+import { flag, isAdmin, c } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
 interface ClickData {
@@ -19,6 +21,7 @@ const clickData: Map<string, ClickData> = new Map<string, ClickData>();
  */
 
 async function AutoClicker (player: Player) {
+    const config = c()
     const currentTime: number = Date.now();
     const { id } = player;
     const { clicks } = clickData.get(id) || { clicks: [] };
@@ -49,27 +52,26 @@ async function AutoClicker (player: Player) {
     clickData.set(id, { clicks: filteredClicks });
 };
 
-world.afterEvents.entityHitEntity.subscribe(({ damagingEntity }) => {
-    const toggle: boolean = (world.getDynamicProperty("antiAutoClicker") ?? config.antiAutoClicker.enabled) as boolean;
-
-    if ( toggle !== true || !(damagingEntity instanceof Player) || isAdmin (damagingEntity as Player)) return;
+const antiAutoClicker = ({ damagingEntity }: EntityHitEntityAfterEvent | EntityHitBlockAfterEvent) => {
+    if (!(damagingEntity instanceof Player) || isAdmin (damagingEntity as Player)) return;
 
     AutoClicker(damagingEntity);
-});
-world.afterEvents.entityHitBlock.subscribe(({ damagingEntity }) => {
-    const toggle: boolean = (world.getDynamicProperty("antiAutoClicker") ?? config.antiAutoClicker.enabled) as boolean;
+};
 
-    if ( toggle !== true || !(damagingEntity instanceof Player) || isAdmin (damagingEntity as Player)) return;
-
-    AutoClicker(damagingEntity);
-});
-
-world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-    if (!initialSpawn) return;
-    if (player.hasTag("matrix:pvp-disabled")) {
-        player.removeTag("matrix:pvp-disabled");
-    }
-})
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     clickData.delete(playerId);
-})
+}
+
+export default {
+    enable () {
+        world.afterEvents.entityHitEntity.subscribe(antiAutoClicker)
+        world.afterEvents.entityHitBlock.subscribe(antiAutoClicker)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        clickData.clear()
+        world.afterEvents.entityHitEntity.unsubscribe(antiAutoClicker)
+        world.afterEvents.entityHitBlock.unsubscribe(antiAutoClicker)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
+}

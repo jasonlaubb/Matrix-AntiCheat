@@ -3,10 +3,11 @@ import {
     system,
     Player,
     Vector3,
-    Entity
+    Entity,
+    EntityHitEntityAfterEvent,
+    PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import config from "../../Data/Config.js";
-import { flag, isAdmin } from "../../Assets/Util.js";
+import { flag, isAdmin, c } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
 /**
@@ -16,9 +17,10 @@ import lang from "../../Data/Languages/lang.js";
 
 const hitLength = new Map<string, any[]>();
 
-async function KillAura(damagingEntity: Player, hitEntity: Entity) {
+async function KillAura (damagingEntity: Player, hitEntity: Entity) {
     //constant the infomation
     let playerHitEntity = hitLength.get(damagingEntity.name) ?? [];
+    const config = c()
     const direction: Vector3 = calculateVector(damagingEntity.location, hitEntity.location) as Vector3;
     const distance: number = calculateMagnitude(direction);
 
@@ -92,21 +94,34 @@ function calculateAngle (attacker: Vector3, target: Vector3, attackerV: Vector3,
     return Math.abs(angle)
 }
 
-world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
-    const toggle = (world.getDynamicProperty("antiKillAura") ?? config.antiKillAura.enabled) as boolean;
-    if (toggle !== true) return;
-
+const antiKillAura = (({ damagingEntity, hitEntity }: EntityHitEntityAfterEvent) => {
     if (!(damagingEntity instanceof Player) || isAdmin (damagingEntity)) return;
 
     KillAura(damagingEntity, hitEntity);
 });
 
-system.runInterval(() => {
+const systemEvent = () => {
     const allplayers = world.getAllPlayers()
     const players = allplayers.filter(player => hitLength.get(player.id) !== undefined)
     players.forEach(player => hitLength.delete(player.id))
-}, 2)
+}
 
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     hitLength.delete(playerId);
-})
+}
+
+let id: number
+
+export default {
+    enable () {
+        world.afterEvents.entityHitEntity.subscribe(antiKillAura)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+        id = system.runInterval(systemEvent, 2)
+    },
+    disable () {
+        hitLength.clear()
+        world.afterEvents.entityHitEntity.unsubscribe(antiKillAura)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+        system.clearRun(id)
+    }
+}

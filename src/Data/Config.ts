@@ -4,6 +4,8 @@
  * 
  * @warning
  * The setting of config maybe changed in dynamic properties (change config will not effect the server)
+ * 
+ * @docs https://transform.tools/json-to-typescript
  */
 
 export default {
@@ -11,6 +13,7 @@ export default {
      * @description
      * The setting for our functions
      */
+    configVersion: 1, //don't change this lol
     language: "en_US",
     flagMode: "tag",
     lockdowncode: "AbCdEfGh",
@@ -22,157 +25,157 @@ export default {
         example: {
             enabled: true, // true mearns the example command will be enabled, false means the example command will be disabled
             adminOnly: true, // true means only admin can use the command, false means everyone can use the command
-            requireTag: ["mod","manager"] // The tag that the player must have 1 of the tag to use the command, "none" means no tag is required
+            requireTag: ["mod","manager"] // The tag that the player must have 1 of the tag to use the command, [] means no tag is required
         },
         help: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         toggles: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         toggle: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         op: {
             enabled: true,
             adminOnly: false,
-            requireTag: "none"
+            requireTag: []
         },
         deop: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         passwords: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         flagmode: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         rank: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         rankclear: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         defaultrank: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         showallrank: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         ban: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         unban: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         unbanremove: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         unbanlist: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         freeze: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         unfreeze: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         mute: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         unmute: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         vanish: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         unvanish: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         invcopy: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         invsee: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         echestwipe: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         lockdowncode: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         lockdown: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         unlock: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         adminchat: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         lang: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         },
         langlist: {
             enabled: true,
             adminOnly: true,
-            requireTag: "none"
+            requireTag: []
         }
     },
     /** 
@@ -188,7 +191,7 @@ export default {
     },
     example_anticheat_module: {
         enabled: true, // true mearns the module will be enabled, false means the module will be disabled
-        punishment: "ban" // The punishment of the module, "none" means no punishment
+        punishment: "ban" // The punishment of the module, [] means no punishment
         //punishmentType: "ban", "kick"
     },
     chatRank: {
@@ -227,7 +230,7 @@ export default {
 
     antiFly: {
         enabled: true,
-        punishment: "none",
+        punishment: "kick",
         maxVL: 4
     },
 
@@ -266,7 +269,7 @@ export default {
         maxAngle: 95,
         factor: 1,
         minRotation: 34.98,
-        maxBPS: 6,
+        maxBPS: 5,
         punishment: "kick",
         maxVL: 2
     },
@@ -282,7 +285,7 @@ export default {
         maxVL: 4
     },
 
-    antiInvalidBreak: {
+    antiBreaker: {
         enabled: false,
         timeout: 60,
         writeList: [
@@ -439,13 +442,13 @@ export default {
         enabled: true,
         punishment: "kick",
         absError: 1.05,
-        maxVL: 7,
+        maxVL: 4,
     },
 
     antiBlink: {
-        enabled: false,
+        enabled: true,
         punishment: "kick",
-        maxVL: 7
+        maxVL: 4
     },
 
     antiFastUse: {

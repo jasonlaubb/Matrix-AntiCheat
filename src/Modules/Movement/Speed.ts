@@ -4,7 +4,8 @@ import {
     Vector3,
     GameMode,
     Player,
-    Effect
+    Effect,
+    PlayerLeaveAfterEvent
 } from "@minecraft/server";
 import config from "../../Data/Config.js";
 import { flag, isAdmin } from "../../Assets/Util.js";
@@ -19,7 +20,7 @@ const speedData = new Map();
  * This is converted from blocks per tick to miles per hour
 */
 
-async function antiSpeed(player: Player, now: number) {
+async function AntiSpeed(player: Player, now: number) {
     const { id } = player;
 
     if (player.threwTridentAt && now - player.threwTridentAt < 2000 || player.lastExplosionTime && now - player.lastExplosionTime < 2000) {
@@ -79,7 +80,7 @@ function getSpeedIncrease(speedEffect: Effect | undefined) {
     return (speedEffect?.amplifier - 2) * 4032 / 1609.34;
 }
 
-system.runInterval(() => {
+const antiSpeed = () => {
     const toggle: boolean = (world.getDynamicProperty("antiSpeed") ?? config.antiSpeed.enabled) as boolean;
 
     if (toggle !== true) {
@@ -93,10 +94,23 @@ system.runInterval(() => {
         if (isAdmin(player)) {
             continue;
         }
-        antiSpeed(player, now);
+        AntiSpeed(player, now);
     }
-}, 2);
+}
 
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
     speedData.delete(playerId);
 });
+
+let id: number
+export default {
+    enable () {
+        id = system.runInterval(antiSpeed, 2)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        speedData.clear()
+        system.clearRun(id)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
+}

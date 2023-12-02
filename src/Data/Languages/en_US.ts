@@ -39,6 +39,7 @@ export default {
     "-toggles.unknownModule": "Unknown module, try %atoggles",
     "-toggles.toggleChange": "%a module has been %bd",
     "-toggles.unknownAction": "Unknown action, please use enable/disable only",
+    "-toggles.already": "This module is %ad already",
 
     "-op.hasbeen": "%a has been opped by %b",
     "-op.please": "Please enter the password",

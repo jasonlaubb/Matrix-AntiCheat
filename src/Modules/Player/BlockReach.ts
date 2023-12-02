@@ -8,9 +8,8 @@ import {
     PlayerPlaceBlockBeforeEvent,
     Vector3
 } from "@minecraft/server"
-import { flag, isAdmin } from "../../Assets/Util"
+import { flag, isAdmin, c } from "../../Assets/Util"
 import { isTargetGamemode } from "../../Assets/Util"
-import config from "../../Data/Config.js"
 import lang from "../../Data/Languages/lang.js"
 
 /**
@@ -18,7 +17,8 @@ import lang from "../../Data/Languages/lang.js"
  * @description A simple checks for block reach, detect low range of blockReach clients
  */
 
-async function antiBlockReachA (event: PlayerBreakBlockBeforeEvent, player: Player, block: Block) {
+async function AntiBlockReachA (event: PlayerBreakBlockBeforeEvent, player: Player, block: Block) {
+    const config = c()
     if (player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
     const distance = Vector.distance(player.getHeadLocation(), absCentrePos(block.location));
 
@@ -36,7 +36,8 @@ async function antiBlockReachA (event: PlayerBreakBlockBeforeEvent, player: Play
     }
 }
 
-async function antiBlockReachB (event: PlayerPlaceBlockBeforeEvent, player: Player, block: Block) {
+async function AntiBlockReachB (event: PlayerPlaceBlockBeforeEvent, player: Player, block: Block) {
+    const config = c()
     if (player.hasTag("matrix:place-disabled") || isTargetGamemode(player, 1)) return;
     const distance = Vector.distance(player.getHeadLocation(), absCentrePos(block.location));
 
@@ -58,22 +59,27 @@ function absCentrePos (pos: Vector3) {
     return { x: pos.x - 0.5, y: pos.y - 0.5, z: pos.z - 0.5 } as Vector3
 }
 
-world.beforeEvents.playerBreakBlock.subscribe(event => {
-    const toggle: boolean = (world.getDynamicProperty("antiBlockReach") ?? config.antiScaffold.enabled) as boolean;
-    if (toggle !== true) return;
-
+const antiBlockReachA = (event: PlayerBreakBlockBeforeEvent) => {
     const { player, block } = event
     if (isAdmin (player)) return;
 
-    antiBlockReachA (event, player, block)
-})
+    AntiBlockReachA (event, player, block)
+}
 
-world.beforeEvents.playerPlaceBlock.subscribe(event => {
-    const toggle: boolean = (world.getDynamicProperty("antiBlockReach") ?? config.antiScaffold.enabled) as boolean;
-    if (toggle !== true) return;
-
+const antiBlockReachB = (event: PlayerPlaceBlockBeforeEvent) => {
     const { player, block } = event
     if (isAdmin (player)) return;
 
-    antiBlockReachB (event, player, block)
-})
+    AntiBlockReachB (event, player, block)
+}
+
+export default {
+    enable () {
+        world.beforeEvents.playerBreakBlock.subscribe(antiBlockReachA)
+        world.beforeEvents.playerPlaceBlock.subscribe(antiBlockReachB)
+    },
+    disable () {
+        world.beforeEvents.playerBreakBlock.unsubscribe(antiBlockReachA)
+        world.beforeEvents.playerPlaceBlock.unsubscribe(antiBlockReachB)
+    }
+}

@@ -1,91 +1,71 @@
-import { world, system, Vector3, Player } from "@minecraft/server"
-import { isAdmin, flag } from "../../Assets/Util"
-import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
-import lang from "../../Data/Languages/lang"
-import config from "../../Data/Config"
+import { world, system, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { c, flag, isAdmin } from "../../Assets/Util";
 
 interface BlinkData {
-    lastPos: Vector3
-    lastlastpos: Vector3
-    lastSpeed: number
+    s: number,
+    l: Vector3
 }
-
 const blinkData = new Map<string, BlinkData>()
+let vl: { [key: string]: number } = {}
 
 /**
  * @author jasonlaubb
- * @description A check prevent player from using blink hacks
- * @warning This check will cause un-sloveable false positive
+ * @description anti Blink
  */
 
-async function antiBlink (player: Player) {
-    const data: BlinkData = blinkData.get(player.id)
-    const { x, y, z } = player.getVelocity()
-    const speed: number = Math.hypot(x, y, z)
+async function AntiBlink (player: Player) {
+    const config = c ()
 
-    if (data === undefined) {
-        blinkData.set(player.id, {
-            lastPos: player.location,
-            lastSpeed: speed
-        } as BlinkData)
-        return
-    }
+    const data = blinkData.get(player.id)
 
-    const { lastPos, lastSpeed } = data
-    blinkData.set(player.id, { lastPos: player.location, lastSpeed: speed } as BlinkData)
+    const velocity = player.getVelocity()
+    const { x: xV, y: yV, z: zV } = velocity
+    const { x: xL, y: yL, z: zL } = player.location
+    const speed = Math.hypot(xV, yV, zV)
 
-    const { x: x1, y: y1, z: z1 } = lastPos
-    const { x: x2, y: y2, z: z2 } = player.location
+    blinkData.set(player.id, { s: speed, l: player.location })
+    if (data === undefined) return;
 
-    const distance: number = Math.hypot(x1 - x2, y1 - y2, z1 - z2)
+    const { l: lastPosition, s: lastSpeed } = data
+    const { x: xT, y: yT, z: zT } = lastPosition
 
-    //check for interger location (teleport)
-    if (x2 % 1 === 0 && x2 % 1 === 0 && x2 % 1 === 0 && speed == 0) return
+    if (vl[player.id] === undefined) vl[player.id] = 0
 
-    //check for item use or detection teleport
-    if (player.hasTag("matrix:useTP") && speed == 0) return
+    const isLocationSame = xL == xT && yL == yT && zT == zL
 
-    const ratio = distance / speed
-    if (ratio > 2.5 && lastSpeed === 0) {
-        flag(player, "Blink", "A", config.antiBlink.maxVL, config.antiBlink.punishment, [lang(">Ratio") + ":" + ratio.toFixed(2)])
-        if (!config.slient) player.teleport(lastPos)
-        player.addTag("matrix:useTP")
-        system.runTimeout(() => {
-            player.removeTag("matrix:useTP")
-        }, 100)
-    }
+    if (speed > 0 && speed == lastSpeed && isLocationSame) {
+        ++vl[player.id]
+        if (vl[player.id] > 10) {
+            if (!config.slient) player.teleport(player.location)
+            flag (player, "Blink", "A", 4, "kick", undefined)
+        }
+    } else vl[player.id] = 0
 }
 
-system.runInterval(() => {
-    const toggle: boolean = world.getDynamicProperty("antiBlink") as boolean ?? true
-    if (toggle !== true) return
-
+const antiBlink = () => {
     const players = world.getAllPlayers()
     for (const player of players) {
         if (isAdmin(player)) continue
-
-        antiBlink (player)
+        AntiBlink(player)
     }
-}, 0)
+}
 
-world.afterEvents.itemUse.subscribe(({ source: player, itemStack: item }) => {
-    if (player.hasTag("matrix:useTP")) return
-    if (item.typeId === MinecraftItemTypes.EnderPearl || item.typeId === MinecraftItemTypes.ChorusFruit) {
-        player.addTag("matrix:useTP")
-        system.runTimeout(() => {
-            player.removeTag("matrix:useTP")
-        }, 120)
-    }
-})
-
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     blinkData.delete(playerId)
-})
+    delete vl[playerId]
+}
 
-world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-    if (!initialSpawn) return
-    
-    if (player.hasTag("matrix:useTP")) {
-        player.removeTag("matrix:useTP")
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(antiBlink)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        blinkData.clear()
+        vl = {}
+        system.clearRun(id)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
     }
-})
+}

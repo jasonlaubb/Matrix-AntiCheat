@@ -2,11 +2,12 @@ import {
     Block,
     GameMode,
     Player,
+    PlayerBreakBlockBeforeEvent,
+    PlayerLeaveAfterEvent,
     system,
     world
 } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import lang from "../../Data/Languages/lang";
@@ -19,10 +20,11 @@ const blockBreakData = new Map<string, number[]>();
  * it detects if a player breaks more than 5 blocks in a tick.
  */
 
-async function antiNuker (player: Player, block: Block) {
+async function AntiNuker (player: Player, block: Block) {
     if (player.hasTag("matrix:break-disabled")) {
         return;
     }
+    const config = c()
     
     const timeNow = Date.now();
 
@@ -53,37 +55,25 @@ async function antiNuker (player: Player, block: Block) {
 
 }
 
-world.afterEvents.playerBreakBlock.subscribe((event) => {
-    const toggle: boolean = (world.getDynamicProperty("antiNuker") ?? config.antiNuker.enabled) as boolean;
-    if (toggle !== true) return;
-
+const antiNuker = (event: PlayerBreakBlockBeforeEvent) => {
     const { player, block } = event;
     if (isAdmin (player)) return;
 
-    antiNuker (player, block)
-});
+    AntiNuker (player, block)
+};
 
-world.afterEvents.playerBreakBlock.subscribe((event) => {
-    const { player, block } = event
-
-    if (player.hasTag("matrix:break-disabled")) {
-        block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => { item.kill() })
-        block.setPermutation(block.permutation.clone())
-    }
-})
-
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    const { player } = event
-    if (player.hasTag("matrix:break-disabled")) {
-        event.cancel = true
-    }
-})
-
-world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-    if (!initialSpawn) return;
-    player.removeTag("matrix:break-disabled");
-})
-
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
     blockBreakData.delete(playerId);
 })
+
+export default {
+    enable () {
+        world.beforeEvents.playerBreakBlock.subscribe(antiNuker)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        blockBreakData.clear()
+        world.beforeEvents.playerBreakBlock.unsubscribe(antiNuker)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
+}

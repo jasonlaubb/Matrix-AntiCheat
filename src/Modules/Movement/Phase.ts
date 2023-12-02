@@ -4,10 +4,10 @@ import {
     Block,
     Vector3,
     GameMode,
-    Player
+    Player,
+    PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 const powderBlock: MinecraftBlockTypes[] = [
@@ -42,7 +42,8 @@ const isSolidBlock = (block: Block) => Boolean(block?.isSolid && !passableBlocks
  * @description This is a simple phase detector, it will detect if the player is inside a block
  */
 
-async function antiPhase (player: Player) {
+async function AntiPhase (player: Player) {
+    const config = c()
     //constant the infomation
     const { id, location, dimension } = player;
     const { x, y, z } = location;
@@ -73,18 +74,30 @@ async function antiPhase (player: Player) {
     phaseData.set(id, lastSafePos);
 }
 
-system.runInterval(() => {
-    const toggle: boolean = (world.getDynamicProperty("antiPhase") ?? config.antiPhase.enabled) as boolean;
-    if (toggle !== true) return;
+const antiPhase = () => {
     const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
     for (const player of players) {
         if (isAdmin (player)) continue;
 
-        antiPhase (player);
+        AntiPhase (player);
     }
-}, 20);
+}
 
-world.afterEvents.playerLeave.subscribe(event => {
-    const playerName: string = event.playerId;
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
+    const playerName: string = playerId;
     phaseData.delete(playerName);
-});
+};
+
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(antiPhase, 20)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        phaseData.clear()
+        system.clearRun(id)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
+}

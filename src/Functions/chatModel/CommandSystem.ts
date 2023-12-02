@@ -8,8 +8,7 @@ import {
     world
 } from "@minecraft/server";
 import { helpList, toggleList, validModules } from "../../Data/Help"
-import { isAdmin, isTimeStr, kick, timeToMs } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { isAdmin, isTimeStr, kick, timeToMs, c } from "../../Assets/Util";
 import { ban, unban, unbanList, unbanRemove } from "../moderateModel/banHandler";
 import { freeze, unfreeze } from "../moderateModel/freezeHandler";
 import { triggerEvent } from "../moderateModel/eventHandler";
@@ -18,6 +17,7 @@ import version from "../../version";
 import lang from "../../Data/Languages/lang";
 import { changeLanguage, getAllLang } from "../../Data/Languages/lang";
 import { SHA256 } from "../../node_modules/crypto-es/lib/sha256"
+import { antiCheatModules, getModuleState, keys } from "../../Modules/Modules";
 
 export { inputCommand }
 
@@ -38,39 +38,40 @@ class Cmds {
 class Command {
     static new (player: Player, setting: Cmds): boolean {
         if (setting.enabled !== true) {
-            system.run(() => player.sendMessage(`§bMatrix §7> §g `+lang(".CommandSystem.command_disabled")))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.command_disabled")))
             return false
         }
         if (setting.adminOnly === true && !isAdmin(player)){
-            system.run(() => player.sendMessage(`§bMatrix §7> §g `+lang(".CommandSystem.command_disabled_reason")))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.command_disabled_reason")))
             return false
         }
         if (setting.requireTag !== "none" && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
-            system.run(() => player.sendMessage(`§bMatrix §7> §g `+lang(".CommandSystem.no_permisson")))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.no_permission")))
             return false
         }
         return true
     }
 }
 async function inputCommand (player: Player, message: string, prefix: string): Promise<any> {
+    const config = c()
     const regax = turnRegax(message, prefix)
 
     switch (regax[0]) {
         case "about": {
             system.run(() =>
-                player.sendMessage(`§bMatrix §7> §g ${lang("-about.line1")}\n§g${lang("-about.version")}: §cV${version.join('.')}\n§4${lang("-about.author")}: §cjasonlaubb\n§4GitHub: §chttps://github.com/jasonlaubb/Matrix-AntiCheat`)
+                player.sendMessage(`§bMatrix §7>§g ${lang("-about.line1")}\n§g${lang("-about.version")}: §cV${version.join('.')}\n§g${lang("-about.author")}: §cjasonlaubb\n§gGitHub: §chttps://github.com/jasonlaubb/Matrix-AntiCheat`)
             )
             break
         }
         case "help": {
             if (!Command.new(player, config.commands.help as Cmds)) return
             const helpMessage: string = helpList(prefix)
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-help.helpCDlist")}\n${helpMessage}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-help.helpCDlist")}\n${helpMessage}`))
             break
         }
         case "toggles": {
             if (!Command.new(player, config.commands.toggles as Cmds)) return
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-toggles.toggleList")}\n${toggleList(prefix)}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleList")}\n${toggleList(prefix)}`))
             break
         }
         case "toggle": {
@@ -78,9 +79,18 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (regax[1] === undefined || !(new Set(validModules).has(regax[1]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownModule").replace("%a", prefix)}`))
             if (regax[2] === undefined || !(new Set(["enable", "disable"]).has(regax[2]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownAction")}`))
 
-            world.setDynamicProperty(regax[1], regax[2] === "enable" ? true : false)
+            if (keys.includes(regax[1])) {
+                if (regax[2] === "enable" === getModuleState(regax[1])) return
+                if (regax[2] === "enable") {
+                    antiCheatModules[regax[2]].enable()
+                    world.setDynamicProperty(regax[2], true)
+                } else {
+                    antiCheatModules[regax[2]].disable()
+                    world.setDynamicProperty(regax[2], false)
+                }
+            }
 
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`))
             break
         }
         case "op": {
@@ -90,7 +100,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 const target = world.getPlayers({ name: regax[1] })[0]
                 if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
                 target.setDynamicProperty("isAdmin", true)
-                system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-op.hasbeen").replace("%a", target.name).replace("%b", player.name)}`))
+                system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-op.hasbeen").replace("%a", target.name).replace("%b", player.name)}`))
             } else {
                 const now = Date.now()
                 const lastTry = player.lastOpTry ?? now - config.passwordCold
@@ -109,7 +119,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
 
                 if (String(SHA256(password)) == correctPassword) {
                     player.setDynamicProperty("isAdmin", true)
-                    system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-op.now")}`))
+                    system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-op.now")}`))
                 } else {
                     system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-op.wrong")}`))
                 }
@@ -124,7 +134,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
             if (!isAdmin(target)) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-deop.notadmin").replace("%a", target.name)}`))
             target.setDynamicProperty("isAdmin", undefined)
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${(lang("-deop.hasbeen").replace("%a", target.name).replace("%b", player.name))}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${(lang("-deop.hasbeen").replace("%a", target.name).replace("%b", player.name))}`))
             break
         }
         case "passwords": {
@@ -132,10 +142,10 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const oldPassword: string = regax[1]
             const newPassword: string = regax[2]
             const correctPassword = (world.getDynamicProperty("password") ?? config.commands.password) as string
-            if (oldPassword === undefined || newPassword === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-passwords.oldnew")}`))
-            if (oldPassword !== correctPassword) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-passwords.wrong")}`))
+            if (oldPassword === undefined || newPassword === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-passwords.oldnew")}`))
+            if (oldPassword !== correctPassword) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-passwords.wrong")}`))
 
-            world.sendMessage(`§bMatrix §7> §g ${player.name} ${lang("-passwords.changed")}`)
+            world.sendMessage(`§bMatrix §7>§g ${player.name} ${lang("-passwords.changed")}`)
             world.setDynamicProperty("sha_password", String(SHA256(newPassword)))
             break
         }
@@ -144,7 +154,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const mode: string = regax[1]
             if (mode === undefined || !(new Set(["all", "tag", "bypass", "admin", "none"]).has(mode))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-flagmode.unknown")}`))
             world.setDynamicProperty("flagMode", mode)
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-flagmode.changed").replace("%a", mode)}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-flagmode.changed").replace("%a", mode)}`))
             break
         }
         case "rank": {
@@ -154,14 +164,14 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const target = world.getPlayers({ name: regax[2] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
             const rank: string = regax[3]
-            if (rank === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-rank.enter")}`))
+            if (rank === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-rank.enter")}`))
             const ranks: string[] = target.getTags().filter(tag => tag.startsWith("rank:"))
             switch (regax[1]) {
                 case "set": {
                     system.run(() => {
                         ranks.forEach(rank => target.removeTag(rank))
                         target.addTag(`rank:${rank}`)
-                        player.sendMessage(`§bMatrix §7> §g ${lang("-rank.hasset").replace("%a", target.name).replace("%b", rank)}`)
+                        player.sendMessage(`§bMatrix §7>§g ${lang("-rank.hasset").replace("%a", target.name).replace("%b", rank)}`)
                     })
                     break
                 }
@@ -169,7 +179,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                     if (!player.hasTag(`rank:${rank}`)) {
                         system.run(() => {
                             target.addTag(`rank:${rank}`)
-                            player.sendMessage(`§bMatrix §7> §g ${lang("-rank.hasadd").replace("%a", target.name).replace("%b", rank)}`)
+                            player.sendMessage(`§bMatrix §7>§g ${lang("-rank.hasadd").replace("%a", target.name).replace("%b", rank)}`)
                         })
                     } else {
                         system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-rank.already").replace("%a", target.name).replace("%b", rank)}`))
@@ -180,7 +190,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                     if (ranks.length > 0) {
                         if (player.hasTag(`rank:${rank}`)) {
                             system.run(() => {
-                                player.sendMessage(`§bMatrix §7> §g ${lang("-rank.hasremove").replace("%a", target.name)}`)
+                                player.sendMessage(`§bMatrix §7>§g ${lang("-rank.hasremove").replace("%a", target.name)}`)
                                 player.removeTag(`rank:${rank}`)
                             })
                         } else {
@@ -204,10 +214,10 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (ranks.length > 0) {
                 system.run(() => {
                     ranks.forEach(rank => target.removeTag(rank))
-                    player.sendMessage(`§bMatrix §7> §g ${lang("-rankclear.has").replace("%a", target.name)}`)
+                    player.sendMessage(`§bMatrix §7>§g ${lang("-rankclear.has").replace("%a", target.name)}`)
                 })
             } else {
-                system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-rankclear.empty").replace("%a", target.name)}`))
+                system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-rankclear.empty").replace("%a", target.name)}`))
             }
             break
         }
@@ -216,7 +226,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const rank: string = regax[1]
             if (rank === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-defaultrank.enter")}`))
             world.setDynamicProperty("defaultRank", rank)
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-defaultrank.has").replace("%a", rank)}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-defaultrank.has").replace("%a", rank)}`))
             break
         }
         case "showallrank": {
@@ -224,7 +234,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const toggle: string = regax[1]
             if (toggle === undefined || !(new Set(["true", "false"]).has(toggle))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-showallrank.unknown")}`))
             world.setDynamicProperty("showAllRank", Boolean(toggle))
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-showallrank.has").replace("%a", toggle)}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-showallrank.has").replace("%a", toggle)}`))
             break
         }
         case "ban": {
@@ -233,16 +243,16 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
             if (target.id === player.id) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-ban.self")}`))
-            if (isAdmin(target)) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-ban.admin")}`))
+            if (isAdmin(target)) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-ban.admin")}`))
 
             const reason = regax[2]
-            if (reason === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-ban.reason")}`))
+            if (reason === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-ban.reason")}`))
 
             const time = regax[3]
             if (time === undefined || (!isTimeStr(time) && time != 'forever')) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-ban.time")}`))
 
             ban(player, 'reason', player.name, time === 'forever' ? time : Date.now() + timeToMs(time))
-            system.run(() => world.sendMessage(`§bMatrix §7> §g ${lang("-ban.has").replace("%a", target.name).replace("%b", player.name)}`))
+            system.run(() => world.sendMessage(`§bMatrix §7>§g ${lang("-ban.has").replace("%a", target.name).replace("%b", player.name)}`))
             break
         }
         case "unban": {
@@ -251,8 +261,8 @@ async function inputCommand (player: Player, message: string, prefix: string): P
 
             const targetName = regax[1]
 
-            if (unbanList().includes(targetName)) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${targetName} has unbanned already`))
-            if (targetName == player.name) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-unban.self")}`))
+            if (unbanList().includes(targetName)) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${targetName} has unbanned already`))
+            if (targetName == player.name) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-unban.self")}`))
 
             unban(targetName)
             break
@@ -270,7 +280,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (!Command.new(player, config.commands.unbanlist as Cmds)) return
             const list = unbanList()
             if (list.length === 0) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unbanlist.none")}`))
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-unbanlist.list")}:\n${list.join("\n")}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-unbanlist.list")}:\n${list.join("\n")}`))
             break
         }
         case "freeze": {
@@ -284,7 +294,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const freezed = freeze (target)
 
             if (freezed) {
-                system.run(() => world.sendMessage(`§bMatrix §7> §g ${lang("-freeze.has").replace("%a", target.name).replace("%b", player.name)}`))
+                system.run(() => world.sendMessage(`§bMatrix §7>§g ${lang("-freeze.has").replace("%a", target.name).replace("%b", player.name)}`))
             } else {
                 system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-freeze.already").replace("%a", target.name)}`))
             }
@@ -301,7 +311,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const unfreezed = unfreeze (target)
 
             if (unfreezed) {
-                system.run(() => world.sendMessage(`§bMatrix §7> §g ${lang("-unfreeze.has").replace("%a", target.name).replace("%b", player.name)}`))
+                system.run(() => world.sendMessage(`§bMatrix §7>§g ${lang("-unfreeze.has").replace("%a", target.name).replace("%b", player.name)}`))
             } else {
                 system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unfreeze.not").replace("%a", target.name)}`))
             }
@@ -317,7 +327,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (target.getDynamicProperty("mute") === true) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-mute.already").replace("%a", target.name)}`))
 
             target.setDynamicProperty("mute", true)
-            system.run(() => world.sendMessage(`§bMatrix §7> §g ${lang("-mute.has").replace("%a", target.name).replace("%b", player.name)}`))
+            system.run(() => world.sendMessage(`§bMatrix §7>§g ${lang("-mute.has").replace("%a", target.name).replace("%b", player.name)}`))
             break
         }
         case "unmute": {
@@ -338,7 +348,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             system.run(() => {
                 triggerEvent(player, "matrix:vanish")
                 player.addEffect(MinecraftEffectTypes.Invisibility, 19999999, { showParticles: false, amplifier: 2 })
-                player.sendMessage(`§bMatrix §7> §g ${lang("-vanish.has")}`)
+                player.sendMessage(`§bMatrix §7>§g ${lang("-vanish.has")}`)
             })
             break
         }
@@ -347,7 +357,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             system.run(() => {
                 triggerEvent(player, "matrix:unvanish")
                 player.removeEffect(MinecraftEffectTypes.Invisibility)
-                player.sendMessage(`§bMatrix §7> §g ${lang("-vanish.out")}`)
+                player.sendMessage(`§bMatrix §7>§g ${lang("-vanish.out")}`)
             })
             break
         }
@@ -374,7 +384,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 }
             })
 
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-invcopy.not").replace("%a", target.name)}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-invcopy.not").replace("%a", target.name)}`))
             break
         }
         case "invsee": {
@@ -398,7 +408,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 }
             }
 
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-invsee.of").replace("%a", target.name)}:\n${itemArray.join("\n")}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-invsee.of").replace("%a", target.name)}:\n${itemArray.join("\n")}`))
             break
         }
         case "echestwipe": {
@@ -413,7 +423,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 player.runCommandAsync(`replaceitem entity @s slot.enderchest ${i} air`)
             }
 
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-echestwipe.has").replace("%a", target.name).replace("%b", player.name)}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-echestwipe.has").replace("%a", target.name).replace("%b", player.name)}`))
             break
         }
         case "lockdowncode": {
@@ -423,7 +433,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             switch (regax[1]) {
                 case "get": {
                     const code = world.getDynamicProperty("lockdowncode") ?? config.lockdowncode
-                    system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-lockdowncode.get").replace("%a", code as string)}`))
+                    system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-lockdowncode.get").replace("%a", code as string)}`))
                     break
                 }
                 case "set": {
@@ -460,7 +470,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
 
                     system.run(() => {
                         world.setDynamicProperty("lockdowncode", code)
-                        player.sendMessage(`§bMatrix §7> §g ${lang("-lockdowncode.set").replace("%a", code)}`)
+                        player.sendMessage(`§bMatrix §7>§g ${lang("-lockdowncode.set").replace("%a", code)}`)
                     })
                     break
                 }
@@ -480,7 +490,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
 
             system.run(() => {
                 world.setDynamicProperty("lockdown", true)
-                world.sendMessage(`§bMatrix §7> §g ${lang("-lockdown.has").replace("%a", player.name)}`)
+                world.sendMessage(`§bMatrix §7>§g ${lang("-lockdown.has").replace("%a", player.name)}`)
                 world.getAllPlayers().filter(players => isAdmin(players) === false).forEach(players => kick(players, "LockDown", 'Matrix'))
             })
             break
@@ -491,7 +501,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
 
             system.run(() => {
                 world.setDynamicProperty("lockdown", undefined)
-                world.sendMessage(`§bMatrix §7> §g ${lang("-unlock.has").replace("%a", player.name)}`)
+                world.sendMessage(`§bMatrix §7>§g ${lang("-unlock.has").replace("%a", player.name)}`)
             })
             break
         }
@@ -499,29 +509,29 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (!Command.new(player, config.commands.adminchat as Cmds)) return
             if (player.getDynamicProperty("adminchat")) {
                 player.setDynamicProperty("adminchat", undefined)
-                system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-adminchat.out")}`))
+                system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-adminchat.out")}`))
             } else {
                 player.setDynamicProperty("adminchat", true)
-                system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-adminchat.has")}`))
+                system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-adminchat.has")}`))
             }
             break
         }
         case "lang": {
             if (!Command.new(player, config.commands.lang as Cmds)) return
-            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-lang.enter")}`))
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-lang.enter")}`))
             if (!getAllLang().includes(regax[1])) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-lang.unknown").replace("%a", prefix)}`))
 
             system.run(() => {
                 changeLanguage(regax[1])
                 player.setDynamicProperty("lang", regax[1])
-                player.sendMessage(`§bMatrix §7> §g ${lang("-lang.has").replace("%a", regax[1])}`)
+                player.sendMessage(`§bMatrix §7>§g ${lang("-lang.has").replace("%a", regax[1])}`)
             })
             break
         }
         case "langlist": {
             if (!Command.new(player, config.commands.langlist as Cmds)) return
             const list = getAllLang().map(value => `§a- ${value}`)
-            system.run(() => player.sendMessage(`§bMatrix §7> §g ${lang("-langlist.list")}\n${list.join("\n")}`))
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-langlist.list")}\n${list.join("\n")}`))
             break
         }
         default: {

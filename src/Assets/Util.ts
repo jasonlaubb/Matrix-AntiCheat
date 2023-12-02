@@ -6,13 +6,16 @@ import {
     ItemEnchantsComponent,
     EntityDamageCause,
     Vector3,
-    Dimension
+    Dimension,
+    system
 } from "@minecraft/server"
 import { ban } from "../Functions/moderateModel/banHandler";
 import config from "../Data/Config";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../Data/Languages/lang";
+import Config from "../Data/Config";
+import { Root } from "../Data/ConfigDocs";
 
 world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
     if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
@@ -52,6 +55,14 @@ world.afterEvents.entityHurt.subscribe(event => {
         }
     }
 });
+
+system.runInterval(() => {
+    const players = world.getPlayers({ tags: ["matrix:knockback"]})
+    for (const player of players) {
+        const velocity = player.getVelocity().y
+        if (velocity <= 0) player.removeTag("matrix:knockback")
+    }
+})
 
 export function kick (player: Player, reason?: string, by?: string) {
     try {
@@ -222,4 +233,12 @@ export function timeToMs(timeStr: string) {
 export function isTimeStr(timeStr: string) {
     const timeUnits = ['d', 'h', 'm', 's'];
     return timeUnits.some(unit => new RegExp(`\\d+${unit}`).test(timeStr));
+}
+
+export const c = (): Root => {
+    try {
+        return JSON.parse(world.getDynamicProperty("matrix_config") as string)
+    } catch {
+        return Config
+    }
 }

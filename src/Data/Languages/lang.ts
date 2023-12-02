@@ -6,7 +6,7 @@ import { LangType } from "./LangType";
 
 let languageNow = config.language
 
-export const langs: { [key: string]: { [key: string]: string } } = {
+export const langs: { [key: string]: { [key: string]: LangType | string } } = {
     "en_US": en_US,
     "zh_TW": zh_TW
 }

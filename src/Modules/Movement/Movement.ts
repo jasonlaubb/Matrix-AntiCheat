@@ -1,6 +1,5 @@
-import { world, Player, system, GameMode, Vector3 } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { world, Player, system, GameMode, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
 interface Horizontal {
@@ -19,6 +18,7 @@ const lastLocation = new Map<string, Vector3>()
  */
 
 async function Movement (player: Player, now: number) {
+    const config = c()
     const velocity = player.getVelocity()
     const { x: x1, z: z1 }: Horizontal = player.getVelocity();
 
@@ -38,7 +38,7 @@ async function Movement (player: Player, now: number) {
     const hVelocity = Math.hypot(x1, z1)
 
     //check if player get damamged
-    const damaged = player.lastExplosionTime && now - player.lastExplosionTime >= 2000
+    const damaged = player.lastExplosionTime && now - player.lastExplosionTime < 2000
     if (player.isJumping || damaged || player.isFlying) return;
 
     //state the difference of X and Z
@@ -54,20 +54,31 @@ async function Movement (player: Player, now: number) {
     }
 }
 
-system.runInterval(() => {
-    const toggle: boolean = world.getDynamicProperty("antiMovement") as boolean ?? config.antiMovement.enabled
-
-    if (toggle !== true) return
-
+const movement = () => {
     const DateNow = Date.now()
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator]} )
     for (const player of players) {
         if (isAdmin(player)) continue;
         Movement (player, DateNow)
     }
-}, 0)
+}
 
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     lastXZ.delete(playerId)
     lastLocation.delete(playerId)
-})
+}
+
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(movement)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        lastXZ.clear()
+        lastLocation.clear()
+        system.clearRun(id)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
+}

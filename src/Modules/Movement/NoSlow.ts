@@ -6,8 +6,7 @@ import {
     Vector3
 } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { flag, isAdmin } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
 function getSpeedIncrease (speedEffect: Effect | undefined) {
@@ -22,7 +21,8 @@ const lastPosition = new Map<string, Vector3>();
  * @description A strong check for no slow, it detect no slow in a high accuracy
  */
 
-async function antiNoSlow (player: Player) {
+async function AntiNoSlow (player: Player) {
+    const config = c()
     //get the player location
     const playerLocation = player.location;
 
@@ -103,12 +103,22 @@ async function antiNoSlow (player: Player) {
     }
 }
 
-system.runInterval(() => {
-    const toggle = (world.getDynamicProperty("antiNoSlow") ?? config.antiNoSlow.enabled) as boolean;
-    if (toggle !== true) return;
+const antiNoSlow = () => {
     const players = world.getAllPlayers()
     for (const player of players) {
         if (isAdmin (player)) continue;
-        antiNoSlow(player);
+        AntiNoSlow(player);
     }
-}, 1)
+}
+
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(antiNoSlow)
+    },
+    disable () {
+        lastPosition.clear()
+        system.clearRun(id)
+    }
+}

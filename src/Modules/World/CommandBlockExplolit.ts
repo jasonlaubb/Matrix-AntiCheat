@@ -1,4 +1,4 @@
-import { world, system } from "@minecraft/server";
+import { world, system, EntityRemoveBeforeEvent } from "@minecraft/server";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { flag, isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
@@ -6,7 +6,7 @@ import lang from "../../Data/Languages/lang";
 
 let killRate: number[] = []
 
-world.beforeEvents.entityRemove.subscribe(({ removedEntity: entity }) => {
+const antiCBE = ({ removedEntity: entity }: EntityRemoveBeforeEvent) => {
     const toggle: boolean = (world.getDynamicProperty("antiCBE") ?? config.antiCommandBlockExplolit.enabled) as boolean;
 
     //if toggle is disabled or the entity is not a command block minecart, return
@@ -40,4 +40,14 @@ world.beforeEvents.entityRemove.subscribe(({ removedEntity: entity }) => {
     system.run(() =>
        flag(player, "CommandBlockExplolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">distance") + ":" + distance.toFixed(2), lang(">Pos") + ":" + Math.floor(pos.x) + ", " + Math.floor(pos.y) + ", " + Math.floor(pos.z)])
     )
-})
+}
+
+export default {
+    enable () {
+        world.beforeEvents.entityRemove.subscribe(antiCBE)
+    },
+    disable () {
+        killRate = []
+        world.beforeEvents.entityRemove.unsubscribe(antiCBE)
+    }
+}

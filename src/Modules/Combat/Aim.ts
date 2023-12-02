@@ -1,6 +1,5 @@
-import { world, system, Player } from "@minecraft/server";
-import config from "../../Data/Config";
-import { flag, isAdmin } from "../../Assets/Util";
+import { world, system, Player, ItemStartUseAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
 /**
@@ -25,6 +24,7 @@ const timer = new Map<string, number>();
 let queueFlag: QueueFlag = {};
 
 async function AntiAim (player: Player) {
+    const config = c()
     const rotation = player.getRotation();
     const rotationSpeed = {x: Math.abs(rotation.x - (lastAction.rotation[player.id]?.x || rotation.x)), y: Math.abs(rotation.y - (lastAction.rotation[player.id]?.y || rotation.y))};
     const averageSpeed = Math.sqrt(rotationSpeed.x ** 2 + rotationSpeed.y ** 2);
@@ -74,27 +74,41 @@ async function AntiAim (player: Player) {
     lastAction.rotation[player.id] = {...rotation, rotationSpeed, averageSpeed};
 };
 
-system.runInterval(() => {
-    const toggle: boolean = (world.getDynamicProperty("antiAim") ?? config.antiAim.enabled) as boolean;
-    if (toggle !== true) return;
+const antiAim = () => {
     const players = world.getAllPlayers();
     for (const player of players) {
         if (isAdmin (player)) continue;
         AntiAim (player)
     }
-}, 1)
+}
         
 
-world.afterEvents.itemStartUse.subscribe((event) => {
-    const toggle: boolean = (world.getDynamicProperty("antiAim") ?? config.antiAim.enabled) as boolean;
-    if (toggle !== true) return;
+const itemStartUse = (event: ItemStartUseAfterEvent) => {
     const player = event.source;
     queueFlag[player.id] = {date: Date.now()};
-});
+};
 
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     delete lastAction.rotation[playerId];
     delete queueFlag[playerId];
     timer.delete(`aim-b:${playerId}`);
     timer.delete(`aim-c:${playerId}`);
-});
+};
+
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(antiAim, 1)
+        world.afterEvents.itemStartUse.subscribe(itemStartUse)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        lastAction = { rotation: {} };
+        queueFlag = {};
+        timer.clear();
+        system.clearRun(id)
+        world.afterEvents.itemStartUse.unsubscribe(itemStartUse)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
+}

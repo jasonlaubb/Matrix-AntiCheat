@@ -3,11 +3,12 @@ import {
     system,
     Player,
     Entity,
-    EntityDamageCause
+    EntityDamageCause,
+    EntityHurtAfterEvent,
+    PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import config from "../../Data/Config.js";
 import {
-    flag, isAdmin
+    flag, isAdmin, c
 } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
@@ -36,6 +37,7 @@ function calculateDistance(b1: Entity, b2: Entity) {
 }
 
 async function AntiReach (hurtEntity: Player, damagingEntity: Player) {
+    const config = c()
     //calculate the y reach
     const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y)
 
@@ -74,16 +76,25 @@ async function AntiReach (hurtEntity: Player, damagingEntity: Player) {
     }
 }
 
-world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity }) => {
-    const toggle: boolean = (world.getDynamicProperty("antiReach") ?? config.antiReach.enabled) as boolean;
-    if (toggle !== true) return;
-
+const antiReach = ({ damageSource, hurtEntity }: EntityHurtAfterEvent) => {
     const damagingEntity: Entity = damageSource.damagingEntity;
     if (damageSource.cause !== EntityDamageCause.entityAttack || !(damagingEntity instanceof Player) || !(hurtEntity instanceof Player) || isAdmin (damagingEntity)) return;
 
     AntiReach(hurtEntity, damagingEntity);
-});
+};
 
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     reachData.delete(playerId);
-})
+}
+
+export default {
+    enable () {
+        world.afterEvents.entityHurt.subscribe(antiReach)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        reachData.clear()
+        world.afterEvents.entityHurt.unsubscribe(antiReach)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
+}

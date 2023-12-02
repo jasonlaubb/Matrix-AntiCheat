@@ -1,9 +1,9 @@
 import { world, GameMode, Player, system } from "@minecraft/server";
-import config from "../../Data/Config";
-import { flag, isAdmin } from "../../Assets/Util";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
-async function antiGameMode (player: Player) {
+async function AntiGameMode (player: Player) {
+    const config = c()
     const gamemode = Gamemode(player.name);
 
     if (config.antiGameMode.bannedGameMode.includes(gamemode)) {
@@ -31,14 +31,22 @@ function Gamemode (playerName: string) {
     return 0
 }
 
-system.runInterval(() => {
-    const toggle: boolean = Boolean(world.getDynamicProperty("antiGameMode")) ?? config.antiGameMode.enabled;
-    if (toggle !== true) return;
-
+const antiGameMode = () => {
     const players = world.getAllPlayers();
     for (const player of players) {
         if (isAdmin(player)) continue;
 
-        antiGameMode(player)
+        AntiGameMode(player)
     }
-}, 20)
+}
+
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(antiGameMode) 
+    },
+    disable () {
+        system.clearRun(id)
+    }
+}

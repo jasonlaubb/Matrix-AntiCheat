@@ -1,4 +1,6 @@
 import lang from "./Languages/lang"
+import { keys } from "../Modules/Modules"
+
 export function helpList (p: string): string {
     return [
         `§g${p}`+lang("-help.help"),
@@ -40,28 +42,5 @@ export function toggleList (p: string): string {
 export const validModules: string[] = [
     "chatRank",
     "dimensionLock",
-    "antiReach",
-    "antiKillAura",
-    "antiAutoClicker",
-    "antiSpam",
-    "antiFly",
-    "antiMotion",
-    "antiMovement",
-    "antiTimer",
-    "antiBlink",
-    "antiInvalidBreak",
-    "antiPhase",
-    "antiSpeed",
-    "antiNuker",
-    "antiGameMode",
-    "antiTower",
-    "antiFastUse",
-    "antiNoSlow",
-    "antiBlockReach",
-    "antiAim",
-    "antiScaffold",
-    "antiIllegalItem",
-    "antiNameSpoof",
-    "antiOperator",
-    "antiCBE"
+    ...keys
 ]

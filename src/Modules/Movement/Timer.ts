@@ -1,6 +1,5 @@
-import { world, system, Player, Vector3 } from "@minecraft/server";
-import config from "../../Data/Config";
-import { flag, isAdmin } from "../../Assets/Util";
+import { world, system, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
@@ -16,7 +15,8 @@ const timerData = new Map<string, TimerData>()
  * @description Check if player is using timer
  */
 
-async function antiTimer (player: Player): Promise<any> {
+async function AntiTimer (player: Player) {
+    const config = c ()
     const { x, y, z } = player.getVelocity()
     const totalSpeed = Math.hypot(x, y, z)
     
@@ -62,18 +62,28 @@ async function antiTimer (player: Player): Promise<any> {
     }
 }
 
-system.runInterval(() => {
-    const toggle: boolean = world.getDynamicProperty("antiTimer") as boolean ?? config.antiTimer.enabled
-    if (toggle !== true) return
-
+const antiTimer = () => {
     const players = world.getAllPlayers()
-
     for (const player of players) {
         if (isAdmin (player)) continue
-        antiTimer (player)
+        AntiTimer (player)
     }
-}, 0)
+}
 
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     timerData.delete(playerId)
-})
+}
+
+let id: number
+
+export default {
+    enable () {
+        id = system.runInterval(antiTimer, 1)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        timerData.clear()
+        system.clearRun(id)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+    }
+}
