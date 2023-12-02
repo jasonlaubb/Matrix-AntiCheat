@@ -39,7 +39,7 @@ function checksBan (player: Player): void {
         by = baninfo.by;
         time = baninfo.time;
     } catch {
-        console.log("Error: banHandler.ts: checksBan: baninfo is not a BanInfo object, unbanned")
+        console.log("baninfo is not a BanInfo object, unbanned")
         player.setDynamicProperty("isBanned", undefined)
     }
 
@@ -60,7 +60,7 @@ function checksBan (player: Player): void {
     }
 
     try {
-        player.runCommand(`kick "${player.name}" "\n§c§l${lang(".banHandler.banned")}${lang(".banHandler.format").replace("%a", timeTherShold).replace("%b", reason).replace("%c", by)}`)
+        player.runCommand(`kick "${player.name}" "§r\n§c§l${lang(".banHandler.banned")}${lang(".banHandler.format").replace("%a", timeTherShold).replace("%b", reason).replace("%c", by)}`)
     } catch {
         triggerEvent (player, "matrix:kick")
     }

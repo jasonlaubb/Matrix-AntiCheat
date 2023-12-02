@@ -63,8 +63,7 @@ export const keys = Object.keys(antiCheatModules)
 export function getModuleState (module: string) {
     const config = c ()
     if (!keys.includes(module)) return undefined
-    //@ts-expect-error
-    return world.getDynamicProperty(module) as boolean ?? config[module]
+    return world.getDynamicProperty(module) as boolean ?? (config as any)[module]
 }
 
 export async function moduleStart () {

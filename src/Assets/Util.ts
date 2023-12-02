@@ -66,7 +66,7 @@ system.runInterval(() => {
 
 export function kick (player: Player, reason?: string, by?: string) {
     try {
-        player.runCommand(`kick "${player.name}" \n§bMatrix §7> §b ${player.name} §m${lang(".Util.kicked")}\n§f${lang(".Util.reason")}: §c${reason ?? lang(".Util.noreason")}\n§fBy: §c${by ?? lang(".Util.unknown")})}`)
+        player.runCommand(`kick "${player.name}" "§r\n§c§l${lang(".Util.kicked")}§r\n§7${lang(".Util.reason")}: §e${reason ?? lang(".Util.noreason")}\n§7By: §e${by ?? lang(".Util.unknown")}"`)
     } catch {
         triggerEvent (player, "matrix:kick")
     }
