@@ -10,7 +10,7 @@ let vl: { [key: string]: number } = {}
 
 /**
  * @author jasonlaubb
- * @description anti Blink
+ * @description check if player keep a same speed without location movement
  */
 
 async function AntiBlink (player: Player) {
