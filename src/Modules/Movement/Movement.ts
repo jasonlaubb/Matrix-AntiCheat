@@ -45,7 +45,7 @@ async function Movement (player: Player, now: number) {
     const difference = Math.hypot(x2 - x1, z2 - z1)
 
     //flag the player
-    if(hVelocity > config.antiMovement.maxHorizontalVelocity && (Math.abs(x1 - x2) > 0.1 || Math.abs(x1 - x2) > 0.1)) {
+    if(hVelocity > config.antiMovement.maxHorizontalVelocity && (Math.abs(x1 - x2) > 0.1 || Math.abs(x1 - x2) > 0.1) && !player.isGliding) {
         player.sendMessage(String(difference))
         flag (player, "Movement", "A", config.antiMovement.maxVL, config.antiMovement.punishment, [lang(">velocityXZ") + ":" + hVelocity.toFixed(2)])
         if (!config.slient) player.teleport(lastPos)

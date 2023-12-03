@@ -1,9 +1,10 @@
-import { world, system, GameMode, Player, Vector3, Dimension } from "@minecraft/server";
+import { world, system, GameMode, Player, Vector3, Dimension, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
 const previousLocations = new Map<string, Vector3>();
+const fallDistances = new Map<string, number[]>();
 
 /**
  * @author RaMiGamerDev & ravriv
@@ -42,11 +43,28 @@ async function AntiFly (player: Player, now: number) {
     //try to increase the velocity limit when player is jumping
     let maxVelocity = player.isJumping ? 0.8 : 0.7
 
+    const airState = inAir(player.dimension, player.location)
     if (prevLoc && !player.hasTag("matrix:knockback") && !player.hasTag("matrix:slime") && !isOnGround && !player.isFlying && !player.isGliding && !player.isInWater && !(jumpEffect && jumpEffect.amplifier > 2) && !(threwTridentAt && now - threwTridentAt < 3000)) {
-        if ((velocity > maxVelocity && velocity !== 1 && inAir(player.dimension, player.location)) || velocity > 3.5) {
+        if ((velocity > maxVelocity && velocity !== 1 && airState) || velocity > 3.5) {
             if (!config.slient) player.teleport(prevLoc)
             flag (player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + velocity.toFixed(2)])
         }
+    }
+
+    if (player.isGliding) {
+        const data = fallDistances.get(player.id) ?? []
+        data.push(player.fallDistance)
+        if (data.length > 4) {
+            data.shift()
+            if (data.every(f => player.fallDistance == f) && player.fallDistance !== 1 && player.fallDistance <= 1.05 && velocity < -0.01) {
+                if (!config.slient) player.teleport(prevLoc)
+                player.applyDamage(8)
+                flag (player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + velocity.toFixed(2)])
+            }
+        }
+        fallDistances.set(player.id, data)
+    } else {
+        fallDistances.set(player.id, undefined)
     }
 }
 async function AntiNoFall (player: Player, now: number) {
@@ -116,6 +134,11 @@ function findSlime (dimension: Dimension, location: Vector3) {
     })?.typeId === MinecraftBlockTypes.Slime))
 }
 
+const playerLeave = ({playerId}: PlayerLeaveAfterEvent) => {
+    previousLocations.delete(playerId)
+    fallDistances.delete(playerId)
+}
+
 let id: { [key: string]: number }
 
 export default {
@@ -124,10 +147,13 @@ export default {
             a: system.runInterval(antiFly, 1),
             b: system.runInterval(antiNofall, 10)
         }
+        world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {
         previousLocations.clear()
+        fallDistances.clear()
         system.clearRun(id.a)
         system.clearRun(id.b)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
     }
 }
