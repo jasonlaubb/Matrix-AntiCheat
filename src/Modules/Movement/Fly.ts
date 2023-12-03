@@ -7,7 +7,7 @@ const previousLocations = new Map<string, Vector3>();
 const fallDistances = new Map<string, number[]>();
 
 /**
- * @author RaMiGamerDev & ravriv
+ * @author jasonlaubb
  * @description This checks if a player velocity is too high.
  */
 
