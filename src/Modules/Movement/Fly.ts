@@ -63,8 +63,18 @@ async function AntiFly (player: Player, now: number) {
             }
         }
         fallDistances.set(player.id, data)
+
+        const ratio = player.fallDistance / (velocity ** 2) * player.getRotation().x ** 2 / 56000
+        player.onScreenDisplay.setActionBar(String(player.fallDistance) + "\n" + ratio)
+
+        if (ratio > 10 && ratio !== Infinity && player.fallDistance !== 1 && player.lastGliding && Date.now() - player.lastGliding > 1000) {
+            if (!config.slient) player.teleport(prevLoc)
+            player.applyDamage(8)
+            flag (player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
+        }
     } else {
         fallDistances.set(player.id, undefined)
+        player.lastGliding = Date.now()
     }
 }
 async function AntiNoFall (player: Player, now: number) {

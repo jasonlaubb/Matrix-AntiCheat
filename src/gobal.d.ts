@@ -13,5 +13,6 @@ declare module "@minecraft/server" {
         lastItemUsed: number;
         lastTouchGround: number;
         lastOpTry: number;
+        lastGliding: number;
     }
 }

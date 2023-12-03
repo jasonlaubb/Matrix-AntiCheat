@@ -53,17 +53,23 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiAim": aim,
     "antiScaffold": scaffold,
     "antiIllegalItem": illegalItem,
-    "auto": auto,
+    "antiAuto": auto,
     "antiNameSpoof": nameSpoof,
     "antiOperator": operator,
     "antiCBE": cbe
 }
+
+const defaultLy = (key: string) => {
+    const config: { [key: string]: any } = c()
+    if (key == "antiCBE") return config.antiCommandBlockExplolit
+    return config[key].enabled
+}
+
 export const keys = Object.keys(antiCheatModules)
 
 export function getModuleState (module: string) {
-    const config = c ()
     if (!keys.includes(module)) return undefined
-    return world.getDynamicProperty(module) as boolean ?? (config as any)[module]
+    return (world.getDynamicProperty(module) as boolean ?? defaultLy(module))
 }
 
 export async function moduleStart () {
