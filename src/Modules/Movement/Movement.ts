@@ -37,7 +37,7 @@ async function Movement (player: Player, now: number) {
     const hVelocity = Math.hypot(x1, z1)
 
     //check if player get damamged
-    const damaged = player.lastExplosionTime && now - player.lastExplosionTime < 2000
+    const damaged = player.lastExplosionTime && now - player.lastExplosionTime < 4500
     if (player.isJumping || damaged || player.isFlying) return;
 
     //state the difference of X and Z
