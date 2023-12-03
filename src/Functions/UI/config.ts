@@ -1,6 +1,25 @@
 import { Player, system } from "@minecraft/server";
-import { c } from "../../Assets/Util";
+import { c, isAdmin } from "../../Assets/Util";
 import { ActionFormData, FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
+
+export default {
+    ui () {
+
+    }
+}
+
+function mainUI (player: Player) {
+    if (!isAdmin(player)) return console.log(`${player.name} are trying to acess adminUI without op`)
+
+    new ActionFormData ()
+        .title("§g§lConfig UI")
+        .body("ePlease select an action want to do")
+        .button("§lEdit config")
+        .button("§lReset config")
+        .button("§lCompare with exportation")
+        .button("§lExport config")
+        //unfinshed tag
+}
 
 function changeJSON (json: any, keys: string[], newValue: any) {
     let current = json;
@@ -44,7 +63,6 @@ function genarateUI (player: Player , path: string[]) {
     for (const key of keys) {
         const type = typeof key
 
-        //menu.button(`§g§l${key[0]}\n§r§8Click here to view`)
         if (key instanceof Array) {
             menu.button(`§g§l${key[0]}\n§r§8[${(key[1] as Array<string>).join(", ")}]`)
         } else if (type !== "object") {
@@ -80,14 +98,17 @@ function genarateUI (player: Player , path: string[]) {
             const holder = getJSON(config, path)
             if (selected[1] instanceof Array) {
                 input.array(player, path, holder)
-            } else if (selectedType !== "object") {
+            } else if (selectedType != "object") {
                 if (selectedType == "number") {
                     input.number(player, path, holder)
                 } else if (selectedType == "boolean") {
                     input.boolean(player, path, holder)
                 } else if (selectedType == "string") {
-                    input.string(player, path, holder)
-                } //unfinished tag
+                    if (selected[1] == "punishment") {
+                        input.punishment(player, path, holder)
+                    } else
+                        input.string(player, path, holder)
+                }
             } else {
                 path.push(selected[0])
                 genarateUI(player, path)
@@ -213,6 +234,44 @@ class input {
             }
 
             changeJSON (config, path, v)
+            path.pop()
+            genarateUI(player, path)
+        })
+    }
+    static punishment (player: Player, path: string[], holder: string) {
+        const config = c()
+        const indexThereShould: { [key: string]: number} = {
+            "none": 0,
+            "kick": 1,
+            "ban": 2
+        }
+        const holderThereShould: string[] = [
+            "none",
+            "kick",
+            "ban"
+        ]
+        const defaultIndex = indexThereShould[holder]
+        new ModalFormData()
+        .title("§g§lInput Value")
+        .dropdown("§7Value: §ePunishment<string>\n§7Example:§e kick\n§c-- Select the punishment here --\n", ["none","kick","ban"], defaultIndex)
+        .show(player).then(res => {
+            if (res.canceled) {
+                if (res.cancelationReason == FormCancelationReason.UserClosed) {
+                    path.pop()
+                    genarateUI(player, path)
+                }
+                return
+            }
+
+            const v = res.formValues[0] as number
+
+            if (v === undefined) {
+                path.pop()
+                genarateUI(player, path)
+                return
+            }
+
+            changeJSON (config, path, holderThereShould[v])
             path.pop()
             genarateUI(player, path)
         })

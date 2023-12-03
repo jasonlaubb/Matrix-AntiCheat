@@ -28,8 +28,8 @@ async function AntiAim (player: Player) {
     const rotation = player.getRotation();
     const rotationSpeed = {x: Math.abs(rotation.x - (lastAction.rotation[player.id]?.x || rotation.x)), y: Math.abs(rotation.y - (lastAction.rotation[player.id]?.y || rotation.y))};
     const averageSpeed = Math.sqrt(rotationSpeed.x ** 2 + rotationSpeed.y ** 2);
+    let isFlagged = false;
     if (lastAction.rotation[player.id]) {
-        let isFlagged = false;
         const maxRotSpeed = config.antiAim.maxRotSpeed;
         if (averageSpeed > maxRotSpeed && queueFlag[player.id]) {
             const delay: number = Date.now() - queueFlag[player.id].date
@@ -60,14 +60,18 @@ async function AntiAim (player: Player) {
                 timer.set(`aim-c:${player.id}`, 0);
             }
         } else timer.set(`aim-c:${player.id}`, 0);
-
-        if (isFlagged) {
-            if (!config.slient) {
-                player.applyDamage(6)
-                if (!player.hasTag("matrix:pvp-disabled")) {
-                    player.addTag("matrix:pvp-disabled")
-                    system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiAim.timeout)
-                }
+    }
+    if (!player.isGliding && (rotation.x % 1 == 0 || (rotation.y % 1 == 0 && Math.abs(rotation.y) != 90)) && rotation.x != 0 && rotation.y != 0) {
+        player.setRotation({ x: Math.random(), y: Math.random() })
+        flag (player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, undefined)
+        isFlagged = true
+    }
+    if (isFlagged) {
+        if (!config.slient) {
+            player.applyDamage(6)
+            if (!player.hasTag("matrix:pvp-disabled")) {
+                player.addTag("matrix:pvp-disabled")
+                system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiAim.timeout)
             }
         }
     }

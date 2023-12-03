@@ -1,3 +1,4 @@
+//credit to Isolate AntiCheat
 import { world, Player, system, GameMode, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
@@ -11,10 +12,8 @@ const lastXZ = new Map<string, Horizontal>()
 const lastLocation = new Map<string, Vector3>()
 
 /**
- * @author 4urxa
- * @link https://github.com/Dream23322/Isolate-Anticheat
- * @license GPLv3
- * @description edit by jasonlaubb
+ * @author jasonlaubb
+ * @description Check if player change speed with a high range while high speed
  */
 
 async function Movement (player: Player, now: number) {
@@ -42,13 +41,12 @@ async function Movement (player: Player, now: number) {
     if (player.isJumping || damaged || player.isFlying) return;
 
     //state the difference of X and Z
-    const difference: Horizontal = {
-        x: Math.abs(x2 - x1),
-        z: Math.abs(z2 - z1)
-    }
+
+    const difference = Math.hypot(x2 - x1, z2 - z1)
 
     //flag the player
-    if(hVelocity > config.antiMovement.maxHorizontalVelocity && (difference.x > config.antiMovement.maxDifferent || difference.z > config.antiMovement.maxDifferent)) {
+    if(hVelocity > config.antiMovement.maxHorizontalVelocity && (Math.abs(x1 - x2) > 0.1 || Math.abs(x1 - x2) > 0.1)) {
+        player.sendMessage(String(difference))
         flag (player, "Movement", "A", config.antiMovement.maxVL, config.antiMovement.punishment, [lang(">velocityXZ") + ":" + hVelocity.toFixed(2)])
         if (!config.slient) player.teleport(lastPos)
     }

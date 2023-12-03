@@ -49,7 +49,9 @@ async function AntiScaffold (player: Player, block: Block) {
     }
 
     const floorPos = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) }
-    if (player.isJumping) floorPos.y -= 1
+    if (player.isJumping && !player.isOnGround && !isUnderPlayer(floorPos, block.location)) {
+        floorPos.y -= 1
+    }
 
     //need to test fallDistance when bridging `.w<`
     const isUnder = isUnderPlayer(floorPos, block.location)

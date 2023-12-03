@@ -424,7 +424,7 @@ export default {
 
     antiMovement: {
         enabled: true,
-        maxDifferent: 0.1,
+        changeThreshold: 0.24596747752,
         maxHorizontalVelocity: 1,
         maxVL: 1,
         punishment: "kick"

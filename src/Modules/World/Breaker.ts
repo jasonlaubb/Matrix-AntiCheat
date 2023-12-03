@@ -19,13 +19,13 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
 
     if (block.typeId === MinecraftBlockTypes.Bed) {
         let allBlock: Block[] = []
-        offset.forEach(({ x }) => offset.forEach(({ y }) => offset.forEach(({ z }) => allBlock.push(player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z }) ?? null))))
+        offset.forEach(({ x, y, z}) => allBlock.push(player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z }) ?? null))
 
         const bedBody = allBlock.filter(block => block.typeId === MinecraftBlockTypes.Bed)
-        if (bedBody.length === 1) {
+        if (bedBody.length === 2) {
             const bed = bedBody[0]
             let allBlock2 = []
-            offset.forEach(({ x }) => offset.forEach(({ y }) => offset.forEach(({ z }) => allBlock2.push(player.dimension.getBlock({ x: bed.location.x + x, y: bed.location.y + y, z: bed.location.z + z }) ?? null))))
+            offset.forEach(({ x, y, z}) => allBlock2.push(player.dimension.getBlock({ x: bed.location.x + x, y: bed.location.y + y, z: bed.location.z + z }) ?? null))
             allBlock2 = allBlock.filter(bedx => bedx.location.x !== block.location.x || bedx.location.y !== block.location.y || bedx.location.z !== block.location.z)
             const aroundSolid = allBlock.every(block => block?.isSolid) && allBlock2.every(block => block?.isSolid)
             if (aroundSolid) {
@@ -40,9 +40,9 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
                 return
             }
         }
-    } else if (block?.isSolid || config.antiBreaker.writeList.includes(block.typeId)) {
+    } else {
         let allBlock: Block[] = []
-        offset.forEach(({ x }) => offset.forEach(({ y }) => offset.forEach(({ z }) => allBlock.push(player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z })) ?? null)))
+        offset.forEach(({ x, y, z}) => allBlock.push(player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z })) ?? null)
         const aroundSolid = allBlock.every(block => block?.isSolid)
 
         if (aroundSolid) {

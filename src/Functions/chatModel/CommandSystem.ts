@@ -45,7 +45,7 @@ class Command {
             system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.command_disabled_reason")))
             return false
         }
-        if (setting.requireTag.length <= 0 && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
+        if (setting.requireTag.length > 0 && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
             system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.no_permission")))
             return false
         }
@@ -79,18 +79,23 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (regax[1] === undefined || !(new Set(validModules).has(regax[1]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownModule").replace("%a", prefix)}`))
             if (regax[2] === undefined || !(new Set(["enable", "disable"]).has(regax[2]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownAction")}`))
 
-            if (keys.includes(regax[1])) {
-                if (regax[2] === "enable" === getModuleState(regax[1])) return
-                if (regax[2] === "enable") {
-                    antiCheatModules[regax[2]].enable()
-                    world.setDynamicProperty(regax[2], true)
+            system.run(() => {
+                if (keys.includes(regax[1])) {
+                    if ((regax[2] == "enable") === getModuleState(regax[1])) return player.sendMessage(`${lang("-toggles.already").replace("%a", regax[2])}`)
+                    if (regax[2] === "enable") {
+                        antiCheatModules[regax[1]].enable()
+                        world.setDynamicProperty(regax[1], true)
+                    } else {
+                        antiCheatModules[regax[1]].disable()
+                        world.setDynamicProperty(regax[1], false)
+                    }
+                    player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
                 } else {
-                    antiCheatModules[regax[2]].disable()
-                    world.setDynamicProperty(regax[2], false)
+                    if (world.getDynamicProperty(regax[1]) == (regax[2] == "enable")) return player.sendMessage(`${lang("-toggles.already").replace("%a", regax[2])}`)
+                    world.setDynamicProperty(regax[1], regax[2] == "enable")
+                    player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
                 }
-            }
-
-            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`))
+            })
             break
         }
         case "op": {
@@ -103,7 +108,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-op.hasbeen").replace("%a", target.name).replace("%b", player.name)}`))
             } else {
                 const now = Date.now()
-                const lastTry = player.lastOpTry ?? now - config.passwordCold
+                const lastTry = player.lastOpTry ?? 0
 
                 if (now - lastTry < config.passwordCold) {
                     const wait = ((config.passwordCold - (now - lastTry)) / 1000).toFixed(1)
@@ -251,7 +256,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             const time = regax[3]
             if (time === undefined || (!isTimeStr(time) && time != 'forever')) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-ban.time")}`))
 
-            ban(player, 'reason', player.name, time === 'forever' ? time : Date.now() + timeToMs(time))
+            ban(target, reason, player.name, time === 'forever' ? time : Date.now() + timeToMs(time))
             system.run(() => world.sendMessage(`§bMatrix §7>§g ${lang("-ban.has").replace("%a", target.name).replace("%b", player.name)}`))
             break
         }

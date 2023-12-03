@@ -358,16 +358,9 @@ export type Root = {
     checkCreativeMode: boolean
     timeout: number
   }
-  antiSurrond: {
-    enabled: boolean
-    maxBlocksPer2Tick: number
-    timeout: number
-    punishment: string
-    maxVL: number
-  }
   antiMovement: {
     enabled: boolean
-    maxDifferent: number
+    changeThreshold: number
     maxHorizontalVelocity: number
     maxVL: number
     punishment: string
@@ -381,6 +374,7 @@ export type Root = {
   antiBlink: {
     enabled: boolean
     punishment: string
+    flagVL: number
     maxVL: number
   }
   antiFastUse: {
