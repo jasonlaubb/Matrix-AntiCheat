@@ -68,6 +68,7 @@ async function AntiNoSlow (player: Player) {
             player.noSlowBuffer++
             if (buffer + 1 > config.antiNoSlow.maxNoSlowBuff) {
                 player.noSlowBuffer = 0
+                //A - false positive: very low, efficiency: high
                 flag (player, "NoSlow", "A" ,config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
                 if (!config.slient) player.teleport(playerLastPos)
             }
@@ -98,6 +99,7 @@ async function AntiNoSlow (player: Player) {
             player.teleport(player.location)
             player.addTag("matrix:item-disabled")
             system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiNoSlow.timeout)
+            //B- false positive: low, efficiency: mid
             flag (player, "NoSlow", "B",config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
         }
     }
