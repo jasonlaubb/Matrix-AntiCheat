@@ -30,7 +30,7 @@ async function AntiBlink (player: Player) {
     const { l: lastPosition, s: lastSpeed } = data
     const { x: xT, y: yT, z: zT } = lastPosition
 
-    if (vl[player.id] === undefined) vl[player.id] = 0
+    vl[player.id] ??= 0
 
     const isLocationSame = xL == xT && yL == yT && zT == zL
 
