@@ -100,18 +100,14 @@ export function checkBlockAround (location: Vector3, blockType: MinecraftBlockTy
 
 let Vl: any = {};
 
-type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H"
+type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I"
 
 export function flag (player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
-    if (Vl[player.id] === undefined) {
-        Vl[player.id] = {}
-    }
-    if (Vl[player.id][modules] === undefined) {
-        Vl[player.id][modules] = 0
-    }
+    Vl[player.id] ??= {}
+    Vl[player.id][modules] ??= 0
 
     let vl = ++Vl[player.id][modules]
-    if (vl > 99) vl = 99
+    if (vl > 999) vl = 99
 
     let flagMsg = `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${vl}§7]§r`
     if (infos !== undefined) flagMsg = flagMsg + "\n" + formatInformation(infos)
