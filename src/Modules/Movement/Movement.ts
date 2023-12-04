@@ -46,6 +46,7 @@ async function Movement (player: Player, now: number) {
     //flag the player
     if(hVelocity > config.antiMovement.maxHorizontalVelocity && (Math.abs(x1 - x2) > 0.1 || Math.abs(x1 - x2) > 0.1)) {
         if (player.isJumping || player.isGliding || player.getEffect("speed") || damaged == true || player.isFlying || player.isInWater) return
+        //A - false positive: high, efficiency: high
         flag (player, "Movement", "A", config.antiMovement.maxVL, config.antiMovement.punishment, [lang(">velocityXZ") + ":" + hVelocity.toFixed(2)])
         if (!config.slient) player.teleport(lastPos)
     }
