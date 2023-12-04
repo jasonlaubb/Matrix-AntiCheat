@@ -35,6 +35,7 @@ async function AutoClicker (player: Player) {
 
     //if the clicks per second is higher than the max clicks per second, flag the player
     if (!player.hasTag("matrix:pvp-disabled") && cps > config.antiAutoClicker.maxClicksPerSecond) {
+        //A - false positive: very low, efficiency: high
         flag (player, 'Auto Clicker', "A", config.antiAutoClicker.maxVL,config.antiAutoClicker.punishment, [`${lang(">Click Per Second")}:${cps.toFixed(0)}`])
 
         if (!config.slient) {
