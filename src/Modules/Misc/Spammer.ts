@@ -12,24 +12,28 @@ async function antiSpammer ({ sender: player }: ChatSendAfterEvent) {
     system.run(() => {
         //check if the player send message while hand swinging
         if (player.hasTag('matrix:attack_time')) {
+            //A - false positive: very low, efficiency: mid
             flag (player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type")+":"+lang(">AttackTime")])
             if (!config.slient) player.applyDamage(6)
         } else
 
         //check if the player send message while using item
         if (player.hasTag('matrix:using_item')) {
+            //B - false positive: mid, efficiency: mid
             flag (player, "Spammer", "B", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type")+":"+lang(">UsingItem")])
             if (!config.slient) player.applyDamage(6)
         } else
 
         //check if the player send message while moving
         if (player.hasTag("matrix:moving") && !player.hasTag("matrix:riding") && player.isOnGround && !player.isJumping && !player.isInWater && !player.isGliding) {
+            //C - false positive: low, efficiency: high
             flag (player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type")+":"+lang(">Moving")])
             if (!config.slient) player.applyDamage(6)
         }
     
         //check if the player sned message opening container
         if (player.hasTag("matrix:container")) {
+            //D - false positive: low, efficiency: mid
             flag (player, "Spammer", "D", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type")+":"+lang(">Container")])
             if (!config.slient) player.applyDamage(6)
         }
