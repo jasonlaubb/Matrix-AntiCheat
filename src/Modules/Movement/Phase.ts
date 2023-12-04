@@ -67,6 +67,7 @@ async function AntiPhase (player: Player) {
 
     //if the player is inside the block, flag them
     } else if (bodyBlock.typeId !== MinecraftBlockTypes.SoulSand) {
+        //A - false positive: good question, efficiency: low
         flag (player, 'Phase', 'A',config.antiPhase.maxVL,config.antiPhase.punishment, undefined)
         if (!config.slient) player.teleport(lastSafePos);
     }
