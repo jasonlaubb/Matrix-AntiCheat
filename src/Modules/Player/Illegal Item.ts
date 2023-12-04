@@ -20,6 +20,16 @@ import lang from "../../Data/Languages/lang"
  * @description A powerful anti illegal item system to prevent player use illegal item
  */
 
+//A - false positive: never, efficiency: very high
+//B - false positive: never, efficiency: high
+//C - false positive: never, efficiency: mid
+//D - false positive: never, efficiency: very high
+//E - false positive: never, efficiency: mid
+//F - false positive: never, efficiency: very high
+//G - false positive: never, efficiency: very high
+//H - false positive: never, efficiency: high
+//I - false positive: never, efficiency: low
+
 function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
     const config = c()
     if (!config.antiIllegalItem.checkCreativeMode && isTargetGamemode(player, 1)) return "Safe"
@@ -76,6 +86,7 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
         if (config.antiIllegalItem.state.enchantLevel.enabled || config.antiIllegalItem.state.enchantConflict.enabled) {
             let patchedEnchantment = []
             let mode = lang(">EnchantLevel")
+            let type = "F"
 
             //create a new EnchantmentList to check if the enchantment is conflict
             const tester = new EnchantmentList (enchantments.slot)
@@ -94,13 +105,14 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
                     if (isConflict === false) {
                         patchedEnchantment.push(enchantment.type.id + ":" + enchantment.level)
                         mode = lang(">EnchantConflict")
+                        type = "G"
                     } else {
                         tester.addEnchantment(enchantment)
                     }
                 }
             }
             if (patchedEnchantment.length > 0) {
-                flag (player, "Illegal Item", "F",0, config.antiIllegalItem.state.enchantLevel.punishment, [lang(">Mode") + ":" + mode, ...patchedEnchantment])
+                flag (player, "Illegal Item", type,0, config.antiIllegalItem.state.enchantLevel.punishment, [lang(">Mode") + ":" + mode, ...patchedEnchantment])
                 state = "Unsafe"
                 container.setItem(i)
                 continue
@@ -109,14 +121,14 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
 
         if (config.antiIllegalItem.state.enchantAble.enabled && [...enchantments].length > 0 && !enchantableItem.includes(item.typeId as MinecraftItemTypes) && !config.antiIllegalItem.state.enchantAble.whiteList.includes(item.typeId)) {
             container.setItem(i)
-            flag (player, "Illegal Item", "G", 0, config.antiIllegalItem.state.enchantAble.punishment, [lang(">Mode") + ":" + lang(">ItemEnchantAble"), lang(">typeId") + item.typeId])
+            flag (player, "Illegal Item", "H", 0, config.antiIllegalItem.state.enchantAble.punishment, [lang(">Mode") + ":" + lang(">ItemEnchantAble"), lang(">typeId") + item.typeId])
             state = "Unsafe"
             continue
         }
 
         if (config.antiIllegalItem.state.enchantRepeat.enabled && new Set([...enchantments]).size < [...enchantments].length) {
             container.setItem(i)
-            flag (player, "Illegal Item", "H", 0, config.antiIllegalItem.state.enchantRepeat.punishment, [lang(">Mode") + ":" + lang(">ItemEnchantRepeat")])
+            flag (player, "Illegal Item", "I", 0, config.antiIllegalItem.state.enchantRepeat.punishment, [lang(">Mode") + ":" + lang(">ItemEnchantRepeat")])
             state = "Unsafe"
             continue
         }
