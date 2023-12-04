@@ -58,6 +58,7 @@ async function AntiTimer (player: Player) {
         if (player.lastExplosionTime && player.lastExplosionTime - timeNow < 2000) return
         if (player.isFlying || player.getEffect(MinecraftEffectTypes.JumpBoost) || player.getEffect(MinecraftEffectTypes.Speed)) return
         if (!config.slient) player.teleport(lastPos)
+        //A - false positive: high, efficiency: high
         flag (player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, [lang(">Ratio") + ":" + ratio.toFixed(2)])
     }
 }
