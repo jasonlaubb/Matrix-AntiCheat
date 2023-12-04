@@ -45,6 +45,7 @@ async function AntiFly (player: Player, now: number) {
 
     const airState = inAir(player.dimension, player.location)
     if (prevLoc && !player.hasTag("matrix:knockback") && !player.hasTag("matrix:slime") && !isOnGround && !player.isFlying && !player.isGliding && !player.isInWater && !(jumpEffect && jumpEffect.amplifier > 2) && !(threwTridentAt && now - threwTridentAt < 3000)) {
+        //A - false positive: mid, efficiency: very high
         if ((velocity > maxVelocity && velocity !== 1 && airState) || velocity > 3.5) {
             if (!config.slient) player.teleport(prevLoc)
             flag (player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + velocity.toFixed(2)])
@@ -59,6 +60,7 @@ async function AntiFly (player: Player, now: number) {
             if (data.every(f => player.fallDistance == f) && player.fallDistance !== 1 && player.fallDistance <= 1.05 && velocity < -0.01) {
                 if (!config.slient) player.teleport(prevLoc)
                 player.applyDamage(8)
+                //C - false positive: very low, efficiency: high
                 flag (player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + velocity.toFixed(2)])
             }
         }
@@ -70,6 +72,7 @@ async function AntiFly (player: Player, now: number) {
         if (ratio > 10 && ratio !== Infinity && player.fallDistance !== 1 && player.lastGliding && Date.now() - player.lastGliding > 1000) {
             if (!config.slient) player.teleport(prevLoc)
             player.applyDamage(8)
+            //D - false positive: low, efficiency: mid
             flag (player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
         }
     } else {
@@ -93,6 +96,7 @@ async function AntiNoFall (player: Player, now: number) {
     //velocityY is 0 and velocityXZ is higher than 0.15, flag the player
     if (y === 0 && xz > 0){
         if (!config.slient) player.teleport(prevLoc);
+        //B - false positive: low, efficiency: high
         flag (player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + y.toFixed(2), lang(">velocityXZ") + ":" + + xz.toFixed(2)])
     }
 }
