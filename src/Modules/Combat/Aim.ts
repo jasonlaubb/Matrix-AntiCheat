@@ -31,6 +31,7 @@ async function AntiAim (player: Player) {
     let isFlagged = false;
     if (lastAction.rotation[player.id]) {
         const maxRotSpeed = config.antiAim.maxRotSpeed;
+        //A - false positive: low, efficiency: mid
         if (averageSpeed > maxRotSpeed && queueFlag[player.id]) {
             const delay: number = Date.now() - queueFlag[player.id].date
             if (delay < 50) {
@@ -39,6 +40,7 @@ async function AntiAim (player: Player) {
             }
         }
 
+        //B - false positive: very low, efficiency: mid
         if (rotationSpeed.x === rotationSpeed.y && rotationSpeed.x !== rotationSpeed.y || rotationSpeed.x > 1 && rotationSpeed.y < 0.6 || rotationSpeed.x < 0.6 && rotationSpeed.y > 1) {
             const timerSet = (timer.get(`aim-b:${player.id}`) || 0);
             timer.set(`aim-b:${player.id}`, timerSet + 1);
@@ -47,7 +49,8 @@ async function AntiAim (player: Player) {
                 flag (player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotationSpeed.x.toFixed(2), lang(">RotSpeedY") + ":" + rotationSpeed.y.toFixed(2)])
             }
         } else timer.set(`aim-b:${player.id}`, 0);
-        
+
+        //C - false positive: very low, efficiency: mid
         if (averageSpeed > 0.1) {
             const checker = Math.abs(averageSpeed - lastAction.rotation[player.id].averageSpeed) > 0 && Math.abs(averageSpeed - lastAction.rotation[player.id].averageSpeed) <= 0.05;
             if (checker) {
@@ -61,6 +64,8 @@ async function AntiAim (player: Player) {
             }
         } else timer.set(`aim-c:${player.id}`, 0);
     }
+
+    //D - false positive: very low, efficiency: mid
     if (!player.isGliding && (rotation.x % 1 == 0 || (rotation.y % 1 == 0 && Math.abs(rotation.y) != 90)) && rotation.x != 0 && rotation.y != 0) {
         player.setRotation({ x: Math.random(), y: Math.random() })
         flag (player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, undefined)
