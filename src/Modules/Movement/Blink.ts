@@ -34,6 +34,7 @@ async function AntiBlink (player: Player) {
 
     const isLocationSame = xL == xT && yL == yT && zT == zL
 
+    //A - false positive: low, efficiency: high
     if (speed > 0 && speed == lastSpeed && isLocationSame) {
         ++vl[player.id]
         if (vl[player.id] > config.antiBlink.flagVL) {
