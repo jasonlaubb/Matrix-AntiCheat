@@ -12,6 +12,7 @@ async function AntiGameMode (player: Player) {
         } else {
             player.runCommand(`gamemode @s ${config.antiGameMode.returnGameMode}`)
         }
+        //A - false positive: never, efficiency: very high
         flag (player, "GameMode", "A", config.antiGameMode.maxVL, config.antiGameMode.punishment, [lang(">GameMode") + ":" + String(gamemodes[gamemode])])
     }
 }
