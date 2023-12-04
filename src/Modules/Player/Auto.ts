@@ -9,6 +9,10 @@ import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data
  * which can detect some hackers that use auto totem and auto shield to cheat
  */
 
+//A - false positive: low, efficiency: high
+//B - false positive: low, efficiency: low
+//C - false positive: low, efficiency: mid
+
 async function AntiAutoTotem (player: Player) {
     const config = c()
     if (player.hasTag("matrix:moving") && player.isOnGround && !player.isJumping && !player.isGliding && !player.hasTag("matrix:riding")) {
