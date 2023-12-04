@@ -33,6 +33,7 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity) {
     //if the player hit more than 1 targets in 2 ticks, flag the player
     if (playerHitEntity.length > config.antiKillAura.maxEntityHit && !damagingEntity.hasTag("matrix:pvp-disabled")) {
         hitLength.delete(damagingEntity.name);
+        //A - false positive: very low, efficiency: high
         flag (damagingEntity, 'Kill Aura', "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`])
         
         if (!config.slient) {
@@ -51,6 +52,7 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity) {
 
     //if the angle is higher than the max angle, flag the player
     if (angle > config.antiKillAura.minAngle) {
+        //B - false positive: low, efficiency: mid
         flag (damagingEntity, 'Kill Aura', 'A', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
 
         if (!config.slient) {
