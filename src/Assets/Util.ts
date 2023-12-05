@@ -2,9 +2,6 @@ import {
     world,
     Player,
     GameMode,
-    EntityInventoryComponent,
-    ItemEnchantsComponent,
-    EntityDamageCause,
     Vector3,
     Dimension,
     system
@@ -12,49 +9,10 @@ import {
 import { ban } from "../Functions/moderateModel/banHandler";
 import config from "../Data/Config";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
-import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../Data/Languages/lang";
 import Config from "../Data/Config";
 import { Root } from "../Data/ConfigDocs";
-
-world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
-    if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
-        const getItemInSlot = (
-            player.getComponent(
-                EntityInventoryComponent.componentId
-            ) as EntityInventoryComponent
-        ).container.getItem(player.selectedSlot);
-        if (getItemInSlot === undefined) return;
-        const getEnchantment = (
-            getItemInSlot.getComponent(
-                ItemEnchantsComponent.componentId
-            ) as ItemEnchantsComponent
-        ).enchantments;
-        if (getItemInSlot.typeId == MinecraftItemTypes.Trident) {
-            const checkRipTide = getEnchantment.hasEnchantment(
-                MinecraftEnchantmentTypes.Riptide
-            );
-            if (checkRipTide) {
-                player.threwTridentAt = Date.now();
-            }
-        }
-    }
-});
-
-world.afterEvents.entityHurt.subscribe(event => {
-    const player = event.hurtEntity;
-    if (player instanceof Player && (event.damageSource.cause == EntityDamageCause.blockExplosion || event.damageSource.cause == EntityDamageCause.entityExplosion || event.damageSource.cause === EntityDamageCause.entityAttack)) {
-        player.lastExplosionTime = Date.now();
-
-        if (world.getDynamicProperty("antiFly") ?? config.antiFly.enabled) {
-            if (!player.hasTag("matrix:knockback")) {
-                player.addTag("matrix:knockback")
-            } else if (player.getVelocity().y <= 0) {
-                player.removeTag("matrix:knockback")
-            }
-        }
-    }
-});
 
 system.runInterval(() => {
     const players = world.getPlayers({ tags: ["matrix:knockback"]})

@@ -1,7 +1,8 @@
 //credit to Isolate AntiCheat
-import { world, Player, system, GameMode, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { world, Player, system, GameMode, Vector3, PlayerLeaveAfterEvent, PlayerPlaceBlockAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 interface Horizontal {
     x: number,
@@ -41,11 +42,9 @@ async function Movement (player: Player, now: number) {
 
     //state the difference of X and Z
 
-    const difference = Math.hypot(x2 - x1, z2 - z1)
-
     //flag the player
-    if(hVelocity > config.antiMovement.maxHorizontalVelocity && (Math.abs(x1 - x2) > 0.1 || Math.abs(x1 - x2) > 0.1)) {
-        if (player.isJumping || player.isGliding || player.getEffect("speed") || damaged == true || player.isFlying || player.isInWater) return
+    if(hVelocity > config.antiMovement.maxHorizontalVelocity && (Math.abs(x1 - x2) > 0.1 || Math.abs(z1 - z2) > 0.1)) {
+        if (player.isJumping || player.isGliding || player.getEffect(MinecraftEffectTypes.Speed) || damaged == true || player.isFlying || player.isInWater || !(player.lastBlockPlace && Date.now() - player.lastBlockPlace > 800)) return
         //A - false positive: high, efficiency: high
         flag (player, "Movement", "A", config.antiMovement.maxVL, config.antiMovement.punishment, [lang(">velocityXZ") + ":" + hVelocity.toFixed(2)])
         if (!config.slient) player.teleport(lastPos)
@@ -61,6 +60,8 @@ const movement = () => {
     }
 }
 
+const blockPlace = ({ player }: PlayerPlaceBlockAfterEvent) => player.lastBlockPlace = Date.now() 
+
 const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     lastXZ.delete(playerId)
     lastLocation.delete(playerId)
@@ -72,11 +73,13 @@ export default {
     enable () {
         id = system.runInterval(movement)
         world.afterEvents.playerLeave.subscribe(playerLeave)
+        world.afterEvents.playerPlaceBlock.subscribe(blockPlace)
     },
     disable () {
         lastXZ.clear()
         lastLocation.clear()
         system.clearRun(id)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
+        world.afterEvents.playerPlaceBlock.unsubscribe(blockPlace)
     }
 }

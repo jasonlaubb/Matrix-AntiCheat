@@ -1,6 +1,6 @@
-import * as Server from "@minecraft/server";
-import * as UI from "@minecraft/server-ui";
-import * as VanillaData from "@minecraft/vanilla-data";
+import * as Server from "../node_modules/@minecraft/server/index";
+import * as Ui from "../node_modules/@minecraft/server-ui/index";
+import * as VanillaData from "./node_modules/@minecraft/vanilla-data/lib/index";
 
 declare module "@minecraft/server" {
     interface Player {
@@ -14,5 +14,6 @@ declare module "@minecraft/server" {
         lastTouchGround: number;
         lastOpTry: number;
         lastGliding: number;
+        lastBlockPlace: number;
     }
 }

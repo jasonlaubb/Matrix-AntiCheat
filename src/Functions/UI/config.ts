@@ -1,14 +1,9 @@
-import { Player, system } from "@minecraft/server";
+import { Player, system, world } from "@minecraft/server";
 import { c, isAdmin } from "../../Assets/Util";
 import { ActionFormData, FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
+import Config from "../../Data/Config";
 
-export default {
-    ui () {
-
-    }
-}
-
-function mainUI (player: Player) {
+export function mainUI (player: Player) {
     if (!isAdmin(player)) return console.log(`${player.name} are trying to acess adminUI without op`)
 
     new ActionFormData ()
@@ -18,7 +13,19 @@ function mainUI (player: Player) {
         .button("§lReset config")
         .button("§lCompare with exportation")
         .button("§lExport config")
-        //unfinshed tag
+        //unfinshed tag - some function isn't finished
+}
+
+//This is not be used
+export default {
+    enable () {
+        const dy = world.getDynamicProperty("matrix_config") as string
+        const update = dy === undefined || JSON.parse(dy).configVersion !== Config.configVersion
+
+        if (update) {
+            world.setDynamicProperty("matrix_config", JSON.stringify(Config))
+        }
+    }
 }
 
 function changeJSON (json: any, keys: string[], newValue: any) {
