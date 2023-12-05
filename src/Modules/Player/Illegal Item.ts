@@ -86,7 +86,7 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
         if (config.antiIllegalItem.state.enchantLevel.enabled || config.antiIllegalItem.state.enchantConflict.enabled) {
             let patchedEnchantment = []
             let mode = lang(">EnchantLevel")
-            let type = "F"
+            let type: any = "F"
 
             //create a new EnchantmentList to check if the enchantment is conflict
             const tester = new EnchantmentList (enchantments.slot)
@@ -112,7 +112,7 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
                 }
             }
             if (patchedEnchantment.length > 0) {
-                flag (player, "Illegal Item", type,0, config.antiIllegalItem.state.enchantLevel.punishment, [lang(">Mode") + ":" + mode, ...patchedEnchantment])
+                flag (player, "Illegal Item", type, 0, config.antiIllegalItem.state.enchantLevel.punishment, [lang(">Mode") + ":" + mode, ...patchedEnchantment])
                 state = "Unsafe"
                 container.setItem(i)
                 continue
