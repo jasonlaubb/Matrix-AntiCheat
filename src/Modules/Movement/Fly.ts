@@ -67,7 +67,6 @@ async function AntiFly (player: Player, now: number) {
         fallDistances.set(player.id, data)
 
         const ratio = player.fallDistance / (velocity ** 2) * player.getRotation().x ** 2 / 56000
-        player.onScreenDisplay.setActionBar(String(player.fallDistance) + "\n" + ratio)
 
         if (ratio > 10 && ratio !== Infinity && player.fallDistance !== 1 && player.lastGliding && now - player.lastGliding > 1000) {
             if (!config.slient) player.teleport(prevLoc)
