@@ -88,10 +88,12 @@ async function AntiFly (player: Player, now: number) {
         }
     }
 
-    if (player.isClimbing && velocity > 0.28 && player.isJumping) {
-        if (!config.slient) player.teleport(prevLoc)
-        player.applyDamage(8)
-        flag (player, "Fly", "F", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(2)])
+    if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.28) {
+        if (!(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback")) {
+            if (!config.slient) player.teleport(prevLoc)
+            player.applyDamage(8)
+            flag (player, "Fly", "F", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(2)])
+        }
     }
 }
 async function AntiNoFall (player: Player, now: number) {

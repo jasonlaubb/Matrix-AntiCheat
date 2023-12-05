@@ -64,7 +64,7 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity) {
     }
 
     //calulate the limit of xz, also Math lol
-    const limitOfXZ = Math.sin(Math.abs(damagingEntity.getRotation().x) * Math.PI / 180) * 5.5
+    const limitOfXZ = Math.sin(Math.abs(damagingEntity.getRotation().x) * Math.PI / 180) * 7.8
 
     //if player attack higher than the limit, flag him
     if (distance > limitOfXZ) {

@@ -36,7 +36,7 @@ async function spammingWarner (player: Player, data: Data) {
 
     if (data.warnings > config.antiSpam.kickThreshold) {
         system.run(() => kick (player, 'spamming', 'Matrix'))
-        world.sendMessage(`§2§l§¶Matrix §7>§g ${lang(".Spam.kicked").replace("%a", player.name)}`);
+        world.sendMessage(`§bMatrix §7>§g ${lang(".Spam.kicked").replace("%a", player.name)}`);
     }
 };
 

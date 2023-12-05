@@ -154,7 +154,7 @@ const illegalItemB = (event: PlayerPlaceBlockBeforeEvent) => {
     if (isAdmin(player) || player.hasTag("matrix:place-disabled")) return
 
     const container: Container = (block.getComponent(BlockInventoryComponent.componentId) as BlockInventoryComponent)?.container
-    if (container.size === 0) return;
+    if (container === undefined || container.size === 0) return;
 
     const checkingState = ItemCheck (player, container)
 
