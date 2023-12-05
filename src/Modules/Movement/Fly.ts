@@ -69,7 +69,7 @@ async function AntiFly (player: Player, now: number) {
         const ratio = player.fallDistance / (velocity ** 2) * player.getRotation().x ** 2 / 56000
         player.onScreenDisplay.setActionBar(String(player.fallDistance) + "\n" + ratio)
 
-        if (ratio > 10 && ratio !== Infinity && player.fallDistance !== 1 && player.lastGliding && Date.now() - player.lastGliding > 1000) {
+        if (ratio > 10 && ratio !== Infinity && player.fallDistance !== 1 && player.lastGliding && now - player.lastGliding > 1000) {
             if (!config.slient) player.teleport(prevLoc)
             player.applyDamage(8)
             //D - false positive: low, efficiency: mid
@@ -77,7 +77,21 @@ async function AntiFly (player: Player, now: number) {
         }
     } else {
         fallDistances.set(player.id, undefined)
-        player.lastGliding = Date.now()
+        player.lastGliding = now
+    }
+
+    if (player.fallDistance <= -1.0002 && !player.isJumping && !player.isOnGround && !(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback") && !player.hasTag("matrix:slime")) {
+        if (Math.abs(velocity) > 0.15) {
+            if (!config.slient) player.teleport(prevLoc)
+            player.applyDamage(8)
+            flag (player, "Fly", "E", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(2)])
+        }
+    }
+
+    if (player.isClimbing && velocity > 0.28 && player.isJumping) {
+        if (!config.slient) player.teleport(prevLoc)
+        player.applyDamage(8)
+        flag (player, "Fly", "F", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(2)])
     }
 }
 async function AntiNoFall (player: Player, now: number) {
@@ -87,6 +101,11 @@ async function AntiNoFall (player: Player, now: number) {
     const prevLoc = previousLocations.get(id);
     const { x, y, z } = player.getVelocity();
     const xz = Math.hypot(x, z)
+
+    if (player.isFlying && !player.hasTag("matrix:may_fly")) {
+        if (!config.slient) player.teleport(prevLoc);
+        flag (player, "Fly", "G", config.antiFly.maxVL, config.antiFly.punishment, undefined)
+    }
 
     //stop false positive
     if (isOnGround || isFlying || isClimbing || isInWater || isGliding || player.hasTag("matrix:levitating") || (jumpEffect && jumpEffect.amplifier > 2) || (threwTridentAt && now - threwTridentAt < 3000) || (lastExplosionTime && now - lastExplosionTime < 5000)) {
