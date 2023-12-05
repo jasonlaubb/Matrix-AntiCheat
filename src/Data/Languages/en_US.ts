@@ -229,5 +229,6 @@ export default {
     ">ItemAmount": "ItemAmount",
     ">ItemTag": "ItemTag",
     ">Amount": "Amount",
-    ">Ratio": "Ratio"
+    ">Ratio": "Ratio",
+    ">Limit": "Limit"
 }
