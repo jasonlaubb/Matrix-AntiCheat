@@ -48,12 +48,12 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity) {
     if (!(hitEntity instanceof Player) || distance <= 2 || damagingEntity.hasTag("matrix:pvp-disabled")) return;
 
     //get the angle
-    const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(),damagingEntity.getRotation().y);
+    const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(), damagingEntity.getRotation().y);
 
     //if the angle is higher than the max angle, flag the player
     if (angle > config.antiKillAura.minAngle) {
         //B - false positive: low, efficiency: mid
-        flag (damagingEntity, 'Kill Aura', 'A', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
+        flag (damagingEntity, 'Kill Aura', 'B', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
 
         if (!config.slient) {
             damagingEntity.addTag("matrix:pvp-disabled");
@@ -61,6 +61,14 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity) {
                 damagingEntity.removeTag("matrix:pvp-disabled");
             }, config.antiKillAura.timeout);
         }
+    }
+
+    //calulate the limit of xz, also Math lol
+    const limitOfXZ = Math.sin(Math.abs(damagingEntity.getRotation().x) * Math.PI / 180) * 5.5
+
+    //if player attack higher than the limit, flag him
+    if (distance > limitOfXZ) {
+        flag (damagingEntity, 'Kill Aura', 'C', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">distance")}:${distance.toFixed(2)}`,`${lang(">Limit")}:${limitOfXZ.toFixed(2)}`])
     }
 }
 
