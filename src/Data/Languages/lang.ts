@@ -2,13 +2,15 @@ import { world } from "@minecraft/server";
 import en_US from "./en_US";
 import config from "../Config";
 import zh_TW from "./zh_TW";
+import ar_DZ from "./ar_DZ";
 import { LangType } from "./LangType";
 
 let languageNow = config.language
 
 export const langs: { [key: string]: { [key: string]: LangType | string } } = {
     "en_US": en_US,
-    "zh_TW": zh_TW
+    "zh_TW": zh_TW,
+    "ar_DZ": ar_DZ
 }
 
 world.afterEvents.worldInitialize.subscribe(() => {
