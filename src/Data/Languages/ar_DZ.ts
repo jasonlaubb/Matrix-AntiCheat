@@ -1,6 +1,4 @@
 export default {
-    "-help.helpCDlist": "Help command list:",
-    export default {
     "-help.helpCDlist": "قائمة المساعدة:",
     "-help.help": "help - يريك قائمة المساعدة هذه",
     "-help.toggles": "toggles - تريك كل الوحدات",
