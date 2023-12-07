@@ -25,7 +25,7 @@
 
   Matrix Anti Cheat is the ultimate Minecraft Bedrock Edition anti-cheat, providing strong protection against hackers.
 
-  Supported Minecraft version: 1.20.30+
+  Supported Minecraft version: 1.20.50+ only
 
   Developed by jasonlaubb, ravriv, nottinghere, Hutao999999, and Rami Gamer
 
@@ -45,11 +45,11 @@
 
   Download the latest release and use the .mcpack file, not the source code.
 
-  ***#op (password)***
+  ***-op (password) ~ to get admin permission***
 
   > The default password is "password"
   
-  ***#help for commands***
+  ***-help ~ for commands***
   
 
   ---
