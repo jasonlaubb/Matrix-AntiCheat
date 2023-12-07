@@ -91,7 +91,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                     }
                     player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
                 } else {
-                    if (world.getDynamicProperty(regax[1]) == (regax[2] == "enable")) return player.sendMessage(`${lang("-toggles.already").replace("%a", regax[2])}`)
+                    if (world.getDynamicProperty(regax[1]) == (regax[2] == "enable")) return player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.already").replace("%a", regax[2])}`)
                     world.setDynamicProperty(regax[1], regax[2] == "enable")
                     player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
                 }
@@ -351,7 +351,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
         case "vanish": {
             if (!Command.new(player, config.commands.vanish as Cmds)) return
             system.run(() => {
-                triggerEvent(player, "matrix:vanish")
+                triggerEvent(player, "matrix:vanished")
                 player.addEffect(MinecraftEffectTypes.Invisibility, 19999999, { showParticles: false, amplifier: 2 })
                 player.sendMessage(`§bMatrix §7>§g ${lang("-vanish.has")}`)
             })
@@ -360,7 +360,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
         case "unvanish": {
             if (!Command.new(player, config.commands.unvanish as Cmds)) return
             system.run(() => {
-                triggerEvent(player, "matrix:unvanish")
+                triggerEvent(player, "matrix:unvanished")
                 player.removeEffect(MinecraftEffectTypes.Invisibility)
                 player.sendMessage(`§bMatrix §7>§g ${lang("-vanish.out")}`)
             })

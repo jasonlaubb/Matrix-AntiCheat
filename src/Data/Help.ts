@@ -1,5 +1,6 @@
 import lang from "./Languages/lang"
-import { keys } from "../Modules/Modules"
+import { defaultLy, keys } from "../Modules/Modules"
+import { world } from "@minecraft/server"
 
 export function helpList (p: string): string {
     return [
@@ -35,8 +36,7 @@ export function helpList (p: string): string {
 }
 
 export function toggleList (p: string): string {
-    const moduleList = validModules
-    return moduleList.map((module) => `§g${p}toggle ${module} <enable/disable> - ${lang("-toggles.toggle")} ${module} ${lang("-toggles.module")}`).join("\n")
+    return keys.map((module) => `§l§7(${(world.getDynamicProperty(module) ?? defaultLy(module) == true ? "§aenabled" : "§cdisabled")}§7)§r §g${p}toggle ${module} <enable/disable> - ${lang("-toggles.toggle")} ${module} ${lang("-toggles.module")}`).join("\n")
 }
 
 export const validModules: string[] = [

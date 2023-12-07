@@ -5,13 +5,20 @@
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
 
+//Load the language
 import "./Data/Languages/lang"
+
+//load the public subscibe util
 import "./Assets/Public"
+
+//load the functions
 import "./Functions/chatModel/ChatHandler"
 import "./Functions/moderateModel/banHandler"
 import "./Functions/moderateModel/freezeHandler"
 import "./Functions/moderateModel/eventHandler"
 import "./Functions/moderateModel/dimensionLock"
 import "./Functions/moderateModel/lockDown"
+
+//start all modules
 import { moduleStart } from "./Modules/Modules"
 moduleStart()

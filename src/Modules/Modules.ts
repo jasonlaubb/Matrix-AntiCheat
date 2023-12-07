@@ -3,13 +3,13 @@ import killAura from "./Combat/Kill Aura"
 import reach from "./Combat/Reach"
 import aim from "./Combat/Aim"
 import spammer from "./Misc/Spammer"
+import timer from "./Misc/Timer"
 import fly from "./Movement/Fly"
 import phase from "./Movement/Phase"
 import speed from "./Movement/Speed"
 import noSlow from "./Movement/NoSlow"
 import motion from "./Movement/Motion"
 import blink from "./Movement/Blink"
-import timer from "./Movement/Timer"
 import movement from "./Movement/Movement"
 import nuker from "./World/Nuker"
 import scaffold from "./World/Scaffold"
@@ -59,7 +59,7 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiCBE": cbe
 }
 
-const defaultLy = (key: string) => {
+export const defaultLy = (key: string) => {
     const config: { [key: string]: any } = c()
     if (key == "antiCBE") return config.antiCommandBlockExplolit
     return config[key].enabled

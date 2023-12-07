@@ -39,6 +39,7 @@ export default {
     "-toggles.unknownModule": "未知模組，嘗試 %atoggles",
     "-toggles.toggleChange": "%a 模組已 %bd",
     "-toggles.unknownAction": "未知操作，請僅使用 enable/disable",
+    "-toggles.already": "這個模組已被 %ad, 無法執行該操作",
 
     "-op.hasbeen": "%a 已被 %b 給予管理員權限",
     "-op.please": "請輸入密碼",

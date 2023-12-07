@@ -43,7 +43,7 @@ async function AntiAutoShield (player: Player) {
     }
 }
 
-const antiAuto = (({ id, entity: player }: DataDrivenEntityTriggerAfterEvent) => {
+const antiAuto = (({ eventId: id, entity: player }: DataDrivenEntityTriggerAfterEvent) => {
     if (isAdmin (player as Player)) return;
     if (id === "matrix:totem") {
         AntiAutoTotem (player as Player);

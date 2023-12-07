@@ -7,8 +7,8 @@ const eventData = new Map<string, string[]>()
 
 const eventList = [
     "matrix:kick",
-    "matrix:unvanish",
-    "matrix:vanish"
+    "matrix:unvanished",
+    "matrix:vanished"
 ]
 
 export async function triggerEvent (player: Player, id: string) {
@@ -36,7 +36,7 @@ world.beforeEvents.dataDrivenEntityTriggerEvent.subscribe((event) => {
 })
 
 world.afterEvents.dataDrivenEntityTriggerEvent.subscribe((event) => {
-    const { entity: player, id } = event
+    const { entity: player, eventId: id } = event
 
     if (id === "matrix:containerOpen") player.addTag("matrix:container")
     if (id === "matrix:containerClose") player.removeTag("matrix:container")
