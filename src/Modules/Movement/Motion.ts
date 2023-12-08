@@ -11,7 +11,7 @@ const lastSafePosition = new Map<string, Vector3>();
  * This check tracking player with un-natural falling movement
 */
 
-async function AntiMotion (player: Player) {
+async function AntiMotion (player: Player, now: number) {
     const config = c()
     let distribution: number[] = velocityList.get(player.id) ?? [];
     const { x, y, z } = player.getVelocity();
@@ -50,12 +50,12 @@ async function AntiMotion (player: Player) {
     
     //log player touch water time
     if (player.isInWater || player.isSwimming || findWater(player)) {
-        player.lastTouchWater = Date.now()
+        player.lastTouchWater = now
         return
     }
 
     //skip check if player is in water in 2 seconds
-    if (player.lastTouchWater && Date.now() - player.lastTouchWater < 2000) {
+    if (player.lastTouchWater && now - player.lastTouchWater < 2000) {
         return
     }
 
@@ -74,10 +74,11 @@ function findWater (player: Player) {
 }
 
 const antiMotion = () => {
+    const timeNow = Date.now()
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative]})
     for (const player of players) {
         if (isAdmin (player)) continue;
-        AntiMotion (player)
+        AntiMotion (player, timeNow)
     }
 }
 
