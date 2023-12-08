@@ -2,7 +2,7 @@ import { world } from "@minecraft/server";
 import en_US from "./en_US";
 import config from "../Config";
 import zh_TW from "./zh_TW";
-import ar_DZ from "./ar_DZ";
+import ar from "./ar";
 import vi_VN from "./vi_VN";
 import { LangType } from "./LangType";
 
@@ -11,7 +11,7 @@ let languageNow = config.language
 export const langs: { [key: string]: { [key: string]: LangType | string } } = {
     "en_US": en_US,
     "zh_TW": zh_TW,
-    "ar_DZ": ar_DZ,
+    "ar": ar,
     "vi_VN": vi_VN
 }
 
