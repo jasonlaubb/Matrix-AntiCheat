@@ -18,7 +18,7 @@ export const langs: { [key: string]: { [key: string]: LangType | string } } = {
 world.afterEvents.worldInitialize.subscribe(() => {
     const language = world.getDynamicProperty("matrix:language") as string
     if (language === undefined) return
-    
+    if (!Object.key(lang).includes(language)) return world.setDynamicProperty("matrix:language", undefined)
     languageNow = language
 })
 
