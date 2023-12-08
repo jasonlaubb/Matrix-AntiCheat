@@ -59,7 +59,7 @@ async function AntiMotion (player: Player) {
         return
     }
 
-    //if the relative velocity is lower than 0.6, flag the player
+    //if the relative velocity is lower than 0.4, flag the player
     if (relativeVelocity <= config.antiMotion.minRelativeY && !keepFalling && !player.hasTag("matrix:levitating") && !inAir(player.dimension, player.location)) {
         //A - false positive: low, efficiency: mid
         flag (player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, [lang(">relative") + ":" + relativeVelocity.toFixed(1)])
