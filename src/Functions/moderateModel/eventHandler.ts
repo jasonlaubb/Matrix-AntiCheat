@@ -7,8 +7,8 @@ const eventData = new Map<string, string[]>()
 
 const eventList = [
     "matrix:kick",
-    "matrix:unvanished",
-    "matrix:vanished"
+    "matrix:unvanish",
+    "matrix:vanish"
 ]
 
 export async function triggerEvent (player: Player, id: string) {
