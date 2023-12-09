@@ -42,6 +42,7 @@ async function AntiFly (player: Player, now: number) {
     velocityLog[player.id] ??= 0
 
     if (prevLoc) {
+        if(player.getEffect("jumpBoost").amplifier > 2 || player.getEffect("levitate").amplifier > 2) return 
         if (velocity > 0.7) {
             ++velocityLog[player.id]
             lastVelocity.set(id, velocity)
@@ -49,7 +50,7 @@ async function AntiFly (player: Player, now: number) {
             velocityLog[player.id] = 0
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5) || (Math.hypot(x, z) > 1 && velocity < 0.7 && velocity > 0)
         
-        if (flyMovement && ) {
+        if (flyMovement) {
             player.teleport(prevLoc);
             player.applyDamage(0);
             flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
@@ -121,6 +122,7 @@ async function AntiNoFall (player: Player, now: number) {
 
     //velocityY is 0 and velocityXZ is higher than 0.15, flag the player
     if (y === 0 && xz > 0){
+        if(player.getEffect("jumpBoost").amplifier > 2 || player.getEffect("levitate").amplifier > 2) return
         if (!config.slient) player.teleport(prevLoc);
         //B - false positive: low, efficiency: high
         flag (player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + y.toFixed(2), lang(">velocityXZ") + ":" + + xz.toFixed(2)])
