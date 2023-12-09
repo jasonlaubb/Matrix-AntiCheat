@@ -1,5 +1,5 @@
 import { world, system, GameMode, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c, findSlime } from "../../Assets/Util";
+import { flag, isAdmin, c, findSlime, inAir } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
@@ -49,7 +49,7 @@ async function AntiFly (player: Player, now: number) {
             velocityLog[player.id] = 0
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5) || (Math.hypot(x, z) > 1 && velocity < 0.7 && velocity > 0)
         
-        if (flyMovement) {
+        if (flyMovement && inAir(player.dimension, player.location)) {
             player.teleport(prevLoc);
             player.applyDamage(0);
             flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
