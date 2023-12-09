@@ -18,8 +18,11 @@ import lang from "../../Data/Languages/lang.js";
 const hitLength = new Map<string, any[]>();
 
 async function KillAura (damagingEntity: Player, hitEntity: Entity) {
+    if (damagingEntity.hasTag("matrix:pvp-disabled")) return
+
     //constant the infomation
     let playerHitEntity = hitLength.get(damagingEntity.name) ?? [];
+    let flagged = false;
     const config = c()
     const direction: Vector3 = calculateVector(damagingEntity.location, hitEntity.location) as Vector3;
     const distance: number = calculateMagnitude(direction);
@@ -31,44 +34,42 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity) {
     }
 
     //if the player hit more than 1 targets in 2 ticks, flag the player
-    if (playerHitEntity.length > config.antiKillAura.maxEntityHit && !damagingEntity.hasTag("matrix:pvp-disabled")) {
+    if (playerHitEntity.length > config.antiKillAura.maxEntityHit) {
         hitLength.delete(damagingEntity.name);
         //A - false positive: very low, efficiency: high
         flag (damagingEntity, 'Kill Aura', "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`])
-        
-        if (!config.slient) {
-            damagingEntity.addTag("matrix:pvp-disabled");
-            system.runTimeout(() => {
-                damagingEntity.removeTag("matrix:pvp-disabled");
-            }, config.antiKillAura.timeout);
-        }
+        flagged = true
     }
 
     //stop false positive
-    if (!(hitEntity instanceof Player) || distance <= 2 || damagingEntity.hasTag("matrix:pvp-disabled")) return;
+    if (hitEntity instanceof Player && distance > 2) {
+        //get the angle
+        const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(), damagingEntity.getRotation().y);
 
-    //get the angle
-    const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(), damagingEntity.getRotation().y);
+        //if the angle is higher than the max angle, flag the player
+        if (angle > config.antiKillAura.minAngle) {
+            //B - false positive: low, efficiency: mid
+            flag (damagingEntity, 'Kill Aura', 'B', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
+            flagged = true
+        }
 
-    //if the angle is higher than the max angle, flag the player
-    if (angle > config.antiKillAura.minAngle) {
-        //B - false positive: low, efficiency: mid
-        flag (damagingEntity, 'Kill Aura', 'B', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
+        //calulate the limit of xz, also Math lol
+        const limitOfXZ = Math.cos(Math.abs(damagingEntity.getRotation().x) * Math.PI / 180) * 7.8
 
+        //if player attack higher than the limit, flag him
+        if (distance > limitOfXZ) {
+            flag (damagingEntity, 'Kill Aura', 'C', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">distance")}:${distance.toFixed(2)}`,`${lang(">Limit")}:${limitOfXZ.toFixed(2)}`])
+            flagged = true
+        }
+    }
+
+    if (flagged) {
         if (!config.slient) {
             damagingEntity.addTag("matrix:pvp-disabled");
             system.runTimeout(() => {
                 damagingEntity.removeTag("matrix:pvp-disabled");
             }, config.antiKillAura.timeout);
         }
-    }
-
-    //calulate the limit of xz, also Math lol
-    const limitOfXZ = Math.sin(Math.abs(damagingEntity.getRotation().x) * Math.PI / 180) * 7.8
-
-    //if player attack higher than the limit, flag him
-    if (distance > limitOfXZ) {
-        flag (damagingEntity, 'Kill Aura', 'C', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">distance")}:${distance.toFixed(2)}`,`${lang(">Limit")}:${limitOfXZ.toFixed(2)}`])
     }
 }
 

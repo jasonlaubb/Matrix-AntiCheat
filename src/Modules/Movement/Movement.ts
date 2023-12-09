@@ -44,7 +44,7 @@ async function Movement (player: Player, now: number) {
 
     //flag the player
     if(hVelocity > config.antiMovement.maxHorizontalVelocity && (Math.abs(x1 - x2) > 0.1 || Math.abs(z1 - z2) > 0.1)) {
-        if (player.isJumping || player.isGliding || player.getEffect(MinecraftEffectTypes.Speed) || damaged == true || player.isFlying || player.isInWater || !(player.lastBlockPlace && Date.now() - player.lastBlockPlace > 800)) return
+        if (player.isJumping || player.isGliding || player.getEffect(MinecraftEffectTypes.Speed) || damaged == true || player.isFlying || player.isInWater || !(player.lastBlockPlace && Date.now() - player.lastBlockPlace > 800) || player.hasTag("matrix:riding")) return
         //A - false positive: high, efficiency: high
         flag (player, "Movement", "A", config.antiMovement.maxVL, config.antiMovement.punishment, [lang(">velocityXZ") + ":" + hVelocity.toFixed(2)])
         if (!config.slient) player.teleport(lastPos)

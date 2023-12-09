@@ -4,7 +4,7 @@ import {
     GameMode,
     Vector3,
     Dimension,
-    system
+    Effect
 } from "@minecraft/server"
 import { ban } from "../Functions/moderateModel/banHandler";
 import config from "../Data/Config";
@@ -14,15 +14,9 @@ import lang from "../Data/Languages/lang";
 import Config from "../Data/Config";
 import { Root } from "../Data/ConfigDocs";
 
-system.runInterval(() => {
-    const players = world.getPlayers({ tags: ["matrix:knockback"]})
-    for (const player of players) {
-        const velocity = player.getVelocity().y
-        if (velocity <= 0) player.removeTag("matrix:knockback")
-    }
-})
+export { kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2 }
 
-export function kick (player: Player, reason?: string, by?: string) {
+function kick (player: Player, reason?: string, by?: string) {
     try {
         player.runCommand(`kick "${player.name}" "§r\n§c§l${lang(".Util.kicked")}§r\n§7${lang(".Util.reason")}: §e${reason ?? lang(".Util.noreason")}\n§7By: §e${by ?? lang(".Util.unknown")}"`)
     } catch {
@@ -30,7 +24,7 @@ export function kick (player: Player, reason?: string, by?: string) {
     }
 }
 
-export function formatInformation (arr: string[]) {
+function formatInformation (arr: string[]) {
     const formattedArr: string[] = arr.map(item => {
       const [key, value, id] = item.split(":");
       return `§r§c» §7${key}:§9 ${value}${id == undefined ? '' : ':' + id}§r`;
@@ -38,7 +32,7 @@ export function formatInformation (arr: string[]) {
     return formattedArr.join("\n");
 }
 
-export function checkBlockAround (location: Vector3, blockType: MinecraftBlockTypes, dimension: Dimension): boolean {
+function checkBlockAround (location: Vector3, blockType: MinecraftBlockTypes, dimension: Dimension): boolean {
     const floorPos: Vector3 = {
         x: Math.floor(location.x),
         y: Math.floor(location.y) - 1,
@@ -60,7 +54,7 @@ let Vl: any = {};
 
 type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I"
 
-export function flag (player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
+function flag (player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
     Vl[player.id] ??= {}
     Vl[player.id][modules] ??= 0
 
@@ -121,7 +115,7 @@ export function flag (player: Player, modules: string, type: Type, maxVL: number
     }
 }
 
-export function msToTime (ms: number) {
+function msToTime (ms: number) {
     const seconds = Math.trunc((ms / 1000) % 60);
     const minutes = Math.trunc((ms / 60000) % 60);
     const hours = Math.trunc((ms / 3600000) % 24);
@@ -130,7 +124,7 @@ export function msToTime (ms: number) {
     return { days, hours, minutes, seconds };
 }
 
-export function isTargetGamemode (player: Player, gamemode: number) {
+function isTargetGamemode (player: Player, gamemode: number) {
     const gamemodes: GameMode[] = [
         GameMode.survival,
         GameMode.creative,
@@ -141,7 +135,7 @@ export function isTargetGamemode (player: Player, gamemode: number) {
     return world.getPlayers({ name: player.name, gameMode: gamemodes[gamemode] }).length > 0
 }
 
-export function getGamemode (playerName: string) {
+function getGamemode (playerName: string) {
     const gamemodes: GameMode[] = [
         GameMode.survival,
         GameMode.creative,
@@ -159,11 +153,11 @@ export function getGamemode (playerName: string) {
     return 0
 }
 
-export function isAdmin (player: Player) {
+function isAdmin (player: Player) {
     return !!player.getDynamicProperty("isAdmin")
 }
 
-export function timeToMs(timeStr: string) {
+function timeToMs(timeStr: string) {
     const timeUnits: { [key: string]: number } = {
         d: 86400000,
         h: 3600000,
@@ -184,15 +178,67 @@ export function timeToMs(timeStr: string) {
     return ms;
 }
 
-export function isTimeStr(timeStr: string) {
+function isTimeStr(timeStr: string) {
     const timeUnits = ['d', 'h', 'm', 's'];
     return timeUnits.some(unit => new RegExp(`\\d+${unit}`).test(timeStr));
 }
 
-export const c = (): Root => {
+const c = (): Root => {
     try {
         return JSON.parse(world.getDynamicProperty("matrix_config") as string)
     } catch {
         return Config
     }
+}
+
+function inAir (dimension: Dimension, location: Vector3) {
+    location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z)}
+    const offset = [-1, 0, 1]
+    const offsetY = [-1, 0, 1, 2]
+    let allBlock = []
+
+    return offset.some(x => offsetY.some(y => offset.some(z => allBlock.push(
+        dimension.getBlock({
+            x: location.x + x,
+            y: location.y + y,
+            z: location.z + z
+        })?.isAir
+    ))))
+}
+
+function findSlime (dimension: Dimension, location: Vector3) {
+    const offset = [-1, 0, 1]
+    const pos = {
+        x: Math.floor(location.x),
+        y: Math.floor(location.y) - 1,
+        z: Math.floor(location.z)
+    }
+
+    return offset.some(x => offset.some(z => dimension.getBlock({
+        x: pos.x + x,
+        y: pos.y,
+        z: pos.z + z
+    })?.typeId === MinecraftBlockTypes.Slime))
+}
+
+function getSpeedIncrease1 (speedEffect: Effect | undefined) {
+    if (speedEffect === undefined) {
+        return 0;
+    }
+    if (speedEffect.amplifier < 2) {
+        return 0;
+    }
+    return (speedEffect?.amplifier - 2) * 4032 / 1609.34;
+}
+
+function getSpeedIncrease2 (speedEffect: Effect | undefined) {
+    if (speedEffect === undefined) {
+        return 0;
+    }
+    return (speedEffect?.amplifier + 1) * 1.12;
+}
+
+function findWater (player: Player) {
+    const pos = { x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)}
+    return [-1,0,1].some(x => [-1,0,1].some(z => [-1,0,1].some(y => player.dimension.getBlock({ x: pos.x + x, y: pos.y + y, z: pos.z + z})?.isLiquid)))
 }

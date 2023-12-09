@@ -1,10 +1,12 @@
-import { world, system, GameMode, Player, Vector3, Dimension, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { world, system, GameMode, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { flag, isAdmin, c, findSlime } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
 const previousLocations = new Map<string, Vector3>();
 const fallDistances = new Map<string, number[]>();
+let velocityLog: { [key: string]: number } = {};
+const lastVelocity = new Map<string, number>();
 
 /**
  * @author jasonlaubb
@@ -14,16 +16,13 @@ const fallDistances = new Map<string, number[]>();
 async function AntiFly (player: Player, now: number) {
     const config = c()
     //constant the infomation
-    const { id, isOnGround, threwTridentAt } = player;
-
-    //get the jump boost effect
-    const jumpEffect = player.getEffect(MinecraftEffectTypes.JumpBoost)
+    const { id, isOnGround } = player;
 
     //get the previous location
     const prevLoc = previousLocations.get(id);
 
     //get the velocity
-    const { y: velocity } = player.getVelocity();
+    const { x, z, y: velocity } = player.getVelocity();
 
     //if player is knocked back, remove the tag and player is falling, remove the tag
     if (player.hasTag("matrix:knockback") && velocity <= 0) {
@@ -40,17 +39,24 @@ async function AntiFly (player: Player, now: number) {
         previousLocations.set(id, player.location);
     }
 
-    //try to increase the velocity limit when player is jumping
-    let maxVelocity = player.isJumping ? 0.8 : 0.7
+    velocityLog[player.id] ??= 0
 
-    const airState = inAir(player.dimension, player.location)
-    if (prevLoc && !player.hasTag("matrix:knockback") && !player.hasTag("matrix:slime") && !isOnGround && !player.isFlying && !player.isGliding && !player.isInWater && !(jumpEffect && jumpEffect.amplifier > 2) && !(threwTridentAt && now - threwTridentAt < 3000)) {
-        //A - false positive: mid, efficiency: very high
-        if ((velocity > maxVelocity && velocity !== 1 && airState) || velocity > 3.5) {
-            if (!config.slient) player.teleport(prevLoc)
-            flag (player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + velocity.toFixed(2)])
-        }
-    }
+    if (prevLoc) {
+        if (velocity > 0.7) {
+            ++velocityLog[player.id]
+            lastVelocity.set(id, velocity)
+        } else if (velocity > 0)
+            velocityLog[player.id] = 0
+        const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5) || (Math.hypot(x, z) > 1 && velocity < 0.7 && velocity > 0)
+        
+        if (flyMovement) {
+            player.teleport(prevLoc);
+            player.applyDamage(0);
+            flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
+            velocityLog[player.id] = 0
+            lastVelocity.set(id, undefined)
+      }
+  }
 
     if (player.isGliding) {
         const data = fallDistances.get(player.id) ?? []
@@ -109,7 +115,7 @@ async function AntiNoFall (player: Player, now: number) {
     }
 
     //stop false positive
-    if (isOnGround || isFlying || isClimbing || isInWater || isGliding || player.hasTag("matrix:levitating") || (jumpEffect && jumpEffect.amplifier > 2) || (threwTridentAt && now - threwTridentAt < 3000) || (lastExplosionTime && now - lastExplosionTime < 5000)) {
+    if (isOnGround || isFlying || isClimbing || isInWater || isGliding || player.hasTag("matrix:levitating") || player.getEffect(MinecraftEffectTypes.Speed)|| (jumpEffect && jumpEffect.amplifier > 2) || (threwTridentAt && now - threwTridentAt < 3000) || (lastExplosionTime && now - lastExplosionTime < 5000)) {
         return;
     }
 
@@ -138,36 +144,6 @@ const antiNofall = () => {
     }
 }
 
-function inAir (dimension: Dimension, location: Vector3) {
-    location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z)}
-    const offset = [-1, 0, 1]
-    const offsetY = [-1, 0, 1, 2]
-    let allBlock = []
-
-    return offset.some(x => offsetY.some(y => offset.some(z => allBlock.push(
-        dimension.getBlock({
-            x: location.x + x,
-            y: location.y + y,
-            z: location.z + z
-        })?.isAir
-    ))))
-}
-
-function findSlime (dimension: Dimension, location: Vector3) {
-    const offset = [-1, 0, 1]
-    const pos = {
-        x: Math.floor(location.x),
-        y: Math.floor(location.y) - 1,
-        z: Math.floor(location.z)
-    }
-
-    return offset.some(x => offset.some(z => dimension.getBlock({
-        x: pos.x + x,
-        y: pos.y,
-        z: pos.z + z
-    })?.typeId === MinecraftBlockTypes.Slime))
-}
-
 const playerLeave = ({playerId}: PlayerLeaveAfterEvent) => {
     previousLocations.delete(playerId)
     fallDistances.delete(playerId)
@@ -186,6 +162,8 @@ export default {
     disable () {
         previousLocations.clear()
         fallDistances.clear()
+        lastVelocity.clear()
+        velocityLog = {}
         system.clearRun(id.a)
         system.clearRun(id.b)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)

@@ -35,13 +35,13 @@ export default {
 
     "-toggles.toggle": "تبديل",
     "-toggles.module": "الوحدة",
-a   "-toggles.toggleList": "قائمة تبديل:",
+    "-toggles.toggleList": "قائمة تبديل:",
     "-toggles.unknownModule": "%atoggles وحدة غير معروفة.جرب وحاول مرة اخرى",
     "-toggles.toggleChange": "%a الوحدة اصبحت %bd",
     "-toggles.unknownAction": "فقط enable/disable فعل غير معروف.ارجوك استعمل",
     "-toggles.already": "هذه الوحدة %ad بلفعل",
 
-a   "-op.hasbeen": "%b لقد اعطى صلاحية الاشراف ل %a",
+    "-op.hasbeen": "%b لقد اعطى صلاحية الاشراف ل %a",
     "-op.please": "ارجوك ادخل شفرة",
     "-op.now": "انت مشرف الان",
     "-op.wrong": "الشفرة خاطئة",

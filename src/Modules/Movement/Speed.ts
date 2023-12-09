@@ -4,11 +4,9 @@ import {
     Vector3,
     GameMode,
     Player,
-    Effect,
     PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import config from "../../Data/Config.js";
-import { flag, isAdmin } from "../../Assets/Util.js";
+import { flag, isAdmin, getSpeedIncrease1, getSpeedIncrease2, c } from "../../Assets/Util.js";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang.js";
 
@@ -20,12 +18,14 @@ const speedData = new Map();
  * This is converted from blocks per tick to miles per hour
 */
 
-async function AntiSpeed(player: Player, now: number) {
+async function AntiSpeedA (player: Player, now: number) {
     const { id } = player;
 
     if (player.threwTridentAt && now - player.threwTridentAt < 2000 || player.lastExplosionTime && now - player.lastExplosionTime < 2000) {
         return;
     }
+
+    const config = c ()
 
     const { x, z } = player.getVelocity();
 
@@ -36,7 +36,7 @@ async function AntiSpeed(player: Player, now: number) {
     const playerInfo: PlayerInfo = speedData.get(id);
 
     //state increase the limit from the speed effect
-    const limitIncrease: number = getSpeedIncrease(player.getEffect(MinecraftEffectTypes.Speed));
+    const limitIncrease: number = getSpeedIncrease1 (player.getEffect(MinecraftEffectTypes.Speed));
 
     //calculate the threshold by adding the limit increase
     const mphThreshold: number = config.antiSpeed.mphThreshold + limitIncrease;
@@ -54,15 +54,42 @@ async function AntiSpeed(player: Player, now: number) {
 
         //if the player hasn't already been flagged, flag them
         if (!playerInfo.highestSpeed) {
-
             //teleport them back
             if (!config.slient) player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
             //A - false positive: low, efficiency: very high
-            flag(player, 'Speed', 'A',config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
+            flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
             playerInfo.highestSpeed = playerSpeedMph;
         }
     } else if (isNotSpeeding) {
         playerInfo.highestSpeed = 0;
+    }
+}
+
+
+const locationData = new Map<string, LocationData>()
+
+async function AntiSpeedB (player: Player, now: number) {
+    const data = locationData.get(player.id)
+    locationData.set(player.id, { location: player.location, recordTime: Date.now() })
+    if (data === undefined) return;
+
+    if (player.threwTridentAt && now - player.threwTridentAt < 2000 || player.lastExplosionTime && now - player.lastExplosionTime < 2000 || player.isFlying || player.isInWater || player.isGliding || player.hasTag("matrix:riding") || player.isSleeping) {
+        return;
+    }
+
+    const config = c()
+
+    const { x: x1, z: z1 } = player.location
+    const { x: x2, z: z2 } = data.location
+    const { x, y, z } = player.getVelocity()
+    if (x == 0 && y == 0 && z == 0) return;
+    
+    const bps = Math.hypot(x1 - x2, z1 - z2) / (Date.now() - data.recordTime) * 1000
+
+    player.onScreenDisplay.setActionBar(bps.toFixed(2) + " / " + (20 + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.25).toFixed(2))
+    if (bps > 25 + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.25) {
+        player.teleport(data.location)
+        flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">PosDeff")}:${bps.toFixed(2)}`]);
     }
 }
 
@@ -71,23 +98,12 @@ interface PlayerInfo {
     initialLocation: Vector3;
 }
 
-function getSpeedIncrease(speedEffect: Effect | undefined) {
-    if (speedEffect === undefined) {
-        return 0;
-    }
-    if (speedEffect.amplifier < 2) {
-        return 0;
-    }
-    return (speedEffect?.amplifier - 2) * 4032 / 1609.34;
+interface LocationData {
+    location: Vector3;
+    recordTime: number;
 }
 
-const antiSpeed = () => {
-    const toggle: boolean = (world.getDynamicProperty("antiSpeed") ?? config.antiSpeed.enabled) as boolean;
-
-    if (toggle !== true) {
-        return;
-    }
-
+const antiSpeedA = () => {
     const now: number = Date.now();
 
     const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
@@ -95,23 +111,39 @@ const antiSpeed = () => {
         if (isAdmin(player)) {
             continue;
         }
-        AntiSpeed(player, now);
+        AntiSpeedA (player, now);
+    }
+}
+const antiSpeedB = () => {
+    const now: number = Date.now();
+
+    const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
+    for (const player of players) {
+        if (isAdmin(player)) {
+            continue;
+        }
+        AntiSpeedB (player, now);
     }
 }
 
 const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
     speedData.delete(playerId);
+    locationData.delete(playerId)
 });
 
-let id: number
+let id: { [key: string]:number}
 export default {
     enable () {
-        id = system.runInterval(antiSpeed, 1)
+        id = {
+            a: system.runInterval(antiSpeedA, 2),
+            b: system.runInterval(antiSpeedB, 1)
+        }
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {
         speedData.clear()
-        system.clearRun(id)
+        system.clearRun(id.a)
+        system.clearRun(id.b)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
     }
 }

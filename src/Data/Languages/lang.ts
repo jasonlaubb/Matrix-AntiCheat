@@ -13,15 +13,16 @@ let languageNow = config.language
 export const langs: { [key: string]: { [key: string]: LangType | string } } = {
     "en_US": en_US,
     "zh_TW": zh_TW,
-    "ar": ar
+    "ar": ar,
     //"vi_VN": vi_VN
 }
 
 // when world initialized, update the language
 world.afterEvents.worldInitialize.subscribe(() => {
     const language = world.getDynamicProperty("matrix:language") as string
-    if (language === undefined) return
-    if (!Object.key(lang).includes(language)) return world.setDynamicProperty("matrix:language", undefined)
+    if (language === undefined) return;else
+    if (!Object.keys(langs).includes(language)) return world.setDynamicProperty("matrix:language", undefined);else
+
     languageNow = language
 })
 

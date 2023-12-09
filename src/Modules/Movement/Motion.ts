@@ -1,5 +1,5 @@
-import { world, system, Player, GameMode, Vector3, Dimension, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { world, system, Player, GameMode, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { flag, isAdmin, c, findWater, inAir } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
 const velocityList = new Map<string, number[]>();
@@ -68,11 +68,6 @@ async function AntiMotion (player: Player, now: number) {
     }
 }
 
-function findWater (player: Player) {
-    const pos = { x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)}
-    return [-1,0,1].some(x => [-1,0,1].some(z => [-1,0,1].some(y => player.dimension.getBlock({ x: pos.x + x, y: pos.y + y, z: pos.z + z})?.isLiquid)))
-}
-
 const antiMotion = () => {
     const timeNow = Date.now()
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative]})
@@ -85,21 +80,6 @@ const antiMotion = () => {
 const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     velocityList.delete(playerId)
     lastSafePosition.delete(playerId)
-}
-
-function inAir (dimension: Dimension, location: Vector3) {
-    location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z)}
-    const offset = [-1, 0, 1]
-    const offsetY = [-1, 0, 1, 2]
-    let allBlock = []
-
-    return offset.some(x => offsetY.some(y => offset.some(z => allBlock.push(
-        dimension.getBlock({
-            x: location.x + x,
-            y: location.y + y,
-            z: location.z + z
-        })?.isAir
-    ))))
 }
 
 let id: number
