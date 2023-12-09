@@ -35,7 +35,7 @@ async function AntiBlink (player: Player) {
     const isLocationSame = xL == xT && yL == yT && zT == zL
 
     //A - false positive: low, efficiency: high
-    if (speed > 0 && speed == lastSpeed && isLocationSame) {
+    if (speed > 0.1 && speed == lastSpeed && isLocationSame) {
         ++vl[player.id]
         if (vl[player.id] > config.antiBlink.flagVL) {
             if (!config.slient) player.teleport(player.location)
@@ -61,7 +61,7 @@ let id: number
 
 export default {
     enable () {
-        id = system.runInterval(antiBlink)
+        id = system.runInterval(antiBlink, 1)
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {
