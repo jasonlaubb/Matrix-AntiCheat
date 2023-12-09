@@ -86,7 +86,6 @@ async function AntiSpeedB (player: Player, now: number) {
     
     const bps = Math.hypot(x1 - x2, z1 - z2) / (Date.now() - data.recordTime) * 1000
 
-    player.onScreenDisplay.setActionBar(bps.toFixed(2) + " / " + (20 + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.25).toFixed(2))
     if (bps > 25 + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.25) {
         player.teleport(data.location)
         flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">PosDeff")}:${bps.toFixed(2)}`]);
