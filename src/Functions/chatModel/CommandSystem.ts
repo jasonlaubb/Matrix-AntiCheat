@@ -351,7 +351,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
         case "vanish": {
             if (!Command.new(player, config.commands.vanish as Cmds)) return
             system.run(() => {
-                triggerEvent(player, "matrix:vanished")
+                triggerEvent(player, "matrix:vanish")
                 player.addEffect(MinecraftEffectTypes.Invisibility, 19999999, { showParticles: false, amplifier: 2 })
                 player.sendMessage(`§bMatrix §7>§g ${lang("-vanish.has")}`)
             })
@@ -360,7 +360,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
         case "unvanish": {
             if (!Command.new(player, config.commands.unvanish as Cmds)) return
             system.run(() => {
-                triggerEvent(player, "matrix:unvanished")
+                triggerEvent(player, "matrix:unvanish")
                 player.removeEffect(MinecraftEffectTypes.Invisibility)
                 player.sendMessage(`§bMatrix §7>§g ${lang("-vanish.out")}`)
             })
