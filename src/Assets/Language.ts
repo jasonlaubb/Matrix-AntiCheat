@@ -4,7 +4,8 @@ import { c } from "./Util"
 import zh_TW from "../Data/Languages/zh_TW";
 import ar from "../Data/Languages/ar";
 import zh_CN from "../Data/Languages/zh_CN";
-//import vi_VN from "./vi_VN"; dịch hơi lâu thông kẻm :)
+import vi_VN from "./vi_VN";
+
 // declare the dynamic language
 
 let languageNow = c().language
@@ -17,7 +18,7 @@ export const langs: { [key: string]: { [key: string]: LangType | string } } = {
     "zh_TW": zh_TW,
     "zh_CN": zh_CN,
     "ar": ar,
-    //"vi_VN": vi_VN
+    "vi_VN": vi_VN,
 }
 
 // when world initialized, update the language
