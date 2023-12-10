@@ -73,7 +73,7 @@ async function AntiSpeedB (player: Player, now: number) {
     locationData.set(player.id, { location: player.location, recordTime: Date.now() })
     if (data === undefined) return;
 
-    if (player.threwTridentAt && now - player.threwTridentAt < 2000 || player.lastExplosionTime && now - player.lastExplosionTime < 2000 || player.isFlying || player.isInWater || player.isGliding || player.hasTag("matrix:riding") || player.isSleeping) {
+    if (player.threwTridentAt && now - player.threwTridentAt < 5000 || player.lastExplosionTime && now - player.lastExplosionTime < 5000 || player.isFlying || player.isInWater || player.isGliding || player.hasTag("matrix:riding") || player.isSleeping) {
         return;
     }
 
@@ -81,14 +81,30 @@ async function AntiSpeedB (player: Player, now: number) {
 
     const { x: x1, z: z1 } = player.location
     const { x: x2, z: z2 } = data.location
-    const { x, y, z } = player.getVelocity()
-    if (x == 0 && y == 0 && z == 0) return;
-    
-    const bps = Math.hypot(x1 - x2, z1 - z2) / (Date.now() - data.recordTime) * 1000
 
-    if (bps > 45 + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.25) {
+    if (player.lastTeleportTime && now - player.lastTeleportTime < 550) return;
+    if (player.lastSpeedSkipCheck && now - player.lastSpeedSkipCheck < 550) return;
+    
+    //calulate the player block per second
+    const bps = Math.hypot(x1 - x2, z1 - z2) / (now - data.recordTime) * 1000
+
+    if (bps > 28.75 + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5) {
         player.teleport(data.location)
-        flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">PosDeff")}:${bps.toFixed(2)}`]);
+        flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">BlockPerTick")}:${bps.toFixed(2)}`])
+    }
+}
+
+async function teleportTracker () {
+    const players = world.getAllPlayers()
+    const now = Date.now()
+    for (const player of players) {
+        const { x, y, z } = player.getVelocity()
+        if (x == 0 && y > -0.2 && y <= 0 && z == 0) {
+            player.lastTeleportTime = now
+        }
+        if (player.isFlying || player.isGliding || player.isSleeping) {
+            player.lastSpeedSkipCheck = now
+        }
     }
 }
 
@@ -130,12 +146,13 @@ const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
     locationData.delete(playerId)
 });
 
-let id: { [key: string]:number}
+let id: { [key: string]: number}
 export default {
     enable () {
         id = {
             a: system.runInterval(antiSpeedA, 2),
-            b: system.runInterval(antiSpeedB, 1)
+            b: system.runInterval(antiSpeedB, 10),
+            c: system.runInterval(teleportTracker, 1)
         }
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
@@ -143,6 +160,7 @@ export default {
         speedData.clear()
         system.clearRun(id.a)
         system.clearRun(id.b)
+        system.clearRun(id.c)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
     }
 }

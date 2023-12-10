@@ -39,10 +39,13 @@ async function AntiFly (player: Player, now: number) {
         previousLocations.set(id, player.location);
     }
 
+    const jumpBoost = player.getEffect(MinecraftEffectTypes.JumpBoost)
+    const levitation = player.getEffect(MinecraftEffectTypes.Levitation)
+
     velocityLog[player.id] ??= 0
 
     if (prevLoc) {
-        if(player.getEffect("jumpBoost").amplifier > 2 || player.getEffect("levitate").amplifier > 2) return 
+        if ((jumpBoost?.amplifier > 2) || levitation?.amplifier > 2) return 
         if (velocity > 0.7) {
             ++velocityLog[player.id]
             lastVelocity.set(id, velocity)
@@ -50,7 +53,7 @@ async function AntiFly (player: Player, now: number) {
             velocityLog[player.id] = 0
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5) || (Math.hypot(x, z) > 1 && velocity < 0.7 && velocity > 0)
         
-        if (flyMovement) {
+        if (flyMovement && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2)) {
             player.teleport(prevLoc);
             player.applyDamage(0);
             flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
@@ -86,7 +89,7 @@ async function AntiFly (player: Player, now: number) {
         player.lastGliding = now
     }
 
-    if (player.fallDistance <= -1.0002 && !player.isJumping && !player.isOnGround && !(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback") && !player.hasTag("matrix:slime")) {
+    if (player.fallDistance < -1 && !player.isJumping && !player.isOnGround && !(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback") && !player.hasTag("matrix:slime") && !levitation && !jumpBoost) {
         if (Math.abs(velocity) > 0.15) {
             if (!config.slient) player.teleport(prevLoc)
             player.applyDamage(8)
@@ -94,7 +97,7 @@ async function AntiFly (player: Player, now: number) {
         }
     }
 
-    if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.28) {
+    if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.28 && !jumpBoost) {
         if (!(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback")) {
             if (!config.slient) player.teleport(prevLoc)
             player.applyDamage(8)
