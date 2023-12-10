@@ -6,7 +6,7 @@
  */
 
 //Load the language
-import "./Data/Languages/lang"
+import "./Assets/Language"
 
 //load the public subscibe util
 import "./Assets/Public"
