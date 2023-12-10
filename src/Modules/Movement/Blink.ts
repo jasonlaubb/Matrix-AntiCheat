@@ -2,7 +2,7 @@ import { world, system, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraf
 import { c, flag, isAdmin } from "../../Assets/Util";
 
 interface BlinkData {
-    s: number,
+    s: Vector3,
     l: Vector3
 }
 const blinkData = new Map<string, BlinkData>()
@@ -22,20 +22,18 @@ async function AntiBlink (player: Player) {
     const velocity = player.getVelocity()
     const { x: xV, y: yV, z: zV } = velocity
     const { x: xL, y: yL, z: zL } = player.location
-    const speed = Math.hypot(xV, yV, zV)
 
-    blinkData.set(player.id, { s: speed, l: player.location })
+    blinkData.set(player.id, { s: velocity, l: player.location })
     if (data === undefined) return;
 
-    const { l: lastPosition, s: lastSpeed } = data
-    const { x: xT, y: yT, z: zT } = lastPosition
+    const { l: { x: xT, y: yT, z: zT }, s: { x, y, z } } = data
 
     vl[player.id] ??= 0
 
     const isLocationSame = xL == xT && yL == yT && zT == zL
 
     //A - false positive: low, efficiency: high
-    if (speed > 0.1 && speed == lastSpeed && isLocationSame) {
+    if (Math.hypot(x, y, z) > 0 && x == xV && y == yV && z == zV && isLocationSame) {
         ++vl[player.id]
         if (vl[player.id] > config.antiBlink.flagVL) {
             if (!config.slient) player.teleport(player.location)
