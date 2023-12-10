@@ -1,0 +1,21 @@
+import * as Server from "../node_modules/@minecraft/server/index";
+import * as Ui from "../node_modules/@minecraft/server-ui/index";
+import * as VanillaData from "./node_modules/@minecraft/vanilla-data/lib/index";
+
+declare module "@minecraft/server" {
+    interface Player {
+        threwTridentAt: number;
+        lastExplosionTime: number;
+        noSlowBuffer: number;
+        blockData: any[];
+        blacklistMsgWarn: number;
+        lastTouchWater: number;
+        lastItemUsed: number;
+        lastTouchGround: number;
+        lastOpTry: number;
+        lastGliding: number;
+        lastBlockPlace: number;
+        lastTeleportTime: number;
+        lastSpeedSkipCheck: number;
+    }
+}
