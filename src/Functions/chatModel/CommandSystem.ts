@@ -15,7 +15,7 @@ import { triggerEvent } from "../moderateModel/eventHandler";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import version from "../../version";
 import lang from "../../Data/Languages/lang";
-import { changeLanguage, getAllLang } from "../../Data/Languages/lang";
+import { changeLanguage, getAllLang } from "../../Assets/Language";
 import { SHA256 } from "../../node_modules/crypto-es/lib/sha256"
 import { antiCheatModules, getModuleState, keys } from "../../Modules/Modules";
 

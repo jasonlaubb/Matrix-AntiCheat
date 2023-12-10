@@ -230,5 +230,6 @@ export default {
     ">ItemTag": "ItemTag",
     ">Amount": "Amount",
     ">Ratio": "Ratio",
-    ">Limit": "Limit"
+    ">Limit": "Limit",
+    ">BlockPerTick": "Bps"
 }

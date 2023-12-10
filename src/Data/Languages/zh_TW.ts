@@ -229,5 +229,6 @@ export default {
     ">ItemAmount": "物品數量",
     ">Amount": "數量",
     ">Ratio": "比率",
-    ">Limit": "上限"
+    ">Limit": "上限",
+    ">BlockPerTick": "每秒移動格數"
 }

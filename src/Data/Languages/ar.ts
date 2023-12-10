@@ -232,5 +232,6 @@ export default {
     ">ItemTag": "وسام العنصر",
     ">Amount": "كمية",
     ">Ratio": "نسبة",
-    ">Limit": "الحد الاقصى"
+    ">Limit": "الحد الاقصى",
+    ">BlockPerTick": "كتلة لكل علامة"
 }

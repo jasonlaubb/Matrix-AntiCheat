@@ -15,5 +15,7 @@ declare module "@minecraft/server" {
         lastOpTry: number;
         lastGliding: number;
         lastBlockPlace: number;
+        lastTeleportTime: number;
+        lastSpeedSkipCheck: number;
     }
 }
