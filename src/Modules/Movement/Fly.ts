@@ -53,7 +53,7 @@ async function AntiFly (player: Player, now: number) {
             velocityLog[player.id] = 0
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5) || (Math.hypot(x, z) > 1 && velocity < 0.7 && velocity > 0)
         
-        if (flyMovement && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2)) {
+        if (flyMovement && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && !(velocity % 1 == 0)) {
             player.teleport(prevLoc);
             player.applyDamage(0);
             flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
