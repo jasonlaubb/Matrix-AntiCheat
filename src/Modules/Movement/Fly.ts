@@ -7,9 +7,10 @@ const previousLocations = new Map<string, Vector3>();
 const fallDistances = new Map<string, number[]>();
 let velocityLog: { [key: string]: number } = {};
 const lastVelocity = new Map<string, number>();
+const lastFlag = new Map<string, number>();
 
 /**
- * @author jasonlaubb
+ * @author jasonlaubb && rami
  * @description This checks if a player velocity is too high.
  */
 
@@ -48,6 +49,7 @@ async function AntiFly (player: Player, now: number) {
         if ((jumpBoost?.amplifier > 2) || levitation?.amplifier > 2) return 
         if (velocity > 0.7) {
             ++velocityLog[player.id]
+            lastFlag.set(id,Date.now()) 
             lastVelocity.set(id, velocity)
         } else if (velocity > 0)
             velocityLog[player.id] = 0
@@ -56,9 +58,11 @@ async function AntiFly (player: Player, now: number) {
         if (flyMovement && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity % 1 != 0) {
             player.teleport(prevLoc);
             player.applyDamage(0);
+            if(Date.now() - lastFlag.get(id) <= 1500){
             flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
             velocityLog[player.id] = 0
             lastVelocity.set(id, undefined)
+            } 
        }
   }
 
