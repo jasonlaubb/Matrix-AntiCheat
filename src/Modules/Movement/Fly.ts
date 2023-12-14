@@ -49,7 +49,6 @@ async function AntiFly (player: Player, now: number) {
         if ((jumpBoost?.amplifier > 2) || levitation?.amplifier > 2) return 
         if (velocity > 0.7) {
             ++velocityLog[player.id]
-            lastFlag.set(id,Date.now()) 
             lastVelocity.set(id, velocity)
         } else if (velocity > 0)
             velocityLog[player.id] = 0
@@ -63,6 +62,7 @@ async function AntiFly (player: Player, now: number) {
             velocityLog[player.id] = 0
             lastVelocity.set(id, undefined)
             } 
+            lastFlag.set(id,Date.now()) 
        }
   }
 
