@@ -2,7 +2,7 @@ import { Block, Player, PlayerBreakBlockBeforeEvent, Vector3, system, world } fr
 import config from "../../Data/Config";
 import { flag, isAdmin } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
-import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+//import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 //offset~
 const offset = [
@@ -17,6 +17,7 @@ const offset = [
 async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBlockBeforeEvent) {
     if (player.hasTag("matrix:break-disabled")) return;
 
+    /* This check is not fixed
     if (block.typeId === MinecraftBlockTypes.Bed) {
         let allBlock: Block[] = []
         offset.forEach(({ x, y, z}) => allBlock.push(player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z }) ?? null))
@@ -40,7 +41,7 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
                 return
             }
         }
-    } else {
+    } else {*/
         let allBlock: Block[] = []
         offset.forEach(({ x, y, z}) => allBlock.push(player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z })) ?? null)
         const aroundSolid = allBlock.every(block => block?.isSolid)
@@ -56,7 +57,7 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
             )
             return
         }
-    }
+//  }
 
     const allPos = new Set(pointsBetween(player.getHeadLocation(), block.location))
     const anySolid = [...allPos].map(pos => player.dimension.getBlock(pos)).some(block => block?.isSolid)

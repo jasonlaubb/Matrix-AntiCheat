@@ -5,7 +5,9 @@ import {
     Vector3,
     Entity,
     EntityHitEntityAfterEvent,
-    PlayerLeaveAfterEvent
+    PlayerLeaveAfterEvent,
+    EntityHurtAfterEvent,
+    EntityDamageCause
 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
@@ -17,7 +19,7 @@ import lang from "../../Data/Languages/lang.js";
 
 const hitLength = new Map<string, any[]>();
 
-async function KillAura (damagingEntity: Player, hitEntity: Entity) {
+async function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolean) {
     if (damagingEntity.hasTag("matrix:pvp-disabled")) return
 
     //constant the infomation
@@ -28,7 +30,7 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity) {
     const distance: number = calculateMagnitude(direction);
 
     //if the player hit a target that is not in the list, add it to the list
-    if (!playerHitEntity.includes(hitEntity.id)) {
+    if (!playerHitEntity.includes(hitEntity.id) && onFirstHit === false) {
         playerHitEntity.push(hitEntity.id);
         hitLength.set(damagingEntity.id, playerHitEntity);
     }
@@ -42,7 +44,7 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity) {
     }
 
     //stop false positive
-    if (hitEntity instanceof Player && distance > 2) {
+    if (hitEntity instanceof Player && distance > 2 && onFirstHit === true) {
         //get the angle
         const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(), damagingEntity.getRotation().y);
 
@@ -84,20 +86,20 @@ function calculateVector(l1: Vector3, l2: Vector3) {
     };
 }
 
-function calculateMagnitude({ x, y, z }: Vector3) {
-    return Math.sqrt(x ** 2 + y ** 2 + z ** 2);
+function calculateMagnitude({ x, z }: Vector3) {
+    return Math.hypot(x, z);
 }
 
 function calculateAngle (attacker: Vector3, target: Vector3, attackerV: Vector3, targetV: Vector3, rotation: number = -90) {
     const pos1 = {
-        x: attacker.x - attackerV.x,
+        x: attacker.x - attackerV.x * 0.5,
         y: 0,
-        z: attacker.z - attackerV.z
+        z: attacker.z - attackerV.z * 0.5
     } as Vector3
     const pos2 = {
-        x: target.x - targetV.x,
+        x: target.x - targetV.x * 0.5,
         y: 0,
-        z: target.z - targetV.z
+        z: target.z - targetV.z * 0.5
     } as Vector3
 
     let angle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - rotation - 90;
@@ -108,8 +110,18 @@ function calculateAngle (attacker: Vector3, target: Vector3, attackerV: Vector3,
 const antiKillAura = (({ damagingEntity, hitEntity }: EntityHitEntityAfterEvent) => {
     if (!(damagingEntity instanceof Player) || isAdmin (damagingEntity)) return;
 
-    KillAura(damagingEntity, hitEntity);
+    KillAura (damagingEntity, hitEntity, false);
 });
+
+const antiKillAura2 = (event: EntityHurtAfterEvent) => {
+    if (event.damageSource.cause !== EntityDamageCause.entityAttack) return;
+
+    const damagingEntity = event.damageSource.damagingEntity
+    const hitEntity = event.hurtEntity
+    if (!(damagingEntity instanceof Player) || isAdmin (damagingEntity)) return;
+
+    KillAura (damagingEntity, hitEntity, true);
+};
 
 const systemEvent = () => {
     const allplayers = world.getAllPlayers()
@@ -126,12 +138,14 @@ let id: number
 export default {
     enable () {
         world.afterEvents.entityHitEntity.subscribe(antiKillAura)
+        world.afterEvents.entityHurt.subscribe(antiKillAura2)
         world.afterEvents.playerLeave.subscribe(playerLeave)
         id = system.runInterval(systemEvent, 2)
     },
     disable () {
         hitLength.clear()
         world.afterEvents.entityHitEntity.unsubscribe(antiKillAura)
+        world.afterEvents.entityHurt.subscribe(antiKillAura2)
         world.afterEvents.playerLeave.subscribe(playerLeave)
         system.clearRun(id)
     }

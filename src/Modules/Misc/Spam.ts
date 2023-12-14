@@ -35,7 +35,7 @@ async function spammingWarner (player: Player, data: Data) {
     }, config.antiSpam.timeout);
 
     if (data.warnings > config.antiSpam.kickThreshold) {
-        system.run(() => kick (player, 'spamming', 'Matrix'))
+        system.run(() => kick (player, 'spamming', 'Matrix AntiCheat'))
         world.sendMessage(`§bMatrix §7>§g ${lang(".Spam.kicked").replace("%a", player.name)}`);
     }
 };
@@ -62,7 +62,7 @@ function antiSpamModule (message: string, player: Player) {
     }
 
     // Check if the message contain a blacklisted word
-    if (config.blacklistedMessages.some((word) => message.includes(word))) {
+    if (config.blacklistedMessages.some((word) => message.toLowerCase().includes(word))) {
 
         // cancel the message
         isSpamming = true;
@@ -73,12 +73,12 @@ function antiSpamModule (message: string, player: Player) {
         player.blacklistMsgWarn = warningTime;
     
         // if warning time is smaller than 2, send a warning message else kick them
-        if (warningTime < 2) {
-            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.blacklist")} §8(${warningTime}/2)`));
+        if (warningTime < 5) {
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.blacklist")} §8(${warningTime}/4)`));
             isSpamming = true;
         }
         system.run(() => {
-            kick(player, 'blacklisted message', 'Matrix')
+            kick(player, 'blacklisted message', 'Matrix AntiCheat')
             world.sendMessage(`§bMatrix §7>§g ${lang(".Spam.kickedBlacklist").replace("%a", player.name)}`);
         })
         isSpamming = true;

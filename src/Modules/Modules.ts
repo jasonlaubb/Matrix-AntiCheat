@@ -3,14 +3,14 @@ import killAura from "./Combat/Kill Aura"
 import reach from "./Combat/Reach"
 import aim from "./Combat/Aim"
 import spammer from "./Misc/Spammer"
-//import timer from "./Misc/Timer"
 import fly from "./Movement/Fly"
 import phase from "./Movement/Phase"
 import speed from "./Movement/Speed"
 import noSlow from "./Movement/NoSlow"
 import motion from "./Movement/Motion"
 import blink from "./Movement/Blink"
-import movement from "./Movement/Movement"
+import elytraFly from "./Movement/ElytraFly"
+import engender from "./Movement/Engender"
 import nuker from "./World/Nuker"
 import scaffold from "./World/Scaffold"
 import tower from "./World/Tower"
@@ -19,7 +19,6 @@ import breaker from "./World/Breaker"
 import blockReach from "./Player/BlockReach"
 import illegalItem from "./Player/Illegal Item"
 import nameSpoof from "./Player/NameSpoof"
-//import operator from "./Player/Operator"
 import auto from "./Player/Auto"
 import fastUse from "./Player/FastUse"
 import gameMode from "./Player/GameMode"
@@ -38,7 +37,7 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiSpammer": spammer,
     "antiFly": fly,
     "antiMotion": motion,
-    "antiMovement": movement,
+    "antiElytraFly": elytraFly,
     "antiBlink": blink,
     "antiBreaker": breaker,
     "antiPhase": phase,
@@ -54,6 +53,7 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiIllegalItem": illegalItem,
     "antiAuto": auto,
     "antiNameSpoof": nameSpoof,
+    "antiEngender": engender,
     "antiCBE": cbe
 }
 

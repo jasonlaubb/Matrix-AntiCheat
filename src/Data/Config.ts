@@ -314,8 +314,8 @@ export default {
 
     antiBlockReach: {
         enabled: true,
-        maxPlaceDistance: 6.9,
-        maxBreakDistance: 6.85,
+        maxPlaceDistance: 8,
+        maxBreakDistance: 8,
         timeout: 60,
         punishment: "kick",
         maxVL: 0,
@@ -423,11 +423,12 @@ export default {
         timeout: 60
     },
 
-    antiMovement: {
+    antiElytraFly: {
         enabled: true,
-        changeThreshold: 0.24596747752,
-        maxHorizontalVelocity: 1,
         maxVL: 1,
+        fallDiscycle: 4,
+        maxFallDis: 1.05,
+        maxRatio: 10,
         punishment: "kick"
     },
 
@@ -454,6 +455,12 @@ export default {
 
     antiCommandBlockExplolit: {
         enabled: false,
+        punishment: "kick",
+        maxVL: 4
+    },
+
+    antiEngender: {
+        enabled: true,
         punishment: "kick",
         maxVL: 4
     },

@@ -4,7 +4,7 @@ import { c } from "./Util"
 import zh_TW from "../Data/Languages/zh_TW";
 import ar from "../Data/Languages/ar";
 import zh_CN from "../Data/Languages/zh_CN";
-import vi_VN from "./vi_VN";
+import vi_VN from "../Data/Languages/vi_VN";
 
 // declare the dynamic language
 
