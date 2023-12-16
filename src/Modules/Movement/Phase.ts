@@ -10,7 +10,7 @@ import {
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
-const powderBlock: MinecraftBlockTypes[] = [
+const powderBlock = [
     MinecraftBlockTypes.RedConcretePowder,
     MinecraftBlockTypes.BlueConcretePowder,
     MinecraftBlockTypes.GreenConcretePowder,
@@ -26,16 +26,19 @@ const powderBlock: MinecraftBlockTypes[] = [
     MinecraftBlockTypes.OrangeConcretePowder,
     MinecraftBlockTypes.PinkConcretePowder,
     MinecraftBlockTypes.PurpleConcretePowder,
-    MinecraftBlockTypes.WhiteConcretePowder
-]
+    MinecraftBlockTypes.WhiteConcretePowder,
+] as string[]
 
 const phaseData: Map<string, Vector3> = new Map<string, Vector3>();
 const passableBlocks = [
     MinecraftBlockTypes.Sand,
-    MinecraftBlockTypes.Gravel
-];
+    MinecraftBlockTypes.Gravel,
+    MinecraftBlockTypes.SoulSand
+] as string[];
 
-const isSolidBlock = (block: Block) => Boolean(block?.isSolid && !passableBlocks.includes(block.typeId as MinecraftBlockTypes) && !powderBlock.includes(block.typeId as MinecraftBlockTypes));
+const isSolidBlock = (block: Block) => {
+    return block?.isSolid && !passableBlocks.includes(block?.typeId as MinecraftBlockTypes) && !powderBlock.includes(block?.typeId as MinecraftBlockTypes)
+}
 
 /**
  * @author ravriv & jasonlaubb
@@ -45,8 +48,8 @@ const isSolidBlock = (block: Block) => Boolean(block?.isSolid && !passableBlocks
 async function AntiPhase (player: Player) {
     const config = c()
     //constant the infomation
-    const { id, getHeadLocation, dimension } = player;
-    const { x, y, z } = getHeadLocation();
+    const { id, dimension } = player;
+    const { x, y, z } = player.getHeadLocation();
 
     //get the floor pos (the block position)
     const floorPos: Vector3 = { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
@@ -59,6 +62,7 @@ async function AntiPhase (player: Player) {
     const headBlock: Block = dimension.getBlock(floorPos);
 
     //check if the player is inside the block
+
     const isSolid: boolean = isSolidBlock(bodyBlock) && isSolidBlock(headBlock);
 
     //if the player is not inside the block, set the last safe position
@@ -66,13 +70,11 @@ async function AntiPhase (player: Player) {
         phaseData.set(player.id, lastSafePos)
 
     //if the player is inside the block, flag them
-    } else if (bodyBlock.typeId !== MinecraftBlockTypes.SoulSand) {
+    } else {
         //A - false positive: good question, efficiency: low
         flag (player, 'Phase', 'A', config.antiPhase.maxVL,config.antiPhase.punishment, undefined)
         if (!config.slient) player.teleport(lastSafePos);
     }
-
-    phaseData.set(id, lastSafePos);
 }
 
 const antiPhase = () => {

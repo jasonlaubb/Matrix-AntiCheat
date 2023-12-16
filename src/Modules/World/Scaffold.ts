@@ -10,7 +10,7 @@ import {
     PlayerLeaveAfterEvent
 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
-import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
+import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
 import lang from "../../Data/Languages/lang";
 
 /**
@@ -68,7 +68,7 @@ async function AntiScaffold (player: Player, block: Block) {
         const timeNow = Date.now()
         blockPlace[player.id] = [...blockPlace[player.id].filter(time => timeNow - time <= 500), timeNow]
 
-        if (blockPlace[player.id].length > config.antiScaffold.maxBPS) {
+        if (blockPlace[player.id].length > config.antiScaffold.maxBPS && !(player.getEffect(MinecraftEffectTypes.JumpBoost) && player.isJumping) && !player.getEffect(MinecraftEffectTypes.Speed)) {
             detected = true;
             blockPlace[player.id] = []
             flag (player, 'Scaffold', 'D', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`])

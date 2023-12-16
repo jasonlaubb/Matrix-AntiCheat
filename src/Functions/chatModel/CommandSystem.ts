@@ -81,7 +81,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
 
             system.run(() => {
                 if (keys.includes(regax[1])) {
-                    if ((regax[2] == "enable") === getModuleState(regax[1])) return player.sendMessage(`${lang("-toggles.already").replace("%a", regax[2])}`)
+                    if ((regax[2] == "enable") === getModuleState(regax[1])) return player.sendMessage(`§bMatrix §7>§c ${lang("-toggles.already").replace("%a", regax[2])}`)
                     if (regax[2] === "enable") {
                         antiCheatModules[regax[1]].enable()
                         world.setDynamicProperty(regax[1], true)
@@ -104,6 +104,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
                 const target = world.getPlayers({ name: regax[1] })[0]
                 if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
+                if (player.id == target.id || isAdmin(target)) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
                 target.setDynamicProperty("isAdmin", true)
                 system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-op.hasbeen").replace("%a", target.name).replace("%b", player.name)}`))
             } else {

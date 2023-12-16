@@ -4,9 +4,11 @@ import {
     EntityInventoryComponent,
     ItemEnchantsComponent,
     EntityDamageCause,
-    system
+    system,
+    PlayerBreakBlockAfterEvent
 } from "@minecraft/server"
 import { MinecraftItemTypes, MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+import { clearBlockBreakLog, findSlime, logBreak } from "./Util";
 
 world.beforeEvents.itemUse.subscribe((event) => {
     const player = event.source
@@ -64,13 +66,19 @@ world.beforeEvents.itemUse.subscribe((event) => {
     }
 })
 
-world.afterEvents.playerBreakBlock.subscribe((event) => {
-    const { player, block } = event
-
+world.afterEvents.playerBreakBlock.subscribe(({ player: { id }, player, brokenBlockPermutation, block: { location }, block }: PlayerBreakBlockAfterEvent) => {
     if (player.hasTag("matrix:break-disabled")) {
-        block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => { item.kill() })
+        block.dimension.getEntities({
+            location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item"
+        }).forEach((item) => { item.kill() })
         block.setPermutation(block.permutation.clone())
+    } else {
+        logBreak(brokenBlockPermutation, location, id)
     }
+})
+
+world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+    clearBlockBreakLog(playerId)
 })
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
@@ -102,5 +110,11 @@ system.runInterval(() => {
         } else if (!player.hasTag("matrix:using_item")) {
             player.lastItemUsed = undefined;
         }
+
+        // slime
+        const slimeUnder = findSlime(player.dimension, player.location)
+        if (slimeUnder) {
+            player.addTag("matrix:slime")
+        } else if (velocity <= 0) player.removeTag("matrix:slime")
     }
 })

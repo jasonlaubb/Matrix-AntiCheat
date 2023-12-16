@@ -1,13 +1,12 @@
 import {
     Block,
-    GameMode,
     Player,
     PlayerBreakBlockBeforeEvent,
     PlayerLeaveAfterEvent,
     system,
     world
 } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { flag, isAdmin, c, recoverBlockBreak } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import lang from "../../Data/Languages/lang";
@@ -46,7 +45,7 @@ async function AntiNuker (player: Player, block: Block) {
 
         //prevent the player from breaking blocks for 3 seconds
         system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
-        player.runCommand('gamemode @s ' + GameMode.adventure)
+        recoverBlockBreak(player.id, 200, player.dimension)
         blockBreakData.delete(player.id);
         flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, [lang(">Block") + ":" + block.typeId]);
         return

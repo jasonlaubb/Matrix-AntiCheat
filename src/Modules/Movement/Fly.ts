@@ -1,5 +1,5 @@
 import { world, system, GameMode, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c, findSlime } from "../../Assets/Util";
+import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
@@ -24,16 +24,6 @@ async function AntiFly (player: Player, now: number) {
     //get the velocity
     const { x, z, y: velocity } = player.getVelocity();
 
-    //if player is knocked back, remove the tag and player is falling, remove the tag
-    if (player.hasTag("matrix:knockback") && velocity <= 0) {
-        player.removeTag("matrix:knockback")
-    }
-
-    const slimeUnder = findSlime(player.dimension, player.location)
-    if (slimeUnder) {
-        player.addTag("matrix:slime")
-    } else if (velocity <= 0) player.removeTag("matrix:slime")
-
     //if player is on ground and velocity is 0, set the previous location
     if (isOnGround && velocity === 0) {
         previousLocations.set(id, player.location);
@@ -53,7 +43,7 @@ async function AntiFly (player: Player, now: number) {
             velocityLog[player.id] = 0
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5) || (Math.hypot(x, z) > 1 && velocity < 0.7 && velocity > 0)
         
-        if (flyMovement && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1) {
+        if (flyMovement && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1) {
             player.teleport(prevLoc);
             player.applyDamage(4);
             if (now - lastFlag.get(id) <= 1500){
@@ -65,19 +55,11 @@ async function AntiFly (player: Player, now: number) {
         }
     }
 
-    if (player.fallDistance < -1 && !player.isJumping && !player.isOnGround && !(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback") && !player.hasTag("matrix:slime") && !levitation && !jumpBoost) {
-        if (Math.abs(velocity) > 0.15) {
-            if (!config.slient) player.teleport(prevLoc)
-            player.applyDamage(8)
-            flag (player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(2)])
-        }
-    }
-
     if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.28 && !jumpBoost) {
         if (!(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback")) {
             if (!config.slient) player.teleport(prevLoc)
             player.applyDamage(8)
-            flag (player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(2)])
+            flag (player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(2)])
         }
     }
 }
@@ -91,7 +73,7 @@ async function AntiNoFall (player: Player, now: number) {
 
     if (player.isFlying && !player.hasTag("matrix:may_fly")) {
         if (!config.slient) player.teleport(prevLoc);
-        flag (player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, undefined)
+        flag (player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, undefined)
     }
 
     //stop false positive
@@ -100,13 +82,13 @@ async function AntiNoFall (player: Player, now: number) {
     }
 
     //velocityY is 0 and velocityXZ is higher than 0.15, flag the player
-    if (y === 0 && xz > 0){
+    if (y === 0 && xz > 0.04){
         const jumpBoost = player.getEffect(MinecraftEffectTypes.JumpBoost)
         const levitate = player.getEffect(MinecraftEffectTypes.Levitation)
         if (jumpBoost && jumpBoost?.amplifier > 2 || levitate && levitate?.amplifier > 2) return;
 
         if (!config.slient) player.teleport(prevLoc);
-        flag (player, "Fly", "F", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + y.toFixed(2), lang(">velocityXZ") + ":" + + xz.toFixed(2)])
+        flag (player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + + y.toFixed(2), lang(">velocityXZ") + ":" + + xz.toFixed(2)])
     }
 }
 
@@ -140,7 +122,7 @@ export default {
     enable () {
         id = {
             a: system.runInterval(antiFly, 1),
-            b: system.runInterval(antiNofall, 10)
+            b: system.runInterval(antiNofall, 20)
         }
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },

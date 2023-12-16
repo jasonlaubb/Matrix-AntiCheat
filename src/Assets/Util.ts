@@ -4,17 +4,17 @@ import {
     GameMode,
     Vector3,
     Dimension,
-    Effect
+    Effect,
+    BlockPermutation,
 } from "@minecraft/server"
 import { ban } from "../Functions/moderateModel/banHandler";
-import config from "../Data/Config";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../Data/Languages/lang";
 import Config from "../Data/Config";
 //import { Root } from "../Data/ConfigDocs";
 
-export { kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2 }
+export { kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog }
 
 function kick (player: Player, reason?: string, by?: string) {
     try {
@@ -55,14 +55,17 @@ let Vl: any = {};
 type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I"
 
 function flag (player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
+    const config = c()
     Vl[player.id] ??= {}
     Vl[player.id][modules] ??= 0
 
     let vl = ++Vl[player.id][modules]
-    if (vl > 999) vl = 99
+    try {
+        ++Vl[player.id][modules]
+    } catch { }
 
-    let flagMsg = `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${vl}§7]§r`
-    if (infos !== undefined) flagMsg = flagMsg + "\n" + formatInformation(infos)
+    let flagMsg = !config.slient ? `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${vl}§7]§r` : ``
+    if (infos !== undefined && !config.slient) flagMsg = flagMsg + "\n" + formatInformation(infos)
     
     if (punishment && vl > maxVL) {
         let punishmentDone = false
@@ -244,3 +247,46 @@ function findWater (player: Player) {
     const pos = { x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)}
     return [-1,0,1].some(x => [-1,0,1].some(z => [-1,0,1].some(y => player.dimension.getBlock({ x: pos.x + x, y: pos.y + y, z: pos.z + z})?.isLiquid)))
 }
+
+let blockBreakLogger: { [key: string]: BlockObject[] } = {}
+
+interface BlockObject {
+    permutation: BlockPermutation
+    time: number,
+    location: Vector3
+}
+
+function logBreak (block: BlockPermutation, location: Vector3, id: string) {
+    const now = Date.now()
+    const blockObject: BlockObject = {
+        permutation: block.clone(),
+        time: now,
+        location: location
+    }
+
+    blockBreakLogger[id] ??= []
+    blockBreakLogger[id].push(blockObject)
+
+    blockBreakLogger[id] = blockBreakLogger[id].filter(f => now - f.time < 1000)
+    return blockObject
+}
+
+function recoverBlockBreak (id: string, range: number, dimension: Dimension) {
+    const now = Date.now()
+    const log = blockBreakLogger[id] ?? []
+    if (log === undefined) return
+
+    log.filter(f => now - f.time <= range).forEach(b => {
+        dimension.getEntities({
+            minDistance: 0,
+            maxDistance: 2,
+            type: "minecraft:item",
+            location: b.location
+        }).forEach(i => i.kill())
+        dimension.getBlock(b.location)?.setPermutation(b.permutation)
+    })
+
+    blockBreakLogger[id] = log.filter(f => now - f.time > range)
+}
+
+const clearBlockBreakLog = (id: string) => delete blockBreakLogger[id]

@@ -49,7 +49,7 @@ export default {
 
     "-deop.lockdown": "伺服器处于锁定模式",
     "-deop.notadmin": "%a 不是管理者",
-    "-deop.hasbeen": "%a 已被 %b 删除",
+    "-deop.hasbeen": "%a 已被 %b 解除管理员权限",
 
     "-passwords.oldnew": "请输入旧密码和新密码",
     "-passwords.wrong": "密码错误",
