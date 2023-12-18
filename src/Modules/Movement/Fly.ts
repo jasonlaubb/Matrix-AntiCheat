@@ -46,7 +46,8 @@ async function AntiFly (player: Player, now: number) {
         if (flyMovement && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1) {
             player.teleport(prevLoc);
             player.applyDamage(4);
-            if (now - lastFlag.get(id) <= 1500){
+            const lastflag = lastFlag.get(id)
+            if (lastflag && now - lastflag <= 1500){
                 flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
                 velocityLog[player.id] = 0
                 lastVelocity.set(id, undefined)
