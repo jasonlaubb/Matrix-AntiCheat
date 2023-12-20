@@ -222,7 +222,7 @@ export default {
 
     antiReach: {
         enabled: true,
-        maxReach: 3.7,
+        maxReach: 4,
         maxYReach: 4.8,
         punishment: "kick",
         maxVL: 2
