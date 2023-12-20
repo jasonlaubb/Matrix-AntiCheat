@@ -44,7 +44,7 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: 
     }
 
     //stop false positive
-    if (hitEntity instanceof Player && distance > 2 && onFirstHit === true) {
+    if (hitEntity instanceof Player && distance > 3 && onFirstHit === true) {
         //get the angle
         const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(), damagingEntity.getRotation().y);
 
