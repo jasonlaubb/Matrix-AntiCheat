@@ -39,7 +39,7 @@ function calculateDistance(b1: Entity, b2: Entity) {
 async function AntiReach (hurtEntity: Player, damagingEntity: Player) {
     const config = c()
     //calculate the y reach
-    const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y)
+    const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y)-Math.abs(damagingEntity.getVelocity.y) 
 
     //constant the max y reach
     let maximumYReach: number = config.antiReach.maxYReach
