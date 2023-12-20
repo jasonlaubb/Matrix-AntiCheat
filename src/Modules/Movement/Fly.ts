@@ -47,11 +47,11 @@ async function AntiFly (player: Player, now: number) {
             player.teleport(prevLoc);
             player.applyDamage(4);
             const lastflag = lastFlag.get(id)
-            if (lastflag && now - lastflag <= 1500){
+            if (lastflag && now - lastflag <= 2000 && now - lastflag >= 60){
                 flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
-                velocityLog[player.id] = 0
-                lastVelocity.set(id, undefined)
             }
+            velocityLog[player.id] = 0
+            lastVelocity.set(id, undefined)
             lastFlag.set(id, now) 
         }
     }
