@@ -23,6 +23,7 @@ async function AntiNameSpoof (player: Player, playerName: string) {
     //if the player name contains non-ASCII characters, check if the non-ASCII characters are illegal
     if (nonASCII?.length > 0) {
         let illegalName = false;
+        let markCount = ""
 
         //check for each non-ASCII characters
         for (let i = 0; i < nonASCII.length; i++) {
@@ -33,7 +34,12 @@ async function AntiNameSpoof (player: Player, playerName: string) {
                 illegalName = true;
                 break
             }
+            if (nonASCII[i] == "(") {
+                markCount += "("
+            } else if (nonASCII[i] == ")")
+                markCount += ")"
         }
+        if (!!markCount === true && markCount !== "()") illegalName = true
 
         //if the player name is illegal, flag the player
         if (illegalName === true) {
