@@ -1,5 +1,5 @@
 import { world, Player, system } from "@minecraft/server"
-import { flag, c } from "../../Assets/Util";
+import { flag, c, isAdmin } from "../../Assets/Util";
 
 /**
  * @author jasonlaubb

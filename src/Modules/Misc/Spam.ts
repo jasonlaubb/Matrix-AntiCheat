@@ -4,7 +4,7 @@ import {
     Player,
     PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import { flag, c } from "../../Assets/Util";
+import { c } from "../../Assets/Util";
 import { isAdmin, kick } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
@@ -43,10 +43,10 @@ async function spammingWarner (player: Player, data: Data) {
 };
 
 function antiSpamModule (message: string, player: Player) {
+    const config = c ()
+    
     const toggle: boolean = (world.getDynamicProperty("antiSpam") ?? config.antiSpam.enabled) as boolean;
     if (toggle !== true || isAdmin (player)) return false;
-
-    const config = c ()
 
     let isSpamming = false;
 

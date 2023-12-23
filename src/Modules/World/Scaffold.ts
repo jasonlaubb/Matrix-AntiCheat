@@ -19,14 +19,14 @@ import lang from "../../Data/Languages/lang";
  * This checks check the invalid rotation, angle and postion
  */
 interface BlockLog {
-    time: number:
-    id: string
+    time: number;
+    id: string;
 }
 
 let blockPlace: { [key: string]: number[] } = {}
-let blockLog: { [key: string]: blockLog[] } = {}
+let blockLog: { [key: string]: BlockLog[] } = {}
 
-async function AntiScaffold (player: Player, block: Block) {
+async function AntiScaffold (player: Player, block: Block, now: number) {
     const config = c ()
     //constant the infomation
     const rotation: Vector2 = player.getRotation();
@@ -69,13 +69,16 @@ async function AntiScaffold (player: Player, block: Block) {
 
     //check if the player is placing block too fast
     const { x, y, z } = block.location
-    const underBlockUnder = block.dimenson.getBlock({ x: x, y: y - 1, z: z })
-    blockLog[player.id] ??= {}
-    blockLog[player.id].push({ time: Date.now(), id: underBlockUnder.id } as BlockLog)
-    blockLog[player.id] = blockLog[player.id].filter(({ time }: BlockLog) => Date.now() - time < 750)
-    if (isUnder && !(underBlockUnder?.isAir && blockLog[player.id].every(({ id }: BlockLog) => id !== underBlockUnder.id))) {
+    const underBlockUnder = block.dimension.getBlock({ x: x, y: y - 1, z: z })
+    blockLog[player.id] ??= []
+
+    const blockId = JSON.stringify(underBlockUnder.location)
+    blockLog[player.id].push({ time: now, id: blockId } as BlockLog)
+    blockLog[player.id] = blockLog[player.id].filter(({ time }: BlockLog) => now - time < 750)
+
+    if (isUnder && !(underBlockUnder?.isAir && blockLog[player.id].every(({ id }: BlockLog) => id !== blockId))) {
         if (!blockPlace[player.id]) blockPlace[player.id] = []
-        const timeNow = Date.now()
+        const timeNow = now
         blockPlace[player.id] = [...blockPlace[player.id].filter(time => timeNow - time <= 500), timeNow]
 
         if (blockPlace[player.id].length > config.antiScaffold.maxBPS && !(player.getEffect(MinecraftEffectTypes.JumpBoost) && player.isJumping) && !player.getEffect(MinecraftEffectTypes.Speed)) {
@@ -102,7 +105,7 @@ function isUnderPlayer (p: Vector3, pos2: Vector3) {
 const antiScaffold = (({ block, player }: PlayerPlaceBlockAfterEvent) => {
     if (isAdmin (player)) return;
 
-    AntiScaffold (player, block)
+    AntiScaffold (player, block, Date.now())
 });
 
 function calculateAngle (pos1: Vector3, pos2: Vector3, rotation = -90) {

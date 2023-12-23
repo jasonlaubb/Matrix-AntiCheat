@@ -1,5 +1,5 @@
 import { world, system, GameMode, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { flag, isAdmin, c, inAir } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
@@ -83,7 +83,7 @@ async function AntiNoFall (player: Player, now: number) {
     }
 
     //velocityY is 0 and velocityXZ is higher than 0.15, flag the player
-    if (y === 0 && xz > 0.04 && inAir(player.dimension, player.location) {
+    if (y === 0 && xz > 0.04 && inAir(player.dimension, player.location)) {
         const jumpBoost = player.getEffect(MinecraftEffectTypes.JumpBoost)
         const levitate = player.getEffect(MinecraftEffectTypes.Levitation)
         if (jumpBoost && jumpBoost?.amplifier > 2 || levitate && levitate?.amplifier > 2) return;

@@ -98,7 +98,7 @@ async function teleportTracker () {
     const players = world.getAllPlayers()
     const now = Date.now()
     for (const player of players) {
-        const { x, y, z } = player.getVelocity()
+        const { x, z } = player.getVelocity()
         if (x == 0 && z == 0) {
             player.lastTeleportTime = now
         }
