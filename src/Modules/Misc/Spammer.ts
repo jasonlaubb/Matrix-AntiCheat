@@ -25,13 +25,13 @@ async function antiSpammer ({ sender: player }: ChatSendAfterEvent) {
         } else
 
         //check if the player send message while moving
-        if (player.hasTag("matrix:moving") && !player.hasTag("matrix:riding") && player.isOnGround && !player.isJumping && !player.isInWater && !player.isGliding) {
+        if (player.hasTag("matrix:moving") && !player.hasTag("matrix:riding") && player.isOnGround && !player.isJumping && !player.isInWater && !player.isGliding && !player.isFalling) {
             //C - false positive: low, efficiency: high
             flag (player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type")+":"+lang(">Moving")])
             if (!config.slient) player.applyDamage(6)
         }
     
-        //check if the player sned message opening container
+        //check if the player send message opening container
         if (player.hasTag("matrix:container")) {
             //D - false positive: low, efficiency: mid
             flag (player, "Spammer", "D", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type")+":"+lang(">Container")])
