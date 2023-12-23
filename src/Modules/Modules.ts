@@ -10,7 +10,6 @@ import noSlow from "./Movement/NoSlow"
 import motion from "./Movement/Motion"
 import blink from "./Movement/Blink"
 import elytraFly from "./Movement/ElytraFly"
-import engender from "./Movement/Engender"
 import nuker from "./World/Nuker"
 import scaffold from "./World/Scaffold"
 import tower from "./World/Tower"
@@ -53,7 +52,6 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiIllegalItem": illegalItem,
     "antiAuto": auto,
     "antiNameSpoof": nameSpoof,
-    "antiEngender": engender,
     "antiCBE": cbe
 }
 
