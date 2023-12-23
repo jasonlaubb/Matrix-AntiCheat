@@ -13,7 +13,7 @@ async function AntiFastUse (player: Player) {
 
     const delay = timeNow - timeLast;
 
-    if (delay < config.antiFastUse.minUseTime && !player.hasTag("matrix:item-disabled")) {
+    if (delay > 0 && delay < config.antiFastUse.minUseTime && !player.hasTag("matrix:item-disabled")) {
         //A - false positive: very low, efficiency: mid
         flag(player, "FastUse", "A", config.antiFastUse.maxVL, config.antiFastUse.punishment, [lang(">Delay") + ":" + delay.toFixed(2)])
         if (!config.slient) {
