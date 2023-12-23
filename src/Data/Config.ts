@@ -186,7 +186,7 @@ export default {
         reason: "Unfair advantage"
     },
     punishment_ban: {
-        minutes: 30,
+        minutes: 1,
         reason: "Unfair advantage"
     },
     example_anticheat_module: {
@@ -207,7 +207,7 @@ export default {
         enabled: true,
         maxClicksPerSecond: 22,
         timeout: 200,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
@@ -216,7 +216,7 @@ export default {
         minAngle: 120,
         timeout: 200,
         maxEntityHit: 1,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
@@ -224,13 +224,13 @@ export default {
         enabled: true,
         maxReach: 4,
         maxYReach: 4.8,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 2
     },
 
     antiFly: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 7
     },
 
@@ -238,21 +238,21 @@ export default {
         enabled: true,
         minRelativeY: 0.4,
         fallingDuration: 5,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
     antiPhase: {
         enabled: true,
-        punishment: "kick",
-        maxVL: 10
+        punishment: "ban",
+        maxVL: 4
     },
 
     antiSpeed: {
         enabled: true,
         mphThreshold: 150,
         bpsThershold: 28.75,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
@@ -260,7 +260,7 @@ export default {
         enabled: true,
         maxBreakPerTick: 5,
         timeout: 100,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 0
     },
 
@@ -271,7 +271,7 @@ export default {
         factor: 1,
         minRotation: 34.98,
         maxBPS: 5,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 2
     },
 
@@ -282,7 +282,7 @@ export default {
         itemUseTime: 250,
         maxNoSlowBuff: 1,
         timeout: 60,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
@@ -293,7 +293,7 @@ export default {
             "minecraft:cake",
             "minecraft:dragon_egg"
         ],
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 2
     },
 
@@ -308,7 +308,7 @@ export default {
 
     antiSpammer: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 2
     },
 
@@ -317,7 +317,7 @@ export default {
         maxPlaceDistance: 8,
         maxBreakDistance: 8,
         timeout: 60,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 0,
     },
 
@@ -325,7 +325,7 @@ export default {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 10
     },
 
@@ -333,8 +333,8 @@ export default {
         enabled: true,
         minDelay: 200,
         timeout: 60,
-        punishment: "kick",
-        maxVL: 2
+        punishment: "ban",
+        maxVL: 4
     },
 
     antiGameMode: {
@@ -342,13 +342,13 @@ export default {
         bannedGameMode: [1], //example [1,3] creative mode and spectator mode will be punished
         returnDefault: true, // if true, player will be return to default game mode
         returnGameMode: 0, // use when returnDefault is false
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 2
     },
 
     antiNameSpoof: {
         enabled: true,
-        punishment: "kick"
+        punishment: "ban"
     },
 
     antiIllegalItem: {
@@ -381,7 +381,7 @@ export default {
             },
             nameLength: {
                 enabled: true,
-                punishment: "none",
+                punishment: "kick",
                 maxItemNameLength: 32
             },
             itemTag: {
@@ -391,32 +391,32 @@ export default {
             },
             loreCheck: {
                 enabled: true,
-                punishment: "kick"
+                punishment: "ban"
             },
             itemAmount: {
                 enabled: true,
-                punishment: "kick"
+                punishment: "ban"
             },
             enchantLevel: {
                 enabled: true,
-                punishment: "kick",
+                punishment: "ban",
                 whiteList: [], //example: ["knockback:4"] than knockback enchantment with level 4 will not be punished
 
             },
             enchantConflict: {
                 enabled: true,
-                punishment: "kick",
+                punishment: "ban",
                 whitList: [], //example: ["mending","infinity"] than mending and infinity will not be punished
             },
             enchantAble: {
                 enabled: true,
-                punishment: "kick",
+                punishment: "ban",
                 whiteList: [], //example: ["superItem:super_sword"] for bypass super_word's enchantment
 
             },
             enchantRepeat: {
                 enabled: true,
-                punishment: "kick"
+                punishment: "ban"
             }
         },
         checkCreativeMode: true,
@@ -429,12 +429,12 @@ export default {
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "kick"
+        punishment: "ban"
     },
 
     antiBlink: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         flagVL: 10,
         maxVL: 4
     },
@@ -443,13 +443,13 @@ export default {
         enabled: true,
         minUseTime: 20,
         timeout: 60,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
     antiAuto: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
@@ -459,9 +459,9 @@ export default {
         maxVL: 4
     },
 
-    antiEngender: {
+    antiCrasher: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
