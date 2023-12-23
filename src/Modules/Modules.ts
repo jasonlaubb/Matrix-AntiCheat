@@ -3,6 +3,7 @@ import killAura from "./Combat/Kill Aura"
 import reach from "./Combat/Reach"
 import aim from "./Combat/Aim"
 import spammer from "./Misc/Spammer"
+import crasher from "./Misc/Crasher"
 import fly from "./Movement/Fly"
 import phase from "./Movement/Phase"
 import speed from "./Movement/Speed"
@@ -52,12 +53,13 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiIllegalItem": illegalItem,
     "antiAuto": auto,
     "antiNameSpoof": nameSpoof,
-    "antiCBE": cbe
+    "antiCBE": cbe,
+    "antiCrasher": crasher
 }
 
 export const defaultLy = (key: string) => {
     const config: { [key: string]: any } = c()
-    if (key == "antiCBE") return config.antiCommandBlockExplolit
+    if (key == "antiCBE") return config.antiCommandBlockExplolit.enabled
     return config[key].enabled
 }
 
