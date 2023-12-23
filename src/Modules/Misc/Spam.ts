@@ -1,9 +1,10 @@
 import {
     world,
     system,
-    Player
+    Player,
+    PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import config from "../../Data/Config.js";
+import { flag, c } from "../../Assets/Util";
 import { isAdmin, kick } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
@@ -23,6 +24,7 @@ const previousMessage: Map<string, string> = new Map<string, string>();
 const spamData: Map<string, Data> = new Map<string, Data>();
 
 async function spammingWarner (player: Player, data: Data) {
+    const config = c()
     data.warnings++;
 
     if (data.warnings <= config.antiSpam.kickThreshold) {
@@ -43,6 +45,8 @@ async function spammingWarner (player: Player, data: Data) {
 function antiSpamModule (message: string, player: Player) {
     const toggle: boolean = (world.getDynamicProperty("antiSpam") ?? config.antiSpam.enabled) as boolean;
     if (toggle !== true || isAdmin (player)) return false;
+
+    const config = c ()
 
     let isSpamming = false;
 
@@ -112,7 +116,18 @@ function antiSpamModule (message: string, player: Player) {
     return isSpamming;
 };
 
-world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     spamData.delete(playerId);
     previousMessage.delete(playerId);
-})
+}
+
+export default {
+    enable () {
+        world.afterEvents.playerLeave.subscribe(playerLeave)
+    },
+    disable () {
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+        spamData.clear()
+        previousMessage.clear()
+    }
+}
