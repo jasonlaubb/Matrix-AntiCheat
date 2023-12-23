@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server"
+import { world, Player, system } from "@minecraft/server"
 
 /**
  * @author jasonlaubb
@@ -6,13 +6,14 @@ import { system } from "@minecraft/server"
  */
 
 // Prevent watchdog to terminating the scripts \:doge\:
-const watchDog = () => system.beforeEvents.watchdogTerminate.subscribe(data => {
+export const watchDog = () => system.beforeEvents.watchdogTerminate.subscribe(data => {
 
     //cancel the watchdog terminate
     data.cancel = true
 })
 
 async function AntiCrasher (player: Player) {
+    const config = c()
     const { x, y, z } = player.location
     const max = 30000000
 
@@ -46,7 +47,6 @@ let id: number
 export default {
     enable () {
         id = system.runInterval(antiCrasher, 0)
-        watchDog ()
     },
     disable () {
         system.clearRun(id)
