@@ -18,8 +18,13 @@ import lang from "../../Data/Languages/lang";
  * @description A simple checks for scaffold, it can detect the main clients now
  * This checks check the invalid rotation, angle and postion
  */
+interface BlockLog {
+    time: number:
+    id: string
+}
 
 let blockPlace: { [key: string]: number[] } = {}
+let blockLog: { [key: string]: blockLog[] } = {}
 
 async function AntiScaffold (player: Player, block: Block) {
     const config = c ()
@@ -63,7 +68,12 @@ async function AntiScaffold (player: Player, block: Block) {
     }
 
     //check if the player is placing block too fast
-    if (isUnder) {
+    const { x, y, z } = block.location
+    const underBlockUnder = block.dimenson.getBlock({ x: x, y: y - 1, z: z })
+    blockLog[player.id] ??= {}
+    blockLog[player.id].push({ time: Date.now(), id: underBlockUnder.id } as BlockLog)
+    blockLog[player.id] = blockLog[player.id].filter(({ time }: BlockLog) => Date.now() - time < 750)
+    if (isUnder && blockLog[player.id].every(({ id }: BlockLog) => id !== underBlockUnder.id)) {
         if (!blockPlace[player.id]) blockPlace[player.id] = []
         const timeNow = Date.now()
         blockPlace[player.id] = [...blockPlace[player.id].filter(time => timeNow - time <= 500), timeNow]
