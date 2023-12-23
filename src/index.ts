@@ -5,6 +5,10 @@
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
 
+// Watch dog, get out
+import { watchDog } from "./Modules/Misc/Crasher"
+watchDog()
+
 //Load the language
 import "./Assets/Language"
 
