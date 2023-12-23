@@ -32,9 +32,6 @@ async function AntiNoSlow (player: Player) {
     //get the velocity
     const { x: velocityX, z: velocityZ } = player.getVelocity();
 
-    //get the no slow buffer
-    const buffer: number = (player.noSlowBuffer ?? 0) as number;
-
     //check if the player's is in the Web
     const headWeb: boolean = player.dimension.getBlock({
         x: Math.floor(player.location.x),
@@ -62,21 +59,13 @@ async function AntiNoSlow (player: Player) {
     if (headWeb === true || bodyWeb === true) {
         if (playerSpeed <= (0.09 + limitIncrease)) {
             lastPosition.set(player.id, playerLocation);
-            player.noSlowBuffer = 0
         } else {
             //flag the player, if the buffer is higher than the max buffer, teleport the player back
-            player.noSlowBuffer++
-            if (buffer + 1 > config.antiNoSlow.maxNoSlowBuff) {
-                player.noSlowBuffer = 0
+            if (!(player.lastExplosionTime && Date.now() - player.lastExplosionTime < 1000)) {
                 //A - false positive: very low, efficiency: high
                 flag (player, "NoSlow", "A" ,config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
                 if (!config.slient) player.teleport(playerLastPos)
             }
-        }
-    } else {
-        if (buffer > 0) {
-            player.noSlowBuffer = 0
-            lastPosition.set(player.id, playerLocation);
         }
     }
 

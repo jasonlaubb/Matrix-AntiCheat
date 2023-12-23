@@ -39,16 +39,17 @@ async function AntiNuker (player: Player, block: Block) {
 
     //if block break is in 1 tick is higher than the limit, flag them
     if (blockBreakCount.length > config.antiNuker.maxBreakPerTick) {
-        player.addTag("matrix:break-disabled");
-        block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => item.kill() )
-        block.setPermutation(block.permutation.clone())
+        system.run(() => {
+            player.addTag("matrix:break-disabled");
+            block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => item.kill() )
+            block.setPermutation(block.permutation.clone())
 
-        //prevent the player from breaking blocks for 3 seconds
-        system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
-        recoverBlockBreak(player.id, 200, player.dimension)
-        blockBreakData.delete(player.id);
-        flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, [lang(">Block") + ":" + block.typeId]);
-        return
+            //prevent the player from breaking blocks for 3 seconds
+            system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
+            recoverBlockBreak(player.id, 200, player.dimension)
+            blockBreakData.delete(player.id);
+            flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, [lang(">Block") + ":" + block.typeId]);
+        })
     }
 
 

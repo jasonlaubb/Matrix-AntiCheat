@@ -1,5 +1,5 @@
 import { world, system, GameMode, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c, inAir } from "../../Assets/Util";
+import { flag, isAdmin, c, inAir, getGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
@@ -56,7 +56,7 @@ async function AntiFly (player: Player, now: number) {
         }
     }
 
-    if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.28 && !jumpBoost) {
+    if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.28 && Math.hypot(x, z) < 0.4 && !jumpBoost) {
         if (!(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback")) {
             if (!config.slient) player.teleport(prevLoc)
             player.applyDamage(8)
@@ -72,7 +72,7 @@ async function AntiNoFall (player: Player, now: number) {
     const { x, y, z } = player.getVelocity();
     const xz = Math.hypot(x, z)
 
-    if (player.isFlying && !player.hasTag("matrix:may_fly")) {
+    if (player.isFlying && !player.hasTag("matrix:may_fly") && ![1,3].includes(getGamemode(player.name))) {
         if (!config.slient) player.teleport(prevLoc);
         flag (player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, undefined)
     }

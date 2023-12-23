@@ -6,7 +6,6 @@ declare module "@minecraft/server" {
     interface Player {
         threwTridentAt: number;
         lastExplosionTime: number;
-        noSlowBuffer: number;
         blockData: any[];
         blacklistMsgWarn: number;
         lastTouchWater: number;

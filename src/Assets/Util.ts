@@ -59,15 +59,14 @@ function flag (player: Player, modules: string, type: Type, maxVL: number, punis
     Vl[player.id] ??= {}
     Vl[player.id][modules] ??= 0
 
-    let vl = ++Vl[player.id][modules]
     try {
-        ++Vl[player.id][modules]
+        Vl[player.id][modules]++
     } catch { }
 
-    let flagMsg = !config.slient ? `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${vl}§7]§r` : ``
+    let flagMsg = !config.slient ? `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${Vl[player.id][modules]}§7]§r` : ``
     if (infos !== undefined && !config.slient) flagMsg = flagMsg + "\n" + formatInformation(infos)
     
-    if (punishment && vl > maxVL) {
+    if (punishment && Vl[player.id][modules] > maxVL) {
         let punishmentDone = false
         switch (punishment) {
             case "kick": {
@@ -283,7 +282,8 @@ function recoverBlockBreak (id: string, range: number, dimension: Dimension) {
             type: "minecraft:item",
             location: b.location
         }).forEach(i => i.kill())
-        dimension.getBlock(b.location)?.setPermutation(b.permutation)
+        //dimension.getBlock(b.location)?.setPermutation(b.permutation.clone())
+        dimension.getBlock(b.location)?.setType(MinecraftBlockTypes.Bedrock)
     })
 
     blockBreakLogger[id] = log.filter(f => now - f.time > range)

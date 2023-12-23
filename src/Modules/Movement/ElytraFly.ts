@@ -25,13 +25,13 @@ async function ElytraFly (player: Player, now: number) {
             }
         } else {
             fallDistances.set(player.id, data)
+        }
 
-            const ratio = player.fallDistance / (velocity ** 2) * player.getRotation().x ** 2 / 56000
+        const ratio = player.fallDistance / (velocity ** 2) * player.getRotation().x ** 2 / 56000
 
-            if (ratio > config.antiElytraFly.maxRatio && ratio !== Infinity && player.fallDistance !== 1 && player.lastGliding && now - player.lastGliding > 1000) {
-                if (!config.slient) player.kill()
-                flag (player, "Elyra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
-            }
+        if (ratio > config.antiElytraFly.maxRatio && ratio !== Infinity && player.fallDistance !== 1 && player.lastGliding && now - player.lastGliding > 1000) {
+            if (!config.slient) player.kill()
+            flag (player, "Elyra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
         }
     } else {
         fallDistances.set(player.id, undefined)

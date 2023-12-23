@@ -8,7 +8,7 @@ import vi_VN from "../Data/Languages/vi_VN";
 
 // declare the dynamic language
 
-let languageNow = c().language
+let languageNow: string = undefined
 
 export const getLang = () => languageNow
 
@@ -23,6 +23,7 @@ export const langs: { [key: string]: { [key: string]: LangType | string } } = {
 
 // when world initialized, update the language
 world.afterEvents.worldInitialize.subscribe(() => {
+    languageNow ??= c().language
     const language = world.getDynamicProperty("matrix:language") as string
     if (language === undefined) return; else
     if (!Object.keys(langs).includes(language)) return world.setDynamicProperty("matrix:language", undefined); else

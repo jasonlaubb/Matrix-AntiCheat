@@ -7,7 +7,7 @@ import {
     system,
     PlayerBreakBlockAfterEvent
 } from "@minecraft/server"
-import { MinecraftItemTypes, MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { clearBlockBreakLog, findSlime, logBreak } from "./Util";
 
 world.beforeEvents.itemUse.subscribe((event) => {
@@ -73,7 +73,8 @@ world.afterEvents.playerBreakBlock.subscribe(({ player: { id }, player, brokenBl
         }).forEach((item) => { item.kill() })
         block.setPermutation(block.permutation.clone())
     } else {
-        logBreak(brokenBlockPermutation, location, id)
+        if (brokenBlockPermutation.type.id !== MinecraftBlockTypes.Air)
+            logBreak(brokenBlockPermutation.clone(), location, id)
     }
 })
 

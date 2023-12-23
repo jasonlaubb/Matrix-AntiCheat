@@ -76,7 +76,7 @@ async function AntiScaffold (player: Player, block: Block, now: number) {
     blockLog[player.id].push({ time: now, id: blockId } as BlockLog)
     blockLog[player.id] = blockLog[player.id].filter(({ time }: BlockLog) => now - time < 750)
 
-    if (isUnder && !(underBlockUnder?.isAir && blockLog[player.id].every(({ id }: BlockLog) => id !== blockId))) {
+    if (isUnder && !(!underBlockUnder?.isAir && blockLog[player.id].some(({ id }: BlockLog) => id == blockId))) {
         if (!blockPlace[player.id]) blockPlace[player.id] = []
         const timeNow = now
         blockPlace[player.id] = [...blockPlace[player.id].filter(time => timeNow - time <= 500), timeNow]

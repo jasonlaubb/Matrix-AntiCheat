@@ -33,7 +33,7 @@ async function AntiBlink (player: Player) {
     const isLocationSame = xL == xT && yL == yT && zT == zL
 
     //A - false positive: low, efficiency: high
-    if (Math.hypot(x, y, z) > 0 && x == xV && y == yV && z == zV && isLocationSame) {
+    if (Math.hypot(x, y, z) > 0 && x == xV && y == yV && z == zV && isLocationSame && player.hasTag("matrix:alive")) {
         ++vl[player.id]
         if (vl[player.id] > config.antiBlink.flagVL) {
             if (!config.slient) player.teleport(player.location)

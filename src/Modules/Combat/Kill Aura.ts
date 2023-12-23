@@ -23,21 +23,21 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: 
     if (damagingEntity.hasTag("matrix:pvp-disabled")) return
 
     //constant the infomation
-    let playerHitEntity = hitLength.get(damagingEntity.name) ?? [];
+    let playerHitEntity = hitLength.get(damagingEntity.id) ?? [];
     let flagged = false;
     const config = c()
     const direction: Vector3 = calculateVector(damagingEntity.location, hitEntity.location) as Vector3;
     const distance: number = calculateMagnitude(direction);
 
     //if the player hit a target that is not in the list, add it to the list
-    if (!playerHitEntity.includes(hitEntity.id) && onFirstHit === false) {
+    if (!playerHitEntity.includes(hitEntity.id)) {
         playerHitEntity.push(hitEntity.id);
         hitLength.set(damagingEntity.id, playerHitEntity);
     }
 
     //if the player hit more than 1 targets in 2 ticks, flag the player
     if (playerHitEntity.length > config.antiKillAura.maxEntityHit) {
-        hitLength.delete(damagingEntity.name);
+        hitLength.delete(damagingEntity.id);
         //A - false positive: very low, efficiency: high
         flag (damagingEntity, 'Kill Aura', "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`])
         flagged = true
