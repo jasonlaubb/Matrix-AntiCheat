@@ -1,7 +1,6 @@
 <div align="center">
   <img src="./pack_icon.png" width="150" height="150">
-
-  # Matrix Anti Cheat
+  <img src="./pack_icon.png" height="150">
   
   <p align="center">
     <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="Downloads">
