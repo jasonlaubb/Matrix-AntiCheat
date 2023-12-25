@@ -79,13 +79,13 @@ function ban (player: Player, reason: string, by: string, time: number | "foreve
 }
 
 function unban (playerName: string) {
-    const unbanListing: string[] = JSON.parse(world.getDynamicProperty("unbanListing") as string)
+    const unbanListing: string[] = JSON.parse(world.getDynamicProperty("unbanListing") as string ?? "[]")
 
     system.run(() => world.setDynamicProperty("unbanListing", JSON.stringify([...unbanListing, playerName])))
 }
 
 function unbanRemove (playerName: string) {
-    const unbanListing: string[] = JSON.parse(world.getDynamicProperty("unbanListing") as string)
+    const unbanListing: string[] = JSON.parse(world.getDynamicProperty("unbanListing") as string ?? "[]")
     if (!unbanListing.includes(playerName)) return false;
     system.run(() => world.setDynamicProperty("unbanListing", JSON.stringify(unbanListing.filter(name => name !== playerName))))
     return true
