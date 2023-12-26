@@ -186,7 +186,7 @@ export default {
         reason: "Unfair advantage"
     },
     punishment_ban: {
-        minutes: 1,
+        minutes: 360,
         reason: "Unfair advantage"
     },
     example_anticheat_module: {
@@ -435,7 +435,7 @@ export default {
     antiBlink: {
         enabled: false,
         punishment: "ban",
-        flagVL: 9,
+        flagVL: 50,
         maxVL: 4
     },
 
