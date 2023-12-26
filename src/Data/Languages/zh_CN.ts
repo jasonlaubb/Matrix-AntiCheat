@@ -84,6 +84,7 @@ export default {
 
     "-unban.self": "你无法解禁自己",
     "-unban.notban": "%a 未被停权",
+    "-unban.add": "%a 已被加入至解禁队列",
 
     "-unbanremove.not": "%a 不在解禁队列",
 
