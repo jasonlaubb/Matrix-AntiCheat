@@ -84,6 +84,7 @@ export default {
 
     "-unban.self": "لاتستطيع ان تلغي حظر نفسك",
     "-unban.notban": "ليس محظور %a",
+    "-unban.add": "لقد تم ضم %a إلى قائمة انتظار إلغاء الحظر",
 
     "-unbanremove.not": "ليس في قائمة غير محظورين %a",
 
