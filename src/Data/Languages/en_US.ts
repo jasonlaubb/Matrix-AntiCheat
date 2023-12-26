@@ -84,6 +84,7 @@ export default {
 
     "-unban.self": "You can't unban yourself",
     "-unban.notban": "%a is not banned",
+    "-unban.add": "%a has been joined to the unban queue",
 
     "-unbanremove.not": "%a is not in unban queue",
 
