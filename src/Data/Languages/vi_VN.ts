@@ -85,6 +85,7 @@ export default {
 
     "-unban.self": "Bạn không thể hủy cấm chính mình",
     "-unban.notban": "%a không bị cấm",
+    "-unban.add": "%a đã được thêm vào hàng đợi bỏ cấm",
 
     "-unbanremove.not": "%a không có trong hàng đợi hủy cấm",
 
