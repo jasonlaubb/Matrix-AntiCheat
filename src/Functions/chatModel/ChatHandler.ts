@@ -10,7 +10,6 @@ import { chatRank } from "./ChatRank";
 import { adminChat } from "./AdminChat";
 import lang from "../../Data/Languages/lang";
 
-//@ts-ignore
 world.beforeEvents.chatSend.subscribe((event) => {
     const prefix: string = (world.getDynamicProperty("prefix") ?? config.commands.prefix) as string
 
