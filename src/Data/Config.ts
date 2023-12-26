@@ -283,7 +283,7 @@ export default {
         maxNoSlowBuff: 1,
         timeout: 60,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiBreaker: {
@@ -326,7 +326,7 @@ export default {
         maxRotSpeed: 15,
         timeout: 50,
         punishment: "ban",
-        maxVL: 10
+        maxVL: 4
     },
 
     antiTower: {
@@ -433,9 +433,9 @@ export default {
     },
 
     antiBlink: {
-        enabled: true,
+        enabled: false,
         punishment: "ban",
-        flagVL: 15,
+        flagVL: 9,
         maxVL: 4
     },
 
@@ -444,13 +444,13 @@ export default {
         minUseTime: 20,
         timeout: 60,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiAuto: {
         enabled: true,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiCommandBlockExplolit: {
