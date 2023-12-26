@@ -271,6 +271,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (targetName == player.name) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-unban.self")}`))
 
             unban(targetName)
+            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-unban.add").replace("%a", targetName)}`))
             break
         }
         case "unbanremove": {
@@ -279,7 +280,11 @@ async function inputCommand (player: Player, message: string, prefix: string): P
 
             const targetName = regax[1]
 
-            if (!unbanRemove(targetName)) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unbanremove.not").replace("%a", targetName)}`))
+            if (!unbanRemove(targetName)) {
+                system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unbanremove.not").replace("%a", targetName)}`))
+            } else {
+                system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unbanremove.yes").replace("%a", targetName)}`))
+            }
             break
         }
         case "unbanlist": {

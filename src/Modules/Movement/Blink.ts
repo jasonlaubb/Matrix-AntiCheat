@@ -1,4 +1,4 @@
-import { world, system, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { world, system, Player, Vector3, PlayerLeaveAfterEvent, PlayerSpawnAfterEvent } from "@minecraft/server";
 import { c, flag, isAdmin } from "../../Assets/Util";
 
 interface BlinkData {
@@ -31,9 +31,10 @@ async function AntiBlink (player: Player) {
     vl[player.id] ??= 0
 
     const isLocationSame = xL == xT && yL == yT && zT == zL
+    const isVelocitySame = x == xV && y == yV && z == zV
 
     //A - false positive: low, efficiency: high
-    if (Math.hypot(x, y, z) > 0 && x == xV && y == yV && z == zV && isLocationSame && player.hasTag("matrix:alive")) {
+    if (Math.hypot(x, y, z) > 0.005 && isVelocitySame && isLocationSame && player.hasTag("matrix:alive") && !(player.lastSpawn && Date.now() - player.lastSpawn < 5000)) {
         ++vl[player.id]
         if (vl[player.id] > config.antiBlink.flagVL) {
             if (!config.slient) player.teleport(player.location)
@@ -55,17 +56,21 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     delete vl[playerId]
 }
 
+const playerSpawn = ({ player }: PlayerSpawnAfterEvent) => player.lastSpawn = Date.now()
+
 let id: number
 
 export default {
     enable () {
         id = system.runInterval(antiBlink, 1)
         world.afterEvents.playerLeave.subscribe(playerLeave)
+        world.afterEvents.playerSpawn.subscribe(playerSpawn)
     },
     disable () {
         blinkData.clear()
         vl = {}
         system.clearRun(id)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
+        world.afterEvents.playerSpawn.unsubscribe(playerSpawn)
     }
 }

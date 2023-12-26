@@ -8,7 +8,6 @@ import lang from "../../Data/Languages/lang";
 import { triggerEvent } from "./eventHandler";
 
 interface BanInfo {
-    isBanned: boolean;
     reason: string;
     by: string;
     time: number | "forever";
@@ -72,7 +71,7 @@ function ban (player: Player, reason: string, by: string, time: number | "foreve
             reason: reason,
             by: by,
             time: time
-        }))
+        } as BanInfo))
         checksBan (player)
     })
 }

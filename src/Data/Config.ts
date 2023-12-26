@@ -231,7 +231,7 @@ export default {
     antiFly: {
         enabled: true,
         punishment: "ban",
-        maxVL: 7
+        maxVL: 4
     },
 
     antiMotion: {
@@ -239,11 +239,11 @@ export default {
         minRelativeY: 0.4,
         fallingDuration: 5,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiPhase: {
-        enabled: true,
+        enabled: false,
         punishment: "ban",
         maxVL: 4
     },
@@ -267,7 +267,7 @@ export default {
     antiScaffold: {
         enabled: true,
         timeout: 20,
-        maxAngle: 95,
+        maxAngle: 120,
         factor: 1,
         minRotation: 34.98,
         maxBPS: 5,
@@ -314,8 +314,8 @@ export default {
 
     antiBlockReach: {
         enabled: true,
-        maxPlaceDistance: 8,
-        maxBreakDistance: 8,
+        maxPlaceDistance: 8.15,
+        maxBreakDistance: 8.05,
         timeout: 60,
         punishment: "ban",
         maxVL: 0,
@@ -435,7 +435,7 @@ export default {
     antiBlink: {
         enabled: true,
         punishment: "ban",
-        flagVL: 10,
+        flagVL: 15,
         maxVL: 4
     },
 
@@ -462,7 +462,7 @@ export default {
     antiCrasher: {
         enabled: true,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 0
     },
 
     chatFilter: [
@@ -484,7 +484,6 @@ export default {
         "https://",
         "http://",
         "the best minecraft bedrock utility mod",
-        "horion",
         "disepi/ambrosial"
     ]
 }

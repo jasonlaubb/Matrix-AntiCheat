@@ -16,5 +16,6 @@ declare module "@minecraft/server" {
         lastBlockPlace: number;
         lastTeleportTime: number;
         lastSpeedSkipCheck: number;
+        lastSpawn: number;
     }
 }

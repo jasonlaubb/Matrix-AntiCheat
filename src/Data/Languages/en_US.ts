@@ -87,6 +87,7 @@ export default {
     "-unban.add": "%a has been joined to the unban queue",
 
     "-unbanremove.not": "%a is not in unban queue",
+    "-unbanremove.yes": "%a has been removed from unban queue",
 
     "-unbanlist.none": "There is no player in unban queue",
     "-unbanlist.list": "Unban list",

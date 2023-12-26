@@ -87,6 +87,8 @@ export default {
     "-unban.add": "%a 已被加入至解禁队列",
 
     "-unbanremove.not": "%a 不在解禁队列",
+    "-unbanremove.yes": "%a 已从解禁队列中删除",
+
 
     "-unbanlist.none": "解封队列中没有玩家",
     "-unbanlist.list": "解禁队列",

@@ -1,4 +1,3 @@
-
 export default {
     "-help.helpCDlist": "Danh sách lệnh trợ giúp:",
     "-help.help": "help - Hiển thị thông điệp trợ giúp này",
@@ -88,6 +87,7 @@ export default {
     "-unban.add": "%a đã được thêm vào hàng đợi bỏ cấm",
 
     "-unbanremove.not": "%a không có trong hàng đợi hủy cấm",
+    "-unbanremove.yes": "%a đã bị xóa khỏi hàng đợi cấm",
 
     "-unbanlist.none": "Không có người chơi nào trong hàng đợi hủy cấm",
     "-unbanlist.list": "Danh sách hủy cấm",
