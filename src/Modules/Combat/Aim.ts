@@ -43,7 +43,7 @@ async function AntiAim (player: Player) {
         if (rotationSpeed.x === rotationSpeed.y && rotationSpeed.x !== rotationSpeed.y || rotationSpeed.x > 1 && rotationSpeed.y < 0.6 || rotationSpeed.x < 0.6 && rotationSpeed.y > 1) {
             const timerSet = (timer.get(`aim-b:${player.id}`) || 0);
             timer.set(`aim-b:${player.id}`, timerSet + 1);
-            if (timerSet > 30 && !player.hasTag("matrix:riding")) {
+            if (timerSet > 30 && !player.hasTag("matrix:riding") && Math.abs(rotation.x) != 90) {
                 isFlagged = true
                 flag (player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotationSpeed.x.toFixed(2), lang(">RotSpeedY") + ":" + rotationSpeed.y.toFixed(2)])
             }
