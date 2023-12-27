@@ -217,7 +217,7 @@ export default {
         timeout: 200,
         maxEntityHit: 1,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 4
     },
 
     antiReach: {
@@ -239,7 +239,7 @@ export default {
         minRelativeY: 0.4,
         fallingDuration: 5,
         punishment: "ban",
-        maxVL: 1
+        maxVL: 0
     },
 
     antiPhase: {
@@ -269,10 +269,10 @@ export default {
         timeout: 20,
         maxAngle: 120,
         factor: 1,
-        minRotation: 34.98,
+        minRotation: 33.95,
         maxBPS: 5,
         punishment: "ban",
-        maxVL: 1
+        maxVL: 0
     },
 
     antiNoSlow: {
@@ -283,11 +283,11 @@ export default {
         maxNoSlowBuff: 1,
         timeout: 60,
         punishment: "ban",
-        maxVL: 1
+        maxVL: 0
     },
 
     antiBreaker: {
-        enabled: false,
+        enabled: true,
         timeout: 60,
         writeList: [
             "minecraft:cake",
@@ -326,7 +326,7 @@ export default {
         maxRotSpeed: 15,
         timeout: 50,
         punishment: "ban",
-        maxVL: 1
+        maxVL: 2
     },
 
     antiTower: {
@@ -334,7 +334,7 @@ export default {
         minDelay: 200,
         timeout: 60,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiGameMode: {
@@ -425,7 +425,7 @@ export default {
 
     antiElytraFly: {
         enabled: true,
-        maxVL: 1,
+        maxVL: 2,
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
@@ -444,7 +444,7 @@ export default {
         minUseTime: 20,
         timeout: 60,
         punishment: "ban",
-        maxVL: 1
+        maxVL: 0
     },
 
     antiAuto: {
