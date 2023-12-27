@@ -26,7 +26,7 @@ const gamemodes = [
 
 function Gamemode (playerName: string) {
     for (let i = 0; i < 4; i++) {
-        if (world.getPlayers({ gameMode: gamemodes[i], name: playerName })) return i
+        if (world.getPlayers({ gameMode: gamemodes[i], name: playerName }).length > 0) return i
     }
 
     return 0
