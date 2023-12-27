@@ -22,6 +22,7 @@ import nameSpoof from "./Player/NameSpoof"
 import auto from "./Player/Auto"
 import fastUse from "./Player/FastUse"
 import gameMode from "./Player/GameMode"
+import spam from "./Misc/Spam"
 import { c } from "../Assets/Util"
 import { world } from "@minecraft/server"
 
@@ -34,6 +35,7 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiReach": reach,
     "antiKillAura": killAura,
     "antiAutoClicker": autoClicker,
+    "antiSpam": spam,
     "antiSpammer": spammer,
     "antiFly": fly,
     "antiMotion": motion,
