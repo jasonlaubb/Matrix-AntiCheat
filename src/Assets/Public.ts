@@ -10,18 +10,6 @@ import {
 import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { clearBlockBreakLog, findSlime, logBreak } from "./Util";
 
-world.beforeEvents.itemUse.subscribe((event) => {
-    const player = event.source
-    if (player.hasTag("matrix:item-disabled")) {
-        event.cancel = true;
-    }
-})
-world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-    if (initialSpawn) {
-        player.removeTag("matrix:item-disabled")
-    }
-})
-
 world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
     if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
         const getItemInSlot = (
