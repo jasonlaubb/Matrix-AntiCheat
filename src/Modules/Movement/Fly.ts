@@ -106,6 +106,8 @@ const antiFly = () => {
 const antiNofall = () => {
     const now = Date.now();
     for (const player of world.getPlayers({ excludeGameModes: [GameMode.spectator] })) {
+        if (isAdmin(player)) continue;
+        
         AntiNoFall (player, now)
     }
 }
