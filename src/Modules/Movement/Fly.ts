@@ -43,7 +43,7 @@ async function AntiFly (player: Player, now: number) {
             velocityLog[player.id] = 0
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5))
         
-        if (flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1) {
+        if (flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1 && !player.isOnGround) {
             player.teleport(prevLoc);
             const lastflag = lastFlag.get(id)
             if (lastflag && now - lastflag <= 1500 && now - lastflag >= 60){
