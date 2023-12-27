@@ -43,11 +43,10 @@ async function AntiFly (player: Player, now: number) {
             velocityLog[player.id] = 0
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5) || (Math.hypot(x, z) > 1 && velocity < 0.7 && velocity > 0)
         
-        if (flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 1750) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1) {
+        if (flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1) {
             player.teleport(prevLoc);
-            player.applyDamage(4);
             const lastflag = lastFlag.get(id)
-            if (lastflag && now - lastflag <= 2000 && now - lastflag >= 60){
+            if (lastflag && now - lastflag <= 1500 && now - lastflag >= 60){
                 flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
             }
             velocityLog[player.id] = 0
