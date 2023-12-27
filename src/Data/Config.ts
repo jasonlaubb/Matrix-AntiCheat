@@ -217,7 +217,7 @@ export default {
         timeout: 200,
         maxEntityHit: 1,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiReach: {
@@ -253,7 +253,7 @@ export default {
         mphThreshold: 150,
         bpsThershold: 28.75,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiNuker: {
