@@ -59,7 +59,7 @@ function checksBan (player: Player): void {
     }
 
     try {
-        player.runCommand(`kick "${player.name}" §r\n§c§l${lang(".banHandler.banned")}${lang(".banHandler.format").replace("%a", timeTherShold).replace("%b", reason).replace("%c", by)}`)
+        player.runCommand(`kick "${player.name}" §r\n${lang(".banHandler.format").replace("%a", timeTherShold).replace("%b", reason).replace("%c", by)}`)
     } catch {
         triggerEvent (player, "matrix:kick")
     }
