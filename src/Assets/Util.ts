@@ -26,8 +26,8 @@ function kick (player: Player, reason?: string, by?: string) {
 
 function formatInformation (arr: string[]) {
     const formattedArr: string[] = arr.map(item => {
-      const [key, value, id] = item.split(":");
-      return `§r§c» §7${key}:§9 ${value}${id == undefined ? '' : ':' + id}§r`;
+       const [key, value, id] = item.split(":");
+       return `§r§c» §7${key}:§9 ${value}${id == undefined ? '' : ':' + id}§r`;
     });
     return formattedArr.join("\n");
 }
@@ -71,13 +71,13 @@ function flag (player: Player, modules: string, type: Type, maxVL: number, punis
         switch (punishment) {
             case "kick": {
                 punishmentDone = true
-                kick (player, config.punishment_kick.reason, "Matrix AntiCheat")
+                kick (player, config.punishment_kick.reason + ` (${modules} ${type}`, "Matrix AntiCheat")
                 flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name)
                 break
             }
             case "ban": {
                 punishmentDone = true
-                ban (player, config.punishment_ban.reason, "Matrix AntiCheat", config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
+                ban (player, config.punishment_ban.reason + ` (${modules} ${type}`, "Matrix AntiCheat", config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
                 flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
                 break
             }
