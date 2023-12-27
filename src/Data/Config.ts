@@ -205,10 +205,10 @@ export default {
 
     antiAutoClicker: {
         enabled: true,
-        maxClicksPerSecond: 22,
+        maxClicksPerSecond: 23,
         timeout: 200,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiKillAura: {
@@ -217,7 +217,7 @@ export default {
         timeout: 200,
         maxEntityHit: 1,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 0
     },
 
     antiReach: {
@@ -225,13 +225,13 @@ export default {
         maxReach: 4,
         maxYReach: 4.8,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiFly: {
         enabled: true,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 7
     },
 
     antiMotion: {
@@ -239,7 +239,7 @@ export default {
         minRelativeY: 0.4,
         fallingDuration: 5,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 1
     },
 
     antiPhase: {
@@ -272,7 +272,7 @@ export default {
         minRotation: 34.98,
         maxBPS: 5,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 1
     },
 
     antiNoSlow: {
@@ -283,7 +283,7 @@ export default {
         maxNoSlowBuff: 1,
         timeout: 60,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 1
     },
 
     antiBreaker: {
@@ -294,7 +294,7 @@ export default {
             "minecraft:dragon_egg"
         ],
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiSpam: {
@@ -309,7 +309,7 @@ export default {
     antiSpammer: {
         enabled: true,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiBlockReach: {
@@ -326,7 +326,7 @@ export default {
         maxRotSpeed: 15,
         timeout: 50,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 1
     },
 
     antiTower: {
@@ -436,7 +436,7 @@ export default {
         enabled: false,
         punishment: "ban",
         flagVL: 50,
-        maxVL: 4
+        maxVL: 7
     },
 
     antiFastUse: {
@@ -444,13 +444,13 @@ export default {
         minUseTime: 20,
         timeout: 60,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 1
     },
 
     antiAuto: {
         enabled: true,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiCommandBlockExplolit: {
@@ -481,6 +481,7 @@ export default {
         "@gmail.com",
         "@hotmail.com",
         "discordapp.com",
+        "discord.com/invite/",
         "https://",
         "http://",
         "the best minecraft bedrock utility mod",
