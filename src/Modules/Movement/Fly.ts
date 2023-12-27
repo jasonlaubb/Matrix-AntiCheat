@@ -55,7 +55,7 @@ async function AntiFly (player: Player, now: number) {
         }
     }
 
-    if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.28 && Math.hypot(x, z) < 0.4 && !jumpBoost) {
+    if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.3 && Math.hypot(x, z) < 0.3 && !jumpBoost) {
         if (!(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback")) {
             if (!config.slient) player.teleport(prevLoc)
             player.applyDamage(8)
@@ -64,17 +64,18 @@ async function AntiFly (player: Player, now: number) {
     }
 }
 async function AntiNoFall (player: Player, now: number) {
-    const config = c()
+    const config = c ()
     const { id, isFlying, isClimbing, isOnGround, isInWater, isGliding, threwTridentAt, lastExplosionTime } = player;
     const jumpEffect = player.getEffect(MinecraftEffectTypes.JumpBoost)
     const prevLoc = previousLocations.get(id);
     const { x, y, z } = player.getVelocity();
     const xz = Math.hypot(x, z)
 
+    /*
     if (player.isFlying && !player.hasTag("matrix:may_fly") && ![1,3].includes(getGamemode(player.name))) {
         if (!config.slient) player.teleport(prevLoc);
         flag (player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, undefined)
-    }
+    }*/
 
     //stop false positive
     if (isOnGround || isFlying || isClimbing || isInWater || isGliding || player.hasTag("matrix:levitating") || player.getEffect(MinecraftEffectTypes.Speed) || (jumpEffect && jumpEffect.amplifier > 2) || (threwTridentAt && now - threwTridentAt < 3000) || (lastExplosionTime && now - lastExplosionTime < 5000)) {
