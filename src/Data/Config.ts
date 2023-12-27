@@ -183,11 +183,11 @@ export default {
      * The config of all modules
     */
     punishment_kick: {
-        reason: "Unfair advantage"
+        reason: "Cheating behaviour"
     },
     punishment_ban: {
-        minutes: 360,
-        reason: "Unfair advantage"
+        minutes: 120,
+        reason: "Cheating behaviour"
     },
     example_anticheat_module: {
         enabled: true, // true mearns the module will be enabled, false means the module will be disabled
