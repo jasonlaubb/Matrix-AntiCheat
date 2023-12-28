@@ -80,7 +80,7 @@ function antiSpamModule (message: string, player: Player) {
         if (warningTime < 5) {
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.blacklist")} §8(${warningTime}/4)`));
             isSpamming = true;
-        }
+        } else
         system.run(() => {
             kick(player, 'blacklisted message', 'Matrix AntiCheat')
             world.sendMessage(`§bMatrix §7>§g ${lang(".Spam.kickedBlacklist").replace("%a", player.name)}`);

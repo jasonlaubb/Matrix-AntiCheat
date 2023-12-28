@@ -217,7 +217,7 @@ export default {
         timeout: 200,
         maxEntityHit: 1,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 4
     },
 
     antiReach: {
@@ -267,7 +267,7 @@ export default {
     antiScaffold: {
         enabled: true,
         timeout: 20,
-        maxAngle: 120,
+        maxAngle: 175,
         factor: 1,
         minRotation: 33.95,
         maxBPS: 5,

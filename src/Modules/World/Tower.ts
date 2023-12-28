@@ -55,8 +55,10 @@ async function AntiTower(player: Player, block: Block) {
     //calculate the delay between last block placed and current block placed
     const delay: number = Date.now() - lastTime;
 
+    const velocity = player.getVelocity().y
+
     //if delay is less than the min delay and all state is true, flag the player
-    if (delay < config.antiTower.minDelay && locationState) {
+    if (delay < config.antiTower.minDelay && locationState && velocity > 0.08 && velocity < 0.09) {
         if (!config.slient) {
             //set the block to the air
             block.setType(MinecraftBlockTypes.Air);

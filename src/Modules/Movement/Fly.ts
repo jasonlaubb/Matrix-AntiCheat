@@ -41,18 +41,23 @@ async function AntiFly (player: Player, now: number) {
             lastVelocity.set(id, velocity)
         } else if (velocity > 0)
             velocityLog[player.id] = 0
+        
+        //if(velocity> 0.7) player.runCommand(`title @s actionbar xz = ${Math.hypot(x, z)}  | velocity  = ${velocity}  | ground = ${player. isOnGround} `)
+
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5)
         
-        if (flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1 && !player.isOnGround) {
-            player.teleport(prevLoc);
+        if (((velocityLog[player.id] > 0 && player.lastVelLog == velocityLog[player.id])) && flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1 && !player.isOnGround) {
             const lastflag = lastFlag.get(id)
             if (lastflag && now - lastflag <= 1500 && now - lastflag >= 60){
+                player.teleport(prevLoc)
                 flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
             }
             velocityLog[player.id] = 0
             lastVelocity.set(id, undefined)
             lastFlag.set(id, now) 
         }
+
+        player.lastVelLog = velocityLog[player.id]
     }
 
     if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.3 && Math.hypot(x, z) < 0.3 && !jumpBoost) {
@@ -82,8 +87,8 @@ async function AntiNoFall (player: Player, now: number) {
         return;
     }
 
-    //velocityY is 0 and velocityXZ is higher than 0.15, flag the player
-    if (y === 0 && xz > 0.04 && inAir(player.dimension, player.location)) {
+    //velocityY is 0 and velocityXZ is higher than 0.2, flag the player
+    if (y === 0 && xz > 0.3 && inAir(player.dimension, player.location)) {
         const jumpBoost = player.getEffect(MinecraftEffectTypes.JumpBoost)
         const levitate = player.getEffect(MinecraftEffectTypes.Levitation)
         if (jumpBoost && jumpBoost?.amplifier > 2 || levitate && levitate?.amplifier > 2) return;

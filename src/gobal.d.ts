@@ -17,5 +17,6 @@ declare module "@minecraft/server" {
         lastTeleportTime: number;
         lastSpeedSkipCheck: number;
         lastSpawn: number;
+        lastVelLog: number;
     }
 }
