@@ -1,5 +1,5 @@
 import { world, system, GameMode, Player, Vector3, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c, inAir, getGamemode } from "../../Assets/Util";
+import { flag, isAdmin, c, inAir } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
@@ -41,7 +41,7 @@ async function AntiFly (player: Player, now: number) {
             lastVelocity.set(id, velocity)
         } else if (velocity > 0)
             velocityLog[player.id] = 0
-        const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5))
+        const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5)
         
         if (flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1 && !player.isOnGround) {
             player.teleport(prevLoc);
