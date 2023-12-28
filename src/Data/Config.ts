@@ -252,7 +252,7 @@ export default {
         enabled: true,
         mphThreshold: 150,
         bpsThershold: 28.75,
-        punishment: "ban",
+        punishment: undefined,
         maxVL: 2
     },
 
