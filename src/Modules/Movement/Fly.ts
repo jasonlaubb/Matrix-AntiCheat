@@ -49,17 +49,16 @@ async function AntiFly (player: Player, now: number) {
 
         const flyMovement = (velocityLog[player.id] > 0 && velocity <= 0) || (velocity < 0.7 && player.fallDistance < -1.5)
         
-        if (((velocityLog[player.id] > 1 && player.lastVelLog == velocityLog[player.id])) && flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1 && !player.isOnGround && !getBlock(player,0,(-1),0).includes("stairs")) && !getBlock(player,0,0,0).includes("stairs")) {
+        if (((velocityLog[player.id] > 1 && player?.lastVelLog == velocityLog[player.id])) && flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1 && !player.isOnGround && !getBlock(player,0,(-1),0).includes("stairs")) && !getBlock(player,0,0,0).includes("stairs")) {
             const lastflag = lastFlag.get(id)
             player.teleport(prevLoc)
-            if (lastflag && now - lastflag <= 1500 && now - lastflag >= 60)
+            if (lastflag && now - lastflag <= 4500 && now - lastflag >= 400)
                 flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
             }
             velocityLog[player.id] = 0
             lastVelocity.set(id, undefined)
-            lastFlag.set(id, now) 
-        }
-
+            lastFlag.set(id, now)
+    }
         player.lastVelLog = velocityLog[player.id]
     }
 
