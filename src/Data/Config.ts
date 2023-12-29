@@ -208,16 +208,16 @@ export default {
         maxClicksPerSecond: 23,
         timeout: 200,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiKillAura: {
         enabled: true,
-        minAngle: 120,
+        minAngle: 160,
         timeout: 200,
         maxEntityHit: 1,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 1
     },
 
     antiReach: {
@@ -231,7 +231,7 @@ export default {
     antiFly: {
         enabled: true,
         punishment: "ban",
-        maxVL: 7
+        maxVL: 4
     },
 
     antiMotion: {
@@ -250,10 +250,10 @@ export default {
 
     antiSpeed: {
         enabled: true,
-        mphThreshold: 150,
+        mphThreshold: 200,
         bpsThershold: 28.75,
-        punishment: undefined,
-        maxVL: 2
+        punishment: "ban",
+        maxVL: 4
     },
 
     antiNuker: {
@@ -326,7 +326,7 @@ export default {
         maxRotSpeed: 15,
         timeout: 50,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiTower: {
@@ -334,7 +334,7 @@ export default {
         minDelay: 200,
         timeout: 60,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiGameMode: {
@@ -343,7 +343,7 @@ export default {
         returnDefault: true, // if true, player will be return to default game mode
         returnGameMode: 0, // use when returnDefault is false
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiNameSpoof: {
@@ -425,7 +425,7 @@ export default {
 
     antiElytraFly: {
         enabled: true,
-        maxVL: 2,
+        maxVL: 0,
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
@@ -435,8 +435,8 @@ export default {
     antiBlink: {
         enabled: false,
         punishment: "ban",
-        flagVL: 50,
-        maxVL: 7
+        flagVL: 100,
+        maxVL: 0
     },
 
     antiFastUse: {
