@@ -42,7 +42,7 @@ const isSolidBlock = (block: Block) => {
 }
 
 /**
- * @author ravriv & jasonlaubb
+ * @author jasonlaubb
  * @description This is a simple phase detector, it will detect if the player is inside a block
  */
 
