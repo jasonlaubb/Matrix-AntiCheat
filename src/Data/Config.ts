@@ -231,21 +231,21 @@ export default {
     antiFly: {
         enabled: true,
         punishment: "ban",
-        maxVL: 4
+        maxVelocity: 0.7,
+        maxVL: 7
     },
 
-    antiMotion: {
-        enabled: true,
-        minRelativeY: 0.4,
-        fallingDuration: 5,
+    antiNoFall: {
+        enabled: false,
         punishment: "ban",
-        maxVL: 0
+        float: 0.3,
+        maxVL: 2
     },
 
     antiPhase: {
         enabled: false,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiSpeed: {
@@ -253,7 +253,7 @@ export default {
         mphThreshold: 200,
         bpsThershold: 28.75,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 7
     },
 
     antiNuker: {
@@ -430,13 +430,6 @@ export default {
         maxFallDis: 1.05,
         maxRatio: 10,
         punishment: "ban"
-    },
-
-    antiBlink: {
-        enabled: false,
-        punishment: "ban",
-        flagVL: 100,
-        maxVL: 0
     },
 
     antiFastUse: {

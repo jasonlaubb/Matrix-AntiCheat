@@ -82,8 +82,8 @@ async function AntiSpeedB (player: Player, now: number) {
     const { x: x1, z: z1 } = player.location
     const { x: x2, z: z2 } = data.location
 
-    if (player.lastTeleportTime && now - player.lastTeleportTime < 1000) return;
-    if (player.lastSpeedSkipCheck && now - player.lastSpeedSkipCheck < 1000) return;
+    if (player.lastTeleportTime && now - player.lastTeleportTime < 2500) return;
+    if (player.lastSpeedSkipCheck && now - player.lastSpeedSkipCheck < 3000) return;
     
     //calulate the player block per second
     const bps = Math.hypot(x1 - x2, z1 - z2) / (now - data.recordTime) * 1000
@@ -99,7 +99,7 @@ async function teleportTracker () {
     const now = Date.now()
     for (const player of players) {
         const { x, z } = player.getVelocity()
-        if (x == 0 && z == 0) {
+        if (Math.hypot(x, z) < 0.35) {
             player.lastTeleportTime = now
         }
         if (player.isFlying || player.isGliding || player.isSleeping) {
@@ -146,7 +146,7 @@ const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
     locationData.delete(playerId)
 });
 
-let id: { [key: string]: number}
+let id: { [key: string]: number }
 export default {
     enable () {
         id = {

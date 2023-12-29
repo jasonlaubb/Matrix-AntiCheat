@@ -44,37 +44,32 @@ const isSolidBlock = (block: Block) => {
  * @author ravriv & jasonlaubb
  * @description This is a simple phase detector, it will detect if the player is inside a block
  */
+interface PhaseData {
+    N: Vector3,
+    O: Vector3
+}
+const data = new Map<string, PhaseData>()
 
 async function AntiPhase (player: Player) {
     const config = c()
-    //constant the infomation
-    const { id, dimension } = player;
-    const { x, y, z } = player.getHeadLocation();
+    const { x, y, z } = player.location
+    const { y: headY } = player.getHeadLocation()
+    if (Math.floor(headY) - Math.floor(y) == 0) return;
+    const { x: xV, z: zV } = player.getVelocity()
+    const nextPos = { x: x + xV, y, z: z + zV }
+    const phaseData = data.get(player.id)
+    const floorPos = { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) }
+    data.set(player.id, { N: nextPos, O: floorPos})
+    const nextSolid: [boolean, boolean] = [isSolidBlock(player.dimension.getBlock({ x: Math.floor(nextPos.x), y: Math.floor(y), z: Math.floor(nextPos.z) })), isSolidBlock(player.dimension.getBlock({ x: Math.floor(nextPos.x), y: Math.floor(y) + 1, z: Math.floor(nextPos.z) }))]
+    const nowSolid: [boolean, boolean] = [isSolidBlock(player.dimension.getBlock({ x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) })), isSolidBlock(player.dimension.getBlock({ x: Math.floor(nextPos.x), y: Math.floor(y) + 1, z: Math.floor(z) }))]
 
-    //get the floor pos (the block position)
-    const floorPos: Vector3 = { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
-
-    //get the last safe position
-    const lastSafePos: Vector3 = phaseData.get(id) ?? floorPos
-
-    //get the head block and the body block
-    const bodyBlock: Block = dimension.getBlock({ x: floorPos.x, y: floorPos.y - 1, z: floorPos.z });
-    const headBlock: Block = dimension.getBlock(floorPos);
-
-    //check if the player is inside the block
-
-    const isSolid: boolean = isSolidBlock(bodyBlock) && isSolidBlock(headBlock);
-
-    //if the player is not inside the block, set the last safe position
-    if (!isSolid) {
-        phaseData.set(player.id, lastSafePos)
-
-    //if the player is inside the block, flag them
-    } else {
-        //A - false positive: good question, efficiency: low
-        flag (player, 'Phase', 'A', config.antiPhase.maxVL,config.antiPhase.punishment, undefined)
-        if (!config.slient) player.teleport(lastSafePos);
+    if (player.phaseCheck) {
+        if (nowSolid && JSON.stringify(nextPos) == JSON.stringify(phaseData.N) && JSON.stringify(floorPos) !== JSON.stringify(phaseData.O)) {
+            if (!config.slient) player.teleport(phaseData.O)
+            flag(player, "Phase", "A", config.antiPhase.maxVL, config.antiPhase.punishment, undefined)
+        }
     }
+    if (nextSolid && !nowSolid && Math.floor(headY) - Math.floor(y) !== 0) player.phaseCheck = true
 }
 
 const antiPhase = () => {
@@ -95,7 +90,7 @@ let id: number
 
 export default {
     enable () {
-        id = system.runInterval(antiPhase, 20)
+        id = system.runInterval(antiPhase, 1)
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {

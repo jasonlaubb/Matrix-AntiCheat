@@ -5,11 +5,10 @@ import aim from "./Combat/Aim"
 import spammer from "./Misc/Spammer"
 import crasher from "./Misc/Crasher"
 import fly from "./Movement/Fly"
+import nofall from "./Movement/NoFall"
 import phase from "./Movement/Phase"
 import speed from "./Movement/Speed"
 import noSlow from "./Movement/NoSlow"
-import motion from "./Movement/Motion"
-import blink from "./Movement/Blink"
 import elytraFly from "./Movement/ElytraFly"
 import nuker from "./World/Nuker"
 import scaffold from "./World/Scaffold"
@@ -38,9 +37,8 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiSpam": spam,
     "antiSpammer": spammer,
     "antiFly": fly,
-    "antiMotion": motion,
+    "antiNoFall": nofall,
     "antiElytraFly": elytraFly,
-    "antiBlink": blink,
     "antiBreaker": breaker,
     "antiPhase": phase,
     "antiSpeed": speed,

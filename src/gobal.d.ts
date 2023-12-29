@@ -18,5 +18,7 @@ declare module "@minecraft/server" {
         lastSpeedSkipCheck: number;
         lastSpawn: number;
         lastVelLog: number;
+        lastGlidingFire: number;
+        phaseCheck: boolean;
     }
 }
