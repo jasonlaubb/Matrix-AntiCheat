@@ -43,10 +43,10 @@ const isSolidBlock = (block: Block) => {
 
 /**
  * @author jasonlaubb
- * @description This is a simple phase detector, it will detect if the player is inside a block
+ * @description It can detect most of the phase hack. And the invalid motion caused by client
  */
 
-async function AntiPhase (player: Player) {
+async function AntiPhase (player: Player, now: number) {
     const config = c()
     const { x: xV, z: zV } = player.getVelocity()
     const { x: x1, y: y1, z: z1 } = player.getHeadLocation()
@@ -54,7 +54,7 @@ async function AntiPhase (player: Player) {
     const movementClip = Math.hypot(xV, zV)
     const lastPos = safeLocation.get(player.id)
 
-    if (lastPos && player?.lastClip && movementClip > 1.6 && player?.lastClip < 0.3 && player?.lastClip > 0.02) {
+    if (lastPos && player?.lastClip && movementClip > 1.6 && player?.lastClip < 0.3 && !player.isGliding && !player.isFlying && player?.lastClip > 0.02 && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500)) {
         if (!config.slient) player.teleport(lastPos)
         flag(player, "NoClip", "A", config.antiPhase.maxVL, config.antiPhase.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)])
     }
@@ -72,10 +72,11 @@ async function AntiPhase (player: Player) {
 
 const antiPhase = () => {
     const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
+    const now = Date.now()
     for (const player of players) {
         if (isAdmin (player)) continue;
 
-        AntiPhase (player);
+        AntiPhase (player, now);
     }
 }
 

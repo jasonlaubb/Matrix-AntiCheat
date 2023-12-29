@@ -236,16 +236,16 @@ export default {
     },
 
     antiNoFall: {
-        enabled: false,
+        enabled: true,
         punishment: "none",
         float: 0.3,
         maxVL: 4
     },
 
     antiPhase: {
-        enabled: false,
+        enabled: true,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiSpeed: {
@@ -269,7 +269,7 @@ export default {
         timeout: 20,
         maxAngle: 175,
         factor: 1,
-        minRotation: 33.95,
+        minRotation: 20,
         maxBPS: 5,
         punishment: "ban",
         maxVL: 0

@@ -5,6 +5,11 @@ import lang from "../../Data/Languages/lang";
 
 const lastLocation = new Map<string, Vector3>()
 
+/**
+ * @author jasonlaubb
+ * @description A simple check for nofall hacking
+ */
+
 async function AntiNoFall (player: Player, now: number) {
     const config = c ()
     const { id, isFlying, isClimbing, isOnGround, isInWater, isGliding, threwTridentAt, lastExplosionTime } = player;
