@@ -25,7 +25,7 @@ async function ElytraFly (player: Player, now: number) {
                     player.kill()
                     player.teleport(player.location)
                 }
-                flag (player, "Elyra Fly", "A", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">velocityY") + ":" + + velocity.toFixed(2)])
+                flag (player, "Elytra Fly", "A", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">velocityY") + ":" + + velocity.toFixed(2)])
             }
         } else {
             fallDistances.set(player.id, data)
@@ -38,7 +38,7 @@ async function ElytraFly (player: Player, now: number) {
                 player.kill()
                 player.teleport(player.location)
             }
-            flag (player, "Elyra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
+            flag (player, "Elytra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
         }
     } else {
         fallDistances.set(player.id, undefined)
