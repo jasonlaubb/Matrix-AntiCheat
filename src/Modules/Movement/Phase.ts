@@ -5,7 +5,8 @@ import {
     Vector3,
     GameMode,
     Player,
-    PlayerLeaveAfterEvent
+    PlayerLeaveAfterEvent,
+    EntityHurtAfterEvent
 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -54,7 +55,7 @@ async function AntiPhase (player: Player, now: number) {
     const movementClip = Math.hypot(xV, zV)
     const lastPos = safeLocation.get(player.id)
 
-    if (lastPos && player?.lastClip && movementClip > 1.6 && player?.lastClip < 0.3 && !player.isGliding && !player.isFlying && player?.lastClip > 0.02 && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500)) {
+    if (lastPos && player?.lastClip && movementClip > 1.6 && player?.lastClip < 0.3 && !player.isGliding && !player.isFlying && player?.lastClip > 0.02 && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500) && !(player.lastApplyDamage && now - player.lastApplyDamage < 250)) {
         if (!config.slient) player.teleport(lastPos)
         flag(player, "NoClip", "A", config.antiPhase.maxVL, config.antiPhase.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)])
     }
@@ -84,15 +85,19 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     safeLocation.delete(playerId)
 };
 
+const entityHurt = ({ hurtEntity: player }: EntityHurtAfterEvent) => (player as Player).lastApplyDamage = Date.now()
+
 let id: number
 
 export default {
     enable () {
         id = system.runInterval(antiPhase, 1)
         world.afterEvents.playerLeave.subscribe(playerLeave)
+        world.afterEvents.entityHurt.subscribe(entityHurt, { entityTypes: ["minecraft:player"] })
     },
     disable () {
         system.clearRun(id)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
+        world.afterEvents.entityHurt.unsubscribe(entityHurt)
     }
 }

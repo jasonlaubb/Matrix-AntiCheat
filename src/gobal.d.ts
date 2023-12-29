@@ -19,5 +19,6 @@ declare module "@minecraft/server" {
         lastVelLog: number;
         lastGlidingFire: number;
         lastClip: number;
+        lastApplyDamage: number;
     }
 }
