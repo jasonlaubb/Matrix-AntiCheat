@@ -217,7 +217,7 @@ export default {
         timeout: 200,
         maxEntityHit: 1,
         punishment: "ban",
-        maxVL: 1
+        maxVL: 0
     },
 
     antiReach: {
@@ -232,28 +232,28 @@ export default {
         enabled: true,
         punishment: "ban",
         maxVelocity: 0.7,
-        maxVL: 7
+        maxVL: 2
     },
 
     antiNoFall: {
         enabled: false,
-        punishment: "ban",
+        punishment: "none",
         float: 0.3,
-        maxVL: 2
+        maxVL: 4
     },
 
     antiPhase: {
         enabled: false,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiSpeed: {
         enabled: true,
         mphThreshold: 200,
         bpsThershold: 28.75,
-        punishment: "ban",
-        maxVL: 7
+        punishment: "none",
+        maxVL: 4
     },
 
     antiNuker: {
@@ -377,16 +377,16 @@ export default {
         state: {
             typeCheck: {
                 enabled: true,
-                punishment: "kick"
+                punishment: "ban"
             },
             nameLength: {
                 enabled: true,
-                punishment: "kick",
+                punishment: "ban",
                 maxItemNameLength: 32
             },
             itemTag: {
                 enabled: true,
-                punishment: "kick",
+                punishment: "ban",
                 maxAllowedTag: 0
             },
             loreCheck: {
