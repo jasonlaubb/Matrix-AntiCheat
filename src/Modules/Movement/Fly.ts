@@ -52,7 +52,7 @@ async function AntiFly (player: Player, now: number) {
         if (((velocityLog[player.id] > 1 && player?.lastVelLog == velocityLog[player.id])) && flyMovement && !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding && !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2) && velocity != 1 && !player.isOnGround && !getBlock(player,0,(-1),0).includes("stairs")) && !getBlock(player,0,0,0).includes("stairs")) {
             const lastflag = lastFlag.get(id)
             player.teleport(prevLoc)
-            if (lastflag && now - lastflag <= 4500 && now - lastflag >= 400)
+            if (lastflag && now - lastflag <= 4000 && now - lastflag >= 450)
                 flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
             }
             velocityLog[player.id] = 0
@@ -60,16 +60,16 @@ async function AntiFly (player: Player, now: number) {
             lastFlag.set(id, now)
     }
         player.lastVelLog = velocityLog[player.id]
-    }
-
-    if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.3 && Math.hypot(x, z) < 0.3 && !jumpBoost) {
+}
+/*
+if (player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z)})?.typeId == MinecraftBlockTypes.Ladder && velocity > 0.3 && Math.hypot(x, z) < 0.3 && !jumpBoost) {
         if (!(player.threwTridentAt && now - player.threwTridentAt < 4500) && !player.hasTag("matrix:knockback")) {
             if (!config.slient) player.teleport(prevLoc)
             player.applyDamage(8)
             flag (player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(2)])
         }
     }
-}
+}*/
 async function AntiNoFall (player: Player, now: number) {
     const config = c ()
     const { id, isFlying, isClimbing, isOnGround, isInWater, isGliding, threwTridentAt, lastExplosionTime } = player;
