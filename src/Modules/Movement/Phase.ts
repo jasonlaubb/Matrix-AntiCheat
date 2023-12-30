@@ -55,11 +55,12 @@ async function AntiPhase (player: Player, now: number) {
     const movementClip = Math.hypot(xV, zV)
     const lastPos = safeLocation.get(player.id)
 
-    if (lastPos && player?.lastClip && movementClip > 1.6 && player?.lastClip < 0.3 && !player.isGliding && !player.isFlying && player?.lastClip > 0.02 && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500) && !(player.lastApplyDamage && now - player.lastApplyDamage < 250)) {
+    if (lastPos && player?.lastClip && player?.backClip && movementClip < 0.1 && player?.lastClip > 1.6 && player?.backClip < 0.1 && !player.isGliding && !player.isFlying && player?.lastClip > 0.02 && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500) && !(player.lastApplyDamage && now - player.lastApplyDamage < 250)) {
         if (!config.slient) player.teleport(lastPos)
         flag(player, "NoClip", "A", config.antiPhase.maxVL, config.antiPhase.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)])
     }
 
+    player.backClip = player.lastClip
     player.lastClip = movementClip
 
     const floorHead = { x: Math.floor(x1), y: Math.floor(y1), z: Math.floor(z1) }
