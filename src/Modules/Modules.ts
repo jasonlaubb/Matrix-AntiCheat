@@ -6,7 +6,7 @@ import spammer from "./Misc/Spammer"
 import crasher from "./Misc/Crasher"
 import fly from "./Movement/Fly"
 import nofall from "./Movement/NoFall"
-import phase from "./Movement/Phase"
+import noClip from "./Movement/Phase"
 import speed from "./Movement/Speed"
 import noSlow from "./Movement/NoSlow"
 import elytraFly from "./Movement/ElytraFly"
@@ -40,7 +40,7 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiNoFall": nofall,
     "antiElytraFly": elytraFly,
     "antiBreaker": breaker,
-    "antiPhase": phase,
+    "antiNoClip": noClip,
     "antiSpeed": speed,
     "antiNuker": nuker,
     "antiGameMode": gameMode,
