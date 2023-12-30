@@ -20,5 +20,6 @@ declare module "@minecraft/server" {
         lastGlidingFire: number;
         lastClip: number;
         lastApplyDamage: number;
+        backClip: number;
     }
 }
