@@ -208,7 +208,7 @@ export default {
         maxClicksPerSecond: 23,
         timeout: 200,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 4
     },
 
     antiKillAura: {
@@ -217,7 +217,7 @@ export default {
         timeout: 200,
         maxEntityHit: 1,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiReach: {
@@ -244,8 +244,8 @@ export default {
 
     antiPhase: {
         enabled: true,
-        punishment: "ban",
-        maxVL: 2
+        punishment: "none",
+        maxVL: 4
     },
 
     antiSpeed: {
@@ -294,7 +294,7 @@ export default {
             "minecraft:dragon_egg"
         ],
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiSpam: {
@@ -309,7 +309,7 @@ export default {
     antiSpammer: {
         enabled: true,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiBlockReach: {
@@ -326,7 +326,7 @@ export default {
         maxRotSpeed: 15,
         timeout: 50,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiTower: {
@@ -437,13 +437,13 @@ export default {
         minUseTime: 20,
         timeout: 60,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiAuto: {
         enabled: true,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiCommandBlockExplolit: {
