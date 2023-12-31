@@ -12,7 +12,7 @@ const lastFlag = new Map<string, number>();
  * @author jasonlaubb && rami
  * @description This checks if a player velocity is too high.
  */
-const includeStair = ({ location: { x: px, y: py, z: pz }, dimension }: Player) => [dimension.getBlock({ x: Math.floor(px), y: Math.floor(py), z: Math.floor(pz)})?.typeId, dimension.getBlock({ x: Math.floor(px), y: Math.floor(py) + 1, z: Math.floor(pz)})?.typeId].includes("stair")
+const includeStair = ({ location: { x: px, y: py, z: pz }, dimension }: Player) => [dimension.getBlock({ x: Math.floor(px), y: Math.floor(py), z: Math.floor(pz)})?.typeId, dimension.getBlock({ x: Math.floor(px), y: Math.floor(py) - 1, z: Math.floor(pz)})?.typeId].includes("stair")
 
 async function AntiFly (player: Player, now: number) {
     const config = c()
