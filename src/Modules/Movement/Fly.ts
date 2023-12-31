@@ -32,6 +32,7 @@ async function AntiFly (player: Player, now: number) {
 
     const jumpBoost = player.getEffect(MinecraftEffectTypes.JumpBoost)
     const levitation = player.getEffect(MinecraftEffectTypes.Levitation)
+    const instair = includeStair(player)
 
     velocityLog[player.id] ??= 0
 
@@ -53,7 +54,7 @@ async function AntiFly (player: Player, now: number) {
     const skip2 = !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding
     const skip3 = !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2)
         
-    if (!player.isOnGround && clientFly && flyMovement && skip1 && skip2 && skip3 && velocity != 1 && !includeStair(player)) {
+    if (!player.isOnGround && clientFly && flyMovement && skip1 && skip2 && skip3 && velocity != 1 && !instair) {
         const lastflag = lastFlag.get(id)
         player.teleport(prevLoc)
 
@@ -67,8 +68,8 @@ async function AntiFly (player: Player, now: number) {
 
     player.lastVelLog = velocityLog[player.id]
     
-     //fly (B) detect instant movement by check velocityLog == 1
-    if (velocityLog[player.id] == 1 && velocity <= 0 && !player.isOnGround &&! getBlock(player,0,0,0).includes("stairs") &&! getBlock(player,0,(-1),0).includes("stairs")){
+    //fly (B) detect instant movement by check velocityLog == 1
+    if (velocityLog[player.id] == 1 && velocity <= 0 && !player.isOnGround && !instair){
         player.teleport(prevLoc)
         flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
     }
