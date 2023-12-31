@@ -79,7 +79,7 @@ async function AntiReach (hurtEntity: Player, damagingEntity: Player) {
 
 const antiReach = ({ damageSource, hurtEntity }: EntityHurtAfterEvent) => {
     const damagingEntity: Entity = damageSource.damagingEntity;
-    if (damageSource.cause !== EntityDamageCause.entityAttack || !(damagingEntity instanceof Player) || !(hurtEntity instanceof Player) || isAdmin (damagingEntity)) return;
+    if (damageSource.cause !== EntityDamageCause.entityAttack || damageSource.damagingProjectile || !(damagingEntity instanceof Player) || !(hurtEntity instanceof Player) || isAdmin (damagingEntity)) return;
 
     AntiReach(hurtEntity, damagingEntity);
 };
