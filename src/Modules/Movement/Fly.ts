@@ -58,7 +58,7 @@ async function AntiFly (player: Player, now: number) {
         const lastflag = lastFlag.get(id)
         player.teleport(prevLoc)
 
-        if (lastflag && now - lastflag <= 4000 && now - lastflag >= 450)
+        if (lastflag && now - lastflag <= 4000 && now - lastflag >= 500)
             flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
 
         velocityLog[player.id] = 0
@@ -68,6 +68,7 @@ async function AntiFly (player: Player, now: number) {
 
     player.lastVelLog = velocityLog[player.id]
     
+    /* It's not in use, until fixed
     //fly (B) detect instant movement by check velocityLog == 1
     if (velocityLog[player.id] == 1 && velocity <= 0 && !player.isOnGround && !instair){
         player.teleport(prevLoc)
@@ -81,6 +82,7 @@ async function AntiFly (player: Player, now: number) {
         flag(player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +velocity.toFixed(2)]);
     }
     if (!player.isOnGround && velocity < 0) player.removeTag("matrix:runned_velocity")
+    */
 }
 
 const antiFly = () => {

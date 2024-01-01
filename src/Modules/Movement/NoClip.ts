@@ -48,27 +48,29 @@ const isSolidBlock = (block: Block) => {
  */
 
 async function AntiNoClip (player: Player, now: number) {
-    const config = c()
-    const { x: xV, y: yV, z: zV } = player.getVelocity()
-    const { x: x1, y: y1, z: z1 } = player.getHeadLocation()
-    const { x: x2, y: y2, z: z2 } = player.location
-    const movementClip = Math.hypot(xV, zV)
-    const lastPos = safeLocation.get(player.id)
-
-    if (lastPos && player?.lastClip && player?.backClip && movementClip < 0.1 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.1 && (yV == 0 || Math.abs(yV) < 1.75 && player.isJumping) && !player.isGliding && !player.isFlying && player?.lastClip > 0.02 && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500) && !(player.lastApplyDamage && now - player.lastApplyDamage < 250)) {
-        if (!config.slient) player.teleport(lastPos)
-        flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)])
+    const config = c();
+    const { x: xV, y: yV, z: zV } = player.getVelocity();
+    const { x: x1, y: y1, z: z1 } = player.getHeadLocation();
+    const { x: x2, y: y2, z: z2 } = player.location;
+    const movementClip = Math.hypot(xV, zV);
+    const lastPos = safeLocation.get(player.id);
+    if (player?.lastSafePos && lastPos && player?.lastClip && player?.backClip && player?.befoClip && (movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25 || player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.befoClip < 0.25) && (yV == 0 || Math.abs(yV) < 1.75 && player.isJumping) && !player.isGliding && !player.isFlying && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500) && !(player.lastApplyDamage && now - player.lastApplyDamage < 250)) {
+        if (!config.slient)
+            player.teleport(player.lastSafePos);
+        flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)]);
     }
-
-    player.backClip = player.lastClip
-    player.lastClip = movementClip
-
-    const floorHead = { x: Math.floor(x1), y: Math.floor(y1), z: Math.floor(z1) }
-    const floorBody = { x: Math.floor(x2), y: Math.floor(y2), z: Math.floor(z2) }
-    const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)) || isSolidBlock(player.dimension.getBlock(floorBody))
-    
+    /*if (player?.lastClip && player?.lastClip > 1.6) {
+        player.sendMessage(`${player.befoClip} > ${player.backClip} > ${player.lastClip} > ${movementClip}`)
+    }*/
+    player.befoClip = player.backClip
+    player.backClip = player.lastClip;
+    player.lastClip = movementClip;
+    const floorHead = { x: Math.floor(x1), y: Math.floor(y1), z: Math.floor(z1) };
+    const floorBody = { x: Math.floor(x2), y: Math.floor(y2), z: Math.floor(z2) };
+    const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)) || isSolidBlock(player.dimension.getBlock(floorBody));
     if (!inSolid) {
-        safeLocation.set(player.id, player.location)
+        safeLocation.set(player.id, player.location);
+        player.lastSafePos = lastPos
     }
 }
 

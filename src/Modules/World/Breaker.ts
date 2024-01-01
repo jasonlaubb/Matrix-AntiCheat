@@ -1,4 +1,4 @@
-import { Block, Player, PlayerBreakBlockBeforeEvent, Vector3, system, world } from "@minecraft/server";
+import { Block, Player, PlayerBreakBlockBeforeEvent, PlayerLeaveAfterEvent, Vector3, system, world } from "@minecraft/server";
 import config from "../../Data/Config";
 import { flag, isAdmin } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
@@ -13,6 +13,8 @@ const offset = [
     { x: 0, y: 0, z: 1 },
     { x: 0, y: 0, z: -1 },
 ]
+
+const lastFlag = new Map<string, number>()
 
 async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBlockBeforeEvent) {
     if (player.hasTag("matrix:break-disabled")) return;
@@ -48,14 +50,15 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
 
         if (aroundSolid) {
             event.cancel = true
-            if (!config.slient) {
-                system.run(() => player.addTag("matrix:break-disabled"))
-                system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout)
+            const lastflag = lastFlag.get(player.id)
+            if (lastflag && Date.now() - lastflag < 80) {
+                if (!config.slient) {
+                    system.run(() => player.addTag("matrix:break-disabled"))
+                    system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout)
+                }
+                system.run(() => flag (player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, [lang(">Type") + ":" + block.typeId]))
             }
-            system.run(() =>
-                flag (player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, [lang(">Type") + ":" + block.typeId])
-            )
-            return
+            lastFlag.set(player.id, Date.now())
         }
 //  }
 
@@ -117,11 +120,18 @@ const antiBreaker = (event: PlayerBreakBlockBeforeEvent) => {
     AntiBreaker (player, block, event)
 }
 
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
+    lastFlag.delete(playerId)
+}
+
 export default {
     enable () {
         world.beforeEvents.playerBreakBlock.subscribe(antiBreaker)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {
+        lastFlag.clear()
         world.beforeEvents.playerBreakBlock.unsubscribe(antiBreaker)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
     }
 }

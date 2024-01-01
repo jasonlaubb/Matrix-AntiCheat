@@ -71,13 +71,13 @@ function flag (player: Player, modules: string, type: Type, maxVL: number, punis
         switch (punishment) {
             case "kick": {
                 punishmentDone = true
-                kick (player, config.punishment_kick.reason + ` (${modules} ${type}`, "Matrix AntiCheat")
+                kick (player, config.punishment_kick.reason + ` (${modules} ${type})`, "Matrix AntiCheat")
                 flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name)
                 break
             }
             case "ban": {
                 punishmentDone = true
-                ban (player, config.punishment_ban.reason + ` (${modules} ${type}`, "Matrix AntiCheat", config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
+                ban (player, config.punishment_ban.reason + ` (${modules} ${type})`, "Matrix AntiCheat", config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
                 flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
                 break
             }

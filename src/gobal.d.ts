@@ -21,5 +21,7 @@ declare module "@minecraft/server" {
         lastClip: number;
         lastApplyDamage: number;
         backClip: number;
+        lastSafePos: Vector3;
+        befoClip: number;
     }
 }

@@ -183,11 +183,11 @@ export default {
      * The config of all modules
     */
     punishment_kick: {
-        reason: "Cheating behaviour"
+        reason: "Cheating behaviour detected"
     },
     punishment_ban: {
         minutes: 120,
-        reason: "Cheating behaviour"
+        reason: "Cheating behaviour detected"
     },
     example_anticheat_module: {
         enabled: true, // true mearns the module will be enabled, false means the module will be disabled
@@ -230,7 +230,7 @@ export default {
 
     antiFly: {
         enabled: true,
-        punishment: "none",
+        punishment: "kick",
         maxVelocity: 0.7,
         maxVL: 4
     },
@@ -244,17 +244,17 @@ export default {
 
     antiNoClip: {
         enabled: true,
-        punishment: "none",
+        punishment: "kick",
         clipMove: 1.6,
-        maxVL: 4
+        maxVL: 7
     },
 
     antiSpeed: {
         enabled: true,
         mphThreshold: 200,
         bpsThershold: 28.75,
-        punishment: "none",
-        maxVL: 4
+        punishment: "kick",
+        maxVL: 7
     },
 
     antiNuker: {
@@ -273,12 +273,12 @@ export default {
         minRotation: 20,
         maxBPS: 5,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 4
     },
 
     antiNoSlow: {
         enabled: true,
-        maxSpeedTherehold: 0.04,
+        maxSpeedTherehold: 1,
         maxUsingItemTherehold: 0.1618875,
         itemUseTime: 250,
         maxNoSlowBuff: 1,
@@ -327,7 +327,7 @@ export default {
         maxRotSpeed: 15,
         timeout: 50,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 7
     },
 
     antiTower: {
