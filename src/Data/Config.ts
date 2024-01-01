@@ -15,7 +15,7 @@ export default {
      */
     configVersion: 1, //don't change this lol
     language: "en_US",
-    flagMode: "tag",
+    flagMode: "admin",
     lockdowncode: "AbCdEfGh",
     passwordCold: 5000,
     slient: false, // No action. This will cause spam message in some Modules
@@ -217,7 +217,7 @@ export default {
         timeout: 200,
         maxEntityHit: 1,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 4
     },
 
     antiReach: {
@@ -225,14 +225,14 @@ export default {
         maxReach: 4,
         maxYReach: 4.8,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 4
     },
 
     antiFly: {
         enabled: true,
-        punishment: "ban",
+        punishment: "none",
         maxVelocity: 0.7,
-        maxVL: 2
+        maxVL: 4
     },
 
     antiNoFall: {
@@ -245,6 +245,7 @@ export default {
     antiNoClip: {
         enabled: true,
         punishment: "none",
+        clipMove: 1.6,
         maxVL: 4
     },
 
@@ -272,7 +273,7 @@ export default {
         minRotation: 20,
         maxBPS: 5,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiNoSlow: {
@@ -318,7 +319,7 @@ export default {
         maxBreakDistance: 8.05,
         timeout: 60,
         punishment: "ban",
-        maxVL: 0,
+        maxVL: 2,
     },
 
     antiAim: {
@@ -334,7 +335,7 @@ export default {
         minDelay: 200,
         timeout: 60,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiGameMode: {
@@ -343,7 +344,7 @@ export default {
         returnDefault: true, // if true, player will be return to default game mode
         returnGameMode: 0, // use when returnDefault is false
         punishment: "ban",
-        maxVL: 0
+        maxVL: 4
     },
 
     antiNameSpoof: {
