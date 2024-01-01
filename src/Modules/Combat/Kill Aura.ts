@@ -113,7 +113,7 @@ const antiKillAura = (({ damagingEntity, hitEntity }: EntityHitEntityAfterEvent)
 });
 
 const antiKillAura2 = (event: EntityHurtAfterEvent) => {
-    if (event.damageSource.cause !== EntityDamageCause.entityAttack || damageSource.damagingProjectile) return;
+    if (event.damageSource.cause !== EntityDamageCause.entityAttack || event.damageSource.damagingProjectile) return;
 
     const damagingEntity = event.damageSource.damagingEntity
     const hitEntity = event.hurtEntity

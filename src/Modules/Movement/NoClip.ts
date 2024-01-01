@@ -92,7 +92,7 @@ let id: number
 
 export default {
     enable () {
-        id = system.runInterval(antiPhase, 1)
+        id = system.runInterval(antiNoClip, 1)
         world.afterEvents.playerLeave.subscribe(playerLeave)
         world.afterEvents.entityHurt.subscribe(entityHurt, { entityTypes: ["minecraft:player"] })
     },

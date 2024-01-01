@@ -242,7 +242,7 @@ export default {
         maxVL: 4
     },
 
-    antiPhase: {
+    antiNoClip: {
         enabled: true,
         punishment: "none",
         maxVL: 4
