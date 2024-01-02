@@ -429,9 +429,10 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
             if (target.id === player.id) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-echestwipe.self")}`))
             if (isAdmin (target)) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-echestwipe.admin")}`))
-
-            for (let i = 0; i < 27; i++) {
-                player.runCommandAsync(`replaceitem entity @s slot.enderchest ${i} air`)
+            system.run(() => {
+                for (let i = 0; i < 27; i++) {
+                    target.runCommand(`replaceitem entity @s slot.enderchest ${i} air`)
+                }
             }
 
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-echestwipe.has").replace("%a", target.name).replace("%b", player.name)}`))
