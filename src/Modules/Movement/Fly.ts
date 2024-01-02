@@ -106,7 +106,7 @@ let id: number
 
 export default {
     enable () {
-        system.runInterval(antiFly, 1),
+        id = system.runInterval(antiFly, 1),
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {
