@@ -60,12 +60,12 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: 
         const limitOfXZ = Math.cos(Math.abs(damagingEntity.getRotation().x) * Math.PI / 180) * 6.1 + 2.4
         //if player attack higher than the limit, flag him
         if (distance > limitOfXZ && damagingEntity.getVelocity().y >= 0) {
-            const lastflag = lastFlag.get(player.id)
-            if (lastflag && now - lastflag < 4000) {
+            const lastflag = lastFlag.get(damagingEntity.id)
+            if (lastflag && Date.now() - lastflag < 4000) {
                 flag (damagingEntity, 'Kill Aura', 'C', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">distance")}:${distance.toFixed(2)}`,`${lang(">Limit")}:${limitOfXZ.toFixed(2)}`])
                 flagged = true
             }
-            lastFlag.set(player.id, Date.now()
+            lastFlag.set(damagingEntity.id, Date.now())
         }
     }
 

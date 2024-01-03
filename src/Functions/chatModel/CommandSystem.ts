@@ -433,7 +433,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 for (let i = 0; i < 27; i++) {
                     target.runCommand(`replaceitem entity @s slot.enderchest ${i} air`)
                 }
-            }
+            })
 
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-echestwipe.has").replace("%a", target.name).replace("%b", player.name)}`))
             break

@@ -183,11 +183,11 @@ export default {
      * The config of all modules
     */
     punishment_kick: {
-        reason: "Cheating behaviour detected"
+        reason: "cheating advantage"
     },
     punishment_ban: {
         minutes: 120,
-        reason: "Cheating behaviour detected"
+        reason: "cheating advantage"
     },
     example_anticheat_module: {
         enabled: true, // true mearns the module will be enabled, false means the module will be disabled
@@ -252,7 +252,7 @@ export default {
     antiSpeed: {
         enabled: true,
         mphThreshold: 200,
-        bpsThershold: 28.75,
+        bpsThershold: 30.25,
         punishment: "ban",
         maxVL: 4
     },
@@ -326,8 +326,8 @@ export default {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: "kick",
-        maxVL: 20
+        punishment: "none",
+        maxVL: 4
     },
 
     antiTower: {
@@ -430,7 +430,7 @@ export default {
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "ban"
+        punishment: "kick"
     },
 
     antiFastUse: {

@@ -4,6 +4,7 @@ import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data
 import lang from "../../Data/Languages/lang";
 
 const lastLocation = new Map<string, Vector3>()
+const lastFlag = new Map<string, number>()
 
 /**
  * @author jasonlaubb
