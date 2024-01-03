@@ -81,10 +81,8 @@ async function AntiNoClip (player: Player, now: number) {
     const { x, y, z }: Vector3 = player.getVelocity()
     const movementClip = Math.hypot(x, z);
     const lastPos = lastLocation.get(player.id);
-    const headY = player.getHeadLocation().y
-    const bodyY = player.location.y
-    const bodyBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })
-    if (lastPos && movementClip >= 1 && headY - bodyY > 0.4 && straight(lastPos, player.location).some(loc => isSolidBlock(player.dimension.getBlock(loc)))) {
+    const bodyBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.typeId as MinecraftBlockTypes
+    if (lastPos && movementClip >= 1 && !passableBlocks.includes(bodyBlock) && !powderBlock.includes(bodyBlock) && straight(lastPos, player.location).some(loc => isSolidBlock(player.dimension.getBlock(loc)))) {
         if (!config.slient) player.teleport(lastPos)
         flag (player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined)
     }
