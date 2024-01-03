@@ -72,7 +72,7 @@ function straight (start: Vector3, end: Vector3): Vector3[] {
 
 /**
  * @author jasonlaubb
- * @description It can detect most of the phase hack. And the invalid motion caused by client
+ * @description Check if player phase more than 1 block
  */
 
 async function AntiNoClip (player: Player, now: number) {
