@@ -28,7 +28,11 @@ async function AntiNoFall (player: Player, now: number) {
     //velocityY is 0 and velocityXZ is higher than 0.3, flag the player
     if (y === 0 && xz > config.antiNoFall.float && inAir(player.dimension, player.location)) {
         if (!config.slient) player.teleport(prevLoc);
-        flag (player, "NoFall", "A", config.antiNoFall.maxVL, config.antiNoFall.punishment, [lang(">velocityY") + ":" + + y.toFixed(2), lang(">velocityXZ") + ":" + + xz.toFixed(2)])
+        const lastflag = lastFlag.get(player.id)
+        if (lastflag && now - lastflag < 3500) {
+            flag (player, "NoFall", "A", config.antiNoFall.maxVL, config.antiNoFall.punishment, [lang(">velocityY") + ":" + + y.toFixed(2), lang(">velocityXZ") + ":" + + xz.toFixed(2)])
+        }
+        lastFlag.set(player.id, now)
     }
 }
 
