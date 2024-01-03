@@ -222,7 +222,7 @@ export default {
 
     antiReach: {
         enabled: true,
-        maxReach: 4,
+        maxReach: 4.2,
         maxYReach: 4.8,
         punishment: "kick",
         maxVL: 4
@@ -284,7 +284,7 @@ export default {
         maxNoSlowBuff: 1,
         timeout: 60,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 2
     },
 
     antiBreaker: {
@@ -319,15 +319,15 @@ export default {
         maxBreakDistance: 8.05,
         timeout: 60,
         punishment: "ban",
-        maxVL: 2,
+        maxVL: 0,
     },
 
     antiAim: {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: "ban",
-        maxVL: 7
+        punishment: "kick",
+        maxVL: 20
     },
 
     antiTower: {
