@@ -460,7 +460,7 @@ export default {
     },
     antiARAS: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 0,
         clickSpeedThershold: 2, // 1 = 1 tick or 50 mile second
         timer: 1 // 1 = 1 minute
