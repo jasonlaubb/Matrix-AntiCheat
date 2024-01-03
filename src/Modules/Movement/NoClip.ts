@@ -43,7 +43,7 @@ const isSolidBlock = (block: Block) => {
     return block?.isSolid && !passableBlocks.includes(block?.typeId as MinecraftBlockTypes) && !powderBlock.includes(block?.typeId as MinecraftBlockTypes)
 }
 
-function blocksBetween (start: Vector3, end: Vector3): Vector3[] {
+function straight (start: Vector3, end: Vector3): Vector3[] {
     const chunks: Vector3[] = [];
     const { x: startX, z: startZ } = start;
     const { x: endX, y , z: endZ } = end;
@@ -77,36 +77,16 @@ function blocksBetween (start: Vector3, end: Vector3): Vector3[] {
 
 async function AntiNoClip (player: Player, now: number) {
     const config = c();
-    const { x: xV, y: yV, z: zV } = player.getVelocity();
-    const { x: x1, y: y1, z: z1 } = player.getHeadLocation();
-    const { x: x2, y: y2, z: z2 } = player.location;
-    const movementClip = Math.hypot(xV, zV);
+    const { x, y, z }: Vector3 = player.getVelocity()
+    const movementClip = Math.hypot(x, z);
     const lastPos = safeLocation.get(player.id);
-    if (player?.lastSafePos && lastPos && player?.lastClip && player?.backClip && player?.befoClip && (movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25 || player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.befoClip < 0.25) && (yV == 0 || Math.abs(yV) < 1.75 && player.isJumping) && !player.isGliding && !player.isFlying && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500) && !(player.lastApplyDamage && now - player.lastApplyDamage < 250)) {
-        // checks if player moved through at least a block
-        if (Math.abs(lastPos.y - y2) < 1.7 && x1 - z2 > 0.3 && blocksBetween(lastPos, player.location).some(loc => isSolidBlock(player.dimension.getBlock(loc)))) {
-            if (!config.slient) player.teleport(player.lastSafePos);
-
-            const Lastflag = lastFlag.get(id) 
-            if(Lastflag && Date.now() - Lastflag < 2500){
-               flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)]);
-            }
-            lastFlag.set(id,Date.now())
-        }
+    const headY = player.getHeadLocation().y
+    const bodyY = player.location.y
+    const bodyBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })
+    if (lastPos && movementClip >= 1 && headY - bodyY > 0.4 && straight(lastPos, player.location).some(loc => isSolidBlock(player.dimension.getBlock(loc)))) {
+        flag (player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined)
     }
-    /*if (player?.lastClip && player?.lastClip > 1.6) {
-        player.sendMessage(`${player.befoClip} > ${player.backClip} > ${player.lastClip} > ${movementClip}`)
-    }*/
-    player.befoClip = player.backClip
-    player.backClip = player.lastClip;
-    player.lastClip = movementClip;
-    const floorHead = { x: Math.floor(x1), y: Math.floor(y1), z: Math.floor(z1) };
-    const floorBody = { x: Math.floor(x2), y: Math.floor(y2), z: Math.floor(z2) };
-    const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)) || isSolidBlock(player.dimension.getBlock(floorBody));
-    if (!inSolid) {
-        safeLocation.set(player.id, player.location);
-        player.lastSafePos = lastPos
-    }
+    safeLocation.set(player.id, player.location)
 }
 
 const antiNoClip = () => {
