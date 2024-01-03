@@ -458,7 +458,13 @@ export default {
         punishment: "ban",
         maxVL: 0
     },
-
+    antiARAS: {
+        enabled: true,
+        punishment: "kick",
+        maxVL: 0,
+        clickSpeedThershold: 2, // 1 = 1 tick or 50 mile second
+        timer: 1 // 1 = 1 minute
+    },
     chatFilter: [
         "niger",
         "nigers",
