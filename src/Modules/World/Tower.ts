@@ -9,6 +9,7 @@ interface TowerData {
 }
 
 const towerData = new Map<string, TowerData>();
+const vL = new Map<string, number>()
 
 /**
  * @author jasonlaubb
@@ -55,22 +56,29 @@ async function AntiTower(player: Player, block: Block) {
     //calculate the delay between last block placed and current block placed
     const delay: number = Date.now() - lastTime;
 
-    const velocity = player.getVelocity().y
+    const vl = vL.get(player.id) ?? 0
 
     //if delay is less than the min delay and all state is true, flag the player
-    if (delay < config.antiTower.minDelay && locationState && velocity > 0.08 && velocity < 0.09) {
-        if (!config.slient) {
-            //set the block to the air
-            block.setType(MinecraftBlockTypes.Air);
+    if (delay < config.antiTower.minDelay && locationState) {
+        if (vl > 2) {
+            vL.set(player.id, undefined)
+            if (!config.slient) {
+                //set the block to the air
+                block.setType(MinecraftBlockTypes.Air);
 
-            //stop player place block
-            player.addTag("matrix:place-disabled");
+                //stop player place block
+                player.addTag("matrix:place-disabled");
 
-            //remove the tag after timeout
-            system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiTower.timeout);
+                //remove the tag after timeout
+                system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiTower.timeout);
+            }
+        } else {
+            vL.set(player.id, vl + 1)
         }
         
         flag(player, "Tower", "A", config.antiTower.maxVL, config.antiTower.punishment, [lang(">Delay") + ":" + delay.toFixed(2), lang(">PosDeff") + ":" + playerPosDeff.toFixed(2), lang(">CentreDis") + ":" + playerCentreDis.toFixed(2)]);
+    } else {
+        vL.set(player.id, undefined)
     }
 }
 const antiTower = (({ player, block }: PlayerPlaceBlockAfterEvent) => {
@@ -79,6 +87,7 @@ const antiTower = (({ player, block }: PlayerPlaceBlockAfterEvent) => {
 });
 const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
     towerData.delete(playerId);
+    vL.delete(playerId)
 });
 
 export default {
@@ -88,6 +97,7 @@ export default {
     },
     disable () {
         towerData.clear()
+        vL.clear()
         world.afterEvents.playerPlaceBlock.subscribe(antiTower)
         world.afterEvents.playerLeave.subscribe(playerLeave)
     }

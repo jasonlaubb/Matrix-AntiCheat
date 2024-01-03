@@ -77,6 +77,13 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     }
 })
 
+world.beforeEvents.playerPlaceBlock.subscribe((event) => {
+    const { player } = event
+    if (player.hasTag("matrix:place-disabled")) {
+        event.cancel = true
+    }
+})
+
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (initialSpawn) {
         player.removeTag("matrix:item-disabled");

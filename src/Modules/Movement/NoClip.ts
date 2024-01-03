@@ -93,8 +93,8 @@ async function AntiNoClip (player: Player, now: number) {
     const lastflag = lastFlag.get(player.id)
     if (player?.lastSafePos && safePos && player?.lastClip && player?.backClip && player?.befoClip && (movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25 || player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.befoClip < 0.25) && (y == 0 || Math.abs(y) < 1.75 && player.isJumping) && !player.isGliding && !player.isFlying && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500) && !(player.lastApplyDamage && now - player.lastApplyDamage < 250)) {
         if (!config.slient) player.teleport(player.lastSafePos);
-        if (lastflag && Date.now() - lastflag < 3000){
-            flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)]);
+        if (lastflag && Date.now() - lastflag < 1200){
+            flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)]);
         } 
         lastFlag.set(player.id, now) 
     }
