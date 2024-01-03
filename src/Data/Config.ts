@@ -205,7 +205,7 @@ export default {
 
     antiAutoClicker: {
         enabled: true,
-        maxClicksPerSecond: 23,
+        maxClicksPerSecond: 24,
         timeout: 200,
         punishment: "kick",
         maxVL: 2
@@ -224,8 +224,8 @@ export default {
         enabled: true,
         maxReach: 4,
         maxYReach: 4.8,
-        punishment: "ban",
-        maxVL: 1
+        punishment: "kick",
+        maxVL: 4
     },
 
     antiFly: {
@@ -237,7 +237,7 @@ export default {
 
     antiNoFall: {
         enabled: true,
-        punishment: "none",
+        punishment: "ban",
         float: 0.3,
         maxVL: 4
     },
