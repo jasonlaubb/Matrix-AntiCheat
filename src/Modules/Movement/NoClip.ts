@@ -43,10 +43,10 @@ const isSolidBlock = (block: Block) => {
     return block?.isSolid && !passableBlocks.includes(block?.typeId as MinecraftBlockTypes) && !powderBlock.includes(block?.typeId as MinecraftBlockTypes)
 }
 
-function blocksBetween (start: Vector3, end: Vector3, defaultY: number): Location[] {
+function blocksBetween (start: Vector3, end: Vector3): Vector3[] {
     const chunks: Vector3[] = [];
     const { x: startX, z: startZ } = start;
-    const { x: endX, z: endZ } = end;
+    const { x: endX, y , z: endZ } = end;
 
     const dx = endX - startX;
     const dz = endZ - startZ;
@@ -63,7 +63,7 @@ function blocksBetween (start: Vector3, end: Vector3, defaultY: number): Locatio
         chunks.push({
             x: Math.floor(startX + xIncrement * i),
             z: Math.floor(startZ + zIncrement * i),
-            y: defaultY,
+            y: y,
         });
     }
 
