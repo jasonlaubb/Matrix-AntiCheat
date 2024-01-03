@@ -207,17 +207,17 @@ export default {
         enabled: true,
         maxClicksPerSecond: 23,
         timeout: 200,
-        punishment: "ban",
-        maxVL: 4
+        punishment: "kick",
+        maxVL: 2
     },
 
     antiKillAura: {
         enabled: true,
         minAngle: 160,
         timeout: 200,
-        maxEntityHit: 1,
+        maxEntityHit: 2,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 2
     },
 
     antiReach: {
@@ -225,12 +225,12 @@ export default {
         maxReach: 4,
         maxYReach: 4.8,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 1
     },
 
     antiFly: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         maxVelocity: 0.7,
         maxVL: 4
     },
@@ -244,17 +244,17 @@ export default {
 
     antiNoClip: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         clipMove: 1.6,
-        maxVL: 7
+        maxVL: 4
     },
 
     antiSpeed: {
         enabled: true,
         mphThreshold: 200,
         bpsThershold: 28.75,
-        punishment: "kick",
-        maxVL: 7
+        punishment: "ban",
+        maxVL: 4
     },
 
     antiNuker: {
