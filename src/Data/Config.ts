@@ -458,8 +458,8 @@ export default {
         punishment: "ban",
         maxVL: 0
     },
-    antiARAS: {
-        enabled: true,
+    antiBot: {
+        enabled: false,
         punishment: "ban",
         maxVL: 0,
         clickSpeedThershold: 2, // 1 = 1 tick or 50 mile second
