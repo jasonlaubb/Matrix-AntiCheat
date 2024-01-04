@@ -33,7 +33,7 @@ system.runInterval(() => {
             clickSpeed.set(player.id, Date.now());
             
             const UI = new ActionFormData();
-            UI.title("§aVerification");
+            UI.title("Captcha");
             UI.body("You need to verify that you're not a bot by clicking Verify");
             UI.button("§a§l§¶Verify");
             
