@@ -25,5 +25,6 @@ declare module "@minecraft/server" {
         befoClip: number;
         lastBreakSolid: number;
         verifyTimer: number;
+        verifyClickSpeed: number;
     }
 }
