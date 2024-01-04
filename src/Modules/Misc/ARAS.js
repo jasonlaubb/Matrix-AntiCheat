@@ -8,7 +8,8 @@ import lang from "../../Data/Languages/lang";
  * @description anti Crashary (ARAS) bot attack realms with bot press button detector
 */
 
-const clickSpeed = new Map();
+// Need change 100%
+
 const config = c();
 
 world.afterEvents.playerSpawn.subscribe((event) => {
@@ -29,7 +30,7 @@ system.runInterval(() => {
                 flag(player, "Verify", "A", 0, "kick", undefined);
             }
             
-            clickSpeed.set(player.id, Date.now());
+            player.verifyClickSpeed = Date.now()
             
             new ActionFormData()
             .title("Captcha")
@@ -39,7 +40,7 @@ system.runInterval(() => {
                 if (result.cancled) {
                     if (!player.hasTag("matrix:notVerified")) return;
                     player.runCommand(`kick "${player.name}" §r\n§c§l$You have been kicked§r\n§7Reason: §eYou have to verify\n§7By: §eMatrix`);
-                } else if (result.selection == 0 && Date.now() - clickSpeed.get(player.id) > config.antiARAS.clickSpeedThershold * 50) {
+                } else if (result.selection == 0 && Date.now() - player.verifyClickSpeed > config.antiARAS.clickSpeedThershold * 50) {
                     if (!player.hasTag("matrix:notVerified")) return;
                     player.removeTag("matrix:notVerified");
                     player.sendMessage(`§bMatrix §7> §aYou have been verified successfully`);
