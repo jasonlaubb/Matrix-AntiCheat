@@ -55,10 +55,13 @@ async function AntiSpeedA (player: Player, now: number) {
         //if the player hasn't already been flagged, flag them
         if (!playerInfo.highestSpeed) {
             //teleport them back
-            if (!config.slient) player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
-            //A - false positive: low, efficiency: very high
-            flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
-            playerInfo.highestSpeed = playerSpeedMph;
+            system.runTimeout(() => {
+                if (player.isGliding) return;
+                if (!config.slient) player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
+                //A - false positive: low, efficiency: very high
+                flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
+                playerInfo.highestSpeed = playerSpeedMph;
+            }, 1)
         }
     } else if (isNotSpeeding) {
         playerInfo.highestSpeed = 0;
