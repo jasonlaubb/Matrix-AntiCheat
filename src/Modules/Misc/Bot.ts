@@ -13,6 +13,7 @@ import lang from "../../Data/Languages/lang";
 const config = c();
 
 const playerSpawn = ({ intialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
+    player.removeTag("matrix:allowedChat")
     // wait 0.1 seconds
     system.runTimeout(() => {
         if (spawn) {
