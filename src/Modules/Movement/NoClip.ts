@@ -82,7 +82,7 @@ async function AntiNoClip (player: Player, now: number) {
     const movementClip = Math.hypot(x, z);
     const lastPos = lastLocation.get(player.id);
     const bodyBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.typeId as MinecraftBlockTypes
-    if (lastPos && movementClip >= 1 && Math.abs(y) < 1.7 && !passableBlocks.includes(bodyBlock) && !powderBlock.includes(bodyBlock) && straight(lastPos, player.location).some(loc => isSolidBlock(player.dimension.getBlock(loc)))) {
+    if (lastPos && movementClip > 1.2 && !(player.lastBreakSolid && now - player.lastBreakSolid < 1750) && Math.abs(y) < 1.7 && !passableBlocks.includes(bodyBlock) && !powderBlock.includes(bodyBlock) && straight(lastPos, player.location).some(loc => isSolidBlock(player.dimension.getBlock(loc)))) {
         if (!config.slient) player.teleport(lastPos)
         flag (player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined)
     }
@@ -126,6 +126,8 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     safeLocation.delete(playerId)
 };
 
+const playerBreakBlock = ({ player, block: { isSolid }) => isSolid && (player.lastBreakSolid = Date.now())
+
 const entityHurt = ({ hurtEntity: player }: EntityHurtAfterEvent) => (player as Player).lastApplyDamage = Date.now()
 
 let id: number
@@ -135,10 +137,12 @@ export default {
         id = system.runInterval(antiNoClip, 1)
         world.afterEvents.playerLeave.subscribe(playerLeave)
         world.afterEvents.entityHurt.subscribe(entityHurt, { entityTypes: ["minecraft:player"] })
+        world.afterEvents.playerBreakBlock.subscribe(playerBreakBlock)
     },
     disable () {
         system.clearRun(id)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
         world.afterEvents.entityHurt.unsubscribe(entityHurt)
+        world.afterEvents.playerBreakBlock.unsubscribe(playerBreakBlock)
     }
 }
