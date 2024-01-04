@@ -23,5 +23,6 @@ declare module "@minecraft/server" {
         backClip: number;
         lastSafePos: Vector3;
         befoClip: number;
+        lastBreakSolid: number;
     }
 }
