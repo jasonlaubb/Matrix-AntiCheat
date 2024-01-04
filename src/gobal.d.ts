@@ -24,5 +24,6 @@ declare module "@minecraft/server" {
         lastSafePos: Vector3;
         befoClip: number;
         lastBreakSolid: number;
+        verifyTimer: number;
     }
 }
