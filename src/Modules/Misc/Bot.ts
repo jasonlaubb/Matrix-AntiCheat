@@ -29,7 +29,7 @@ const antiBot = () => {
     const now = Date.now()
     for (const player of players) {
             if (now - player.verifyTimer >= config.antiARAS.timer * 1000 * 60 && player.hasTag("matrix:notVerified")) {
-                kick (player, "Matrix AntiCheat", "failed to verify")
+                kick (player, "Matrix AntiCheat", "non bot verify failed")
             }
             
             player.verifyClickSpeed = Date.now()
