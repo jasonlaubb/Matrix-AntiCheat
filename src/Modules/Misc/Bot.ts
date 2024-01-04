@@ -35,13 +35,14 @@ const antiBot = () => {
             player.verifyClickSpeed = Date.now()
 
             try {
-                new ActionFormData()
+                const ui = new ActionFormData()
                 .title("Anti Bot")
                 .body("You need to verify that you're not a bot by clicking Verify")
-                .button("§a§l§¶Verify")   
-                .show(player).then((result) => {
+                .button("§a§l§¶Verify");
+                
+                const menu = (player) => ui.show(player).then((result) => {
                     if (result.cancled) {
-                        // call kick function after warning
+                        system.run(() => menu(player))
                     } else if (result.selection == 0 && Date.now() - player.verifyClickSpeed > config.antiARAS.clickSpeedThershold * 50) {
                         if (!player.hasTag("matrix:notVerified")) return;
                         player.removeTag("matrix:notVerified");
@@ -50,6 +51,8 @@ const antiBot = () => {
                         flag(player, "Crashary Bot", "A", config.antiARAS.maxVL, config.antiARAS.punishment, [lang(">Delay") + ":" + (Date.now() - clickSpeed.get(player.id)).toFixed(2)]);
                     }
                 });
+
+                menu (player)
             } catch { }
     }
 }
