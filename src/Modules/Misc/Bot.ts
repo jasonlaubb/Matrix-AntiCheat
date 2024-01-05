@@ -5,12 +5,9 @@ import lang from "../../Data/Languages/lang";
 
 /**
  * @author RaMiGanerDev
- * @description anti Crashary (ARAS) bot attack realms with bot press button detector
+ * @description anti Crashary (ARAS) bot or other bot from attacking the realm.
+ * It works by making a verification for the player.
 */
-
-// Need change 100%
-
-const config = c();
 
 const playerSpawn = ({ intialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
     if (isAdmin(player)) return
