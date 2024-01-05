@@ -51,7 +51,7 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
         if (aroundSolid) {
             event.cancel = true
             const lastflag = lastFlag.get(player.id)
-            if (lastflag && Date.now() - lastflag < 80) {
+            if (lastflag && Date.now() - lastflag < 35) {
                 if (!config.slient) {
                     system.run(() => player.addTag("matrix:break-disabled"))
                     system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout)
