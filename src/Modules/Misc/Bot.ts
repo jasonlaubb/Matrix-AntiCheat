@@ -31,7 +31,7 @@ const antiBot = () => {
     for (const player of players) {
             if (!player.notVerified) continue
             if (now - player.verifyTimer >= config.antiARAS.timer * 1000 * 60) {
-                kick (player, "Matrix AntiCheat", "non bot verify failed")
+                kick (player, "Matrix AntiCheat", "Expired Verification")
             }
             
             player.verifyClickSpeed = Date.now()
@@ -50,11 +50,18 @@ const antiBot = () => {
                     // stop bot from bypassing the ui
                     if (result.cancled || !formValues[0] || codeNow != formValues[0]) {
                         player.verifying = false
+                        player.tryVerify ??= 0
+                        player.tryVerify++
+
+                        if (player.tryVerify > config.maxTry) {
+                            kick (player, "Matrix AntiCheat", "Verify Failed")
+                            return
+                        }
                         system.run(() => menu(player))
-                        continue
+                        return
                     } else if (now - player.verifyClickSpeed <= config.antiARAS.clickSpeedThershold * 50 && result.selection == 0) {
                         flag(player, "Crashary Bot", "A", config.antiARAS.maxVL, config.antiARAS.punishment, [lang(">Delay") + ":" + (Date.now() - clickSpeed.get(player.id)).toFixed(2)]);
-                        continue
+                        return
                     }
                     player.sendMessage(`§bMatrix §7> §aYou have been verified successfully`)
                     player.notVerified = undefined
