@@ -37,18 +37,17 @@ const antiBot = () => {
             player.verifyClickSpeed = Date.now()
 
             try {
-                const ui = new ModalFormData()
-                .title("Anti Bot")
-                
                 const menu = (player) => {
                     if (!player.notVerified) return;
                     player.verifying = true
                     const codeNow = [0,0,0,0,0,0].map(() => Math.floor(Math.random() * 10)).join("")
-                    ui.textField("You need to verify if you're not a bot\nYou have " + Math.floor((now - player.verifyTimer) / 1000) + " seconds left\nEnter the code " + codeNow + " below", "000000", undefined);
-                    ui.show(player).then(({ formValues, canceled }) => {
+                    new ModalFormData()
+                    .title("Anti Bot")
+                    .textField("You need to verify if you're not a bot\nYou have " + Math.floor((now - player.verifyTimer) / 1000) + " seconds left\nEnter the code " + codeNow + " below", "000000", undefined);
+                    .show(player).then(({ formValues, canceled }) => {
                     if (!player.notVerified) return;
 
-                    // stop attack bot
+                    // stop bot from bypassing the ui
                     if (result.cancled || !formValues[0] || codeNow != formValues[0]) {
                         player.verifying = false
                         system.run(() => menu(player))
