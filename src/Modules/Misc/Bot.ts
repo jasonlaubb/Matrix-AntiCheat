@@ -13,47 +13,59 @@ import lang from "../../Data/Languages/lang";
 const config = c();
 
 const playerSpawn = ({ intialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
-    player.removeTag("matrix:allowedChat")
+    if (isAdmin(player)) return
+    player.removeTag("matrix:verified")
     // wait 0.1 seconds
     system.runTimeout(() => {
         if (spawn) {
             player.verifyTimer ??= Date.now()
-            player.addTag("matrix:notVerified");
+            player.notVerified = true
             player.sendMessage(`§bMatrix §7> §cyou cant chat untill you §averify §cclose chat and wait ui to show you have §e${config.antiARAS.timer} §cminute to §averify`);
         }
     }, 2)
 };
 
 const antiBot = () => {
-    const players = world.getPlayers({ tags: ["matrix:notVerified"] })
+    const players = world.getAllPlayers()
     const now = Date.now()
     for (const player of players) {
-            if (now - player.verifyTimer >= config.antiARAS.timer * 1000 * 60 && player.hasTag("matrix:notVerified")) {
+            if (!player.notVerified) continue
+            if (now - player.verifyTimer >= config.antiARAS.timer * 1000 * 60) {
                 kick (player, "Matrix AntiCheat", "non bot verify failed")
             }
             
             player.verifyClickSpeed = Date.now()
 
             try {
-                const ui = new ActionFormData()
+                const ui = new ModalFormData()
                 .title("Anti Bot")
-                .body("You need to verify that you're not a bot by clicking Verify")
-                .button("§a§l§¶Verify");
                 
-                const menu = (player) => ui.show(player).then((result) => {
-                    if (result.cancled) {
+                const menu = (player) => {
+                    if (!player.notVerified) return;
+                    player.verifying = true
+                    const codeNow = [0,0,0,0,0,0].map(() => Math.floor(Math.random() * 10)).join("")
+                    ui.textField("You need to verify if you're not a bot\nYou have " + Math.floor((now - player.verifyTimer) / 1000) + " seconds left\nEnter the code " + codeNow + " below", "000000", undefined);
+                    ui.show(player).then(({ formValues, canceled }) => {
+                    if (!player.notVerified) return;
+
+                    // stop attack bot
+                    if (result.cancled || !formValues[0] || codeNow != formValues[0]) {
+                        player.verifying = false
                         system.run(() => menu(player))
-                    } else if (result.selection == 0 && Date.now() - player.verifyClickSpeed > config.antiARAS.clickSpeedThershold * 50) {
-                        if (!player.hasTag("matrix:notVerified")) return;
-                        player.removeTag("matrix:notVerified");
-                        player.sendMessage(`§bMatrix §7> §aYou have been verified successfully`);
+                        continue
                     } else if (now - player.verifyClickSpeed <= config.antiARAS.clickSpeedThershold * 50 && result.selection == 0) {
                         flag(player, "Crashary Bot", "A", config.antiARAS.maxVL, config.antiARAS.punishment, [lang(">Delay") + ":" + (Date.now() - clickSpeed.get(player.id)).toFixed(2)]);
+                        continue
                     }
-                });
-
-                menu (player)
-            } catch { }
+                    player.sendMessage(`§bMatrix §7> §aYou have been verified successfully`)
+                    player.notVerified = undefined
+                    player.addTag("matrix:verified")
+                    }
+                                         if (!player.verifying) menu (player)
+                    }
+            } catch {
+                player.verifying = undefined
+            }
     }
 }
 
