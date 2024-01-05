@@ -11,6 +11,11 @@ import { adminChat } from "./AdminChat";
 import lang from "../../Data/Languages/lang";
 
 world.beforeEvents.chatSend.subscribe((event) => {
+    // Defend the spam bot from sending the chat packets
+    if (world.antiBotEnabled === true && !player.verified) {
+        event.cancel = true
+        return
+    }
     const prefix: string = (world.getDynamicProperty("prefix") ?? config.commands.prefix) as string
 
     const { message, sender: player } = event;
