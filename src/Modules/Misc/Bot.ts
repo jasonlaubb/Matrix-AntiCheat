@@ -30,7 +30,7 @@ const antiBot = () => {
     const now = Date.now()
     for (const player of players) {
             if (!player.notVerified) continue
-            if (now - player.verifyTimer >= config.antiARAS.timer * 1000 * 60) {
+            if (now - player.verifyTimer >= config.antiBot.timer * 1000 * 60) {
                 kick (player, "Matrix AntiCheat", "Expired Verification")
             }
             
@@ -53,14 +53,14 @@ const antiBot = () => {
                         player.tryVerify ??= 0
                         player.tryVerify++
 
-                        if (player.tryVerify > config.maxTry) {
+                        if (player.tryVerify > config.antiBot.maxTry) {
                             kick (player, "Matrix AntiCheat", "Verify Failed")
                             return
                         }
                         system.run(() => menu(player))
                         return
                     } else if (now - player.verifyClickSpeed <= config.antiARAS.clickSpeedThershold * 50 && result.selection == 0) {
-                        flag(player, "Crashary Bot", "A", config.antiARAS.maxVL, config.antiARAS.punishment, [lang(">Delay") + ":" + (Date.now() - clickSpeed.get(player.id)).toFixed(2)]);
+                        flag(player, "Bot Attack", "A", config.antiBot.maxVL, config.antiBot.punishment, [lang(">Delay") + ":" + (Date.now() - clickSpeed.get(player.id)).toFixed(2)]);
                         return
                     }
                     player.sendMessage(`§bMatrix §7> §aYou have been verified successfully`)
@@ -72,6 +72,13 @@ const antiBot = () => {
             } catch {
                 player.verifying = undefined
             }
+    }
+}
+
+const chatSend = ({ sender }: ChatSendAfterEvent) => {
+    if (player.notVerified && player.verifying) {
+        if (isAdmin(player)) return
+        flag(player, "Bot Attack", "B", config.antiBot.maxVL, config.antiBot.punishment, undefined);
     }
 }
 
