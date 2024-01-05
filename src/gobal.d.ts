@@ -26,5 +26,10 @@ declare module "@minecraft/server" {
         lastBreakSolid: number;
         verifyTimer: number;
         verifyClickSpeed: number;
+        verifying: boolean;
+        notVerified: boolean;
+    }
+    interface World {
+        antiBotEnabled: boolean;
     }
 }
