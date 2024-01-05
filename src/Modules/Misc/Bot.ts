@@ -74,6 +74,8 @@ let id: number
 export default {
     enable () {
         world.antiBotEnabled = true
+        const players = world.getAllPlayers()
+        players.forEach(player => player.verified = true)
         id = system.runInterval(antiBot, 60)
         world.afterEvents.playerSpawn.subscribe(playerSpawn)
     },
