@@ -20,7 +20,7 @@ const playerSpawn = ({ intialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
         if (spawn) {
             player.verifyTimer ??= Date.now()
             player.notVerified = true
-            player.sendMessage(`§bMatrix §7> §cyou cant chat untill you §averify §cclose chat and wait ui to show you have §e${config.antiARAS.timer} §cminute to §averify`);
+            player.sendMessage(`§bMatrix §7> §cFor security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown`);
         }
     }, 2)
 };
