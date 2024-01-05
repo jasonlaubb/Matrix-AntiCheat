@@ -73,10 +73,12 @@ let id: number
 
 export default {
     enable () {
+        world.antiBotEnabled = true
         id = system.runInterval(antiBot, 60)
         world.afterEvents.playerSpawn.subscribe(playerSpawn)
     },
     disable () {
+        world.antiBotEnabled = undefined
         system.clearRun(id)
         world.afterEvents.playerSpawn.unsubscribe(playerSpawn)
     }
