@@ -6,6 +6,7 @@
   ## Project Status
 
   <img src="https://img.shields.io/badge/Language-TypeScript-%23EF4041?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Discord-Matrix%20AntiCheat-%1976D2?style=for-the-badge">
   <p align="center">
     <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="Downloads">   
     <img src="https://img.shields.io/github/issues/jasonlaubb/Matrix-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open">  
