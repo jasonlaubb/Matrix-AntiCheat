@@ -29,7 +29,7 @@ async function AntiAim (player: Player) {
     const rotationSpeed = {x: Math.abs(rotation.x - (lastAction.rotation[player.id]?.x || rotation.x)), y: Math.abs(rotation.y - (lastAction.rotation[player.id]?.y || rotation.y))};
     const averageSpeed = Math.sqrt(rotationSpeed.x ** 2 + rotationSpeed.y ** 2);
     let isFlagged = false;
-    if (lastAction.rotation[player.id]) {
+    if (lastAction.rotation[player.id] && Math.abs(rotation.x) < 89) {
         const maxRotSpeed = config.antiAim.maxRotSpeed;
         //A - false positive: low, efficiency: mid
         if (averageSpeed > maxRotSpeed && player.lastItemUsed) {
@@ -43,7 +43,7 @@ async function AntiAim (player: Player) {
         if (rotationSpeed.x > 1 && rotationSpeed.y < 0.6 || rotationSpeed.x < 0.6 && rotationSpeed.y > 1) {
             const timerSet = (timer.get(`aim-b:${player.id}`) || 0);
             timer.set(`aim-b:${player.id}`, timerSet + 1);
-            if (timerSet > 30 && !player.hasTag("matrix:riding") && Math.abs(rotation.x) < 79) {
+            if (timerSet > 30 && !player.hasTag("matrix:riding")) {
                 isFlagged = true
                 flag (player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotationSpeed.x.toFixed(2), lang(">RotSpeedY") + ":" + rotationSpeed.y.toFixed(2)])
             }
