@@ -6,7 +6,7 @@
   ## Project Status
 
   <img src="https://img.shields.io/badge/Language-TypeScript-%23EF4041?style=for-the-badge">
-  [<img src="https://img.shields.io/badge/Discord-CqZGXeRKPJ-%231976D2?style=for-the-badge">](https://discord.gg/CqZGXeRKPJ)
+  <a href="https://discord.gg/CqZGXeRKPJ"><img src="https://img.shields.io/badge/Discord-CqZGXeRKPJ-%231976D2?style=for-the-badge"></a>
   <p align="center">
     <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="Downloads">   
     <img src="https://img.shields.io/github/issues/jasonlaubb/Matrix-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open">  
