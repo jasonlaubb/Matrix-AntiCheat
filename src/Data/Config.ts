@@ -19,6 +19,7 @@ export default {
     lockdowncode: "AbCdEfGh",
     passwordCold: 5000,
     slient: false, // No action. This will cause spam message in some Modules
+    otherPrefix: [],
     commands: {
         password: "password", // The password for op command
         prefix: "-", // The prefix of commands
