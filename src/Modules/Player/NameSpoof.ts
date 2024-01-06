@@ -12,8 +12,9 @@ async function AntiNameSpoof (player: Player, playerName: string) {
     const config = c()
 
     //check if the player name is too long or too short
-    playerName = playerName.replace(/\([^)]+\)/g, "")
-    if (playerName?.length < 3 || playerName?.length > 16) {
+    const matches = playerName.match(/\([1-9]|[1-3][0-9]|40\)/g)
+    const absName = matches[0] ? playerName.replace(matches[0], "") : playerName
+    if (absName?.length < 3 || absName?.length > 16) {
         flag (player, "NameSpoof", "A", 0, config.antiNameSpoof.punishment, [lang(">Type") + ":" + lang(">illegalLength"), lang(">Length") + ":" + playerName.length])
         return
     }
