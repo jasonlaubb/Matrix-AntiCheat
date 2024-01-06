@@ -44,7 +44,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
 
     const chatRankToggle = (world.getDynamicProperty("chatRank") ?? config.chatRank.enabled) as boolean;
     
-    if (chatRankToggle) {
+    if (chatRankToggle && !config.otherPrefix.some(otherP => message.startsWith(otherP)) {
         event.cancel = true;
         chatRank(player, message)
     }
