@@ -2,7 +2,10 @@
   <img src="./pack_icon.png" width="150" height="150">
   
   <img src="./Matrix-AntiCheat.png" height="50">
-  
+
+  ## Project Status
+
+  <img src="https://img.shields.io/badge/Language-TypeScript-%23EF4041?style=for-the-badge">
   <p align="center">
     <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="Downloads">   
     <img src="https://img.shields.io/github/issues/jasonlaubb/Matrix-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open">  
