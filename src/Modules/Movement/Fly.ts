@@ -67,14 +67,13 @@ async function AntiFly (player: Player, now: number) {
     }
 
     player.lastVelLog = velocityLog[player.id]
-    
-    /* It's not in use, until fixed
-    //fly (B) detect instant movement by check velocityLog == 1
-    if (velocityLog[player.id] == 1 && velocity <= 0 && !player.isOnGround && !instair){
-        player.teleport(prevLoc)
-        flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
-    }
-    
+    //fly [B] 
+//check for moving while fly hacking (detect some instant movement and more fast to detect movement hacks) 
+if(velocity> 0.7 && xz > 1 && ! player.isOnGround && !instair){
+	player.teleport(prevLoc) 
+flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
+} 
+//efficiency: high | false postive: unknown 
     //fly (C) detect players flying on high distance 
     if (player.isOnGround && velocity > 0) player.addTag("matrix:runned_velocity")
     if (velocity > 0.7 && !player.isOnGround && !player.hasTag("matrix:runned_velocity")) {
