@@ -67,14 +67,19 @@ async function AntiAim (player: Player) {
     //D - false positive: very low, efficiency: mid
     const { x, z } = player.getVelocity()
     if (!player.isGliding && (rotation.x % 1 == 0 || (rotation.y % 1 == 0 && Math.abs(rotation.y) != 90)) && rotation.x != 0 && rotation.y != 0 && Math.hypot(x, z) > 0.2) {
-        player.setRotation({ x: Math.random(), y: Math.random() })
         flag (player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, undefined)
+        isFlagged = true
+    }
+
+    if (Math.abs(rotation.x) > 90 || Math.abs(rotation.y) > 180) {
+        flag (player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, undefined)
         isFlagged = true
     }
 
     if (isFlagged) {
         if (!config.slient) {
             player.applyDamage(6)
+            player.setRotation({ x: Math.random(), y: Math.random() })
             if (!player.hasTag("matrix:pvp-disabled")) {
                 player.addTag("matrix:pvp-disabled")
                 system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiAim.timeout)
