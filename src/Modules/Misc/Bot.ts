@@ -39,7 +39,7 @@ const antiBot = () => {
                     player.verifying = true
                     const codeNow = [0,0,0,0,0,0].map(() => Math.floor(Math.random() * 10)).join("")
                     new ModalFormData()
-                    .title("Anti Bot")
+                    .title("Anti Bot Verification")
                     .textField("You need to verify if you're not a bot\nYou have " + Math.floor((now - player.verifyTimer) / 1000) + " seconds left\nEnter the code " + codeNow + " below", "000000", undefined);
                     .show(player).then(({ formValues, canceled }) => {
                     if (!player.notVerified) return;
@@ -56,7 +56,7 @@ const antiBot = () => {
                         }
                         system.run(() => menu(player))
                         return
-                    } else if (now - player.verifyClickSpeed <= config.antiARAS.clickSpeedThershold * 50 && result.selection == 0) {
+                    } else if (now - player.verifyClickSpeed <= config.antiBot.clickSpeedThershold * 50) {
                         flag(player, "Bot Attack", "A", config.antiBot.maxVL, config.antiBot.punishment, [lang(">Delay") + ":" + (Date.now() - clickSpeed.get(player.id)).toFixed(2)]);
                         return
                     }
