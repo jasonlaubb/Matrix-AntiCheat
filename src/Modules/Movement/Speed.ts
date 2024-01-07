@@ -102,7 +102,7 @@ async function teleportTracker () {
     const now = Date.now()
     for (const player of players) {
         const { x, z } = player.getVelocity()
-        if (Math.hypot(x, z) < 0.35) {
+        if (Math.hypot(x, z) === 0) {
             player.lastTeleportTime = now
         }
         if (player.isFlying || player.isGliding || player.isSleeping) {
