@@ -209,7 +209,7 @@ export default {
         maxClicksPerSecond: 24,
         timeout: 200,
         punishment: "kick",
-        maxVL: 2
+        maxVL: 4
     },
 
     antiKillAura: {
@@ -231,7 +231,7 @@ export default {
 
     antiFly: {
         enabled: true,
-        punishment: "ban",
+        punishment: "kick",
         maxVelocity: 0.7,
         maxVL: 4
     },
@@ -239,8 +239,8 @@ export default {
     antiNoFall: {
         enabled: true,
         punishment: "ban",
-        float: 0.3,
-        maxVL: 4
+        float: 15,
+        maxVL: 2
     },
 
     antiNoClip: {
@@ -254,7 +254,7 @@ export default {
         enabled: true,
         mphThreshold: 200,
         bpsThershold: 30.25,
-        punishment: "ban",
+        punishment: "kick",
         maxVL: 4
     },
 
@@ -280,7 +280,7 @@ export default {
     antiNoSlow: {
         enabled: true,
         maxSpeedTherehold: 1,
-        maxUsingItemTherehold: 0.1618875,
+        maxUsingItemTherehold: 0.16,
         itemUseTime: 250,
         maxNoSlowBuff: 1,
         timeout: 60,
@@ -465,6 +465,7 @@ export default {
         maxVL: 0,
         clickSpeedThershold: 2, // 1 = 1 tick or 50 mile second
         timer: 1, // 1 = 1 minute
+        maxTry: 3
     },
     chatFilter: [
         "niger",

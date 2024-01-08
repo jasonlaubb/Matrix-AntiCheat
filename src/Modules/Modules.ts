@@ -24,6 +24,7 @@ import gameMode from "./Player/GameMode"
 import spam from "./Misc/Spam"
 import { c } from "../Assets/Util"
 import { world } from "@minecraft/server"
+import bot from "./Misc/Bot"
 
 interface toggleHandler {
     enable: () => void
@@ -54,7 +55,8 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiAuto": auto,
     "antiNameSpoof": nameSpoof,
     "antiCBE": cbe,
-    "antiCrasher": crasher
+    "antiCrasher": crasher,
+    "antiBot": bot,
 }
 
 export const defaultLy = (key: string) => {

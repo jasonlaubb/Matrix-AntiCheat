@@ -12,7 +12,7 @@ import lang from "../../Data/Languages/lang";
 
 world.beforeEvents.chatSend.subscribe((event) => {
     // Defend the spam bot from sending the chat packets
-    if (world.antiBotEnabled === true && !player.verified) {
+    if (world.antiBotEnabled === true && !event.sender.verified) {
         event.cancel = true
         return
     }
@@ -44,7 +44,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
 
     const chatRankToggle = (world.getDynamicProperty("chatRank") ?? config.chatRank.enabled) as boolean;
     
-    if (chatRankToggle && !config.otherPrefix.some(otherP => message.startsWith(otherP)) {
+    if (chatRankToggle && !config.otherPrefix.some(otherP => message.startsWith(otherP))) {
         event.cancel = true;
         chatRank(player, message)
     }

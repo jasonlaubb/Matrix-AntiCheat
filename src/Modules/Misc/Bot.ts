@@ -1,5 +1,5 @@
-import { world, system, PlayerSpawnAfterEvent } from "@minecraft/server";
-import { ActionFormData } from  "@minecraft/server-ui";
+import { world, system, PlayerSpawnAfterEvent, Player, ChatSendAfterEvent } from "@minecraft/server";
+import { FormCancelationReason, ModalFormData } from  "@minecraft/server-ui";
 import { flag, c, isAdmin, kick } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
@@ -9,8 +9,11 @@ import lang from "../../Data/Languages/lang";
  * It works by making a verification for the player.
 */
 
-const playerSpawn = ({ intialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
-    if (isAdmin(player)) return
+const playerSpawn = ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
+    if (isAdmin(player)) {
+        player.verified = true
+        return
+    }
     player.removeTag("matrix:verified")
     // wait 0.1 seconds
     system.runTimeout(() => {
@@ -23,56 +26,59 @@ const playerSpawn = ({ intialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
 };
 
 const antiBot = () => {
-    const players = world.getAllPlayers()
+    const players = world.getPlayers({ excludeTags: ["matrix:verified"]})
     const now = Date.now()
+    const config = c()
     for (const player of players) {
             if (!player.notVerified) continue
             if (now - player.verifyTimer >= config.antiBot.timer * 1000 * 60) {
-                kick (player, "Matrix AntiCheat", "Expired Verification")
+                kick (player, "Expired Verification", "Matrix AntiCheat")
             }
-            
-            player.verifyClickSpeed = Date.now()
 
             try {
-                const menu = (player) => {
+                const menu = (player: Player) => {
+                    player.verifyClickSpeed = Date.now()
                     if (!player.notVerified) return;
                     player.verifying = true
                     const codeNow = [0,0,0,0,0,0].map(() => Math.floor(Math.random() * 10)).join("")
+                    player.tryVerify ??= 0
                     new ModalFormData()
                     .title("Anti Bot Verification")
-                    .textField("You need to verify if you're not a bot\nYou have " + Math.floor((now - player.verifyTimer) / 1000) + " seconds left\nEnter the code " + codeNow + " below", "000000", undefined);
-                    .show(player).then(({ formValues, canceled }) => {
+                    .textField("§a[This server is protected by Matrix AntiCheat]\n§gYou need to verify if you're not a bot §7("+player.tryVerify+"/"+config.antiBot.maxTry+")§g\nYou have §e" + Math.floor((config.antiBot.timer * 60000 - now + player.verifyTimer) / 1000) + " §gseconds left\nEnter the code §e§l" + codeNow + "§r§g below", "000000", undefined)
+                    .show(player).then(({ formValues, canceled, cancelationReason }) => {
                     if (!player.notVerified) return;
 
                     // stop bot from bypassing the ui
-                    if (result.cancled || !formValues[0] || codeNow != formValues[0]) {
-                        player.verifying = false
-                        player.tryVerify ??= 0
-                        player.tryVerify++
+                    if (canceled || !formValues[0] || codeNow != formValues[0]) {
+                        player.verifying = undefined
+                        if (cancelationReason != FormCancelationReason.UserBusy) {
+                            player.tryVerify += 1
 
-                        if (player.tryVerify > config.antiBot.maxTry) {
-                            kick (player, "Matrix AntiCheat", "Verify Failed")
-                            return
+                            if (player.tryVerify > config.antiBot.maxTry) {
+                                kick (player, "Verify Failed", "Matrix AntiCheat")
+                                return
+                            }
                         }
-                        system.run(() => menu(player))
                         return
-                    } else if (now - player.verifyClickSpeed <= config.antiBot.clickSpeedThershold * 50) {
-                        flag(player, "Bot Attack", "A", config.antiBot.maxVL, config.antiBot.punishment, [lang(">Delay") + ":" + (Date.now() - clickSpeed.get(player.id)).toFixed(2)]);
+                    } else if (Date.now() - player.verifyClickSpeed <= config.antiBot.clickSpeedThershold * 50) {
+                        flag(player, "Bot Attack", "A", config.antiBot.maxVL, config.antiBot.punishment, [lang(">Delay") + ":" + (now - player.verifyClickSpeed)]);
                         return
                     }
                     player.sendMessage(`§bMatrix §7> §aYou have been verified successfully`)
                     player.notVerified = undefined
+                    player.verified = true
                     player.addTag("matrix:verified")
-                    }
-                                         if (!player.verifying) menu (player)
-                    }
+                    })
+                }
+                    if (!player.verifying) menu (player)
             } catch {
                 player.verifying = undefined
             }
     }
 }
 
-const chatSend = ({ sender }: ChatSendAfterEvent) => {
+const chatSend = ({ sender: player }: ChatSendAfterEvent) => {
+    const config = c()
     if (player.notVerified && player.verifying) {
         if (isAdmin(player)) return
         flag(player, "Bot Attack", "B", config.antiBot.maxVL, config.antiBot.punishment, undefined);
@@ -86,12 +92,14 @@ export default {
         world.antiBotEnabled = true
         const players = world.getAllPlayers()
         players.forEach(player => player.verified = true)
-        id = system.runInterval(antiBot, 60)
+        id = system.runInterval(antiBot, 5)
         world.afterEvents.playerSpawn.subscribe(playerSpawn)
+        world.afterEvents.chatSend.subscribe(chatSend)
     },
     disable () {
         world.antiBotEnabled = undefined
         system.clearRun(id)
         world.afterEvents.playerSpawn.unsubscribe(playerSpawn)
+        world.afterEvents.chatSend.unsubscribe(chatSend)
     }
 }

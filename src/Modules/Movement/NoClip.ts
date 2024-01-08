@@ -6,7 +6,8 @@ import {
     GameMode,
     Player,
     PlayerLeaveAfterEvent,
-    EntityHurtAfterEvent
+    EntityHurtAfterEvent,
+    PlayerBreakBlockAfterEvent
 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -126,7 +127,7 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     safeLocation.delete(playerId)
 };
 
-const playerBreakBlock = ({ player, block: { isSolid }) => isSolid && (player.lastBreakSolid = Date.now())
+const playerBreakBlock = ({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) => isSolid && (player.lastBreakSolid = Date.now())
 
 const entityHurt = ({ hurtEntity: player }: EntityHurtAfterEvent) => (player as Player).lastApplyDamage = Date.now()
 

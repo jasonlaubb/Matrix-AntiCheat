@@ -94,14 +94,14 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 })
 
 system.runInterval(() => {
-    const players = world.getPlayers({ tags: ["matrix:knockback"]})
+    const players = world.getAllPlayers()
     for (const player of players) {
         // knockback
         const velocity = player.getVelocity().y
         if (velocity <= 0) player.removeTag("matrix:knockback")
 
         // item use
-        if (player.hasTag("matrix:using_item") && player.lastItemUsed === undefined) {
+        if (player.hasTag("matrix:using_item") && !player.lastItemUsed) {
             player.lastItemUsed = Date.now();
         } else if (!player.hasTag("matrix:using_item")) {
             player.lastItemUsed = undefined;

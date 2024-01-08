@@ -56,7 +56,7 @@ async function AntiSpeedA (player: Player, now: number) {
         if (!playerInfo.highestSpeed) {
             //teleport them back
             system.runTimeout(() => {
-                if (player.isGliding) return;
+                if (player.isGliding || player.threwTridentAt && now - player.threwTridentAt < 80 || player.lastExplosionTime && now - player.lastExplosionTime < 80) return;
                 if (!config.slient) player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
                 //A - false positive: low, efficiency: very high
                 flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
@@ -91,7 +91,7 @@ async function AntiSpeedB (player: Player, now: number) {
     //calulate the player block per second
     const bps = Math.hypot(x1 - x2, z1 - z2) / (now - data.recordTime) * 1000
 
-    if (bps > 28.75 + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5) {
+    if (bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5) {
         player.teleport(data.location)
         flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">BlockPerTick")}:${bps.toFixed(2)}`])
     }

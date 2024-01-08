@@ -28,6 +28,8 @@ declare module "@minecraft/server" {
         verifyClickSpeed: number;
         verifying: boolean;
         notVerified: boolean;
+        tryVerify: number;
+        verified: boolean;
     }
     interface World {
         antiBotEnabled: boolean;

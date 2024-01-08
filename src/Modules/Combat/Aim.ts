@@ -1,6 +1,7 @@
-import { world, system, Player, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { world, system, Player, PlayerLeaveAfterEvent, EntityInventoryComponent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
+import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
  * @author notthinghere
@@ -31,9 +32,10 @@ async function AntiAim (player: Player) {
     let isFlagged = false;
     if (lastAction.rotation[player.id] && Math.abs(rotation.x) < 89) {
         const maxRotSpeed = config.antiAim.maxRotSpeed;
+        const lastSpeed = lastAction.rotation[player.id].averageSpeed
         //A - false positive: low, efficiency: mid
-        if (averageSpeed > maxRotSpeed && player.lastItemUsed) {
-            if (Date.now() - player.lastItemUsed > 500) {
+        if (lastSpeed < 20 && averageSpeed > maxRotSpeed && player.lastItemUsed && player.getComponent(EntityInventoryComponent.componentId).container.getItem(player.selectedSlot)?.typeId !== MinecraftItemTypes.Bow) {
+            if (Date.now() - player.lastItemUsed < 100) {
                 isFlagged = true
                 flag (player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeed") + ":" + averageSpeed.toFixed(2)])
             }
