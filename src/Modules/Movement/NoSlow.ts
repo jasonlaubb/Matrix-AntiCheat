@@ -70,7 +70,6 @@ async function AntiNoSlow (player: Player) {
     }
 
     //check if player speed while using item is too high
-    player.onScreenDisplay.setActionBar(`${player.lastItemUsed && Date.now() - player.lastItemUsed}`)
     if (!player.getEffect(MinecraftEffectTypes.Speed) && player.lastItemUsed && Date.now() - player.lastItemUsed >= config.antiNoSlow.itemUseTime && playerSpeed > config.antiNoSlow.maxUsingItemTherehold && player.isOnGround && !(player.lastExplosionTime && Date.now() - player.lastExplosionTime < 1000)) {
         const isIceBelow = player.dimension.getBlock({
             x: Math.floor(player.location.x),
