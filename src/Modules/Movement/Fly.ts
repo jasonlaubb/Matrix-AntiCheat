@@ -148,7 +148,8 @@ async function AntiFly(player: Player, now: number) {
 		velocity > 0.7 &&
 		!player.isOnGround &&
 		!player.hasTag("matrix:runned_velocity") &&
-		!skip1
+		!skip1 &&
+		!player.isInWater
 	) {
 		player.teleport(prevLoc);
 		flag(player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [
