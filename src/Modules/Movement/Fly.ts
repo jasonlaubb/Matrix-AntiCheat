@@ -140,6 +140,7 @@ async function AntiFly(player: Player, now: number) {
 			lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2),
 		]);
 	}
+	/* It's removed from Matrix, it's no longer in use
 	//efficiency: high | false postive: unknown
 	//fly (C) detect players flying on high distance
 	if (player.isOnGround && velocity > 0)
@@ -158,6 +159,7 @@ async function AntiFly(player: Player, now: number) {
 	}
 	if (!player.isOnGround && velocity < 0)
 		player.removeTag("matrix:runned_velocity");
+        */
 }
 
 const antiFly = () => {
