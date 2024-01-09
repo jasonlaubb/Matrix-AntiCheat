@@ -79,10 +79,14 @@ async function AntiNoSlow (player: Player) {
 
         if (!isIceBelow) {
             player.teleport(player.location)
-            player.addTag("matrix:item-disabled")
-            system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiNoSlow.timeout)
-            //B- false positive: low, efficiency: mid
-            flag (player, "NoSlow", "B",config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
+            const lastFlag = lastflag.get(player.id)
+            if (lastFlag && Date.now() - lastFlag < 500) {
+                player.addTag("matrix:item-disabled")
+                system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiNoSlow.timeout)
+                //B- false positive: low, efficiency: mid
+                flag (player, "NoSlow", "B",config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
+            }
+            lastflag.set(player.id, Date.now())
         }
     }
 }
