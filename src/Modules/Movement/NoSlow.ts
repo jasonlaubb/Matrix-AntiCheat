@@ -80,7 +80,7 @@ async function AntiNoSlow (player: Player) {
         if (!isIceBelow) {
             player.teleport(player.location)
             const lastFlag = lastflag.get(player.id)
-            if (lastFlag && Date.now() - lastFlag < 500) {
+            if (lastFlag && Date.now() - lastFlag < 400) {
                 player.addTag("matrix:item-disabled")
                 system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiNoSlow.timeout)
                 //B- false positive: low, efficiency: mid
