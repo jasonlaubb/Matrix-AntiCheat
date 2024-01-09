@@ -48,7 +48,8 @@ async function AntiNoFall (player: Player, now: number) {
 
 const antiNofall = () => {
     const now = Date.now();
-    for (const player of world.getPlayers({ excludeGameModes: [GameMode.spectator] })) {
+    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator] })
+    for (const player of players) {
         if (isAdmin(player)) continue;
         
         AntiNoFall (player, now)
