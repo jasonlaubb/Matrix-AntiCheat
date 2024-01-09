@@ -26,7 +26,7 @@ const playerSpawn = ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) => 
 };
 
 const antiBot = () => {
-    const players = world.getPlayers({ excludeTags: ["matrix:verified"]})
+    const players = world.getPlayers({ excludeTags: ["matrix:verified"] })
     const now = Date.now()
     const config = c()
     for (const player of players) {
@@ -40,7 +40,7 @@ const antiBot = () => {
                     player.verifyClickSpeed = Date.now()
                     if (!player.notVerified) return;
                     player.verifying = true
-                    const codeNow = [0,0,0,0,0,0].map(() => Math.floor(Math.random() * 10)).join("")
+                    const codeNow = [0,0,0,0,0,0,0].map(() => Math.floor(Math.random() * 10)).join("")
                     player.tryVerify ??= 0
                     new ModalFormData()
                     .title("Anti Bot Verification")
