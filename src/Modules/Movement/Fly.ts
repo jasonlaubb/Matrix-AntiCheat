@@ -133,7 +133,8 @@ async function AntiFly(player: Player, now: number) {
 		Math.hypot(x, z) > 0.35 &&
 		!player.isOnGround &&
 		!instair &&
-		!skip1
+		!skip1 &&
+		!player.hasTag("matrix:knockback")
 	) {
 		player.teleport(prevLoc);
 		flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [
