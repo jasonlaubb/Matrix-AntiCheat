@@ -31,6 +31,7 @@ async function AntiAim (player: Player) {
     const averageSpeed = Math.sqrt(rotationSpeed.x ** 2 + rotationSpeed.y ** 2);
     let isFlagged = false;
     if (lastAction.rotation[player.id] && Math.abs(rotation.x) < 89) {
+        /* This check is no longer in use
         const maxRotSpeed = config.antiAim.maxRotSpeed;
         const lastSpeed = lastAction.rotation[player.id].averageSpeed
         //A - false positive: low, efficiency: mid
@@ -39,7 +40,7 @@ async function AntiAim (player: Player) {
                 isFlagged = true
                 flag (player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeed") + ":" + averageSpeed.toFixed(2)])
             }
-        }
+        }*/
 
         //B - false positive: very low, efficiency: mid
         if (rotationSpeed.x > 1 && rotationSpeed.y < 0.6 || rotationSpeed.x < 0.6 && rotationSpeed.y > 1) {
