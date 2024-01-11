@@ -11,6 +11,7 @@ import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data
 import lang from "../../Data/Languages/lang.js";
 
 const speedData = new Map();
+const lastflag = new Map<string, number>();
 
 /**
  * @author ravriv
@@ -59,7 +60,10 @@ async function AntiSpeedA (player: Player, now: number) {
                 if (player.isGliding || player.threwTridentAt && now - player.threwTridentAt < 80 || player.lastExplosionTime && now - player.lastExplosionTime < 80) return;
                 if (!config.slient) player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
                 //A - false positive: low, efficiency: very high
-                flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
+                const lastFlag = lastflag.get(player.id)
+                if (lastFlag && now - lastFlag < 2500)
+                    flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
+                lastflag.set(player.id, now)
                 playerInfo.highestSpeed = playerSpeedMph;
             }, 1)
         }
@@ -146,7 +150,8 @@ const antiSpeedB = () => {
 
 const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
     speedData.delete(playerId);
-    locationData.delete(playerId)
+    locationData.delete(playerId);
+    lastflag.delete(playerId);
 });
 
 let id: { [key: string]: number }
@@ -161,6 +166,8 @@ export default {
     },
     disable () {
         speedData.clear()
+        locationData.clear()
+        lastflag.clear()
         system.clearRun(id.a)
         system.clearRun(id.b)
         system.clearRun(id.c)
