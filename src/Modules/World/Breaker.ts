@@ -17,7 +17,7 @@ const offset = [
 const lastFlag = new Map<string, number>()
 
 async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBlockBeforeEvent) {
-    if (player.hasTag("matrix:break-disabled")) return;
+    if (player.hasTag("matrix:break-disabled") || block?.isAir) return;
 
     /* This check is not fixed
     if (block.typeId === MinecraftBlockTypes.Bed) {

@@ -232,5 +232,5 @@ export default {
     ">Amount": "Số lượng",
     ">Ratio": "Tỉ lệ",
     ">Limit": "Giới hạn",
-    ">BlockPerTick": "Khối mỗi tick"
+    ">BlockPerSecond": "khối mỗi giây"
 };

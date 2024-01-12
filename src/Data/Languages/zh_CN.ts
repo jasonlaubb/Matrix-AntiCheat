@@ -233,5 +233,5 @@ export default {
     ">Amount": "数量",
     ">Ratio": "比率",
     ">Limit": "上限",
-    ">BlockPerTick": "每秒移动格数"
+    ">BlockPerSecond": "方块/每秒"
 }

@@ -235,5 +235,5 @@ export default {
     ">Amount": "كمية",
     ">Ratio": "نسبة",
     ">Limit": "الحد الاقصى",
-    ">BlockPerTick": "كتلة لكل علامة"
+    ">BlockPerSecond": "كتلة في الثانية"
 }

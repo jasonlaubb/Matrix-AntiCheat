@@ -1,3 +1,4 @@
+// import the toggle handler of each module
 import autoClicker from "./Combat/Auto Clicker"
 import killAura from "./Combat/Kill Aura"
 import reach from "./Combat/Reach"
@@ -22,9 +23,12 @@ import auto from "./Player/Auto"
 import fastUse from "./Player/FastUse"
 import gameMode from "./Player/GameMode"
 import spam from "./Misc/Spam"
+import autotool from "./World/AutoTool"
+import bot from "./Misc/Bot"
+import fastBreak from "./World/FastBreak"
+
 import { c } from "../Assets/Util"
 import { world } from "@minecraft/server"
-import bot from "./Misc/Bot"
 
 interface toggleHandler {
     enable: () => void
@@ -51,11 +55,13 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiBlockReach": blockReach,
     "antiAim": aim,
     "antiScaffold": scaffold,
-    "antiIllegalItem": illegalItem,
+    "antiAutoTool": autotool,
     "antiAuto": auto,
+    "antiFastBreak": fastBreak,
     "antiNameSpoof": nameSpoof,
     "antiCBE": cbe,
     "antiCrasher": crasher,
+    "antiIllegalItem": illegalItem,
     "antiBot": bot,
 }
 

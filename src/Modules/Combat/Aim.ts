@@ -1,7 +1,6 @@
-import { world, system, Player, PlayerLeaveAfterEvent, EntityInventoryComponent } from "@minecraft/server";
+import { world, system, Player, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
-import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
  * @author notthinghere

@@ -233,5 +233,5 @@ export default {
     ">Amount": "Amount",
     ">Ratio": "Ratio",
     ">Limit": "Limit",
-    ">BlockPerTick": "Bps"
+    ">BlockPerSecond": "BPS"
 }

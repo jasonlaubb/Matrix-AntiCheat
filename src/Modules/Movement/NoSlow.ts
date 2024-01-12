@@ -15,6 +15,7 @@ function getSpeedIncrease (speedEffect: Effect | undefined) {
 }
 
 const lastPosition = new Map<string, Vector3>();
+const lastflag = new Map<string, number>()
 
 /**
  * @author RaMiGamerDev

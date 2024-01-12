@@ -20,7 +20,7 @@ const blockBreakData = new Map<string, number[]>();
  */
 
 async function AntiNuker (player: Player, block: Block) {
-    if (player.hasTag("matrix:break-disabled")) {
+    if (player.hasTag("matrix:break-disabled") || block?.isAir) {
         return;
     }
     const config = c()

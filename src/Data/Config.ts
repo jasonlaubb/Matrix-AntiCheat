@@ -353,6 +353,36 @@ export default {
         punishment: "ban"
     },
 
+    antiAutoTool: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 4,
+        toolType: [
+            "axe",
+            "shovel",
+            "pickaxe",
+            "sword"
+        ]
+    },
+
+    antiFastBreak: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 4,
+        maxBPS: 1,
+        toolLimit: 4,
+        toolType: [
+            "axe",
+            "shovel",
+            "pickaxe",
+            "sword"
+        ],
+        matchType: { //edit the tool type and it's break limit here
+            "wood": 3.85,
+            "stone": 5
+        }
+    },
+
     antiIllegalItem: {
         enabled: false,
         illegalItem: [

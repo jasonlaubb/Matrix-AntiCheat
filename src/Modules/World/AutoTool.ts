@@ -1,12 +1,15 @@
-import { world, system, EntityHitBlockAfterEvent } from "@minecraft/server"
+import { world, system, EntityHitBlockAfterEvent, Player, EntityInventoryComponent } from "@minecraft/server"
 import { flag, c, isAdmin } from "../../Assets/Util"
 
-const antiAutoTool = ({ player }: EntityHitBlockAfterEvent) => {
-    if (isAdmin(player) || !player.lastSelectSlot) return
+const antiAutoTool = ({ damagingEntity: player }: EntityHitBlockAfterEvent) => {
+    if (!(player instanceof Player) || isAdmin(player) || !player.lastSelectSlot) return
+    const config = c()
+    const itemStack = player.getComponent(EntityInventoryComponent.componentId).container.getItem(player.selectedSlot)?.typeId ?? "air"
+    if (config.antiAutoTool.toolType.some(eit => itemStack.endsWith(eit)) == false) return
 
     if (player.lastSelectSlot != player.selectedSlot) {
         player.applyDamage(4)
-        flag (player, "Auto Tool", config.antiAutoTool.maxVL, config.antiAutoTool.punishment, undefined)
+        flag (player, "Auto Tool", "A", config.antiAutoTool.maxVL, config.antiAutoTool.punishment, undefined)
     }
 }
 
