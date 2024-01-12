@@ -32,6 +32,7 @@ declare module "@minecraft/server" {
         verified: boolean;
         lastSelectSlot: number;
         lastTouchBlock: number;
+        lastTouchBlockId: string;
     }
     interface World {
         antiBotEnabled: boolean;

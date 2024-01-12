@@ -1,4 +1,4 @@
-import { EntityHitBlockAfterEvent, ItemEnchantsComponent, Player, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server"
+import { EntityHitBlockAfterEvent, ItemEnchantsComponent, Player, PlayerBreakBlockAfterEvent, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server"
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks"
 import { c, flag, isAdmin, isTargetGamemode } from "../../Assets/Util"
 import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -8,9 +8,9 @@ const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
     const { player, block, itemStack } = event
     if (isAdmin(player) || block.isAir || player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
     const config = c()
-    const { typeId } = itemStack
+    const typeId = itemStack?.typeId ?? "minecraft:air"
 
-    const hasEfficiency = itemStack.getComponent(ItemEnchantsComponent.componentId).enchantments.hasEnchantment(MinecraftEnchantmentTypes.Efficiency) != 0
+    const hasEfficiency = itemStack ? itemStack?.getComponent(ItemEnchantsComponent.componentId)?.enchantments?.hasEnchantment(MinecraftEnchantmentTypes.Efficiency) != 0 : false
 
     if (!typeId.startsWith("minecraft:") || hasEfficiency || player.getEffect(MinecraftEffectTypes.Haste) || fastBrokenBlocks.includes(typeId as MinecraftBlockTypes)) return;
 
@@ -20,27 +20,42 @@ const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
         speedLimit = (config.antiFastBreak.matchType as { [key: string]: number })[typeId.replace("minecraft:", "").split("_")[0]] ?? 4
     }
 
-    const breakBPS = 1 / (Date.now() - player.lastTouchBlock / 1000)
+    const breakBPS = 1 / (Date.now() - player.lastTouchBlock) * 1000
+    system.run(() => player.sendMessage(`${breakBPS} / ${speedLimit}`))
 
     if (breakBPS > speedLimit) {
         event.cancel = true
-        player.addTag("matrix:break-disabled")
+        system.run(() => {
+            player.addTag("matrix:break-disabled")
+            flag (player, "Fast Break", "A", config.antiFastBreak.maxVL, config.antiFastBreak.punishment, [lang(">BlockPerSecond") + ":" + breakBPS.toFixed(2)])
+        })
         system.runTimeout(() => {
             player.removeTag("matrix:break-disabled")
         }, 60)
-        flag (player, "Fast Break", "A", config.antiFastBreak.maxVL, config.antiFastBreak.punishment, [lang(">BlockPerSecond") + ":" + breakBPS.toFixed(2)])
+    } else if (breakBPS < 11 && player.lastTouchBlockId != JSON.stringify(block.location)) {
+        event.cancel = true
+        system.run(() => {
+            player.addTag("matrix:break-disabled")
+            flag (player, "Fast Break", "B", config.antiFastBreak.maxVL, config.antiFastBreak.punishment, undefined)
+        })
+        system.runTimeout(() => {
+            player.removeTag("matrix:break-disabled")
+        }, 100)
     }
 }
 
-const hitBlock = ({ damagingEntity: player }: EntityHitBlockAfterEvent) => player instanceof Player && (player.lastTouchBlock = Date.now())
+const breakBlockAfter = ({ player }: PlayerBreakBlockAfterEvent) => player.lastTouchBlock = Date.now()
+const hitBlock = ({ damagingEntity: player, hitBlock: { location } }: EntityHitBlockAfterEvent) => player instanceof Player && (player.lastTouchBlockId = JSON.stringify(location))
 
 export default {
     enable () {
         world.beforeEvents.playerBreakBlock.subscribe(antiFastBreak)
+        world.afterEvents.playerBreakBlock.subscribe(breakBlockAfter)
         world.afterEvents.entityHitBlock.subscribe(hitBlock)
     },
     disable () {
         world.beforeEvents.playerBreakBlock.unsubscribe(antiFastBreak)
+        world.afterEvents.playerBreakBlock.unsubscribe(breakBlockAfter)
         world.afterEvents.entityHitBlock.unsubscribe(hitBlock)
     }
 }
