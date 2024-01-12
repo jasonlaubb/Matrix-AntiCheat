@@ -2,6 +2,11 @@ import { world, GameMode, Player, system } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
+/**
+ * @author jasonlaubb
+ * stop player from using the illegal gamemode without permisson
+ */
+
 async function AntiGameMode (player: Player) {
     const config = c()
     const gamemode = Gamemode(player.name);

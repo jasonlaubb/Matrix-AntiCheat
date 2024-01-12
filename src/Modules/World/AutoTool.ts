@@ -1,6 +1,11 @@
 import { world, system, EntityHitBlockAfterEvent, Player, EntityInventoryComponent } from "@minecraft/server"
 import { flag, c, isAdmin } from "../../Assets/Util"
 
+/**
+ * @author jasonlaubb
+ * @description A simple check to caught slient autotool hacker
+ */
+
 const antiAutoTool = ({ damagingEntity: player }: EntityHitBlockAfterEvent) => {
     if (!(player instanceof Player) || isAdmin(player) || !player.lastSelectSlot) return
     const config = c()

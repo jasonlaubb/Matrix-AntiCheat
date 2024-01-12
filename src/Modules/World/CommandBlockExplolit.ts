@@ -4,13 +4,16 @@ import { flag, isAdmin } from "../../Assets/Util";
 import config from "../../Data/Config";
 import lang from "../../Data/Languages/lang";
 
+/**
+ * @author jasonlaubb
+ * @description flag player nears command block minecart.
+ */
+
 let killRate: number[] = []
 
 const antiCBE = ({ removedEntity: entity }: EntityRemoveBeforeEvent) => {
-    const toggle: boolean = (world.getDynamicProperty("antiCBE") ?? config.antiCommandBlockExplolit.enabled) as boolean;
-
     //if toggle is disabled or the entity is not a command block minecart, return
-    if (toggle !== true || entity.typeId !== MinecraftEntityTypes.CommandBlockMinecart) return
+    if (entity.typeId !== MinecraftEntityTypes.CommandBlockMinecart) return
 
     const pos = entity.location
 

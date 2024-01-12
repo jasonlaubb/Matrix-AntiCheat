@@ -31,7 +31,7 @@ async function AntiNameSpoof (player: Player, playerName: string) {
             const regax = nonASCII[i];
 
             //if the word isn't a valid character for player name
-            if (/[\u4E00-\u9FFF\uAC00-\uD7AF\u3040-\u30FF]/.test(regax) === false && !/[^\d_]/.test(regax) && !/[().&*]/.test(regax)) {
+            if (!/[\u4E00-\u9FFF\uAC00-\uD7AF\u3040-\u30FF]|[^\d_]|[().&*]/.test(regax)) {
                 illegalName = true;
                 break
             }

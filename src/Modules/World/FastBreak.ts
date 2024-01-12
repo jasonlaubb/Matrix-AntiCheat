@@ -4,13 +4,20 @@ import { c, flag, isAdmin, isTargetGamemode } from "../../Assets/Util"
 import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
 
+/**
+ * @author jasonlaubb
+ * @description Checks if player breaks block too fast.
+ * Also, checks if player break block without start breaking block first.
+ * It can detect most of the timer and insteaBreak hack.
+ */
+
 const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
     const { player, block, itemStack } = event
     if (isAdmin(player) || block.isAir || player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
     const config = c()
     const typeId = itemStack?.typeId ?? "minecraft:air"
 
-    const hasEfficiency = itemStack ? itemStack?.getComponent(ItemEnchantsComponent.componentId)?.enchantments?.hasEnchantment(MinecraftEnchantmentTypes.Efficiency) != 0 : false
+    const hasEfficiency = itemStack ? itemStack.getComponent(ItemEnchantsComponent.componentId).enchantments.hasEnchantment(MinecraftEnchantmentTypes.Efficiency) != 0 : false
 
     if (!typeId.startsWith("minecraft:") || hasEfficiency || player.getEffect(MinecraftEffectTypes.Haste) || fastBrokenBlocks.includes(typeId as MinecraftBlockTypes)) return;
 
@@ -21,7 +28,6 @@ const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
     }
 
     const breakBPS = 1 / (Date.now() - player.lastTouchBlock) * 1000
-    system.run(() => player.sendMessage(`${breakBPS} / ${speedLimit}`))
 
     if (breakBPS > speedLimit) {
         event.cancel = true
