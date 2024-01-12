@@ -383,6 +383,14 @@ export default {
         }
     },
 
+    antiXray: {
+        enabled: false,
+        notifyAt: [
+            "diamond_ore",
+            "ancient_debris"
+        ]
+    },
+
     antiIllegalItem: {
         enabled: false,
         illegalItem: [
