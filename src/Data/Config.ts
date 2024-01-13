@@ -366,7 +366,7 @@ export default {
     },
 
     antiFastBreak: {
-        enabled: true,
+        enabled: false, 
         punishment: "ban",
         maxVL: 4,
         maxBPS: 1,
