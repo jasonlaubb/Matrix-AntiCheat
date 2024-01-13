@@ -21,37 +21,27 @@ import { antiCheatModules, getModuleState, keys } from "../../Modules/Modules";
 
 export { inputCommand }
 
-function turnRegax (message: string, prefix: string) {
-    const regex = /(["'])(.*?)\1|\S+/g
-    const matches = message.match(regex)
-    const command = matches.shift().slice(prefix.length)
-    const args = matches.map(arg => arg.replace(/[@"]/g, '').replace(/"$/, ''))
-    return [command, ...args]
-}
-
+const turnRegax = (message: string, prefix: string) => (message.slice(prefix.length).match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g) || []).map(regax => regax.replace(/^"(.*)"$/, '$1').replace(/\\"/g, '"'));
 class Cmds {
     enabled: boolean;
     adminOnly: boolean;
     requireTag: string[]
 }
 
-class Command {
-    static new (player: Player, setting: Cmds): boolean {
-        if (setting.enabled !== true) {
-            system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.command_disabled")))
-            return false
-        }
-        if (setting.adminOnly === true && !isAdmin(player)){
-            system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.command_disabled_reason")))
-            return false
-        }
-        if (setting.requireTag.length > 0 && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
-            system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.no_permission")))
-            return false
-        }
+function blockUsage (player: Player, setting: Cmds) {
+    if (setting.enabled !== true) {
+        system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.command_disabled")))
+        return true
+    } else if (setting.adminOnly === true && !isAdmin(player)){
+        system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.command_disabled_reason")))
+        return true
+    } else if (setting.requireTag.length > 0 && !player.getTags().some(tag => setting.requireTag.includes(tag))) {
+        system.run(() => player.sendMessage(`§bMatrix §7>§g `+lang(".CommandSystem.no_permission")))
         return true
     }
+    return false
 }
+
 async function inputCommand (player: Player, message: string, prefix: string): Promise<any> {
     const config = c()
     const regax = turnRegax(message, prefix)
@@ -64,18 +54,18 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "help": {
-            if (!Command.new(player, config.commands.help as Cmds)) return
+            if (blockUsage(player, config.commands.help as Cmds)) return
             const helpMessage: string = helpList(prefix)
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-help.helpCDlist")}\n${helpMessage}`))
             break
         }
         case "toggles": {
-            if (!Command.new(player, config.commands.toggles as Cmds)) return
+            if (blockUsage(player, config.commands.toggles as Cmds)) return
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleList")}\n${toggleList(prefix)}`))
             break
         }
         case "toggle": {
-            if (!Command.new(player, config.commands.toggle as Cmds)) return
+            if (blockUsage(player, config.commands.toggle as Cmds)) return
             if (regax[1] === undefined || !(new Set(validModules).has(regax[1]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownModule").replace("%a", prefix)}`))
             if (regax[2] === undefined || !(new Set(["enable", "disable"]).has(regax[2]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownAction")}`))
 
@@ -99,7 +89,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "op": {
-            if (!Command.new(player, config.commands.op as Cmds)) return
+            if (blockUsage(player, config.commands.op as Cmds)) return
             if (isAdmin(player)) {
                 if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
                 const target = world.getPlayers({ name: regax[1] })[0]
@@ -133,7 +123,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break      
         }
         case "deop": {
-            if (!Command.new(player, config.commands.deop as Cmds)) return
+            if (blockUsage(player, config.commands.deop as Cmds)) return
             if (world.getDynamicProperty("lockdown") === true) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${(lang("-deop.lockdown"))}`))
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
@@ -144,7 +134,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "passwords": {
-            if (!Command.new(player, config.commands.passwords as Cmds)) return
+            if (blockUsage(player, config.commands.passwords as Cmds)) return
             const oldPassword: string = regax[1]
             const newPassword: string = regax[2]
             const correctPassword = (world.getDynamicProperty("password") ?? config.commands.password) as string
@@ -156,7 +146,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "flagmode": {
-            if (!Command.new(player, config.commands.flagmode as Cmds)) return
+            if (blockUsage(player, config.commands.flagmode as Cmds)) return
             const mode: string = regax[1]
             if (mode === undefined || !(new Set(["all", "tag", "bypass", "admin", "none"]).has(mode))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-flagmode.unknown")}`))
             world.setDynamicProperty("flagMode", mode)
@@ -164,7 +154,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "rank": {
-            if (!Command.new(player, config.commands.rank as Cmds)) return
+            if (blockUsage(player, config.commands.rank as Cmds)) return
             if (regax[1] === undefined || !(new Set(["set", "add", "remove"]).has(regax[1]))) return system.run(() => player.sendMessage(`§bMatrix §7> ${lang("-rank.unknownAction")}`))
             if (regax[2] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[2] })[0]
@@ -211,7 +201,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "rankclear": {
-            if (!Command.new(player, config.commands.rankclear as Cmds)) return
+            if (blockUsage(player, config.commands.rankclear as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -228,7 +218,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "defaultrank": {
-            if (!Command.new(player, config.commands.defaultrank as Cmds)) return
+            if (blockUsage(player, config.commands.defaultrank as Cmds)) return
             const rank: string = regax[1]
             if (rank === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-defaultrank.enter")}`))
             world.setDynamicProperty("defaultRank", rank)
@@ -236,7 +226,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "showallrank": {
-            if (!Command.new(player, config.commands.showallrank as Cmds)) return
+            if (blockUsage(player, config.commands.showallrank as Cmds)) return
             const toggle: string = regax[1]
             if (toggle === undefined || !(new Set(["true", "false"]).has(toggle))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-showallrank.unknown")}`))
             world.setDynamicProperty("showAllRank", Boolean(toggle))
@@ -244,7 +234,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "ban": {
-            if (!Command.new(player, config.commands.ban as Cmds)) return
+            if (blockUsage(player, config.commands.ban as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -262,7 +252,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "unban": {
-            if (!Command.new(player, config.commands.unban as Cmds)) return
+            if (blockUsage(player, config.commands.unban as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
 
             const targetName = regax[1]
@@ -275,7 +265,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "unbanremove": {
-            if (!Command.new(player, config.commands.unbanremove as Cmds)) return
+            if (blockUsage(player, config.commands.unbanremove as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
 
             const targetName = regax[1]
@@ -288,14 +278,14 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "unbanlist": {
-            if (!Command.new(player, config.commands.unbanlist as Cmds)) return
+            if (blockUsage(player, config.commands.unbanlist as Cmds)) return
             const list = unbanList()
             if (list.length === 0) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unbanlist.none")}`))
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-unbanlist.list")}:\n${list.join("\n")}`))
             break
         }
         case "freeze": {
-            if (!Command.new(player, config.commands.freeze as Cmds)) return
+            if (blockUsage(player, config.commands.freeze as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -312,7 +302,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "unfreeze": {
-            if (!Command.new(player, config.commands.unfreeze as Cmds)) return
+            if (blockUsage(player, config.commands.unfreeze as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -329,7 +319,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "mute": {
-            if (!Command.new(player, config.commands.mute as Cmds)) return
+            if (blockUsage(player, config.commands.mute as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -342,7 +332,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "unmute": {
-            if (!Command.new(player, config.commands.unmute as Cmds)) return
+            if (blockUsage(player, config.commands.unmute as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -355,7 +345,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "vanish": {
-            if (!Command.new(player, config.commands.vanish as Cmds)) return
+            if (blockUsage(player, config.commands.vanish as Cmds)) return
             system.run(() => {
                 triggerEvent(player, "matrix:vanish")
                 player.addEffect(MinecraftEffectTypes.Invisibility, 19999999, { showParticles: false, amplifier: 2 })
@@ -364,7 +354,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "unvanish": {
-            if (!Command.new(player, config.commands.unvanish as Cmds)) return
+            if (blockUsage(player, config.commands.unvanish as Cmds)) return
             system.run(() => {
                 triggerEvent(player, "matrix:unvanish")
                 player.removeEffect(MinecraftEffectTypes.Invisibility)
@@ -373,7 +363,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "invcopy": {
-            if (!Command.new(player, config.commands.invcopy as Cmds)) return
+            if (blockUsage(player, config.commands.invcopy as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -399,7 +389,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "invsee": {
-            if (!Command.new(player, config.commands.invsee as Cmds)) return
+            if (blockUsage(player, config.commands.invsee as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -423,7 +413,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "echestwipe": {
-            if (!Command.new(player, config.commands.echestwipe as Cmds)) return
+            if (blockUsage(player, config.commands.echestwipe as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`))
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
@@ -439,7 +429,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "lockdowncode": {
-            if (!Command.new(player, config.commands.lockdowncode as Cmds)) return
+            if (blockUsage(player, config.commands.lockdowncode as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-lockdowncode.unknown")}`))
 
             switch (regax[1]) {
@@ -494,7 +484,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "lockdown": {
-            if (!Command.new(player, config.commands.lockdown as Cmds)) return
+            if (blockUsage(player, config.commands.lockdown as Cmds)) return
             const code = world.getDynamicProperty("lockdowncode") ?? config.lockdowncode
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-lockdown.enter")}`))
             if (regax[1] !== code) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-lockdown.wrong")}`))
@@ -508,7 +498,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "unlock": {
-            if (!Command.new(player, config.commands.unlock as Cmds)) return
+            if (blockUsage(player, config.commands.unlock as Cmds)) return
             if (!world.getDynamicProperty("lockdown")) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unlock.not")}`))
 
             system.run(() => {
@@ -518,7 +508,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "adminchat": {
-            if (!Command.new(player, config.commands.adminchat as Cmds)) return
+            if (blockUsage(player, config.commands.adminchat as Cmds)) return
             if (player.getDynamicProperty("adminchat")) {
                 player.setDynamicProperty("adminchat", undefined)
                 system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-adminchat.out")}`))
@@ -529,7 +519,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "lang": {
-            if (!Command.new(player, config.commands.lang as Cmds)) return
+            if (blockUsage(player, config.commands.lang as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-lang.enter")}`))
             if (!getAllLang().includes(regax[1])) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-lang.unknown").replace("%a", prefix)}`))
 
@@ -541,7 +531,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             break
         }
         case "langlist": {
-            if (!Command.new(player, config.commands.langlist as Cmds)) return
+            if (blockUsage(player, config.commands.langlist as Cmds)) return
             const list = getAllLang().map(value => `§a- ${value}`)
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-langlist.list")}\n${list.join("\n")}`))
             break

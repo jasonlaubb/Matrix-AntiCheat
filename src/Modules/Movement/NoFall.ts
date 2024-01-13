@@ -23,7 +23,7 @@ async function AntiNoFall (player: Player, now: number) {
     const xz = Math.hypot(x, z)
 
     //stop false positive
-    if (player.hasTag("matrix:dead") || isOnGround || isFlying || isClimbing || isInWater || isGliding || player.hasTag("matrix:levitating") || player.getEffect(MinecraftEffectTypes.Speed) || (jumpEffect && jumpEffect.amplifier > 2) || (threwTridentAt && now - threwTridentAt < 3000) || (lastExplosionTime && now - lastExplosionTime < 5000)) {
+    if (player.hasTag("matrix:dead") || player.hasTag("matrix:riding") || isOnGround || isFlying || isClimbing || isInWater || isGliding || player.hasTag("matrix:levitating") || player.getEffect(MinecraftEffectTypes.Speed) || (jumpEffect && jumpEffect.amplifier > 2) || (threwTridentAt && now - threwTridentAt < 3000) || (lastExplosionTime && now - lastExplosionTime < 5000)) {
         playerVL[player.id] ??= 0
         playerVL[player.id] = 0
         return;

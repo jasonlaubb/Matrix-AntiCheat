@@ -35,6 +35,7 @@ const powderBlock = [
 const safeLocation = new Map<string, Vector3>()
 const lastLocation = new Map<string, Vector3>()
 const lastFlag = new Map<string, number>()
+const lastFlag2 = new Map<string, number>()
 const passableBlocks = [
     MinecraftBlockTypes.Sand,
     MinecraftBlockTypes.Gravel,
@@ -84,8 +85,12 @@ async function AntiNoClip (player: Player, now: number) {
     const lastPos = lastLocation.get(player.id);
     const bodyBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.typeId as MinecraftBlockTypes
     if (lastPos && movementClip > 1.2 && !player.isGliding && !(player.lastBreakSolid && now - player.lastBreakSolid < 1750) && Math.abs(y) < 1.7 && !passableBlocks.includes(bodyBlock) && !powderBlock.includes(bodyBlock) && straight(lastPos, player.location).some(loc => isSolidBlock(player.dimension.getBlock(loc)))) {
+        const lastflag = lastFlag2.get(player.id)
         if (!config.slient) player.teleport(lastPos)
-        flag (player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined)
+        if (lastflag && now - lastflag < 2000) {
+            flag (player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined)
+        }
+        lastFlag2.set(player.id, now)
     }
     lastLocation.set(player.id, player.location)
 
@@ -94,7 +99,7 @@ async function AntiNoClip (player: Player, now: number) {
     const lastflag = lastFlag.get(player.id)
     if (player?.lastSafePos && safePos && player?.lastClip && player?.backClip && player?.befoClip && (movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25 || player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.befoClip < 0.25) && (y == 0 || Math.abs(y) < 1.75 && player.isJumping) && !player.isGliding && !player.isFlying && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 2500) && !(player.lastApplyDamage && now - player.lastApplyDamage < 250)) {
         if (!config.slient) player.teleport(player.lastSafePos);
-        if (lastflag && Date.now() - lastflag < 850){
+        if (lastflag && now - lastflag < 850){
             flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)]);
         } 
         lastFlag.set(player.id, now) 
@@ -125,6 +130,8 @@ const antiNoClip = () => {
 
 const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     safeLocation.delete(playerId)
+    lastFlag.delete(playerId)
+    lastFlag2.delete(playerId)
 };
 
 const playerBreakBlock = ({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) => isSolid && (player.lastBreakSolid = Date.now())
@@ -141,6 +148,9 @@ export default {
         world.afterEvents.playerBreakBlock.subscribe(playerBreakBlock)
     },
     disable () {
+        safeLocation.clear()
+        lastFlag.clear()
+        lastFlag2.clear()
         system.clearRun(id)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
         world.afterEvents.entityHurt.unsubscribe(entityHurt)

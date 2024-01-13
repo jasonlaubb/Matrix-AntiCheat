@@ -9,6 +9,7 @@ import lang from "../../Data/Languages/lang";
  * @description Checks if player breaks block too fast.
  * Also, checks if player break block without start breaking block first.
  * It can detect most of the timer and insteaBreak hack.
+ * The limit value is reference from RaMiGamerDev
  */
 
 const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {

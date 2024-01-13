@@ -85,7 +85,7 @@ async function AntiNoSlow (player: Player) {
                 player.addTag("matrix:item-disabled")
                 system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiNoSlow.timeout)
                 //B- false positive: low, efficiency: mid
-                flag (player, "NoSlow", "B",config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
+                flag (player, "NoSlow", "B", config.antiNoSlow.maxVL, config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
             }
             lastflag.set(player.id, Date.now())
         }

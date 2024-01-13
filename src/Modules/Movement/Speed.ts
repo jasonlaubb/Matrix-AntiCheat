@@ -61,7 +61,7 @@ async function AntiSpeedA (player: Player, now: number) {
                 if (!config.slient) player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
                 //A - false positive: low, efficiency: very high
                 const lastFlag = lastflag.get(player.id)
-                if (lastFlag && now - lastFlag < 2500)
+                if (lastFlag && now - lastFlag < 2450)
                     flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
                 lastflag.set(player.id, now)
                 playerInfo.highestSpeed = playerSpeedMph;

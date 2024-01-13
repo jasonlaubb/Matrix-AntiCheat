@@ -225,13 +225,13 @@ export default {
         enabled: true,
         maxReach: 4.2,
         maxYReach: 4.8,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4
     },
 
     antiFly: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         maxVelocity: 0.7,
         maxVL: 4
     },
@@ -252,9 +252,9 @@ export default {
 
     antiSpeed: {
         enabled: true,
-        mphThreshold: 200,
-        bpsThershold: 30.25,
-        punishment: "kick",
+        mphThreshold: 150,
+        bpsThershold: 28.75,
+        punishment: "none",
         maxVL: 4
     },
 
