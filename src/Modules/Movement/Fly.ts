@@ -120,7 +120,7 @@ async function AntiFly(player: Player, now: number) {
 	//fly [B]
 	//check for moving while fly hacking (detect some instant movement and more fast to detect movement hacks)
 	if (
-		velocity > 0.7 &&
+		velocity != 0 &&
 		Math.hypot(x, z) > 0.35 &&
 		!player.isOnGround &&
 		!instair &&
