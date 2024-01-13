@@ -66,13 +66,11 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
 export default {
     enable () {
         world.afterEvents.entityHitEntity.subscribe(antiAutoClicker)
-        world.afterEvents.entityHitBlock.subscribe(antiAutoClicker)
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {
         clickData.clear()
         world.afterEvents.entityHitEntity.unsubscribe(antiAutoClicker)
-        world.afterEvents.entityHitBlock.unsubscribe(antiAutoClicker)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
     }
 }
