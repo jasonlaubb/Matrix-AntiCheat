@@ -39,7 +39,8 @@ const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
         system.runTimeout(() => {
             player.removeTag("matrix:break-disabled")
         }, 60)
-    } else if (breakBPS < 11 && player.lastTouchBlockId != JSON.stringify(block.location)) {
+    }//this is disabled until fix it
+    /*else if (breakBPS < 11 && player.lastTouchBlockId != JSON.stringify(block.location)) {
         event.cancel = true
         system.run(() => {
             player.addTag("matrix:break-disabled")
@@ -48,7 +49,7 @@ const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
         system.runTimeout(() => {
             player.removeTag("matrix:break-disabled")
         }, 100)
-    }
+    }*/
 }
 
 const breakBlockAfter = ({ player }: PlayerBreakBlockAfterEvent) => player.lastTouchBlock = Date.now()
