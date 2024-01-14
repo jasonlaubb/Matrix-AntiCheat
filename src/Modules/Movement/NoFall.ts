@@ -35,7 +35,7 @@ async function AntiNoFall (player: Player, now: number) {
     } else playerVL[player.id] = 0
 
     //velocityY is 0, flag the player
-    if (y == 0 && playerVL[player.id] >= config.antiNoFall.float) {
+    if (y == 0 && playerVL[player.id] >= config.antiNoFall.float && !((!player.spawnTime || now - player.spawnTime < 12000) && xz == 0) {
         if (!config.slient) player.teleport(prevLoc);
         const lastflag = lastFlag.get(player.id)
         playerVL[player.id] = 0
@@ -61,6 +61,8 @@ const playerLeave = ({playerId}: PlayerLeaveAfterEvent) => {
     lastFlag.delete(playerId)
     delete playerVL[playerId]
 }
+
+const playerSpawn = ({player, initialSpawn: spawn}: PlayerSpawnAfterEvent) => spawn && player.spawnTime = Date.now()
 
 let id: number
 
