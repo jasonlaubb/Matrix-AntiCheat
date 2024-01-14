@@ -50,8 +50,8 @@ async function AntiFly(player: Player, now: number) {
 	//get the velocity
 	const {
 		y: velocity,
-		x,
-		z
+		//x,
+		//z
 	} = player.getVelocity();
 
 	//if player is on ground and velocity is 0, set the previous location
@@ -117,6 +117,7 @@ async function AntiFly(player: Player, now: number) {
 	}
 
 	player.lastVelLog = velocityLog[player.id];
+	/* Disable until fixed
 	//fly [B]
 	//check for moving while fly hacking (detect some instant movement and more fast to detect movement hacks)
 	if (

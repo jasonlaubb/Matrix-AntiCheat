@@ -32,7 +32,7 @@ const antiBot = () => {
     for (const player of players) {
             if (!player.notVerified) continue
             if (now - player.verifyTimer >= config.antiBot.timer * 1000 * 60) {
-                kick (player, "Expired Verification", "Matrix AntiCheat")
+                kick (player, "Expired verification", "(Bot defensive action)")
             }
 
             try {
@@ -55,13 +55,13 @@ const antiBot = () => {
                             player.tryVerify += 1
 
                             if (player.tryVerify > config.antiBot.maxTry) {
-                                kick (player, "Verify Failed", "Matrix AntiCheat")
+                                kick (player, "Anti bot verify failed", "(Bot defensive action)")
                                 return
                             }
                         }
                         return
                     } else if (Date.now() - player.verifyClickSpeed <= config.antiBot.clickSpeedThershold * 50) {
-                        flag(player, "Bot Attack", "A", config.antiBot.maxVL, config.antiBot.punishment, [lang(">Delay") + ":" + (now - player.verifyClickSpeed)]);
+                        flag(player, "Bot", "A", config.antiBot.maxVL, config.antiBot.punishment, [lang(">Delay") + ":" + (now - player.verifyClickSpeed)]);
                         return
                     }
                     player.sendMessage(`§bMatrix §7> §aYou have been verified successfully`)

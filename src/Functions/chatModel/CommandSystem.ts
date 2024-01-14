@@ -184,10 +184,10 @@ async function inputCommand (player: Player, message: string, prefix: string): P
                 }
                 case "remove": {
                     if (ranks.length > 0) {
-                        if (player.hasTag(`rank:${rank}`)) {
+                        if (ranks.includes(`rank:${rank}`)) {
                             system.run(() => {
                                 player.sendMessage(`§bMatrix §7>§g ${lang("-rank.hasremove").replace("%a", target.name)}`)
-                                player.removeTag(`rank:${rank}`)
+                                target.removeTag(`rank:${rank}`)
                             })
                         } else {
                             system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-rank.norank").replace("%a", target.name).replace("%b", rank)}`))

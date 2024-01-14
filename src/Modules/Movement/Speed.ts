@@ -61,7 +61,7 @@ async function AntiSpeedA (player: Player, now: number) {
                 if (!config.slient) player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
                 //A - false positive: low, efficiency: very high
                 const lastFlag = lastflag.get(player.id)
-                if (lastFlag && now - lastFlag < 2450)
+                if (lastFlag && now - lastFlag < 2450 && now - lastFlag > 550)
                     flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
                 lastflag.set(player.id, now)
                 playerInfo.highestSpeed = playerSpeedMph;
@@ -95,7 +95,7 @@ async function AntiSpeedB (player: Player, now: number) {
     //calulate the player block per second
     const bps = Math.hypot(x1 - x2, z1 - z2) / (now - data.recordTime) * 1000
 
-    if (bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 5000) {
+    if (bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 500) {
         player.teleport(data.location)
         flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">BlockPerSecond")}:${bps.toFixed(2)}`])
     }

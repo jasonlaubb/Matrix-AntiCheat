@@ -39,7 +39,7 @@ async function AntiNoFall (player: Player, now: number) {
         if (!config.slient) player.teleport(prevLoc);
         const lastflag = lastFlag.get(player.id)
         playerVL[player.id] = 0
-        if (lastflag && now - lastflag < 8000) {
+        if (lastflag && now - lastflag < 2000 && now - lastflag > 80) {
             flag (player, "NoFall", "A", config.antiNoFall.maxVL, config.antiNoFall.punishment, [lang(">velocityY") + ":" + + y.toFixed(2), lang(">velocityXZ") + ":" + + xz.toFixed(2)])
         }
         lastFlag.set(player.id, now)
@@ -48,7 +48,7 @@ async function AntiNoFall (player: Player, now: number) {
 
 const antiNofall = () => {
     const now = Date.now();
-    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator] })
+    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative] })
     for (const player of players) {
         if (isAdmin(player)) continue;
         

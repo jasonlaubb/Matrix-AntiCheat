@@ -184,11 +184,11 @@ export default {
      * The config of all modules
     */
     punishment_kick: {
-        reason: "cheating advantage"
+        reason: "Unfair advantage"
     },
     punishment_ban: {
         minutes: 120,
-        reason: "cheating advantage"
+        reason: "Unfair advantage"
     },
     example_anticheat_module: {
         enabled: true, // true mearns the module will be enabled, false means the module will be disabled
@@ -254,7 +254,7 @@ export default {
         enabled: true,
         mphThreshold: 150,
         bpsThershold: 28.75,
-        punishment: "none",
+        punishment: "kick",
         maxVL: 4
     },
 
@@ -327,8 +327,8 @@ export default {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: "none",
-        maxVL: 4
+        punishment: "kick",
+        maxVL: 11
     },
 
     antiTower: {
@@ -369,8 +369,8 @@ export default {
         enabled: false, 
         punishment: "ban",
         maxVL: 4,
-        maxBPS: 1,
-        toolLimit: 4,
+        maxBPS: 1.2,
+        toolLimit: 4.2,
         toolType: [
             "axe",
             "shovel",
@@ -378,8 +378,8 @@ export default {
             "sword"
         ],
         matchType: { //edit the tool type and it's break limit here
-            "wood": 3.85,
-            "stone": 5
+            "wood": 3.9,
+            "stone": 5.1
         }
     },
 
@@ -507,11 +507,14 @@ export default {
     },
     chatFilter: [
         "niger",
-        "nigers",
-        "gay",
-        "stupid",
-        "dumb",
-        "noob"
+        "nigg",
+        "fuck",
+        "shit",
+        "kys",
+        "ky$",
+        "retards",
+        "bitch",
+        "fisting"
     ],
 
     blacklistedMessages: [
@@ -525,6 +528,7 @@ export default {
         "https://",
         "http://",
         "the best minecraft bedrock utility mod",
-        "disepi/ambrosial"
+        "disepi/ambrosial",
+        "aras"
     ]
 }

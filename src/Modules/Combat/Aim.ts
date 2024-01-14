@@ -68,7 +68,7 @@ async function AntiAim (player: Player) {
 
     //D - false positive: very low, efficiency: mid
     const { x, z } = player.getVelocity()
-    if (!player.isGliding && (rotation.x % 1 == 0 || (rotation.y % 1 == 0 && Math.abs(rotation.y) != 90)) && rotation.x != 0 && rotation.y != 0 && Math.hypot(x, z) > 0.2) {
+    if (!player.isGliding && (rotation.x % 5 == 0 || (rotation.y % 5 == 0 && Math.abs(rotation.y) != 90)) && rotation.x != 0 && rotation.y != 0 && Math.hypot(x, z) > 0.2) {
         flag (player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, undefined)
         isFlagged = true
     }
