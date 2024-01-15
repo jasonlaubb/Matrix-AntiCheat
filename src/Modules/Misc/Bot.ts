@@ -18,7 +18,7 @@ const playerSpawn = ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) => 
     // wait 0.1 seconds
     system.runTimeout(() => {
         if (spawn) {
-            player.verifyTimer ??= Date.now()
+            player.verifyTimer = Date.now()
             player.notVerified = true
             player.sendMessage(`§bMatrix §7> §cFor security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown`);
         }
