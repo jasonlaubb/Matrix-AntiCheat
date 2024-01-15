@@ -66,12 +66,18 @@ async function AntiFly(player: Player, now: number) {
 	velocityLog[player.id] ??= 0;
 
 	if (prevLoc === undefined) return;
-
+        //fly [B] 
+//detect instant movement by check velocityLog == 1
+    if (velocityLog[player.id] == 1 && velocity <= 0 && !instair){
+    	velocityLog[player.id] = 0;
+        player.teleport(prevLoc)
+        flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
+    }
 	if (jumpBoost?.amplifier > 2 || levitation?.amplifier > 2) return;
 	if (velocity > config.antiFly.maxVelocity) {
 		++velocityLog[player.id];
 		lastVelocity.set(id, velocity);
-	} else if (velocity > 0 || (player.isOnGround && velocity == 0))
+	} else if (velocity < config.antiFly.maxVelocity || (player.isOnGround && velocity == 0))
 		velocityLog[player.id] = 0;
 
 	// if (velocity> 0.7) player.runCommand(`title @s actionbar xz = ${Math.hypot(x, z)}  | velocity  = ${velocity}  | ground = ${player.isOnGround}`)
