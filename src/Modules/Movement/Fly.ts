@@ -69,12 +69,7 @@ async function AntiFly(player: Player, now: number) {
 
 	if (jumpBoost?.amplifier > 2 || levitation?.amplifier > 2) return;
 	if (velocity > config.antiFly.maxVelocity) {
-		++velocityLog[player.id];
-		lastVelocity.set(id, velocity);
-	} else if (velocity > 0 || velocity == 0 && player.isOnGround) {
-		velocityLog[player.id] = 0
-	}
-
+	
 	// if (velocity> 0.7) player.runCommand(`title @s actionbar xz = ${Math.hypot(x, z)}  | velocity  = ${velocity}  | ground = ${player.isOnGround}`)
 
 	const flyMovement =
@@ -111,12 +106,17 @@ async function AntiFly(player: Player, now: number) {
 
 	player.lastVelLog = velocityLog[player.id];
 
-	if (player.lastVelocity && velocityLog[player.id] == 1 && velocity < 0 && player.lastVelocity > config.antiFly.maxVelocity && skip1 && skip2) {
+	if (player.lastVelocity && velocityLog[player.id] == 1 && velocity < 0 && player.lastVelocity > config.antiFly.maxVelocity && skip1 && skip2 && !instair) {
 		player.teleport(prevLoc);
 		flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(4)]);
 	}
 
 	player.lastVelocity = velocity
+		++velocityLog[player.id];
+		lastVelocity.set(id, velocity);
+	} else if (velocity > 0 || velocity == 0 && player.isOnGround) {
+		velocityLog[player.id] = 0
+ }
 }
 
 const antiFly = () => {
