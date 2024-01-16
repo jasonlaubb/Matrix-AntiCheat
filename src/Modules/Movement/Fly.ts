@@ -71,7 +71,7 @@ async function AntiFly(player: Player, now: number) {
 	if (velocity > config.antiFly.maxVelocity) {
 		++velocityLog[player.id];
 		lastVelocity.set(id, velocity);
-	} else if (velocity >= 0)
+	} else if (velocity <= config.antiFly.maxVelocity)
 		velocityLog[player.id] = 0;
 
 	// if (velocity> 0.7) player.runCommand(`title @s actionbar xz = ${Math.hypot(x, z)}  | velocity  = ${velocity}  | ground = ${player.isOnGround}`)
