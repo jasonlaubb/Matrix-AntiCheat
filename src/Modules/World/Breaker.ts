@@ -1,4 +1,4 @@
-import { Block, Player, PlayerBreakBlockBeforeEvent, PlayerLeaveAfterEvent, Vector3, system, world } from "@minecraft/server";
+import { Block, Player, PlayerBreakBlockBeforeEvent, PlayerLeaveAfterEvent, /*Vector3,*/ system, world } from "@minecraft/server";
 import config from "../../Data/Config";
 import { flag, isAdmin } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
@@ -62,6 +62,7 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
         }
 //  }
 
+/*
     const allPos = new Set(pointsBetween(player.getHeadLocation(), block.location))
     const anySolid = [...allPos].map(pos => player.dimension.getBlock(pos)).some(block => block?.isSolid)
 
@@ -74,9 +75,9 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
         system.run(() => 
             flag (player, "Breaker", "C", config.antiBreaker.maxVL, config.antiBreaker.punishment, [lang(">Type") + ":" + block.typeId])
         )
-    }
+    }*/
 }
-
+/*
 function pointsBetween (pos1: Vector3, pos2: Vector3): Vector3[] {
     pos1 = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) }
 
@@ -111,7 +112,7 @@ function pointsBetween (pos1: Vector3, pos2: Vector3): Vector3[] {
        points[i] = point;
     }
     return points.filter(pos => pos.x !== pos2.x && pos.y !== pos2.y && pos.z !== pos2.z && pos.x !== pos1.x && pos.y !== pos1.y && pos.z !== pos1.z)
-}
+}*/
 
 const antiBreaker = (event: PlayerBreakBlockBeforeEvent) => {
     const { player, block } = event

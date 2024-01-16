@@ -33,6 +33,8 @@ declare module "@minecraft/server" {
         lastSelectSlot: number;
         lastTouchBlock: number;
         lastTouchBlockId: string;
+        spawnTime: number;
+        lastXZLogged: number;
     }
     interface World {
         antiBotEnabled: boolean;

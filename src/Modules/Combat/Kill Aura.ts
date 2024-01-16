@@ -48,18 +48,20 @@ async function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: 
     if (hitEntity instanceof Player && distance > 3 && onFirstHit === true) {
         //get the angle
         const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(), damagingEntity.getRotation().y);
+        const rotationFloat: number = Math.abs(damagingEntity.getRotation().x)
+        const velocity = damagingEntity.getVelocity().y
 
         //if the angle is higher than the max angle, flag the player
-        if (angle > config.antiKillAura.minAngle) {
+        if (angle > config.antiKillAura.minAngle && rotationFloat < 79) {
             //B - false positive: low, efficiency: mid
             flag (damagingEntity, 'Kill Aura', 'B', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
             flagged = true
         }
 
         //calulate the limit of xz, also Math lol
-        const limitOfXZ = Math.cos(Math.abs(damagingEntity.getRotation().x) * Math.PI / 180) * 6.1 + 2.4
+        const limitOfXZ = Math.cos(rotationFloat * Math.PI / 180) * 6.1 + 2.4
         //if player attack higher than the limit, flag him
-        if (distance > limitOfXZ && damagingEntity.getVelocity().y >= 0) {
+        if (distance > limitOfXZ && velocity >= 0) {
             const lastflag = lastFlag.get(damagingEntity.id)
             if (lastflag && Date.now() - lastflag < 4000) {
                 flag (damagingEntity, 'Kill Aura', 'C', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">distance")}:${distance.toFixed(2)}`,`${lang(">Limit")}:${limitOfXZ.toFixed(2)}`])

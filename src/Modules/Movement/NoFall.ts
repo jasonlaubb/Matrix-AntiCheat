@@ -1,4 +1,4 @@
-import { world, GameMode, Player, Vector3, system, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { world, GameMode, Player, Vector3, system, PlayerLeaveAfterEvent, PlayerSpawnAfterEvent } from "@minecraft/server";
 import { c, flag, isAdmin } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
@@ -35,7 +35,8 @@ async function AntiNoFall (player: Player, now: number) {
     } else playerVL[player.id] = 0
 
     //velocityY is 0, flag the player
-    if (y == 0 && playerVL[player.id] >= config.antiNoFall.float && !((!player.spawnTime || now - player.spawnTime < 12000) && xz == 0) {
+    if (y == 0 && playerVL[player.id] >= config.antiNoFall.float) {
+        if (xz == 0 && player.spawnTime && now - player.spawnTime < 12000) return
         if (!config.slient) player.teleport(prevLoc);
         const lastflag = lastFlag.get(player.id)
         playerVL[player.id] = 0
@@ -62,7 +63,7 @@ const playerLeave = ({playerId}: PlayerLeaveAfterEvent) => {
     delete playerVL[playerId]
 }
 
-const playerSpawn = ({player, initialSpawn: spawn}: PlayerSpawnAfterEvent) => spawn && player.spawnTime = Date.now()
+const playerSpawn = ({player, initialSpawn: spawn}: PlayerSpawnAfterEvent) => spawn && (player.spawnTime = Date.now())
 
 let id: number
 
@@ -70,11 +71,13 @@ export default {
     enable () {
         id = system.runInterval(antiNofall, 1)
         world.afterEvents.playerLeave.subscribe(playerLeave)
+        world.afterEvents.playerSpawn.subscribe(playerSpawn)
     },
     disable () {
         lastLocation.clear()
         system.clearRun(id)
         playerVL = {}
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
+        world.afterEvents.playerSpawn.unsubscribe(playerSpawn)
     }
 }

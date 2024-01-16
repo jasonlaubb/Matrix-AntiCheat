@@ -81,7 +81,7 @@ const chatSend = ({ sender: player }: ChatSendAfterEvent) => {
     const config = c()
     if (player.notVerified && player.verifying) {
         if (isAdmin(player)) return
-        flag(player, "Bot Attack", "B", config.antiBot.maxVL, config.antiBot.punishment, undefined);
+        flag(player, "Bot", "B", config.antiBot.maxVL, config.antiBot.punishment, undefined);
     }
 }
 

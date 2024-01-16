@@ -254,7 +254,8 @@ export default {
         enabled: true,
         mphThreshold: 150,
         bpsThershold: 28.75,
-        punishment: "kick",
+        clipThershold: 7,
+        punishment: "ban",
         maxVL: 4
     },
 
@@ -327,8 +328,8 @@ export default {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: "kick",
-        maxVL: 11
+        punishment: "ban",
+        maxVL: 4
     },
 
     antiTower: {
@@ -465,7 +466,7 @@ export default {
 
     antiElytraFly: {
         enabled: true,
-        maxVL: 0,
+        maxVL: 4,
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
@@ -501,7 +502,7 @@ export default {
         enabled: false,
         punishment: "ban",
         maxVL: 0,
-        clickSpeedThershold: 2, // 1 = 1 tick or 50 mile second
+        clickSpeedThershold: 6, // 1 = 1 tick or 50 mile second
         timer: 1, // 1 = 1 minute
         maxTry: 3
     },

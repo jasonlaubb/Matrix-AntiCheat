@@ -50,12 +50,12 @@ async function AntiFly(player: Player, now: number) {
 	//get the velocity
 	const {
 		y: velocity,
-		//x,
-		//z
+		x,
+		z
 	} = player.getVelocity();
 
 	//if player is on ground and velocity is 0, set the previous location
-	if (isOnGround && velocity === 0) {
+	if (isOnGround && velocity == 0 && x == 0 && z == 0) {
 		previousLocations.set(id, player.location);
 	}
 
@@ -66,31 +66,25 @@ async function AntiFly(player: Player, now: number) {
 	velocityLog[player.id] ??= 0;
 
 	if (prevLoc === undefined) return;
-        //fly [B] 
-//detect instant movement by check velocityLog == 1
-    if (velocityLog[player.id] == 1 && velocity <= 0 && !instair){
-    	velocityLog[player.id] = 0;
-        player.teleport(prevLoc)
-        flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]);
-    }
+
 	if (jumpBoost?.amplifier > 2 || levitation?.amplifier > 2) return;
 	if (velocity > config.antiFly.maxVelocity) {
 		++velocityLog[player.id];
 		lastVelocity.set(id, velocity);
-	} else if (velocity < config.antiFly.maxVelocity || (player.isOnGround && velocity == 0))
+	} else if (velocity > 0 || (player.isOnGround && velocity == 0))
 		velocityLog[player.id] = 0;
 
 	// if (velocity> 0.7) player.runCommand(`title @s actionbar xz = ${Math.hypot(x, z)}  | velocity  = ${velocity}  | ground = ${player.isOnGround}`)
 
 	const flyMovement =
-		(velocityLog[player.id] > 0 && velocity <= 0) ||
-		(velocity < 0.7 && player.fallDistance < -1.5);
+		(velocityLog[player.id] > 1 && velocity <= 0) ||
+		(velocity < config.antiFly.maxVelocity && player.fallDistance < -1.5)
 	const clientFly =
-		velocityLog[player.id] > 1 && player?.lastVelLog == velocityLog[player.id];
+		velocityLog[player.id] > 0 && player?.lastVelLog == velocityLog[player.id];
 
 	const skip1 = !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) &&
 		!(player.threwTridentAt && now - player.threwTridentAt < 5000);
-	const skip2 = !player.isFlying && !player.hasTag("matrix:slime") && !player.isGliding;
+	const skip2 = !player.isFlying && !player.isGliding;
 	const skip3 = !(jumpBoost && jumpBoost?.amplifier > 2) &&
 		!(levitation && levitation?.amplifier > 2);
 
@@ -108,57 +102,18 @@ async function AntiFly(player: Player, now: number) {
 		player.teleport(prevLoc);
 
 		if (lastflag && now - lastflag <= 4000 && now - lastflag >= 500)
-			flag(
-				player,
-				"Fly",
-				"A",
-				config.antiFly.maxVL,
-				config.antiFly.punishment,
-				[lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2)]
-			);
-
+			flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + lastVelocity.get(id).toFixed(2)]);
 		velocityLog[player.id] = 0;
 		lastVelocity.set(id, undefined);
 		lastFlag.set(id, now);
 	}
 
 	player.lastVelLog = velocityLog[player.id];
-	/* Disable until fixed
-	//fly [B]
-	//check for moving while fly hacking (detect some instant movement and more fast to detect movement hacks)
-	if (
-		velocity != 0 &&
-		Math.hypot(x, z) > 0.35 &&
-		!player.isOnGround &&
-		!instair &&
-		!skip1 &&
-		!player.hasTag("matrix:knockback")
-	) {
+
+	if (velocityLog[player.id] == 1 && velocity < 0 && skip1 && skip2) {
 		player.teleport(prevLoc);
-		flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [
-			lang(">velocityY") + ":" + +lastVelocity.get(id).toFixed(2),
-		]);
+		flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity]);
 	}
-	/* It's removed from Matrix, it's no longer in use
-	//efficiency: high | false postive: unknown
-	//fly (C) detect players flying on high distance
-	if (player.isOnGround && velocity > 0)
-		player.addTag("matrix:runned_velocity");
-	if (
-		velocity > 0.7 &&
-		!player.isOnGround &&
-		!player.hasTag("matrix:runned_velocity") &&
-		!skip1 &&
-		!player.isInWater
-	) {
-		player.teleport(prevLoc);
-		flag(player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [
-			lang(">velocityY") + ":" + +velocity.toFixed(2),
-		]);
-	}
-	if (!player.isOnGround && velocity < 0)
-		player.removeTag("matrix:runned_velocity");
-        */
 }
 
 const antiFly = () => {

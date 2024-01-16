@@ -10,7 +10,7 @@ import { flag, isAdmin, getSpeedIncrease1, getSpeedIncrease2, c } from "../../As
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang.js";
 
-const speedData = new Map();
+const speedData = new Map<string, PlayerInfo>();
 const lastflag = new Map<string, number>();
 
 /**
@@ -95,28 +95,42 @@ async function AntiSpeedB (player: Player, now: number) {
     //calulate the player block per second
     const bps = Math.hypot(x1 - x2, z1 - z2) / (now - data.recordTime) * 1000
 
-    if (bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 500) {
+    if (bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 90) {
         player.teleport(data.location)
         flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">BlockPerSecond")}:${bps.toFixed(2)}`])
     }
 }
 
-async function teleportTracker () {
+async function AntiSpeedC () {
     const players = world.getAllPlayers()
     const now = Date.now()
     for (const player of players) {
         const { x, z } = player.getVelocity()
-        if (Math.hypot(x, z) === 0) {
+        const xz = Math.hypot(x, z)
+        // collect the data
+        if (xz == 0) {
             player.lastTeleportTime = now
         }
         if (player.isFlying || player.isGliding || player.isSleeping) {
             player.lastSpeedSkipCheck = now
         }
+
+        const safePos = speedData.get(player.id)?.initialLocation
+        if (safePos === undefined) continue
+
+        if (isAdmin(player) || player.isFlying || player.isGliding) continue
+        const config = c()
+
+        if (player?.lastXZLogged && xz == 0 && player.lastXZLogged > config.antiSpeed.clipThershold && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 1000)) {
+            player.teleport(safePos)
+            flag(player, 'Speed', 'C', config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" + player.lastXZLogged.toFixed(2)])
+        }
+        player.lastXZLogged = xz
     }
 }
 
 interface PlayerInfo {
-    highestSpeed: number;
+    highestSpeed?: number;
     initialLocation: Vector3;
 }
 
@@ -160,7 +174,7 @@ export default {
         id = {
             a: system.runInterval(antiSpeedA, 2),
             b: system.runInterval(antiSpeedB, 10),
-            c: system.runInterval(teleportTracker, 1)
+            c: system.runInterval(AntiSpeedC, 1)
         }
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
