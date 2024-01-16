@@ -19,7 +19,7 @@ const blockBreakData = new Map<string, number[]>();
  * it detects if a player breaks more than 5 blocks in a tick.
  */
 
-async function AntiNuker (player: Player, block: Block) {
+async function AntiNuker (player: Player, block: Block, itemStack: itemStack) {
     if (player.hasTag("matrix:break-disabled") || block?.isAir) {
         return;
     }
@@ -48,7 +48,7 @@ async function AntiNuker (player: Player, block: Block) {
             system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
             recoverBlockBreak(player.id, 200, player.dimension)
             blockBreakData.delete(player.id); 
-            if(hasEfficiency > 2){
+            if(hasEfficiency <= 2 || !hasEffiency){
             flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, [lang(">Block") + ":" + block.typeId]);
             } 
         })
