@@ -29,7 +29,7 @@ async function AntiNuker (player: Player, block: Block) {
 
     //get the block break count in the 1 tick
     let blockBreakCount: number[] = blockBreakData.get(player.id)?.filter(time => timeNow - time < 50) ?? [];
-
+    const hasEfficiency = itemStack ? itemStack.getComponent(ItemEnchantsComponent.componentId).enchantments.hasEnchantment(MinecraftEnchantmentTypes.Efficiency) != 0 : false
     //if the block not the fast broken block, push the block right now
     if (!fastBrokenBlocks.includes(block.typeId as MinecraftBlockTypes)) {
         blockBreakCount.push(timeNow);
@@ -47,8 +47,10 @@ async function AntiNuker (player: Player, block: Block) {
             //prevent the player from breaking blocks for 3 seconds
             system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
             recoverBlockBreak(player.id, 200, player.dimension)
-            blockBreakData.delete(player.id);
+            blockBreakData.delete(player.id); 
+            if(hasEfficiency > 2){
             flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, [lang(">Block") + ":" + block.typeId]);
+            } 
         })
     }
 
