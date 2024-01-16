@@ -35,6 +35,7 @@ declare module "@minecraft/server" {
         lastTouchBlockId: string;
         spawnTime: number;
         lastXZLogged: number;
+        lastVelocity: number;
     }
     interface World {
         antiBotEnabled: boolean;

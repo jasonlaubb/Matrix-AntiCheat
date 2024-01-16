@@ -352,10 +352,11 @@ export default {
     antiNameSpoof: {
         enabled: true,
         punishment: "ban"
+        // nothing to give you set :doge:
     },
 
     antiAutoTool: {
-        enabled: true,
+        enabled: false, //unstable module >A<
         punishment: "ban",
         maxVL: 4,
         toolType: [
@@ -370,6 +371,7 @@ export default {
         enabled: false, 
         punishment: "ban",
         maxVL: 4,
+        solidOnly: true,
         maxBPS: 1.2,
         toolLimit: 4.2,
         toolType: [
