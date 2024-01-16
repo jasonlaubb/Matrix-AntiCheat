@@ -14,7 +14,7 @@ import lang from "../../Data/Languages/lang";
 
 const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
     const { player, block, itemStack } = event
-    if (isAdmin(player) || block.isAir || player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
+    if (isAdmin(player) || block.isAir || player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1) || fastBrokenBlocks.includes(block.typeId as MinecraftBlockTypes)) return;
     const config = c()
     const typeId = itemStack?.typeId ?? "minecraft:air"
 
