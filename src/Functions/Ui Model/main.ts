@@ -10,13 +10,15 @@ const ui = new ActionFormData()
   ui.button("Config") 
   ui.button("About") 
   ui.show(attacker).then(result => {
-    if(result.selection == 0){
+    switch (result.selection){
+        case 1:{
        commandUI(player) 
-  } if(result.selection == 1){
+      } case 2:{
        configUI(player) 
-  } if(result.selection == 2){
+      } case 3:{
        aboutUI(player) 
-  } 
+      } 
+   } 
  }) 
 } 
 function commandUI(player){
@@ -35,6 +37,23 @@ function commandUI(player){
   ui.button("unmute") 
 } 
 function configUI(player){
+  const ui = new ActionFormData() 
   ui.title("config UI") 
-  ui.body("Admin tool help you enable and disable easily")
+  ui.body("Admin tool help you enable and disable modules easily")
+  ui.button("AntiKillaura "+status("killaura")) 
+  ui.button("AntiReach "+status("reach")) 
+  ui.button("AntiAutoClicker "+status("autoClicker")) 
+  ui.button("AntiBlockReach "+status("blockReach")) 
+  ui.button("AntiTower "+status("tower")) 
+  ui.button("AntiScaffold "+status("scaffold")) 
+  ui.button("AntiNuker "+status("nuker")) 
+  ui.button("AntiFastUse "+status("fastUse")) 
+  } 
+
+
+
+
+
+
+
   } 
