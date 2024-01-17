@@ -42,6 +42,8 @@ async function spammingWarner (player: Player, data: Data) {
     }
 };
 
+import ChatFilterData from "../../Data/ChatFilterData";
+
 function antiSpamModule (message: string, player: Player) {
     const config = c ()
     
@@ -57,16 +59,18 @@ function antiSpamModule (message: string, player: Player) {
         previousMessage.set(player.id, message);
     }
 
+    const lowerCase = message.toLowerCase()
+
     if (message.length > config.antiSpam.maxCharacterLimit) {
         player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.long")} §8(${message.length}/${config.antiSpam.maxCharacterLimit})`);
         isSpamming = true
-    } else if (config.chatFilter.some((word) => message.toLowerCase().includes(word))) {
+    } else if (ChatFilterData.some((word) => lowerCase.includes(word))) {
         system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.filter")}`));
         isSpamming = true
     }
 
     // Check if the message contain a blacklisted word
-    if (config.blacklistedMessages.some((word) => message.toLowerCase().includes(word))) {
+    if (config.blacklistedMessages.some((word) => lowerCase.includes(word))) {
 
         // cancel the message
         isSpamming = true;

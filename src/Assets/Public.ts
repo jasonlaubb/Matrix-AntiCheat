@@ -35,8 +35,8 @@ world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
 });
 
 world.afterEvents.entityHurt.subscribe(event => {
-    const player = event.hurtEntity;
-    if (player instanceof Player && (event.damageSource.cause == EntityDamageCause.blockExplosion || event.damageSource.cause == EntityDamageCause.entityExplosion || event.damageSource.cause === EntityDamageCause.entityAttack)) {
+    const player = event.hurtEntity as Player;
+    if ((event.damageSource.cause == EntityDamageCause.blockExplosion || event.damageSource.cause == EntityDamageCause.entityExplosion || event.damageSource.cause === EntityDamageCause.entityAttack)) {
         player.lastExplosionTime = Date.now();
 
         if (!player.hasTag("matrix:knockback")) {
@@ -45,7 +45,8 @@ world.afterEvents.entityHurt.subscribe(event => {
             player.removeTag("matrix:knockback")
         }
     }
-});
+    player.lastApplyDamage = Date.now()
+}, { entityTypes: ["minecraft:player"] });
 
 world.beforeEvents.itemUse.subscribe((event) => {
     const player = event.source

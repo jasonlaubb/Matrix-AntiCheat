@@ -223,9 +223,9 @@ export default {
 
     antiReach: {
         enabled: true,
-        maxReach: 4.2,
+        maxReach: 4.21,
         maxYReach: 4.8,
-        punishment: "ban",
+        punishment: "kick",
         maxVL: 4
     },
 
@@ -261,9 +261,10 @@ export default {
 
     antiNuker: {
         enabled: true,
-        maxBreakPerTick: 5,
+        maxBreakPerTick: 6,
         timeout: 100,
         punishment: "ban",
+        solidOnly: true,
         maxVL: 0
     },
 
@@ -357,7 +358,7 @@ export default {
 
     antiAutoTool: {
         enabled: false, //unstable module >A<
-        punishment: "ban",
+        punishment: "kick",
         maxVL: 4,
         toolType: [
             "axe",
@@ -472,7 +473,7 @@ export default {
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "kick"
+        punishment: "ban"
     },
 
     antiFastUse: {

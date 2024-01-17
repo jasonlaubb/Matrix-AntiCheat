@@ -36,6 +36,7 @@ const includeStair = ({ location: { x: px, y: py, z: pz }, dimension }: Player) 
 	})?.typeId
 ].includes("stair");
 
+
 async function AntiFly(player: Player, now: number) {
 	const config = c();
 	//constant the infomation
@@ -67,9 +68,13 @@ async function AntiFly(player: Player, now: number) {
 
 	if (prevLoc === undefined) return;
 
-	if (jumpBoost?.amplifier > 2 || levitation?.amplifier > 2) return;
 	if (velocity > config.antiFly.maxVelocity) {
-	
+	    velocityLog[player.id] += 1;
+	    lastVelocity.set(id, velocity);
+    } else if (velocity > 0 || velocity == 0 && player.isOnGround)
+	    velocityLog[player.id] = 0
+
+	if (jumpBoost?.amplifier > 2 || levitation?.amplifier > 2) return;
 	// if (velocity> 0.7) player.runCommand(`title @s actionbar xz = ${Math.hypot(x, z)}  | velocity  = ${velocity}  | ground = ${player.isOnGround}`)
 
 	const flyMovement =
@@ -111,12 +116,7 @@ async function AntiFly(player: Player, now: number) {
 		flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(4)]);
 	}
 
-	player.lastVelocity = velocity
-		++velocityLog[player.id];
-		lastVelocity.set(id, velocity);
-	} else if (velocity > 0 || velocity == 0 && player.isOnGround) {
-		velocityLog[player.id] = 0
- }
+    player.lastVelocity = velocity
 }
 
 const antiFly = () => {
@@ -144,7 +144,7 @@ let id: number;
 
 export default {
 	enable() {
-		(id = system.runInterval(antiFly, 1)),
+		id = system.runInterval(antiFly, 1);
 		world.afterEvents.playerLeave.subscribe(playerLeave);
 	},
 	disable() {
