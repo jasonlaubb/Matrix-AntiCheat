@@ -42,8 +42,8 @@ async function menu (player: Player) {
 }
 
 async function selectPlayer (player: Player) {
-    const pointAllPlayer = world.getPlayers()
-    const menu = new ActionFormData()
+    const pointAllPlayer = world.getAllPlayers()
+    const selectMenu = new ActionFormData()
         .title("Select online player")
     for (const target of pointAllPlayer) {
         let des = ""
@@ -54,7 +54,7 @@ async function selectPlayer (player: Player) {
         }
         menu.button(target.name + des)
     }
-    const result = await menu.show(player)
+    const result = await selectMenu.show(player)
     if (result.canceled) return null
     return pointAllPlayer[result.selection] ?? null
 }
