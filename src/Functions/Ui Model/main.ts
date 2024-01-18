@@ -59,7 +59,7 @@ async function selectPlayer (player: Player) {
     if (result.canceled) return null
     return pointAllPlayer[result.selection] ?? null
 }
-async function actions (target: Player) {
+async function actions (player: Player, target: Player) {
     .title("Select action") 
     .button("Op") 
     .button("deop")  
@@ -74,6 +74,48 @@ async function actions (target: Player) {
     .button("Echestwipe") 
     .button("Invsee")  
     .button("Invcopy")  
+    .show(player).then(res => {
+    switch (res.selection){
+        case 0:{
+      inputCommand(player,`op "${target.name}"`,config.prefix) 
+            } 
+        case 1:{
+      inputCommand(player,`deop "${target.name}"`,config.prefix) 
+            } 
+        case 2:{
+      inputCommand(player,`ban "${target.name}"`,config.prefix) 
+            } 
+        case 3:{
+      inputCommand(player,`unban "${target.name}"`,config.prefix) 
+            } 
+        case 4:{
+      inputCommand(player,`freeze "${target.name}"`,config.prefix) 
+            } 
+        case 5:{
+      inputCommand(player,`unfreeze "${target.name}"`,config.prefix) 
+            } 
+        case 6:{
+      inputCommand(player,`mute "${target.name}"`,config.prefix) 
+            } 
+        case 7:{
+      inputCommand(player,`unmute "${target.name}"`,config.prefix) 
+            } 
+        case 8:{
+      inputCommand(player,`vanish "${target.name}"`,config.prefix) 
+            } 
+        case 9:{
+      inputCommand(player,`unvanish "${target.name}"`,config.prefix) 
+            } 
+        case 10:{
+      inputCommand(player,`echestwipe "${target.name}"`,config.prefix) 
+            } 
+        case 11:{
+      inputCommand(player,`invsee "${target.name}"`,config.prefix) 
+            } 
+        case 12:{
+      inputCommand(player,`invcopy "${target.name}"`,config.prefix) 
+            } 
 
     } 
+} 
     
