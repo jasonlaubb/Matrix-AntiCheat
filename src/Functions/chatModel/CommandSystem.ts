@@ -42,7 +42,7 @@ function blockUsage (player: Player, setting: Cmds) {
     return false
 }
 
-async function inputCommand (player: Player, message: string, prefix: string): Promise<any> {
+function inputCommand (player: Player, message: string, prefix: string): Promise<any> {
     const config = c()
     const regax = turnRegax(message, prefix)
 
