@@ -39,12 +39,14 @@ async function ElytraFly (player: Player, now: number) {
         const ratio = player.fallDistance / (velocity ** 2) * player.getRotation().x ** 2 / 56000
 
         if (!player.hasTag("matrix:stop-gliding") && ratio > config.antiElytraFly.maxRatio && ratio !== Infinity && player.fallDistance !== 1 && player.lastGliding && now - player.lastGliding > 1000 && !(player.lastGlidingFire && now - player.lastGlidingFire < 7000)) {
-            if (!config.slient) {
-                player.teleport(lastPos)
+            system.run(() => {
+                if (player.lastGlidingFire && now - player.lastGlidingFire < 90) return
+                if (!config.slient)
+                    player.teleport(lastPos)
+                player.addTag("matrix:stop-gliding")
+                system.runTimeout(() => player.removeTag("matrix:stop-gliding"), 10)
+                flag (player, "Elytra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
             }
-            player.addTag("matrix:stop-gliding")
-            system.runTimeout(() => player.removeTag("matrix:stop-gliding"), 10)
-            flag (player, "Elytra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
         }
     } else {
         fallDistances.set(player.id, undefined)
