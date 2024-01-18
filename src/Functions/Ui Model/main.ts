@@ -17,33 +17,24 @@ async function menu (player: Player) {
         .button("Exit", "textures/ui/redX1.png")
         .show(player).then(res => {
             if (res.canceled) return;
+            // player: The admin which using the ui
             switch (res.selection) {
                 case 0: {
+                    // target: The player which selected as a target
                     selectPlayer(player).then(target => {
+                        // Checks if player selected a valid target
                         if (target !== null) {
-                            if (isAdmin(player)) {
-                            switch (target.selection) 
-                                case 1:{
-                                .title("Admin GUI") 
-                            for (let players of world.getPlayers()){
-                                if (players.name == player.name){
-                                .button(player.name+" §c[YOU]")
-                             } else if(players.name != player.name){
-                               if(isAdmin(players)){
-                                .button(players.name+" §c[Admin]") 
-                               } else if(!isAdmin(players)){
-                                .button(players.name)
-                                 } 
-                                } 
-                               } else {
-                                //nomal manage player ui
+                            if (isAdmin(target)) {
+                                // If player selected an admin
+                            } else {
+                                // Player selected a normal player
                             }
                         }
                     })
                     break
                 }
                 case 1: {
-                    // wait
+                    // If player wants to set the amticheat
                     break
                 }
             }
