@@ -20,7 +20,7 @@ const clickData: Map<string, ClickData> = new Map<string, ClickData>();
  * @description This checks if the player is clicking more than 22 times per second.
  */
 
-async function AutoClicker (player: Player) {
+function AutoClicker (player: Player) {
     const config = c()
     const currentTime: number = Date.now();
     const { id } = player;
