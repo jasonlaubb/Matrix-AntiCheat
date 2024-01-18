@@ -22,8 +22,20 @@ async function menu (player: Player) {
                     selectPlayer(player).then(target => {
                         if (target !== null) {
                             if (isAdmin(player)) {
-                                //unfinished
-                            } else {
+                            switch (target.selection) 
+                                case 1:{
+                                .title("Admin GUI") 
+                            for (let players of world.getPlayers()){
+                                if (players.name == player.name){
+                                .button(player.name+" §c[YOU]")
+                             } else if(players.name != player.name){
+                               if(isAdmin(players)){
+                                .button(players.name+" §c[Admin]") 
+                               } else if(!isAdmin(players)){
+                                .button(players.name)
+                                 } 
+                                } 
+                               } else {
                                 //nomal manage player ui
                             }
                         }
