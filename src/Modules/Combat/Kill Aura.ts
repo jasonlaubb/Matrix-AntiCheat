@@ -20,7 +20,7 @@ import lang from "../../Data/Languages/lang.js";
 const hitLength = new Map<string, any[]>();
 const lastFlag = new Map<string, number>();
 
-async function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolean) {
+function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolean) {
     if (damagingEntity.hasTag("matrix:pvp-disabled")) return
 
     //constant the infomation
