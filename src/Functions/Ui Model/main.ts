@@ -74,7 +74,7 @@ async function actions (player: Player, target: Player) {
     .button("Echestwipe") 
     .button("Invsee")  
     .button("Invcopy")  
-    .button("§cExit, "textures/ui/redX1.png") 
+    .button("§cExit", "textures/ui/redX1.png") 
     .show(player).then(res => {
     switch (res.selection){
         case 0:{
