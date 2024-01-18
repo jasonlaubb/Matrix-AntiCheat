@@ -61,13 +61,20 @@ async function selectPlayer (player: Player) {
 }
 async function actions (target: Player) {
     .title("Select action") 
+    .button("Op") 
+    .button("deop")  
     .button("Ban") 
     .button("Unban")  
+    .button("UnbanList")  
     .button("Freeze")  
     .button("Unfreeze")  
     .button("Mute")  
     .button("Unmute")  
-    .button("lockdown")  
+    .button("Vanish")  
+    .button("Unvanish")  
+    .button("Lockdown")  
+    .button("Lockdowncode") 
+    .button("Echestwipe") 
     .button("Invsee")  
     .button("Invcopy")  
     } 
