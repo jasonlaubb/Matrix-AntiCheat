@@ -3,7 +3,7 @@ import { ActionFormData } from "@minecraft/server-ui";
 import { isAdmin } from "../../Assets/Util";
 
 export const adminUI = (player: Player) => system.run(() => menu(player))
-async function menu (player: Player) {
+function menu (player: Player) {
     if (!isAdmin(player)) {
         //prevent no admin open ui mistakenly
         player.sendMessage(`§bMatrix §7> §cError: Access denied!`)
