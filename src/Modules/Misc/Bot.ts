@@ -10,19 +10,20 @@ import lang from "../../Data/Languages/lang";
 */
 
 const playerSpawn = ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
+    if (!spawn) return
     if (isAdmin(player)) {
         player.verified = true
         return
     }
-    player.removeTag("matrix:verified")
+    player.notVerified = undefined
     // wait 0.1 seconds
-    system.runTimeout(() => {
-        if (spawn) {
-            player.verifyTimer = Date.now()
-            player.notVerified = true
-            player.sendMessage(`§bMatrix §7> §cFor security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown`);
-        }
-    }, 2)
+    system.run(() => {
+        player.verifying = false
+        player.removeTag("matrix:verified")
+        player.verifyTimer = Date.now()
+        player.notVerified = true
+        player.sendMessage(`§bMatrix §7> §cFor security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown`)
+    })
 };
 
 const antiBot = () => {
