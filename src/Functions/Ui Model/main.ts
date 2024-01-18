@@ -26,7 +26,7 @@ function menu (player: Player) {
                         // Checks if player selected a valid target
                         if (target !== null) {
                             if (isAdmin(target)) {
-                                // If player selected an admin
+                                actions(player, target) 
                             } else {
                                 // Player selected a normal player
                             }
@@ -74,6 +74,7 @@ async function actions (player: Player, target: Player) {
     .button("Echestwipe") 
     .button("Invsee")  
     .button("Invcopy")  
+    .button("§cExit, "textures/ui/redX1.png") 
     .show(player).then(res => {
     switch (res.selection){
         case 0:{
