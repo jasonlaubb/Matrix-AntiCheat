@@ -1,59 +1,57 @@
-// It's empty! Let fill 100k line!
-//lets do that
-import { world, system } from "@minecraft/server"
-import { ActionFormData } from "@minecraft/server-ui"
-function UI(player){
-const ui = new ActionFormData() 
-  ui.title("Admin gui") 
-  ui.body("Admin tool for manage matrix easily") 
-  ui.button("§cCommands") 
-  ui.button("Config") 
-  ui.button("About") 
-  ui.show(attacker).then(result => {
-    switch (result.selection){
-        case 1:{
-       commandUI(player) 
-      } case 2:{
-       configUI(player) 
-      } case 3:{
-       aboutUI(player) 
-      } 
-   } 
- }) 
-} 
-function commandUI(player){
-  const ui = new ActionFormData() 
-  ui.title("Command UI") 
-  ui.body("Admin tool help you use commands easily")
-  ui.button("ban") 
-  ui.button("unban") 
-  ui.button("lockdown") 
-  ui.button("invsee") 
-  ui.button("invcopy") 
-  ui.button("kick") 
-  ui.button("freeze") 
-  ui.button("unfreeze") 
-  ui.button("mute") 
-  ui.button("unmute") 
-} 
-function configUI(player){
-  const ui = new ActionFormData() 
-  ui.title("config UI") 
-  ui.body("Admin tool help you enable and disable modules easily")
-  ui.button("AntiKillaura "+status("killaura")) 
-  ui.button("AntiReach "+status("reach")) 
-  ui.button("AntiAutoClicker "+status("autoClicker")) 
-  ui.button("AntiBlockReach "+status("blockReach")) 
-  ui.button("AntiTower "+status("tower")) 
-  ui.button("AntiScaffold "+status("scaffold")) 
-  ui.button("AntiNuker "+status("nuker")) 
-  ui.button("AntiFastUse "+status("fastUse")) 
-  } 
+import { system, Player, world } from "@minecraft/server";
+import { ActionFormData } from "@minecraft/server-ui";
+import { isAdmin } from "../../Assets/Util";
 
+export const adminUI = (player: Player) => system.run(() => menu(player))
+async function menu (player: Player) {
+    if (!isAdmin(player)) {
+        //prevent no admin open ui mistakenly
+        player.sendMessage(`§bMatrix §7> §cError: Access denied!`)
+        return
+    }
 
+    new ActionFormData()
+        .title("Admin GUI")
+        .button("Manage Players", "textures/ui/FriendsDiversity.png")
+        .button("Settings", "textures/ui/gear.png")
+        .button("Exit", "textures/ui/redX1.png")
+        .show(player).then(res => {
+            if (res.canceled) return;
+            switch (res.selection) {
+                case 0: {
+                    selectPlayer(player).then(target => {
+                        if (target !== null) {
+                            if (isAdmin(player)) {
+                                //unfinished
+                            } else {
+                                //nomal manage player ui
+                            }
+                        }
+                    })
+                    break
+                }
+                case 1: {
+                    // wait
+                    break
+                }
+            }
+        })
+}
 
-
-
-
-
-  } 
+async function selectPlayer (player: Player) {
+    const pointAllPlayer = world.getPlayers()
+    const menu = new ActionFormData()
+        .title("Select online player")
+    for (const target of pointAllPlayer) {
+        let des = ""
+        if (player.name == target.name) {
+            des = "\n§c§lYou"
+        } else if (isAdmin(player)) {
+            des = "\n§c§lAdmin"
+        }
+        menu.button(target.name + des)
+    }
+    const result = await menu.show(player)
+    if (result.canceled) return null
+    return pointAllPlayer[result.selection] ?? null
+}
