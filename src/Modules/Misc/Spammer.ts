@@ -7,7 +7,7 @@ import lang from "../../Data/Languages/lang";
  * @description This check can detect players with spammer clients
  */
 
-async function antiSpammer ({ sender: player }: ChatSendAfterEvent) {
+function antiSpammer ({ sender: player }: ChatSendAfterEvent) {
     const config = c()
 
     system.run(() => {
