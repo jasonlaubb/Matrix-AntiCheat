@@ -72,8 +72,9 @@ const antiBot = () => {
                     })
                 }
                     if (!player.verifying) menu (player)
-            } catch {
+            } catch (error) {
                 player.verifying = undefined
+                console.error(error)
             }
     }
 }
