@@ -23,7 +23,7 @@ interface Data {
 const previousMessage: Map<string, string> = new Map<string, string>();
 const spamData: Map<string, Data> = new Map<string, Data>();
 
-async function spammingWarner (player: Player, data: Data) {
+function spammingWarner (player: Player, data: Data) {
     const config = c()
     data.warnings++;
 
