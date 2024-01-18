@@ -46,6 +46,7 @@ async function selectPlayer (player: Player) {
     const pointAllPlayer = world.getAllPlayers()
     const selectMenu = new ActionFormData()
         .title("Select online player")
+    menu.button("§aunban player") 
     for (const target of pointAllPlayer) {
         let des = ""
         if (player.name == target.name) {
@@ -64,7 +65,6 @@ async function actions (player: Player, target: Player) {
     .button("Op") 
     .button("deop")  
     .button("Ban") 
-    .button("Unban")  
     .button("Freeze")  
     .button("Unfreeze")  
     .button("Mute")  
@@ -87,33 +87,30 @@ async function actions (player: Player, target: Player) {
       inputCommand(player,`ban "${target.name}"`,config.prefix) 
             } 
         case 3:{
-      inputCommand(player,`unban "${target.name}"`,config.prefix) 
-            } 
-        case 4:{
       inputCommand(player,`freeze "${target.name}"`,config.prefix) 
             } 
-        case 5:{
+        case 4:{
       inputCommand(player,`unfreeze "${target.name}"`,config.prefix) 
             } 
-        case 6:{
+        case 5:{
       inputCommand(player,`mute "${target.name}"`,config.prefix) 
             } 
-        case 7:{
+        case 6:{
       inputCommand(player,`unmute "${target.name}"`,config.prefix) 
             } 
-        case 8:{
+        case 7:{
       inputCommand(player,`vanish "${target.name}"`,config.prefix) 
             } 
-        case 9:{
+        case 8:{
       inputCommand(player,`unvanish "${target.name}"`,config.prefix) 
             } 
-        case 10:{
+        case 9:{
       inputCommand(player,`echestwipe "${target.name}"`,config.prefix) 
             } 
-        case 11:{
+        case 10:{
       inputCommand(player,`invsee "${target.name}"`,config.prefix) 
             } 
-        case 12:{
+        case 11:{
       inputCommand(player,`invcopy "${target.name}"`,config.prefix) 
             } 
 
