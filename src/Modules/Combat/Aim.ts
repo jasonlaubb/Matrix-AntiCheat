@@ -23,7 +23,7 @@ const timer = new Map<string, number>();
 
 let queueFlag: QueueFlag = {};
 
-async function AntiAim (player: Player) {
+function AntiAim (player: Player) {
     const config = c()
     const rotation = player.getRotation();
     const rotationSpeed = {x: Math.abs(rotation.x - (lastAction.rotation[player.id]?.x || rotation.x)), y: Math.abs(rotation.y - (lastAction.rotation[player.id]?.y || rotation.y))};
