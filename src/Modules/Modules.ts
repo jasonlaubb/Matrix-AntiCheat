@@ -30,6 +30,7 @@ import autotool from "./World/AutoTool"
 import bot from "./Misc/Bot"
 import fastBreak from "./World/FastBreak"
 import xray from "./Misc/Xray"
+import worldBorder from "./Movement/World Border"
 
 interface toggleHandler {
     enable: () => void
@@ -37,6 +38,7 @@ interface toggleHandler {
 }
 
 export const antiCheatModules: { [key: string]: toggleHandler } = {
+    "worldBorder": worldBorder,
     "antiReach": reach,
     "antiKillAura": killAura,
     "antiAutoClicker": autoClicker,
