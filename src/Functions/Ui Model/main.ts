@@ -1,5 +1,6 @@
 import { system, Player, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
+import { inputCommand } from "../chatModel/CommandSystem"
 import { isAdmin } from "../../Assets/Util";
 
 export const adminUI = (player: Player) => system.run(() => menu(player))
@@ -58,3 +59,16 @@ async function selectPlayer (player: Player) {
     if (result.canceled) return null
     return pointAllPlayer[result.selection] ?? null
 }
+async function actions (target: Player) {
+    .title("Select action") 
+    .button("Ban") 
+    .button("Unban")  
+    .button("Freeze")  
+    .button("Unfreeze")  
+    .button("Mute")  
+    .button("Unmute")  
+    .button("lockdown")  
+    .button("Invsee")  
+    .button("Invcopy")  
+    } 
+    
