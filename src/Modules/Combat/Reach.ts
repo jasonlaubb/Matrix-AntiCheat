@@ -36,7 +36,7 @@ function calculateDistance(b1: Entity, b2: Entity) {
     return Math.floor(Math.hypot(dx, dz)) - (velocityB1 + velocityB2);
 }
 
-async function AntiReach (hurtEntity: Player, damagingEntity: Player) {
+function AntiReach (hurtEntity: Player, damagingEntity: Player) {
     const config = c()
     //calculate the y reach
     const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y)-Math.abs(damagingEntity.getVelocity().y) 
