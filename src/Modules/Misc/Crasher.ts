@@ -13,7 +13,7 @@ export const watchDog = () => system.beforeEvents.watchdogTerminate.subscribe(da
     data.cancel = true
 })
 
-async function AntiCrasher (player: Player) {
+function AntiCrasher (player: Player) {
     const config = c()
     const { x, y, z } = player.location
     const max = 30000000
