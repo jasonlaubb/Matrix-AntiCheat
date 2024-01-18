@@ -509,17 +509,15 @@ export default {
         timer: 1, // 1 = 1 minute
         maxTry: 3
     },
-    chatFilter: [
-        "niger",
-        "nigg",
-        "fuck",
-        "shit",
-        "kys",
-        "ky$",
-        "retards",
-        "bitch",
-        "fisting"
-    ],
+
+    worldBorder: {
+        enabled: false,
+        checkEvery: 2, // tick
+        radius: 250000, // default radius
+        stopAdmin: false,
+        centerX: undefined,
+        centerZ: undefined
+    },
 
     blacklistedMessages: [
         "discord.gg",

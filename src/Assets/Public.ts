@@ -115,3 +115,10 @@ system.runInterval(() => {
         } else if (velocity <= 0) player.removeTag("matrix:slime")
     }
 })
+
+import allProperty from "../Data/ValidPlayerProperty";
+
+world.beforeEvents.playerLeave.subscribe(({ player }) => {
+    // delete all property saved
+    allProperty.forEach(property => delete (player as { [key: string]: any | Player })[property])
+})
