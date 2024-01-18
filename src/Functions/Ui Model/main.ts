@@ -65,17 +65,15 @@ async function actions (target: Player) {
     .button("deop")  
     .button("Ban") 
     .button("Unban")  
-    .button("UnbanList")  
     .button("Freeze")  
     .button("Unfreeze")  
     .button("Mute")  
     .button("Unmute")  
     .button("Vanish")  
     .button("Unvanish")  
-    .button("Lockdown")  
-    .button("Lockdowncode") 
     .button("Echestwipe") 
     .button("Invsee")  
     .button("Invcopy")  
+
     } 
     
