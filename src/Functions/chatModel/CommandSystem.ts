@@ -520,7 +520,7 @@ async function inputCommand (player: Player, message: string, prefix: string): P
         }
         case "lang": {
             if (blockUsage(player, config.commands.lang as Cmds)) return
-            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-lang.enter")}`))
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§c ${lang("-lang.enter")}`))
             if (!getAllLang().includes(regax[1])) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-lang.unknown").replace("%a", prefix)}`))
 
             system.run(() => {
@@ -534,6 +534,19 @@ async function inputCommand (player: Player, message: string, prefix: string): P
             if (blockUsage(player, config.commands.langlist as Cmds)) return
             const list = getAllLang().map(value => `§a- ${value}`)
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-langlist.list")}\n${list.join("\n")}`))
+            break
+        }
+        case "-borderSize": {
+            if (blockUsage(player, config.commands.borderSize as Cmds)) return
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§c Please enter a border size.`))
+            const size = Number(regax[1])
+            if (Number.isNaN(size)) return system.run(() => player.sendMessage(`§bMatrix §7>§c Not a number!`))
+            if (size > 12000000 || size < 100) return system.run(() => player.sendMessage(`§bMatrix §7>§c Border size should between 100 to 1M!`))
+
+            system.run(() => {
+                player.setDynamicProperty("worldBorderSize", size)
+                player.sendMessage("§bMatrix §7>§g Sucessfully changed world border size to " + size)
+            })
             break
         }
         default: {

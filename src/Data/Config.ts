@@ -177,6 +177,11 @@ export default {
             enabled: true,
             adminOnly: true,
             requireTag: []
+        },
+        borderSize: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: []
         }
     },
     /** 
