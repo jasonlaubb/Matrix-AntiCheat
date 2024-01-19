@@ -21,7 +21,7 @@ import { antiCheatModules, getModuleState, keys } from "../../Modules/Modules";
 
 export { inputCommand }
 
-const turnRegax = (message: string, prefix: string) => (message.slice(prefix.length).match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g) || []).map(regax => regax.replace(/^"(.*)"$/, '$1').replace(/\\"/g, '"'));
+const turnRegax = (message: string, prefix?: string) => (message.slice(prefix?.length ?? 0).match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g) || []).map(regax => regax.replace(/^"(.*)"$/, '$1').replace(/\\"/g, '"'));
 class Cmds {
     enabled: boolean;
     adminOnly: boolean;
@@ -42,7 +42,7 @@ function blockUsage (player: Player, setting: Cmds) {
     return false
 }
 
-function inputCommand (player: Player, message: string, prefix: string): Promise<any> {
+function inputCommand (player: Player, message: string, prefix?: string): any {
     const config = c()
     const regax = turnRegax(message, prefix)
 
