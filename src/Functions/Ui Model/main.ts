@@ -1,5 +1,5 @@
 import { system, Player, world } from "@minecraft/server";
-import { ActionFormData } from "@minecraft/server-ui";
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { inputCommand } from "../chatModel/CommandSystem"
 import { isAdmin } from "../../Assets/Util";
 
@@ -13,7 +13,7 @@ function menu (player: Player) {
 
     new ActionFormData()
         .title("Admin GUI")
-        .button("Manage Players", "textures/ui/FriendsDiversity.png")
+        .button("Moderate Players", "textures/ui/FriendsDiversity.png")
         .button("Settings", "textures/ui/gear.png")
         .button("Exit", "textures/ui/redX1.png")
         .show(player).then(res => {
@@ -26,9 +26,9 @@ function menu (player: Player) {
                         // Checks if player selected a valid target
                         if (target !== null) {
                             if (isAdmin(target)) {
-                                actions(player, target) 
+                                // No, Just ignore this
                             } else {
-                                // Player selected a normal player
+                                moderatePlayer (player, target)
                             }
                         }
                     })
@@ -46,7 +46,6 @@ async function selectPlayer (player: Player) {
     const pointAllPlayer = world.getAllPlayers()
     const selectMenu = new ActionFormData()
         .title("Select online player")
-    menu.button("§aunban player") 
     for (const target of pointAllPlayer) {
         let des = ""
         if (player.name == target.name) {
@@ -54,66 +53,54 @@ async function selectPlayer (player: Player) {
         } else if (isAdmin(player)) {
             des = "\n§c§lAdmin"
         }
-        menu.button(target.name + des)
+        selectMenu.button(target.name + des)
     }
     const result = await selectMenu.show(player)
     if (result.canceled) return null
     return pointAllPlayer[result.selection] ?? null
 }
-async function actions (player: Player, target: Player) {
-    .title("Select action") 
-    .button("Op") 
-    .button("deop")  
-    .button("Ban") 
-    .button("Freeze")  
-    .button("Unfreeze")  
-    .button("Mute")  
-    .button("Unmute")  
-    .button("Vanish")  
-    .button("Unvanish")  
-    .button("Echestwipe") 
-    .button("Invsee")  
-    .button("Invcopy")  
-    .button("§cExit", "textures/ui/redX1.png") 
-    .show(player).then(res => {
-    switch (res.selection){
-        case 0:{
-      inputCommand(player,`op "${target.name}"`,config.prefix) 
-            } 
-        case 1:{
-      inputCommand(player,`deop "${target.name}"`,config.prefix) 
-            } 
-        case 2:{
-      inputCommand(player,`ban "${target.name}"`,config.prefix) 
-            } 
-        case 3:{
-      inputCommand(player,`freeze "${target.name}"`,config.prefix) 
-            } 
-        case 4:{
-      inputCommand(player,`unfreeze "${target.name}"`,config.prefix) 
-            } 
-        case 5:{
-      inputCommand(player,`mute "${target.name}"`,config.prefix) 
-            } 
-        case 6:{
-      inputCommand(player,`unmute "${target.name}"`,config.prefix) 
-            } 
-        case 7:{
-      inputCommand(player,`vanish "${target.name}"`,config.prefix) 
-            } 
-        case 8:{
-      inputCommand(player,`unvanish "${target.name}"`,config.prefix) 
-            } 
-        case 9:{
-      inputCommand(player,`echestwipe "${target.name}"`,config.prefix) 
-            } 
-        case 10:{
-      inputCommand(player,`invsee "${target.name}"`,config.prefix) 
-            } 
-        case 11:{
-      inputCommand(player,`invcopy "${target.name}"`,config.prefix) 
-            } 
 
-    } 
+interface AbcSelection {
+    a: string;
+    b?: string;
+    c?: string;
+}
+
+const groupAbc = ([ a, b, c ]: any[]): AbcSelection => ({ a, b, c })
+
+async function cpu (form: ModalFormData, player: Player): Promise<AbcSelection> {
+    const data = await form.show(player)
+    if (data.canceled) return null
+    return groupAbc(data.formValues)
+}
+
+// For state that how to form a command
+const moderateAction: { [key: number]: (arg: AbcSelection) => string } = {
+    0: ({ a, b, c }) => `ban "${a}" "${b}" "${c}"`
+}
+
+// Match the ui
+const moderateUI: { [key: number]: (player: Player) => Promise<AbcSelection> } = {
+    0: (p) => cpu(banForm, p)
+}
+
+async function moderatePlayer (player: Player, target: Player) {
+    const action = await new ActionFormData()
+        .title("Action of " + target.name)
+        .button("Ban player §7(ban)")
+        .button("Exit", "textures/ui/redX1.png")
+        .show(player)
+    if (action.canceled) return
+    const actionData = moderateUI[action.selection]
+    if (actionData === undefined) return
+    // get the selection of player
+    const abcSelection = await actionData(player)
+    if (abcSelection === null) return
+    // Run an chat command for the player
+    inputCommand(player, moderateAction[action.selection](abcSelection))
 } 
-    
+
+const banForm = new ModalFormData()
+    .title("Ban player")
+    .textField("Reason:", "Type your reason here")
+    .textField("Ban Length:", "1d2h3m4s", "forever")
