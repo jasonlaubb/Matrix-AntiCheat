@@ -103,7 +103,8 @@ function flag (player: Player, modules: string, type: Type, maxVL: number, punis
             break
         }
         case "admin": {
-            const targets = world.getAllPlayers().filter(players => isAdmin(players))
+            const allPlayers = world.getAllPlayers()
+            const targets = allPlayers.filter(players => isAdmin(players))
             targets.forEach(players => players.sendMessage(flagMsg))
             break
         }
