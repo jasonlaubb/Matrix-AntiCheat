@@ -160,20 +160,32 @@ function isAdmin (player: Player) {
 }
 
 function timeToMs(timeStr: string) {
-    const timeUnits: { [key: string]: number } = {
-        d: 86400000,
-        h: 3600000,
-        m: 60000,
-        s: 1000
-    };
-
     let ms = 0;
-    let match;
-
-    for (const unit in timeUnits) {
-        match = timeStr.match(new RegExp(`(\\d+)${unit}`));
-        if (match) {
-            ms += parseInt(match[1]) * timeUnits[unit];
+    const timeRegax = /\d+(s|m|h|d)/g
+    const matches = timeStr.match(timeRegax)
+    for (const str of matches) {
+        const value = Number(str.slice(0, -1))
+        if (Number.isNaN(value)) continue
+        const unit = str[str.length - 1]
+        switch (unit) {
+            case "s": {
+                ms += value * 1000
+                break
+            }
+            case "m": {
+                ms += value * 60000
+                break
+            }
+            case "h": {
+                ms += value * 3600000
+                break
+            }
+            case "d": {
+                ms += value * 86400000
+                break
+            }
+            default:
+                console.error("Unexpect time unit: " + unit)
         }
     }
 
