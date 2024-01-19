@@ -46,7 +46,7 @@ async function ElytraFly (player: Player, now: number) {
                 player.addTag("matrix:stop-gliding")
                 system.runTimeout(() => player.removeTag("matrix:stop-gliding"), 10)
                 flag (player, "Elytra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">Ratio") + ":" + + ratio.toFixed(2)])
-            }
+            })
         }
     } else {
         fallDistances.set(player.id, undefined)
