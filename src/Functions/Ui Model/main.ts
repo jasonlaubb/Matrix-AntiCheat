@@ -76,7 +76,14 @@ async function cpu (form: ModalFormData, player: Player): Promise<AbcSelection> 
 
 // For state that how to form a command
 const moderateAction: { [key: number]: (arg: AbcSelection) => string } = {
-    0: ({ a, b, c }) => `ban "${a}" "${b}" "${c}"`
+    0: ({ a, b, c }) => `ban "${a}" "${b}" "${c}"`, 
+    1: ({ a }) => `freeze "${a}"`, 
+    2: ({ a }) => `unfreeze "${a}"`,
+    3: ({ a }) => `mute "${a}"`, 
+    4: ({ a }) => `unmute "${a}"`, 
+    5: ({ a }) => `invcopy "${a}"`, 
+    6: ({ a }) => `invsee "${a}"`, 
+    7: ({ a }) => `echestwipe "${a}"`
 }
 
 // Match the ui
@@ -88,18 +95,24 @@ async function moderatePlayer (player: Player, target: Player) {
     const action = await new ActionFormData()
         .title("Action of " + target.name)
         .button("Ban player §7(ban)")
+        .button("Freeze player §7(freeze)") 
+        .button("Unfreeze player §7(unfreeze)") 
+        .button("Mute player §7(mute)") 
+        .button("Unmute player §7(unmute)") 
+        .button("Invcopy player §7(invcopy)") 
+        .button("Invsee player §7(invsee)") 
+        .button("Echestwipe player §7(echestwipe)") 
         .button("Exit", "textures/ui/redX1.png")
         .show(player)
     if (action.canceled) return
-    const actionData = moderateUI[action.selection]
+            const actionData = moderateUI[action.selection]
     if (actionData === undefined) return
     // get the selection of player
     const abcSelection = await actionData(player)
     if (abcSelection === null) return
     // Run an chat command for the player
-    inputCommand(player, moderateAction[action.selection](abcSelection))
+    inputCommand(player, moderateAction[action.selection](abcSelection)) 
 } 
-
 const banForm = new ModalFormData()
     .title("Ban player")
     .textField("Reason:", "Type your reason here")
