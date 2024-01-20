@@ -18,7 +18,7 @@ export { kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, 
 
 function kick (player: Player, reason?: string, by?: string) {
     try {
-        player.runCommand(`kick "${player.name}" §r\n§c§l${lang(".Util.kicked")}§r\n§7${lang(".Util.reason")}: §e${reason ?? lang(".Util.noreason")}\n§7By: §e${by ?? lang(".Util.unknown")}`)
+        player.runCommand(`kick "${player.name}" §r\n§c§l${lang(".Util.kicked")}§r\n§7${lang(".Util.reason")}: §e${reason ?? lang(".Util.noreason")}\n§7${lang(".Util.operator")}: §e${by ?? lang(".Util.unknown")}`)
     } catch {
         triggerEvent (player, "matrix:kick")
     }
@@ -71,17 +71,14 @@ function flag (player: Player, modules: string, type: Type, maxVL: number, punis
         switch (punishment) {
             case "kick": {
                 punishmentDone = true
-                kick (player, config.punishment_kick.reason + ` of ${modules} ${type}`, "(Immediate behavioral defense)")
+                kick (player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"))
                 flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name)
                 break
             }
             case "ban": {
                 punishmentDone = true
-                ban (player, config.punishment_ban.reason + ` of ${modules} ${type}`, "(Immediate behavioral defense)", config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
+                ban (player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"), config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
                 flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
-                break
-            }
-            default: {
                 break
             }
         }

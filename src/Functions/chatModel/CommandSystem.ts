@@ -67,17 +67,23 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
         case "toggle": {
             if (blockUsage(player, config.commands.toggle as Cmds)) return
             if (regax[1] === undefined || !(new Set(validModules).has(regax[1]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownModule").replace("%a", prefix)}`))
-            if (regax[2] === undefined || !(new Set(["enable", "disable"]).has(regax[2]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownAction")}`))
+            if (regax[2] === undefined || !(new Set(["enable", "disable", "default"]).has(regax[2]))) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-toggles.unknownAction")}`))
 
             system.run(() => {
                 if (keys.includes(regax[1])) {
-                    if ((regax[2] == "enable") === getModuleState(regax[1])) return player.sendMessage(`§bMatrix §7>§c ${lang("-toggles.already").replace("%a", regax[2])}`)
+                    const state = getModuleState(regax[1])
+                    if ((regax[2] == "enable") === getModuleState(regax[1]) && regax[2] != "default") return player.sendMessage(`§bMatrix §7>§c ${lang("-toggles.already").replace("%a", regax[2])}`)
                     if (regax[2] === "enable") {
                         antiCheatModules[regax[1]].enable()
                         world.setDynamicProperty(regax[1], true)
-                    } else {
+                    } else if (regax[2] == "disable") {
                         antiCheatModules[regax[1]].disable()
                         world.setDynamicProperty(regax[1], false)
+                    } else {
+                        const configState = (config as { [key: string]: any })[regax[1]]
+                        if (state != configState)
+                            state ? antiCheatModules[regax[1]].disable() : antiCheatModules[regax[1]].enable()
+                        world.setDynamicProperty(regax[1])
                     }
                     player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
                 } else {
@@ -129,7 +135,7 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             const target = world.getPlayers({ name: regax[1] })[0]
             if (target === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown_player")}`))
             if (!isAdmin(target)) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-deop.notadmin").replace("%a", target.name)}`))
-            target.setDynamicProperty("isAdmin", undefined)
+            target.setDynamicProperty("isAdmin")
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${(lang("-deop.hasbeen").replace("%a", target.name).replace("%b", player.name))}`))
             break
         }
@@ -340,7 +346,7 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             if (isAdmin(target)) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unmute.admin")}`))
             if (target.getDynamicProperty("mute") !== true) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unmute.not").replace("%a", target.name)}`))
 
-            target.setDynamicProperty("mute", undefined)
+            target.setDynamicProperty("mute")
             system.run(() => world.sendMessage(`§bMatrix §7> §c ${lang("-unmute.has").replace("%a", target.name).replace("%b", player.name)}`))
             break
         }
@@ -502,7 +508,7 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             if (!world.getDynamicProperty("lockdown")) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-unlock.not")}`))
 
             system.run(() => {
-                world.setDynamicProperty("lockdown", undefined)
+                world.setDynamicProperty("lockdown")
                 world.sendMessage(`§bMatrix §7>§g ${lang("-unlock.has").replace("%a", player.name)}`)
             })
             break
@@ -510,7 +516,7 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
         case "adminchat": {
             if (blockUsage(player, config.commands.adminchat as Cmds)) return
             if (player.getDynamicProperty("adminchat")) {
-                player.setDynamicProperty("adminchat", undefined)
+                player.setDynamicProperty("adminchat")
                 system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-adminchat.out")}`))
             } else {
                 player.setDynamicProperty("adminchat", true)
@@ -538,14 +544,18 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
         }
         case "-borderSize": {
             if (blockUsage(player, config.commands.borderSize as Cmds)) return
-            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§c Please enter a border size.`))
-            const size = Number(regax[1])
-            if (Number.isNaN(size)) return system.run(() => player.sendMessage(`§bMatrix §7>§c Not a number!`))
-            if (size > 12000000 || size < 100) return system.run(() => player.sendMessage(`§bMatrix §7>§c Border size should between 100 to 1M!`))
+            if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§c ${lang("-borderSize.enter")}`))
+            let size: number
+
+            if (regax[1] != "default") {
+                size = Number(size)
+                if (Number.isNaN(size)) return system.run(() => player.sendMessage(`§bMatrix §7>§c ${lang("-borderSize.notANum")}`))
+                if (size > 10000000 || size < 100) return system.run(() => player.sendMessage(`§bMatrix §7>§c ${lang("-borderSize.between")}`))
+            }
 
             system.run(() => {
                 player.setDynamicProperty("worldBorderSize", size)
-                player.sendMessage("§bMatrix §7>§g Sucessfully changed world border size to " + size)
+                player.sendMessage("§bMatrix §7>§g " + lang("-borderSize.ok").replace("%a", String(size ?? config.worldBorder.radius)))
             })
             break
         }

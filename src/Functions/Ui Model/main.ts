@@ -2,6 +2,7 @@ import { system, Player, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { inputCommand } from "../chatModel/CommandSystem"
 import { isAdmin } from "../../Assets/Util";
+import l from "../../Data/Languages/lang";
 
 export const adminUI = (player: Player) => system.run(() => menu(player))
 function menu (player: Player) {
@@ -12,10 +13,10 @@ function menu (player: Player) {
     }
 
     new ActionFormData()
-        .title("Admin GUI")
-        .button("Moderate Players", "textures/ui/FriendsDiversity.png")
-        .button("Settings", "textures/ui/gear.png")
-        .button("Exit", "textures/ui/redX1.png")
+        .title(l(".UI.i"))
+        .button(l(".UI.i.a"), "textures/ui/FriendsDiversity.png")
+        .button(l(".UI.i.b"), "textures/ui/gear.png")
+        .button(l(".UI.exit"), "textures/ui/redX1.png")
         .show(player).then(res => {
             if (res.canceled) return;
             // player: The admin which using the ui
@@ -68,10 +69,10 @@ interface AbcSelection {
 
 const groupAbc = ([ a, b, c ]: any[]): AbcSelection => ({ a, b, c })
 
-async function cpu (form: ModalFormData, player: Player): Promise<AbcSelection> {
+async function cpu (form: ModalFormData, player: Player, to: string): Promise<AbcSelection> {
     const data = await form.show(player)
     if (data.canceled) return null
-    return groupAbc(data.formValues)
+    return groupAbc([to, ...data.formValues])
 }
 
 // For state that how to form a command
@@ -87,13 +88,13 @@ const moderateAction: { [key: number]: (arg: AbcSelection) => string } = {
 }
 
 // Match the ui
-const moderateUI: { [key: number]: (player: Player) => Promise<AbcSelection> } = {
-    0: (p) => cpu(banForm, p)
+const moderateUI: { [key: number]: (player: Player, target: string) => Promise<AbcSelection> } = {
+    0: (p, t) => cpu(banForm, p, t)
 }
 
 async function moderatePlayer (player: Player, target: Player) {
     const action = await new ActionFormData()
-        .title("Action of " + target.name)
+        .title("Moderate " + target.name)
         .button("Ban player §7(ban)")
         .button("Freeze player §7(freeze)") 
         .button("Unfreeze player §7(unfreeze)") 
@@ -102,14 +103,16 @@ async function moderatePlayer (player: Player, target: Player) {
         .button("Invcopy player §7(invcopy)") 
         .button("Invsee player §7(invsee)") 
         .button("Echestwipe player §7(echestwipe)") 
-        .button("Exit", "textures/ui/redX1.png")
+        .button(l(".UI.exit"), "textures/ui/redX1.png")
         .show(player)
     if (action.canceled) return
-            const actionData = moderateUI[action.selection]
-    if (actionData === undefined) return
-    // get the selection of player
-    const abcSelection = await actionData(player)
-    if (abcSelection === null) return
+    const actionData = moderateUI[action.selection]
+    let abcSelection: AbcSelection = { a: target.name }
+    if (actionData) {
+        // get the selection of player
+        abcSelection = await actionData(player, target.name)
+        if (abcSelection === null) return
+    } else if (action.selection >= Object.keys(moderateAction).length) return
     // Run an chat command for the player
     inputCommand(player, moderateAction[action.selection](abcSelection)) 
 } 

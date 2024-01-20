@@ -37,7 +37,7 @@ function spammingWarner (player: Player, data: Data) {
     }, config.antiSpam.timeout);
 
     if (data.warnings > config.antiSpam.kickThreshold) {
-        system.run(() => kick (player, 'Spamming chat', '(Anti spam automatic action)'))
+        system.run(() => kick (player, lang(".Spam.spamming"), lang(".Spam.by")))
         world.sendMessage(`§bMatrix §7>§g ${lang(".Spam.kicked").replace("%a", player.name)}`);
     }
 };
@@ -86,7 +86,7 @@ function antiSpamModule (message: string, player: Player) {
             isSpamming = true;
         } else
         system.run(() => {
-            kick(player, 'Blacklisted message', '(Anti spam automatic action)')
+            kick(player, lang(".Spam.blacklisted"), lang(".Spam.by"))
             world.sendMessage(`§bMatrix §7>§g ${lang(".Spam.kickedBlacklist").replace("%a", player.name)}`);
         })
         isSpamming = true;

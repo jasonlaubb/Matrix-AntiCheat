@@ -1,5 +1,6 @@
 import { PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerInteractWithEntityBeforeEvent, PlayerPlaceBlockBeforeEvent, Vector3, system, world } from "@minecraft/server"
 import { c, isAdmin } from "../../Assets/Util"
+import lang from "../../Data/Languages/lang"
 
 // delcare the variable
 let radius: number
@@ -25,7 +26,7 @@ const worldBorder = () => {
             if (!teleportShould || Math.abs(teleportShould.x - centerX) > radius || Math.abs(teleportShould.z - centerZ) > radius)
                 player.teleport(spawn)
             else player.teleport(teleportShould)
-            player.sendMessage(`§bMatrix §7>§c You cannot access that location, you have reached the world border.`)
+            player.sendMessage(`§bMatrix §7>§c ${lang(".Border.reached")}`)
         }
     }
 }
@@ -34,7 +35,7 @@ const blockCancel = (event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBefore
     const { x, z } = event.block.location
     if (Math.abs(x - centerX) > radius || Math.abs(z - centerZ) > radius) {
         event.cancel = true
-        system.run(() => event.player.sendMessage(`§bMatrix §7>§c You cannot access a location which is outside the world border.`))
+        system.run(() => event.player.sendMessage(`§bMatrix §7>§c ${lang(".Border.outside")}`))
     }
 }
 
@@ -43,7 +44,7 @@ const playerInteractBlock = (event: PlayerInteractWithBlockBeforeEvent) => {
     const { block: { location: { x, z } } } = event
     if (Math.abs(x - centerX) > radius || Math.abs(z - centerZ) > radius) {
         event.cancel = true
-        system.run(() => event.player.sendMessage(`§bMatrix §7>§c You cannot interact with a block or entity which is outside the world border.`))
+        system.run(() => event.player.sendMessage(`§bMatrix §7>§c ${lang(".Border.interact")}`))
     }
 }
 
@@ -52,7 +53,7 @@ const playerInteractEntity = (event: PlayerInteractWithEntityBeforeEvent) => {
     const { target: { location: { x, z } } } = event
     if (Math.abs(x - centerX) > radius || Math.abs(z - centerZ) > radius) {
         event.cancel = true
-        system.run(() => event.player.sendMessage(`§bMatrix §7>§c You cannot interact with a block or entity which is outside the world border.`))
+        system.run(() => event.player.sendMessage(`§bMatrix §7>§c ${lang(".Border.interact")}`))
     }
 }
 

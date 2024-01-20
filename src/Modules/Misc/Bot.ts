@@ -22,7 +22,7 @@ const playerSpawn = ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) => 
         player.removeTag("matrix:verified")
         player.verifyTimer = Date.now()
         player.notVerified = true
-        player.sendMessage(`§bMatrix §7> §cFor security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown`)
+        player.sendMessage(`§bMatrix §7> §c${lang(".Bot.waitUI")}`)
     })
 };
 
@@ -33,7 +33,7 @@ const antiBot = () => {
     for (const player of players) {
             if (!player.notVerified) continue
             if (now - player.verifyTimer >= config.antiBot.timer * 1000 * 60) {
-                kick (player, "Expired verification", "(Bot defensive action)")
+                kick (player, lang(".Bot.expired"), lang(".Bot.by"))
             }
 
             try {
@@ -44,8 +44,8 @@ const antiBot = () => {
                     const codeNow = [0,0,0,0,0,0,0].map(() => Math.floor(Math.random() * 10)).join("")
                     player.tryVerify ??= 0
                     new ModalFormData()
-                    .title("Anti Bot Verification")
-                    .textField("§a[This server is protected by Matrix AntiCheat]\n§gYou need to verify if you're not a bot §7("+player.tryVerify+"/"+config.antiBot.maxTry+")§g\nYou have §e" + Math.floor((config.antiBot.timer * 60000 - now + player.verifyTimer) / 1000) + " §gseconds left\nEnter the code §e§l" + codeNow + "§r§g below", "000000", undefined)
+                    .title(lang(".Bot.title"))
+                    .textField(lang(".Bot.ui").replace("%a", String(player.tryVerify)).replace("%b", String(config.antiBot.maxTry)).replace("%c", String(Math.floor((config.antiBot.timer * 60000 - now + player.verifyTimer) / 1000))).replace("%d", codeNow), "0000000")
                     .show(player).then(({ formValues, canceled, cancelationReason }) => {
                     if (!player.notVerified) return;
 
@@ -56,7 +56,7 @@ const antiBot = () => {
                             player.tryVerify += 1
 
                             if (player.tryVerify > config.antiBot.maxTry) {
-                                kick (player, "Anti bot verify failed", "(Bot defensive action)")
+                                kick (player, lang(".Bot.failed"), lang(".Bot.by"))
                                 return
                             }
                         }
@@ -65,7 +65,7 @@ const antiBot = () => {
                         flag(player, "Bot", "A", config.antiBot.maxVL, config.antiBot.punishment, [lang(">Delay") + ":" + (now - player.verifyClickSpeed)]);
                         return
                     }
-                    player.sendMessage(`§bMatrix §7> §aYou have been verified successfully`)
+                    player.sendMessage(`§bMatrix §7> §a${lang(".Bot.ok")}`)
                     player.notVerified = undefined
                     player.verified = true
                     player.addTag("matrix:verified")
