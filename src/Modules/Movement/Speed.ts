@@ -102,6 +102,7 @@ async function AntiSpeedB (player: Player, now: number) {
         if (lastFlag && now - lastFlag < 1200) {
             flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">BlockPerSecond")}:${bps.toFixed(2)}`])
         }
+        lastflag2.set(player.id, now)
     }
 }
 
