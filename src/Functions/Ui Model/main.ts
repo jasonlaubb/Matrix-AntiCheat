@@ -1,5 +1,5 @@
 import { system, Player, world } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { ActionFormData, FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
 import { inputCommand } from "../chatModel/CommandSystem"
 import { isAdmin } from "../../Assets/Util";
 import l from "../../Data/Languages/lang";
@@ -18,7 +18,10 @@ function menu (player: Player) {
         .button(l(".UI.i.b") + "\n§cComming soon", "textures/ui/gear.png")
         .button(l(".UI.exit"), "textures/ui/redX1.png")
         .show(player).then(res => {
-            if (res.canceled) return;
+            if (res.canceled) {
+                if (res.cancelationReason == FormCancelationReason.UserBusy) system.run(() => adminUI(player))
+                return;
+            }
             // player: The admin which using the ui
             switch (res.selection) {
                 case 0: {
@@ -55,7 +58,7 @@ async function selectPlayer (player: Player): Promise<Player> {
         let des = ""
         if (player.name == target.name) {
             des = "\n§c§lYou"
-        } else if (isAdmin(player)) {
+        } else if (isAdmin(target)) {
             des = "\n§c§lAdmin"
         }
         selectMenu.button(target.name + des)
@@ -99,14 +102,14 @@ const moderateUI: { [key: number]: (player: Player, target: string) => Promise<A
 async function moderatePlayer (player: Player, target: Player) {
     const action = await new ActionFormData()
         .title("Moderate " + target.name)
-        .button("Ban player §7(ban)")
-        .button("Freeze player §7(freeze)") 
-        .button("Unfreeze player §7(unfreeze)") 
-        .button("Mute player §7(mute)") 
-        .button("Unmute player §7(unmute)") 
-        .button("Invcopy player §7(invcopy)") 
-        .button("Invsee player §7(invsee)") 
-        .button("Echestwipe player §7(echestwipe)") 
+        .button("Ban player §8(ban)")
+        .button("Freeze player §8(freeze)") 
+        .button("Unfreeze player §8(unfreeze)") 
+        .button("Mute player §8(mute)") 
+        .button("Unmute player §8(unmute)") 
+        .button("Invcopy player §8(invcopy)") 
+        .button("Invsee player §8(invsee)") 
+        .button("Echestwipe player §8(echestwipe)") 
         .button(l(".UI.exit"), "textures/ui/redX1.png")
         .show(player)
     if (action.canceled) return

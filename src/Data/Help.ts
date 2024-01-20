@@ -33,6 +33,7 @@ export function helpList (p: string): string {
         lang("-help.lang"),
         lang("-help.langlist"),
         lang("-help.borderSize"),
+        "matrixui - open the ui (beta)"
     ].map(des => "§g" + p + des).join("\n")
 }
 
