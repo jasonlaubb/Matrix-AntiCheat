@@ -9,6 +9,7 @@ let centerZ: number
 let spawn: Vector3
 
 const lastSafePos = new Map<string, Vector3>()
+export { lastSafePos }
 
 const worldBorder = () => {
     const players = world.getAllPlayers()
@@ -23,10 +24,14 @@ const worldBorder = () => {
         const { x, z } = player.location
         if (Math.abs(x - centerX) > radius || Math.abs(z - centerZ) > radius) {
             const teleportShould = lastSafePos.get(player.id)
-            if (!teleportShould || Math.abs(teleportShould.x - centerX) > radius || Math.abs(teleportShould.z - centerZ) > radius)
+            if (!teleportShould)
                 player.teleport(spawn)
             else player.teleport(teleportShould)
             player.sendMessage(`§bMatrix §7>§c ${lang(".Border.reached")}`)
+        } else {
+            const { x, z } = player.getVelocity()
+            if (Math.hypot(x, z) == 0)
+                lastSafePos.set(player.id, player.location)
         }
     }
 }

@@ -19,6 +19,7 @@ import { changeLanguage, getAllLang } from "../../Assets/Language";
 import { SHA256 } from "../../node_modules/crypto-es/lib/sha256"
 import { antiCheatModules, getModuleState, keys } from "../../Modules/Modules";
 import { adminUI } from "../Ui Model/main";
+import { lastSafePos } from "../../Modules/Movement/World Border";
 
 export { inputCommand }
 
@@ -549,12 +550,13 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             let size: number
 
             if (regax[1] != "default") {
-                size = Number(size)
+                size = Number(regax[1].trim())
                 if (Number.isNaN(size)) return system.run(() => player.sendMessage(`§bMatrix §7>§c ${lang("-borderSize.notANum")}`))
                 if (size > 10000000 || size < 100) return system.run(() => player.sendMessage(`§bMatrix §7>§c ${lang("-borderSize.between")}`))
             }
 
             system.run(() => {
+                lastSafePos.clear()
                 player.setDynamicProperty("worldBorderSize", size)
                 player.sendMessage("§bMatrix §7>§g " + lang("-borderSize.ok").replace("%a", String(size ?? config.worldBorder.radius)))
             })
