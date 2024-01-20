@@ -334,7 +334,7 @@ export default {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: "ban",
+        punishment: "none",
         maxVL: 4
     },
 
@@ -342,7 +342,7 @@ export default {
         enabled: true,
         minDelay: 200,
         timeout: 60,
-        punishment: "ban",
+        punishment: "kick",
         maxVL: 2
     },
 
