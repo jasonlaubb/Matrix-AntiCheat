@@ -543,7 +543,7 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-langlist.list")}\n${list.join("\n")}`))
             break
         }
-        case "-borderSize": {
+        case "borderSize": {
             if (blockUsage(player, config.commands.borderSize as Cmds)) return
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§c ${lang("-borderSize.enter")}`))
             let size: number
@@ -561,7 +561,7 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             break
         }
         /** @beta It's not fully finished */
-        case "-matrixui": {
+        case "matrixui": {
             if (blockUsage(player, config.commands.matrixui as Cmds)) return
             // Open the ui for the player
             adminUI (player)
