@@ -12,6 +12,7 @@ import lang from "../../Data/Languages/lang.js";
 
 const speedData = new Map<string, PlayerInfo>();
 const lastflag = new Map<string, number>();
+const lastflag2 = new Map<string, number>();
 
 /**
  * @author ravriv
@@ -89,15 +90,18 @@ async function AntiSpeedB (player: Player, now: number) {
     const { x: x1, z: z1 } = player.location
     const { x: x2, z: z2 } = data.location
 
-    if (player.lastTeleportTime && now - player.lastTeleportTime < 2500) return;
+    if (player.lastTeleportTime && now - player.lastTeleportTime < 600) return;
     if (player.lastSpeedSkipCheck && now - player.lastSpeedSkipCheck < 3000) return;
     
     //calulate the player block per second
     const bps = Math.hypot(x1 - x2, z1 - z2) / (now - data.recordTime) * 1000
 
-    if (bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 90) {
+    if (bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 120) {
+        const lastFlag = lastflag2.get(player.id)
         player.teleport(data.location)
-        flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">BlockPerSecond")}:${bps.toFixed(2)}`])
+        if (lastFlag && now - lastFlag < 1200) {
+            flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">BlockPerSecond")}:${bps.toFixed(2)}`])
+        }
     }
 }
 
@@ -144,9 +148,7 @@ const antiSpeedA = () => {
 
     const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
     for (const player of players) {
-        if (isAdmin(player)) {
-            continue;
-        }
+        if (isAdmin(player)) continue;
         AntiSpeedA (player, now);
     }
 }
@@ -155,9 +157,7 @@ const antiSpeedB = () => {
 
     const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
     for (const player of players) {
-        if (isAdmin(player)) {
-            continue;
-        }
+        if (isAdmin(player)) continue;
         AntiSpeedB (player, now);
     }
 }

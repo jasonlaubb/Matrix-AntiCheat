@@ -182,6 +182,11 @@ export default {
             enabled: true,
             adminOnly: true,
             requireTag: []
+        },
+        matrixui: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: []
         }
     },
     /** 
@@ -258,9 +263,9 @@ export default {
     antiSpeed: {
         enabled: true,
         mphThreshold: 150,
-        bpsThershold: 28.75,
+        bpsThershold: 20,
         clipThershold: 7,
-        punishment: "ban",
+        punishment: "kick",
         maxVL: 4
     },
 

@@ -8,14 +8,14 @@ export const adminUI = (player: Player) => system.run(() => menu(player))
 function menu (player: Player) {
     if (!isAdmin(player)) {
         //prevent no admin open ui mistakenly
-        player.sendMessage(`§bMatrix §7> §cError: Access denied!`)
+        player.sendMessage(`§bMatrix §7> §l§cAccess denied! §7No admin permission`)
         return
     }
 
     new ActionFormData()
         .title(l(".UI.i"))
         .button(l(".UI.i.a"), "textures/ui/FriendsDiversity.png")
-        .button(l(".UI.i.b"), "textures/ui/gear.png")
+        .button(l(".UI.i.b") + "\n§cComming soon", "textures/ui/gear.png")
         .button(l(".UI.exit"), "textures/ui/redX1.png")
         .show(player).then(res => {
             if (res.canceled) return;
@@ -26,11 +26,7 @@ function menu (player: Player) {
                     selectPlayer(player).then(target => {
                         // Checks if player selected a valid target
                         if (target !== null) {
-                            if (isAdmin(target)) {
-                                // No, Just ignore this
-                            } else {
-                                moderatePlayer (player, target)
-                            }
+                            openForIt (player, target)
                         }
                     })
                     break
@@ -43,7 +39,15 @@ function menu (player: Player) {
         })
 }
 
-async function selectPlayer (player: Player) {
+function openForIt (player: Player, target: Player) {
+    if (isAdmin(target)) {
+        player.sendMessage(`§bMatrix §7> §c§lAccess denied! §r§7Moderate players with admin permission`)
+    } else {
+        moderatePlayer (player, target)
+    }
+}
+
+async function selectPlayer (player: Player): Promise<Player> {
     const pointAllPlayer = world.getAllPlayers()
     const selectMenu = new ActionFormData()
         .title("Select online player")

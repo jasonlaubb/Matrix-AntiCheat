@@ -18,6 +18,7 @@ import lang from "../../Data/Languages/lang";
 import { changeLanguage, getAllLang } from "../../Assets/Language";
 import { SHA256 } from "../../node_modules/crypto-es/lib/sha256"
 import { antiCheatModules, getModuleState, keys } from "../../Modules/Modules";
+import { adminUI } from "../Ui Model/main";
 
 export { inputCommand }
 
@@ -557,6 +558,13 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
                 player.setDynamicProperty("worldBorderSize", size)
                 player.sendMessage("§bMatrix §7>§g " + lang("-borderSize.ok").replace("%a", String(size ?? config.worldBorder.radius)))
             })
+            break
+        }
+        /** @beta It's not fully finished */
+        case "-matrixui": {
+            if (blockUsage(player, config.commands.matrixui as Cmds)) return
+            // Open the ui for the player
+            adminUI (player)
             break
         }
         default: {
