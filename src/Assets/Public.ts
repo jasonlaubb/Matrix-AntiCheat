@@ -98,8 +98,8 @@ system.runInterval(() => {
     const players = world.getAllPlayers()
     for (const player of players) {
         // knockback
-        const velocity = player.getVelocity().y
-        if (velocity <= 0) player.removeTag("matrix:knockback")
+        const v player.getVelocity()
+        if (v.y <= 0) player.removeTag("matrix:knockback")
 
         // item use
         if (player.hasTag("matrix:using_item") && !player.lastItemUsed) {
@@ -113,6 +113,17 @@ system.runInterval(() => {
         if (slimeUnder) {
             player.addTag("matrix:slime")
         } else if (velocity <= 0) player.removeTag("matrix:slime")
+
+        if (player.lastVelObject && player.lastLocObject) {
+            if (JSON.stringify(player.lastVelObject) == JSON.stringify(v) &&
+                JSON.stringify(player.lastLocObject) == JSON.stringify(player.location) {
+                player.pingTick ??= 0
+                player.pingTick += 1
+            } else player.pingTick = 0
+        }
+
+        player.lastVelObject = v
+        player.lastLocObject = player.location
     }
 })
 
