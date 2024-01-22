@@ -115,7 +115,8 @@ system.runInterval(() => {
         } else if (velocity <= 0) player.removeTag("matrix:slime")
 
         if (player.lastVelObject && player.lastLocObject) {
-            if (JSON.stringify(player.lastVelObject) == JSON.stringify(v) &&
+            if ((v.x != 0 || v.y != 0 || v.z != 0) &&
+                JSON.stringify(player.lastVelObject) == JSON.stringify(v) &&
                 JSON.stringify(player.lastLocObject) == JSON.stringify(player.location) {
                 player.pingTick ??= 0
                 player.pingTick += 1
