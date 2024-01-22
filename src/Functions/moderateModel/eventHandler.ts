@@ -27,7 +27,7 @@ world.beforeEvents.dataDrivenEntityTriggerEvent.subscribe((event) => {
 
     if (!(player instanceof Player) || !eventList.includes(id)) return;
 
-    const data: string[] = eventData.get(id) ?? []
+    const data: string[] = eventData.get(player.id) ?? []
 
     if (!data.includes(id)) {
         event.cancel = true
