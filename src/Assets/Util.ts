@@ -300,3 +300,6 @@ function recoverBlockBreak (id: string, range: number, dimension: Dimension) {
 }
 
 const clearBlockBreakLog = (id: string) => delete blockBreakLogger[id]
+
+// The most useless function lol
+const getPing = (player: Player) => player.pingTick ?? 0
