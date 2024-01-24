@@ -16,6 +16,7 @@
                     "jumping",
                     "levitating",
                     "moving",
+                    "attack_time",
                     "on_ground",
                     "riding",
                     "sneaking",
