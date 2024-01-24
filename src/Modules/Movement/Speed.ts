@@ -96,7 +96,7 @@ async function AntiSpeedB (player: Player, now: number) {
     //calulate the player block per second
     const bps = Math.hypot(x1 - x2, z1 - z2) / (now - data.recordTime) * 1000
 
-    if (bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 120) {
+    if (getPing(player) < 4 && bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 120) {
         const lastFlag = lastflag2.get(player.id)
         player.teleport(data.location)
         if (lastFlag && now - lastFlag < 1200) {
