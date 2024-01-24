@@ -151,8 +151,8 @@ export default {
     disable () {
         hitLength.clear()
         world.afterEvents.entityHitEntity.unsubscribe(antiKillAura)
-        world.afterEvents.entityHurt.subscribe(antiKillAura2)
-        world.afterEvents.playerLeave.subscribe(playerLeave)
+        world.afterEvents.entityHurt.unsubscribe(antiKillAura2)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
         system.clearRun(id)
     }
 }
