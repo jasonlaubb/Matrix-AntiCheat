@@ -117,7 +117,7 @@ system.runInterval(() => {
         if (player.lastVelObject && player.lastLocObject) {
             if ((v.x != 0 || v.y != 0 || v.z != 0) &&
                 JSON.stringify(player.lastVelObject) == JSON.stringify(v) &&
-                JSON.stringify(player.lastLocObject) == JSON.stringify(player.location) {
+                JSON.stringify(player.lastLocObject) == JSON.stringify(player.location)) {
                 player.pingTick ??= 0
                 player.pingTick += 1
             } else player.pingTick = 0
