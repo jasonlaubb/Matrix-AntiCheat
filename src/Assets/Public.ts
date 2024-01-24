@@ -94,7 +94,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     }
 })
 
-system.runInterval(() => {
+system.runInterval(async () => {
     const players = world.getAllPlayers()
     for (const player of players) {
         // knockback
@@ -114,17 +114,20 @@ system.runInterval(() => {
             player.addTag("matrix:slime")
         } else if (velocity <= 0) player.removeTag("matrix:slime")
 
-        if (player.lastVelObject && player.lastLocObject) {
-            if ((v.x != 0 || v.y != 0 || v.z != 0) &&
-                JSON.stringify(player.lastVelObject) == JSON.stringify(v) &&
-                JSON.stringify(player.lastLocObject) == JSON.stringify(player.location)) {
-                player.pingTick ??= 0
-                player.pingTick += 1
-            } else player.pingTick = 0
-        }
+        // Not useful lmao
+        system.run(() => {
+            if (player.lastVelObject && player.lastLocObject) {
+                if ((v.x != 0 || v.y != 0 || v.z != 0) &&
+                    JSON.stringify(player.lastVelObject) == JSON.stringify(v) &&
+                    JSON.stringify(player.lastLocObject) == JSON.stringify(player.location)) {
+                    player.pingTick ??= 0
+                    player.pingTick += 1
+                } else player.pingTick = 0
+            }
 
-        player.lastVelObject = v
-        player.lastLocObject = player.location
+            player.lastVelObject = v
+            player.lastLocObject = player.location
+        })
     }
 })
 
