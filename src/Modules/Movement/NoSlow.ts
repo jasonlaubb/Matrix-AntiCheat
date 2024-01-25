@@ -59,7 +59,7 @@ async function AntiNoSlow (player: Player) {
 
     //check if the player is in the web and the player speed is lower than the max speed
     if (headWeb === true || bodyWeb === true) {
-        if (playerSpeed <= (0.25 + limitIncrease)) {
+        if (playerSpeed <= (config.antiNoSlow.maxWebSpeed + limitIncrease)) {
             lastPosition.set(player.id, playerLocation);
         } else {
             //flag the player, if the buffer is higher than the max buffer, teleport the player back
