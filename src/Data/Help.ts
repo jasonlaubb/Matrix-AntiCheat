@@ -38,7 +38,7 @@ export function helpList (p: string): string {
 }
 
 export function toggleList (p: string): string {
-    return keys.map((module) => `§l§7(${(world.getDynamicProperty(module) ?? defaultLy(module) == true ? "§aenabled" : "§cdisabled")}§7)§r §g${p}toggle ${module} <enable/disable> - ${lang("-toggles.toggle")} ${module} ${lang("-toggles.module")}`).join("\n")
+    return validModules.map((module) => `§l§7(${(world.getDynamicProperty(module) ?? defaultLy(module) == true ? "§aenabled" : "§cdisabled")}§7)§r §g${p}toggle ${module} <enable/disable> - ${lang("-toggles.toggle")} ${module} ${lang("-toggles.module")}`).join("\n")
 }
 
 export const validModules: string[] = [
