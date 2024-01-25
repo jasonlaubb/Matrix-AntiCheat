@@ -291,13 +291,12 @@ export default {
 
     antiNoSlow: {
         enabled: true,
-        maxSpeedTherehold: 1,
-        maxUsingItemTherehold: 0.16,
-        itemUseTime: 250,
-        maxNoSlowBuff: 1,
+        maxWebSpeed: 0.85, // huh
+        maxItemSpeed: 0.2,
+        itemUseTime: 350,
         timeout: 60,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 4
     },
 
     antiBreaker: {
@@ -308,7 +307,7 @@ export default {
             "minecraft:dragon_egg"
         ],
         punishment: "ban",
-        maxVL: 2
+        maxVL: 4
     },
 
     antiSpam: {
@@ -323,13 +322,13 @@ export default {
     antiSpammer: {
         enabled: true,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 0
     },
 
     antiBlockReach: {
         enabled: true,
-        maxPlaceDistance: 8.15,
-        maxBreakDistance: 8.05,
+        maxPlaceDistance: 8,
+        maxBreakDistance: 8,
         timeout: 60,
         punishment: "ban",
         maxVL: 0,
@@ -347,7 +346,7 @@ export default {
         enabled: true,
         minDelay: 200,
         timeout: 60,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 2
     },
 
