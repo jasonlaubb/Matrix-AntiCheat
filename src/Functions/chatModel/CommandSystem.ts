@@ -89,9 +89,14 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
                     }
                     player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
                 } else {
-                    if (world.getDynamicProperty(regax[1]) == (regax[2] == "enable")) return player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.already").replace("%a", regax[2])}`)
-                    world.setDynamicProperty(regax[1], regax[2] == "enable")
-                    player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
+                    if (regax[1] != "default") {
+                        if (world.getDynamicProperty(regax[1]) == (regax[2] == "enable")) return player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.already").replace("%a", regax[2])}`)
+                        world.setDynamicProperty(regax[1], regax[2] == "enable")
+                        player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
+                    } else {
+                        world.setDynamicProperty(regax[1])
+                        player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleChange").replace("%a", regax[1]).replace("%b", regax[2])}`)
+                    }
                 }
             })
             break
