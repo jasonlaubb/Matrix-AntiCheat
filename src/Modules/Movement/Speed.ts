@@ -15,9 +15,9 @@ const lastflag = new Map<string, number>();
 const lastflag2 = new Map<string, number>();
 
 /**
- * @author ravriv
+ * @author ravriv & jasonlaubb
  * @description A advanced checks for Speed, the player is calculated based on their velocity in the x and z directions
- * This is converted from blocks per tick to miles per hour
+ * This is converted from velocity to miles per hour (also velocity directly
 */
 
 async function AntiSpeedA (player: Player, now: number) {
