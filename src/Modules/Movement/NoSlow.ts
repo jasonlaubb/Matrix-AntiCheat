@@ -62,18 +62,17 @@ async function AntiNoSlow (player: Player) {
         if (playerSpeed <= (config.antiNoSlow.maxWebSpeed + limitIncrease)) {
             lastPosition.set(player.id, playerLocation);
         } else {
-            //flag the player, if the buffer is higher than the max buffer, teleport the player back
-            if (!(player.lastExplosionTime && Date.now() - player.lastExplosionTime < 1000) && !player.isFlying) {
+            // flag the player
+            if (!(player.lastExplosionTime && Date.now() - player.lastExplosionTime < 1000) && !player.isFlying && !player.isGlding) {
                 //A - false positive: very low, efficiency: high
                 flag (player, "NoSlow", "A" ,config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
                 if (!config.slient) player.teleport(playerLastPos)
             }
         }
     }
-
-    /* disable until fixed
+    
     //check if player speed while using item is too high
-    if (!player.getEffect(MinecraftEffectTypes.Speed) && player.lastItemUsed && Date.now() - player.lastItemUsed >= config.antiNoSlow.itemUseTime && playerSpeed > config.antiNoSlow.maxUsingItemTherehold && player.isOnGround && !player.isGliding && !(player.lastExplosionTime && Date.now() - player.lastExplosionTime < 1000)) {
+    if (!player.getEffect(MinecraftEffectTypes.Speed) && player.lastItemUsed && Date.now() - player.lastItemUsed >= config.antiNoSlow.itemUseTime && playerSpeed > config.antiNoSlow.maxUsingItemTherehold && player.isOnGround && !player.isJumping && !player.isGliding && !(player.lastExplosionTime && Date.now() - player.lastExplosionTime < 1000)) {
         const isIceBelow = player.dimension.getBlock({
             x: Math.floor(player.location.x),
             y: Math.floor(player.location.y) - 1,
@@ -91,13 +90,14 @@ async function AntiNoSlow (player: Player) {
             }
             lastflag.set(player.id, Date.now())
         }
-    }*/
+    }
 }
 
 const antiNoSlow = () => {
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative]})
     for (const player of players) {
         if (isAdmin (player)) continue;
+        
         AntiNoSlow(player);
     }
 }
