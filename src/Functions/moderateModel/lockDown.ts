@@ -4,5 +4,5 @@ import { isAdmin, kick } from "../../Assets/Util";
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (world.getDynamicProperty("lockdown") !== true || !initialSpawn || isAdmin(player)) return;
 
-    kick (player, "LockDown", 'Matrix')
+    kick (player, "Lock down enabled", 'Matrix AntiCheat')
 })
