@@ -1,5 +1,5 @@
 import { world, Player, system, GameMode, PlayerLeaveAfterEvent, ItemUseAfterEvent, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { flag, isAdmin, c, getPing } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
@@ -24,7 +24,7 @@ async function ElytraFly (player: Player, now: number) {
     if (player.isGliding) {
         if (data.length > config.antiElytraFly.fallDiscycle) {  
             data.shift()
-            if (!player.hasTag("matrix:stop-gliding") && data.every(f => player.fallDistance == f) && player.fallDistance !== 1 && player.fallDistance <= config.antiElytraFly.maxFallDis && velocity < -0.01) {
+            if (getPing(player) < 4 && !player.hasTag("matrix:stop-gliding") && data.every(f => player.fallDistance == f) && player.fallDistance !== 1 && player.fallDistance <= config.antiElytraFly.maxFallDis && velocity < -0.01) {
                 if (!config.slient) {
                     player.teleport(lastPos)
                 }
