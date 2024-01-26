@@ -14,7 +14,7 @@ import lang from "../Data/Languages/lang";
 import Config from "../Data/Config";
 //import { Root } from "../Data/ConfigDocs";
 
-export { kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog }
+export { getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog }
 
 function kick (player: Player, reason?: string, by?: string) {
     try {
