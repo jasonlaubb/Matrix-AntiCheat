@@ -1,4 +1,4 @@
-import { world, system, PlayerPlaceBlockBeforeEvent, ItemUseBeforeEvent, EntityEquippableComponent, EquipmentSlot } from "@minecraft/server";
+import { world, system, PlayerPlaceBlockBeforeEvent, EntityEquippableComponent, EquipmentSlot, ItemUseOnBeforeEvent } from "@minecraft/server";
 import { c, flag, isAdmin } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
@@ -8,19 +8,19 @@ import lang from "../../Data/Languages/lang";
  */
 
 const blockPlace = (event: PlayerPlaceBlockBeforeEvent) => {
-    const { player, block } = event
+    const { player, itemStack } = event
     if (isAdmin(player)) return
     const config = c()
-    if (config.antiCommandBlockExplolit.cancelPlacement.includes(block?.typeId)) {
+    if (config.antiCommandBlockExplolit.cancelPlacement.includes(itemStack.typeId)) {
         event.cancel = true
         system.run(() => {
             player.getComponent(EntityEquippableComponent.componentId).setEquipment(EquipmentSlot.Mainhand) // bye bye item
-            flag (player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + block.typeId])
+            flag (player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + itemStack.typeId])
         })
     }
 }
 
-const itemUse = (event: ItemUseBeforeEvent) => {
+const itemUse = (event: ItemUseOnBeforeEvent) => {
     const { source: player, itemStack } = event
     if (isAdmin(player)) return
     const config = c()
@@ -35,11 +35,12 @@ const itemUse = (event: ItemUseBeforeEvent) => {
 
 export default {
     enable () {
+        world.sendMessage(`Anti CBE enabled`)
         world.beforeEvents.playerPlaceBlock.subscribe(blockPlace)
-        world.beforeEvents.itemUse.subscribe(itemUse)
+        world.beforeEvents.itemUseOn.subscribe(itemUse)
     },
     disable () {
         world.beforeEvents.playerPlaceBlock.unsubscribe(blockPlace)
-        world.beforeEvents.itemUse.unsubscribe(itemUse)
+        world.beforeEvents.itemUseOn.unsubscribe(itemUse)
     }
 }
