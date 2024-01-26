@@ -115,19 +115,19 @@ system.runInterval(async () => {
         } else if (v.y <= 0) player.removeTag("matrix:slime")
 
         // Not useful lmao
-        system.run(() => {
-            if (player.lastVelObject && player.lastLocObject) {
-                if ((v.x != 0 || v.y != 0 || v.z != 0) &&
-                    JSON.stringify(player.lastVelObject) == JSON.stringify(v) &&
-                    JSON.stringify(player.lastLocObject) == JSON.stringify(player.location)) {
+        if (player.lastVelObject && player.lastLocObject) {
+            if ((v.x != 0 || v.y != 0 || v.z != 0) &&
+                JSON.stringify(player.lastVelObject) == JSON.stringify(v) &&
+                JSON.stringify(player.lastLocObject) == JSON.stringify(player.location)) {
+                system.run(() => {
                     player.pingTick ??= 0
                     player.pingTick += 1
-                } else player.pingTick = 0
-            }
+                })
+            } else system.run(() => player.pingTick = 0)
+        }
 
-            player.lastVelObject = v
-            player.lastLocObject = player.location
-        })
+        player.lastVelObject = v
+        player.lastLocObject = player.location
     }
 })
 

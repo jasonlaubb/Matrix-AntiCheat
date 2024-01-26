@@ -68,10 +68,16 @@ async function AntiFly(player: Player, now: number) {
 
 	if (prevLoc === undefined) return;
 
-	if (velocity > config.antiFly.maxVelocity) {
+	const skip1 = !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) &&
+	!(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.hasTag("matrix:knockback");
+    const skip2 = !player.isFlying && !player.isGliding;
+    const skip3 = !(jumpBoost && jumpBoost?.amplifier > 2) &&
+	!(levitation && levitation?.amplifier > 2);
+
+	if (velocity > config.antiFly.maxVelocity && !skip1) {
 	    velocityLog[player.id] += 1;
 	    lastVelocity.set(id, velocity);
-    } else if (velocity > 0 || velocity == 0 && player.isOnGround)
+    } else if (velocity > 0 || velocity == 0 && player.isOnGround || skip1)
 	    velocityLog[player.id] = 0
 
 	if (jumpBoost?.amplifier > 2 || levitation?.amplifier > 2) return;
@@ -82,12 +88,6 @@ async function AntiFly(player: Player, now: number) {
 		(velocity < config.antiFly.maxVelocity && player.fallDistance < -1.5)
 	const clientFly =
 		velocityLog[player.id] > 0 && player?.lastVelLog == velocityLog[player.id];
-
-	const skip1 = !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) &&
-		!(player.threwTridentAt && now - player.threwTridentAt < 5000);
-	const skip2 = !player.isFlying && !player.isGliding;
-	const skip3 = !(jumpBoost && jumpBoost?.amplifier > 2) &&
-		!(levitation && levitation?.amplifier > 2);
 
 	if (
 		!player.isOnGround &&

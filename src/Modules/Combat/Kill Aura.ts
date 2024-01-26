@@ -9,7 +9,7 @@ import {
     EntityHurtAfterEvent,
     EntityDamageCause
 } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util.js";
+import { flag, isAdmin, c, getPing } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
 /**
@@ -37,7 +37,7 @@ function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolea
     }
 
     //if the player hit more than 1 targets in 2 ticks, flag the player
-    if (playerHitEntity.length > config.antiKillAura.maxEntityHit) {
+    if (getPing(damagingEntity) < 4 && playerHitEntity.length > config.antiKillAura.maxEntityHit) {
         hitLength.delete(damagingEntity.id);
         //A - false positive: very low, efficiency: high
         flag (damagingEntity, 'Kill Aura', "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`])
