@@ -6,7 +6,7 @@ import {
     Player,
     PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import { flag, isAdmin, getSpeedIncrease1, getSpeedIncrease2, c } from "../../Assets/Util.js";
+import { flag, isAdmin, getSpeedIncrease1, getSpeedIncrease2, c, getPing } from "../../Assets/Util.js";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang.js";
 

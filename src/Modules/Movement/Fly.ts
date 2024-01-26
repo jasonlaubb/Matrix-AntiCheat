@@ -9,7 +9,8 @@ import {
 import {
 	flag,
 	isAdmin,
-	c
+	c,
+	getPing
 } from "../../Assets/Util";
 import {
 	MinecraftEffectTypes
@@ -20,6 +21,7 @@ const previousLocations = new Map <string, Vector3>();
 let velocityLog: { [key: string]: number } = {};
 const lastVelocity = new Map<string, number> ();
 const lastFlag = new Map <string, number>();
+const lastFlag2 = new Map<string, number>()
 
 /**
  * @author jasonlaubb && rami
@@ -102,7 +104,7 @@ async function AntiFly(player: Player, now: number) {
 		const lastflag = lastFlag.get(id);
 		player.teleport(prevLoc);
 
-		if (lastflag && now - lastflag <= 4000 && now - lastflag >= 500)
+		if (lastflag && now - lastflag <= 5000 && now - lastflag >= 500)
 			flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + lastVelocity.get(id).toFixed(2)]);
 		velocityLog[player.id] = 0;
 		lastVelocity.set(id, undefined);
@@ -111,8 +113,10 @@ async function AntiFly(player: Player, now: number) {
 
 	player.lastVelLog = velocityLog[player.id];
 
-	if (player.lastVelocity && velocityLog[player.id] == 1 && velocity < 0 && player.lastVelocity > config.antiFly.maxVelocity && skip1 && skip2 && !instair) {
+	if (getPing(player) < 4 && player.lastVelocity && velocityLog[player.id] == 1 && velocity < 0 && player.lastVelocity > config.antiFly.maxVelocity && skip1 && skip2 && !instair) {
 		player.teleport(prevLoc);
+		const lastflag = lastFlag2.get(id)
+		if (lastflag && now - lastflag < 4500) return
 		flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(4)]);
 	}
 
@@ -137,6 +141,7 @@ const playerLeave = ({
 	previousLocations.delete(playerId);
 	lastVelocity.delete(playerId);
 	lastFlag.delete(playerId);
+	lastFlag2.delete(playerId);
 	delete velocityLog[playerId];
 };
 
@@ -151,6 +156,7 @@ export default {
 		previousLocations.clear();
 		lastVelocity.clear();
 		lastFlag.clear();
+		lastFlag2.clear()
 		velocityLog = {};
 		system.clearRun(id);
 		world.afterEvents.playerLeave.unsubscribe(playerLeave);
