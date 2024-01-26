@@ -1,7 +1,8 @@
 import { ItemTypes, Player } from "@minecraft/server"
 
 // Constant all item!
-const ALL_ITEM: string[] = ItemTypes.getAll().map(item => item.id)
+var all = ItemTypes.getAll()
+const ALL_ITEM: string[] = all.map(item => item.id)
 
 class EnderChestContainer {
     private container: { [key: number]: string } = []
