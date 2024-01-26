@@ -31,6 +31,9 @@ export default [
     "spawnTime",
     "lastXZLogged",
     "lastVelocity",
+    "lastVelObject",
+    "lastLocObject",
+    "pingTick"
 ]
 
 /** A code for making this

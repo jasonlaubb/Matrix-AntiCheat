@@ -4,7 +4,8 @@ import {
     world,
     Effect,
     Vector3,
-    GameMode
+    GameMode,
+    PlayerLeaveAfterEvent
 } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { flag, isAdmin, c } from "../../Assets/Util";
@@ -16,6 +17,8 @@ function getSpeedIncrease (speedEffect: Effect | undefined) {
 }
 
 const lastPosition = new Map<string, Vector3>();
+const lastflag = new Map<string, number>();
+const lastflag2 = new Map<string, number>();
 //const lastflag = new Map<string, number>()
 
 /**
@@ -23,7 +26,7 @@ const lastPosition = new Map<string, Vector3>();
  * @description A strong check for no slow, it detect no slow in a high accuracy
  */
 
-async function AntiNoSlow (player: Player) {
+async function AntiNoSlow (player: Player, now: number) {
     const config = c()
     //get the player location
     const playerLocation = player.location;
@@ -63,16 +66,20 @@ async function AntiNoSlow (player: Player) {
             lastPosition.set(player.id, playerLocation);
         } else {
             // flag the player
-            if (!(player.lastExplosionTime && Date.now() - player.lastExplosionTime < 1000) && !player.isFlying && !player.isGlding) {
-                //A - false positive: very low, efficiency: high
-                flag (player, "NoSlow", "A" ,config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
-                if (!config.slient) player.teleport(playerLastPos)
+            if (!(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !player.isFlying && !player.isGliding) {
+                const lastFlag = lastflag.get(player.id)
+                if (lastFlag && now - lastFlag < 3500) {
+                    //A - false positive: very low, efficiency: high
+                    flag (player, "NoSlow", "A" ,config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
+                    player.teleport(playerLastPos)
+                }
+                lastflag.set(player.id, now)
             }
         }
     }
     
     //check if player speed while using item is too high
-    if (!player.getEffect(MinecraftEffectTypes.Speed) && player.lastItemUsed && Date.now() - player.lastItemUsed >= config.antiNoSlow.itemUseTime && playerSpeed > config.antiNoSlow.maxUsingItemTherehold && player.isOnGround && !player.isJumping && !player.isGliding && !(player.lastExplosionTime && Date.now() - player.lastExplosionTime < 1000)) {
+    if (!player.getEffect(MinecraftEffectTypes.Speed) && player.lastItemUsed && now - player.lastItemUsed >= config.antiNoSlow.itemUseTime && playerSpeed > config.antiNoSlow.maxItemSpeed && player.isOnGround && !player.isJumping && !player.isGliding && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000)) {
         const isIceBelow = player.dimension.getBlock({
             x: Math.floor(player.location.x),
             y: Math.floor(player.location.y) - 1,
@@ -81,25 +88,31 @@ async function AntiNoSlow (player: Player) {
 
         if (!isIceBelow) {
             player.teleport(player.location)
-            const lastFlag = lastflag.get(player.id)
-            if (lastFlag && Date.now() - lastFlag < 400) {
+            const lastFlag = lastflag2.get(player.id)
+            if (lastFlag && now - lastFlag < 400) {
                 player.addTag("matrix:item-disabled")
                 system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiNoSlow.timeout)
                 //B- false positive: low, efficiency: mid
                 flag (player, "NoSlow", "B", config.antiNoSlow.maxVL, config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
             }
-            lastflag.set(player.id, Date.now())
+            lastflag2.set(player.id, now)
         }
     }
 }
 
 const antiNoSlow = () => {
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative]})
+    const now = Date.now()
     for (const player of players) {
         if (isAdmin (player)) continue;
-        
-        AntiNoSlow(player);
+        AntiNoSlow (player, now);
     }
+}
+
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
+    lastPosition.delete(playerId)
+    lastflag.delete(playerId)
+    lastflag2.delete(playerId)
 }
 
 let id: number
@@ -107,9 +120,13 @@ let id: number
 export default {
     enable () {
         id = system.runInterval(antiNoSlow)
+        world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {
         lastPosition.clear()
+        lastflag.clear()
+        lastflag2.clear()
         system.clearRun(id)
+        world.afterEvents.playerLeave.unsubscribe(playerLeave)
     }
 }

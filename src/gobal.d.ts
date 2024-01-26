@@ -36,6 +36,9 @@ declare module "@minecraft/server" {
         spawnTime: number;
         lastXZLogged: number;
         lastVelocity: number;
+        lastVelObject: Vector3;
+        lastLocObject: Vector3;
+        pingTick: number;
     }
     interface World {
         antiBotEnabled: boolean;

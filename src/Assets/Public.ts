@@ -98,7 +98,7 @@ system.runInterval(async () => {
     const players = world.getAllPlayers()
     for (const player of players) {
         // knockback
-        const v player.getVelocity()
+        const v = player.getVelocity()
         if (v.y <= 0) player.removeTag("matrix:knockback")
 
         // item use
@@ -112,7 +112,7 @@ system.runInterval(async () => {
         const slimeUnder = findSlime(player.dimension, player.location)
         if (slimeUnder) {
             player.addTag("matrix:slime")
-        } else if (velocity <= 0) player.removeTag("matrix:slime")
+        } else if (v.y <= 0) player.removeTag("matrix:slime")
 
         // Not useful lmao
         system.run(() => {
