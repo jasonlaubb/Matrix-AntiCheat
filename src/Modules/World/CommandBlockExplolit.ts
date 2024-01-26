@@ -35,7 +35,6 @@ const itemUse = (event: ItemUseOnBeforeEvent) => {
 
 export default {
     enable () {
-        world.sendMessage(`Anti CBE enabled`)
         world.beforeEvents.playerPlaceBlock.subscribe(blockPlace)
         world.beforeEvents.itemUseOn.subscribe(itemUse)
     },
