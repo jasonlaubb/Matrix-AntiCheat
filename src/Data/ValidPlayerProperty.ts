@@ -34,7 +34,8 @@ export default [
     "lastVelObject",
     "lastLocObject",
     "pingTick",
-    "perfectMove"
+    "perfectMove",
+    "lastTouchEntity"
 ]
 
 /** A code for making this

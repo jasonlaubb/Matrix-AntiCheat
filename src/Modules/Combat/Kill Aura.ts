@@ -13,7 +13,7 @@ import { flag, isAdmin, c, getPing } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
 /**
- * @author ravriv
+ * @author ravriv & jasonlaubb
  * @description This checks if the player is hitting another player from a impossible angle.
  */
 
@@ -43,6 +43,8 @@ function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolea
         flag (damagingEntity, 'Kill Aura', "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`])
         flagged = true
     }
+
+    damagingEntity.lastTouchEntity = Date.now()
 
     const state = hitEntity instanceof Player && onFirstHit === true
     //stop false positive
@@ -96,7 +98,7 @@ const tickEvent = () => {
         if (isAdmin(player)) continue
         const data = lastRotateData.get(player.id)
         const pos1 = player.getHeadLocation()
-        const nearestPlayer = player.dimension.getPlayers({ excludeNames: [player.name], location: pos1, maxDistance: 10 })[0]
+        const nearestPlayer = player.dimension.getEntities({ excludeNames: [player.name], location: pos1, maxDistance: 10 })[0]
         if (!nearestPlayer) continue
         const pos2 = nearestPlayer.getHeadLocation()
         const { x: verticalRotation, y: horizontalRotation }  = player.getRotation()
@@ -107,25 +109,29 @@ const tickEvent = () => {
         let horizontalAngle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - horizontalRotation - 90;
         horizontalAngle = Math.abs(horizontalAngle <= -180 ? horizontalAngle += 360 : horizontalAngle)
 
-        let verticalAngle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - verticalRotation - 90;
-        horizontalAngle = Math.abs(verticalAngle <= -180 ? verticalAngle += 360 : verticalAngle)
+        /*let verticalAngle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - verticalRotation - 90;
+        verticalAngle = Math.abs(verticalAngle <= -180 ? verticalAngle += 360 : verticalAngle)*/
         const { x: floatX, z: floatZ } = playerVelocity
         const { x: moveX, z: moveZ } = nearestPlayer.getVelocity()
         const float = Math.hypot(floatX, floatZ)
         const move = Math.hypot(moveX, moveZ)
-        const rotatedMove = Math.hypot(data.horizonR - data.verticalR, data.horizonR - data.verticalR)
+        const rotatedMove = Math.abs(data.horizonR - horizontalRotation)
 
         const config = c()
-        if (float + move > 0.35 && horizontalAngle < 1.2 && verticalAngle < 1.2 && rotatedMove > 1.5) {
+        //player.onScreenDisplay.setActionBar(`${float + move}\n${horizontalAngle}\n${player.perfectMove ?? "idk"}\n${rotatedMove}`)
+        if (float > 0.1 && move > 0 && player.lastTouchEntity && Date.now() - player.lastTouchEntity < 450 && horizontalAngle < 12 && /*verticalAngle < 2.5 &&*/ rotatedMove > 0) {
             player.perfectMove ??= 0
             player.perfectMove += 1
-            if (player.perfectMove > 5 && !player.hasTag("matrix:pvp-disabled")) {
+            if (player.perfectMove > 2 && !player.hasTag("matrix:pvp-disabled")) {
                 player.perfectMove = 0
-                player.addTag("matrix:pvp-disabled")
-                system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
-                flag(player, "Kill Aura", "D", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Ratio") + ":" + ((horizontalAngle + verticalAngle) / 2).toFixed(2)])
+                /*player.addTag("matrix:pvp-disabled")
+                system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)*/
+                flag(player, "Kill Aura", "D", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + horizontalAngle.toFixed(5)])
             }
-        } else player.perfectMove = 0
+        } else {
+            if (move < 0.2 && horizontalAngle > 10 && horizontalAngle < 90) return
+            player.perfectMove = 0
+        }
     }
 }
 

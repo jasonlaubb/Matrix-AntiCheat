@@ -404,6 +404,12 @@ export default {
         ]
     },
 
+    antiDisabler: {
+        enabled: true,
+        maxVL: 0,
+        punishment: "ban"
+    },
+
     antiIllegalItem: {
         enabled: false,
         illegalItem: [
