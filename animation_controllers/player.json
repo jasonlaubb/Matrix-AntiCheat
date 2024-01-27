@@ -56,7 +56,7 @@
                             "attack_time": "variable.attack_time"
                         }
                     ],
-                    "on_entry": ["/tag @s add matrix:attack_time"]
+                    "on_entry": ["/tag @s remove matrix:attack_time"]
                 },
                 "attack_time": {
                     "transitions": [
@@ -64,7 +64,7 @@
                             "default": "!variable.attack_time"
                         }
                     ],
-                    "on_entry": ["/tag @s remove matrix:attack_time"]
+                    "on_entry": ["/tag @s add matrix:attack_time"]
                 }
             }
         },
