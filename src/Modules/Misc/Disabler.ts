@@ -1,6 +1,6 @@
 import { EntityEquippableComponent, EquipmentSlot, ItemDurabilityComponent, PlayerSpawnAfterEvent, system, world } from "@minecraft/server"
 import { isAdmin, c, flag } from "../../Assets/Util"
-import { MinecraftItemTypes } from "@minecraft/vanilla-data"
+import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
 
 /**
  * @author jasonlaubb
