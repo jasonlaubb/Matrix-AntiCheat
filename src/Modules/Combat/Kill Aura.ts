@@ -98,8 +98,10 @@ const tickEvent = () => {
         if (isAdmin(player)) continue
         const data = lastRotateData.get(player.id)
         const pos1 = player.getHeadLocation()
-        const nearestPlayer = player.dimension.getEntities({ excludeNames: [player.name], location: pos1, maxDistance: 10 })[0]
-        if (!nearestPlayer) continue
+        const raycast = player.getEntitiesFromViewDirection()[0]
+        const nearestPlayer = raycast.entity
+        if (!raycast) continue
+        if (!(raycast.entity instanceof Player) || raycast.distance > 7.5) continue
         const pos2 = nearestPlayer.getHeadLocation()
         const { x: verticalRotation, y: horizontalRotation }  = player.getRotation()
         const playerVelocity = player.getVelocity()

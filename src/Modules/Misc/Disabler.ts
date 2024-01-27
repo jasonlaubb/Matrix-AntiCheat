@@ -25,8 +25,8 @@ const antiDisabler = () => {
     for (const player of players) {
         if (isAdmin(player) || !player.isGliding || player.hasTag("matrix:disabler-patched")) continue
         const elytra = player.getComponent(EntityEquippableComponent.componentId)!?.getEquipment(EquipmentSlot.Chest)!
-        const durability = elytra?.getComponent(ItemDurabilityComponent.componentId)?.getDamageChance()
-        if (elytra.typeId != MinecraftItemTypes.Elytra || (elytra.typeId != MinecraftItemTypes.Elytra && durability == 0)) {
+        const durability = elytra?.getComponent(ItemDurabilityComponent.componentId)
+        if (elytra.typeId != MinecraftItemTypes.Elytra || (elytra.typeId == MinecraftItemTypes.Elytra && durability.maxDurability - durability.damage <= 1)) {
             const config = c()
             player.addTag("matrix:disabler-patched")
             system.runTimeout(() => player.removeTag("matrix:disabler-patched"), 500)
