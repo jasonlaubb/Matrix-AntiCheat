@@ -7,7 +7,7 @@ import {
     EntityHitEntityAfterEvent,
     PlayerLeaveAfterEvent,
     EntityHurtAfterEvent,
-    EntityDamageCause
+    EntityDamageCause,
 } from "@minecraft/server";
 import { flag, isAdmin, c, getPing } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
@@ -44,8 +44,9 @@ function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolea
         flagged = true
     }
 
+    const state = hitEntity instanceof Player && onFirstHit === true
     //stop false positive
-    if (hitEntity instanceof Player && distance > 3 && onFirstHit === true) {
+    if (state && distance > 3) {
         //get the angle
         const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(), damagingEntity.getRotation().y);
         const rotationFloat: number = Math.abs(damagingEntity.getRotation().x)
@@ -78,6 +79,53 @@ function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolea
                 damagingEntity.removeTag("matrix:pvp-disabled");
             }, config.antiKillAura.timeout);
         }
+    }
+}
+
+interface LastRotateData {
+    horizonR: number;
+    verticalR: number;
+    lastVel: Vector3;
+}
+
+const lastRotateData = new Map<string, LastRotateData>()
+
+const tickEvent = () => {
+    const players = world.getAllPlayers()
+    for (const player of players) {
+        if (isAdmin(player)) continue
+        const data = lastRotateData.get(player.id)
+        const pos1 = player.getHeadLocation()
+        const nearestPlayer = player.dimension.getPlayers({ excludeNames: [player.name], location: pos1, maxDistance: 10 })[0]
+        if (!nearestPlayer) continue
+        const pos2 = nearestPlayer.getHeadLocation()
+        const { x: verticalRotation, y: horizontalRotation }  = player.getRotation()
+        const playerVelocity = player.getVelocity()
+        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity })
+        if (!data) continue
+
+        let horizontalAngle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - horizontalRotation - 90;
+        horizontalAngle = Math.abs(horizontalAngle <= -180 ? horizontalAngle += 360 : horizontalAngle)
+
+        let verticalAngle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - verticalRotation - 90;
+        horizontalAngle = Math.abs(verticalAngle <= -180 ? verticalAngle += 360 : verticalAngle)
+        const { x: floatX, z: floatZ } = playerVelocity
+        const { x: moveX, z: moveZ } = nearestPlayer.getVelocity()
+        const float = Math.hypot(floatX, floatZ)
+        const move = Math.hypot(moveX, moveZ)
+        const rotatedMove = Math.hypot(data.horizonR - data.verticalR, data.horizonR - data.verticalR)
+
+        const config = c()
+        if (float + move > 0.35 && horizontalAngle < 1.2 && verticalAngle < 1.2 && rotatedMove > 1.5) {
+            player.perfectMove ??= 0
+            player.perfectMove += 1
+            if (player.perfectMove > 5 && !player.hasTag("matrix:pvp-disabled")) {
+                player.perfectMove = 0
+                player.addTag("matrix:pvp-disabled")
+                system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
+                flag(player, "Kill Aura", "D", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Ratio") + ":" + ((horizontalAngle + verticalAngle) / 2).toFixed(2)])
+            }
+        } else player.perfectMove = 0
     }
 }
 
@@ -140,6 +188,7 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
 }
 
 let id: number
+let id2: number
 
 export default {
     enable () {
@@ -147,6 +196,7 @@ export default {
         world.afterEvents.entityHurt.subscribe(antiKillAura2)
         world.afterEvents.playerLeave.subscribe(playerLeave)
         id = system.runInterval(systemEvent, 2)
+        id2 = system.runInterval(tickEvent, 1)
     },
     disable () {
         hitLength.clear()
@@ -154,5 +204,6 @@ export default {
         world.afterEvents.entityHurt.unsubscribe(antiKillAura2)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
         system.clearRun(id)
+        system.clearRun(id2)
     }
 }

@@ -33,7 +33,8 @@ export default [
     "lastVelocity",
     "lastVelObject",
     "lastLocObject",
-    "pingTick"
+    "pingTick",
+    "perfectMove"
 ]
 
 /** A code for making this

@@ -39,6 +39,7 @@ declare module "@minecraft/server" {
         lastVelObject: Vector3;
         lastLocObject: Vector3;
         pingTick: number;
+        perfectMove: number
     }
     interface World {
         antiBotEnabled: boolean;
