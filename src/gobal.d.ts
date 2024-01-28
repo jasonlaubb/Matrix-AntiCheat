@@ -41,6 +41,7 @@ declare module "@minecraft/server" {
         pingTick: number;
         perfectMove: number;
         lastTouchEntity: number;
+        lastNonGlidingPoint: Vector3;
     }
     interface World {
         antiBotEnabled: boolean;

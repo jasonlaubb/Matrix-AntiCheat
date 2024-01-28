@@ -12,7 +12,8 @@ function antiSpammer ({ sender: player }: ChatSendAfterEvent) {
 
     system.run(() => {
         //check if the player send message while hand swinging
-        /*if (player.hasTag('matrix:attack_time')) {
+        /*
+        if (player.hasTag('matrix:attack_time')) {
             //A - false positive: very low, efficiency: mid
             flag (player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type")+":"+lang(">AttackTime")])
             if (!config.slient) player.applyDamage(6)

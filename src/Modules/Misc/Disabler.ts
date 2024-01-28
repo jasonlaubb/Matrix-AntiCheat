@@ -23,14 +23,19 @@ export default {
 const antiDisabler = () => {
     const players = world.getAllPlayers()
     for (const player of players) {
-        if (isAdmin(player) || !player.isGliding || player.hasTag("matrix:disabler-patched")) continue
-        const elytra = player.getComponent(EntityEquippableComponent.componentId)!?.getEquipment(EquipmentSlot.Chest)!
-        const durability = elytra?.getComponent(ItemDurabilityComponent.componentId)
-        if (elytra.typeId != MinecraftItemTypes.Elytra || (elytra.typeId == MinecraftItemTypes.Elytra && durability.maxDurability - durability.damage <= 1)) {
+        if (isAdmin(player) || player.hasTag("matrix:disabler-patched") || !player.hasTag("matrix:alive")) continue
+        if (player.isGliding) {
+            const elytra = player.getComponent(EntityEquippableComponent.componentId)!?.getEquipment(EquipmentSlot.Chest)!
+            const durability = elytra?.getComponent(ItemDurabilityComponent.componentId)
+            if (elytra?.typeId != MinecraftItemTypes.Elytra || (elytra?.typeId == MinecraftItemTypes.Elytra && durability.maxDurability - durability.damage <= 1)) {
             const config = c()
-            player.addTag("matrix:disabler-patched")
-            system.runTimeout(() => player.removeTag("matrix:disabler-patched"), 500)
-            flag(player, "Disabler", "A", config.antiDisabler.maxVL, config.antiDisabler.punishment, undefined)
+                player.addTag("matrix:disabler-patched")
+                system.runTimeout(() => player.removeTag("matrix:disabler-patched"), 10)
+                player.teleport(player.lastNonGlidingPoint)
+                flag(player, "Disabler", "A", config.antiDisabler.maxVL, config.antiDisabler.punishment, undefined)
+            }
+        } else {
+            player.lastNonGlidingPoint = player.location
         }
     }
 }

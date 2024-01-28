@@ -99,9 +99,9 @@ const tickEvent = () => {
         const data = lastRotateData.get(player.id)
         const pos1 = player.getHeadLocation()
         const raycast = player.getEntitiesFromViewDirection()[0]
-        const nearestPlayer = raycast.entity
         if (!raycast) continue
-        if (!(raycast.entity instanceof Player) || raycast.distance > 7.5) continue
+        const nearestPlayer = raycast?.entity
+        if (/*!(raycast.entity instanceof Player) ||*/ raycast.distance > 7.5) continue
         const pos2 = nearestPlayer.getHeadLocation()
         const { x: verticalRotation, y: horizontalRotation }  = player.getRotation()
         const playerVelocity = player.getVelocity()
@@ -136,6 +136,7 @@ const tickEvent = () => {
         }
     }
 }
+tickEvent // KillAuraD is in beta!
 
 function calculateVector(l1: Vector3, l2: Vector3) {
     const { x: x1, y: y1, z: z1 } = l1;
@@ -196,7 +197,7 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
 }
 
 let id: number
-let id2: number
+//let id2: number
 
 export default {
     enable () {
@@ -204,7 +205,7 @@ export default {
         world.afterEvents.entityHurt.subscribe(antiKillAura2)
         world.afterEvents.playerLeave.subscribe(playerLeave)
         id = system.runInterval(systemEvent, 2)
-        id2 = system.runInterval(tickEvent, 1)
+        //id2 = system.runInterval(tickEvent, 1)
     },
     disable () {
         hitLength.clear()
@@ -212,6 +213,6 @@ export default {
         world.afterEvents.entityHurt.unsubscribe(antiKillAura2)
         world.afterEvents.playerLeave.unsubscribe(playerLeave)
         system.clearRun(id)
-        system.clearRun(id2)
+        //system.clearRun(id2)
     }
 }
