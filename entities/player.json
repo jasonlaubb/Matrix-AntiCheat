@@ -11,6 +11,7 @@
                     "tick_speed",
                     "may_fly",
                     "alive",
+                    "attack_time",
                     "gliding",
                     "jump_action",
                     "jumping",
