@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./pack_icon.png" width="150" height="150">
+  <img src="./pack_icon.png" width="150" height="50">
   
   <img src="./Matrix-AntiCheat.png" height="50">
 
