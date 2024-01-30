@@ -1,3 +1,4 @@
+/** @author notthingHere */
 export default {
     "-help.helpCDlist": "Danh sách lệnh trợ giúp:",
     "-help.help": "help - Hiển thị thông điệp trợ giúp này",
