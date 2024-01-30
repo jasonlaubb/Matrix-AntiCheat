@@ -5,10 +5,12 @@ import zh_TW from "../Data/Languages/zh_TW";
 import ar from "../Data/Languages/ar";
 import zh_CN from "../Data/Languages/zh_CN";
 import vi_VN from "../Data/Languages/vi_VN";
-
+import ro from "../Data/Languages/ro";
+import it_IT from "../Data/Languages/it_IT";
+import fr from "../Data/Languages/fr";
 // declare the dynamic language
 
-let languageNow: string = undefined
+let languageNow: string
 
 export const getLang = () => languageNow
 
@@ -19,6 +21,9 @@ export const langs: { [key: string]: { [key: string]: LangType | string } } = {
     "zh_CN": zh_CN,
     "ar": ar,
     "vi_VN": vi_VN,
+    "ro": ro,
+    "it_IT": it_IT,
+    "fr": fr,
 }
 
 // when world initialized, update the language
