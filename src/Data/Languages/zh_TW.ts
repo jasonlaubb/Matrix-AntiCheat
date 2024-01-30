@@ -1,3 +1,4 @@
+/** @author jasonlaubb */
 export default {
     "-help.helpCDlist": "幫助指令清單：",
     "-help.help": "help - 顯示此說明訊息",
