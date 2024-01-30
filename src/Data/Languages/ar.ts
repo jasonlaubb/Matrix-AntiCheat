@@ -1,3 +1,4 @@
+/** @author RaMiGamerDev */
 export default {
     "-help.helpCDlist": "قائمة المساعدة:",
     "-help.help": "help - يريك قائمة المساعدة هذه",
