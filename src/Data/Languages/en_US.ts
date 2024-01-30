@@ -156,7 +156,7 @@ export default {
     ".CommandSystem.unknown_command": "Unknown command. Type \"help\" for help.",
     ".CommandSystem.command_disabled": "This command is disabled",
     ".CommandSystem.command_disabled_reason": "You are not an admin to use this command",
-    ".CommandSystem.no_permisson": "You don't have enough permisson to use this command",
+    ".CommandSystem.no_permisson": "You don't have enough permission to use this command",
     ".CommandSystem.no_player": "Please specify the player",
     ".CommandSystem.unknown_player": "Unknown player",
     ".CommandSystem.unknown": "Unknown command, try %ahelp",
