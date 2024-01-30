@@ -63,8 +63,8 @@ export default {
     "-rank.enter": "Veuillez entrer le grade",
     "-rank.hasset": "%a le rang a été fixé à %b",
     "-rank.hasadd": "%a le rang a été ajouté %b",
-    "-rank.already": "%aa déjà %b §r§cgrade",
-    "-rank.hasremove": "%ale grade de a été supprimé",
+    "-rank.already": "%a a déjà %b §r§cgrade",
+    "-rank.hasremove": "%a le grade de a été supprimé",
     "-rank.norank": "%a N'a pas %b §r§c grade",
     "-rank.empty": "%a n'a aucun grade",
 
@@ -81,7 +81,7 @@ export default {
     "-ban.admin": "Vous ne pouvez pas bannir un administrateur",
     "-ban.reason": "Veuillez entrer la raison",
     "-ban.time": "Veuillez entrer l'heure, exemple : 1d20h30m40s",
-    "-ban.has": "%a a été banni par%b",
+    "-ban.has": "%a a été banni par %b",
 
     "-unban.self": "Vous ne pouvez pas vous débannir",
     "-unban.notban": "%a n'est pas banne",
