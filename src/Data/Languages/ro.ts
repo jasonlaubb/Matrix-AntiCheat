@@ -1,3 +1,4 @@
+/** @author selder578 */
 export default {
     "-help.helpCDlist": "Listă comenzi:",
     "-help.help": "help - Arată acest mesaj pentru ajutor",
