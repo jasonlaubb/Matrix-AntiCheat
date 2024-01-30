@@ -1,3 +1,4 @@
+/** @author amiconabbo */
 export default {
     "-help.helpCDlist": "Help command list:",
     "-help.help": "help - Show this help message",
