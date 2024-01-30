@@ -9,7 +9,7 @@ export default {
     "-help.passwords": "passwords <vecchiaPassword> <nuovaPassword> - Cambia la password",
     "-help.flagmode": "flagmode <tutti/tag/bypass/admin> - Cambia la flag mode",
     "-help.rank": "rank <set/aggiungi/rimuovi> <giocatore> <rank> - Cambia il rank a un giocatore",
-    "-help.rankclear": "rankclear <giocatore> - Toglie tutti i rank a un giocatore",
+    "-help.rankclear": "rankclear <giocatore> - Rimuove tutti i rank a un giocatore",
     "-help.defaultrank": "defaultrank <rank> - Cambia il rank predefinito",
     "-help.showallrank": "showallrank <vero/falso> - Mostra tutti i rank in chat",
     "-help.ban": "ban <giocatore> <ragione> <tempoDefinito/perSempre> - Banna un giocatore",
