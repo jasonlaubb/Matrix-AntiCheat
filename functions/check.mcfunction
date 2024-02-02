@@ -1,7 +1,7 @@
 tag @s remove "matrix:no-beta-api"
 tag @s remove "matrix:not-the-top"
-execute unless score "matrix:beta-api-enabled" "matrix:api" matches -2048 -2048 run tag @s add "matrix:no-beta-api"
-execute unless score "matrix:superlative-pack" "matrix:api" matches -2048 -2048 run tag @s add "matrix:not-the-top"
+execute unless score "matrix:beta-api-enabled" "matrix:api" matches -2048 run tag @s add "matrix:no-beta-api"
+execute unless score "matrix:superlative-pack" "matrix:api" matches -2048 run tag @s add "matrix:not-the-top"
 tellraw @s {"rawtext":[{"text":"§bMatrix §7>§g Anti-Cheat setup checking:"}]}
 tellraw @s[tag="matrix:no-beta-api"] {"rawtext":[{"text":"§gBeta-API state: §cFALSE"}]}
 tellraw @s[tag="matrix:not-the-top"] {"rawtext":[{"text":"§gSuperlative pack: §cFALSE"}]}
