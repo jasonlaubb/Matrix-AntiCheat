@@ -26,3 +26,14 @@ import "./Functions/moderateModel/lockDown"
 //start all modules
 import { moduleStart } from "./Modules/Modules"
 moduleStart()
+
+import { world, system } from "@minecraft/server"
+import { c } from "./Assets/Util"
+
+if (c().createScoreboard) {
+    system.runTimeout(() => {
+        try {
+            world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048)
+        } catch { }
+    }, 10)
+}
