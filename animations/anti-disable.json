@@ -1,0 +1,12 @@
+{
+	"format_version": "1.10.0",
+	"animations": {
+		"animation.anti_disable": {
+			"timeline": {
+				"0.0": ["/gamerule randomtickspeed 1"]
+			},
+			"animation_length": 0.05,
+			"loop": true
+		}
+	}
+}
