@@ -8,7 +8,8 @@
             "is_experimental": false,
             "scripts": {
                 "animate": [
-                    "tick_speed",
+                    "anti_disable",
+                    "superlative_pack",
                     "may_fly",
                     "alive",
                     "gliding",
@@ -30,7 +31,8 @@
                 ]
             },
             "animations": {
-                "tick_speed": "animation.tickSpeed",
+                "anti_disable": "animation.anti_disable",
+                "superlative_pack": "animation.superlative_pack",
                 "may_fly": "controller.animation.may_fly",
                 "alive": "controller.animation.alive",
                 "attack_time": "controller.animation.attack_time",
