@@ -15,6 +15,7 @@ export default {
      */
     configVersion: 1, //don't change this lol
     language: "en_US",
+    createScoreboard: true, //create betaAPI scoreboard on boot
     flagMode: "admin",
     lockdowncode: "AbCdEfGh",
     passwordCold: 5000,
@@ -263,7 +264,7 @@ export default {
     antiSpeed: {
         enabled: true,
         mphThreshold: 150,
-        bpsThershold: 20,
+        bpsThershold: 11.5,
         clipThershold: 7,
         punishment: "kick",
         maxVL: 4
