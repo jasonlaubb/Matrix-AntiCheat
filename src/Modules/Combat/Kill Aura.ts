@@ -46,7 +46,7 @@ function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolea
 
     damagingEntity.lastTouchEntity = Date.now()
 
-    const state = hitEntity instanceof Player && onFirstHit === true
+    const state = hitEntity instanceof Player && onFirstHit == true
     //stop false positive
     if (state && distance > 3) {
         //get the angle
@@ -71,6 +71,19 @@ function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolea
                 flagged = true
             }
             lastFlag.set(damagingEntity.id, Date.now())
+        }
+    }
+
+    if (onFirstHit == true) {
+        const entityInDirection = damagingEntity.getEntitiesFromViewDirection
+        if (!entityInDirection.some(({ id } => id == hitEntity.id)) {
+            flag (damagingEntity, 'Kill Aura', 'D', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
+            flagged = true
+        }
+        // bad packet -w-
+        if (player.isEmoting || player.isSleeping || player.hasTag("matrix:container") || !player.hasTag("matrix:attack_time")) {
+            flag (damagingEntity, 'Kill Aura', 'E', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
+            flagged = true 
         }
     }
 
@@ -128,7 +141,7 @@ const tickEvent = () => {
                 player.perfectMove = 0
                 /*player.addTag("matrix:pvp-disabled")
                 system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)*/
-                flag(player, "Kill Aura", "D", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + horizontalAngle.toFixed(5)])
+                flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + horizontalAngle.toFixed(5)])
             }
         } else {
             if (move < 0.2 && horizontalAngle > 10 && horizontalAngle < 90) return
