@@ -75,11 +75,12 @@ function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolea
     }
 
     if (onFirstHit == true) {
+        /* Just an idea
         const entityInDirection = damagingEntity.getEntitiesFromViewDirection
         if (!entityInDirection.some(({ id } => id == hitEntity.id)) {
             flag (damagingEntity, 'Kill Aura', 'D', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
             flagged = true
-        }
+        }*/
         // bad packet -w-
         if (player.isEmoting || player.isSleeping || player.hasTag("matrix:container") || !player.hasTag("matrix:attack_time")) {
             flag (damagingEntity, 'Kill Aura', 'E', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
@@ -114,7 +115,7 @@ const tickEvent = () => {
         const raycast = player.getEntitiesFromViewDirection()[0]
         if (!raycast) continue
         const nearestPlayer = raycast?.entity
-        if (/*!(raycast.entity instanceof Player) ||*/ raycast.distance > 7.5) continue
+        if (!(raycast.entity instanceof Player) || raycast.distance > 7.5) continue
         const pos2 = nearestPlayer.getHeadLocation()
         const { x: verticalRotation, y: horizontalRotation }  = player.getRotation()
         const playerVelocity = player.getVelocity()
