@@ -35,7 +35,7 @@ world.beforeEvents.dataDrivenEntityTriggerEvent.subscribe((event) => {
     }
 })
 
-world.afterEvents.dataDrivenEntityTriggerEvent.subscribe((event) => {
+world.afterEvents.dataDrivenEntityTrigger.subscribe((event) => {
     const { entity: player, eventId: id } = event
 
     if (id === "matrix:containerOpen") player.addTag("matrix:container")

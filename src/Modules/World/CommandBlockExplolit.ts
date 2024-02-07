@@ -8,14 +8,14 @@ import lang from "../../Data/Languages/lang";
  */
 
 const blockPlace = (event: PlayerPlaceBlockBeforeEvent) => {
-    const { player, itemStack } = event
-    if (isAdmin(player)) return
+    const { player, permutationBeingPlaced: permutation } = event
+    if (isAdmin(player) || !permutation) return
     const config = c()
-    if (config.antiCommandBlockExplolit.cancelPlacement.includes(itemStack.typeId)) {
+    if (config.antiCommandBlockExplolit.cancelPlacement.includes(permutation.type.id)) {
         event.cancel = true
         system.run(() => {
             player.getComponent(EntityEquippableComponent.componentId).setEquipment(EquipmentSlot.Mainhand) // bye bye item
-            flag (player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + itemStack.typeId])
+            flag (player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + permutation.type.id])
         })
     }
 }

@@ -9,6 +9,7 @@ import {
 import { flag, isAdmin, getSpeedIncrease1, getSpeedIncrease2, c, getPing } from "../../Assets/Util.js";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang.js";
+import { tps } from "../../Assets/Public.js";
 
 const speedData = new Map<string, PlayerInfo>();
 const lastflag = new Map<string, number>();
@@ -76,12 +77,12 @@ async function AntiSpeedA (player: Player, now: number) {
 
 const locationData = new Map<string, LocationData>()
 
-async function AntiSpeedB (player: Player, now: number) {
+async function AntiSpeedB (player: Player, now: number, Tps: number) {
     const data = locationData.get(player.id)
     locationData.set(player.id, { location: player.location, recordTime: Date.now() })
     if (data === undefined) return;
 
-    if (player.threwTridentAt && now - player.threwTridentAt < 5000 || player.lastExplosionTime && now - player.lastExplosionTime < 5000 || player.isFlying || player.isInWater || player.isGliding || player.hasTag("matrix:riding") || player.isSleeping) {
+    if (Tps < 12 || (player.threwTridentAt && now - player.threwTridentAt < 5000) || (player.lastExplosionTime && now - player.lastExplosionTime < 5000) || player.isFlying || player.isInWater || player.isGliding || player.hasTag("matrix:riding") || player.isSleeping) {
         return;
     }
 
@@ -155,11 +156,11 @@ const antiSpeedA = () => {
 }
 const antiSpeedB = () => {
     const now: number = Date.now();
-
+    const Tps = tps.getTps()
     const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
     for (const player of players) {
         if (isAdmin(player)) continue;
-        AntiSpeedB (player, now);
+        AntiSpeedB (player, now, Tps);
     }
 }
 

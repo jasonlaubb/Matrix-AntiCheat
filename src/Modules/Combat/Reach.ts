@@ -11,6 +11,7 @@ import {
     flag, isAdmin, c
 } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
+import { MinecraftEntityTypes } from "@minecraft/vanilla-data";
 
 const reachData: Map <string, number> = new Map <string, number> ();
 
@@ -79,9 +80,9 @@ function AntiReach (hurtEntity: Player, damagingEntity: Player) {
 
 const antiReach = ({ damageSource, hurtEntity }: EntityHurtAfterEvent) => {
     const damagingEntity: Entity = damageSource.damagingEntity;
-    if (damageSource.cause !== EntityDamageCause.entityAttack || damageSource.damagingProjectile || !(damagingEntity instanceof Player) || !(hurtEntity instanceof Player) || isAdmin (damagingEntity)) return;
+    if (damageSource.cause !== EntityDamageCause.entityAttack || damageSource.damagingProjectile || !(damagingEntity instanceof Player) || isAdmin (damagingEntity)) return;
 
-    AntiReach(hurtEntity, damagingEntity);
+    AntiReach(hurtEntity as Player, damagingEntity);
 };
 
 const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
@@ -90,7 +91,7 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
 
 export default {
     enable () {
-        world.afterEvents.entityHurt.subscribe(antiReach)
+        world.afterEvents.entityHurt.subscribe(antiReach, { entityTypes: [MinecraftEntityTypes.Player] })
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {

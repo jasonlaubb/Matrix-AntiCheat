@@ -1,4 +1,4 @@
-import { EntityHitBlockAfterEvent, ItemEnchantsComponent, Player, PlayerBreakBlockAfterEvent, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server"
+import { EntityHitBlockAfterEvent, ItemEnchantableComponent, Player, PlayerBreakBlockAfterEvent, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server"
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks"
 import { c, flag, isAdmin, isTargetGamemode } from "../../Assets/Util"
 import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -18,7 +18,7 @@ const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
     const config = c()
     const typeId = itemStack?.typeId ?? "minecraft:air"
 
-    const hasEfficiency = itemStack ? itemStack.getComponent(ItemEnchantsComponent.componentId).enchantments.hasEnchantment(MinecraftEnchantmentTypes.Efficiency) != 0 : false
+    const hasEfficiency = itemStack ? itemStack.getComponent(ItemEnchantableComponent.componentId).hasEnchantment(MinecraftEnchantmentTypes.Efficiency) : false
 
     if (!typeId.startsWith("minecraft:") || hasEfficiency || player.getEffect(MinecraftEffectTypes.Haste) || fastBrokenBlocks.includes(typeId as MinecraftBlockTypes)) return;
 

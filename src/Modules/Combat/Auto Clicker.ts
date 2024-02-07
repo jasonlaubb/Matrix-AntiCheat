@@ -8,6 +8,8 @@ import {
 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
+import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { tps } from "../../Assets/Public.js";
 
 interface ClickData {
     clicks: number[]
@@ -34,7 +36,7 @@ function AutoClicker (player: Player) {
     const cps: number = filteredClicks.length;
 
     //if the clicks per second is higher than the max clicks per second, flag the player
-    if (!player.hasTag("matrix:pvp-disabled") && cps > config.antiAutoClicker.maxClicksPerSecond) {
+    if (!player.hasTag("matrix:pvp-disabled") && tps.getTps() > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
         //A - false positive: very low, efficiency: high
         flag (player, 'Auto Clicker', "A", config.antiAutoClicker.maxVL,config.antiAutoClicker.punishment, [`${lang(">Click Per Second")}:${cps.toFixed(0)}`])
 
@@ -54,9 +56,9 @@ function AutoClicker (player: Player) {
 };
 
 const antiAutoClicker = ({ damagingEntity }: EntityHitEntityAfterEvent | EntityHitBlockAfterEvent) => {
-    if (!(damagingEntity instanceof Player) || isAdmin (damagingEntity as Player)) return;
+    if (isAdmin (damagingEntity as Player)) return;
 
-    AutoClicker(damagingEntity);
+    AutoClicker(damagingEntity as Player);
 };
 
 const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
@@ -65,7 +67,7 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
 
 export default {
     enable () {
-        world.afterEvents.entityHitEntity.subscribe(antiAutoClicker)
+        world.afterEvents.entityHitEntity.subscribe(antiAutoClicker, { entityTypes: [MinecraftEntityTypes.Player] })
         world.afterEvents.playerLeave.subscribe(playerLeave)
     },
     disable () {

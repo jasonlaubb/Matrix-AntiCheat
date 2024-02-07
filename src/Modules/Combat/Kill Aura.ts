@@ -11,6 +11,7 @@ import {
 } from "@minecraft/server";
 import { flag, isAdmin, c, getPing } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
+import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
  * @author ravriv & jasonlaubb
@@ -20,44 +21,44 @@ import lang from "../../Data/Languages/lang.js";
 const hitLength = new Map<string, any[]>();
 const lastFlag = new Map<string, number>();
 
-function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolean) {
-    if (damagingEntity.hasTag("matrix:pvp-disabled")) return
+function KillAura (player: Player, hitEntity: Entity, onFirstHit: boolean) {
+    if (player.hasTag("matrix:pvp-disabled")) return
 
     //constant the infomation
-    let playerHitEntity = hitLength.get(damagingEntity.id) ?? [];
+    let playerHitEntity = hitLength.get(player.id) ?? [];
     let flagged = false;
     const config = c()
-    const direction: Vector3 = calculateVector(damagingEntity.location, hitEntity.location) as Vector3;
+    const direction: Vector3 = calculateVector(player.location, hitEntity.location) as Vector3;
     const distance: number = calculateMagnitude(direction);
 
     //if the player hit a target that is not in the list, add it to the list
     if (!playerHitEntity.includes(hitEntity.id)) {
         playerHitEntity.push(hitEntity.id);
-        hitLength.set(damagingEntity.id, playerHitEntity);
+        hitLength.set(player.id, playerHitEntity);
     }
 
     //if the player hit more than 1 targets in 2 ticks, flag the player
-    if (getPing(damagingEntity) < 4 && playerHitEntity.length > config.antiKillAura.maxEntityHit) {
-        hitLength.delete(damagingEntity.id);
+    if (getPing(player) < 4 && playerHitEntity.length > config.antiKillAura.maxEntityHit) {
+        hitLength.delete(player.id);
         //A - false positive: very low, efficiency: high
-        flag (damagingEntity, 'Kill Aura', "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`])
+        flag (player, 'Kill Aura', "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`])
         flagged = true
     }
 
-    damagingEntity.lastTouchEntity = Date.now()
+    player.lastTouchEntity = Date.now()
 
     const state = hitEntity instanceof Player && onFirstHit == true
     //stop false positive
     if (state && distance > 3) {
         //get the angle
-        const angle: number = calculateAngle(damagingEntity.location, hitEntity.location, damagingEntity.getVelocity(), hitEntity.getVelocity(), damagingEntity.getRotation().y);
-        const rotationFloat: number = Math.abs(damagingEntity.getRotation().x)
-        const velocity = damagingEntity.getVelocity().y
+        const angle: number = calculateAngle(player.location, hitEntity.location, player.getVelocity(), hitEntity.getVelocity(), player.getRotation().y);
+        const rotationFloat: number = Math.abs(player.getRotation().x)
+        const velocity = player.getVelocity().y
 
         //if the angle is higher than the max angle, flag the player
         if (angle > config.antiKillAura.minAngle && rotationFloat < 79) {
             //B - false positive: low, efficiency: mid
-            flag (damagingEntity, 'Kill Aura', 'B', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
+            flag (player, 'Kill Aura', 'B', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
             flagged = true
         }
 
@@ -65,34 +66,34 @@ function KillAura (damagingEntity: Player, hitEntity: Entity, onFirstHit: boolea
         const limitOfXZ = Math.cos(rotationFloat * Math.PI / 180) * 6.1 + 2.4
         //if player attack higher than the limit, flag him
         if (distance > limitOfXZ && velocity >= 0) {
-            const lastflag = lastFlag.get(damagingEntity.id)
+            const lastflag = lastFlag.get(player.id)
             if (lastflag && Date.now() - lastflag < 4000) {
-                flag (damagingEntity, 'Kill Aura', 'C', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">distance")}:${distance.toFixed(2)}`,`${lang(">Limit")}:${limitOfXZ.toFixed(2)}`])
+                flag (player, 'Kill Aura', 'C', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">distance")}:${distance.toFixed(2)}`,`${lang(">Limit")}:${limitOfXZ.toFixed(2)}`])
                 flagged = true
             }
-            lastFlag.set(damagingEntity.id, Date.now())
+            lastFlag.set(player.id, Date.now())
         }
     }
 
     if (onFirstHit == true) {
         /* Just an idea
-        const entityInDirection = damagingEntity.getEntitiesFromViewDirection
+        const entityInDirection = player.getEntitiesFromViewDirection
         if (!entityInDirection.some(({ id } => id == hitEntity.id)) {
-            flag (damagingEntity, 'Kill Aura', 'D', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
+            flag (player, 'Kill Aura', 'D', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
             flagged = true
         }*/
         // bad packet -w-
         if (player.isEmoting || player.isSleeping || player.hasTag("matrix:container") || !player.hasTag("matrix:attack_time")) {
-            flag (damagingEntity, 'Kill Aura', 'E', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
+            flag (player, 'Kill Aura', 'E', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
             flagged = true 
         }
     }
 
     if (flagged) {
         if (!config.slient) {
-            damagingEntity.addTag("matrix:pvp-disabled");
+            player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => {
-                damagingEntity.removeTag("matrix:pvp-disabled");
+                player.removeTag("matrix:pvp-disabled");
             }, config.antiKillAura.timeout);
         }
     }
@@ -184,20 +185,20 @@ function calculateAngle (attacker: Vector3, target: Vector3, attackerV: Vector3,
     return Math.abs(angle)
 }
 
-const antiKillAura = (({ damagingEntity, hitEntity }: EntityHitEntityAfterEvent) => {
-    if (!(damagingEntity instanceof Player) || isAdmin (damagingEntity)) return;
+const antiKillAura = (({ damagingEntity: player, hitEntity }: EntityHitEntityAfterEvent) => {
+    if (isAdmin (player as Player)) return;
 
-    KillAura (damagingEntity, hitEntity, false);
+    KillAura (player as Player, hitEntity, false);
 });
 
 const antiKillAura2 = (event: EntityHurtAfterEvent) => {
     if (event.damageSource.cause !== EntityDamageCause.entityAttack || event.damageSource.damagingProjectile) return;
 
-    const damagingEntity = event.damageSource.damagingEntity
+    const player = event.damageSource.damagingEntity
     const hitEntity = event.hurtEntity
-    if (!(damagingEntity instanceof Player) || isAdmin (damagingEntity)) return;
+    if (!(player instanceof Player) || isAdmin (player)) return;
 
-    KillAura (damagingEntity, hitEntity, true);
+    KillAura (player, hitEntity, true);
 };
 
 const systemEvent = () => {
@@ -215,7 +216,7 @@ let id: number
 
 export default {
     enable () {
-        world.afterEvents.entityHitEntity.subscribe(antiKillAura)
+        world.afterEvents.entityHitEntity.subscribe(antiKillAura, { entityTypes: [MinecraftEntityTypes.Player] })
         world.afterEvents.entityHurt.subscribe(antiKillAura2)
         world.afterEvents.playerLeave.subscribe(playerLeave)
         id = system.runInterval(systemEvent, 2)

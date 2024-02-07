@@ -12,6 +12,7 @@ import {
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
 import lang from "../../Data/Languages/lang";
+import { tps } from "../../Assets/Public";
 
 /**
  * @author jasonlaubb
@@ -26,7 +27,7 @@ interface BlockLog {
 let blockPlace: { [key: string]: number[] } = {}
 let blockLog: { [key: string]: BlockLog[] } = {}
 
-async function AntiScaffold (player: Player, block: Block, now: number) {
+async function AntiScaffold (player: Player, block: Block, now: number, Tps: number) {
     const config = c ()
     //constant the infomation
     const rotation: Vector2 = player.getRotation();
@@ -48,7 +49,7 @@ async function AntiScaffold (player: Player, block: Block, now: number) {
     }
 
     //check if the angle is higher than the max angle
-    if (angle > config.antiScaffold.maxAngle && Vector.distance({ x: pos1.x, y: 0, z: pos1.z }, { x: pos2.x, y: 0, z: pos2.z }) > 1.75 && Math.abs(rotation.x) < 69.5) {
+    if (Tps > 12 && angle > config.antiScaffold.maxAngle && Vector.distance({ x: pos1.x, y: 0, z: pos1.z }, { x: pos2.x, y: 0, z: pos2.z }) > 1.75 && Math.abs(rotation.x) < 69.5) {
         detected = true;
         flag (player, 'Scaffold', 'B', config.antiScaffold.maxVL,  config.antiScaffold.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
     }
@@ -62,7 +63,7 @@ async function AntiScaffold (player: Player, block: Block, now: number) {
     const isUnder = isUnderPlayer(floorPos, block.location)
     
     //check if the rotation is lower than the min rotation and the block is under the player
-    if (rotation.x < config.antiScaffold.minRotation && isUnder) {
+    if (Tps > 13.5 && rotation.x < config.antiScaffold.minRotation && isUnder) {
         detected = true;
         flag (player, 'Scaffold', 'C', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`])
     }
@@ -105,7 +106,7 @@ function isUnderPlayer (p: Vector3, pos2: Vector3) {
 const antiScaffold = (({ block, player }: PlayerPlaceBlockAfterEvent) => {
     if (isAdmin (player)) return;
 
-    AntiScaffold (player, block, Date.now())
+    AntiScaffold (player, block, Date.now(), tps.getTps())
 });
 
 function calculateAngle (pos1: Vector3, pos2: Vector3, rotation = -90) {

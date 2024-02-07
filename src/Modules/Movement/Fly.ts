@@ -16,6 +16,7 @@ import {
 	MinecraftEffectTypes
 } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
+import { tps } from "../../Assets/Public";
 
 const previousLocations = new Map <string, Vector3>();
 let velocityLog: { [key: string]: number } = {};
@@ -39,7 +40,7 @@ const includeStair = ({ location: { x: px, y: py, z: pz }, dimension }: Player) 
 ].includes("stair");
 
 
-async function AntiFly(player: Player, now: number) {
+async function AntiFly(player: Player, now: number, Tps: number) {
 	const config = c();
 	//constant the infomation
 	const {
@@ -113,11 +114,13 @@ async function AntiFly(player: Player, now: number) {
 
 	player.lastVelLog = velocityLog[player.id];
 
-	if (getPing(player) < 4 && player.lastVelocity && velocityLog[player.id] == 1 && velocity < 0 && player.lastVelocity > config.antiFly.maxVelocity && skip1 && skip2 && !instair) {
+	if (getPing(player) < 4 && Tps > 12 && player.lastVelocity && velocityLog[player.id] == 1 && velocity < 0 && player.lastVelocity > config.antiFly.maxVelocity && skip1 && skip2 && !instair) {
 		player.teleport(prevLoc);
 		const lastflag = lastFlag2.get(id)
-		if (lastflag && now - lastflag < 4500) return
-		flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(4)]);
+		if (lastflag && now - lastflag <= 4500 && now - lastflag > 120) {
+		    flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(4)]);
+		}
+		lastFlag2.set(id, now)
 	}
 
     player.lastVelocity = velocity
@@ -128,10 +131,11 @@ const antiFly = () => {
 	const players = world.getPlayers({
 		excludeGameModes: [GameMode.spectator]
 	});
+	const Tps = tps.getTps()
 	for (const player of players) {
 		if (isAdmin(player)) continue;
 
-		AntiFly(player, now);
+		AntiFly(player, now, Tps);
 	}
 };
 

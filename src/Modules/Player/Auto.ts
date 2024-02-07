@@ -53,9 +53,9 @@ const data = { eventTypes: ["matrix:totem","matrix:shield"], entityTypes: [Minec
 
 export default {
     enable () {
-        world.afterEvents.dataDrivenEntityTriggerEvent.subscribe(antiAuto, data)
+        world.afterEvents.dataDrivenEntityTrigger.subscribe(antiAuto, data)
     },
     disable () {
-        world.afterEvents.dataDrivenEntityTriggerEvent.unsubscribe(antiAuto)
+        world.afterEvents.dataDrivenEntityTrigger.unsubscribe(antiAuto)
     }
 }

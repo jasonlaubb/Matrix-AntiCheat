@@ -2,7 +2,7 @@ import {
     world,
     Player,
     EntityInventoryComponent,
-    ItemEnchantsComponent,
+    ItemEnchantableComponent,
     EntityDamageCause,
     system,
     PlayerBreakBlockAfterEvent
@@ -18,15 +18,10 @@ world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
             ) as EntityInventoryComponent
         ).container.getItem(player.selectedSlot);
         if (getItemInSlot === undefined) return;
-        const getEnchantment = (
-            getItemInSlot.getComponent(
-                ItemEnchantsComponent.componentId
-            ) as ItemEnchantsComponent
-        ).enchantments;
         if (getItemInSlot.typeId == MinecraftItemTypes.Trident) {
-            const checkRipTide = getEnchantment.hasEnchantment(
-                MinecraftEnchantmentTypes.Riptide
-            );
+            const checkRipTide = (getItemInSlot.getComponent(
+                    ItemEnchantableComponent.componentId
+                ) as ItemEnchantableComponent).hasEnchantment(MinecraftEnchantmentTypes.Riptide)
             if (checkRipTide) {
                 player.threwTridentAt = Date.now();
             }
@@ -94,7 +89,30 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     }
 })
 
+class Tps {
+    private tps: number
+    constructor () {}
+    public getTps () {
+        return this.tps
+    }
+    public updateTps (tps: number) {
+        this.tps = tps
+    }
+}
+
+let tpsAmountData: number[] = []
+let lastTickLog: number = Date.now()
+
+const tps = new Tps()
+export { tps }
+
 system.runInterval(async () => {
+    const now = Date.now()
+    tpsAmountData.push((now - lastTickLog) * 2.5)
+    if (tpsAmountData.length > 20) tpsAmountData.shift()
+    let tpsNow: number = 0
+    tpsAmountData.forEach(period => tpsNow += period)
+    tps.updateTps(tpsNow / 20)
     const players = world.getAllPlayers()
     for (const player of players) {
         // knockback
@@ -103,7 +121,7 @@ system.runInterval(async () => {
 
         // item use
         if (player.hasTag("matrix:using_item") && !player.lastItemUsed) {
-            player.lastItemUsed = Date.now();
+            player.lastItemUsed = now;
         } else if (!player.hasTag("matrix:using_item")) {
             player.lastItemUsed = undefined;
         }

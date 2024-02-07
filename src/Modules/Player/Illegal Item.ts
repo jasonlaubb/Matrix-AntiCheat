@@ -4,11 +4,10 @@ import {
     Container,
     Player,
     ItemStack,
-    ItemEnchantsComponent,
+    ItemEnchantableComponent,
     EntityInventoryComponent,
     BlockInventoryComponent,
-    EnchantmentList,
-    PlayerPlaceBlockBeforeEvent
+    PlayerPlaceBlockBeforeEvent,    
 } from "@minecraft/server"
 import { flag, isAdmin, isTargetGamemode, c } from "../../Assets/Util"
 import { MinecraftBlockTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
@@ -80,8 +79,8 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
             continue
         }
 
-        const itemEnchant = item.getComponent(ItemEnchantsComponent.componentId) as ItemEnchantsComponent
-        const enchantments = itemEnchant.enchantments
+        const itemEnchant = item.getComponent(ItemEnchantableComponent.componentId) as ItemEnchantableComponent
+        const enchantments = itemEnchant.getEnchantments()
 
         if (config.antiIllegalItem.state.enchantLevel.enabled || config.antiIllegalItem.state.enchantConflict.enabled) {
             let patchedEnchantment = []
@@ -89,21 +88,26 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
             let type: any = "F"
 
             //create a new EnchantmentList to check if the enchantment is conflict
-            const tester = new EnchantmentList (enchantments.slot)
+            const testItem = new ItemStack(item.typeId, 1)
+            const tester = testItem.getComponent(ItemEnchantableComponent.componentId) as ItemEnchantableComponent
             for (const enchantment of enchantments) {
                 if (config.antiIllegalItem.state.enchantLevel.enabled) {
                     const enchantmentType = enchantment.type
                     const enchantmentLevel = enchantment.level
+                    const isEnTypeString = typeof enchantmentType == "string"
+                    const enchantmentMaxLv = isEnTypeString ? 1 : enchantmentType.maxLevel
+                    const enchantmentId = isEnTypeString ? enchantmentType : enchantment
 
-                    if (config.antiIllegalItem.state.enchantLevel.whiteList.includes(enchantmentType.id + ":" + enchantmentLevel)) continue
-                    if (enchantmentLevel > enchantmentType.maxLevel || enchantmentLevel <= 0) {
-                        patchedEnchantment.push(enchantmentType.id + ":" + enchantmentLevel)
+                    if (config.antiIllegalItem.state.enchantLevel.whiteList.includes(enchantmentId + ":" + enchantmentLevel)) continue
+                    if (enchantmentLevel > enchantmentMaxLv || enchantmentLevel <= 0) {
+                        patchedEnchantment.push(enchantmentId + ":" + enchantmentLevel)
                     }
                 }
                 if (config.antiIllegalItem.state.enchantConflict.enabled) {
                     const isConflict = tester.canAddEnchantment(enchantment)
                     if (isConflict === false) {
-                        patchedEnchantment.push(enchantment.type.id + ":" + enchantment.level)
+                        const enchantmentId = typeof enchantment.type == "string" ? enchantment.type : enchantment.type.id
+                        patchedEnchantment.push(enchantmentId + ":" + enchantment.level)
                         mode = lang(">EnchantConflict")
                         type = "G"
                     } else {
@@ -119,14 +123,14 @@ function ItemCheck (player: Player, container: Container): "Safe" | "Unsafe" {
             }
         }
 
-        if (config.antiIllegalItem.state.enchantAble.enabled && [...enchantments].length > 0 && !enchantableItem.includes(item.typeId as MinecraftItemTypes) && !config.antiIllegalItem.state.enchantAble.whiteList.includes(item.typeId)) {
+        if (config.antiIllegalItem.state.enchantAble.enabled && enchantments.length > 0 && !enchantableItem.includes(item.typeId as MinecraftItemTypes) && !config.antiIllegalItem.state.enchantAble.whiteList.includes(item.typeId)) {
             container.setItem(i)
             flag (player, "Illegal Item", "H", 0, config.antiIllegalItem.state.enchantAble.punishment, [lang(">Mode") + ":" + lang(">ItemEnchantAble"), lang(">typeId") + item.typeId])
             state = "Unsafe"
             continue
         }
 
-        if (config.antiIllegalItem.state.enchantRepeat.enabled && new Set([...enchantments]).size < [...enchantments].length) {
+        if (config.antiIllegalItem.state.enchantRepeat.enabled && new Set(enchantments).size < enchantments.length) {
             container.setItem(i)
             flag (player, "Illegal Item", "I", 0, config.antiIllegalItem.state.enchantRepeat.punishment, [lang(">Mode") + ":" + lang(">ItemEnchantRepeat")])
             state = "Unsafe"
