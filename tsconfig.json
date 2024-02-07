@@ -1,6 +1,7 @@
 {
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
+  "libChecking": false,
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
@@ -19,6 +20,6 @@
     "alwaysStrict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
   }
 }
