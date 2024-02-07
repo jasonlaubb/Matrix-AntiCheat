@@ -18,6 +18,7 @@ const worldBorder = () => {
     spawn = world.getDefaultSpawnLocation()
     centerX = config.worldBorder.centerX ?? spawn.x
     centerZ = config.worldBorder.centerZ ?? spawn.z
+    //world.getAllPlayers()[0].runCommand(`title @s actionbar spawn = ${[centerX,centerZ].join(", ")}\nradius = ${radius}\ndistanceX = ${Math.abs(centerX - world.getAllPlayers()[0].location.x)}`)
 
     for (const player of players) {
         if (config.worldBorder.stopAdmin && isAdmin(player)) continue

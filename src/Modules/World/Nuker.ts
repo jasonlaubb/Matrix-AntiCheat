@@ -8,7 +8,7 @@ import {
     ItemStack,
     ItemEnchantableComponent
 } from "@minecraft/server";
-import { flag, isAdmin, c, recoverBlockBreak } from "../../Assets/Util";
+import { flag, isAdmin, c, recoverBlockBreak, isTargetGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import lang from "../../Data/Languages/lang";
@@ -22,7 +22,7 @@ const blockBreakData = new Map<string, number[]>();
  */
 
 async function AntiNuker (player: Player, block: Block, itemStack: ItemStack) {
-    if (player.hasTag("matrix:break-disabled") || block?.isAir) {
+    if (player.hasTag("matrix:break-disabled") || block?.isAir || isTargetGamemode(player, 1)) {
         return;
     }
     const config = c()

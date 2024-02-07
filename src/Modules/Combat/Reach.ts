@@ -11,7 +11,7 @@ import {
     flag, isAdmin, c
 } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
-import { MinecraftEntityTypes } from "@minecraft/vanilla-data";
+import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 const reachData: Map <string, number> = new Map <string, number> ();
 

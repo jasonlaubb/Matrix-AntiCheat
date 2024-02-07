@@ -13,9 +13,9 @@ async function AntiGameMode (player: Player) {
 
     if (config.antiGameMode.bannedGameMode.includes(gamemode)) {
         if (config.antiGameMode.returnDefault) {
-            player.runCommand(`gamemode @s default`)
+            player.runCommand(`gamemode default @s`)
         } else {
-            player.runCommand(`gamemode @s ${config.antiGameMode.returnGameMode}`)
+            player.runCommand(`gamemode ${config.antiGameMode.returnGameMode} @s`)
         }
         //A - false positive: never, efficiency: very high
         flag (player, "GameMode", "A", config.antiGameMode.maxVL, config.antiGameMode.punishment, [lang(">GameMode") + ":" + String(gamemodes[gamemode])])

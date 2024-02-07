@@ -108,11 +108,11 @@ export { tps }
 
 system.runInterval(async () => {
     const now = Date.now()
-    tpsAmountData.push((now - lastTickLog) * 2.5)
+    tpsAmountData.push((now - lastTickLog))
     if (tpsAmountData.length > 20) tpsAmountData.shift()
     let tpsNow: number = 0
     tpsAmountData.forEach(period => tpsNow += period)
-    tps.updateTps(tpsNow / 20)
+    tps.updateTps(20 / 1000 * tpsNow)
     const players = world.getAllPlayers()
     for (const player of players) {
         // knockback

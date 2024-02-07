@@ -562,7 +562,7 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
 
             system.run(() => {
                 lastSafePos.clear()
-                player.setDynamicProperty("worldBorderSize", size)
+                world.setDynamicProperty("worldBorderSize", size)
                 player.sendMessage("§bMatrix §7>§g " + lang("-borderSize.ok").replace("%a", String(size ?? config.worldBorder.radius)))
             })
             break

@@ -132,7 +132,7 @@ function isTargetGamemode (player: Player, gamemode: number) {
         GameMode.spectator
     ]
 
-    return world.getPlayers({ name: player.name, gameMode: gamemodes[gamemode] }).length > 0
+    return [...world.getPlayers({ name: player.name, gameMode: gamemodes[gamemode]})].length != 0
 }
 
 function getGamemode (playerName: string) {
@@ -147,7 +147,7 @@ function getGamemode (playerName: string) {
         if (world.getPlayers({
             name: playerName,
             gameMode: gamemodes[i]
-        }).length > 0) return i
+        }).length != 0) return i
     }
 
     return 0
