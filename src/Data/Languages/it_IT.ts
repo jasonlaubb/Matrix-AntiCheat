@@ -30,7 +30,7 @@ export default {
     "-help.lang": "lang <lingua> - Cambia la lingua",
     "-help.langlist": "langlist - Vedi la lista delle lingue",
 
-    "-about.line1": "Il Matrix è u anticheat per minecraft bedrock basatu su @minecraft API",
+    "-about.line1": "Il Matrix è un anticheat per minecraft bedrock basato su @minecraft API",
     "-about.version": "Versione",
     "-about.author": "Autore",
 
@@ -43,7 +43,7 @@ export default {
     "-toggles.already": "Questo modulo è %ad già",
 
     "-op.hasbeen": "%a è stato oppatto correttamente da %b",
-    "-op.please": "Perfsvore inserisci la password",
+    "-op.please": "Perfavore inserisci la password",
     "-op.now": "Ora sei un admin",
     "-op.wrong": "Password errata",
     "-op.wait": "Perfavore aspetta %a altri secondi prima di riprovare",
@@ -56,7 +56,7 @@ export default {
     "-passwords.wrong": "Password errata",
     "-passwords.changed": "La password è stata cambiata con successo",
 
-    "-flagmode.unknown": "Azione sconosciuta, peravore usa solo tutti/bypass/admin/tag/nessuno",
+    "-flagmode.unknown": "Azione sconosciuta, perfavore usa solo tutti/bypass/admin/tag/nessuno",
     "-flagmode.changed": "Flag mode è stata cambiata con successo a %a",
 
     "-rank.unknownAction": "Azione sconosciuta, perfavore usa solo setta/aggiungi/rimuovi",
@@ -117,8 +117,8 @@ export default {
     "-invsee.self": "Non puoi vedere il tuo stesso inventario",
     "-invsee.of": "Inventario di %a",
 
-    "-echestwipe.self": "Non puoi cancellarti l'endecìrchest",
-    "-echestwipe.admin": "Non puoi cancellare l'endecìrchest di un admin",
+    "-echestwipe.self": "Non puoi cancellarti l'enderchest",
+    "-echestwipe.admin": "Non puoi cancellare l'enderchest di un admin",
     "-echestwipe.has": "L'enderchest di %a è stato cancellato con successo da %b",
 
     "-lockdowncode.unknown": "Perfavore inserisci l'azione che desideri fare",
@@ -145,12 +145,12 @@ export default {
     "-lang.unknown": "Linguaggio sconosciuto, prova %alanglist",
     "-lang.has": "Il linguaggio è stato cambiato con successo a %a",
 
-    "-langlist.list": "Lista dei linhguaggi:",
+    "-langlist.list": "Lista dei linguaggi:",
 
     ".CommandSystem.no_permission": "Non hai il permesso di usare questo comando",
     ".CommandSystem.unknown_command": "Comando sconosciuto. Scrivi \"help\" per aiuto.",
     ".CommandSystem.command_disabled": "Questo comando è disabilitato",
-    ".CommandSystem.command_disabled_reason": "Non sei un admin per usare questo comando",
+    ".CommandSystem.command_disabled_reason": "Non sei un admin per eseguire questo comando",
     ".CommandSystem.no_permisson": "Non hai i permessi per eseguire questo comando",
     ".CommandSystem.no_player": "Perfavore specifica il giocatore",
     ".CommandSystem.unknown_player": "Giocatore sconosciuto",
