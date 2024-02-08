@@ -3,7 +3,7 @@ export default {
     "-help.helpCDlist": "Lista dei comandi:",
     "-help.help": "help - Mostra questo messaggio",
     "-help.toggles": "toggles - Mostra tutti i moduli",
-    "-help.toggle": "toggle <modulo> <attivo/disattivo> - Toggle un modulo",
+    "-help.toggle": "toggle <modulo> <attivo/disattivo> - Serve per attivare o disattivare un modulo",
     "-help.op": "op <giocatore> - Dare a un giocatore i permessi da admin",
     "-help.deop": "deop <giocatore> - Rimuovere a un giocatore i permessi da admin",
     "-help.passwords": "passwords <vecchiaPassword> <nuovaPassword> - Cambia la password",
