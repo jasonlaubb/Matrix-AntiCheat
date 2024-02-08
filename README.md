@@ -30,8 +30,12 @@
 
   Supported Minecraft version: 1.20.50+ only
 
+  ## Developers
+  
   Author: jasonlaubb
+  
   Contributors: ravriv, nottinghere, Hutao999999, and Rami Gamer
+  
   Translate: amico_nabbo, kris02, Selder578
 
   ---
