@@ -195,7 +195,7 @@ export default {
      * The config of all modules
     */
     punishment_kick: {
-        reason: "Unfair advantage"
+        reason: "Bad behavior"
     },
     punishment_ban: {
         minutes: 1440,
@@ -229,7 +229,7 @@ export default {
         timeout: 200,
         maxEntityHit: 2,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 3
     },
 
     antiReach: {
@@ -237,7 +237,7 @@ export default {
         maxReach: 4.21,
         maxYReach: 4.8,
         punishment: "kick",
-        maxVL: 4
+        maxVL: 3
     },
 
     antiFly: {
@@ -251,7 +251,7 @@ export default {
         enabled: true,
         punishment: "ban",
         float: 15,
-        maxVL: 2
+        maxVL: 3
     },
 
     antiNoClip: {
@@ -406,7 +406,7 @@ export default {
     },
 
     antiDisabler: {
-        enabled: true,
+        enabled: true, // THIS SHOULD BE ENABLED
         maxVL: 0,
         punishment: "ban"
     },
