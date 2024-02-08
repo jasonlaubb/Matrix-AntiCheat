@@ -198,7 +198,7 @@ export default {
         reason: "Unfair advantage"
     },
     punishment_ban: {
-        minutes: 120,
+        minutes: 1440,
         reason: "Unfair advantage"
     },
     example_anticheat_module: {
