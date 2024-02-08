@@ -83,7 +83,7 @@ function KillAura (player: Player, hitEntity: Entity, onFirstHit: boolean) {
             flagged = true
         }*/
         // bad packet -w-
-        if (player.isEmoting || player.isSleeping || player.hasTag("matrix:container") || !player.hasTag("matrix:attack_time")) {
+        if (player.isSleeping || player.hasTag("matrix:container")) {
             flag (player, 'Kill Aura', 'E', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
             flagged = true 
         }
