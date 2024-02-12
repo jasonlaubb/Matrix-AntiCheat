@@ -23,9 +23,9 @@
 
   The anticheat can work on V1.20.6x Minecraft bedrock version.
 
-| Localhost Worlds | Minecraft Realms | Bedrock Dedicated Servers (BDS) | BDS Extended (BDSX) | PocketMine
-| ------- | ------- | ------- | ------- | ------- |
-| Supported | Supported | Supported | Supported | Unsupported
+| Device | Localhost Worlds | Minecraft Realms | Bedrock Dedicated Servers (BDS) | BDS Extended (BDSX) | PocketMine |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+| Android | Supported | Supported | Supported | Supported | Unsupported |
 
   ---
 
