@@ -46,7 +46,7 @@
   
   Author: jasonlaubb
   
-  Contributors: ravriv, nottinghere, Hutao999999, and Rami Gamer
+  Contributors: ravriv, nottinghere, Hutao999999, Rami Gamer and Kaaaaii
   
   Translate: amico_nabbo, kris02, Selder578
 
