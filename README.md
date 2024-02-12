@@ -13,6 +13,7 @@
     <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Matrix-AntiCheat?style=for-the-badge" alt="Commits Per Week"> 
     <img src="https://img.shields.io/github/last-commit/jasonlaubb/Matrix-AntiCheat?style=for-the-badge" alt="Last Commit">
   </p>
+</div>
 
   ## Introduction
 
@@ -102,5 +103,3 @@
   ```properties
   op-permission-level=2
   ```
-
-</div>
