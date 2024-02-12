@@ -26,15 +26,10 @@
 | Device of client | Localhost Worlds | Minecraft Realms | Bedrock Dedicated Servers (BDS) | BDS Extended (BDSX) | PocketMine | Other Custom Servers |
 | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | Android | Supported | Supported | Supported | Supported | Unsupported | Unsupported |
-| ------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | IOS | Supported | Supported | Supported | Supported | Unsupported | Unsupported |
-| ------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | Windows | Supported | Supported | Supported | Supported | Unsupported | Unsupported |
-| ------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | Xbox | Supported | Supported | Supported | Supported | Unsupported | Unsupported |
-| ------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | PS4/PS5 | Supported | Supported | Supported | Supported | Unsupported | Unsupported |
-| ------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | Nintendo Switch | Supported | Supported | Supported | Supported | Unsupported | Unsupported |
 
   ---
