@@ -6,7 +6,7 @@ import config from "../data/config";
 const flagData = new Map<string, { [key: string]: number }>()
 
 export default class {
-    static flag (id: string, type: "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H", { flagTarget: player, description, moduleOption }: FlagComponent) {
+    static flag (id: string, type: "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H", { flagTarget: player, description, moduleOption: { punishment, maxVL } }: FlagComponent) {
         const shown = description ? description.map(data => {
             const [key, value] = Object.entries(data)
             return `\n§r§c» §7${key}:§9 ${value}§r`
@@ -14,8 +14,28 @@ export default class {
         let playerFlag = flagData.get(player.id) ?? {}
         playerFlag[id] ??= 0
         playerFlag[id] += 1
-        const flagMessage = `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${id}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${playerFlag}§7]§r` + shown
+        let flagMessage = `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${id}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${playerFlag}§7]§r` + shown
         const flagMode = world.getDynamicProperty("flagMode") ?? config.antiCheatOptions.flagMode
+        if (punishment && playerFlag[id] > maxVL) {
+            let punishmentDone = false
+            switch (punishment) {
+                case "kick": {
+                    punishmentDone = true
+                    this.kick (player, lang(".Util.unfair").replace("%a", `${id} ${type}`), lang(".Util.by"))
+                    flagMessage += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name)
+                    break
+                }
+                case "ban": {
+                    punishmentDone = true
+                    this.ban (player, lang(".Util.unfair").replace("%a", `${id} ${type}`), lang(".Util.by"), config.punishment.ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
+                    flagMessage += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
+                    break
+                }
+            }
+            if (punishmentDone) {
+                playerFlag[id] = 0
+            }
+        }
         switch (flagMode) {
             case "tag": {
                 const targets = world.getPlayers({ tags: ["matrix:notify"]})
@@ -41,6 +61,7 @@ export default class {
                 break
             }
         }
+    
         flagData.set(player.id, playerFlag)
     }
     static isAdmin (player: Player) {
