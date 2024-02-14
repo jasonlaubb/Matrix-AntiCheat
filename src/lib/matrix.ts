@@ -27,7 +27,7 @@ export default class {
                 }
                 case "ban": {
                     punishmentDone = true
-                    this.ban (player, lang(".Util.unfair").replace("%a", `${id} ${type}`), lang(".Util.by"), config.punishment.ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
+                    this.ban (player, lang(".Util.unfair").replace("%a", `${id} ${type}`), lang(".Util.by"), config.punishment.ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment.ban.minutes * 60000))
                     flagMessage += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
                     break
                 }
@@ -66,5 +66,12 @@ export default class {
     }
     static isAdmin (player: Player) {
         return !!player.getDynamicProperty("isAdmin")
+    }
+    static kick (player: Player, reason?: string, by?: string) {
+        try {
+            player.runCommand(`kick "${player.name}" §r\n§c§l${lang(".Util.kicked")}§r\n§7${lang(".Util.reason")}: §e${reason ?? lang(".Util.noreason")}\n§7${lang(".Util.operator")}: §e${by ?? lang(".Util.unknown")}`)
+        } catch {
+            player.triggerEvent("matrix:kick")
+        }
     }
 }
