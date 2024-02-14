@@ -1,10 +1,11 @@
-import { Player } from "@minecraft/server";
+import { Player, Vector3 } from "@minecraft/server";
 
 export interface Module {
     on: () => void;
     off: () => void;
+    runId?: number
 };
-export interface ModuleAction { type: 0 | 1 | 2 | 3, duration: null | number }
+export interface ModuleAction { type: 0 | 1 | 2 | 3 | false, duration: null | number }
 export interface ModuleOption {
     enabled: boolean,
     punishment: "none" | "kick" | "ban",
@@ -13,6 +14,11 @@ export interface ModuleOption {
 };
 export interface FlagComponent {
     flagTarget: Player;
-    description: [ { [key: string]: string | number }] | null;
+    description: [string, string | number][] | null;
     moduleOption: ModuleOption;
 };
+export interface FlyMapData {
+    velocityLog: number;
+    lastLog: number;
+    safePosition: Vector3;
+}
