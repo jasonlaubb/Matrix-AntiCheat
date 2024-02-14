@@ -41,6 +41,7 @@ export default class {
                 break
             }
         }
+        flagData.set(player.id, playerFlag)
     }
     static isAdmin (player: Player) {
         return !!player.getDynamicProperty("isAdmin")
