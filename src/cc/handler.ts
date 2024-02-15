@@ -112,17 +112,17 @@ class CommandBuilder {
         return this;
     }
 
-    description(string: string) {
+    setDescription(string: string) {
         this.command.data.description = string;
         return this;
     }
 
-    usage(...string: string[]) {
+    setUsage(...string: string[]) {
         this.command.data.usage = string
         return this
     }
 
-    requires(func: (player?: _server.Player) => boolean) {
+    setRequires(func: (player?: _server.Player) => boolean) {
         this.command.data.requires = func;
         return this;
     }
