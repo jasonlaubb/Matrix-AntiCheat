@@ -102,7 +102,9 @@ let COMMANDS: Command[] = [];
 class CommandBuilder {
     private command: Command
     constructor(command: Command) {
-        this.command = command;
+      //@ts-expect-error
+      this.command.data = {}
+      this.command = command;
     }
 
     setName(string: string) {
@@ -115,21 +117,33 @@ class CommandBuilder {
         return this;
     }
 
+    usage(...string: string[]) {
+        this.command.data.usage = string
+        return this
+    }
+
     requires(func: (player?: _server.Player) => boolean) {
         this.command.data.requires = func;
         return this;
     }
 }
 
+interface CommandData {
+  name: string;
+  description: string;
+  requires: (player?: _server.Player) => boolean;
+  usage: string[]
+  aliases: string[];
+}
+
 export class Command {
-    public data: any
+    public data: CommandData
     private callback: Function
     private types: string[] | LiteralArgumentType[]
     private root: any
     private index: any
     private _arguments_: any
     constructor(data: (data: CommandBuilder) => CommandBuilder, types?: string[], parent?: Command, root?: Command) {
-        this.data = {};
         this.callback = null;
 
         data (new CommandBuilder(this))
@@ -161,6 +175,10 @@ export class Command {
     static subscribe (command: Command) {
       if (parent || COMMANDS.includes(command)) throw new Error("[Command::subsribe]: Cannot subscribe the command")
       COMMANDS.push(command);
+    }
+
+    static getCommands (): Command[] {
+      return COMMANDS
     }
 }
 
