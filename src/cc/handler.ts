@@ -5,82 +5,87 @@
 import * as _server from "@minecraft/server";
 import * as _ui from "@minecraft/server-ui";
 
-let server = {
+const server = {
 	..._server,
 	..._ui
 };
 
 
 class DefaultArgumentType {
-  constructor(data) {
+  private data: any
+  constructor(data: any) {
     this.data = data || {};
   }
 }
 
 class LiteralArgumentType {
-  constructor(name, description) {
+  private name: string
+  public description: string
+  constructor(name: string, description?: string) {
     this.name = name;
+    this.description = description
   }
 
-  verify = value => value === this.name;
-  parse = value => value;
+  verify = (value: string) => value === this.name;
+  parse = (value: any) => value;
 }
 
 class StringArgumentType {
-  verify = value => (typeof value === 'string' && value !== "") ? value : undefined;
-  parse = value => value;
+  verify = (value: any) => (typeof value === 'string' && value !== "") ? value : undefined;
+  parse = (value: any) => value;
 }
 
 class NumericArgumentType extends DefaultArgumentType {
-  constructor(name, range) {
+  private range: [number, number] | []
+  constructor(name: string, range: [number, number]) {
     super(name);
     this.range = range || [];
   }
 
-  _verify = (value, parseFunc, test) => (value && ((this.range.length ? (Number(value) >= this.range[0] && Number(value) <= this.range[1]) : test(value))));
+  _verify = (value: any, parseFunc: any, test: any) => (value && ((this.range.length ? (Number(value) >= this.range[0] && Number(value) <= this.range[1]) : test(value))));
 
-  _parse = (value) => (value ? Number(value) : null);
+  _parse = (value: any) => (value ? Number(value) : null);
 }
 
 class IntegerArgumentType extends NumericArgumentType {
-  verify = value => this._verify(value, parseInt, (arg) => (/^-?\d*\.?\d+$/.test(arg) && !isNaN(parseFloat(arg))));
-  parse = value => this._parse(value, parseInt);
+  verify = (value: any) => this._verify(value, parseInt, (arg) => (/^-?\d*\.?\d+$/.test(arg) && !isNaN(parseFloat(arg))));
+  parse = (value: any) => this._parse(value, parseInt);
 }
 
 class FloatArgumentType extends NumericArgumentType {
-  verify = value => this._verify(value, parseFloat, (arg) => /^\d+\.\d+$/.test(value) && !isNaN(arg));
-  parse = value => this._parse(value, parseFloat);
+  verify = (value: any) => this._verify(value, parseFloat, (arg) => /^\d+\.\d+$/.test(value) && !isNaN(arg));
+  parse = (value: any) => this._parse(value, parseFloat);
 }
 
 
 class LocationArgumentType {
-  verify = value => /^([~^]?(-\d)?(\d*)?(\.\d+)?)$/.test(value) ? value : undefined;
-  parse = value => value;
+  verify = (value: any) => /^([~^]?(-\d)?(\d*)?(\.\d+)?)$/.test(value) ? value : undefined;
+  parse = (value: any) => value;
 }
 
 class BooleanArgumentType {
-  verify = value => /^(true|false)$/.test(value) ? value === "true" : undefined;
-  parse = value => value === "true";
+  verify = (value: any) => /^(true|false)$/.test(value) ? value === "true" : undefined;
+  parse = (value: any) => value === "true";
 }
 
 class PlayerArgumentType {
-  verify = value => fetch(value);
-  parse = value => fetch(value);
+  verify = (value: any) => fetch(value);
+  parse = (value: any) => fetch(value);
 }
 
 class TargetArgumentType {
-  verify = value => /^(@.|"[\s\S]+")$/.test(value) ? value : undefined;
-  parse = value => value;
+  verify = (value: any) => /^(@.|"[\s\S]+")$/.test(value) ? value : undefined;
+  parse = (value: any) => value;
 }
 
 class ArrayArgumentType {
-  verify = value => Array.isArray(value) ? value : undefined;
-  parse = value => value;
+  verify = (value: any) => Array.isArray(value) ? value : undefined;
+  parse = (value: any) => value;
 }
 
 class DurationArgumentType {
-  verify = value => /^(\d+[hdysmw],?)+$/.test(value) ? value : undefined;
-  parse = value => value;
+  verify = (value: any) => /^(\d+[hdysmw],?)+$/.test(value) ? value : undefined;
+  parse = (value: any) => value;
 }
 
 const OptionTypes = {
@@ -96,24 +101,25 @@ const OptionTypes = {
 };
 
 
-let COMMANDS = [];
+let COMMANDS: any[] = [];
 
 class CommandBuilder {
-    constructor(command) {
+  private command: any
+    constructor(command: any) {
         this.command = command;
     }
 
-    setName(string) {
+    setName(string: any) {
         this.command.data.name = string;
         return this;
     }
 
-    description(string) {
+    description(string: any) {
         this.command.data.description = string;
         return this;
     }
 
-    requires(func) {
+    requires(func: any) {
         this.command.data.requires = func;
         return this;
     }
@@ -121,6 +127,12 @@ class CommandBuilder {
 
 
 export class Command {
+  private types: any[]
+  private _arguments_: any
+  private data: any
+  private callback: any
+  private root: any
+  private index: any
     constructor(data, types, parent, root) {
         this.data = {};
         this.callback = null;
@@ -151,7 +163,7 @@ export class Command {
        return this._arguments_[this._arguments_.push(new Command(data, Array.isArray(types) ? types.map(type => new OptionTypes[type]) : [new OptionTypes[types]], this, this.types instanceof LiteralArgumentType ? this : this.root)) - 1];
     }
 
-    execute(callback) {
+    execute(callback: (data: any) => void) {
       return (this.types[0] instanceof LiteralArgumentType ? this.callback = callback : this.root.callback = callback, this);
     }
 }
@@ -172,7 +184,7 @@ const subCommand1 = command.subCommand(data => data.setName("test1"))
   .execute((ev, args) => ev.sender.tell(JSON.stringify(args)))
 */
 
-export function chatSendBeforeEvent (event: server.ChatSendBeforeEvent) {
+export function chatSendBeforeEvent (event: _server.ChatSendBeforeEvent) {
   if (!event.message.startsWith(PREFIX)) return;
   event.cancel = true;
   let args = event.message.slice(PREFIX.length).trim().match(/"[^"]+"|[^\s]+/g).map((arg) => arg.replace(/"(.+)"/, "$1").toString());
