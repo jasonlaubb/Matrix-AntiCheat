@@ -4,9 +4,9 @@ import version from "../../version"
 import matrix from "../../lib/matrix";
 const command = new Command(data => data
     .setName("help")
-    .description(lang("-help.about"))
-    .usage()
-    .requires((player) => matrix.isAdmin(player)))
+    .setDescription(lang("-help.about"))
+    .setUsage()
+    .setRequires((player) => matrix.isAdmin(player)))
     .execute(({ sender: player }) => {
         player.sendMessage(`§bMatrix §7>§g ${lang("-about.line1")}\n§g${lang("-about.version")}: §cV${version.join('.')}\n§g${lang("-about.author")}: §cjasonlaubb\n§gGitHub: §chttps://github.com/jasonlaubb/Matrix-AntiCheat`)
     })
