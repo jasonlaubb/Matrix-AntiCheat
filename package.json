@@ -1,12 +1,11 @@
 {
-  "name": "matrix-anticheat",
+  "name": "matrix-anticheat-src",
   "version": "Give you a chance to think what version is it? >w<",
-  "productName": "Matrix-AntiCheat",
-  "description": "The best Minecraft bedrock AntiCheat",
+  "productName": "Matrix-AntiCheat-SRC",
+  "description": "The TypeScript src in Matrix AntiCheat",
   "private": true,
   "dependencies": {
-    "@minecraft/server": "^1.9.0-beta.1.20.60-stable",
-    "@minecraft/server-ui": "^1.2.0-beta.1.20.40-stable",
-    "typescript": "^5.3.3"
+    "@minecraft/vanilla-data": "^1.20.60",
+    "crypto-es": "^2.1.0"
   }
 }
