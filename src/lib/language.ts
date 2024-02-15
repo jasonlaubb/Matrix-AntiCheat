@@ -49,8 +49,24 @@ export function changeLanguage (lang: string) {
 }
 export const getAllLang = () => Object.keys(langs)
 
-export const lang = (key: LangType): string => {
-    const selected = langs[languageNow][key] ?? langs["en_US"][key]
+const arrayMap = {
+    1: "%a",
+    2: "%b",
+    3: "%c",
+    4: "%d",
+    5: "%e",
+    6: "%f",
+    7: "%g",
+    8: "%g"
+}
+
+export const lang = (key: LangType, ...regax: string[]): string => {
+    let selected = langs[languageNow][key] ?? langs["en_US"][key]
+    if (selected && regax.length > 0) {
+        for (let i = 0; i < regax.length; i++) {
+            selected = selected.replace((arrayMap as { [ key: number ]: string } )[i], regax[i])
+        }
+    }
     if (selected) return selected
     throw new Error ("[Language::lang] Invalid key for language, key = " + key)
 }

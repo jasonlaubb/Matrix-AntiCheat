@@ -206,10 +206,16 @@ export default {
     chatRank: {
         enabled: true,
         defaultRank: "§pMember",
-        showAllRank: true
+        showAllRank: true,
+        action: { type: false, duration: null },
+        punishment: "none",
+        maxVL: 0
     },
     dimensionLock: {
-        enabled: false
+        enabled: false,
+        action: { type: false, duration: null },
+        punishment: "none",
+        maxVL: 0
     },
 
     //action 0: banPVP, 1: banBlock, 2: teleport, 3: damage
@@ -323,6 +329,9 @@ export default {
 
     antiSpam: {
         enabled: true,
+        punishment: "none",
+        maxVL: 0,
+        action: { type: false, duration: null },
         maxMessagesPerSecond: 3,
         timer: 500,
         maxCharacterLimit: 200,
@@ -391,7 +400,9 @@ export default {
 
     antiNameSpoof: {
         enabled: true,
-        punishment: "ban"
+        punishment: "ban",
+        action: { type: false, duration: null },
+        maxVL: 0
         // nothing to give you set :doge:
     },
 
@@ -433,7 +444,10 @@ export default {
         notifyAt: [
             "diamond_ore",
             "ancient_debris"
-        ]
+        ],
+        maxVL: 0,
+        action: { type: false, duration: null },
+        punishment: "none"
     },
 
     antiDisabler: {
@@ -442,7 +456,7 @@ export default {
         action: { type: 2, duration: null },
         punishment: "ban"
     },
-
+    /*
     antiIllegalItem: {
         enabled: false,
         action: { type: false, duration: null },
@@ -647,7 +661,7 @@ export default {
         },
         checkCreativeMode: true,
         timeout: 60
-    },
+    },*/
 
     antiElytraFly: {
         enabled: true,
@@ -674,7 +688,7 @@ export default {
         action: { type: 3, duration: null },
         maxVL: 2
     },
-
+    /*
     antiCommandBlockExplolit: {
         enabled: false,
         punishment: "ban",
@@ -696,7 +710,7 @@ export default {
             "minecraft:tadpole_bucket",
             "minecraft:tropical_fish_bucket",
         ]
-    },
+    },*/
 
     antiCrasher: {
         enabled: true,
@@ -718,6 +732,7 @@ export default {
         enabled: false,
         punishment: "none",
         action: { type: false, duration: null },
+        maxVL: 0,
         checkEvery: 2, // tick
         radius: 250000, // default radius
         stopAdmin: false,

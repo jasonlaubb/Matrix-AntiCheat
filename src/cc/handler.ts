@@ -96,6 +96,8 @@ const OptionTypes: { [key: string]: any } = {
   duration: DurationArgumentType,
 };
 
+type TypeString = "string" | "int" | "float" | "location" | "boolean" | "player" | "target" | "array" | "duration"
+
 
 let COMMANDS: Command[] = [];
 
@@ -168,9 +170,9 @@ export class Command {
     }
 
     
-    option(types: string[], data: (data: CommandBuilder) => CommandBuilder) {
+    option(types: TypeString[] | TypeString, data: (data: CommandBuilder) => CommandBuilder): Command {
       if (this.callback) throw new Error("[Command::option]: Cannot add option to command.");
-       return this._arguments_[this._arguments_.push(new Command(data, Array.isArray(types) ? types.map(type => new OptionTypes[type]) : [new OptionTypes[types]], this, this.types instanceof LiteralArgumentType ? this : this.root)) - 1];
+      return (this._arguments_[this._arguments_.push(new Command(data, Array.isArray(types) ? types.map(type => new OptionTypes[type]) : [new OptionTypes[types]], this, this.types instanceof LiteralArgumentType ? this : this.root)) - 1]);
     }
 
     execute(callback: (ev: _server.ChatSendBeforeEvent, args?: any[]) => void) {

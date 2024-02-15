@@ -10,7 +10,7 @@ const command = new Command(data => data
     .setRequires((player) => matrix.isAdmin(player)))
     .execute(({ sender: player }) => {
         const commands = Command.getCommands()
-        let output = "§bMatrix §7>§g " + lang("-help.helpCDlist")
+        let output = lang("-help.helpCDlist")
         for (const { data } of commands) {
             output += "\n" + config.commandOptions.prefix + data.name
             if (data.usage.length > 0) {
@@ -18,7 +18,7 @@ const command = new Command(data => data
             }
             output += " - " + data.description 
         }
-        player.sendMessage(output)
+        player.tell(output)
     })
 
 Command.subscribe(command)

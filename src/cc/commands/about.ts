@@ -7,7 +7,7 @@ const command = new Command(data => data
     .setUsage()
     .setRequires(() => true))
     .execute(({ sender: player }) => {
-        player.sendMessage(`§bMatrix §7>§g ${lang("-about.line1")}\n§g${lang("-about.version")}: §cV${version.join('.')}\n§g${lang("-about.author")}: §cjasonlaubb\n§gGitHub: §chttps://github.com/jasonlaubb/Matrix-AntiCheat`)
+        player.tell(`${lang("-about.line1")}\n§g${lang("-about.version")}: §cV${version.join('.')}\n§g${lang("-about.author")}: §cjasonlaubb\n§gGitHub: §chttps://github.com/jasonlaubb/Matrix-AntiCheat`)
     })
 
 Command.subscribe(command)
