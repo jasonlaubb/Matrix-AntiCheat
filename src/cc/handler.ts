@@ -122,6 +122,11 @@ class CommandBuilder {
         return this
     }
 
+    setAliases(...string: string[]) {
+        this.command.data.aliases = string
+        return this
+    }
+
     setRequires(func: (player?: _server.Player) => boolean) {
         this.command.data.requires = func;
         return this;
