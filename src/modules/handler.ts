@@ -1,5 +1,6 @@
 import config from "../data/config";
-import { Module, ModuleOption } from "../data/interface";
+import { ModuleOption } from "../data/interface";
+import { AntiCheatModule } from "../lib/matrix";
 import antiFly from "./anticheat/movement/fly";
 import { world } from "@minecraft/server";
 
@@ -14,7 +15,7 @@ export function checkState (module: string): boolean {
 export function worldInitializeAfterEvent () {
     for (const module of Object.keys(modules)) {
         if (checkState(module)) {
-            ((modules as { [key: string]: Module })[module]).on()
+            ((modules as { [key: string]: AntiCheatModule })[module]).switch().on()
         }
     }
 }

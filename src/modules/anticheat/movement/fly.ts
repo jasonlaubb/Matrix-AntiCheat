@@ -1,22 +1,19 @@
-import { GameMode, PlayerLeaveAfterEvent, system, world } from "@minecraft/server";
-import { Module, FlyMapData, FlagComponent, ModuleOption } from "../../data/interface";
-import matrix from "../../lib/matrix";
-import config from "../../data/config";
-import { lang } from "../../lib/language";
+import { GameMode, PlayerLeaveAfterEvent, world } from "@minecraft/server";
+import { FlyMapData, FlagComponent, ModuleOption, BuildForm } from "../../../data/interface";
+import config from "../../../data/config";
+import matrix from "../../../lib/matrix"
+import { lang } from "../../../lib/language";
+import { AntiCheatModule } from "../../../lib/matrix";
 
-export default {
-    runId: undefined,
-    on () {
-        this.runId = system.runInterval(tickEvent)
-        world.afterEvents.playerLeave.subscribe(playerLeaveAfterEvent)
-    },
-    off () {
-        system.clearRun(this.runId)
-        world.afterEvents.playerLeave.unsubscribe(playerLeaveAfterEvent)
-    }
-} as Module
+const subscribeForm: BuildForm = [
+    [tickEvent, 1],
+    [playerLeaveAfterEvent, world.afterEvents.playerLeave]
+]
+
+export default new AntiCheatModule ("Fly", subscribeForm)
 
 const flyMapData = new Map<string, FlyMapData>()
+
 function tickEvent () {
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator] })
     for (const player of players) {

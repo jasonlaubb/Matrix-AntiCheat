@@ -1,4 +1,4 @@
-import { FlagComponent } from "../data/interface";
+import { FlagComponent, Module, BasicCallBack, Subject, Handler } from "../data/interface";
 import { lang } from "./language";
 import { Player, Vector3, system, world } from "@minecraft/server";
 import config from "../data/config";
@@ -6,7 +6,7 @@ import { MinecraftEffectTypes } from "../node_modules/@minecraft/vanilla-data/li
 
 const flagData = new Map<string, { [key: string]: number }>()
 
-export default class {
+class Util {
     static flag (id: string, type: "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H", maxDelay: number, minDelay: number, { flagTarget: player, description, moduleOption: { punishment, maxVL, action } }: FlagComponent, extended?: Vector3) {
         let playerFlag = flagData.get(player.id) ?? {}
         const lastFlag = playerFlag["*" + id + type]
@@ -23,6 +23,7 @@ export default class {
         playerFlag[id] ??= 0
         playerFlag[id] += 1
         let flagMessage = `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${id}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${playerFlag}§7]§r` + shown
+        console.log("[Matrix::flag] " + player.name + " -> " + id + ` (${type}) x${playerFlag[id]}`)
         const flagMode = world.getDynamicProperty("flagMode") ?? config.antiCheatOptions.flagMode
         switch (action.type) {
             case 0: {
@@ -50,7 +51,7 @@ export default class {
                 break
             }
             default: {
-                console.warn("invalid case of punishment: " + action.type)
+                throw new Error("[Util::Flag] Invalid case of punishment: " + action.type)
             }
         }
         if (punishment && playerFlag[id] > maxVL) {
@@ -124,3 +125,39 @@ export default class {
         return true
     }
 }
+
+export default Util
+
+class AntiCheatModule {
+    private output: Module = { on: () => {}, off: () => {} }
+    private runId: number[] = []
+    private moduleId: string
+    public constructor (moduleId: string, matchForm: [subject: Subject, handler: Handler][]) {
+        this.moduleId = moduleId
+        this.output.on = () => {
+            for (const [subject, handler] of matchForm) {
+                if (typeof handler == "number") {
+                    this.runId.push(system.runInterval(subject as BasicCallBack, handler))
+                } else {
+                    handler.subscribe(subject)
+                }
+            }
+        }
+        this.output.off = () => {
+            for (const [subject, handler] of matchForm) {
+                if (typeof handler == "number") {
+                    system.clearRun(this.runId[0])
+                    this.runId.shift()
+                } else {
+                    handler.unsubscribe(subject)
+                }
+            }
+        }
+    }
+    public readonly getName = (): string => this.moduleId
+    public readonly switch = (): Module => this.output
+    // Create a copy for Util functions
+    protected readonly util = Util
+}
+
+export { AntiCheatModule }

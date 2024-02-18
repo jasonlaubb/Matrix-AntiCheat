@@ -1,6 +1,7 @@
 import { Command } from "../handler";
 import { lang } from "../../lib/language";
-import { modules, checkState } from "../../modules/handler";import { world } from "@minecraft/server";
+import { modules, checkState } from "../../modules/handler";
+import { world } from "@minecraft/server";
 
 const command = new Command(data => data
     .setName("toggle")
@@ -15,10 +16,10 @@ const command = new Command(data => data
             return
         }
         if (checkState(module) == state) {
-            player.warn(lang("-toggles.already"))
+            player.warn(lang("-toggles.already", state ? "enabled" : "disabled"))
         }
         world.setDynamicProperty(module, state)
-        player.tell(lang("-toggles.already", state ? "enabled" : "disabled"))
+        player.tell(lang("-toggles.toggleChange", state ? "enabled" : "disabled"))
     })
 
 Command.subscribe(command)

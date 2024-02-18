@@ -12,11 +12,24 @@ export interface ModuleOption {
     action: ModuleAction,
     maxVL: number,
 };
+export interface BanDataOption {
+    reason: string;
+    by: string;
+    time: number | "forever";
+}
 export interface FlagComponent {
     flagTarget: Player;
     description: [string, string | number][] | null;
     moduleOption: ModuleOption;
 };
+export interface EventSignal {
+    subscribe: (callback: (input: any) => void, subscribeOption?: any) => void
+    unsubscribe: (callback: (input: any) => void) => void
+}
+export type BasicCallBack = () => void
+export type Subject = BasicCallBack | ((input: any) => void)
+export type Handler = EventSignal | number
+export type BuildForm = [Subject, Handler][]
 export interface FlyMapData {
     velocityLog: number;
     lastLog: number;
