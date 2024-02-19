@@ -7,6 +7,6 @@ const command = new Command(data => data
   .setDescription(lang("-help.toggles"))
   .setUsage()
   .setAliases("toggleList"))
-  .execute(({ sender: player }, []) =>  player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleList")}\n${toggleList(prefix)}`));
+  .execute(({ sender: player }, []) => player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleList")}\n${toggleList(prefix)}`));
 
 Command.subscribe(command);
