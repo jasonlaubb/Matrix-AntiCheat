@@ -1,6 +1,7 @@
 import { Command } from "../handler";
 import { lang } from "../../lib/language";
 //import { toggleList } from ** SOS **;
+import { system } from "@minecraft/server";
 
 const command = new Command(data => data
   .setName("toggles")
