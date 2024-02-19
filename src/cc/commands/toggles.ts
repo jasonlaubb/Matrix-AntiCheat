@@ -1,13 +1,12 @@
 import { Command } from "../handler";
 import { lang } from "../../lib/language";
 //import { toggleList } from ** SOS **;
-import { system } from "@minecraft/server";
 
 const command = new Command(data => data
   .setName("toggles")
   .setDescription(lang("-help.toggles"))
   .setUsage()
   .setAliases("toggleList"))
-  .execute(({ sender: player }, []) => system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleList")}\n${toggleList(prefix)}`)));
+  .execute(({ sender: player }, []) =>  player.sendMessage(`§bMatrix §7>§g ${lang("-toggles.toggleList")}\n${toggleList(prefix)}`));
 
 Command.subscribe(command);
