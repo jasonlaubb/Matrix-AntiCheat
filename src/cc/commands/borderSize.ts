@@ -3,6 +3,7 @@ import { lang } from "../../lib/language";
 import { world } from "@minecraft/server";
 //import { config } from ** help json :< **;
 //import { lastSafePos } from ** help json :< **;
+import { system } from "@minecraft/server";
 
 const command = new Command(data => data
   .setName("borderSize")
