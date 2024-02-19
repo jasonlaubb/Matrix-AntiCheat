@@ -202,7 +202,7 @@ const subCommand1 = command.subCommand(data => data.setName("test1"))
   .option("int", a => a.setName("int"))
   .subCommand(data => data.setName("test2"))
   .option("int", a => a.setName("int"))
-  .execute((ev, args) => ev.sender.tell(JSON.stringify(args)))*/
+  .execute((ev, args) => ev.sender.sendMessage(JSON.stringify(args)))*/
 
 
 export function chatSendBeforeEvent (event: _server.ChatSendBeforeEvent) {
