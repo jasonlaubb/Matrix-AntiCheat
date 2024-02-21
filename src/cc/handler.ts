@@ -88,15 +88,15 @@ const OptionTypes: { [key: string]: any } = {
   string: StringArgumentType,
   int: IntegerArgumentType,
   float: FloatArgumentType,
-  location: LocationArgumentType,
+  //location: LocationArgumentType, #in dev
   boolean: BooleanArgumentType,
   player: PlayerArgumentType,
   target: TargetArgumentType,
-  array: ArrayArgumentType,
-  duration: DurationArgumentType,
+  //array: ArrayArgumentType, #in dev
+  //duration: DurationArgumentType, #in dev
 };
 
-type TypeString = "string" | "int" | "float" | "location" | "boolean" | "player" | "target" | "array" | "duration"
+type TypeString = "string" | "int" | "float" | "boolean" | "player" | "target"
 
 
 let COMMANDS: Command[] = [];
