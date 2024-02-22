@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="./pack_icon.png" height="50">
+  <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/pack_icon.png" height="50">
   
-  <img src="./Matrix-AntiCheat.png" height="50">
+  <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/.github/PRIVATE_DATA/title.png" height="50">
 
   ## Project Status
 
