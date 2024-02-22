@@ -8,6 +8,12 @@
  * @docs https://transform.tools/json-to-typescript
  */
 
+import silent from "./rules/silent"
+import debugger_ from "./rules/debugger"
+import supervise from "./rules/supervise"
+import sentinel from "./rules/sentinel"
+import terminator from "./rules/terminator"
+
 export default {
     /** 
      * @description
@@ -16,8 +22,8 @@ export default {
     antiCheatOptions: {
         configVersion: 1, // Version of config, useless
         language: "en_US", // default language
-        createScoreboard: true, //create betaAPI scoreboard on boot
-        flagMode: "admin",
+        createScoreboard: true, // create betaAPI scoreboard on boot
+        followRule: sentinel // default rule should anticheat follow
     },
     commandOptions: {
         password: "password", // The password for op command
@@ -35,6 +41,13 @@ export default {
         toggle: true,
         toggles: true
     },
+    rules: [
+        silent,
+        debugger_,
+        supervise,
+        sentinel,
+        terminator
+    ], // Export the rulesets to the anticheat
     punishment: {
         kick: {
             reason: "Bad behavior"
@@ -50,14 +63,11 @@ export default {
         defaultRank: "§pMember",
         showAllRank: true,
         action: { type: false, duration: null },
-        punishment: "none",
-        maxVL: 0
+
     },
     dimensionLock: {
         enabled: false,
         action: { type: false, duration: null },
-        punishment: "none",
-        maxVL: 0
     },
 
     //action 0: banPVP, 1: banBlock, 2: teleport, 3: damage
@@ -66,9 +76,9 @@ export default {
         enabled: true,
         maxClicksPerSecond: 24,
         timeout: 200,
-        punishment: "kick",
+        types: ["light"],
         action: { type: 0, duration: 20 },
-        maxVL: 4
+  
     },
 
     antiKillAura: {
@@ -76,7 +86,7 @@ export default {
         minAngle: 160,
         timeout: 200,
         maxEntityHit: 2,
-        punishment: "ban",
+        types: ["stable","absloute","stable","absloute"],
         action: { type: 0, duration: 20 },
         maxVL: 3
     },
@@ -85,22 +95,22 @@ export default {
         enabled: true,
         maxReach: 4.21,
         maxYReach: 4.8,
-        punishment: "kick",
+        types: ["stable"],
         action: { type: 0, duration: 40 },
         maxVL: 3
     },
 
     antiFly: {
         enabled: true,
-        punishment: "ban",
+        types: ["stable"],
         maxVelocity: 0.7,
         action: { type: 2, duration: 40 },
-        maxVL: 4
+  
     },
 
     antiNoFall: {
         enabled: true,
-        punishment: "ban",
+        types: ["absloute"],
         action: { type: 2, duration: null },
         float: 15,
         maxVL: 3
@@ -108,10 +118,9 @@ export default {
 
     antiNoClip: {
         enabled: true,
-        punishment: "ban",
+        types: ["stable","stable"],
         action: { type: 2, duration: null },
         clipMove: 1.6,
-        maxVL: 4
     },
 
     antiSpeed: {
@@ -119,19 +128,18 @@ export default {
         mphThreshold: 150,
         bpsThershold: 11.5,
         clipThershold: 7,
-        punishment: "kick",
         action: { type: 2, duration: null },
-        maxVL: 4
+        types: ["absloute"]
     },
 
     antiNuker: {
         enabled: true,
         maxBreakPerTick: 6,
         timeout: 100,
-        punishment: "ban",
+        types: ["absloute"],
         solidOnly: true,
         action: { type: 1, duration: 60 },
-        maxVL: 0
+
     },
 
     antiScaffold: {
@@ -141,9 +149,8 @@ export default {
         factor: 1,
         minRotation: 20,
         maxBPS: 5,
-        punishment: "ban",
         action: { type: 1, duration: 20 },
-        maxVL: 4
+        types: ["absloute","stable","stable","absloute"],
     },
 
     antiNoSlow: {
@@ -152,9 +159,8 @@ export default {
         maxItemSpeed: 0.2,
         itemUseTime: 350,
         timeout: 60,
-        punishment: "ban",
         action: { type: 2, duration: null },
-        maxVL: 4
+        types: ["absloute","unstable"]
     },
 
     antiBreaker: {
@@ -164,15 +170,11 @@ export default {
             "minecraft:cake",
             "minecraft:dragon_egg"
         ],
-        punishment: "ban",
         action: { type: 1, duration: 40 },
-        maxVL: 4
     },
 
     antiSpam: {
         enabled: true,
-        punishment: "none",
-        maxVL: 0,
         action: { type: false, duration: null },
         maxMessagesPerSecond: 3,
         timer: 500,
@@ -197,9 +199,8 @@ export default {
 
     antiSpammer: {
         enabled: true,
-        punishment: "ban",
         action: { type: 3, duration: null },
-        maxVL: 0
+        types: ["absloute","absloute","absloute"]
     },
 
     antiBlockReach: {
@@ -207,27 +208,25 @@ export default {
         maxPlaceDistance: 8,
         maxBreakDistance: 8,
         timeout: 60,
-        punishment: "ban",
         action: { type: 1, duration: 40 },
-        maxVL: 0,
+        types: ["absloute","absloute"]
     },
 
     antiAim: {
         enabled: true,
         maxRotSpeed: 15,
         timeout: 50,
-        punishment: "none",
         action: { type: 3, duration: null },
-        maxVL: 4
+        types: ["unstable","unstable","stable","absloute"]
     },
 
     antiTower: {
         enabled: true,
         minDelay: 200,
         timeout: 60,
-        punishment: "ban",
         action: { type: 1, duration: 35 },
-        maxVL: 2
+        maxVL: 2,
+        types: ["stable"]
     },
 
     antiGameMode: {
@@ -235,37 +234,32 @@ export default {
         bannedGameMode: [1], //example [1,3] creative mode and spectator mode will be punished
         returnDefault: true, // if true, player will be return to default game mode
         returnGameMode: 0, // use when returnDefault is false
-        punishment: "ban",
         action: { type: false, duration: null },
-        maxVL: 4
+        types: ["stable"]
     },
 
     antiNameSpoof: {
         enabled: true,
-        punishment: "ban",
         action: { type: false, duration: null },
-        maxVL: 0
+        types: ["absloute","absloute"]
         // nothing to give you set :doge:
     },
 
     antiAutoTool: {
         enabled: false, //unstable module >A<
-        punishment: "kick",
-        maxVL: 4,
         action: { type: 3, duration: null },
         toolType: [
             "axe",
             "shovel",
             "pickaxe",
             "sword"
-        ]
+        ],
+        types: ["unstable"]
     },
 
     antiFastBreak: {
-        enabled: false, 
-        punishment: "ban",
+        enabled: false,
         action: { type: 1, duration: 50 },
-        maxVL: 4,
         solidOnly: true,
         maxBPS: 1.2,
         toolLimit: 4.2,
@@ -278,7 +272,8 @@ export default {
         matchType: { //edit the tool type and it's break limit here
             "wood": 3.9,
             "stone": 5.1
-        }
+        },
+        types: ["unstable"]
     },
 
     antiXray: {
@@ -287,16 +282,15 @@ export default {
             "diamond_ore",
             "ancient_debris"
         ],
-        maxVL: 0,
         action: { type: false, duration: null },
-        punishment: "none"
+
     },
 
     antiDisabler: {
         enabled: true, // THIS SHOULD BE ENABLED
-        maxVL: 0,
+        types: ["absloute"],
         action: { type: 2, duration: null },
-        punishment: "ban"
+
     },
     /*
     antiIllegalItem: {
@@ -459,46 +453,45 @@ export default {
         state: {
             typeCheck: {
                 enabled: true,
-                punishment: "ban"
+        
             },
             nameLength: {
                 enabled: true,
-                punishment: "ban",
+
                 maxItemNameLength: 32
             },
             itemTag: {
                 enabled: true,
-                punishment: "ban",
+
                 maxAllowedTag: 0
             },
             loreCheck: {
                 enabled: true,
-                punishment: "ban"
+        
             },
             itemAmount: {
                 enabled: true,
-                punishment: "ban"
+        
             },
             enchantLevel: {
                 enabled: true,
-                punishment: "ban",
+
                 whiteList: [], //example: ["knockback:4"] than knockback enchantment with level 4 will not be punished
 
             },
             enchantConflict: {
                 enabled: true,
-                punishment: "ban",
+
                 whitList: [], //example: ["mending","infinity"] than mending and infinity will not be punished
             },
             enchantAble: {
                 enabled: true,
-                punishment: "ban",
                 whiteList: [], //example: ["superItem:super_sword"] for bypass super_word's enchantment
 
             },
             enchantRepeat: {
                 enabled: true,
-                punishment: "ban"
+        
             }
         },
         checkCreativeMode: true,
@@ -507,35 +500,33 @@ export default {
 
     antiElytraFly: {
         enabled: true,
-        maxVL: 4,
+        types: ["stable"],
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "ban",
         action: { type: 2, duration: null },
     },
 
     antiFastUse: {
         enabled: true,
         minUseTime: 20,
+        types: ["absloute"],
         timeout: 60,
-        punishment: "ban",
         action: { type: 3, duration: null },
         maxVL: 2
     },
-
     antiAuto: {
         enabled: true,
-        punishment: "ban",
         action: { type: 3, duration: null },
+        types: ["absloute"],
         maxVL: 2
     },
     /*
     antiCommandBlockExplolit: {
         enabled: false,
-        punishment: "ban",
+,
         action: { type: false, duration: null },
-        maxVL: 0,
+
         cancelPlacement: [ // cancel the cbe block placement
             "minecraft:bee_nest",
             "minecraft:beehive",
@@ -553,18 +544,15 @@ export default {
             "minecraft:tropical_fish_bucket",
         ]
     },*/
-
+    /*
     antiCrasher: {
         enabled: true,
-        punishment: "ban",
         action: { type: false, duration: null },
-        maxVL: 0
-    },
+    },*/
     antiBot: {
         enabled: false,
-        punishment: "ban",
         action: { type: false, duration: null },
-        maxVL: 0,
+        types: ["absloute","absloute"],
         clickSpeedThershold: 6, // 1 = 1 tick or 50 mile second
         timer: 1, // 1 = 1 minute
         maxTry: 3
@@ -572,9 +560,7 @@ export default {
 
     worldBorder: {
         enabled: false,
-        punishment: "none",
         action: { type: false, duration: null },
-        maxVL: 0,
         checkEvery: 2, // tick
         radius: 250000, // default radius
         stopAdmin: false,

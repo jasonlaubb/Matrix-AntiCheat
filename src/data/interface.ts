@@ -44,6 +44,37 @@ export type BasicCallBack = () => void
 export type Subject = BasicCallBack | ((input: any) => void)
 export type Handler = EventSignal | number
 export type BuildForm = [Subject, Handler][]
+export type Punishment = "none" | "kick" | "ban"
+export interface Ruleset {
+    name: string,
+    description: string,
+    rule: {
+        action: {
+            absloute: Punishment,
+            stable: Punishment,
+            unstable: Punishment,
+            light: Punishment
+        },
+        maxVL: {
+            absloute: number,
+            stable: number,
+            unstable: number,
+            light: number
+        },
+        alert: {
+            actionFlag: {
+                state: boolean,
+                requires: (player: Player) => boolean | null,
+                log: boolean
+            },
+            actionDone: {
+                state: boolean,
+                requires: (player: Player) => boolean | null,
+                log: boolean
+            }
+        }
+    }
+}
 export interface FlyMapData {
     velocityLog: number;
     lastLog: number;
