@@ -4,8 +4,8 @@ import * as data from "./node_modules/@minecraft/vanilla-data/lib/index"
 declare module "@minecraft/server" {
     interface Player {
         // Method
-        tell: (message: string) => void
-        warn: (message: string) => void
+        tell: (message: string | server.RawMessage) => void
+        warn: (message: string | server.RawMessage) => void
         // Number value
         lastExplosionTime: number
         threwTridentAt: number

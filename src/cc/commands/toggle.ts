@@ -10,7 +10,7 @@ const command = new Command(data => data
     .setUsage("module", "true / false"))
     .option("string", option => option.setName("module"))
     .option("boolean", option => option.setName("state"))
-    .execute(({ sender: player }, [module, state]) => {
+    .execute(({ sender: player }, [module, state]: any[]) => {
         if (!Object.keys(modules).includes(module)) {
             player.warn(lang("-toggles.unknownModule"))
             return

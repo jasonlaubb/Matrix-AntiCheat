@@ -1,17 +1,31 @@
 import { Player, Vector3 } from "@minecraft/server";
+import { CommandBuilder } from "../cc/handler"
 
 export interface Module {
     on: () => void;
     off: () => void;
-    runId?: number
+    runId?: number;
 };
-export interface ModuleAction { type: 0 | 1 | 2 | 3 | false, duration: null | number }
+export interface ModuleAction {
+    type: 0 | 1 | 2 | 3 | false;
+    duration: null | number;
+}
 export interface ModuleOption {
-    enabled: boolean,
-    punishment: "none" | "kick" | "ban",
-    action: ModuleAction,
-    maxVL: number,
+    enabled: boolean;
+    punishment: "none" | "kick" | "ban";
+    action: ModuleAction;
+    maxVL: number;
 };
+export interface CommandBuildOption {
+    name?: string;
+    description?: string;
+    usage?: string[];
+    aliases?: string[];
+    requires?: (player?: Player) => boolean;
+}
+export type StringTypeKey = "string" | "int" | "float" | "location" | "boolean" | "player" | "array" | "duration"
+export type Common = string | number | Vector3 | Player | Array<any>
+export type BuilderCallBack = ((data: CommandBuilder) => void)
 export interface BanDataOption {
     reason: string;
     by: string;

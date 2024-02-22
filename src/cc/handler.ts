@@ -1,229 +1,220 @@
-import * as _server from "@minecraft/server";
-import * as _ui from "@minecraft/server-ui";
-import config from "../data/config";
+/**
+ * @author notthinghere
+ * @description A unique command handler system
+ * Code improved by jasonlaubb
+ */
 
-let server = {
-	..._server,
-	..._ui
-};
+import { world, Player, ChatSendBeforeEvent, system } from "@minecraft/server";
+import config from "../data/config";
+import { CommandBuildOption, BuilderCallBack, Common, StringTypeKey } from "../data/interface"
+
+function findSelectedPlayer(name: string) {
+  return [...world.getAllPlayers()].find((player) => player.name == name);
+}
 
 class DefaultArgumentType {
-    protected data: any
-  constructor(data: any) {
+  protected data: any
+  public constructor (data: any) {
     this.data = data || {};
   }
 }
 
 class LiteralArgumentType {
-  private name: string
-  protected description: string
-  constructor(name: string, description?: string) {
+  public name: string
+  public description: string
+  public constructor (name: string, description?: string) {
     this.name = name;
-    this.description = description
+    this.description = description;
   }
 
-  verify = (value: any) => value === this.name;
-  parse = (value: any) => value;
+  readonly verify = (value: string) => value === this.name;
+  readonly parse = (value: any) => value;
 }
 
 class StringArgumentType {
-  verify = (value: any) => (typeof value === 'string' && value !== "") ? value : undefined;
-  parse = (value: any) => value;
+  readonly verify = (value: string) => (typeof value === "string" && value !== "") ? value : null;
+  readonly parse = (value: any) => value;
 }
 
 class NumericArgumentType extends DefaultArgumentType {
-private range: any
-  constructor(name: string, range: [number, number]) {
+  private range: [number, number] | []
+  public constructor (name: string, range: [number, number]) {
     super(name);
     this.range = range || [];
   }
 
-  _verify = (value: any, parseFunc: Function, test: any) => (value && ((this.range.length ? (Number(value) >= this.range[0] && parseFunc(value) <= this.range[1]) : test(value))));
-
-  _parse = (value: any, parseFunc: Function) => (value ? parseFunc(value) : null);
+  readonly _verify = (value: number, parseFunc: Function, test: Function) => (value && ((this.range.length ? (Number(value) >= this.range[0] && parseFunc(value) <= this.range[1]) : test(value))));
+  readonly _parse = (value: any, parseFunc: Function) => (value ? parseFunc(value) : null);
 }
 
 class IntegerArgumentType extends NumericArgumentType {
-  verify = (value: any) => this._verify(value, parseInt, (arg: any) => (/^-?\d*\.?\d+$/.test(arg) && !isNaN(parseFloat(arg))));
-  parse = (value: any) => this._parse(value, parseInt);
+  readonly verify = (value: number) => this._verify(value, parseInt, (arg: string) => (/^-?\d*\.?\d+$/.test(arg) && !isNaN(parseFloat(arg))));
+  readonly parse = (value: any) => this._parse(value, parseInt);
 }
 
 class FloatArgumentType extends NumericArgumentType {
-  verify = (value: any) => this._verify(value, parseFloat, (arg: any) => /^\d+\.\d+$/.test(value) && !isNaN(arg));
-  parse = (value: any) => this._parse(value, parseFloat);
+  readonly verify = (value: string) => this._verify(value as any, parseFloat, (arg: number) => /^\d+\.\d+$/.test(value) && !isNaN(arg));
+  readonly parse = (value: any) => this._parse(value, parseFloat);
 }
 
-
 class LocationArgumentType {
-  verify = (value: any) => /^([~^]?(-\d)?(\d*)?(\.\d+)?)$/.test(value) ? value : undefined;
-  parse = (value: any) => value;
+  readonly verify = (value: string) => /^([~^]?(-\d)?(\d*)?(\.\d+)?)$/.test(value) ? value : null;
+  readonly parse = (value: any) => value;
 }
 
 class BooleanArgumentType {
-  verify = (value: any) => /^(true|false)$/.test(value) ? value === "true" : undefined;
-  parse = (value: any) => value === "true";
+  readonly verify = (value: boolean) => typeof value === "boolean" || /^(true|false)$/.test(value);
+  readonly parse = (value: any) => value;
 }
 
 class PlayerArgumentType {
-  verify = (value: any) => fetch(value);
-  parse = (value: any) => fetch(value);
-}
-
-class TargetArgumentType {
-  verify = (value: any) => /^(@.|"[\s\S]+")$/.test(value) ? value : undefined;
-  parse = (value: any) => value;
+  readonly verify = (value: string) => /^(@.|"[\s\S]+")$/.test(value) && findSelectedPlayer(value.substring(1));
+  readonly parse = (value: any) => findSelectedPlayer(value);
 }
 
 class ArrayArgumentType {
-  verify = (value: any) => Array.isArray(value) ? value : undefined;
-  parse = (value: any) => value;
+  readonly readonlyverify = (value: any[]) => Array.isArray(value) ? value : null;
+  readonly parse = (value: any) => value;
 }
 
 class DurationArgumentType {
-  verify = (value: any) => /^(\d+[hdysmw],?)+$/.test(value) ? value : undefined;
-  parse = (value: any) => value;
+  readonly verify = (value: string) => /^(\d+[hdysmw],?)+$/.test(value) ? value : null;
+  readonly parse = (value: any) => value;
 }
 
 const OptionTypes: { [key: string]: any } = {
   string: StringArgumentType,
   int: IntegerArgumentType,
   float: FloatArgumentType,
-  //location: LocationArgumentType, #in dev
+  location: LocationArgumentType,
   boolean: BooleanArgumentType,
   player: PlayerArgumentType,
-  target: TargetArgumentType,
-  //array: ArrayArgumentType, #in dev
-  //duration: DurationArgumentType, #in dev
+  array: ArrayArgumentType,
+  duration: DurationArgumentType,
 };
-
-type TypeString = "string" | "int" | "float" | "boolean" | "player" | "target"
-
 
 let COMMANDS: Command[] = [];
 
-class CommandBuilder {
-    private command: Command
-    constructor(command: Command) {
-      //@ts-expect-error
-      this.command.data = {}
-      this.command = command;
-    }
+export class CommandBuilder {
+  private command: Command
+  public constructor (command: Command) {
+    this.command.data = {}
+    this.command = command;
+  }
 
-    setName(string: string) {
-        this.command.data.name = string;
-        return this;
-    }
+  setName(string: string) {
+    this.command.data.name = string;
+    return this;
+  }
 
-    setDescription(string: string) {
-        this.command.data.description = string;
-        return this;
-    }
+  setDescription(string: string) {
+    this.command.data.description = string;
+    return this;
+  }
 
-    setUsage(...string: string[]) {
-        this.command.data.usage = string
-        return this
-    }
+  setUsage(...items: string[]) {
+    this.command.data.usage = items;
+    return this;
+  }
 
-    setAliases(...string: string[]) {
-        this.command.data.aliases = string
-        return this
-    }
+  setAliases(...items: string[]) {
+    this.command.data.aliases = items;
+    return this;
+  }
 
-    setRequires(func: (player?: _server.Player) => boolean) {
-        this.command.data.requires = func;
-        return this;
-    }
-}
-
-interface CommandData {
-  name: string;
-  description: string;
-  requires: (player?: _server.Player) => boolean;
-  usage: string[]
-  aliases: string[];
+  setRequires(func: (player?: Player) => boolean) {
+    this.command.data.requires = func;
+    return this;
+  }
 }
 
 export class Command {
-    public data: CommandData
-    private callback: Function
-    private types: string[] | LiteralArgumentType[]
-    private root: any
-    private index: any
-    private _arguments_: any
-    constructor(data: (data: CommandBuilder) => CommandBuilder, types?: string[], parent?: Command, root?: Command) {
-        this.callback = null;
+  public data: CommandBuildOption
+  private types: string[] | [LiteralArgumentType]
+  private callback: Function
+  public parent: Command
+  private root: Command
+  public index: number
+  public _arguments_: any[]
+  public constructor (data: BuilderCallBack, types?: string[] | [LiteralArgumentType], parent?: Command, root?: Command) {
+    this.callback = null;
+    data(new CommandBuilder(this));
+    this.types = types ?? [new LiteralArgumentType(this.data.name)];
+    this.root = root ?? (this.types[0] instanceof LiteralArgumentType ? this : parent);
+    this.index = (parent?.index ?? -1) + 1;
+    if (!this.data.requires)
+      this.data.requires = (() => true);
+    this._arguments_ = [];
+  }
 
-        data (new CommandBuilder(this))
-        this.types = types ?? [new LiteralArgumentType(this.data.name)];
-        this.root = root ?? (this.types[0] instanceof LiteralArgumentType ? this : parent);
-        this.index = (parent?.index ?? -1) + 1;
-        
-        if (!this.data.requires)
-            this.data.requires = (() => true);
+  public subCommand(data: BuilderCallBack) {
+    if (this.root?.callback) throw new Error("[Command::subCommand]: Can not add subcommand to command");
+    return this._arguments_[this._arguments_.push(new Command(data, null, this)) - 1];
+  }
 
-        this._arguments_ = [];
-    }
+  public option(types: StringTypeKey | StringTypeKey[], data: BuilderCallBack): Command {
+    if (this.callback) throw new Error("[Command::option]: Cannot add option to command.");
+    return (this._arguments_[this._arguments_.push(new Command(data, Array.isArray(types) ? types.map(type => new OptionTypes[type]) : [new OptionTypes[types]], this, this.types instanceof LiteralArgumentType ? this : this.root)) - 1]);
+  }
 
-    subCommand(data: (data: CommandBuilder) => CommandBuilder) {
-      if (this.root?.callback) throw new Error("[Command::subCommand]: Can not add subcommand to command")
-      return this._arguments_[this._arguments_.push(new Command(data, null, this)) - 1];
-    }
+  public execute(callback: (event: ChatSendBeforeEvent, regax: Common[]) => void) {
+    return (this.types[0] instanceof LiteralArgumentType ? this.callback = callback : this.root.callback = callback, this);
+  }
 
-    
-    option(types: TypeString[] | TypeString, data: (data: CommandBuilder) => CommandBuilder): Command {
-      if (this.callback) throw new Error("[Command::option]: Cannot add option to command.");
-      return (this._arguments_[this._arguments_.push(new Command(data, Array.isArray(types) ? types.map(type => new OptionTypes[type]) : [new OptionTypes[types]], this, this.types instanceof LiteralArgumentType ? this : this.root)) - 1]);
-    }
+  static subscribe(command: Command) {
+    if (parent || COMMANDS.includes(command)) throw new Error("[Command::subsribe]: Cannot subscribe the command");
+    COMMANDS.push(command);
+  }
 
-    execute(callback: (ev: _server.ChatSendBeforeEvent, args?: any[]) => void) {
-      return (this.types[0] instanceof LiteralArgumentType ? this.callback = callback : this.root.callback = callback, this);
-    }
-
-    static subscribe (command: Command) {
-      if (parent || COMMANDS.includes(command)) throw new Error("[Command::subsribe]: Cannot subscribe the command")
-      COMMANDS.push(command);
-    }
-
-    static getCommands (): Command[] {
-      return COMMANDS
-    }
+  static getCommands() {
+    return COMMANDS;
+  }
 }
 
-const PREFIX = config.commandOptions.prefix
+const PREFIX = config.commandOptions.prefix;
 
-/*
-const command = new Command(data => data
-    .setName("hi")
-    .description("hi")
-    .requires((plr) => true))
+export function chatSendBeforeEvent(event: ChatSendBeforeEvent) {
+  if (!event.message.startsWith(PREFIX)) return;
+  event.cancel = true;
+  let args: any[] = event.message.slice(PREFIX.length).trim().match(/"[^"]+"|[^\s]+/g).map((arg: string) => arg.replace(/"(.+)"/, "$1").toString());
+  const command = COMMANDS.find((cmd) => cmd.data.name == args[0] || cmd.data?.aliases?.includes(args[0]));
+  if (!command || !command?.data?.requires(event.sender)) return event.sender.warn({ rawtext: [{ translate: "commands.generic.unknown", with: [`${args[0]}`] }]})
+  args.shift();
+  let selectedArgs: any[] = [];
+  const verifyArgs = (cmd: Command, i: number): boolean => {
+    if (cmd._arguments_.length === 0) return true;
 
-const subCommand1 = command.subCommand(data => data.setName("test1"))
-  .option(["int", "string"], a => a.setName("int"))
-  .option("int", a => a.setName("int"))
-  .subCommand(data => data.setName("test2"))
-  .option("int", a => a.setName("int"))
-  .execute((ev, args) => ev.sender.sendMessage(JSON.stringify(args)))*/
+    const arg = cmd._arguments_.find(a => a.types.some((e: any) => e.verify(args[i])));
+    if (!arg) return true;
 
+    const { data } = arg;
+    if (!data || !data.requires || !data.requires(event.sender)) {
+      event.sender.warn({
+        rawtext: [{
+          translate: "commands.generic.syntax",
+          with: [
+            `${`${PREFIX}${command.data.name} ${args.slice(0, i).join(" ")}`.slice(-9)} `,
+            args[i] ?? "",
+            ` ${`${args.slice(i + 1).join(" ")}`.slice(0, 9)}`
+          ]
+        }]
+      });
+      return false;
+    }
 
-export function chatSendBeforeEvent (event: _server.ChatSendBeforeEvent) {
-    if (!event.message.startsWith(PREFIX)) return;
-    event.cancel = true;
-    let args = event.message.slice(PREFIX.length).trim().match(/"[^"]+"|[^\s]+/g).map((arg) => arg.replace(/"(.+)"/, "$1").toString());
-    const command = COMMANDS.find((cmd) => cmd.data.name == args[0] || cmd.data?.aliases?.includes(args[0]));
-    if (!command || !command?.data?.requires(event.sender)) return event.sender.sendMessage({ rawtext: [{ text: "§c" }, { translate: "commands.generic.unknown", with: [`${args[0]}`] }]});
-    args.shift();
-    let selectedArgs: any[] = [];
-    const verifyArgs: any = (cmd: any, i: any) => cmd._arguments_.length > 0 ? ((arg) => !arg || !arg.data?.requires?.(event.sender) ? (event.sender.sendMessage({ rawtext: [{ text: "§c" }, { translate: "commands.generic.syntax", with: [`${`${PREFIX}${command.data.name} ${args.slice(0, i).join(" ")}`.slice(-9)} `, args[i] ?? "", ` ${`${args.slice(i + 1).join(" ")}`.slice(0, 9)}`] }] }), false) : (selectedArgs.push(arg), verifyArgs(arg, i + 1)))(cmd._arguments_.find((a: any) => a.types.find((e: any) => e.verify(args[i])))) : true;
-    if (!verifyArgs(command, 0)) return;
-    server.system.run(() => sendCommandCallback(event, command, args, selectedArgs));
+    selectedArgs.push(arg);
+    return verifyArgs(cmd, ++i)
+  }
+
+  if (!verifyArgs(command, 0)) return;
+  system.run(() => sendCommandCallback(event, args, selectedArgs));
 }
 
-function sendCommandCallback (event: _server.ChatSendBeforeEvent, command: Command, args: string[], selectedArgs: any[]) {
-    command
-  let argsToReturn: string[] = [];
-  selectedArgs.forEach((arg, i) => {
-    if (arg.types[0] instanceof LiteralArgumentType) return
-    argsToReturn.push(arg.types.find((a: any) => a.verify(args[i])).parse(args[i]))
+function sendCommandCallback(event: ChatSendBeforeEvent, args: any[], selectedArgs: any[]) {
+  let argsToReturn: any[] = [];
+  selectedArgs.forEach((arg: any, i: number) => {
+    if (arg.types[0] instanceof LiteralArgumentType) return;
+    argsToReturn.push(arg.types.find((a: any) => a.verify(args[i])).parse(args[i]));
   });
-  selectedArgs[selectedArgs.length - 1].root?.callback?.(event, argsToReturn)
+  selectedArgs[selectedArgs.length - 1].root?.callback?.(event, argsToReturn);
 }

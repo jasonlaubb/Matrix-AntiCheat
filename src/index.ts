@@ -15,5 +15,10 @@ world.afterEvents.playerSpawn.subscribe(playerSpawnAfterEvent)
 
 // Subscribe the command to handler
 import "./cc/commands/about"
+import "./cc/commands/borderSize"
+import "./cc/commands/defaultrank"
 import "./cc/commands/help"
+import "./cc/commands/passwords"
+import "./cc/commands/showallrank"
 import "./cc/commands/toggle"
+import "./cc/commands/toggles"

@@ -8,8 +8,9 @@ const command = new Command(data => data
   .setUsage("rank"))
   .option("string", option => option.setName("rank"))
   .execute(({ sender: player }, [rank]) => {
+    rank = rank as string
     world.setDynamicProperty("defaultRank", rank)
-    player.sendMessage(`§bMatrix §7>§g ${lang("-defaultrank.has").replace("%a", rank)}`);
+    player.tell(lang("-defaultrank.has", rank));
   });
 
 Command.subscribe(command);

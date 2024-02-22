@@ -1,4 +1,4 @@
-import { World, Player, world, EntityQueryOptions } from "@minecraft/server";
+import { World, Player, world, EntityQueryOptions, RawMessage } from "@minecraft/server";
 
 /** @description Show a message to all players */
 World.prototype.show = function show (message: string) {
@@ -24,12 +24,16 @@ World.prototype.send = function send (message: string, option: EntityQueryOption
     else selected.forEach(player => player.sendMessage("§bMatrix §7>§g " + message))
 }
 
+function raw (raw: RawMessage, color: string) {
+    raw.rawtext.unshift({"text":"§bMatrix §7>§" + color + " "})
+    return raw
+}
 /** @description Send a message to the player */
-Player.prototype.tell = function tell (message: string) {
-    this.sendMessage("§bMatrix §7>§g " + message)
+Player.prototype.tell = function tell (message: string | RawMessage) {
+    this.sendMessage(typeof message == "string" ? "§bMatrix §7>§g " + message : raw(message, "b"))
 }
 
 /** @description Send a warn message to the player */
-Player.prototype.warn = function warn (message: string) {
-    this.sendMessage("§bMatrix §7>§c " + message)
+Player.prototype.warn = function warn (message: string | RawMessage) {
+    this.sendMessage(typeof message == "string" ? "§bMatrix §7>§g " + message : raw(message, "c"))
 }
