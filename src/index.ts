@@ -1,40 +1,26 @@
-/**
- * @author jasonlaubb
- * @contributors ravriv, Hutao999999, RaMiGamerDev, notthinghere
- * @translate amico_nabbo, kris02, Selder578
- * @license AGPLv3
- * @link https://github.com/jasonlaubb/Matrix-AntiCheat
- */
+import { world } from "@minecraft/server"
+import { chatSendBeforeEvent as commandListener } from "./cc/handler"
+import { worldInitializeAfterEvent as languageLanucher } from "./lib/language"
+import { worldInitializeAfterEvent as moduleLanucher } from "./modules/handler"
+import { playerSpawnAfterEvent as banLanucher } from "./modules/model/ban"
+import { worldInitializeAfterEvent as ruleHandler } from "./lib/rule_handler"
 
-// Watch dog, get out
-import { watchDog } from "./Modules/Misc/Crasher"
-watchDog()
+// Setup the method
+import "./lib/property"
 
-//Load the language
-import "./Assets/Language"
+// Subscribe events
+world.beforeEvents.chatSend.subscribe(commandListener)
+world.afterEvents.worldInitialize.subscribe(languageLanucher)
+world.afterEvents.worldInitialize.subscribe(moduleLanucher)
+world.afterEvents.playerSpawn.subscribe(banLanucher)
+world.afterEvents.worldInitialize.subscribe(ruleHandler)
 
-//load the public subscibe util
-import "./Assets/Public"
-
-//load the functions
-import "./Functions/chatModel/ChatHandler"
-import "./Functions/moderateModel/banHandler"
-import "./Functions/moderateModel/freezeHandler"
-import "./Functions/moderateModel/eventHandler"
-import "./Functions/moderateModel/dimensionLock"
-import "./Functions/moderateModel/lockDown"
-
-//start all modules
-import { moduleStart } from "./Modules/Modules"
-moduleStart()
-
-import { world, system } from "@minecraft/server"
-import { c } from "./Assets/Util"
-
-if (c().createScoreboard) {
-    system.runTimeout(() => {
-        try {
-            world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048)
-        } catch { }
-    }, 10)
-}
+// Subscribe the command to handler
+import "./cc/commands/about"
+import "./cc/commands/borderSize"
+import "./cc/commands/defaultrank"
+import "./cc/commands/help"
+import "./cc/commands/passwords"
+import "./cc/commands/showallrank"
+import "./cc/commands/toggle"
+import "./cc/commands/toggles"
