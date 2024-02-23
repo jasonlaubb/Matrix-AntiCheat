@@ -2,7 +2,8 @@ import { world } from "@minecraft/server"
 import { chatSendBeforeEvent as commandListener } from "./cc/handler"
 import { worldInitializeAfterEvent as languageLanucher } from "./lib/language"
 import { worldInitializeAfterEvent as moduleLanucher } from "./modules/handler"
-import { playerSpawnAfterEvent } from "./modules/model/ban"
+import { playerSpawnAfterEvent as banLanucher } from "./modules/model/ban"
+import { worldInitializeAfterEvent as ruleHandler } from "./lib/rule_handler"
 
 // Setup the method
 import "./lib/property"
@@ -11,7 +12,9 @@ import "./lib/property"
 world.beforeEvents.chatSend.subscribe(commandListener)
 world.afterEvents.worldInitialize.subscribe(languageLanucher)
 world.afterEvents.worldInitialize.subscribe(moduleLanucher)
-world.afterEvents.playerSpawn.subscribe(playerSpawnAfterEvent)
+world.afterEvents.playerSpawn.subscribe(banLanucher)
+world.afterEvents.worldInitialize.subscribe(ruleHandler)
+
 
 // Subscribe the command to handler
 import "./cc/commands/about"

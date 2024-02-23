@@ -1,3 +1,8 @@
+/**
+ * @author jasonlaubb
+ * @description Saved interface of typescript
+ * @warning There might be nothing when it's javascript.
+ */
 import { Player, Vector3 } from "@minecraft/server";
 import { CommandBuilder } from "../cc/handler"
 
@@ -12,9 +17,8 @@ export interface ModuleAction {
 }
 export interface ModuleOption {
     enabled: boolean;
-    punishment: "none" | "kick" | "ban";
+    types: string[]
     action: ModuleAction;
-    maxVL: number;
 };
 export interface CommandBuildOption {
     name?: string;
@@ -79,4 +83,14 @@ export interface FlyMapData {
     velocityLog: number;
     lastLog: number;
     safePosition: Vector3;
+}
+export const TypeToType = {
+    "A": 0,
+    "B": 1,
+    "C": 2,
+    "D": 3,
+    "E": 4,
+    "F": 5,
+    "G": 6,
+    "H": 7
 }

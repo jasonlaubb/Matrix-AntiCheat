@@ -1,13 +1,15 @@
-import { FlagComponent, Module, BasicCallBack, Subject, Handler } from "../data/interface";
+import { FlagComponent, Module, BasicCallBack, Subject, Handler, TypeToType, Punishment } from "../data/interface";
 import { lang } from "./language";
 import { Player, Vector3, system, world } from "@minecraft/server";
-import config from "../data/config";
 import { MinecraftEffectTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+import { getRule } from "./rule_handler";
+import config from "../data/config";
+import { ban } from "../modules/model/ban";
 
 const flagData = new Map<string, { [key: string]: number }>()
 
 class Util {
-    static flag (id: string, type: "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H", maxDelay: number, minDelay: number, { flagTarget: player, description, moduleOption: { punishment, maxVL, action } }: FlagComponent, extended?: Vector3) {
+    static flag (id: string, type: "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H", maxDelay: number, minDelay: number, { flagTarget: player, description, moduleOption: { types, action } }: FlagComponent, extended?: Vector3) {
         let playerFlag = flagData.get(player.id) ?? {}
         const lastFlag = playerFlag["*" + id + type]
         const now = Date.now()
@@ -16,15 +18,16 @@ class Util {
             flagData.set(player.id, playerFlag)
             return
         }
+        const ruleNow = getRule()
         const shown = description ? description.map(data => {
             const [key, value] = Object.entries(data)
             return `\n§r§c» §7${key}:§9 ${value}§r`
         }).join("") : ""
         playerFlag[id] ??= 0
         playerFlag[id] += 1
-        let flagMessage = `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${id}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${playerFlag}§7]§r` + shown
+        let flagMessage = `${player.name}§g ` + lang(".Util.has_failed") + ` §4${id}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${playerFlag}§7]§r` + shown
         console.log("[Matrix::flag] " + player.name + " -> " + id + ` (${type}) x${playerFlag[id]}`)
-        const flagMode = world.getDynamicProperty("flagMode") ?? config.antiCheatOptions.flagMode
+        const flag_setting = ruleNow.alert.actionFlag
         switch (action.type) {
             case 0: {
                 if (player.hasTag("matrix:pvp-disabled")) break
@@ -51,54 +54,42 @@ class Util {
                 break
             }
             default: {
-                throw new Error("[Util::Flag] Invalid case of punishment: " + action.type)
+                throw new Error("[Util::Flag] Invalid case of action: " + action.type)
             }
         }
-        if (punishment && playerFlag[id] > maxVL) {
+        const punishment = (ruleNow.action as { [key: string]: Punishment })[types[TypeToType[type]]]
+        const maxVL = (ruleNow.maxVL as { [key: string]: number })[types[TypeToType[type]]]
+        const players = world.getAllPlayers()
+        if (punishment && playerFlag[id] > (maxVL ?? 32767)) {
+            let doneMessage: string
             let punishmentDone = false
             switch (punishment) {
                 case "kick": {
                     punishmentDone = true
                     this.kick (player, lang(".Util.unfair").replace("%a", `${id} ${type}`), lang(".Util.by"))
-                    flagMessage += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name)
+                    doneMessage = lang(".Util.formkick", player.name)
                     break
                 }
                 case "ban": {
                     punishmentDone = true
-                    //this.ban (player, lang(".Util.unfair").replace("%a", `${id} ${type}`), lang(".Util.by"), config.punishment.ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment.ban.minutes * 60000))
-                    flagMessage += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
+                    this.ban (player, lang(".Util.unfair", `${id} ${type}`), lang(".Util.by"), config.punishment.ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment.ban.minutes * 60000))
+                    doneMessage = lang(".Util.formban", player.name)
                     break
                 }
+                case "none": {
+                    // No action will be needed
+                    break
+                }
+                default:
+                    throw new Error("[Util::Flag] Unexpected punishment type: " + punishment)
             }
             if (punishmentDone) {
                 playerFlag[id] = 0
+                const flag2_setting = ruleNow.alert.actionDone
+                if (flag2_setting.state) players.filter(flag2_setting.requires).forEach((client) => client.warn(doneMessage))
             }
         }
-        switch (flagMode) {
-            case "tag": {
-                const targets = world.getPlayers({ tags: ["matrix:notify"]})
-                targets.forEach(players => players.sendMessage(flagMessage))
-                break
-            }
-            case "bypass": {
-                const targets = world.getPlayers({ excludeNames: [player.name] })
-                targets.forEach(players => players.sendMessage(flagMessage))
-                break
-            }
-            case "admin": {
-                const allPlayers = world.getAllPlayers()
-                const targets = allPlayers.filter(players => this.isAdmin(players))
-                targets.forEach(players => players.sendMessage(flagMessage))
-                break
-            }
-            case "none": {
-                break
-            }
-            default: {
-                world.sendMessage(flagMessage)
-                break
-            }
-        }
+        if (flag_setting.state) players.filter(flag_setting.requires).forEach((client) => client.warn(flagMessage))
     
         flagData.set(player.id, playerFlag)
     }
@@ -124,6 +115,7 @@ class Util {
 
         return true
     }
+    static readonly ban = ban
 }
 
 export default Util

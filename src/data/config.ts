@@ -23,7 +23,8 @@ export default {
         configVersion: 1, // Version of config, useless
         language: "en_US", // default language
         createScoreboard: true, // create betaAPI scoreboard on boot
-        followRule: sentinel // default rule should anticheat follow
+        followRule: sentinel, // default rule should anticheat follow
+        betaAPITracker: true, // optional, state if anticheat will create a scoreboard with script.
     },
     commandOptions: {
         password: "password", // The password for op command
@@ -63,11 +64,13 @@ export default {
         defaultRank: "§pMember",
         showAllRank: true,
         action: { type: false, duration: null },
+        types: [],
 
     },
     dimensionLock: {
         enabled: false,
         action: { type: false, duration: null },
+        types: [],
     },
 
     //action 0: banPVP, 1: banBlock, 2: teleport, 3: damage
@@ -171,11 +174,13 @@ export default {
             "minecraft:dragon_egg"
         ],
         action: { type: 1, duration: 40 },
+        types: [],
     },
 
     antiSpam: {
         enabled: true,
         action: { type: false, duration: null },
+        types: [],
         maxMessagesPerSecond: 3,
         timer: 500,
         maxCharacterLimit: 200,
@@ -283,14 +288,13 @@ export default {
             "ancient_debris"
         ],
         action: { type: false, duration: null },
-
+        types: [],
     },
 
     antiDisabler: {
         enabled: true, // THIS SHOULD BE ENABLED
         types: ["absloute"],
         action: { type: 2, duration: null },
-
     },
     /*
     antiIllegalItem: {
@@ -564,6 +568,7 @@ export default {
         checkEvery: 2, // tick
         radius: 250000, // default radius
         stopAdmin: false,
+        types: [],
         centerX: undefined,
         centerZ: undefined
     }
