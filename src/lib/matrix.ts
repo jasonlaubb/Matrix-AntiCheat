@@ -1,4 +1,4 @@
-import { FlagComponent, Module, BasicCallBack, Subject, Handler, TypeToType, Punishment } from "../data/interface";
+import { FlagComponent, Module, BasicCallBack, Subject, Handler, Punishment } from "../data/interface";
 import { lang } from "./language";
 import { Player, Vector3, system, world } from "@minecraft/server";
 import { MinecraftEffectTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
@@ -9,7 +9,7 @@ import { ban } from "../modules/model/ban";
 const flagData = new Map<string, { [key: string]: number }>()
 
 class Util {
-    static flag (id: string, type: "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H", maxDelay: number, minDelay: number, { flagTarget: player, description, moduleOption: { types, action } }: FlagComponent, extended?: Vector3) {
+    static flag (id: string, type: number, method: string, maxDelay: number, minDelay: number, { flagTarget: player, description, moduleOption: { group, action } }: FlagComponent, case_: string, extended?: Vector3) {
         let playerFlag = flagData.get(player.id) ?? {}
         const lastFlag = playerFlag["*" + id + type]
         const now = Date.now()
@@ -25,8 +25,8 @@ class Util {
         }).join("") : ""
         playerFlag[id] ??= 0
         playerFlag[id] += 1
-        let flagMessage = `${player.name}§g ` + lang(".Util.has_failed") + ` §4${id}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${playerFlag}§7]§r` + shown
-        console.log("[Matrix::flag] " + player.name + " -> " + id + ` (${type}) x${playerFlag[id]}`)
+        let flagMessage = `${player.name}§g ` + lang(".Util.has_failed") + ` §4${id}§r ${method ? `(${method})` : "(common)"} §7 §7[§dx${playerFlag}§7]§r` + shown
+        console.log("[Matrix::Flag] Detected: <" + player.name + "> <case " + case_ + type + ">")
         const flag_setting = ruleNow.alert.actionFlag
         switch (action.type) {
             case 0: {
@@ -57,8 +57,9 @@ class Util {
                 throw new Error("[Util::Flag] Invalid case of action: " + action.type)
             }
         }
-        const punishment = (ruleNow.action as { [key: string]: Punishment })[types[TypeToType[type]]]
-        const maxVL = (ruleNow.maxVL as { [key: string]: number })[types[TypeToType[type]]]
+        if (!["stable", "unstable", "light"].includes(group)) throw new Error("[Util::Flag] Invalid group: " + id + " >> " + group)
+        const punishment = (ruleNow.action as { [key: string]: Punishment })[group]
+        const maxVL = (ruleNow.maxVL as { [key: string]: number })[group]
         const players = world.getAllPlayers()
         if (punishment && playerFlag[id] > (maxVL ?? 32767)) {
             let doneMessage: string
@@ -66,13 +67,13 @@ class Util {
             switch (punishment) {
                 case "kick": {
                     punishmentDone = true
-                    this.kick (player, lang(".Util.unfair").replace("%a", `${id} ${type}`), lang(".Util.by"))
+                    this.kick (player, "Unfair advantage (case " + case_ + type + ")", lang(".Util.by"))
                     doneMessage = lang(".Util.formkick", player.name)
                     break
                 }
                 case "ban": {
                     punishmentDone = true
-                    this.ban (player, lang(".Util.unfair", `${id} ${type}`), lang(".Util.by"), config.punishment.ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment.ban.minutes * 60000))
+                    this.ban (player, "Unfair advantage (case " + case_ + type + ")", lang(".Util.by"), config.punishment.ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment.ban.minutes * 60000))
                     doneMessage = lang(".Util.formban", player.name)
                     break
                 }

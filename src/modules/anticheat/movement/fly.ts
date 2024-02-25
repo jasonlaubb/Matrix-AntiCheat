@@ -13,14 +13,14 @@ const subscribeForm: BuildForm = [
 export default new AntiCheatModule ("Fly", subscribeForm)
 
 const flyMapData = new Map<string, FlyMapData>()
-
+const maxVelocityLog = Math.trunc(100 / config.modules.fly.RUMF.sensitivity)
 function tickEvent () {
     const players = world.getPlayers({ excludeGameModes: [GameMode.spectator] })
     for (const player of players) {
         const skipCondition = matrix.isAdmin(player) || player.isFlying || player.isGliding || matrix.skipIf(player, 5500, 5000) || matrix.effectSkipIf(player, 2, 2)
         const data: FlyMapData = flyMapData.get(player.id) ?? { velocityLog: 0, lastLog: 0, safePosition: player.location }
         const { y: floatUp } = player.getVelocity()
-        if (floatUp > config.modules.antiFly.maxVelocity && !skipCondition) {
+        if (floatUp > config.modules.fly.RUMF.maxVelocity && !skipCondition) {
             data.velocityLog += 1;
         } else if (floatUp > 0 || floatUp == 0 && player.isOnGround || skipCondition)
             data.velocityLog = 0
@@ -29,15 +29,15 @@ function tickEvent () {
             flyMapData.set(player.id, data)
             continue
         }
-        const flagConditionA = data.velocityLog > 0 && data.velocityLog == data.lastLog
-        const flagConditionB = config.modules.antiFly.maxVelocity && player.fallDistance < -1.5
+        const flagConditionA = data.velocityLog > maxVelocityLog && data.velocityLog == data.lastLog
+        const flagConditionB = config.modules.fly.RUMF.maxVelocity < config.modules.fly.RUMF.maxVelocity && player.fallDistance < config.modules.fly.RUMF.minFallDistance
         if (flagConditionA || flagConditionB) {
             const flagInfo: FlagComponent = {
                 flagTarget: player,
                 description: [[lang(">velocityY"), floatUp]],
-                moduleOption: config.modules.antiFly as ModuleOption
+                moduleOption: config.modules.fly.RUMF as ModuleOption
             }
-            matrix.flag("Fly", "A", 5000, 500, flagInfo, data.safePosition)
+            matrix.flag("Fly", 0, "RUMF", 5000, 500, flagInfo, "102", data.safePosition)
         }
         flyMapData.set(player.id, data)
     }

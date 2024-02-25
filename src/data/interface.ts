@@ -11,13 +11,16 @@ export interface Module {
     off: () => void;
     runId?: number;
 };
+export interface ModuleStateObject {
+    enabled: boolean;
+    id?: string;
+}
 export interface ModuleAction {
     type: 0 | 1 | 2 | 3 | false;
     duration: null | number;
 }
 export interface ModuleOption {
-    enabled: boolean;
-    types: string[]
+    group: string
     action: ModuleAction;
 };
 export interface CommandBuildOption {
