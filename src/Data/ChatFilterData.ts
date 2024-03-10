@@ -974,6 +974,11 @@ export default [
     "batard",
     "bite",
     "racistes",
+    "ta gueule",
+    "tg",
+    "ftg",
+    "fdp"
+    "fils de pute",
     //link
     "https",
     "discord.gg",
