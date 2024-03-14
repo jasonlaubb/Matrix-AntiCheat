@@ -977,7 +977,7 @@ export default [
     "ta gueule",
     "tg",
     "ftg",
-    "fdp"
+    "fdp",
     "fils de pute",
     //link
     "https",

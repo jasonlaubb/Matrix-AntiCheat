@@ -1,4 +1,4 @@
-import { world, GameMode, Player, system } from "@minecraft/server";
+import { world, system, PlayerGameModeChangeBeforeEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
@@ -7,52 +7,31 @@ import lang from "../../Data/Languages/lang";
  * stop player from using the illegal gamemode without permisson
  */
 
-async function AntiGameMode (player: Player) {
+async function AntiGameMode (event: PlayerGameModeChangeBeforeEvent) {
     const config = c()
-    const gamemode = Gamemode(player.name);
+    if (isAdmin(event.player)) return
 
-    if (config.antiGameMode.bannedGameMode.includes(gamemode)) {
-        if (config.antiGameMode.returnDefault) {
-            player.runCommand(`gamemode default @s`)
-        } else {
-            player.runCommand(`gamemode ${config.antiGameMode.returnGameMode} @s`)
-        }
+    if (config.antiGameMode.bannedGameMode.includes(gamemodes[String(event.toGameMode)])) {
+        event.cancel = true;
         //A - false positive: never, efficiency: very high
-        flag (player, "GameMode", "A", config.antiGameMode.maxVL, config.antiGameMode.punishment, [lang(">GameMode") + ":" + String(gamemodes[gamemode])])
+        system.run(() => {
+            flag (event.player, "GameMode", "A", config.antiGameMode.maxVL, config.antiGameMode.punishment, [lang(">GameMode") + ":" + String(event.toGameMode)])
+        })
     }
 }
 
-const gamemodes = [
-    GameMode.survival,
-    GameMode.creative,
-    GameMode.adventure,
-    GameMode.spectator
-]
-
-function Gamemode (playerName: string) {
-    for (let i = 0; i < 4; i++) {
-        if (world.getPlayers({ gameMode: gamemodes[i], name: playerName }).length > 0) return i
-    }
-
-    return 0
+const gamemodes: { [key: string]: number } = {
+    "survival": 0,
+    "creative": 1,
+    "adventure": 2,
+    "spectator": 3,
 }
-
-const antiGameMode = () => {
-    const players = world.getAllPlayers();
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-
-        AntiGameMode(player)
-    }
-}
-
-let id: number
 
 export default {
     enable () {
-        id = system.runInterval(antiGameMode) 
+        world.beforeEvents.playerGameModeChange.subscribe(AntiGameMode) 
     },
     disable () {
-        system.clearRun(id)
+        world.beforeEvents.playerGameModeChange.unsubscribe(AntiGameMode) 
     }
 }
