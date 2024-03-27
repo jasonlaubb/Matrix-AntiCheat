@@ -72,7 +72,7 @@ function antiSpeed (player: Player, now: number) {
     }
     const timerLogCondition = xz != 0 && locDiff != 0 && locDiff > xz
     if (timerLogCondition && predictionDiff > 0.2) data.timerLog++
-    if (data.timerLog == data.lastTimerLog && data.timerLog >= 1 && predictionDiff > 0.2)
+    if (data.timerLog == data.lastTimerLog && now - data.lastflag < 300 && data.timerLog >= 1 && predictionDiff > 0.2)
         data.timerLog2++
     else data.timerLog2 = 0
     if (data.timerLog2 >= 5 || data.timerLog >= 5 && now - data.lastflag < 60 && getPing(player) < 5 && predictionDiff > 0.1) {
