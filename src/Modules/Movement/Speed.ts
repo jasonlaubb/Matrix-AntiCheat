@@ -120,9 +120,8 @@ function antiSpeed (player: Player, now: number) {
             logDiff > 5000 && xz - data.lastXZlogged < data.speedMaxV ||
             logDiff < 500  && xzDiff > data.speedMaxV ||
             player.threwTridentAt && now - player.threwTridentAt < 2100 ||
-            hurtDuration < 250 ||
-            data.lastVelocity < data.speedMaxV ||
-            logDiff < 150
+            hurtDuration < 250 &&
+            data.lastVelocity < data.speedMaxV
             ) data.speedLog = 0
         if (xzDiff > data.speedMaxV && !(Number(data.lastXZlogged.toFixed(2)) > 0 && Number(data.lastXZlogged.toFixed(2)) < 0.05)) {
             data.speedLog++
