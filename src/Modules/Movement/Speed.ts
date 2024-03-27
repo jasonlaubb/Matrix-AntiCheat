@@ -97,10 +97,11 @@ function antiSpeed (player: Player, now: number) {
         const attackDuration = data?.lastAttack ? now - data.lastAttack : null
         const hurtDuration = data?.lastHurt ? now - data.lastHurt : null
         if (attackDuration && hurtDuration) {
-            if (hurtDuration <= 250) data.speedMaxV = 12
-            if (attackDuration <= 1000) {
-                data.speedMaxV = 3
-            } else if (hurtDuration > 250) {
+            if(player.hasTag("matrix:using_item")) data.speedMaxV = 0.7
+            if(attackDuration <= 1000) data.speedMaxV = 3 
+            if (hurtDuration <= 250) {
+                data.speedMaxV = 12
+            } else if (attackDuration > 1000 && !player.hasTag("matrix:using_item")) {
                 data.speedMaxV = 0.5
             }
         }
