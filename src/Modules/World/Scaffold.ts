@@ -35,7 +35,7 @@ async function AntiScaffold (player: Player, block: Block, now: number, Tps: num
     const pos2: Vector3 = { x: block.location.x - 0.5, z: block.location.z - 0.5 } as Vector3;
     const angle: number = calculateAngle(pos1, pos2, rotation.y);
 
-    if (player.hasTag("matrix:place-disabled")) return;
+    if (player.hasTag("matrix:place-disabled") || isAdmin(player)) return;
 
     let detected: boolean = false;
 
