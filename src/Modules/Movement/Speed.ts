@@ -1,192 +1,170 @@
 import {
     world,
     system,
-    Vector3,
     GameMode,
     Player,
+    Vector3,
     PlayerLeaveAfterEvent
 } from "@minecraft/server";
-import { flag, isAdmin, getSpeedIncrease1, getSpeedIncrease2, c, getPing } from "../../Assets/Util.js";
-import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import {
+    flag,
+    isAdmin,
+    c,
+    getPing
+} from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
-import { tps } from "../../Assets/Public.js";
-
-const speedData = new Map<string, PlayerInfo>();
-const lastflag = new Map<string, number>();
-const lastflag2 = new Map<string, number>();
 
 /**
- * @author ravriv & jasonlaubb
- * @description A advanced checks for Speed, the player is calculated based on their velocity in the x and z directions
- * This is converted from velocity to miles per hour (also velocity directly
-*/
+ * @author RamiGamerDev
+ * @description Code improved by jasonlaubb
+ * An integrated check for horizontal movement
+ */
 
-async function AntiSpeedA (player: Player, now: number) {
-    const { id } = player;
-
-    if (player.threwTridentAt && now - player.threwTridentAt < 2000 || player.lastExplosionTime && now - player.lastExplosionTime < 2000) {
-        return;
+interface SpeedData {
+    locationData: {
+        location: Vector3
+        recordTime: number
     }
-
-    const config = c ()
-
-    const { x, z } = player.getVelocity();
-
-    //calulate the Mph from velocity X and Z
-    const playerSpeedMph: number = Math.hypot(x, z) * 72000 / 1609.34;
-
-    //get the info from map
-    const playerInfo: PlayerInfo = speedData.get(id);
-
-    //state increase the limit from the speed effect
-    const limitIncrease: number = getSpeedIncrease1 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.25;
-
-    //calculate the threshold by adding the limit increase
-    const mphThreshold: number = config.antiSpeed.mphThreshold + limitIncrease;
-
-    //check if the player is speeding or not
-    const isSpeeding: boolean = playerSpeedMph > mphThreshold && speedData.has(id);
-
-    //check if the player is not speeding or is speeding
-    const isNotSpeeding: boolean = playerSpeedMph <= mphThreshold && speedData.has(id);
-
-    //if the player is not moving, set the initial location
-    if (playerSpeedMph === 0) {
-        speedData.set(id, { initialLocation: player.location });
-    } else if (isSpeeding) {
-
-        //if the player hasn't already been flagged, flag them
-        if (!playerInfo.highestSpeed) {
-            //teleport them back
-            system.runTimeout(() => {
-                if (player.isGliding || player.threwTridentAt && now - player.threwTridentAt < 80 || player.lastExplosionTime && now - player.lastExplosionTime < 80) return;
-                if (!config.slient) player.teleport(playerInfo.initialLocation, { dimension: player.dimension, rotation: { x: -180, y: 0 } });
-                //A - false positive: low, efficiency: very high
-                const lastFlag = lastflag.get(player.id)
-                if (lastFlag && now - lastFlag < 2450 && now - lastFlag > 550)
-                    flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">Mph")}:${playerSpeedMph.toFixed(2)}`]);
-                lastflag.set(player.id, now)
-                playerInfo.highestSpeed = playerSpeedMph;
-            }, 1)
-        }
-    } else if (isNotSpeeding) {
-        playerInfo.highestSpeed = 0;
-    }
+    timerLog: number
+    timerLog2: number
+    safeZone: Vector3
+    lastTimerLog: number
+    lastflag: number
+    lastflag2: number
+    speedMaxV: number
+    lastHurt: number
+    lastAttack: number
+    speedLog: number
+    lastSpeedLog: number
+    lastXZlogged: number
+    posBackup: Vector3
+    lastVelocity: number
+    previousXZ: number
 }
 
+// The data storage
+const speedData = new Map<string, SpeedData>()
 
-const locationData = new Map<string, LocationData>()
-
-async function AntiSpeedB (player: Player, now: number, Tps: number) {
-    const data = locationData.get(player.id)
-    locationData.set(player.id, { location: player.location, recordTime: Date.now() })
-    if (data === undefined) return;
-
-    if (Tps < 12 || (player.threwTridentAt && now - player.threwTridentAt < 5000) || (player.lastExplosionTime && now - player.lastExplosionTime < 5000) || player.isFlying || player.isInWater || player.isGliding || player.hasTag("matrix:riding") || player.isSleeping) {
-        return;
+function antiSpeed (player: Player, now: number) {
+    let data = speedData.get(player.id)
+    if (!data?.locationData) {
+        data.locationData = {
+            location: player.location,
+            recordTime: now
+        }
+        speedData.set(player.id, {} as any)
+        return
     }
-
     const config = c()
-
-    const { x: x1, z: z1 } = player.location
-    const { x: x2, z: z2 } = data.location
-
-    if (player.lastTeleportTime && now - player.lastTeleportTime < 600) return;
-    if (player.lastSpeedSkipCheck && now - player.lastSpeedSkipCheck < 3000) return;
-    
-    //calulate the player block per second
-    const bps = Math.hypot(x1 - x2, z1 - z2) / (now - data.recordTime) * 1000
-
-    if (getPing(player) < 4 && bps > config.antiSpeed.bpsThershold + getSpeedIncrease2 (player.getEffect(MinecraftEffectTypes.Speed)) * 1.5 && bps < 120) {
-        const lastFlag = lastflag2.get(player.id)
-        player.teleport(data.location)
-        if (lastFlag && now - lastFlag < 1200) {
-            flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [`${lang(">BlockPerSecond")}:${bps.toFixed(2)}`])
+    const { x: x1, z: z1 } = player.location;
+    const { x: x2, z: z2 } = data.locationData.location;
+    const { x, z } = player.getVelocity();
+    const xz = Math.hypot(x, z)
+    const locDiff = Math.hypot(x1 - x2, z1 - z2)
+    const predictionDiff = Math.abs(xz - locDiff)
+    if (data?.timerLog == undefined || Number.isNaN(data?.timerLog)) {
+        data.timerLog = 0
+        data.timerLog2 = 0
+        data.safeZone = player.location
+        data.lastTimerLog = 0
+        data.lastflag = now
+        data.lastflag2 = now
+    }
+    const timerLogCondition = locDiff != 0 && locDiff > xz
+    if (timerLogCondition && predictionDiff > 0.2) data.timerLog++
+    if (data.timerLog == data.lastTimerLog && data.timerLog >= 1 && predictionDiff > 0.2)
+        data.timerLog2++
+    else data.timerLog2 = 0
+    if (data.timerLog2 >= 5 || data.timerLog >= 5 && now - data.lastflag < 60 && getPing(player) < 5 && predictionDiff > 0.1) {
+        if (now - data.lastflag2 < 1000) {
+            flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" + predictionDiff.toFixed(2)])
         }
-        lastflag2.set(player.id, now)
+        data.lastflag2 = now
+        player.teleport(data.safeZone)
+        data.timerLog = 0
+        data.timerLog2 = 0
+    }
+    if (xz == predictionDiff && data.timerLog != 0) {
+        data.timerLog = 0
+        data.safeZone = player.location
+        data.lastTimerLog = data.timerLog
+    }
+    if (timerLogCondition && predictionDiff > 0.1) data.lastflag = now
+
+    if (player.isGliding || player.isFlying || player.isSleeping) player.lastSpeedSkipCheck = now
+    if (!(player.isFlying || player.isGliding || player.threwTridentAt && now - player.threwTridentAt < 2000)) {
+        if (data?.lastHurt && now - data.lastHurt) data.speedMaxV = 12
+        const attackDuration = data?.lastAttack ? now - data.lastAttack : null
+        const hurtDuration = data?.lastHurt ? now - data.lastHurt : null
+        if (attackDuration && hurtDuration) {
+            if (hurtDuration <= 250) data.speedMaxV = 12
+            if (attackDuration <= 1000) {
+                data.speedMaxV = 3
+            } else if (hurtDuration > 250) {
+                data.speedMaxV = 0.5
+            }
+        }
+        if (!data?.speedLog || !data.lastSpeedLog) {
+            data.speedLog = 0
+            data.lastXZlogged = xz
+            data.posBackup = player.location
+            data.lastSpeedLog = now
+            data.lastAttack = now
+            data.lastHurt = now
+        }
+        if (xz - data.lastXZlogged < data.speedMaxV && now - data.lastSpeedLog > 900 && data.lastXZlogged - xz < data.speedMaxV) data.posBackup = player.location
+        const logDiff = now - data.lastSpeedLog
+        const xzDiff = xz - player.lastXZLogged
+        if (
+            logDiff > 5000 && xz - data.lastXZlogged < data.speedMaxV ||
+            logDiff < 500  && xzDiff > data.speedMaxV ||
+            player.threwTridentAt && now - player.threwTridentAt < 2100 ||
+            hurtDuration < 250 ||
+            data.lastVelocity < data.speedMaxV ||
+            logDiff < 150
+            ) data.speedLog = 0
+        if (xzDiff > data.speedMaxV && !(Number(data.lastXZlogged.toFixed(2)) > 0 && Number(data.lastXZlogged.toFixed(2)) < 0.05)) {
+            data.speedLog++
+            player.lastSpeedSkipCheck = now
+            data.lastSpeedLog = now
+            data.previousXZ = data.lastXZlogged
+        }
+        if (data.lastXZlogged - xz > data.speedMaxV && data.speedLog >= 1) player.teleport(data.safeZone);
+        if ((data.speedLog >= 3 || data.speedLog >= 1  && xzDiff > data.speedMaxV +4.5) && data.lastVelocity - xzDiff < 0.2 && Math.abs(data.lastXZlogged - data.previousXZ) < 0.05 && getPing(player) < 5) {
+            flag(player, 'Speed', 'B', config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" +(xz - data.lastXZlogged).toFixed(2)]);
+            player.teleport(data.safeZone)
+            data.speedLog = 0
+        }
+        if (xzDiff > data.speedMaxV) data.lastVelocity = xzDiff
+        data.lastXZlogged = xz
+
+        speedData.set(player.id, data)
     }
 }
 
-async function AntiSpeedC () {
-    const players = world.getAllPlayers()
+function systemEvent () {
+    const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator]})
     const now = Date.now()
     for (const player of players) {
-        const { x, z } = player.getVelocity()
-        const xz = Math.hypot(x, z)
-        // collect the data
-        if (xz == 0) {
-            player.lastTeleportTime = now
-        }
-        if (player.isFlying || player.isGliding || player.isSleeping) {
-            player.lastSpeedSkipCheck = now
-        }
-
-        const safePos = speedData.get(player.id)?.initialLocation
-        if (safePos === undefined) continue
-
-        if (isAdmin(player) || player.isFlying || player.isGliding) continue
-        const config = c()
-
-        if (player?.lastXZLogged && xz == 0 && player.lastXZLogged > config.antiSpeed.clipThershold && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !(player.threwTridentAt && now - player.threwTridentAt < 1000)) {
-            player.teleport(safePos)
-            flag(player, 'Speed', 'C', config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" + player.lastXZLogged.toFixed(2)])
-        }
-        player.lastXZLogged = xz
+        if (isAdmin(player)) continue
+        antiSpeed (player, now)
     }
 }
 
-interface PlayerInfo {
-    highestSpeed?: number;
-    initialLocation: Vector3;
+function playerLeaveAfterEvent ({ playerId }: PlayerLeaveAfterEvent) {
+    speedData.delete(playerId)
 }
 
-interface LocationData {
-    location: Vector3;
-    recordTime: number;
-}
+let id: number
 
-const antiSpeedA = () => {
-    const now: number = Date.now();
-
-    const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-        AntiSpeedA (player, now);
-    }
-}
-const antiSpeedB = () => {
-    const now: number = Date.now();
-    const Tps = tps.getTps()
-    const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] })
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-        AntiSpeedB (player, now, Tps);
-    }
-}
-
-const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
-    speedData.delete(playerId);
-    locationData.delete(playerId);
-    lastflag.delete(playerId);
-});
-
-let id: { [key: string]: number }
 export default {
     enable () {
-        id = {
-            a: system.runInterval(antiSpeedA, 2),
-            b: system.runInterval(antiSpeedB, 10),
-            c: system.runInterval(AntiSpeedC, 1)
-        }
-        world.afterEvents.playerLeave.subscribe(playerLeave)
+        id = system.runInterval(systemEvent)
+        world.afterEvents.playerLeave.subscribe(playerLeaveAfterEvent)
     },
     disable () {
         speedData.clear()
-        locationData.clear()
-        lastflag.clear()
-        system.clearRun(id.a)
-        system.clearRun(id.b)
-        system.clearRun(id.c)
-        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+        system.clearRun(id)
+        world.afterEvents.playerLeave.unsubscribe(playerLeaveAfterEvent)
     }
 }
