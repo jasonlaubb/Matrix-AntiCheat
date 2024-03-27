@@ -8,6 +8,7 @@ import vi_VN from "../Data/Languages/vi_VN";
 import ro from "../Data/Languages/ro";
 import it_IT from "../Data/Languages/it_IT";
 import fr from "../Data/Languages/fr";
+import ko_KR from "../Data/Languages/ko_KR";
 // declare the dynamic language
 
 let languageNow: string
@@ -24,6 +25,7 @@ export const langs: { [key: string]: { [key: string]: LangType | string } } = {
     "ro": ro,
     "it_IT": it_IT,
     "fr": fr,
+    "ko_KR": ko_KR
 }
 
 // when world initialized, update the language
