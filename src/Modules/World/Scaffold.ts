@@ -2,131 +2,140 @@ import {
     world,
     system,
     Vector,
-    Vector3,
-    Vector2,
-    Player,
-    Block,
     PlayerPlaceBlockAfterEvent,
-    PlayerLeaveAfterEvent
-} from "@minecraft/server";
+    PlayerLeaveAfterEvent,
+    Vector3 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
-import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index"
+import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
-import { tps } from "../../Assets/Public";
 
 /**
- * @author jasonlaubb
- * @description A simple checks for scaffold, it can detect the main clients now
- * This checks check the invalid rotation, angle and postion
+ * @author jasonlaubb & RaMiGamerDev
+ * @description A integrated check for many type of scaffold
  */
-interface BlockLog {
-    time: number;
-    id: string;
+interface ScaffoldData {
+    lastX: number
+    lastDiagX: number
+    lastZ: number
+    lastDiagZ: number
+    scaffoldFlags: number
+    lastPlace: number
+    blockLog: {
+        time: number
+        id: string
+    }[]
+    blockPlace: number[]
 }
-
-let blockPlace: { [key: string]: number[] } = {}
-let blockLog: { [key: string]: BlockLog[] } = {}
-
-async function AntiScaffold (player: Player, block: Block, now: number, Tps: number) {
-    const config = c ()
-    //constant the infomation
-    const rotation: Vector2 = player.getRotation();
-    const pos1: Vector3 = player.location;
-    const pos2: Vector3 = { x: block.location.x - 0.5, z: block.location.z - 0.5 } as Vector3;
-    const angle: number = calculateAngle(pos1, pos2, rotation.y);
-
-    if (player.hasTag("matrix:place-disabled") || isAdmin(player)) return;
-
-    let detected: boolean = false;
-
+const scaffoldData = new Map<string, ScaffoldData>()
+function playerPlaceBlockAfterEvent ({ player, block }: PlayerPlaceBlockAfterEvent) {
+    if (isAdmin(player) || player.hasTag("matrix:place-disabled")) return
+    const config = c()
+    let data = scaffoldData.get(player.id)
+    const { x, y, z } = block.location
+    if (!data) {
+        data = {
+            lastX: x,
+            lastDiagX: 0,
+            lastZ: z,
+            lastDiagZ: 0,
+            scaffoldFlags: 0,
+            lastPlace: Date.now(),
+            blockLog: [],
+            blockPlace: []
+        }
+        scaffoldData.set(player.id, data)
+        return
+    }
+    const rotation = player.getRotation();
+    const pos1 = player.location;
+    const pos2 = { x: block.location.x - 0.5, y: 0, z: block.location.z - 0.5 };
+    const angle = calculateAngle(pos1, pos2, rotation.y);
+    let detected
     //get the factor from the config
-    const factor: number = config.antiScaffold.factor;
-
+    const factor = config.antiScaffold.factor;
     //check if rotation is a number that can be divided by the factor
     if ((rotation.x % factor === 0 || rotation.y % factor === 0) && Math.abs(rotation.x) !== 90) {
-        detected = true
-        flag (player, 'Scaffold', 'A', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`, `${lang(">RotationY")}:${rotation.y.toFixed(2)}°`])
+        detected = true;
+        flag(player, 'Scaffold', 'A', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`, `${lang(">RotationY")}:${rotation.y.toFixed(2)}°`]);
     }
-
     //check if the angle is higher than the max angle
-    if (Tps > 12 && angle > config.antiScaffold.maxAngle && Vector.distance({ x: pos1.x, y: 0, z: pos1.z }, { x: pos2.x, y: 0, z: pos2.z }) > 1.75 && Math.abs(rotation.x) < 69.5) {
+    if (angle > config.antiScaffold.maxAngle && Vector.distance({ x: pos1.x, y: 0, z: pos1.z }, { x: pos2.x, y: 0, z: pos2.z }) > 1.75 && Math.abs(rotation.x) < 69.5) {
         detected = true;
-        flag (player, 'Scaffold', 'B', config.antiScaffold.maxVL,  config.antiScaffold.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
+        flag(player, 'Scaffold', 'B', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`]);
     }
-
-    const floorPos = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) }
+    const floorPos = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) };
     if (player.isJumping && !player.isOnGround && !isUnderPlayer(floorPos, block.location)) {
-        floorPos.y -= 1
+        floorPos.y -= 1;
     }
-
-    //need to test fallDistance when bridging `.w<`
-    const isUnder = isUnderPlayer(floorPos, block.location)
-    
+    const isUnder = isUnderPlayer(floorPos, block.location);
     //check if the rotation is lower than the min rotation and the block is under the player
-    if (Tps > 13.5 && rotation.x < config.antiScaffold.minRotation && isUnder) {
+    if (rotation.x < config.antiScaffold.minRotation && isUnder) {
         detected = true;
-        flag (player, 'Scaffold', 'C', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`])
+        flag(player, 'Scaffold', 'C', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`]);
     }
-
-    //check if the player is placing block too fast
-    const { x, y, z } = block.location
-    const underBlockUnder = block.dimension.getBlock({ x: x, y: y - 1, z: z })
-    blockLog[player.id] ??= []
-
-    const blockId = JSON.stringify(underBlockUnder.location)
-    blockLog[player.id].push({ time: now, id: blockId } as BlockLog)
-    blockLog[player.id] = blockLog[player.id].filter(({ time }: BlockLog) => now - time < 750)
-
-    if (isUnder && !(!underBlockUnder?.isAir && blockLog[player.id].some(({ id }: BlockLog) => id == blockId))) {
-        if (!blockPlace[player.id]) blockPlace[player.id] = []
-        const timeNow = now
-        blockPlace[player.id] = [...blockPlace[player.id].filter(time => timeNow - time <= 500), timeNow]
-
-        if (blockPlace[player.id].length > config.antiScaffold.maxBPS && !(player.getEffect(MinecraftEffectTypes.JumpBoost) && player.isJumping) && !player.getEffect(MinecraftEffectTypes.Speed)) {
-            detected = true;
-            blockPlace[player.id] = []
-            flag (player, 'Scaffold', 'D', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`])
+    const diagZ = Math.abs(z - data.lastX)
+    const diagX = Math.abs(x - data.lastZ)
+    const diagScaffold = (data.lastDiagX == 1 && diagX == 0 && data.lastDiagZ == 0 && diagZ == 1 || data.lastDiagX == 0 && diagX == 1 && data.lastDiagZ == 1 && diagZ == 0)
+    const now = Date.now()
+    if(isUnder && now - data.lastPlace < 300 && diagScaffold) {
+        data.scaffoldFlags++
+        if(data.scaffoldFlags == 2){
+            flag(player, 'Scaffold', 'E', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`])
+            data.scaffoldFlags = 0
+            detected = true
         }
     }
-
-    //if detected, flag the player and set the block to the air
+    data.lastDiagX = diagX
+    data.lastDiagZ = diagZ
+    if (!diagScaffold || now - data.lastPlace > 500) data.scaffoldFlags = 0
+    const underBlockUnder = block.dimension.getBlock({ x: x, y: y - 1, z: z });
+    data.blockLog ??= [];
+    const blockId = JSON.stringify(underBlockUnder.location);
+    data.blockLog.push({ time: now, id: blockId });
+    data.blockLog = data.blockLog.filter(({ time }) => now - time < 750);
+    if (isUnder && !(!underBlockUnder?.isAir && data.blockLog.some(({ id }) => id == blockId))) {
+        if (!data.blockPlace)
+            data.blockPlace = [];
+        const timeNow = now;
+        data.blockPlace = data.blockPlace.filter(time => timeNow - time <= 500)
+        data.blockPlace.push(timeNow)
+        if (data.blockPlace.length > config.antiScaffold.maxBPS && !(player.getEffect(MinecraftEffectTypes.JumpBoost) && player.isJumping) && !player.getEffect(MinecraftEffectTypes.Speed)) {
+            detected = true;
+            data.blockPlace = [];
+            flag(player, 'Scaffold', 'D', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+        }
+    }
+    data.lastX = x
+    data.lastZ = z
+    data.lastPlace = now
     if (detected && !config.slient) {
         block.setType(MinecraftBlockTypes.Air);
         player.addTag("matrix:place-disabled");
         system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiScaffold.timeout);
     }
 }
-
-function isUnderPlayer (p: Vector3, pos2: Vector3) {
-    if (p.y - 1 !== pos2.y) return false;
-    const offsets: number[] = [-1, 0, 1];
-    return offsets.includes(p.x - pos2.x) && offsets.includes(p.z - pos2.z);
+function playerLeaveAfterEvent ({ playerId }: PlayerLeaveAfterEvent) {
+    scaffoldData.delete(playerId)
 }
-
-const antiScaffold = (({ block, player }: PlayerPlaceBlockAfterEvent) => {
-    if (isAdmin (player)) return;
-
-    AntiScaffold (player, block, Date.now(), tps.getTps())
-});
-
-function calculateAngle (pos1: Vector3, pos2: Vector3, rotation = -90) {
+function calculateAngle(pos1: Vector3, pos2: Vector3, rotation = -90) {
     let angle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - rotation - 90;
-    angle = angle <= -180 ? angle += 360 : angle
+    angle = angle <= -180 ? angle += 360 : angle;
     return Math.abs(angle);
 }
-
-const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
-    delete blockPlace[playerId]
-})
-
+function isUnderPlayer(p: Vector3, pos2: Vector3) {
+    if (p.y - 1 !== pos2.y)
+        return false;
+    const offsets = [-1, 0, 1];
+    return offsets.includes(p.x - pos2.x) && offsets.includes(p.z - pos2.z);
+}
 export default {
     enable () {
-        world.afterEvents.playerPlaceBlock.subscribe(antiScaffold)
-        world.afterEvents.playerLeave.subscribe(playerLeave)
+        world.afterEvents.playerPlaceBlock.subscribe(playerPlaceBlockAfterEvent)
+        world.afterEvents.playerLeave.subscribe(playerLeaveAfterEvent)
     },
     disable () {
-        blockPlace = {}
-        world.afterEvents.playerPlaceBlock.unsubscribe(antiScaffold)
-        world.afterEvents.playerLeave.unsubscribe(playerLeave)
+        scaffoldData.clear()
+        world.afterEvents.playerPlaceBlock.unsubscribe(playerPlaceBlockAfterEvent)
+        world.afterEvents.playerLeave.unsubscribe(playerLeaveAfterEvent)
     }
 }
