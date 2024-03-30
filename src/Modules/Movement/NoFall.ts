@@ -36,7 +36,7 @@ async function AntiNoFall (player: Player, now: number) {
 
     //velocityY is 0, flag the player
     if (y == 0 && playerVL[player.id] >= config.antiNoFall.float && getPing(player) < 5) {
-        if (xz == 0 || xz == 0 player.spawnTime && now - player.spawnTime < 12000) return
+        if (xz == 0 || xz == 0 || (player.spawnTime && now - player.spawnTime < 12000)) return
         if (!config.slient) player.teleport(prevLoc);
         const lastflag = lastFlag.get(player.id)
         playerVL[player.id] = 0
