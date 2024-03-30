@@ -347,7 +347,7 @@ export default {
         enabled: true,
         minDelay: 200,
         timeout: 60,
-        punishment: "ban",
+        punishment: "none",
         maxVL: 2
     },
 
@@ -622,7 +622,7 @@ export default {
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "ban"
+        punishment: "none"
     },
 
     antiFastUse: {
