@@ -77,7 +77,7 @@ async function AntiNoSlow (player: Player, now: number) {
             }
         }
     }
-    
+    /* This check too sus
     //check if player speed while using item is too high
     if (!player.getEffect(MinecraftEffectTypes.Speed) && player.lastItemUsed && now - player.lastItemUsed >= config.antiNoSlow.itemUseTime && playerSpeed > config.antiNoSlow.maxItemSpeed && player.isOnGround && !player.isJumping && !player.isGliding && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000)) {
         const isIceBelow = player.dimension.getBlock({
@@ -97,7 +97,7 @@ async function AntiNoSlow (player: Player, now: number) {
             }
             lastflag2.set(player.id, now)
         }
-    }
+    }*/
 }
 
 const antiNoSlow = () => {
