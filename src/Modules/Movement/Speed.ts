@@ -47,12 +47,13 @@ const speedData = new Map<string, SpeedData>()
 
 function antiSpeed (player: Player, now: number) {
     let data = speedData.get(player.id)
-    if (!data?.locationData) {
+    if (!data) {
+        data = {} as any
         data.locationData = {
             location: player.location,
             recordTime: now
         }
-        speedData.set(player.id, {} as any)
+        speedData.set(player.id, data)
         return
     }
     const config = c()
