@@ -574,6 +574,30 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             adminUI (player)
             break
         }
+        case "banrun": {
+            if (blockUsage(player, config.commands.banrun)) return
+            const command = regax[1];
+            if (command.startsWith("/")) command.slice(1)
+            if (!command || command.length < 4) {
+                system.run(() => player.sendMessage(`§bMatrix §7>§c Please enter an valid command!`))
+            }
+            if (command == "disable") {
+                if (world.getDynamicProperty("banrun")) {
+                    system.run(() => {
+                        world.setDynamicProperty("banrun")
+                        player.sendMessage(`§bMatrix §7>§g Sucessfully disable ban-run module.`)
+                    })
+                } else {
+                    system.run(() => player.sendMessage(`§bMatrix §7>§c You haven't setted any ban-run command up yet!`))
+                }
+                return
+            }
+            system.run(() => {
+                world.setDynamicProperty("banrun", command)
+                player.sendMessage(`§bMatrix §7>§g Sucessfully create a new ban-run command!`)
+            })
+            break
+        }
         default: {
             if (isAdmin (player)) {
                 system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.unknown").replace("%a", prefix)}`))
