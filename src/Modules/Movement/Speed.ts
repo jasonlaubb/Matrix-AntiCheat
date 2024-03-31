@@ -84,7 +84,7 @@ async function AntiSpeedB(){
             player.lastSpeedSkipCheck = now;
         }
         const safePos = speedData.get(player.id)
-        if (isAdmin(player) || player.isFlying || player.isGliding || player.threwTridentAt && now - player.threwTridentAt < 2000)
+        if (isAdmin(player) || player.isFlying || player.isGliding || player.threwTridentAt && now - player.threwTridentAt < 2000 || player.hasTag("matrix:riding"))
             continue;
         const config = c();
     if(Date.now() - lastHurt.get(player.id) < 250) speedMaxV[player.id] = 12
