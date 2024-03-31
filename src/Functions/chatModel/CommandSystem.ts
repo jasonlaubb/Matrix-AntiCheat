@@ -578,8 +578,9 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             if (blockUsage(player, config.commands.banrun)) return
             const command = regax[1];
             if (command.startsWith("/")) command.slice(1)
-            if (!command || command.length < 4) {
+            if (!command || command.length < 3) {
                 system.run(() => player.sendMessage(`§bMatrix §7>§c Please enter an valid command!`))
+                return
             }
             if (command == "disable") {
                 if (world.getDynamicProperty("banrun")) {
