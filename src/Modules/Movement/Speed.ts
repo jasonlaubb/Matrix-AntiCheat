@@ -89,7 +89,7 @@ async function AntiSpeedB(){
         const config = c();
     if(Date.now() - lastHurt.get(player.id) < 250) speedMaxV[player.id] = 12
     if(Date.now() - lastAttack.get(player.id) < 1000) speedMaxV[player.id] = 3
-	    if (player.hasTag("matrix:usingItem")) speedMaxV = 0.7
+	    if (player.hasTag("matrix:using_item")) speedMaxV = 0.7
     if(Date.now() - lastAttack.get(player.id) > 1000 && Date.now() - lastHurt.get(player.id) > 250) speedMaxV[player.id] = 0.5
 	if(speedLog[player.id] == undefined || 
         lastSpeedLog.get(player.id) == undefined){
