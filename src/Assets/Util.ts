@@ -68,18 +68,23 @@ function flag (player: Player, modules: string, type: Type, maxVL: number, punis
     
     if (punishment && Vl[player.id][modules] > maxVL) {
         let punishmentDone = false
-        switch (punishment) {
-            case "kick": {
-                punishmentDone = true
-                kick (player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"))
-                flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name)
-                break
-            }
-            case "ban": {
-                punishmentDone = true
-                ban (player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"), config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
-                flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
-                break
+        const banrun = world.getDynamicProperty("banrun")
+        if (config.commands.banrun && banrun && ["kick","ban"].includes(punishment)) {
+            player.runCommandAsync(banrun as string)
+        } else {
+            switch (punishment) {
+                case "kick": {
+                    punishmentDone = true
+                    kick (player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"))
+                    flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name)
+                    break
+                }
+                case "ban": {
+                    punishmentDone = true
+                    ban (player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"), config.punishment_ban.minutes as number | "forever" === "forever" ? "forever" : Date.now() + (config.punishment_ban.minutes * 60000))
+                    flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name)
+                    break
+                }
             }
         }
         if (punishmentDone) {
