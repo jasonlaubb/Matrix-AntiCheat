@@ -188,6 +188,11 @@ export default {
             enabled: true,
             adminOnly: true,
             requireTag: []
+        },
+        banrun: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: []
         }
     },
     /** 
