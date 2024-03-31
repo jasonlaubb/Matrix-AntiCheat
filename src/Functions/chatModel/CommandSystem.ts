@@ -150,7 +150,7 @@ function inputCommand (player: Player, message: string, prefix?: string): any {
             if (blockUsage(player, config.commands.passwords as Cmds)) return
             const oldPassword: string = regax[1]
             const newPassword: string = regax[2]
-            const correctPassword = (world.getDynamicProperty("password") ?? config.commands.password) as string
+            const correctPassword = (world.getDynamicProperty("sha_password") ?? config.commands.password) as string
             if (oldPassword === undefined || newPassword === undefined) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-passwords.oldnew")}`))
             if (oldPassword !== correctPassword) return system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-passwords.wrong")}`))
 
