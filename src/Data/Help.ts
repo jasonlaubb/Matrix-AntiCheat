@@ -33,7 +33,8 @@ export function helpList (p: string): string {
         lang("-help.lang"),
         lang("-help.langlist"),
         lang("-help.borderSize"),
-        "matrixui - open the ui (beta)"
+        "matrixui - open the ui (beta)",
+        "banrun <command/disable> - change the punishment to execute a command on the hacker"
     ].map(des => "§g" + p + des).join("\n")
 }
 
