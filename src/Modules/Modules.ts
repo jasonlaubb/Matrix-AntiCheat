@@ -32,6 +32,8 @@ import fastBreak from "./World/FastBreak"
 import xray from "./Misc/Xray"
 import worldBorder from "./Movement/World Border"
 import disabler from "./Misc/Disabler"
+import clientAuth from "./Player/ClientAuth"
+import timer from "./Movement/Timer"
 
 interface toggleHandler {
     enable: () => void
@@ -68,7 +70,9 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     "antiCrasher": crasher,
     "antiIllegalItem": illegalItem,
     "antiBot": bot,
-    "antiDisabler": disabler
+    "antiDisabler": disabler,
+    "antiTimer": timer,
+    "clientAuth": clientAuth
 }
 
 export const defaultLy = (key: string) => {
