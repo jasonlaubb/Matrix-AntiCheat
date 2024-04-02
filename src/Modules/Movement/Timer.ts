@@ -33,7 +33,7 @@ function antiTimer (player: Player) {
         data.locationMove.shift()
         data.velocityMove.shift()
         for (let i = 0; i < data.locationMove.length; i++) {
-            totalDifferent += Math.abs(data.locationMove[i] - data.velocityMove[i]) * 0.05
+            if (data.locationMove[i] != 0) totalDifferent += Math.abs(data.locationMove[i] - data.velocityMove[i]) * 0.05
         }
         const config = c()
         if (totalDifferent > config.antiTimer.maxDifferent) {
