@@ -1,5 +1,6 @@
 import { Player, PlayerLeaveAfterEvent, world, Vector3, system, GameMode } from "@minecraft/server";
 import { c, flag } from "../../Assets/Util";
+import { tps } from "../../Assets/Public";
 import lang from "../../Data/Languages/lang";
 
 interface TimerData {
@@ -28,11 +29,12 @@ function antiTimer (player: Player) {
     if (xV + zV > 0 && (xV != data.lastX || zV != data.lastZ)) {
         const diff = system.currentTick - data.lastTick
         data.listing.push(diff)
-        if (data.listing.length > 30) data.listing.shift()
-        const ratio = data.listing.filter(dat => dat == 2).length / data.listing.length
-        if (data.listing.length >= 30 && ratio > 0.26) {
+        if (data.listing.length > 25) data.listing.shift()
+        const ratio = (data.listing.filter(dat => dat == 2).length - data.listing.filter(dat => dat > 2).length) / data.listing.length
+        if (data.listing.length >= 20 && ratio >= 0.24 && tps.getTps() > 19.92 && !player.isGliding && !player.isFlying) {
             player.teleport(data.lastLocation)
             const config = c()
+            player.sendMessage(`${tps.getTps()}`)
             flag (player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, [lang(">Ratio") + ":" + ratio.toFixed(2)])
             data.listing = []
         }
