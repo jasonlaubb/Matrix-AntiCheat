@@ -3,49 +3,47 @@ import { c, flag } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
 interface TimerData {
-    locationMove: number[]
-    velocityMove: number[]
+    lastX: number
+    lastZ: number
+    lastTick: number
+    diff: number
     lastLocation: Vector3
-    previousLocation: Vector3
-    lastflag: number
+    listing: number[]
 }
 const timerData = new Map<string, TimerData>()
 function antiTimer (player: Player) {
     let data = timerData.get(player.id)
-    const { x: xV, y: yV, z: zV } = player.getVelocity()
-    if (!data || (xV == 0 && zV == 0 && yV <= 0) || player.isFlying || player.isGliding) {
+    const { x: xV, z: zV } = player.getVelocity()
+    if (!data) {
         data = {
-            locationMove: [],
-            velocityMove: [],
+            lastX: xV,
+            lastZ: zV,
+            lastTick: system.currentTick,
+            diff: 0,
             lastLocation: player.location,
-            previousLocation: player.location,
-            lastflag: Date.now() - 5500
+            listing: []
         }
         timerData.set(player.id, data)
-        return
     }
-    const { x: xL, z: zL } = player.location
-    const { x: xP, z: zP } = data.lastLocation
-    data.locationMove.push(Math.hypot(xL - xP, zL - zP))
-    data.velocityMove.push(Math.hypot(xV, zV))
-    if (data.locationMove.length > 20) {
-        let totalDifferent = 0
-        data.locationMove.shift()
-        data.velocityMove.shift()
-        for (let i = 0; i < data.locationMove.length; i++) {
-            if (data.locationMove[i] != 0) totalDifferent += Math.abs(data.locationMove[i] - data.velocityMove[i]) * 0.05
+    if (xV + zV > 0 && (xV != data.lastX || zV != data.lastZ)) {
+        const diff = system.currentTick - data.lastTick
+        data.listing.push(diff)
+        if (data.listing.length > 30) data.listing.shift()
+        const ratio = data.listing.filter(dat => dat == 2).length / data.listing.length
+        if (data.listing.length >= 30 && ratio > 0.26) {
+            player.teleport(data.lastLocation)
+            const config = c()
+            flag (player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, [lang(">Ratio") + ":" + ratio.toFixed(2)])
+            data.listing = []
         }
-        const config = c()
-        if (totalDifferent > config.antiTimer.maxDifferent) {
-            player.teleport(data.previousLocation)
-            const now = Date.now()
-            if (now - data.lastflag < 5500) {
-                flag (player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, [lang(">distance") + ":" + totalDifferent])
-            }
-            data.lastflag = now
-            data = undefined
-        }
+        data.diff = diff
+        data.lastTick = system.currentTick
     }
+    if (xV + zV == 0) {
+        data.lastLocation = player.location
+    }
+    data.lastX = xV
+    data.lastZ = zV
     timerData.set(player.id, data)
 }
 function playerLeaveAfterEvent ({ playerId }: PlayerLeaveAfterEvent) {
