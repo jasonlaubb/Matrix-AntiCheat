@@ -109,6 +109,7 @@ export { tps }
 system.runInterval(async () => {
     const now = Date.now()
     tpsAmountData.push((now - lastTickLog))
+    lastTickLog = Date.now()
     if (tpsAmountData.length > 20) tpsAmountData.shift()
     let tpsNow: number = 0
     tpsAmountData.forEach(period => tpsNow += period)
