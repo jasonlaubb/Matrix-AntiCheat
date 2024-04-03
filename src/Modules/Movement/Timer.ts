@@ -26,7 +26,7 @@ function antiTimer (player: Player) {
         }
         timerData.set(player.id, data)
     }
-    if (xV + zV > 0 && (xV != data.lastX || zV != data.lastZ)) {
+    if ((xV != 0 || zV != 0) && (xV != data.lastX || zV != data.lastZ)) {
         const diff = system.currentTick - data.lastTick
         data.listing.push(diff)
         if (data.listing.length > 25) data.listing.shift()
