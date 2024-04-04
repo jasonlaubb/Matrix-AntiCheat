@@ -57,9 +57,9 @@ async function AntiSpeedA(player, now) {
     timerLog[player.id] = timerLog[player.id]+1
     } if(lastTimerLog.get(player.id) == timerLog[player.id] && timerLog[player.id] >= 1 && dBVD > 0.20 && Date.now() - lastFlag.get(player.id) < 400){
       timerLog2[player.id] = timerLog2[player.id]+1
-      } else if(Date.now() - lastFlag.get(player.id) > 400) { timerLog2[player.id] = 0 }
+      } else if(Date.now() - lastFlag.get(player.id) > 400 || lastTimerLog.get(player.id) - timerLog[player.id] > 1 && timerLog[player.id] >= 1) { timerLog2[player.id] = 0 }
 	if(dBVD > 1 && dBVD-lastDBVD.get(player.id) > 0.5 && timerLog[player.id] >= 1) player.teleport(safeZone.get(player.id))
-       if(timerLog2[player.id] >= 20 || timerLog[player.id] >= 20 && Date.now() - lastFlag.get(player.id) < 60 && getPing(player) < 5 && dBVD >= 0.1){
+       if(timerLog2[player.id] >= 10 || timerLog[player.id] >= 5 && Date.now() - lastFlag.get(player.id) < 60 && getPing(player) < 5 && dBVD >= 0.1){
        if(Date.now() - lastFlag2.get(player.id) < 10000 && Date.now() - lastFlag2.get(player.id) > 300) flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" +(dBVD).toFixed(2)]);
        lastFlag2.set(player.id, Date.now()) 
        player.teleport(safeZone.get(player.id));
