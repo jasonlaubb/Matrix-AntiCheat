@@ -35,18 +35,18 @@ world.afterEvents.entityHurt.subscribe((event) => {
     catch {} 
 }) 
 async function AntiSpeedA2(player, now) {
-	//loading data
+     //loading data
      const data = locationData.get(player.id);
-   //skip the code for some reasons
-     if (data === undefined || isAdmin(player) || player.isGliding || player.hasTag("matrix:riding"))
+     //skip the code for some reasons
+     if (isAdmin(player) || player.isGliding || player.hasTag("matrix:riding"))
         return;
-    //define some cool things
+     //define some cool things
      const config = c();
      const { x: x1, z: z1 } = player.location;
      const { x: x2, z: z2 } = data.location;
      const { x, z } = player.getVelocity();
      const xz = Math.hypot(x, z)
-       //dBVD == difference between velocity and moved distance 
+     //dBVD == difference between velocity and moved distance 
      const dBVD = Math.abs(xzLog[player.id] - disLog[player.id]) 
        //check if dBVD lower than 1 and higher than 0.5 add one to timerLog and when timerLog reach 3 flag (check for low timer) 
      if(dBVD < 1 && dBVD > 0.5) timerLog[player.id]++
@@ -56,7 +56,7 @@ async function AntiSpeedA2(player, now) {
      //dBLFN = difference between last flag time and now
      const dBLFN = Date.now() - lastFlag.get(player.id)
      //if the dBLFN is lower than the given value flag
-     if(dBLFN < 3100 && timerLog[player.id] >= 3 || dBLFN < 1100 &&  dBVD > 1) flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang("Bps") + ":" +(Math.hypot(x1 - x2, z1 - z2)).toFixed(2)]);
+     if(dBLFN < 5000 && timerLog[player.id] >= 3 || dBLFN < 1500 &&  dBVD > 1) flag(player, 'Speed', 'A', config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">BlockPerSecond") + ":" +disLog[player.id].toFixed(2)]);
      //lag back the player 
      player.teleport(safeZone.get(player.id));
      //setting new lastFlag 
@@ -69,10 +69,10 @@ async function AntiSpeedA2(player, now) {
      disLog[player.id] = 0
 } 
 async function AntiSpeedA(player, now) {
-	//getting data
+    //getting data
     const data = locationData.get(player.id);   
     //skip the code for for some reasons
-    if (data === undefined || isAdmin(player) || player.isGliding || player.hasTag("matrix:riding"))
+    if (isAdmin(player) || player.isGliding || player.hasTag("matrix:riding"))
         return;
     locationData.set(player.id, { location: player.location, recordTime: Date.now() });
     //just defineing everything we need
@@ -101,7 +101,7 @@ async function AntiSpeedA(player, now) {
 async function AntiSpeedB(){
 	//getting players
 	const players = world.getAllPlayers();
-	//looping to every player in the server
+    //looping to every player in the server
     for (const player of players) {
     //define cool things
     const { x, z } = player.getVelocity();
