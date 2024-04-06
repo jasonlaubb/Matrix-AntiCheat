@@ -73,8 +73,8 @@ function playerPlaceBlockAfterEvent ({ player, block }: PlayerPlaceBlockAfterEve
         detected = true;
         flag(player, 'Scaffold', 'C', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`]);
     }
-    const diagZ = Math.abs(z - data.lastX)
-    const diagX = Math.abs(x - data.lastZ)
+    const diagZ = Math.abs(z - data.lastZ)
+    const diagX = Math.abs(x - data.lastX)
     const diagScaffold = (data.lastDiagX == 1 && diagX == 0 && data.lastDiagZ == 0 && diagZ == 1 || data.lastDiagX == 0 && diagX == 1 && data.lastDiagZ == 1 && diagZ == 0)
     const now = Date.now()
     if(isUnder && now - data.lastPlace < 300 && diagScaffold) {
