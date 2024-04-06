@@ -77,7 +77,9 @@ function playerPlaceBlockAfterEvent ({ player, block }: PlayerPlaceBlockAfterEve
     const diagX = Math.abs(x - data.lastX)
     const diagScaffold = (data.lastDiagX == 1 && diagX == 0 && data.lastDiagZ == 0 && diagZ == 1 || data.lastDiagX == 0 && diagX == 1 && data.lastDiagZ == 1 && diagZ == 0)
     const now = Date.now()
-    if(isUnder && now - data.lastPlace < 300 && diagScaffold) {
+    const { x: xV, z: zV } = player.getVelocity() 
+    const xz = Math.hypot(xV, zV) 
+    if(isUnder && now - data.lastPlace < 200 && xz > 0.1 && diagScaffold) {
         data.scaffoldFlags++
         if(data.scaffoldFlags == 2){
             flag(player, 'Scaffold', 'E', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`])
