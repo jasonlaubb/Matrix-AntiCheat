@@ -22,23 +22,30 @@ const clickData: Map<string, ClickData> = new Map<string, ClickData>();
  * @description This checks if the player is clicking more than 22 times per second.
  */
 
-function AutoClicker (player: Player) {
-    const config = c()
-    const currentTime: number = Date.now();
+function AutoClicker(player: Player) {
+    const config = c();
+    const currentTime = Date.now();
     const { id } = player;
     const { clicks } = clickData.get(id) || { clicks: [] };
 
-    //filter the clicks that are older than 1.5 seconds
-    const filteredClicks: number[] = clicks.filter(clickTime => currentTime - clickTime < 1500);
+    // Filter the clicks that are older than 1.5 seconds
+    const filteredClicks = clicks.filter(clickTime => currentTime - clickTime < 1500);
     filteredClicks.push(currentTime);
 
-    //constant the clicks per second
-    const cps: number = filteredClicks.length;
+    // Calculate clicks per second
+    const cps = filteredClicks.length;
 
-    //if the clicks per second is higher than the max clicks per second, flag the player
+    // If cps is between 15 and 21, add the tag "matrix:pvp-disabled"
+    if (cps >= 15 && cps < config.antiAutoClicker.maxClicksPerSecond && !player.hasTag("matrix:pvp-disabled")) {
+        player.addTag("matrix:pvp-disabled");
+    } else if (cps < 15 && player.hasTag("matrix:pvp-disabled")) { // Remove the tag if cps falls below 15
+        player.removeTag("matrix:pvp-disabled");
+    }
+
+    // If the cps is higher than the max clicks per second, flag the player
     if (!player.hasTag("matrix:pvp-disabled") && tps.getTps() > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
-        //A - false positive: very low, efficiency: high
-        flag (player, 'Auto Clicker', "A", config.antiAutoClicker.maxVL,config.antiAutoClicker.punishment, [`${lang(">Click Per Second")}:${cps.toFixed(0)}`])
+        // A - false positive: very low, efficiency: high
+        flag(player, 'Auto Clicker', "A", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, [`${lang(">Click Per Second")}:${cps.toFixed(0)}`]);
 
         if (!config.slient) {
             player.applyDamage(6);
@@ -51,7 +58,7 @@ function AutoClicker (player: Player) {
         }
     }
 
-    //set the clicks to the map
+    // Set the clicks to the map
     clickData.set(id, { clicks: filteredClicks });
 };
 
