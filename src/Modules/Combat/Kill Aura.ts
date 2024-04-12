@@ -1,4 +1,4 @@
-import {
+importimport {
     world,
     system,
     Player,
@@ -56,7 +56,7 @@ function KillAura (player: Player, hitEntity: Entity, onFirstHit: boolean) {
         const velocity = player.getVelocity().y
 
         //if the angle is higher than the max angle, flag the player
-        if (angle > config.antiKillAura.minAngle && rotationFloat < 79) {
+        if (angle > config.antiKillAura.minAngle && rotationFloat < 79 && !(player.threwTridentAt && now - player.threwTridentAt < 3000)) {
             //B - false positive: low, efficiency: mid
             flag (player, 'Kill Aura', 'B', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
             flagged = true
