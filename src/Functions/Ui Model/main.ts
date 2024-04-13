@@ -36,6 +36,7 @@ function menu (player: Player) {
                 }
                 case 1: {
                     // If player wants to set the amticheat
+                    moduleUI(player) 
                     break
                 }
             }
@@ -127,3 +128,44 @@ const banForm = new ModalFormData()
     .title("Ban player")
     .textField("Reason:", "Type your reason here")
     .textField("Ban Length:", "1d2h3m4s", "forever")
+async function moduleUI(player){
+    const moduleForm = new ActionFormData()
+    moduleForm.title("Module UI") 
+    for (let i = 0; i < keys.length; i++){
+    let state = getModuleState(keys[i])
+    if(state == true) state = "§aEnabled" 
+    else state = "§cDisabled" 
+	moduleForm.button("§8"+keys[i]+" §8[§r"+state+"§8]§r")
+	}; 
+	moduleForm.show(player).then(data => { 
+	if (data.canceled)
+        return;
+    const moduleData = keys[data.selection] 
+    if(moduleData) {
+      toggleUI(player, moduleData) 
+    } 
+  }) 
+} 
+async function toggleUI(player, moduleData){
+	let state = getModuleState(moduleData)
+    if(state == true) state = "§aEnabled" 
+    else state = "§cDisabled" 
+	const moduleForm = new ActionFormData() 
+    moduleForm.title("toggle module") 
+    moduleForm.body("module: §8"+moduleData+"\n§rstatus: §8"+state) 
+    moduleForm.button("§aEnable§r") 
+    moduleForm.button("§cDisable§r") 
+    moduleForm.show(player).then(data => { 
+    if (data.canceled)
+        return;
+    if(data.selection == 0){
+    player.sendMessage(`§bMatrix §7>§g ${l("-toggles.toggleChange").replace("%a", moduleData).replace("%b", "enable")}`);
+    antiCheatModules[moduleData].enable();
+    world.setDynamicProperty(moduleData, true);
+    } else {
+    player.sendMessage(`§bMatrix §7>§g ${l("-toggles.toggleChange").replace("%a", moduleData).replace("%b", "disable")}`);
+    antiCheatModules[moduleData].disable();
+    world.setDynamicProperty(moduleData, false);
+    } 
+  }) 
+} 
