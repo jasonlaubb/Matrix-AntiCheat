@@ -15,12 +15,10 @@ interface FlyData {
     previousLocations: Vector3
     velocityLog: number
     lastHighVelocity: number
-    previousHighVelocity: number
-    previousVelocity: number
+    flyFlags: number
     lastFlag: number
     lastFlag2: number
     lastVelLog: number
-    lastVelocity: number
 }
 interface IncludeStairDataInput {
     location: Vector3
@@ -90,21 +88,20 @@ function antiFly (player: Player, now: number) {
         data.lastFlag = now
     }
     data.lastVelLog = data.velocityLog
-    if (getPing(player) < 4 && data.velocityLog == 1 && !instair && velocity <= 0 && player.lastVelocity <= 0) {
-        player.teleport(data.previousLocations);
-        data.previousVelocity = data.lastVelocity 
+    if (data.velocityLog == 1 && !instair && velocity <= 0 && Math.abs(data.previousLocations.y - player.location.y) > 1) { 
         const lastflag = data.lastFlag2
-        if (lastflag && now - lastflag <= 4500 && now - lastflag > 120 && Math.abs(data.previousHighVelocity - data.lastHighVelocity) < 0.3 && Math.abs(player.lastVelocity - data.previousVelocity) > 0 ) {
-            flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + velocity.toFixed(4)]);
-        }
+        data.flyFlags++
+        if (lastflag && now - lastflag <= 1000 && now - lastflag > 450 && data.flyFlags >= 2 || data.lastHighVelocity >= 7) {
+            flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(4)]);
+            player.teleport(data.previousLocations);
+            data.flyFlags = 0
+        } else if(flyFlags >= 2) data.flyFlags = 0
         data.lastFlag2 = now
     }
     if (velocity > config.antiFly.maxVelocity && skip1) {
         data.velocityLog += 1;
-        data.previousHighVelocity = data.lastHighVelocity
         data.lastHighVelocity = velocity 
-    } else if (velocity >= 0 || velocity == 0 && player.isOnGround || !skip1) data.velocityLog = 0;
-    if (!(velocity > config.antiFly.maxVelocity || data.velocityLog == 1 && velocity <= 0)) player.lastVelocity = velocity;
+    } else if (velocity < config.antiFly.maxVelocity || velocity == 0 && player.isOnGround || !skip1) data.velocityLog = 0;
     flyData.set(player.id, data)
 }
 function systemEvent () {
