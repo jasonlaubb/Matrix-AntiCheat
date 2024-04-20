@@ -18,7 +18,13 @@ interface ScaffoldData {
     lastDiagX: number
     lastZ: number
     lastDiagZ: number
-    scaffoldFlags: number
+    scaffoldFlags: number 
+    scaffoldFlagsF2: number 
+    scaffoldFlagsF: number 
+    scaffoldFlagsG: number 
+    scaffoldFlagsH: number 
+    scaffoldFlagsI: number 
+    lastXRot: number 
     lastPlace: number
     blockLog: {
         time: number
@@ -39,6 +45,12 @@ function playerPlaceBlockAfterEvent ({ player, block }: PlayerPlaceBlockAfterEve
             lastZ: z,
             lastDiagZ: 0,
             scaffoldFlags: 0,
+            scaffoldFlagsF2: 0,
+            scaffoldFlagsF: 0,
+            scaffoldFlagsG: 0,
+            scaffoldFlagsH: 0,
+            scaffoldFlagsI: 0,
+            lastXRot: 0,
             lastPlace: Date.now(),
             blockLog: [],
             blockPlace: []
@@ -73,23 +85,73 @@ function playerPlaceBlockAfterEvent ({ player, block }: PlayerPlaceBlockAfterEve
         detected = true;
         flag(player, 'Scaffold', 'C', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`]);
     }
-    const diagZ = Math.abs(z - data.lastZ)
-    const diagX = Math.abs(x - data.lastX)
-    const diagScaffold = (data.lastDiagX == 1 && diagX == 0 && data.lastDiagZ == 0 && diagZ == 1 || data.lastDiagX == 0 && diagX == 1 && data.lastDiagZ == 1 && diagZ == 0)
-    const now = Date.now()
-    const { x: xV, z: zV } = player.getVelocity() 
-    const xz = Math.hypot(xV, zV) 
-    if(isUnder && now - data.lastPlace < 200 && xz > 0.1 && diagScaffold) {
-        data.scaffoldFlags++
-        if(data.scaffoldFlags == 2){
-            flag(player, 'Scaffold', 'E', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`])
-            data.scaffoldFlags = 0
-            detected = true
-        }
+//diag scaffold check 
+    //false postive: very low | efficiency: high
+    //calculate the extender
+    const extender = Math.hypot(x - player.location.x, z - player.location.z)-0.5
+    //choosing maximum diag speed
+    if(xz > 0 && xz < 0.3 && player.isOnGround && extender < 1 && data.lastXRot == rotation.x) data.diagSpeed = 150
+    if(xz > 0.1 && !player.isOnGround || extender >= 1 || xz > 0.5 || rotation.x >= 80) data.diagSpeed = 500
+    if(xz > 0 && xz < 0.3 && player.isOnGround && extender < 1 && data.lastXRot != rotation.x) data.diagSpeed = 50
+    //i cant explain, its just some math:) 
+    const diagZ = Math.abs(z - data.lastZ);
+    const diagX = Math.abs(x - data.lastX);
+    const diagScaffold = (data.lastDiagX == 1 && diagX == 0 && data.lastDiagZ == 0 && diagZ == 1 || data.lastDiagX == 0 && diagX == 1 && data.lastDiagZ == 1 && diagZ == 0);
+    const now = Date.now();
+    const yLoc = y - player.location.y 
+    //the check:) 
+    if (yLoc > -2.1 && yLoc < 0 && now - data.lastPlace < data.diagSpeed && diagScaffold &&  (extender - data.lastDis > 0 || extender < 1)) {
+        data.scaffoldFlags++;
+        if (data.scaffoldFlags >= 3) {
+            data.scaffoldFlags = 0;
+            data.scaffoldFlags2++
+        if(data.scaffoldFlags2 >= 2){
+        flag(player, 'Scaffold', 'E', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+        detected = true;
+        } 
+      }
     }
-    data.lastDiagX = diagX
-    data.lastDiagZ = diagZ
-    if (!diagScaffold || now - data.lastPlace > 500) data.scaffoldFlags = 0
+    //if the player not diagonal scaffolding or duration higher than 500 ticks reset the log
+    if (!diagScaffold || now - data.lastPlace > 500)
+        data.scaffoldFlags = 0;
+    if(now - data.lastPlace > 8000) data.scaffoldFlags2 = 0
+    //scaffold/F: check for unnatural rotating head with placing  blocks
+    if(yLoc > -2.1 && yLoc < 0 && now - data.lastPlace < 200 && now - data.lastPlace >= 100 && Math.abs(data.lastXRot - rotation.x) > 0.5 && !diagScaffold){
+       data.scaffoldFlagsF++
+       if(data.scaffoldFlagsF >= 3){ 
+       flag(player, 'Scaffold', 'F', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+       data.scaffoldFlagsF = 0
+       detected = true
+       } 
+    } else if(now - data.lastPlace > 200 || now - data.lastPlace < 25 || Math.abs(data.lastXRot - rotation.x) < 0.5) data.scaffoldFlagsF = 0
+    //scaffold/G: check for invalid high extender with high rotation 
+    if(yLoc > -2.1 && yLoc < 0 && rotation.x == data.lastXRot && rotation.x > 50 && extender > 1){
+      data.scaffoldFlagsG++
+      if(data.scaffoldFlagG >= 3){
+      flag(player, 'Scaffold', 'G', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+      data.scaffoldFlagsG = 0
+      detected = true
+      } 
+    } else data.scaffoldFlagsG = 0
+    //scaffold/H: check for invalid low extender with low rotation
+    if(yLoc > -2.1 && yLoc < 0 && rotation.x == data.lastXRot && rotation.x < 50 && extender < 1 && !player.isOnGround){
+      data.scaffoldFlagsH++
+      if(data.scaffoldFlagsH >= 3){
+      flag(player, 'Scaffold', 'H', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+      data.scaffoldFlagsH = 0
+      detected = true
+      } 
+    } else data.scaffoldFlagsH = 0
+    //scaffold/I: check for ground scaffolding with less than 1 extender 
+    if(yLoc > -2.1 && yLoc < 0 && rotation.x == data.lastXRot && now - data.lastPlace < 300 && extender > 0.1 && extender < 1 && player.isOnGround){
+      data.scaffoldFlagsI++
+      if(data.scaffoldFlagsI >= 5){
+      flag(player, 'Scaffold', 'I', config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+      data.scaffoldFlagsI = 0
+      detected = true
+      } 
+    } else data.scaffoldFlagsI = 0
+    //all of this checks are new so idk how much is false postive rate but efficiency is good
     const underBlockUnder = block.dimension.getBlock({ x: x, y: y - 1, z: z });
     data.blockLog ??= [];
     const blockId = JSON.stringify(underBlockUnder.location);
