@@ -52,6 +52,7 @@ function antiFly (player: Player, now: number) {
         return
     }
     const { y: velocity, x, z } = player.getVelocity()
+    const xz = Math.hypot(x, z) 
     if (player.isOnGround && velocity == 0 && x == 0 && z == 0) {
         data.previousLocations = player.location
         data.velocityLog = 0
@@ -88,10 +89,10 @@ function antiFly (player: Player, now: number) {
         data.lastFlag = now
     }
     data.lastVelLog = data.velocityLog
-    if (data.velocityLog == 1 && !instair && velocity <= 0 && Math.abs(data.previousLocations.y - player.location.y) > 1) { 
+    if (data.velocityLog == 1 && !instair && velocity <= 0) { 
         const lastflag = data.lastFlag2
         data.flyFlags++
-        if (lastflag && now - lastflag <= 1000 && now - lastflag > 450 && data.flyFlags >= 2 || data.lastHighVelocity >= 7) {
+        if (xz > 0 && (data.lastHighVelocity >= 7 || data.flyFlags >= 2 && now - lastflag >= 450 && now - lastflag <= 1000) || data.lastHighVelocity >= 1.5 && data.lastHighVelocity == Math.floor(data.lastHighVelocity) || data.lastHighVelocity > 25){
             flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(4)]);
             player.teleport(data.previousLocations);
             data.flyFlags = 0
