@@ -1,4 +1,4 @@
-importimport {
+import {
     world,
     system,
     Player,
@@ -23,7 +23,6 @@ const lastFlag = new Map<string, number>();
 
 function KillAura (player: Player, hitEntity: Entity, onFirstHit: boolean) {
     if (player.hasTag("matrix:pvp-disabled")) return
-
     //constant the infomation
     let playerHitEntity = hitLength.get(player.id) ?? [];
     let flagged = false;
@@ -56,7 +55,7 @@ function KillAura (player: Player, hitEntity: Entity, onFirstHit: boolean) {
         const velocity = player.getVelocity().y
 
         //if the angle is higher than the max angle, flag the player
-        if (angle > config.antiKillAura.minAngle && rotationFloat < 79 && !(player.threwTridentAt && now - player.threwTridentAt < 3000)) {
+        if (angle > config.antiKillAura.minAngle && rotationFloat < 79 && !(player.threwTridentAt && Date.now() - player.threwTridentAt < 3000)) {
             //B - false positive: low, efficiency: mid
             flag (player, 'Kill Aura', 'B', config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`])
             flagged = true
