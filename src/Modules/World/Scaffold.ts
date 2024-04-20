@@ -141,8 +141,8 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
             detected = true;
         }
     } else data.scaffoldFlagsH = 0;
-    //scaffold/I: check for ground scaffolding with less than 1 extender
-    if (yLoc > -2.1 && yLoc < 0 && rotation.x == data.lastXRot && now - data.lastPlace < 300 && extender > 0.1 && extender < 1 && player.isOnGround) {
+    //scaffold/I: check for ground scaffolding with less than 0.6 extender
+    if (yLoc > -2.1 && yLoc < 0 && rotation.x == data.lastXRot && now - data.lastPlace < 300 && extender > 0.1 && extender < 0.6 && player.isOnGround) {
         data.scaffoldFlagsI++;
         if (data.scaffoldFlagsI >= 5) {
             flag(player, "Scaffold", "I", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
