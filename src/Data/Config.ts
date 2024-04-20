@@ -1,15 +1,15 @@
 /**
  * @author Matrix Team
  * @description The config json of the AntiCheat
- * 
+ *
  * @warning
  * The setting of config maybe changed in dynamic properties (change config will not effect the server)
- * 
+ *
  * @docs https://transform.tools/json-to-typescript
  */
 
 export default {
-    /** 
+    /**
      * @description
      * The setting for our functions
      */
@@ -27,197 +27,197 @@ export default {
         example: {
             enabled: true, // true mearns the example command will be enabled, false means the example command will be disabled
             adminOnly: true, // true means only admin can use the command, false means everyone can use the command
-            requireTag: ["mod","manager"] // The tag that the player must have 1 of the tag to use the command, [] means no tag is required
+            requireTag: ["mod", "manager"], // The tag that the player must have 1 of the tag to use the command, [] means no tag is required
         },
         help: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         toggles: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         toggle: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         op: {
             enabled: true,
             adminOnly: false,
-            requireTag: []
+            requireTag: [],
         },
         deop: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         passwords: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         flagmode: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         rank: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         rankclear: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         defaultrank: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         showallrank: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         ban: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         unban: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         unbanremove: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         unbanlist: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         freeze: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         unfreeze: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         mute: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         unmute: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         vanish: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         unvanish: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         invcopy: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         invsee: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         echestwipe: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         lockdowncode: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         lockdown: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         unlock: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         adminchat: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         lang: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         langlist: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         borderSize: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         matrixui: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
+            requireTag: [],
         },
         banrun: {
             enabled: true,
             adminOnly: true,
-            requireTag: []
-        }
+            requireTag: [],
+        },
     },
-    /** 
+    /**
      * @description
      * The config of all modules
-    */
+     */
     punishment_kick: {
-        reason: "Bad behavior"
+        reason: "Bad behavior",
     },
     punishment_ban: {
         minutes: 1440,
-        reason: "Unfair advantage"
+        reason: "Unfair advantage",
     },
     example_anticheat_module: {
         enabled: true, // true mearns the module will be enabled, false means the module will be disabled
-        punishment: "ban" // The punishment of the module, [] means no punishment
+        punishment: "ban", // The punishment of the module, [] means no punishment
         //punishmentType: "ban", "kick"
     },
     chatRank: {
         enabled: true,
         defaultRank: "§pMember",
-        showAllRank: true
+        showAllRank: true,
     },
     dimensionLock: {
-        enabled: false
+        enabled: false,
     },
 
     antiAutoClicker: {
@@ -225,7 +225,7 @@ export default {
         maxClicksPerSecond: 24,
         timeout: 200,
         punishment: "kick",
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiKillAura: {
@@ -234,7 +234,7 @@ export default {
         timeout: 200,
         maxEntityHit: 2,
         punishment: "ban",
-        maxVL: 3
+        maxVL: 3,
     },
 
     antiReach: {
@@ -242,28 +242,28 @@ export default {
         maxReach: 4.21,
         maxYReach: 4.8,
         punishment: "kick",
-        maxVL: 3
+        maxVL: 3,
     },
 
     antiFly: {
         enabled: true,
         punishment: "ban",
         maxVelocity: 0.7,
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiNoFall: {
         enabled: true,
         punishment: "ban",
         float: 15,
-        maxVL: 3
+        maxVL: 3,
     },
 
     antiNoClip: {
         enabled: true,
         punishment: "ban",
         clipMove: 1.6,
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiSpeed: {
@@ -272,7 +272,7 @@ export default {
         bpsThershold: 11.5,
         clipThershold: 7,
         punishment: "kick",
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiNuker: {
@@ -281,7 +281,7 @@ export default {
         timeout: 100,
         punishment: "ban",
         solidOnly: true,
-        maxVL: 0
+        maxVL: 0,
     },
 
     antiScaffold: {
@@ -292,7 +292,7 @@ export default {
         minRotation: 20,
         maxBPS: 5,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiNoSlow: {
@@ -302,18 +302,15 @@ export default {
         itemUseTime: 350,
         timeout: 60,
         punishment: "ban",
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiBreaker: {
         enabled: true,
         timeout: 60,
-        writeList: [
-            "minecraft:cake",
-            "minecraft:dragon_egg"
-        ],
+        writeList: ["minecraft:cake", "minecraft:dragon_egg"],
         punishment: "ban",
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiSpam: {
@@ -322,13 +319,13 @@ export default {
         timer: 500,
         maxCharacterLimit: 200,
         kickThreshold: 3,
-        timeout: 200
+        timeout: 200,
     },
 
     antiSpammer: {
         enabled: true,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 0,
     },
 
     antiBlockReach: {
@@ -345,7 +342,7 @@ export default {
         maxRotSpeed: 15,
         timeout: 50,
         punishment: "none",
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiTower: {
@@ -353,7 +350,7 @@ export default {
         minDelay: 200,
         timeout: 60,
         punishment: "none",
-        maxVL: 2
+        maxVL: 2,
     },
 
     antiGameMode: {
@@ -362,12 +359,12 @@ export default {
         returnDefault: true, // if true, player will be return to default game mode
         returnGameMode: 0, // use when returnDefault is false
         punishment: "ban",
-        maxVL: 4
+        maxVL: 4,
     },
 
     antiNameSpoof: {
         enabled: true,
-        punishment: "ban"
+        punishment: "ban",
         // nothing to give you set :doge:
     },
 
@@ -375,45 +372,33 @@ export default {
         enabled: false, //unstable module >A<
         punishment: "kick",
         maxVL: 4,
-        toolType: [
-            "axe",
-            "shovel",
-            "pickaxe",
-            "sword"
-        ]
+        toolType: ["axe", "shovel", "pickaxe", "sword"],
     },
 
     antiFastBreak: {
-        enabled: false, 
+        enabled: false,
         punishment: "ban",
         maxVL: 4,
         solidOnly: true,
         maxBPS: 1.2,
         toolLimit: 4.2,
-        toolType: [
-            "axe",
-            "shovel",
-            "pickaxe",
-            "sword"
-        ],
-        matchType: { //edit the tool type and it's break limit here
-            "wood": 3.9,
-            "stone": 5.1
-        }
+        toolType: ["axe", "shovel", "pickaxe", "sword"],
+        matchType: {
+            //edit the tool type and it's break limit here
+            wood: 3.9,
+            stone: 5.1,
+        },
     },
 
     antiXray: {
         enabled: false,
-        notifyAt: [
-            "diamond_ore",
-            "ancient_debris"
-        ]
+        notifyAt: ["diamond_ore", "ancient_debris"],
     },
 
     antiDisabler: {
         enabled: true, // THIS SHOULD BE ENABLED
         maxVL: 0,
-        punishment: "ban"
+        punishment: "ban",
     },
 
     antiIllegalItem: {
@@ -570,36 +555,35 @@ export default {
             "minecraft:item.wooden_door",
             "minecraft:cave_vines",
             "minecraft:cave_vines_body_with",
-            "minecraft:npc_spawn_egg"
+            "minecraft:npc_spawn_egg",
         ],
         state: {
             typeCheck: {
                 enabled: true,
-                punishment: "ban"
+                punishment: "ban",
             },
             nameLength: {
                 enabled: true,
                 punishment: "ban",
-                maxItemNameLength: 32
+                maxItemNameLength: 32,
             },
             itemTag: {
                 enabled: true,
                 punishment: "ban",
-                maxAllowedTag: 0
+                maxAllowedTag: 0,
             },
             loreCheck: {
                 enabled: true,
-                punishment: "ban"
+                punishment: "ban",
             },
             itemAmount: {
                 enabled: true,
-                punishment: "ban"
+                punishment: "ban",
             },
             enchantLevel: {
                 enabled: true,
                 punishment: "ban",
                 whiteList: [], //example: ["knockback:4"] than knockback enchantment with level 4 will not be punished
-
             },
             enchantConflict: {
                 enabled: true,
@@ -610,15 +594,14 @@ export default {
                 enabled: true,
                 punishment: "ban",
                 whiteList: [], //example: ["superItem:super_sword"] for bypass super_word's enchantment
-
             },
             enchantRepeat: {
                 enabled: true,
-                punishment: "ban"
-            }
+                punishment: "ban",
+            },
         },
         checkCreativeMode: true,
-        timeout: 60
+        timeout: 60,
     },
 
     antiElytraFly: {
@@ -627,7 +610,7 @@ export default {
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "none"
+        punishment: "none",
     },
 
     antiFastUse: {
@@ -635,27 +618,29 @@ export default {
         minUseTime: 20,
         timeout: 60,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 2,
     },
 
     antiAuto: {
         enabled: true,
         punishment: "ban",
-        maxVL: 2
+        maxVL: 2,
     },
 
     antiCommandBlockExplolit: {
         enabled: false,
         punishment: "ban",
         maxVL: 0,
-        cancelPlacement: [ // cancel the cbe block placement
+        cancelPlacement: [
+            // cancel the cbe block placement
             "minecraft:bee_nest",
             "minecraft:beehive",
             "minecraft:moving_block",
             "minecraft:movingBlock",
             "minecraft:movingblock",
         ],
-        cancelUsage: [ // cancel the usage of bucket
+        cancelUsage: [
+            // cancel the usage of bucket
             "minecraft:axolotl_bucket",
             "minecraft:cod_bucket",
             "minecraft:powder_snow_bucket",
@@ -663,13 +648,13 @@ export default {
             "minecraft:salmon_bucket",
             "minecraft:tadpole_bucket",
             "minecraft:tropical_fish_bucket",
-        ]
+        ],
     },
 
     antiCrasher: {
         enabled: true,
         punishment: "ban",
-        maxVL: 0
+        maxVL: 0,
     },
     antiBot: {
         enabled: false,
@@ -677,7 +662,7 @@ export default {
         maxVL: 0,
         clickSpeedThershold: 6, // 1 = 1 tick or 50 mile second
         timer: 1, // 1 = 1 minute
-        maxTry: 3
+        maxTry: 3,
     },
 
     worldBorder: {
@@ -686,21 +671,8 @@ export default {
         radius: 250000, // default radius
         stopAdmin: false,
         centerX: undefined,
-        centerZ: undefined
+        centerZ: undefined,
     },
 
-    blacklistedMessages: [
-        "discord.gg",
-        "dsc.gg",
-        "@outlook.com",
-        "@gmail.com",
-        "@hotmail.com",
-        "discordapp.com",
-        "discord.com/invite/",
-        "https://",
-        "http://",
-        "the best minecraft bedrock utility mod",
-        "disepi/ambrosial",
-        "aras"
-    ]
-}
+    blacklistedMessages: ["discord.gg", "dsc.gg", "@outlook.com", "@gmail.com", "@hotmail.com", "discordapp.com", "discord.com/invite/", "https://", "http://", "the best minecraft bedrock utility mod", "disepi/ambrosial", "aras"],
+};

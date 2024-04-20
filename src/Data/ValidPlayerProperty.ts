@@ -36,12 +36,12 @@ export default [
     "pingTick",
     "perfectMove",
     "lastTouchEntity",
-    "lastNonGlidingPoint"
-]
+    "lastNonGlidingPoint",
+];
 
 /** A code for making this
  * @author jasonlaubb
- * 
+ *
  * @code
  * const item = ``
  * const split = item.split("\n").map((each) => each.trim().split(":")[0]).map((each) => `    "${each}",\n`).join("")

@@ -153,7 +153,7 @@ export default {
     "-langlist.list": "Danh sách ngôn ngữ:",
 
     ".CommandSystem.no_permission": "Bạn không có quyền sử dụng lệnh này",
-    ".CommandSystem.unknown_command": "Lệnh không xác định. Nhập \"help\" để biết trợ giúp.",
+    ".CommandSystem.unknown_command": 'Lệnh không xác định. Nhập "help" để biết trợ giúp.',
     ".CommandSystem.command_disabled": "Lệnh này đã bị vô hiệu hóa",
     ".CommandSystem.command_disabled_reason": "Bạn không phải là quản trị viên để sử dụng lệnh này",
     ".CommandSystem.no_permisson": "Bạn không có đủ quyền để sử dụng lệnh này",

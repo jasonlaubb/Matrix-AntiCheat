@@ -1,8 +1,8 @@
-import lang from "./Languages/lang"
-import { defaultLy, keys } from "../Modules/Modules"
-import { world } from "@minecraft/server"
+import lang from "./Languages/lang";
+import { defaultLy, keys } from "../Modules/Modules";
+import { world } from "@minecraft/server";
 
-export function helpList (p: string): string {
+export function helpList(p: string): string {
     return [
         lang("-help.help"),
         lang("-help.toggles"),
@@ -34,16 +34,16 @@ export function helpList (p: string): string {
         lang("-help.langlist"),
         lang("-help.borderSize"),
         "matrixui - open the ui (beta)",
-        "banrun <command/disable> - change the punishment to execute a command on the hacker"
-    ].map(des => "§g" + p + des).join("\n")
+        "banrun <command/disable> - change the punishment to execute a command on the hacker",
+    ]
+        .map((des) => "§g" + p + des)
+        .join("\n");
 }
 
-export function toggleList (p: string): string {
-    return validModules.map((module) => `§l§7(${(world.getDynamicProperty(module) ?? defaultLy(module) == true ? "§aenabled" : "§cdisabled")}§7)§r §g${p}toggle ${module} <enable/disable> - ${lang("-toggles.toggle")} ${module} ${lang("-toggles.module")}`).join("\n")
+export function toggleList(p: string): string {
+    return validModules
+        .map((module) => `§l§7(${world.getDynamicProperty(module) ?? defaultLy(module) == true ? "§aenabled" : "§cdisabled"}§7)§r §g${p}toggle ${module} <enable/disable> - ${lang("-toggles.toggle")} ${module} ${lang("-toggles.module")}`)
+        .join("\n");
 }
 
-export const validModules: string[] = [
-    "chatRank",
-    "dimensionLock",
-    ...keys
-]
+export const validModules: string[] = ["chatRank", "dimensionLock", ...keys];

@@ -1,9 +1,4 @@
-import {
-    world,
-    system, 
-    Vector3,
-    Player
-} from "@minecraft/server";
+import { world, system, Vector3, Player } from "@minecraft/server";
 import { isAdmin } from "../../Assets/Util";
 
 interface Freeze {
@@ -24,12 +19,12 @@ system.runInterval(() => {
         try {
             player.teleport(freeze.location, {
                 dimension: world.getDimension(freeze.dimension),
-                rotation: { x: 0, y: 0 }
+                rotation: { x: 0, y: 0 },
             });
         } catch {
             player.teleport(freeze.location, {
                 dimension: player.dimension,
-                rotation: { x: 0, y: 0 }
+                rotation: { x: 0, y: 0 },
             });
             freeze.dimension = player.dimension.id;
             player.setDynamicProperty("freeze", JSON.stringify(freeze));
@@ -43,7 +38,7 @@ function freeze(player: Player) {
     const floorPos = {
         x: Math.floor(player.location.x),
         y: Math.floor(player.location.y),
-        z: Math.floor(player.location.z)
+        z: Math.floor(player.location.z),
     } as Vector3;
     if (player.getDynamicProperty("freeze") !== undefined) return false;
     system.run(() => {
@@ -52,14 +47,14 @@ function freeze(player: Player) {
     return true;
 }
 
-function unfreeze (player: Player) {
-    if (player.getDynamicProperty("freeze") === undefined) return false
+function unfreeze(player: Player) {
+    if (player.getDynamicProperty("freeze") === undefined) return false;
     system.run(() => {
         player.runCommand("inputpermission set @s movement enabled");
         player.runCommand("inputpermission set @s camera enabled");
-        player.setDynamicProperty("freeze", undefined)
-    })
-    return true
+        player.setDynamicProperty("freeze", undefined);
+    });
+    return true;
 }
 
-export { freeze, unfreeze }
+export { freeze, unfreeze };

@@ -124,7 +124,7 @@ export default {
     "-lang.has": "La langue a été changée en %a",
     "-langlist.list": "Language list:",
     ".CommandSystem.no_permission": "Vous n'êtes pas autorisé à utiliser cette commande",
-    ".CommandSystem.unknown_command": "Commande inconnue. Tapez \"help\" pour obtenir de l'aide.",
+    ".CommandSystem.unknown_command": 'Commande inconnue. Tapez "help" pour obtenir de l\'aide.',
     ".CommandSystem.command_disabled": "Cette commande est désactivée",
     ".CommandSystem.command_disabled_reason": "vous n'êtes pas un administrateur pour utiliser cette commande",
     ".CommandSystem.no_permisson": "Vous n'avez pas les autorisations suffisantes pour utiliser cette commande",

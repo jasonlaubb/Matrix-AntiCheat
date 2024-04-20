@@ -108,7 +108,7 @@ export default {
     "-mute.has": "%a è stato mutato con successo da %b",
     "-mute.already": "%a è già mutato",
 
-    "-vanish.has": "Sei invisibile agli altri",  
+    "-vanish.has": "Sei invisibile agli altri",
     "-vanish.out": "Non sei più invisibile agli altri",
 
     "-invcopy.self": "Non puoi copiare il tuo stesso inventario",
@@ -148,7 +148,7 @@ export default {
     "-langlist.list": "Lista dei linguaggi:",
 
     ".CommandSystem.no_permission": "Non hai il permesso di usare questo comando",
-    ".CommandSystem.unknown_command": "Comando sconosciuto. Scrivi \"help\" per aiuto.",
+    ".CommandSystem.unknown_command": 'Comando sconosciuto. Scrivi "help" per aiuto.',
     ".CommandSystem.command_disabled": "Questo comando è disabilitato",
     ".CommandSystem.command_disabled_reason": "Non sei un admin per eseguire questo comando",
     ".CommandSystem.no_permisson": "Non hai i permessi per eseguire questo comando",
@@ -256,4 +256,4 @@ export default {
     ".UI.i": "Admin GUI",
     ".UI.i.a": "Moderate Players",
     ".UI.i.b": "Settings",
-}
+};

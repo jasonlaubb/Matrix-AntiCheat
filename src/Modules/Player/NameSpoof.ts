@@ -8,15 +8,15 @@ import lang from "../../Data/Languages/lang";
  * It basically checks if the player name contains any non-ASCII characters or invalid length
  */
 
-async function AntiNameSpoof (player: Player, playerName: string) {
-    const config = c()
+async function AntiNameSpoof(player: Player, playerName: string) {
+    const config = c();
 
     //check if the player name is too long or too short
-    const matches = playerName.match(/\([1-9]|[1-3][0-9]|40\)/g)
-    const absName = matches[0] ? playerName.replace(matches[0], "") : playerName
+    const matches = playerName.match(/\([1-9]|[1-3][0-9]|40\)/g);
+    const absName = matches[0] ? playerName.replace(matches[0], "") : playerName;
     if (absName?.length < 3 || absName?.length > 16) {
-        flag (player, "NameSpoof", "A", 0, config.antiNameSpoof.punishment, [lang(">Type") + ":" + lang(">illegalLength"), lang(">Length") + ":" + playerName.length])
-        return
+        flag(player, "NameSpoof", "A", 0, config.antiNameSpoof.punishment, [lang(">Type") + ":" + lang(">illegalLength"), lang(">Length") + ":" + playerName.length]);
+        return;
     }
 
     //get the non-ASCII characters in player name
@@ -33,27 +33,27 @@ async function AntiNameSpoof (player: Player, playerName: string) {
             //if the word isn't a valid character for player name
             if (!/[\u4E00-\u9FFF\uAC00-\uD7AF\u3040-\u30FF]|[^\d_]|[().&*]/.test(regax)) {
                 illegalName = true;
-                break
+                break;
             }
         }
 
         //if the player name is illegal, flag the player
         if (illegalName === true) {
-            flag (player, "NameSpoof", "B", 0, config.antiNameSpoof.punishment, [lang(">Type") + ":" + lang(">illegalRegax")])
+            flag(player, "NameSpoof", "B", 0, config.antiNameSpoof.punishment, [lang(">Type") + ":" + lang(">illegalRegax")]);
         }
     }
 }
 
-const antiNameSpoof = (({ player }: PlayerSpawnAfterEvent) => {
-    if (isAdmin (player)) return
-    system.run(() => AntiNameSpoof (player, player.name))
-})
+const antiNameSpoof = ({ player }: PlayerSpawnAfterEvent) => {
+    if (isAdmin(player)) return;
+    system.run(() => AntiNameSpoof(player, player.name));
+};
 
 export default {
-    enable () {
-        world.afterEvents.playerSpawn.subscribe(antiNameSpoof)
+    enable() {
+        world.afterEvents.playerSpawn.subscribe(antiNameSpoof);
     },
-    disable () {
-        world.afterEvents.playerSpawn.unsubscribe(antiNameSpoof)
-    }
-}
+    disable() {
+        world.afterEvents.playerSpawn.unsubscribe(antiNameSpoof);
+    },
+};

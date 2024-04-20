@@ -1,19 +1,9 @@
-import {
-    world,
-    system,
-    Player,
-    Entity,
-    EntityDamageCause,
-    EntityHurtAfterEvent,
-    PlayerLeaveAfterEvent
-} from "@minecraft/server";
-import {
-    flag, isAdmin, c
-} from "../../Assets/Util.js";
+import { world, system, Player, Entity, EntityDamageCause, EntityHurtAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { flag, isAdmin, c } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
-const reachData: Map <string, number> = new Map <string, number> ();
+const reachData: Map<string, number> = new Map<string, number>();
 
 /**
  * @author ravriv && RamiGamerDev
@@ -37,22 +27,22 @@ function calculateDistance(b1: Entity, b2: Entity) {
     return Math.floor(Math.hypot(dx, dz)) - (velocityB1 + velocityB2);
 }
 
-function AntiReach (hurtEntity: Player, damagingEntity: Player) {
-    const config = c()
+function AntiReach(hurtEntity: Player, damagingEntity: Player) {
+    const config = c();
     //calculate the y reach
-    const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y)-Math.abs(damagingEntity.getVelocity().y) 
+    const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y) - Math.abs(damagingEntity.getVelocity().y);
 
     //constant the max y reach
-    let maximumYReach: number = config.antiReach.maxYReach
+    let maximumYReach: number = config.antiReach.maxYReach;
 
     //if the player is jumping, increase the max y reach by 1
     if (damagingEntity.isJumping) {
-        maximumYReach += 1
+        maximumYReach += 1;
     }
 
     //if the player is higher than the target, decrease the max y reach by 1
     if (damagingEntity.location.y > hurtEntity.location.y) {
-        maximumYReach -= 1
+        maximumYReach -= 1;
     }
 
     //constant the distance
@@ -72,7 +62,7 @@ function AntiReach (hurtEntity: Player, damagingEntity: Player) {
     //if the vl is higher than 2, flag the player
     if (reachData.get(damagingEntity.id) >= 2) {
         //A - false positive: very low, efficiency: high
-        flag(damagingEntity, 'Reach', "A", config.antiReach.maxVL, config.antiReach.punishment, [lang(">distance") + ":" + distance.toFixed(2), lang(">yReach") + ":" + yReach.toFixed(2)])
+        flag(damagingEntity, "Reach", "A", config.antiReach.maxVL, config.antiReach.punishment, [lang(">distance") + ":" + distance.toFixed(2), lang(">yReach") + ":" + yReach.toFixed(2)]);
         if (!config.slient) damagingEntity.applyDamage(6);
         reachData.delete(damagingEntity.id);
     }
@@ -80,23 +70,23 @@ function AntiReach (hurtEntity: Player, damagingEntity: Player) {
 
 const antiReach = ({ damageSource, hurtEntity }: EntityHurtAfterEvent) => {
     const damagingEntity: Entity = damageSource.damagingEntity;
-    if (damageSource.cause !== EntityDamageCause.entityAttack || damageSource.damagingProjectile || !(damagingEntity instanceof Player) || isAdmin (damagingEntity)) return;
+    if (damageSource.cause !== EntityDamageCause.entityAttack || damageSource.damagingProjectile || !(damagingEntity instanceof Player) || isAdmin(damagingEntity)) return;
 
     AntiReach(hurtEntity as Player, damagingEntity);
 };
 
 const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     reachData.delete(playerId);
-}
+};
 
 export default {
-    enable () {
-        world.afterEvents.entityHurt.subscribe(antiReach, { entityTypes: [MinecraftEntityTypes.Player] })
-        world.afterEvents.playerLeave.subscribe(playerLeave)
+    enable() {
+        world.afterEvents.entityHurt.subscribe(antiReach, { entityTypes: [MinecraftEntityTypes.Player] });
+        world.afterEvents.playerLeave.subscribe(playerLeave);
     },
-    disable () {
-        reachData.clear()
-        world.afterEvents.entityHurt.unsubscribe(antiReach)
-        world.afterEvents.playerLeave.unsubscribe(playerLeave)
-    }
-}
+    disable() {
+        reachData.clear();
+        world.afterEvents.entityHurt.unsubscribe(antiReach);
+        world.afterEvents.playerLeave.unsubscribe(playerLeave);
+    },
+};

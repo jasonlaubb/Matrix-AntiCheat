@@ -125,7 +125,7 @@ export default {
     "-lang.has": "언어가 %a님에 의해 번경되었습니다.",
     "-langlist.list": "언어 목록:",
     ".CommandSystem.no_permission": "이 명령어를 사용할 권한이 없습니다.",
-    ".CommandSystem.unknown_command": "잘못된 명령어. \"help\"를 입력해보세요.",
+    ".CommandSystem.unknown_command": '잘못된 명령어. "help"를 입력해보세요.',
     ".CommandSystem.command_disabled": "이 명령어는 현재 꺼져있습니다.",
     ".CommandSystem.command_disabled_reason": "이 명령어는 어드민만 사용할 수 있습니다.",
     ".CommandSystem.no_permisson": "이 명령어를 사용할 충분한 권한이 없습니다.",

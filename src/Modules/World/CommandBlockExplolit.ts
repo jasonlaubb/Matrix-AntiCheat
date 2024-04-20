@@ -8,38 +8,38 @@ import lang from "../../Data/Languages/lang";
  */
 
 const blockPlace = (event: PlayerPlaceBlockBeforeEvent) => {
-    const { player, permutationBeingPlaced: permutation } = event
-    if (isAdmin(player) || !permutation) return
-    const config = c()
+    const { player, permutationBeingPlaced: permutation } = event;
+    if (isAdmin(player) || !permutation) return;
+    const config = c();
     if (config.antiCommandBlockExplolit.cancelPlacement.includes(permutation.type.id)) {
-        event.cancel = true
+        event.cancel = true;
         system.run(() => {
-            player.getComponent(EntityEquippableComponent.componentId).setEquipment(EquipmentSlot.Mainhand) // bye bye item
-            flag (player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + permutation.type.id])
-        })
+            player.getComponent(EntityEquippableComponent.componentId).setEquipment(EquipmentSlot.Mainhand); // bye bye item
+            flag(player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + permutation.type.id]);
+        });
     }
-}
+};
 
 const itemUse = (event: ItemUseOnBeforeEvent) => {
-    const { source: player, itemStack } = event
-    if (isAdmin(player)) return
-    const config = c()
+    const { source: player, itemStack } = event;
+    if (isAdmin(player)) return;
+    const config = c();
     if (config.antiCommandBlockExplolit.cancelUsage.includes(itemStack?.typeId)) {
-        event.cancel = true
+        event.cancel = true;
         system.run(() => {
-            player.getComponent(EntityEquippableComponent.componentId).setEquipment(EquipmentSlot.Mainhand) // bye bye item
-            flag (player, "Command Block Explolit", "B", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + itemStack.typeId])
-        })
+            player.getComponent(EntityEquippableComponent.componentId).setEquipment(EquipmentSlot.Mainhand); // bye bye item
+            flag(player, "Command Block Explolit", "B", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + itemStack.typeId]);
+        });
     }
-}
+};
 
 export default {
-    enable () {
-        world.beforeEvents.playerPlaceBlock.subscribe(blockPlace)
-        world.beforeEvents.itemUseOn.subscribe(itemUse)
+    enable() {
+        world.beforeEvents.playerPlaceBlock.subscribe(blockPlace);
+        world.beforeEvents.itemUseOn.subscribe(itemUse);
     },
-    disable () {
-        world.beforeEvents.playerPlaceBlock.unsubscribe(blockPlace)
-        world.beforeEvents.itemUseOn.unsubscribe(itemUse)
-    }
-}
+    disable() {
+        world.beforeEvents.playerPlaceBlock.unsubscribe(blockPlace);
+        world.beforeEvents.itemUseOn.unsubscribe(itemUse);
+    },
+};

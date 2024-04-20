@@ -12,7 +12,7 @@ export default {
     "-help.rankclear": "rankclear <玩家> - 清除玩家的所有聊天称号",
     "-help.defaultrank": "defaultrank <rank> - 更改预设聊天称号",
     "-help.showallrank": "showallrank true/false - 在聊天中显示所有聊天称号",
-    "-help.ban": "ban <玩家> <原因> <timeRegax/\"forever\"> - 停权玩家",
+    "-help.ban": 'ban <玩家> <原因> <timeRegax/"forever"> - 停权玩家',
     "-help.unban": "unban <玩家> - 解除停权玩家",
     "-help.unbanremove": "unbanremove <玩家> - 从解禁伫列中删除玩家",
     "-help.unbanlist": "unbanlist - 显示解禁伫列中的所有玩家",
@@ -90,7 +90,6 @@ export default {
     "-unbanremove.not": "%a 不在解禁队列",
     "-unbanremove.yes": "%a 已从解禁队列中删除",
 
-
     "-unbanlist.none": "解封队列中没有玩家",
     "-unbanlist.list": "解禁队列",
 
@@ -154,7 +153,7 @@ export default {
     "-langlist.list": "语言列表：",
 
     ".CommandSystem.no_permission": "你没有权限使用该指令",
-    ".CommandSystem.unknown_command": "未知指令。请输入 \"help\" 取得协助。",
+    ".CommandSystem.unknown_command": '未知指令。请输入 "help" 取得协助。',
     ".CommandSystem.command_disabled": "该指令已停用",
     ".CommandSystem.command_disabled_reason": "您不是管理员，无法使用此指令",
     ".CommandSystem.no_player": "请指定玩家",
@@ -259,4 +258,4 @@ export default {
     ".UI.i": "Admin GUI",
     ".UI.i.a": "Moderate Players",
     ".UI.i.b": "Settings",
-}
+};

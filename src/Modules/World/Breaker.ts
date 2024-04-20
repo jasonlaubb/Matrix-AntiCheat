@@ -12,11 +12,11 @@ const offset = [
     { x: 0, y: -1, z: 0 },
     { x: 0, y: 0, z: 1 },
     { x: 0, y: 0, z: -1 },
-]
+];
 
-const lastFlag = new Map<string, number>()
+const lastFlag = new Map<string, number>();
 
-async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBlockBeforeEvent) {
+async function AntiBreaker(player: Player, block: Block, event: PlayerBreakBlockBeforeEvent) {
     if (player.hasTag("matrix:break-disabled") || block?.isAir) return;
 
     /* This check is not fixed
@@ -44,25 +44,25 @@ async function AntiBreaker (player: Player, block: Block, event: PlayerBreakBloc
             }
         }
     } else {*/
-        let allBlock: Block[] = []
-        offset.forEach(({ x, y, z}) => allBlock.push(player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z })) ?? null)
-        const aroundSolid = allBlock.every(block => block?.isSolid)
+    let allBlock: Block[] = [];
+    offset.forEach(({ x, y, z }) => allBlock.push(player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z })) ?? null);
+    const aroundSolid = allBlock.every((block) => block?.isSolid);
 
-        if (aroundSolid) {
-            event.cancel = true
-            const lastflag = lastFlag.get(player.id)
-            if (lastflag && Date.now() - lastflag < 35) {
-                if (!config.slient) {
-                    system.run(() => player.addTag("matrix:break-disabled"))
-                    system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout)
-                }
-                system.run(() => flag (player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, [lang(">Type") + ":" + block.typeId]))
+    if (aroundSolid) {
+        event.cancel = true;
+        const lastflag = lastFlag.get(player.id);
+        if (lastflag && Date.now() - lastflag < 35) {
+            if (!config.slient) {
+                system.run(() => player.addTag("matrix:break-disabled"));
+                system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout);
             }
-            lastFlag.set(player.id, Date.now())
+            system.run(() => flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, [lang(">Type") + ":" + block.typeId]));
         }
-//  }
+        lastFlag.set(player.id, Date.now());
+    }
+    //  }
 
-/*
+    /*
     const allPos = new Set(pointsBetween(player.getHeadLocation(), block.location))
     const anySolid = [...allPos].map(pos => player.dimension.getBlock(pos)).some(block => block?.isSolid)
 
@@ -115,24 +115,24 @@ function pointsBetween (pos1: Vector3, pos2: Vector3): Vector3[] {
 }*/
 
 const antiBreaker = (event: PlayerBreakBlockBeforeEvent) => {
-    const { player, block } = event
-    if (isAdmin(player)) return
+    const { player, block } = event;
+    if (isAdmin(player)) return;
 
-    AntiBreaker (player, block, event)
-}
+    AntiBreaker(player, block, event);
+};
 
 const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    lastFlag.delete(playerId)
-}
+    lastFlag.delete(playerId);
+};
 
 export default {
-    enable () {
-        world.beforeEvents.playerBreakBlock.subscribe(antiBreaker)
-        world.afterEvents.playerLeave.subscribe(playerLeave)
+    enable() {
+        world.beforeEvents.playerBreakBlock.subscribe(antiBreaker);
+        world.afterEvents.playerLeave.subscribe(playerLeave);
     },
-    disable () {
-        lastFlag.clear()
-        world.beforeEvents.playerBreakBlock.unsubscribe(antiBreaker)
-        world.afterEvents.playerLeave.unsubscribe(playerLeave)
-    }
-}
+    disable() {
+        lastFlag.clear();
+        world.beforeEvents.playerBreakBlock.unsubscribe(antiBreaker);
+        world.afterEvents.playerLeave.unsubscribe(playerLeave);
+    },
+};

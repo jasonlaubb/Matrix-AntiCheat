@@ -113,7 +113,7 @@ export default {
     "-unmute.has": "%a has been unmuted by %b",
     "-unmute.admin": "You can't unmute an admin",
 
-    "-vanish.has": "You are now vanished",  
+    "-vanish.has": "You are now vanished",
     "-vanish.out": "You are now no longer vanished",
 
     "-invcopy.self": "You can't copy your own inventory",
@@ -153,7 +153,7 @@ export default {
     "-langlist.list": "Language list:",
 
     ".CommandSystem.no_permission": "You don't have permission to use this command",
-    ".CommandSystem.unknown_command": "Unknown command. Type \"help\" for help.",
+    ".CommandSystem.unknown_command": 'Unknown command. Type "help" for help.',
     ".CommandSystem.command_disabled": "This command is disabled",
     ".CommandSystem.command_disabled_reason": "You are not an admin to use this command",
     ".CommandSystem.no_permisson": "You don't have enough permission to use this command",
@@ -261,4 +261,4 @@ export default {
     ".UI.i": "Admin GUI",
     ".UI.i.a": "Moderate Players",
     ".UI.i.b": "Settings",
-}
+};

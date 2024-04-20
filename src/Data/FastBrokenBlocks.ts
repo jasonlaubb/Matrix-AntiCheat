@@ -64,5 +64,5 @@ export default [
     MinecraftBlockTypes.UnpoweredRepeater,
     MinecraftBlockTypes.PoweredRepeater,
     MinecraftBlockTypes.UnpoweredComparator,
-    MinecraftBlockTypes.PoweredComparator
-]
+    MinecraftBlockTypes.PoweredComparator,
+];

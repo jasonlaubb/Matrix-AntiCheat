@@ -1,4 +1,4 @@
-import { MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index"
+import { MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 
 export default [
     MinecraftItemTypes.WoodenSword,
@@ -58,5 +58,5 @@ export default [
     MinecraftItemTypes.TurtleHelmet,
     MinecraftItemTypes.Elytra,
     MinecraftItemTypes.FlintAndSteel,
-    MinecraftItemTypes.EnchantedBook
-]
+    MinecraftItemTypes.EnchantedBook,
+];

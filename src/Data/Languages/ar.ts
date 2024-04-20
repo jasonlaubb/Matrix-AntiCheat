@@ -113,7 +113,7 @@ export default {
     "-unmute.has": "%a قد الغا اسكات %b",
     "-unmute.admin": "لا يمكنك الغاء اسكات مشرف",
 
-    "-vanish.has": "انت الان مخفي",  
+    "-vanish.has": "انت الان مخفي",
     "-vanish.out": "انت الان لست مخفي",
 
     "-invcopy.self": "لا تستطيع نسخ الانفتوري الخاص بك",
@@ -124,13 +124,13 @@ export default {
 
     "-echestwipe.self": "لا تستطيع افراغ الاندر شست الخاص بك",
     "-echestwipe.admin": "لا تستطيع افراغ اندر شست خاص بمشرف",
-    "-echestwipe.has": "%b تم افراغه من قبل %a:اندر شست الخاص ب", 
+    "-echestwipe.has": "%b تم افراغه من قبل %a:اندر شست الخاص ب",
 
     "-lockdowncode.unknown": "ارجوك ادخل الفعل الذي تريده",
     "-lockdowncode.get": "%a :شفرة اغلاق سيرفر هي",
     "-lockdowncode.enter": "ارجوك ادخل شفرة",
     "-lockdowncode.set": "%a تم بمجاح تغير شفرة الى",
-    
+
     "-lockdowncode.number": "%a طول الكود يجب ان يكون",
     "-lockdowncode.length": "ارجوك ادخل طول الكود بين 1 و 128",
     "-lockdowncode.random": "%a - ؛تم بنجاح انشاء شفرة عشوائي",
@@ -154,7 +154,7 @@ export default {
     "-langlist.list": ":قائمة اللغات",
 
     ".CommandSystem.no_permission": "ليس لديك القدرة على استعمال هذا الامر",
-    ".CommandSystem.unknown_command": "للمساعدة \"help\" امر غير معروف.اكتب",
+    ".CommandSystem.unknown_command": 'للمساعدة "help" امر غير معروف.اكتب',
     ".CommandSystem.command_disabled": "هذا الامر مطفأ",
     ".CommandSystem.command_disabled_reason": "لست مشرف لاستعمال هذا الامر",
     ".CommandSystem.no_permisson": "ليس لديك الصلاحية الكافية لاستخدام هذا الامر",
@@ -181,7 +181,7 @@ export default {
     ".dimensionLock.stop": "!انت غير مسموح لك لذهاب لابعاد اخرى",
 
     ".Spam.slowdown": "ارجوك ارسل رسائل ببطئ",
-    
+
     ".Spam.repeated": "لاتستطيع ارسال نفس الرسالة",
     ".Spam.kicked": "§gتم طرده بسبب تكرار§c%a",
     ".Spam.filter": "رسالتك تحتوي على كلمة محظورة",
@@ -261,4 +261,4 @@ export default {
     ".UI.i": "Admin GUI",
     ".UI.i.a": "Moderate Players",
     ".UI.i.b": "Settings",
-}
+};

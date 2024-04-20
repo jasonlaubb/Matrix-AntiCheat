@@ -113,7 +113,7 @@ export default {
     "-unmute.has": "Lui %a ii s-a dat accesul de a vorbi de către %b",
     "-unmute.admin": "Nu poți readuce accesul de a vorbi unui administrator",
 
-    "-vanish.has": "Acum ești invisibil",  
+    "-vanish.has": "Acum ești invisibil",
     "-vanish.out": "Nu mai ești invisibil",
 
     "-invcopy.self": "Nu îți poți copia inventarul",
@@ -153,7 +153,7 @@ export default {
     "-langlist.list": "Language list:",
 
     ".CommandSystem.no_permission": "Nu ai permisiunea să folosești această comandă",
-    ".CommandSystem.unknown_command": "Comandă necunoscută. Scrie \"help\" Pentru ajutor.",
+    ".CommandSystem.unknown_command": 'Comandă necunoscută. Scrie "help" Pentru ajutor.',
     ".CommandSystem.command_disabled": "Această comandă este oprită",
     ".CommandSystem.command_disabled_reason": "Nu ești administrator să folosești această comandă",
     ".CommandSystem.no_permisson": "Nu ai destule permisiuni să folosești această comandă",
@@ -261,4 +261,4 @@ export default {
     ".UI.i": "Admin GUI",
     ".UI.i.a": "Moderate Players",
     ".UI.i.b": "Settings",
-}
+};

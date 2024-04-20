@@ -1,19 +1,11 @@
-import {
-    Player,
-    system,
-    world,
-    Effect,
-    Vector3,
-    GameMode,
-    PlayerLeaveAfterEvent
-} from "@minecraft/server";
+import { Player, system, world, Effect, Vector3, GameMode, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
-function getSpeedIncrease (speedEffect: Effect | undefined) {
+function getSpeedIncrease(speedEffect: Effect | undefined) {
     if (speedEffect === undefined) return 0;
-    return (speedEffect?.amplifier + 1) * 0.0476
+    return (speedEffect?.amplifier + 1) * 0.0476;
 }
 
 const lastPosition = new Map<string, Vector3>();
@@ -26,8 +18,8 @@ const lastflag2 = new Map<string, number>();
  * @description A strong check for no slow, it detect no slow in a high accuracy
  */
 
-async function AntiNoSlow (player: Player, now: number) {
-    const config = c()
+async function AntiNoSlow(player: Player, now: number) {
+    const config = c();
     //get the player location
     const playerLocation = player.location;
 
@@ -38,16 +30,18 @@ async function AntiNoSlow (player: Player, now: number) {
     const { x: velocityX, z: velocityZ } = player.getVelocity();
 
     //check if the player's is in the Web
-    const headWeb: boolean = player.dimension.getBlock({
-        x: Math.floor(player.location.x),
-        y: Math.floor(player.location.y) + 1,
-        z: Math.floor(player.location.z)
-    })?.typeId === MinecraftBlockTypes.Web
-    const bodyWeb: boolean = player.dimension.getBlock({
-        x: Math.floor(player.location.x),
-        y: Math.floor(player.location.y),
-        z: Math.floor(player.location.z)
-    })?.typeId === MinecraftBlockTypes.Web
+    const headWeb: boolean =
+        player.dimension.getBlock({
+            x: Math.floor(player.location.x),
+            y: Math.floor(player.location.y) + 1,
+            z: Math.floor(player.location.z),
+        })?.typeId === MinecraftBlockTypes.Web;
+    const bodyWeb: boolean =
+        player.dimension.getBlock({
+            x: Math.floor(player.location.x),
+            y: Math.floor(player.location.y),
+            z: Math.floor(player.location.z),
+        })?.typeId === MinecraftBlockTypes.Web;
 
     //if the player isn't in the web, set the last position
     if (!headWeb && !bodyWeb) {
@@ -62,18 +56,18 @@ async function AntiNoSlow (player: Player, now: number) {
 
     //check if the player is in the web and the player speed is lower than the max speed
     if (headWeb === true || bodyWeb === true) {
-        if (playerSpeed <= (config.antiNoSlow.maxWebSpeed + limitIncrease)) {
+        if (playerSpeed <= config.antiNoSlow.maxWebSpeed + limitIncrease) {
             lastPosition.set(player.id, playerLocation);
         } else {
             // flag the player
             if (!(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !player.isFlying && !player.isGliding) {
-                const lastFlag = lastflag.get(player.id)
+                const lastFlag = lastflag.get(player.id);
                 if (lastFlag && now - lastFlag < 3500) {
                     //A - false positive: very low, efficiency: high
-                    flag (player, "NoSlow", "A" ,config.antiNoSlow.maxVL,config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`])
-                    player.teleport(playerLastPos)
+                    flag(player, "NoSlow", "A", config.antiNoSlow.maxVL, config.antiNoSlow.punishment, [`${lang(">playerSpeed")}:${playerSpeed.toFixed(2)}`]);
+                    player.teleport(playerLastPos);
                 }
-                lastflag.set(player.id, now)
+                lastflag.set(player.id, now);
             }
         }
     }
@@ -101,32 +95,32 @@ async function AntiNoSlow (player: Player, now: number) {
 }
 
 const antiNoSlow = () => {
-    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative]})
-    const now = Date.now()
+    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative] });
+    const now = Date.now();
     for (const player of players) {
-        if (isAdmin (player)) continue;
-        AntiNoSlow (player, now);
+        if (isAdmin(player)) continue;
+        AntiNoSlow(player, now);
     }
-}
+};
 
 const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    lastPosition.delete(playerId)
-    lastflag.delete(playerId)
-    lastflag2.delete(playerId)
-}
+    lastPosition.delete(playerId);
+    lastflag.delete(playerId);
+    lastflag2.delete(playerId);
+};
 
-let id: number
+let id: number;
 
 export default {
-    enable () {
-        id = system.runInterval(antiNoSlow)
-        world.afterEvents.playerLeave.subscribe(playerLeave)
+    enable() {
+        id = system.runInterval(antiNoSlow);
+        world.afterEvents.playerLeave.subscribe(playerLeave);
     },
-    disable () {
-        lastPosition.clear()
-        lastflag.clear()
-        lastflag2.clear()
-        system.clearRun(id)
-        world.afterEvents.playerLeave.unsubscribe(playerLeave)
-    }
-}
+    disable() {
+        lastPosition.clear();
+        lastflag.clear();
+        lastflag2.clear();
+        system.clearRun(id);
+        world.afterEvents.playerLeave.unsubscribe(playerLeave);
+    },
+};

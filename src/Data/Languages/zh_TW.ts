@@ -12,7 +12,7 @@ export default {
     "-help.rankclear": "rankclear <玩家> - 清除玩家的所有聊天稱號",
     "-help.defaultrank": "defaultrank <rank> - 更改預設聊天稱號",
     "-help.showallrank": "showallrank true/false - 在聊天中顯示所有聊天稱號",
-    "-help.ban": "ban <玩家> <原因> <timeRegax/\"forever\"> - 停權玩家",
+    "-help.ban": 'ban <玩家> <原因> <timeRegax/"forever"> - 停權玩家',
     "-help.unban": "unban <玩家> - 解除停權玩家",
     "-help.unbanremove": "unbanremove <玩家> - 從解禁佇列中刪除玩家",
     "-help.unbanlist": "unbanlist - 顯示解禁佇列中的所有玩家",
@@ -153,7 +153,7 @@ export default {
     "-langlist.list": "語言列表：",
 
     ".CommandSystem.no_permission": "你沒有權限使用該指令",
-    ".CommandSystem.unknown_command": "未知指令。請輸入 \"help\" 取得協助。",
+    ".CommandSystem.unknown_command": '未知指令。請輸入 "help" 取得協助。',
     ".CommandSystem.command_disabled": "該指令已停用",
     ".CommandSystem.command_disabled_reason": "您不是管理員，無法使用此指令",
     ".CommandSystem.no_player": "請指定玩家",
@@ -258,4 +258,4 @@ export default {
     ".UI.i": "Admin GUI",
     ".UI.i.a": "Moderate Players",
     ".UI.i.b": "Settings",
-}
+};

@@ -948,7 +948,7 @@ export default [
     "不机米",
     "憨巴子",
     "二青头",
-    //Français 
+    //Français
     "salope",
     "sale pute",
     "sale noire",
@@ -988,5 +988,5 @@ export default [
     ".com",
     ".fr",
     "19132",
-    "2004"
-]
+    "2004",
+];

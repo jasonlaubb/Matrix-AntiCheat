@@ -9,7 +9,7 @@ interface TowerData {
 }
 
 const towerData = new Map<string, TowerData>();
-const vL = new Map<string, number>()
+const vL = new Map<string, number>();
 
 /**
  * @author jasonlaubb
@@ -18,11 +18,11 @@ const vL = new Map<string, number>()
  */
 
 async function AntiTower(player: Player, block: Block) {
-    const config = c()
-    const data = towerData.get(player.id)
+    const config = c();
+    const data = towerData.get(player.id);
     //get the two value from Map
-    const towerBlock = data?.towerBlock
-    const lastTime = data?.lastBlockPlace
+    const towerBlock = data?.towerBlock;
+    const lastTime = data?.lastBlockPlace;
 
     //set the value to Map
     towerData.set(player.id, { towerBlock: block.location, lastBlockPlace: Date.now() });
@@ -32,7 +32,7 @@ async function AntiTower(player: Player, block: Block) {
 
     //prevent false positive and disable check when player has tag
     if (player.hasTag("matrix:place-disabled") || player.isOnGround || !player.isJumping || player.isFlying || player.isInWater || player.getEffect(MinecraftEffectTypes.JumpBoost)) return;
-    
+
     const { x, y, z }: Vector3 = block.location;
 
     //check the block has the same position as the tower block horizontally
@@ -56,12 +56,12 @@ async function AntiTower(player: Player, block: Block) {
     //calculate the delay between last block placed and current block placed
     const delay: number = Date.now() - lastTime;
 
-    const vl = vL.get(player.id) ?? 0
+    const vl = vL.get(player.id) ?? 0;
 
     //if delay is less than the min delay and all state is true, flag the player
     if (delay < config.antiTower.minDelay && locationState) {
         if (vl > 2) {
-            vL.set(player.id, undefined)
+            vL.set(player.id, undefined);
             if (!config.slient) {
                 //set the block to the air
                 block.setType(MinecraftBlockTypes.Air);
@@ -73,32 +73,32 @@ async function AntiTower(player: Player, block: Block) {
                 system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiTower.timeout);
             }
         } else {
-            vL.set(player.id, vl + 1)
+            vL.set(player.id, vl + 1);
         }
-        
+
         flag(player, "Tower", "A", config.antiTower.maxVL, config.antiTower.punishment, [lang(">Delay") + ":" + delay.toFixed(2), lang(">PosDeff") + ":" + playerPosDeff.toFixed(2), lang(">CentreDis") + ":" + playerCentreDis.toFixed(2)]);
     } else {
-        vL.set(player.id, undefined)
+        vL.set(player.id, undefined);
     }
 }
-const antiTower = (({ player, block }: PlayerPlaceBlockAfterEvent) => {
-    if (isAdmin(player)) return
+const antiTower = ({ player, block }: PlayerPlaceBlockAfterEvent) => {
+    if (isAdmin(player)) return;
     AntiTower(player, block);
-});
-const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
+};
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     towerData.delete(playerId);
-    vL.delete(playerId)
-});
+    vL.delete(playerId);
+};
 
 export default {
-    enable () {
-        world.afterEvents.playerPlaceBlock.subscribe(antiTower)
-        world.afterEvents.playerLeave.subscribe(playerLeave)
+    enable() {
+        world.afterEvents.playerPlaceBlock.subscribe(antiTower);
+        world.afterEvents.playerLeave.subscribe(playerLeave);
     },
-    disable () {
-        towerData.clear()
-        vL.clear()
-        world.afterEvents.playerPlaceBlock.subscribe(antiTower)
-        world.afterEvents.playerLeave.subscribe(playerLeave)
-    }
-}
+    disable() {
+        towerData.clear();
+        vL.clear();
+        world.afterEvents.playerPlaceBlock.subscribe(antiTower);
+        world.afterEvents.playerLeave.subscribe(playerLeave);
+    },
+};

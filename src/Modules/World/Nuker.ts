@@ -1,13 +1,4 @@
-import {
-    Block,
-    Player,
-    PlayerBreakBlockBeforeEvent,
-    PlayerLeaveAfterEvent,
-    system,
-    world,
-    ItemStack,
-    ItemEnchantableComponent
-} from "@minecraft/server";
+import { Block, Player, PlayerBreakBlockBeforeEvent, PlayerLeaveAfterEvent, system, world, ItemStack, ItemEnchantableComponent } from "@minecraft/server";
 import { flag, isAdmin, c, recoverBlockBreak, isTargetGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
@@ -21,27 +12,27 @@ const blockBreakData = new Map<string, number[]>();
  * it detects if a player breaks more than 5 blocks in a tick.
  */
 
-async function AntiNuker (player: Player, block: Block, itemStack: ItemStack) {
+async function AntiNuker(player: Player, block: Block, itemStack: ItemStack) {
     if (player.hasTag("matrix:break-disabled") || block?.isAir || isTargetGamemode(player, 1)) {
         return;
     }
-    const config = c()
-    
+    const config = c();
+
     const timeNow = Date.now();
 
     //get the block break count in the 1 tick
-    let blockBreakCount: number[] = blockBreakData.get(player.id)?.filter(time => timeNow - time < 50) ?? [];
-    let hasEfficiency: number
+    let blockBreakCount: number[] = blockBreakData.get(player.id)?.filter((time) => timeNow - time < 50) ?? [];
+    let hasEfficiency: number;
     // Thank you mojang, you add more case for throw
     try {
-        hasEfficiency = itemStack.getComponent(ItemEnchantableComponent.componentId).getEnchantment(MinecraftEnchantmentTypes.Efficiency).level
+        hasEfficiency = itemStack.getComponent(ItemEnchantableComponent.componentId).getEnchantment(MinecraftEnchantmentTypes.Efficiency).level;
     } catch {
-        hasEfficiency = 0
+        hasEfficiency = 0;
     }
     //if the block not the fast broken block, push the block right now
     if (!fastBrokenBlocks.includes(block.typeId as MinecraftBlockTypes)) {
         blockBreakCount.push(timeNow);
-    };
+    }
 
     blockBreakData.set(player.id, blockBreakCount);
 
@@ -49,41 +40,39 @@ async function AntiNuker (player: Player, block: Block, itemStack: ItemStack) {
     if (blockBreakCount.length > config.antiNuker.maxBreakPerTick && !(config.antiNuker.solidOnly && !block.isSolid)) {
         system.run(() => {
             player.addTag("matrix:break-disabled");
-            block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => item.kill() )
-            block.setPermutation(block.permutation.clone())
+            block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => item.kill());
+            block.setPermutation(block.permutation.clone());
 
             //prevent the player from breaking blocks for 3 seconds
             system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
-            recoverBlockBreak(player.id, 200, player.dimension)
-            blockBreakData.delete(player.id); 
+            recoverBlockBreak(player.id, 200, player.dimension);
+            blockBreakData.delete(player.id);
             if (hasEfficiency <= 2) {
                 flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, [lang(">Block") + ":" + block.typeId]);
-            } 
-        })
+            }
+        });
     }
-
-
 }
 
 const antiNuker = (event: PlayerBreakBlockBeforeEvent) => {
     const { player, block, itemStack } = event;
-    if (isAdmin (player)) return;
+    if (isAdmin(player)) return;
 
-    AntiNuker (player, block, itemStack)
+    AntiNuker(player, block, itemStack);
 };
 
-const playerLeave = (({ playerId }: PlayerLeaveAfterEvent) => {
+const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
     blockBreakData.delete(playerId);
-})
+};
 
 export default {
-    enable () {
-        world.beforeEvents.playerBreakBlock.subscribe(antiNuker)
-        world.afterEvents.playerLeave.subscribe(playerLeave)
+    enable() {
+        world.beforeEvents.playerBreakBlock.subscribe(antiNuker);
+        world.afterEvents.playerLeave.subscribe(playerLeave);
     },
-    disable () {
-        blockBreakData.clear()
-        world.beforeEvents.playerBreakBlock.unsubscribe(antiNuker)
-        world.afterEvents.playerLeave.unsubscribe(playerLeave)
-    }
-}
+    disable() {
+        blockBreakData.clear();
+        world.beforeEvents.playerBreakBlock.unsubscribe(antiNuker);
+        world.afterEvents.playerLeave.unsubscribe(playerLeave);
+    },
+};
