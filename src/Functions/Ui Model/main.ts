@@ -16,7 +16,7 @@ function menu(player: Player) {
     new ActionFormData()
         .title(l(".UI.i"))
         .button(l(".UI.i.a"), "textures/ui/FriendsDiversity.png")
-        .button(l(".UI.i.b") + "\n§cComming soon", "textures/ui/gear.png")
+        .button(l(".UI.i.b"), "textures/ui/gear.png")
         .button(l(".UI.exit"), "textures/ui/redX1.png")
         .show(player)
         .then((res) => {
