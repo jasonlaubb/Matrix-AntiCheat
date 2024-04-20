@@ -1,5 +1,6 @@
 scripts/
-src/node_modules/
 node_modules/
-.github/
 docs/
+.github
+LICENSE
+README.md
