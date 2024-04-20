@@ -49,8 +49,7 @@ async function AntiSpeedA2(player, now) {
      const dBVD = Math.abs(xzLog[player.id] - disLog[player.id]) 
        //setting max value of dBVD 
        //iSL = is spike lagging 
-     if(iSL[player.id]) maxDBVD[player.id] = 2
-     else maxDBVD[player.id] = 1
+       maxDBVD[player.id] = 1
        //check if dBVD lower than 1 and higher than 0.5 add one to timerLog and when timerLog reach 3 flag (check for low timer) 
      if(dBVD < maxDBVD[player.id] && dBVD > 0.5) timerLog[player.id]++
      else { timerLog[player.id] = 0 }
