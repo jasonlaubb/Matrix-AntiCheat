@@ -4,7 +4,7 @@ import lang from "../../Data/Languages/lang.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
- * @author ravriv & jasonlaubb
+ * @author ravriv & jasonlaubb & RaMiGamerDev
  * @description This checks if the player is hitting another player from a impossible angle.
  */
 
@@ -94,53 +94,76 @@ interface LastRotateData {
     lastVel: Vector3;
 }
 
-const lastRotateData = new Map<string, LastRotateData>();
-
+const lastRotateData = new Map();
 const tickEvent = () => {
     const players = world.getAllPlayers();
     for (const player of players) {
-        if (isAdmin(player)) continue;
+        if (isAdmin(player))
+            continue;
         const data = lastRotateData.get(player.id);
         const pos1 = player.getHeadLocation();
         const raycast = player.getEntitiesFromViewDirection()[0];
-        if (!raycast) continue;
-        const nearestPlayer = raycast?.entity;
-        if (!(raycast.entity instanceof Player) || raycast.distance > 7.5) continue;
-        const pos2 = nearestPlayer.getHeadLocation();
         const { x: verticalRotation, y: horizontalRotation } = player.getRotation();
         const playerVelocity = player.getVelocity();
-        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity });
-        if (!data) continue;
-
-        let horizontalAngle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / Math.PI - horizontalRotation - 90;
-        horizontalAngle = Math.abs(horizontalAngle <= -180 ? (horizontalAngle += 360) : horizontalAngle);
-
-        /*let verticalAngle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - verticalRotation - 90;
-        verticalAngle = Math.abs(verticalAngle <= -180 ? verticalAngle += 360 : verticalAngle)*/
-        const { x: floatX, z: floatZ } = playerVelocity;
-        const { x: moveX, z: moveZ } = nearestPlayer.getVelocity();
+        try{ const yPitch = Math.abs(data.verticalR - verticalRotation) 
+        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: yPitch});
+        } catch {lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity})} 
+        if (!raycast) kAFlags[player.id] = 0
+        if (!raycast)
+            continue;
+        const nearestPlayer = raycast?.entity;
+        if (!(raycast.entity instanceof Player) || raycast.distance > 7.5 || player.hasTag("matrix:pvp_disabled"))
+           continue;
+        const pos2 = nearestPlayer.getHeadLocation();
+        if (!data)
+            continue;
+        let horizontalAngle = Math.atan2((pos2.z - pos1.z), (pos2.x - pos1.x)) * 180 / Math.PI - horizontalRotation - 90;
+        horizontalAngle = Math.abs(horizontalAngle <= -180 ? horizontalAngle += 360 : horizontalAngle);
+        const { x: floatX, y:floatY, z: floatZ } = playerVelocity;
+        const { x: moveX, y:moveY,  z: moveZ } = nearestPlayer.getVelocity();
         const float = Math.hypot(floatX, floatZ);
         const move = Math.hypot(moveX, moveZ);
         const rotatedMove = Math.abs(data.horizonR - horizontalRotation);
-
+        const yPitch = Math.abs(data.verticalR - verticalRotation) 
+        const instantRot = rotatedMove > 60
         const config = c();
-        //player.onScreenDisplay.setActionBar(`${float + move}\n${horizontalAngle}\n${player.perfectMove ?? "idk"}\n${rotatedMove}`)
-        if (float > 0.1 && move > 0 && player.lastTouchEntity && Date.now() - player.lastTouchEntity < 450 && horizontalAngle < 12 && /*verticalAngle < 2.5 &&*/ rotatedMove > 0) {
-            player.perfectMove ??= 0;
-            player.perfectMove += 1;
-            if (player.perfectMove > 2 && !player.hasTag("matrix:pvp-disabled")) {
-                player.perfectMove = 0;
-                /*player.addTag("matrix:pvp-disabled")
-                system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)*/
-                flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + horizontalAngle.toFixed(5)]);
-            }
-        } else {
-            if (move < 0.2 && horizontalAngle > 10 && horizontalAngle < 90) return;
-            player.perfectMove = 0;
+        if(Math.abs(yPitch - data.lastPitch) >  1 && Math.abs(yPitch - data.lastPitch) < 3 && (verticalRotation < 0 && moveY+floatY > 0 || verticalRotation > 0 && moveY+floatY < 0) && move > 0.1) invalidPitch[player.id]++
+        else invalidPitch[player.id] = 0
+        if(rotatedMove > 0 && rotatedMove < 20 && move > 0 || instantRot){
+        kAFlags[player.id]++ 
+        if(instantRot) kAFlags[player.id] = "G" 
+        } else if(rotatedMove == 0 && move > 0 || rotatedMove > 0 && move == 0 || rotatedMove > 40) kAFlags[player.id] = 0
+        player.onScreenDisplay.setActionBar(`${Math.abs(yPitch - data.lastPitch)}`)
+        //killaura/F check for head rotation 
+        if (kAFlags[player.id] >= 10) {
+            player.addTag("matrix:pvp-disabled")
+            system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
+            flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + horizontalAngle.toFixed(5)]);
+            kAFlags[player.id] = 0
         }
-    }
+        //killaura/G check for instant rotation to the target 
+        if(rotatedMove <= 10 && kAFlags[player.id] == "G") {
+        player.addTag("matrix:pvp-disabled")
+        system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
+        flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" +rotatedMove.toFixed(5)]);
+        kAFlags[player.id] = 0
+        } 
+        //killaura/H check for smooth y Pitch movement 
+        if(invalidPitch[player.id] >= 10){
+        player.addTag("matrix:pvp-disabled")
+        system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
+        flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" +(yPitch-data.lastPitch).toFixed(5)])
+        invalidPitch[player.id] = 0
+        } 
+        //killaura/I check for if the player rotation can be divided by 1
+        if ((verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && rotatedMove > 0) {
+        player.addTag("matrix:pvp-disabled")
+        system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
+        flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" +(yPitch-data.lastPitch).toFixed(5)])
+        } 
+     }
 };
-tickEvent; // KillAuraD is in beta!
+tickEvent; // no killaura is in beta LOL
 
 function calculateVector(l1: Vector3, l2: Vector3) {
     const { x: x1, y: y1, z: z1 } = l1;
