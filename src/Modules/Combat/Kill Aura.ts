@@ -108,7 +108,6 @@ const tickEvent = () => {
         try{ const yPitch = Math.abs(data.verticalR - verticalRotation) 
         lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: yPitch});
         } catch {lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity})} 
-        if (!raycast) kAFlags[player.id] = 0
         if (!raycast)
             continue;
         const nearestPlayer = raycast?.entity;
@@ -129,34 +128,34 @@ const tickEvent = () => {
         const config = c();
         if(Math.abs(yPitch - data.lastPitch) >  1 && Math.abs(yPitch - data.lastPitch) < 3 && (verticalRotation < 0 && moveY+floatY > 0 || verticalRotation > 0 && moveY+floatY < 0) && move > 0.1) invalidPitch[player.id]++
         else invalidPitch[player.id] = 0
-        if(rotatedMove > 0 && rotatedMove < 20 && move > 0 || instantRot){
+        if(rotatedMove > 0 && rotatedMove < 60 && move > 0 || instantRot){
         kAFlags[player.id]++ 
         if(instantRot) kAFlags[player.id] = "G" 
         } else if(rotatedMove == 0 && move > 0 || rotatedMove > 0 && move == 0 || rotatedMove > 40) kAFlags[player.id] = 0
-        player.onScreenDisplay.setActionBar(`${Math.abs(yPitch - data.lastPitch)}`)
+     //   player.onScreenDisplay.setActionBar(`${Math.abs(yPitch - data.lastPitch)}`)
         //killaura/F check for head rotation 
-        if (kAFlags[player.id] >= 10) {
+        if (kAFlags[player.id] >= 40) {
             player.addTag("matrix:pvp-disabled")
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
             flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + horizontalAngle.toFixed(5)]);
             kAFlags[player.id] = 0
         }
         //killaura/G check for instant rotation to the target 
-        if(rotatedMove <= 10 && kAFlags[player.id] == "G") {
+        if(rotatedMove == 0 && kAFlags[player.id] == "G") {
         player.addTag("matrix:pvp-disabled")
         system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
         flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" +rotatedMove.toFixed(5)]);
         kAFlags[player.id] = 0
         } 
         //killaura/H check for smooth y Pitch movement 
-        if(invalidPitch[player.id] >= 10){
+        if(invalidPitch[player.id] >= 20){
         player.addTag("matrix:pvp-disabled")
         system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
         flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" +(yPitch-data.lastPitch).toFixed(5)])
         invalidPitch[player.id] = 0
         } 
         //killaura/I check for if the player rotation can be divided by 1
-        if ((verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && rotatedMove > 0) {
+        if ((verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && (rotatedMove > 0 && rotation.x == 0 || rotation.x != 0) {
         player.addTag("matrix:pvp-disabled")
         system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout)
         flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" +(yPitch-data.lastPitch).toFixed(5)])
