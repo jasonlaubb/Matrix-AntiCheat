@@ -141,15 +141,6 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
             detected = true;
         }
     } else data.scaffoldFlagsH = 0;
-    //scaffold/I: check for ground scaffolding with less than 0.6 extender
-    if (yLoc > -2.1 && yLoc < 0 && rotation.x == data.lastXRot && now - data.lastPlace < 300 && extender > 0.1 && extender < 0.6 && player.isOnGround) {
-        data.scaffoldFlagsI++;
-        if (data.scaffoldFlagsI >= 5) {
-            flag(player, "Scaffold", "I", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
-            data.scaffoldFlagsI = 0;
-            detected = true;
-        }
-    } else data.scaffoldFlagsI = 0;
     //all of this checks are new so idk how much is false postive rate but efficiency is good
     const underBlockUnder = block.dimension.getBlock({ x: x, y: y - 1, z: z });
     data.blockLog ??= [];
