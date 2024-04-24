@@ -40,8 +40,11 @@ function AntiAim(player: Player) {
                 flag (player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeed") + ":" + averageSpeed.toFixed(2)])
             }
         }*/
-
-        //B - false positive: very low, efficiency: mid
+    /**
+    -- UNDERDEVELOPMENT --
+    This check is false postives as hell.
+    Imma update it till Mid May cus im struggling with tons of exam rn. RIP
+        //B - false positive: Nah i dont wanna talk abt this, efficiency: mid
         if ((rotationSpeed.x > 1 && rotationSpeed.y < 0.6) || (rotationSpeed.x < 0.6 && rotationSpeed.y > 1)) {
             const timerSet = timer.get(`aim-b:${player.id}`) || 0;
             timer.set(`aim-b:${player.id}`, timerSet + 1);
@@ -51,7 +54,7 @@ function AntiAim(player: Player) {
             }
         } else timer.set(`aim-b:${player.id}`, 0);
 
-        //C - false positive: very low, efficiency: mid
+        //C - false positive: 100% false flag if u using console, efficiency: mid
         if (averageSpeed > 0.1) {
             const checker = Math.abs(averageSpeed - lastAction.rotation[player.id].averageSpeed) > 0 && Math.abs(averageSpeed - lastAction.rotation[player.id].averageSpeed) <= 0.05;
             if (checker) {
@@ -65,7 +68,7 @@ function AntiAim(player: Player) {
             }
         } else timer.set(`aim-c:${player.id}`, 0);
     }
-
+    */
     //D - false positive: very low, efficiency: mid
     const { x, z } = player.getVelocity();
     if (!player.isGliding && (rotation.x % 5 == 0 || (rotation.y % 5 == 0 && Math.abs(rotation.y) != 90)) && rotation.x != 0 && rotation.y != 0 && Math.hypot(x, z) > 0.2) {
