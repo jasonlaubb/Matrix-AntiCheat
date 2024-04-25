@@ -952,7 +952,7 @@ export default [
     "salope",
     "salop3",
     "Salope",
-    "Salop3"
+    "Salop3",
     "Sale put3",
     "sale tepu",
     "sal3 put3",

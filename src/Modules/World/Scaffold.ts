@@ -1,4 +1,4 @@
-import { world, system, Vector, PlayerPlaceBlockAfterEvent, PlayerLeaveAfterEvent, Vector3 } from "@minecraft/server";
+import { world, system, PlayerPlaceBlockAfterEvent, PlayerLeaveAfterEvent, Vector3 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../../Data/Languages/lang";
@@ -69,7 +69,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
         flag(player, "Scaffold", "A", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`, `${lang(">RotationY")}:${rotation.y.toFixed(2)}°`]);
     }
     //check if the angle is higher than the max angle
-    if (angle > config.antiScaffold.maxAngle && Vector.distance({ x: pos1.x, y: 0, z: pos1.z }, { x: pos2.x, y: 0, z: pos2.z }) > 1.75 && Math.abs(rotation.x) < 69.5) {
+    if (angle > config.antiScaffold.maxAngle && Math.hypot(pos1.x - pos2.x, pos1.z - pos2.z) > 1.75 && Math.abs(rotation.x) < 69.5) {
         detected = true;
         flag(player, "Scaffold", "B", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`]);
     }

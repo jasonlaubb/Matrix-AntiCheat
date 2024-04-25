@@ -1,6 +1,6 @@
 import { world, system, Player, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
+//import lang from "../../Data/Languages/lang";
 
 /**
  * @author notthinghere
@@ -40,7 +40,7 @@ function AntiAim(player: Player) {
                 flag (player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeed") + ":" + averageSpeed.toFixed(2)])
             }
         }*/
-    /**
+        /**
     -- UNDERDEVELOPMENT --
     This check is false postives as hell.
     Imma update it till Mid May cus im struggling with tons of exam rn. RIP
@@ -69,29 +69,30 @@ function AntiAim(player: Player) {
         } else timer.set(`aim-c:${player.id}`, 0);
     }
     */
-    //D - false positive: very low, efficiency: mid
-    const { x, z } = player.getVelocity();
-    if (!player.isGliding && (rotation.x % 5 == 0 || (rotation.y % 5 == 0 && Math.abs(rotation.y) != 90)) && rotation.x != 0 && rotation.y != 0 && Math.hypot(x, z) > 0.2) {
-        flag(player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, undefined);
-        isFlagged = true;
-    }
+        //D - false positive: very low, efficiency: mid
+        const { x, z } = player.getVelocity();
+        if (!player.isGliding && (rotation.x % 5 == 0 || (rotation.y % 5 == 0 && Math.abs(rotation.y) != 90)) && rotation.x != 0 && rotation.y != 0 && Math.hypot(x, z) > 0.2) {
+            flag(player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, undefined);
+            isFlagged = true;
+        }
 
-    if (Math.abs(rotation.x) > 90 || Math.abs(rotation.y) > 180) {
-        flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, undefined);
-        isFlagged = true;
-    }
+        if (Math.abs(rotation.x) > 90 || Math.abs(rotation.y) > 180) {
+            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, undefined);
+            isFlagged = true;
+        }
 
-    if (isFlagged) {
-        if (!config.slient) {
-            player.applyDamage(6);
-            player.setRotation({ x: Math.random(), y: Math.random() });
-            if (!player.hasTag("matrix:pvp-disabled")) {
-                player.addTag("matrix:pvp-disabled");
-                system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiAim.timeout);
+        if (isFlagged) {
+            if (!config.slient) {
+                player.applyDamage(6);
+                player.setRotation({ x: Math.random(), y: Math.random() });
+                if (!player.hasTag("matrix:pvp-disabled")) {
+                    player.addTag("matrix:pvp-disabled");
+                    system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiAim.timeout);
+                }
             }
         }
+        lastAction.rotation[player.id] = { ...rotation, rotationSpeed, averageSpeed };
     }
-    lastAction.rotation[player.id] = { ...rotation, rotationSpeed, averageSpeed };
 }
 
 const antiAim = () => {
@@ -110,7 +111,6 @@ const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
 };
 
 let id: number;
-
 export default {
     enable() {
         id = system.runInterval(antiAim, 1);

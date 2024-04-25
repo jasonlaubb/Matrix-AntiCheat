@@ -1,4 +1,4 @@
-import { Vector, world, system, PlayerBreakBlockBeforeEvent, Player, Block, PlayerPlaceBlockBeforeEvent, Vector3 } from "@minecraft/server";
+import { world, system, PlayerBreakBlockBeforeEvent, Player, Block, PlayerPlaceBlockBeforeEvent, Vector3 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { isTargetGamemode } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang.js";
@@ -11,7 +11,9 @@ import lang from "../../Data/Languages/lang.js";
 async function AntiBlockReachA(event: PlayerBreakBlockBeforeEvent, player: Player, block: Block) {
     const config = c();
     if (player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
-    const distance = Vector.distance(player.getHeadLocation(), absCentrePos(block.location));
+    const headLoc = player.getHeadLocation();
+    const absCenL = absCentrePos(block.location);
+    const distance = Math.hypot(headLoc.x - absCenL.x, headLoc.z - absCenL.z);
 
     //if the distance is higher than the max distance, flag the player
     if (distance > config.antiBlockReach.maxBreakDistance) {
@@ -31,7 +33,9 @@ async function AntiBlockReachA(event: PlayerBreakBlockBeforeEvent, player: Playe
 async function AntiBlockReachB(event: PlayerPlaceBlockBeforeEvent, player: Player, block: Block) {
     const config = c();
     if (player.hasTag("matrix:place-disabled") || isTargetGamemode(player, 1)) return;
-    const distance = Vector.distance(player.getHeadLocation(), absCentrePos(block.location));
+    const headLoc = player.getHeadLocation();
+    const absCenL = absCentrePos(block.location);
+    const distance = Math.hypot(headLoc.x - absCenL.x, headLoc.z - absCenL.z);
 
     //if the distance is higher than the max distance, flag the player
     if (distance > config.antiBlockReach.maxPlaceDistance) {

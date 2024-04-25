@@ -15,19 +15,6 @@ export async function triggerEvent(player: Player, id: string) {
     }
 }
 
-world.beforeEvents.dataDrivenEntityTriggerEvent.subscribe((event) => {
-    const { entity: player, id } = event;
-
-    if (!(player instanceof Player) || !eventList.includes(id)) return;
-
-    const data: string[] = eventData.get(player.id) ?? [];
-
-    if (!data.includes(id)) {
-        event.cancel = true;
-        return;
-    }
-});
-
 world.afterEvents.dataDrivenEntityTrigger.subscribe((event) => {
     const { entity: player, eventId: id } = event;
 
