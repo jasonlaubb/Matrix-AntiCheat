@@ -56,7 +56,6 @@ async function AntiSpeedA2(player: any, now: number) {
     }
     //flag time if dBVD is greater than 1 blocks or timerLog reach 3 (low timer will flag in 3 secs probably but maybe i will downgrade the max from 1 to 1 after make sure no falses)
     if (dBVD > maxDBVD[player.id] || timerLog[player.id] >= 3) {
-        player.sendMessage(`${dBVD}`);
         //dBLFN = difference between last flag time and now
         const dBLFN = now - lastFlag.get(player.id);
         //if the dBLFN is lower than the given value flag
