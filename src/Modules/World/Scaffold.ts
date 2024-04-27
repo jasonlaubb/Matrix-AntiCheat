@@ -105,7 +105,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
         if (data.scaffoldFlags >= 3) {
             data.scaffoldFlags = 0;
             data.scaffoldFlags2++;
-            if (data.scaffoldFlags2 >= 2) {
+            if (data.scaffoldFlags2 >= 1) {
                 flag(player, "Scaffold", "E", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
                 detected = true;
             }
