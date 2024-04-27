@@ -115,7 +115,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
     if (!diagScaffold || now - data.lastPlace > 500) data.scaffoldFlags = 0;
     if (now - data.lastPlace > 8000) data.scaffoldFlags2 = 0;
     //scaffold/F: check for unnatural rotating head with placing  blocks
-    if (yLoc > -2.1 && yLoc <= -1 && now - data.lastPlace < 200 && now - data.lastPlace >= 100 && Math.abs(data.lastXRot - rotation.x) > 0.5 && !diagScaffold) {
+    if (yLoc > -2.1 && yLoc <= -1 && now - data.lastPlace < 200 && now - data.lastPlace >= 100 && Math.abs(data.lastXRot - rotation.x) > 5 && !diagScaffold) {
         data.scaffoldFlagsF++;
         if (data.scaffoldFlagsF >= 3) {
             flag(player, "Scaffold", "F", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
