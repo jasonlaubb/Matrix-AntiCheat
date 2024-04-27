@@ -124,7 +124,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
         }
     } else if (now - data.lastPlace > 200 || now - data.lastPlace < 25 || Math.abs(data.lastXRot - rotation.x) < 0.5) data.scaffoldFlagsF = 0;
     //scaffold/G: check for invalid high extender with high rotation
-    if (yLoc > -2.1 && yLoc <= -1 && rotation.x == data.lastXRot && rotation.x > 50 && extender > 1) {
+    if (yLoc > -2.1 && yLoc <= -1 && rotation.x == data.lastXRot && rotation.x > 60 && extender > 1) {
         data.scaffoldFlagsG++;
         if (data.scaffoldFlagsG >= 3) {
             flag(player, "Scaffold", "G", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
