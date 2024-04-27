@@ -81,15 +81,19 @@ function antiFly(player: Player, now: number) {
     if (data.velocityLog == 1 && !instair && velocity <= 0) {
         const lastflag = data.lastFlag2;
         data.flyFlags++;
-        if (
-            (xz > 0 && (data.lastHighVelocity >= 7 || (data.flyFlags >= 2 && now - lastflag >= 450 && now - lastflag <= 1000))) ||
-            (data.lastHighVelocity >= 1.5 && data.lastHighVelocity == Math.floor(data.lastHighVelocity)) ||
-            data.lastHighVelocity > 25
-        ) {
-            flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(4)]);
-            player.teleport(data.previousLocations);
-            data.flyFlags = 0;
-        } else if (data.flyFlags >= 2) data.flyFlags = 0;
+        if ((xz > 0 || player.lastXZLogged > 0) && (data.lastHighVelocity >= 7 || data.flyFlags >= 2 && now - lastflag >= 450 && now - lastflag <= 1000)){
+              flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+              player.teleport(data.previousLocations);
+              data.flyFlags = 0
+        } else if(data.flyFlags >= 2) data.flyFlags = 0
+        if(data.lastHighVelocity >= 1.5 && player.isOnGround) {
+               flag(player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+               player.teleport(data.previousLocations);
+        } 
+        if(data.lastHighVelocity > 22) {
+               flag(player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+              player.teleport(data.previousLocations);
+        } 
         data.lastFlag2 = now;
     }
     if (velocity > config.antiFly.maxVelocity && skip1) {
