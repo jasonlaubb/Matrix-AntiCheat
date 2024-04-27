@@ -141,7 +141,7 @@ const tickEvent = () => {
             kAFlags[player.id] = 0;
         }
         //killaura/G check for instant rotation to the target
-        if (rotatedMove == 0 && kAFlags[player.id] == "G") {
+        if (rotatedMove == 0 && kAFlags[player.id] == "G" && verticalRotation != 0) {
             player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
             flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + rotatedMove.toFixed(5)]);
