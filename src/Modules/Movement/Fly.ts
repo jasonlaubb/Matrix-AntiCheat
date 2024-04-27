@@ -91,8 +91,12 @@ function antiFly(player: Player, now: number) {
                player.teleport(data.previousLocations);
         } 
         if(data.lastHighVelocity > 22) {
-               flag(player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+              flag(player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
               player.teleport(data.previousLocations);
+        } 
+        if(player.location.y - data.previousLocations.y >= 1 && data.lastHighVelocity > 1){
+             flag(player, "Fly", "E", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+             player.teleport(data.previousLocations);
         } 
         data.lastFlag2 = now;
     }
