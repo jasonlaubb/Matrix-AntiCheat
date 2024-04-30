@@ -225,7 +225,6 @@ export default {
         enabled: false,
     },
     logsettings: {
-        utc: 0, // How anticheat display the time in UTC
         maxStorge: 200,
         pageShows: 20,
         logCommandUsage: false,
@@ -364,8 +363,9 @@ export default {
         enabled: true,
         minDelay: 200,
         timeout: 60,
-        punishment: "none",
+        punishment: "kick",
         maxVL: 2,
+        experimental: true,
     },
 
     antiGameMode: {
