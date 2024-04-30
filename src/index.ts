@@ -23,7 +23,7 @@ import "./Functions/moderateModel/freezeHandler";
 import "./Functions/moderateModel/eventHandler";
 import "./Functions/moderateModel/dimensionLock";
 import "./Functions/moderateModel/lockDown";
-
+import "./Functions/moderateModel/log";
 //start all modules
 import { moduleStart } from "./Modules/Modules";
 moduleStart();

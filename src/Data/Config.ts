@@ -194,6 +194,11 @@ export default {
             adminOnly: true,
             requireTag: [],
         },
+        openLog: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
     },
     /**
      * @description
@@ -219,7 +224,15 @@ export default {
     dimensionLock: {
         enabled: false,
     },
-
+    logsettings: {
+        utc: 0, // How anticheat display the time in UTC
+        maxStorge: 200,
+        pageShows: 20,
+        logCommandUsage: false,
+        logPlayerRegister: false,
+        logCheatFlag: true,
+        logCheatPunishment: true,
+    },
     antiAutoClicker: {
         enabled: true,
         maxClicksPerSecond: 24,
@@ -291,7 +304,7 @@ export default {
         factor: 1,
         minRotation: 20,
         maxBPS: 5,
-        punishment: "ban",
+        punishment: "kick",
         maxVL: 4,
     },
 
@@ -306,11 +319,12 @@ export default {
     },
 
     antiBreaker: {
-        enabled: true,
+        enabled: false,
         timeout: 60,
         writeList: ["minecraft:cake", "minecraft:dragon_egg"],
         punishment: "ban",
         maxVL: 4,
+        experimental: true,
     },
 
     antiSpam: {
@@ -338,10 +352,11 @@ export default {
     },
 
     antiAim: {
-        enabled: true,
+        enabled: false,
         maxRotSpeed: 15,
         timeout: 50,
         punishment: "none",
+        experimental: true,
         maxVL: 4,
     },
 
@@ -373,6 +388,7 @@ export default {
         punishment: "kick",
         maxVL: 4,
         toolType: ["axe", "shovel", "pickaxe", "sword"],
+        experimental: true,
     },
 
     antiFastBreak: {
@@ -388,11 +404,13 @@ export default {
             wood: 3.9,
             stone: 5.1,
         },
+        experimental: true,
     },
 
     antiXray: {
         enabled: false,
         notifyAt: ["diamond_ore", "ancient_debris"],
+        experimental: true,
     },
 
     antiDisabler: {
@@ -610,7 +628,8 @@ export default {
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "none",
+        punishment: "kick",
+        experimental: true,
     },
 
     antiFastUse: {
@@ -679,4 +698,5 @@ export default {
     },
 
     blacklistedMessages: ["discord.gg", "dsc.gg", "@outlook.com", "@gmail.com", "@hotmail.com", "discordapp.com", "discord.com/invite/", "https://", "http://", "the best minecraft bedrock utility mod", "disepi/ambrosial", "aras"],
+    exN: 1, // change it you will have big problem. (maybe not big)
 };

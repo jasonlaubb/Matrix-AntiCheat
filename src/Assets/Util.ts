@@ -4,6 +4,7 @@ import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../Data/Languages/lang";
 import Config from "../Data/Config";
+import { saveLog } from "../Functions/moderateModel/log";
 //import { Root } from "../Data/ConfigDocs";
 
 export { getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
@@ -56,6 +57,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
     } catch {}
 
     let flagMsg = !config.slient ? `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${Vl[player.id][modules]}§7]§r` : ``;
+    if (config.logsettings.logCheatFlag) saveLog("Flag", player.name, `${modules} ${type} (x${Vl[player.id][modules]})`);
     if (infos !== undefined && !config.slient) flagMsg = flagMsg + "\n" + formatInformation(infos);
 
     if (punishment && Vl[player.id][modules] > maxVL) {
@@ -67,12 +69,14 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
             switch (punishment) {
                 case "kick": {
                     punishmentDone = true;
+                    if (config.logsettings.logCheatPunishment) saveLog("Kick", player.name, `${modules} ${type}`);
                     kick(player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"));
                     flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name);
                     break;
                 }
                 case "ban": {
                     punishmentDone = true;
+                    if (config.logsettings.logCheatPunishment) saveLog("Ban", player.name, `${modules} ${type}`);
                     ban(player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"), (config.punishment_ban.minutes as number | "forever") === "forever" ? "forever" : Date.now() + config.punishment_ban.minutes * 60000);
                     flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name);
                     break;

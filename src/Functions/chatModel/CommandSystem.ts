@@ -12,6 +12,8 @@ import { SHA256 } from "../../node_modules/crypto-es/lib/sha256";
 import { antiCheatModules, getModuleState, keys } from "../../Modules/Modules";
 import { adminUI } from "../Ui Model/main";
 import { lastSafePos } from "../../Modules/Movement/World Border";
+import { sendLog } from "../moderateModel/log";
+import Config from "../../Data/Config";
 
 export { inputCommand };
 
@@ -36,10 +38,18 @@ function blockUsage(player: Player, setting: Cmds) {
     return false;
 }
 
-function inputCommand(player: Player, message: string, prefix?: string): any {
+async function inputCommand(player: Player, message: string, prefix?: string): Promise<any> {
     const config = c();
     const regax = turnRegax(message, prefix);
 
+    try {
+        await box(regax, player, prefix, config);
+    } catch (error) {
+        system.run(() => player.sendMessage("§bMatrix §7>§c " + "Command ran with error\n" + error));
+    }
+}
+
+async function box(regax: string[], player: Player, prefix: string, config: typeof Config): Promise<any> {
     switch (regax[0]) {
         case "about": {
             system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-about.line1")}\n§g${lang("-about.version")}: §cV${version.join(".")}\n§g${lang("-about.author")}: §cjasonlaubb\n§gGitHub: §chttps://github.com/jasonlaubb/Matrix-AntiCheat`));
@@ -65,6 +75,8 @@ function inputCommand(player: Player, message: string, prefix?: string): any {
                 if (keys.includes(regax[1])) {
                     const state = getModuleState(regax[1]);
                     if ((regax[2] == "enable") === getModuleState(regax[1]) && regax[2] != "default") return player.sendMessage(`§bMatrix §7>§c ${lang("-toggles.already").replace("%a", regax[2])}`);
+                    if ((config as { [key: string]: any })[regax[1]].experimental && regax[3] != "force" && regax[2] == "enable")
+                        return player.sendMessage(`§bMatrix §7>§c You're trying to open an experimental module, this might cause bugs and false positives! Please use '${prefix}toggle ${regax[1]} enable force' to enable it`);
                     if (regax[2] === "enable") {
                         antiCheatModules[regax[1]].enable();
                         world.setDynamicProperty(regax[1], true);
@@ -632,6 +644,14 @@ function inputCommand(player: Player, message: string, prefix?: string): any {
             system.run(() => {
                 world.setDynamicProperty("banrun", command);
                 player.sendMessage(`§bMatrix §7>§g Sucessfully create a new ban-run command!`);
+            });
+            break;
+        }
+        case "openLog": {
+            if (blockUsage(player, config.commands.openLog as Cmds)) return;
+            system.run(() => {
+                player.sendMessage(`§bMatrix §7>§g Close the chat to open the ui!`);
+                sendLog(player);
             });
             break;
         }

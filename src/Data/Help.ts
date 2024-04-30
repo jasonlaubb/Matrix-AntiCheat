@@ -35,6 +35,7 @@ export function helpList(p: string): string {
         lang("-help.borderSize"),
         "matrixui - open the ui (beta)",
         "banrun <command/disable> - change the punishment to execute a command on the hacker",
+        "openLog - open matrix log system",
     ]
         .map((des) => "§g" + p + des)
         .join("\n");

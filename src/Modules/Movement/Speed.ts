@@ -128,17 +128,13 @@ async function AntiSpeedB() {
         const xz = Math.hypot(x, z);
         const safePos = speedData.get(player.id);
         //skip the code for some reasons
-        if (isAdmin(player) || player.isFlying || player.isGliding || player.hasTag("matrix:riding"))
-            continue;
+        if (isAdmin(player) || player.isFlying || player.isGliding || player.hasTag("matrix:riding")) continue;
         const config = c();
         //start complex things
         //changing value when needed to avoid false postives
-        if (Date.now() - lastAttack.get(player.id) < 1000)
-            speedMaxV[player.id] = 3;
-        if (player.hasTag("matrix:using_item"))
-            speedMaxV[player.id] = 0.7;
-        if (!player.hasTag("matrix:using_item") && Date.now() - lastAttack.get(player.id) > 1000)
-            speedMaxV[player.id] = 0.5;
+        if (Date.now() - lastAttack.get(player.id) < 1000) speedMaxV[player.id] = 3;
+        if (player.hasTag("matrix:using_item")) speedMaxV[player.id] = 0.7;
+        if (!player.hasTag("matrix:using_item") && Date.now() - lastAttack.get(player.id) > 1000) speedMaxV[player.id] = 0.5;
         //checking if values are undefined then define them
         if (speedLog[player.id] == undefined || lastSpeedLog.get(player.id) == undefined) {
             speedLog[player.id] = 0;
@@ -151,7 +147,11 @@ async function AntiSpeedB() {
         if (xz - player.lastXZLogged < speedMaxV[player.id] && Date.now() - lastSpeedLog.get(player.id) > 900 && player.lastXZLogged - xz < speedMaxV[player.id]) {
             speedData.set(player.id, player.location);
         }
-        if ((Date.now() - lastSpeedLog.get(player.id) > 5000 && xz - player.lastXZLogged < speedMaxV[player.id]) || (Date.now() - lastSpeedLog.get(player.id) < 500 && xz - player.lastXZLogged > speedMaxV[player.id]) || (player.lastXZLogged - xz > speedMaxV[player.id] && Math.abs(xz - lastLastLoggedV.get(player.id)) > 0.3)) {
+        if (
+            (Date.now() - lastSpeedLog.get(player.id) > 5000 && xz - player.lastXZLogged < speedMaxV[player.id]) ||
+            (Date.now() - lastSpeedLog.get(player.id) < 500 && xz - player.lastXZLogged > speedMaxV[player.id]) ||
+            (player.lastXZLogged - xz > speedMaxV[player.id] && Math.abs(xz - lastLastLoggedV.get(player.id)) > 0.3)
+        ) {
             speedLog[player.id] = 0;
         }
         //check if the player flagged for if the difference between now and last velocity more than the maxvalue in one tick
@@ -160,7 +160,7 @@ async function AntiSpeedB() {
             speedLog[player.id]++;
             lastSpeedLog.set(player.id, Date.now());
         }
-        const lagBack = (player.lastXZLogged - xz > speedLog[player.id] + 1 && speedLog[player.id] >= 1)
+        const lagBack = player.lastXZLogged - xz > speedLog[player.id] + 1 && speedLog[player.id] >= 1;
         //if the player dBLNV bigger than max value + 1.5 lag back for escape bypasses
         if (lagBack) player.teleport(safePos);
         //check if speedLog reached the max which is 3 flag
@@ -170,13 +170,12 @@ async function AntiSpeedB() {
             speedLog[player.id] = 0;
         }
         //saving last high velocity
-        if (xz - player.lastXZLogged > speedMaxV[player.id])
-            lastVelocity.set(player.id, xz - player.lastXZLogged);
+        if (xz - player.lastXZLogged > speedMaxV[player.id]) lastVelocity.set(player.id, xz - player.lastXZLogged);
         //finally saving last xz velocity
-        if(player.lastXZLogged - xz < speedMaxV[player.id]) lastLastLoggedV.set(player.id, player.lastXZLogged);
+        if (player.lastXZLogged - xz < speedMaxV[player.id]) lastLastLoggedV.set(player.id, player.lastXZLogged);
         player.lastXZLogged = xz;
     }
- }
+}
 
 const antiSpeedA = () => {
     const now = Date.now();
