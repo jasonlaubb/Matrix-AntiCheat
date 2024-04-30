@@ -11,6 +11,7 @@ interface FlyData {
     lastFlag: number;
     lastFlag2: number;
     lastVelLog: number;
+    lastVelocity: number; 
     previousVelocity: number;
 }
 interface IncludeStairDataInput {
@@ -78,32 +79,41 @@ function antiFly(player: Player, now: number) {
         data.lastFlag = now;
     }
     data.lastVelLog = data.velocityLog;
-    if (data.velocityLog == 1 && !instair && velocity <= 0) {
+    if (data.velocityLog == 1 && !instair && velocity <= 0.1 && (data.lastVelocity >= -0.95  && data.lastVelocity <= -0.1 || data.lastVelocity <= 0.42 && data.lastVelocity >= -0.03)) {
         const lastflag = data.lastFlag2;
         data.flyFlags++;
         if ((xz > 0 || player.lastXZLogged > 0) && (data.lastHighVelocity >= 7 || (data.flyFlags >= 2 && now - lastflag >= 450 && now - lastflag <= 1000))) {
             flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
-            player.teleport(data.previousLocations);
-            data.flyFlags = 0;
-        } else if (data.flyFlags >= 2) data.flyFlags = 0;
-        if (data.lastHighVelocity >= 1.5 && player.isOnGround) {
-            flag(player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
-            player.teleport(data.previousLocations);
-        }
-        if (data.lastHighVelocity > 22) {
-            flag(player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
-            player.teleport(data.previousLocations);
-        }
-        if (player.location.y - data.previousLocations.y >= 1 && data.lastHighVelocity > 1) {
-            flag(player, "Fly", "E", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
-            player.teleport(data.previousLocations);
-        }
+            player.teleport(data.previif (data.velocityLog == 1 && !instair && velocity <= 0.1 && (data.lastVelocity >= -0.95  && data.lastVelocity <= -0.1 || data.lastVelocity <= 0.42 && data.lastVelocity >= -0.03)) {
+        const lastflag = data.lastFlag2;
+        data.flyFlags++ 
+        if ((xz > 0 || player.lastXZLogged > 0) && (data.lastHighVelocity >= 7 || data.flyFlags >= 2 && now - lastflag >= 450 && now - lastflag <= 1000)){
+              flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+              player.teleport(data.previousLocations);
+              data.flyFlags = 0
+        } else if(data.flyFlags >= 2) data.flyFlags = 0
+        if(data.lastHighVelocity >= 1.5 && player.isOnGround) {
+               flag(player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+               player.teleport(data.previousLocations);
+        } 
+        if(data.lastHighVelocity > 22) {
+              flag(player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+              player.teleport(data.previousLocations);
+        } 
+        if(player.location.y - data.previousLocations.y >= 1 && data.lastHighVelocity > 1){
+             flag(player, "Fly", "E", config.antiFly.maxVL, config.antiFly.punishment, [lang(">velocityY") + ":" + data.lastHighVelocity.toFixed(2)]);
+             player.teleport(data.previousLocations);
+        } 
         data.lastFlag2 = now;
-    }
+    } 
     if (velocity > config.antiFly.maxVelocity && skip1) {
         data.velocityLog += 1;
         data.lastHighVelocity = velocity;
-    } else if (velocity < config.antiFly.maxVelocity || (velocity == 0 && player.isOnGround) || !skip1) data.velocityLog = 0;
+    }
+    else if (velocity <= config.antiFly.maxVelocity || velocity == 0 && player.isOnGround || !skip1){
+         data.velocityLog = 0;
+         data.lastVelocity = velocity;
+    }  
     flyData.set(player.id, data);
 }
 function systemEvent() {
