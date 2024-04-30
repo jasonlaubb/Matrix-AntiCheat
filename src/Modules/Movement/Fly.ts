@@ -54,7 +54,7 @@ function antiFly(player: Player, now: number) {
     }
     const { y: velocity, x, z } = player.getVelocity();
     const xz = Math.hypot(x, z);
-    if (player.isOnGround && velocity == 0 && x == 0 && z == 0) {
+    if (velocity <= config.antiFly.maxVelocity && velocity >= 0) {
         data.previousLocations = player.location;
         data.velocityLog = 0;
     }
