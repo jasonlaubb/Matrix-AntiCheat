@@ -227,6 +227,7 @@ export default {
     logsettings: {
         maxStorge: 200,
         pageShows: 20,
+        utc: 0,
         logCommandUsage: false,
         logPlayerRegister: false,
         logCheatFlag: true,
