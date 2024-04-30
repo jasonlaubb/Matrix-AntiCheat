@@ -1,13 +1,13 @@
-import { Player, world } from "@minecraft/server";
+import { Player, world, system } from "@minecraft/server";
 import { c } from "../../Assets/Util";
-import { ActionFormData } from "@minecraft/server-ui";
+import { ActionFormData, FormCancelationReason } from "@minecraft/server-ui";
 export { saveLog, sendLog };
 function saveLog(type: string, subject: string, object: string = "§cNo object") {
     const config = c();
-    const logData = JSON.parse((world.getDynamicProperty("log") as string) ?? JSON.stringify([])) as logObject[];
+    let logData = JSON.parse((world.getDynamicProperty("log") as string) ?? JSON.stringify([])) as logObject[];
     if (logData.length >= config.logsettings.maxStorge) {
         // Remove the part which is not needed
-        logData.slice(0, logData.length - config.logsettings.maxStorge);
+        logData = logData.slice(0, logData.length - config.logsettings.maxStorge);
     }
     logData.push({
         type: type,
@@ -22,29 +22,40 @@ async function sendLog(player: Player, currentPage: number = 0) {
     const dataView = JSON.parse((world.getDynamicProperty("log") as string) ?? JSON.stringify([])) as logObject[];
     if (dataView.length == 0) return player.sendMessage(`§bMatrix §7>§g There has been no log yet`);
     let output = "";
-    for (let i = currentPage * config.logsettings.pageShows; i <= config.logsettings.pageShows; i++) {
-        const data = dataView[i];
-        // if there is no more log, break
+    const startIndex = currentPage * config.logsettings.pageShows;
+    const endIndex = startIndex + config.logsettings.pageShows;   
+    for (let i = startIndex; i < endIndex; i++) {
+        const data = dataView[dataView.length - i - 1];
         if (!data) break;
-        const date = new Date(data.time);
+        const date = new Date(data.time + config.logsettings.utc * 3600000);
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
         const hour = date.getHours();
         const minute = date.getMinutes();
         const second = date.getSeconds();
-        const time = `${day}/${month}/${year}|${hour}:${minute}:${second}`;
+        const formattedHour = hour < 10 ? `0${hour}` : hour;
+        const formattedMinute = minute < 10 ? `0${minute}` : minute;
+        const formattedSecond = second < 10 ? `0${second}` : second;
+
+        const time = `${day}/${month}/${year}|${formattedHour}:${formattedMinute}:${formattedSecond}`;
         output += `§7[§e${data.type}§7][§e${time}§7] Subject: §e${data.subject}§r §7Object: §e${data.object}§r\n`;
     }
+    // player.sendMessage(output);  
     const maxPages = Math.ceil(dataView.length / config.logsettings.pageShows);
     const previousButtonActive = currentPage > 0 && maxPages > 1;
     const nextButtonActive = currentPage < maxPages - 1 && maxPages > 1;
-    const ui = new ActionFormData().title("Anti Cheat Log | Page " + (currentPage + 1) + " of " + maxPages).body(output);
-    if (previousButtonActive) ui.button("Previous Page", "textures/ui/arrow.png");
-    if (nextButtonActive) ui.button("Next Page", "textures/ui/arrow_left.png");
+    const ui = new ActionFormData().title("Anti Cheat Log | Page " + (currentPage + 1) + " of " + maxPages + " | UTC " + (config.logsettings.utc == 0 ? "time" : config.logsettings.utc > 0 ? `+${config.logsettings.utc}` : `-${config.logsettings.utc}`)).body(output);
+    if (previousButtonActive) ui.button("Previous Page", "textures/ui/arrow_left.png");
+    if (nextButtonActive) ui.button("Next Page", "textures/ui/arrow_right.png");
     ui.button("Close", "textures/ui/redX1.png");
     const result = await ui.show(player);
-    if (result.canceled || result.selection == 2) return;
+    if (result.canceled && result.cancelationReason == FormCancelationReason.UserBusy) {
+        // Retry every 40 ticks
+        system.runTimeout(() => sendLog(player, currentPage), 60);
+        return;
+    };
+    if (result.canceled && result.cancelationReason == FormCancelationReason.UserClosed || result.selection == 2) return;
     if (previousButtonActive && !nextButtonActive) {
         if (result.selection == 1) return;
         sendLog(player, currentPage - 1);
