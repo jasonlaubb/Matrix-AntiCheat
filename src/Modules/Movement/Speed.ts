@@ -9,6 +9,7 @@ const lastVelocity: Map<string, any> = new Map();
 const lastLastLoggedV: Map<string, any> = new Map();
 const safeZone: Map<string, any> = new Map();
 const lastFlag: Map<string, any> = new Map();
+const lastReset: Map<string, any> = new Map();
 let iSL: any = {};
 let maxDBVD: any = {};
 let xzLog: any = {};
