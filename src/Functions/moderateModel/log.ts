@@ -5,17 +5,6 @@ export { saveLog, sendLog };
 function saveLog(type: string, subject: string, object: string = "§cNo object") {
     const config = c();
     const logData = JSON.parse((world.getDynamicProperty("log") as string) ?? JSON.stringify([])) as logObject[];
-    /*
-    const date = new Date(Date.now());
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    const second = date.getSeconds();
-    const time = `${day}/${month}/${year} ${hour}:${minute}:${second}`
-    const log = `[${type}][${time}] Subject: ${subject} Object: ${object}`;
-    */
     if (logData.length >= config.logsettings.maxStorge) {
         // Remove the part which is not needed
         logData.slice(0, logData.length - config.logsettings.maxStorge);
@@ -26,13 +15,13 @@ function saveLog(type: string, subject: string, object: string = "§cNo object")
         object: object,
         time: Date.now(),
     });
+    world.setDynamicProperty("log", JSON.stringify(logData));
 }
 async function sendLog(player: Player, currentPage: number = 0) {
     const config = c();
     const dataView = JSON.parse((world.getDynamicProperty("log") as string) ?? JSON.stringify([])) as logObject[];
     if (dataView.length == 0) return player.sendMessage(`§bMatrix §7>§g There has been no log yet`);
     let output = "";
-    // 0
     for (let i = currentPage * config.logsettings.pageShows; i <= config.logsettings.pageShows; i++) {
         const data = dataView[i];
         // if there is no more log, break
