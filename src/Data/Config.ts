@@ -281,11 +281,16 @@ export default {
 
     antiSpeed: {
         enabled: true,
-        mphThreshold: 150,
-        bpsThershold: 11.5,
-        clipThershold: 7,
         punishment: "kick",
         maxVL: 4,
+        minSpeedLog: 3,
+    },
+
+    antiTimer: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 4,
+        minTimerLog: 3,
     },
 
     antiNuker: {

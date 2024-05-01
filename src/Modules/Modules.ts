@@ -12,6 +12,7 @@ import fly from "./Movement/Fly";
 import nofall from "./Movement/NoFall";
 import noClip from "./Movement/NoClip";
 import speed from "./Movement/Speed";
+import timer from "./Movement/Timer";
 import noSlow from "./Movement/NoSlow";
 import elytraFly from "./Movement/ElytraFly";
 import nuker from "./World/Nuker";
@@ -52,6 +53,7 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     antiBreaker: breaker,
     antiNoClip: noClip,
     antiSpeed: speed,
+    antiTimer: timer,
     antiNuker: nuker,
     antiGameMode: gameMode,
     antiTower: tower,

@@ -23,7 +23,7 @@ async function sendLog(player: Player, currentPage: number = 0) {
     if (dataView.length == 0) return player.sendMessage(`§bMatrix §7>§g There has been no log yet`);
     let output = "";
     const startIndex = currentPage * config.logsettings.pageShows;
-    const endIndex = startIndex + config.logsettings.pageShows;   
+    const endIndex = startIndex + config.logsettings.pageShows;
     for (let i = startIndex; i < endIndex; i++) {
         const data = dataView[dataView.length - i - 1];
         if (!data) break;
@@ -41,11 +41,13 @@ async function sendLog(player: Player, currentPage: number = 0) {
         const time = `${day}/${month}/${year}|${formattedHour}:${formattedMinute}:${formattedSecond}`;
         output += `§7[§e${data.type}§7][§e${time}§7] Subject: §e${data.subject}§r §7Object: §e${data.object}§r\n`;
     }
-    // player.sendMessage(output);  
+    // player.sendMessage(output);
     const maxPages = Math.ceil(dataView.length / config.logsettings.pageShows);
     const previousButtonActive = currentPage > 0 && maxPages > 1;
     const nextButtonActive = currentPage < maxPages - 1 && maxPages > 1;
-    const ui = new ActionFormData().title("Anti Cheat Log | Page " + (currentPage + 1) + " of " + maxPages + " | UTC " + (config.logsettings.utc == 0 ? "time" : config.logsettings.utc > 0 ? `+${config.logsettings.utc}` : `-${config.logsettings.utc}`)).body(output);
+    const ui = new ActionFormData()
+        .title("Anti Cheat Log | Page " + (currentPage + 1) + " of " + maxPages + " | UTC " + (config.logsettings.utc == 0 ? "time" : config.logsettings.utc > 0 ? `+${config.logsettings.utc}` : `-${config.logsettings.utc}`))
+        .body(output);
     if (previousButtonActive) ui.button("Previous Page", "textures/ui/arrow_left.png");
     if (nextButtonActive) ui.button("Next Page", "textures/ui/arrow_right.png");
     ui.button("Close", "textures/ui/redX1.png");
@@ -54,8 +56,8 @@ async function sendLog(player: Player, currentPage: number = 0) {
         // Retry every 40 ticks
         system.runTimeout(() => sendLog(player, currentPage), 60);
         return;
-    };
-    if (result.canceled && result.cancelationReason == FormCancelationReason.UserClosed || result.selection == 2) return;
+    }
+    if ((result.canceled && result.cancelationReason == FormCancelationReason.UserClosed) || result.selection == 2) return;
     if (previousButtonActive && !nextButtonActive) {
         if (result.selection == 1) return;
         sendLog(player, currentPage - 1);
