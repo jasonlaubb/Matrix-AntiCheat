@@ -113,7 +113,7 @@ let id: number;
 
 export default {
     enable() {
-        system.runInterval(AntiSpeed, 1);
+        id = system.runInterval(AntiSpeed, 1);
         world.afterEvents.playerLeave.subscribe(playerLeave);
     },
     disable() {

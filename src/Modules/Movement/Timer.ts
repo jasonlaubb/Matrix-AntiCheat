@@ -131,7 +131,7 @@ let id2: number;
 export default {
     enable() {
         id = system.runInterval(antiTimer, 20);
-        id2 = system.runInterval(systemEvent, 20);
+        id2 = system.runInterval(systemEvent, 1);
         world.afterEvents.playerLeave.subscribe(playerLeave);
     },
     disable() {
