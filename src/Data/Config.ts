@@ -701,6 +701,10 @@ export default {
 
     clientAuth: {
         enabled: false,
+        checkForTick: 5,
+        punishment: "kick",
+        maxVL: 0,
+        tpOffset: 1,
     },
 
     blacklistedMessages: ["discord.gg", "dsc.gg", "@outlook.com", "@gmail.com", "@hotmail.com", "discordapp.com", "discord.com/invite/", "https://", "http://", "the best minecraft bedrock utility mod", "disepi/ambrosial", "aras"],
