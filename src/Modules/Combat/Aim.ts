@@ -16,6 +16,7 @@ function AntiAim (player: Player) {
         return;
     } else if (!data?.previousRotationX) {
         aimData.set(player.id, { lastRotationX: rotationX, lastRotationY: rotationY, previousRotationX: data.lastRotationX, previousRotationY: data.lastRotationY, strightRotContinue: data.strightRotContinue, vibrateRotContinue: data.vibrateRotContinue, lastRotDifferent: 0 });
+        return;
     }
     const rotSpeedX = Math.abs(rotationX - data.lastRotationX);
     const rotSpeedY = Math.abs(rotationY - data.lastRotationY);
