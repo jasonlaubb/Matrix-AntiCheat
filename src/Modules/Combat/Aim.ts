@@ -1,6 +1,11 @@
 import { Player, PlayerLeaveAfterEvent, system, world } from "@minecraft/server";
 import { c, flag, isAdmin } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
+
+/**
+ * @author jasonlaubb
+ * @description Detect the suspicious aiming
+ */
 const aimData: Map<string, AimData> = new Map();
 
 function AntiAim (player: Player) {
