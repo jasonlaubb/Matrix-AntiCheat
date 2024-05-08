@@ -358,8 +358,6 @@ export default {
 
     antiAim: {
         enabled: false,
-        maxRotSpeed: 15,
-        timeout: 50,
         punishment: "none",
         experimental: true,
         maxVL: 4,
