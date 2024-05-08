@@ -88,18 +88,20 @@ export function getModuleState(module: string) {
     return (world.getDynamicProperty(module) as boolean) ?? defaultLy(module);
 }
 
-export async function moduleStart() {
+export function moduleStart() {
     const config = c();
     const exN = (world.getDynamicProperty("exN") as number) ?? 0;
     for (const module of keys) {
         if (getModuleState(module) !== true) continue;
-     //the bug is config[module] module must be a number not string 
-     try {
-        if ((config as { [key: string]: any })[module].experimental && exN != config.exN) {
-            antiCheatModules[module].disable();
-            continue;
-        }
-    } catch {} 
+        // the bug is config[module] module must be a number not string 
+        try {
+            if ((config as { [key: string]: any })[module].experimental && exN != config.exN) {
+                world.setDynamicProperty(module, undefined);
+                continue;
+            }
+        } catch (error) {
+            console.warn(JSON.stringify(error));
+        } 
         antiCheatModules[module].enable();
     }
     if (exN != config.exN) world.setDynamicProperty("exN", config.exN);
