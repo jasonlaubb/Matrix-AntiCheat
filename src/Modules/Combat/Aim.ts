@@ -81,6 +81,12 @@ function AntiAim(player: Player) {
             isFlagged = true;
         }
 
+        // idea, rewrite later lmaooook (used to detect prax?)
+        if ((rotationSpeed.x > 0 && rotationSpeed.x % 1 == 0) || (rotationSpeed.y > 0 && rotationSpeed.y % 1 == 0)) {
+            flag(player, "Aim", "F", config.antiAim.maxVL, config.antiAim.punishment, undefined);
+            isFlagged = true;
+        }
+
         if (isFlagged) {
             if (!config.slient) {
                 player.applyDamage(6);

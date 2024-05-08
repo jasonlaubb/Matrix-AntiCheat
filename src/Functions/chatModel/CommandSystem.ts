@@ -163,8 +163,10 @@ async function box(regax: string[], player: Player, prefix: string, config: type
             if (blockUsage(player, config.commands.flagmode as Cmds)) return;
             const mode: string = regax[1];
             if (mode === undefined || !new Set(["all", "tag", "bypass", "admin", "none"]).has(mode)) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang("-flagmode.unknown")}`));
-            world.setDynamicProperty("flagMode", mode);
-            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang("-flagmode.changed").replace("%a", mode)}`));
+            system.run(() => {
+                world.setDynamicProperty("flagMode", mode);
+                player.sendMessage(`§bMatrix §7>§g ${lang("-flagmode.changed").replace("%a", mode)}`);
+            });
             break;
         }
         case "rank": {
@@ -619,6 +621,7 @@ async function box(regax: string[], player: Player, prefix: string, config: type
         case "matrixui": {
             if (blockUsage(player, config.commands.matrixui as Cmds)) return;
             // Open the ui for the player
+            system.run(() => player.sendMessage("§bMatrix §7>§g Close the chat to open the matrix ui."));
             adminUI(player);
             break;
         }

@@ -1,10 +1,12 @@
 import { world, system, Player } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
+import { tps } from "../../Assets/Public.js";
 import lang from "../../Data/Languages/lang.js";
 
 const safeZone: Map<string, any> = new Map();
 const lastFlag: Map<string, any> = new Map();
 const locationData: Map<string, any> = new Map();
+import { lastReset } from "./Speed.js";
 let iSL: any = {};
 let maxDBVD: any = {};
 let xzLog: any = {};
@@ -21,7 +23,7 @@ export async function AntiTimer(player: Player, now: number) {
     //loading data
     //const data = locationData.get(player.id);
     //skip the code for some reasons
-    if (player.isGliding || player.hasTag("matrix:riding")) return;
+    if (player.isGliding || player.hasTag("matrix:riding") || tps.getTps() <= 18.5) return;
     //define some cool things
     const config = c();
     //dBVD == difference between velocity and moved distance
@@ -34,14 +36,14 @@ export async function AntiTimer(player: Player, now: number) {
     if ((dBVD < maxDBVD[player.id] && dBVD > 0.5) || (dBVD2 < maxDBVD[player.id] && dBVD2 > 0.5)) timerLog[player.id]++;
     else timerLog[player.id] = 0;
     //flag time if dBVD is greater than 1 blocks or timerLog reach 3 (low timer will flag in 3 secs probably but maybe i will downgrade the max from 1 to 1 after make sure no falses)
-    if (dBVD > maxDBVD[player.id] || dBVD2 > maxDBVD[player.id] || timerLog[player.id] >= config.antiTimer.minTimerLog) {
+    if (((dBVD > maxDBVD[player.id] || dBVD2 > maxDBVD[player.id]) && Date.now() - lastReset.get(player.id) >= 700) || timerLog[player.id] >= config.antiTimer.minTimerLog) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - lastFlag.get(player.id);
         //if the dBLFN is lower than the given value flag
         if (!iSL[player.id] && ((dBLFN < 5000 && timerLog[player.id] >= 3) || (dBLFN < 2000 && dBVD > maxDBVD[player.id])))
             flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, [lang(">BlockPerSecond") + ":" + disLog[player.id].toFixed(2) * 2]);
         //lag back the player
-        player.teleport(safeZone.get(player.id));
+        if (!config.slient) player.teleport(safeZone.get(player.id));
         //setting new lastFlag
         lastFlag.set(player.id, Date.now());
     }
@@ -81,8 +83,10 @@ export async function SystemEvent(player: Player, now: number) {
     }
     //just logging every velocity or moved distance in 20 ticks
     xzLog[player.id] = xzLog[player.id] + xz;
-    yLog[player.id] = yLog[player.id] + Math.abs(y);
-    yDisLog[player.id] = yDisLog[player.id] + Math.abs(y1 - y2);
+    if (y > 0) {
+        yLog[player.id] = yLog[player.id] + Math.abs(y);
+        yDisLog[player.id] = yDisLog[player.id] + Math.abs(y1 - y2);
+    }
     disLog[player.id] = disLog[player.id] + Math.hypot(x1 - x2, z1 - z2);
     //reset velocity xz log and distance log if player used /tp or using high y velocity
     if ((xz == 0 && Math.hypot(x1 - x2, z1 - z2) > 0.5) || y > 0.5) {

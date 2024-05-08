@@ -28,14 +28,6 @@ function AutoClicker(player: Player) {
     // Calculate clicks per second
     const cps = filteredClicks.length;
 
-    // If cps is between 15 and 21, add the tag "matrix:pvp-disabled"
-    if (cps >= 15 && cps < config.antiAutoClicker.maxClicksPerSecond && !player.hasTag("matrix:pvp-disabled")) {
-        player.addTag("matrix:pvp-disabled");
-    } else if (cps < 15 && player.hasTag("matrix:pvp-disabled")) {
-        // Remove the tag if cps falls below 15
-        player.removeTag("matrix:pvp-disabled");
-    }
-
     // If the cps is higher than the max clicks per second, flag the player
     if (!player.hasTag("matrix:pvp-disabled") && tps.getTps() > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
         // A - false positive: very low, efficiency: high

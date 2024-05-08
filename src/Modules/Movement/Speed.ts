@@ -1,4 +1,4 @@
-import { world, system, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { world, system, PlayerLeaveAfterEvent, Player } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
@@ -7,7 +7,7 @@ const lastSpeedLog: Map<string, any> = new Map();
 const lastAttack: Map<string, any> = new Map();
 const lastVelocity: Map<string, any> = new Map();
 const lastLastLoggedV: Map<string, any> = new Map();
-const lastReset: Map<string, any> = new Map();
+export const lastReset: Map<string, any> = new Map();
 let speedLog: any = {};
 let speedMaxV: any = {};
 /**
@@ -22,14 +22,13 @@ world.afterEvents.entityHurt.subscribe((event: any) => {
         //define attacker and target
         const attacker = event.damageSource.damagingEntity;
         //check if the attacker is a player then save the time
-        if (attacker.typeId == "minecraft:player") lastAttack.set(attacker.id, Date.now());
+        if (attacker instanceof Player) lastAttack.set(attacker.id, Date.now());
     } catch {}
 });
 
 async function AntiSpeed() {
     //getting players
     const players = world.getAllPlayers();
-    const now = Date.now();
     //looping to every player in the server
     for (const player of players) {
         //define cool things
@@ -43,51 +42,45 @@ async function AntiSpeed() {
         //start complex things
         //changing value when needed to avoid false postives
         if (solidBlock) speedMaxV[player.id] = 1.3;
-        if (now - lastAttack.get(player.id) < 1000) speedMaxV[player.id] = 3;
-        if (player.hasTag("matrix:using_item")) speedMaxV[player.id] = 0.7;
-        if (!player.hasTag("matrix:using_item") && now - lastAttack.get(player.id) > 1000 && !solidBlock) speedMaxV[player.id] = 0.5;
+        if (Date.now() - lastAttack.get(player.id) < 1000) speedMaxV[player.id] = 3;
+        if (Date.now() - lastAttack.get(player.id) > 1000 && !solidBlock) speedMaxV[player.id] = 0.7;
         //checking if values are undefined then define them
         if (speedLog[player.id] == undefined || lastSpeedLog.get(player.id) == undefined) {
             speedLog[player.id] = 0;
             player.lastXZLogged = xz;
-            lastReset.set(player.id, now);
+            lastReset.set(player.id, Date.now());
             speedData.set(player.id, player.location);
-            lastSpeedLog.set(player.id, now);
-            lastAttack.set(player.id, now);
+            lastSpeedLog.set(player.id, Date.now());
+            lastAttack.set(player.id, Date.now());
         }
         //checking if the player didnt got flagged then save location
-        if (xz - player.lastXZLogged < speedMaxV[player.id] && now - lastSpeedLog.get(player.id) > 900 && player.lastXZLogged - xz < speedMaxV[player.id]) {
+        if (xz - player.lastXZLogged < speedMaxV[player.id] && Date.now() - lastSpeedLog.get(player.id) > 900 && player.lastXZLogged - xz < speedMaxV[player.id]) {
             speedData.set(player.id, player.location);
         }
         //check for so many things that help to prevent false postives
         if (
-            (now - lastSpeedLog.get(player.id) > 3000 && xz - player.lastXZLogged < speedMaxV[player.id]) ||
-            (now - lastSpeedLog.get(player.id) < 475 && xz - player.lastXZLogged > speedMaxV[player.id]) ||
-            (player.lastXZLogged - xz > speedMaxV[player.id] && Math.abs(xz - lastLastLoggedV.get(player.id)) > 0.3) ||
-            (now - lastReset.get(player.id) <= 500 && xz - player.lastXZLogged <= lastVelocity.get(player.id) + 3) ||
-            (now - lastReset.get(player.id) <= 275 && xz - player.lastXZLogged >= lastVelocity.get(player.id) + 3) ||
-            now - player.threwTridentAt <= 1500
+            (Date.now() - lastSpeedLog.get(player.id) > 3000 && xz - player.lastXZLogged < speedMaxV[player.id]) ||
+            (Date.now() - lastSpeedLog.get(player.id) < 475 && xz - player.lastXZLogged > speedMaxV[player.id]) ||
+            (xz - player.lastXZLogged < speedMaxV[player.id] && Math.abs(xz - lastLastLoggedV.get(player.id)) > 0.4) ||
+            Date.now() - lastReset.get(player.id) <= 350
         ) {
             speedLog[player.id] = 0;
-            if (player.lastXZLogged - xz > speedMaxV[player.id] && Math.abs(xz - lastLastLoggedV.get(player.id)) > 0.3) lastReset.set(player.id, now);
+            if (Math.abs(xz - lastLastLoggedV.get(player.id)) > 0.4) lastReset.set(player.id, Date.now());
         }
         //check if the player flagged for if the difference between now and last velocity more than the maxvalue in one tick
         //dBLNV = difference between last and now velocity
-        if (
-            xz - player.lastXZLogged > speedMaxV[player.id] &&
-            ((now - lastReset.get(player.id) >= 500 && xz - player.lastXZLogged <= speedMaxV[player.id] + 6) || (now - lastReset.get(player.id) >= 275 && xz - player.lastXZLogged >= speedMaxV[player.id] + 6))
-        ) {
+        if (xz - player.lastXZLogged > speedMaxV[player.id] && Date.now() - lastReset.get(player.id) >= 100) {
             speedLog[player.id]++;
-            lastSpeedLog.set(player.id, now);
+            lastSpeedLog.set(player.id, Date.now());
         }
         //lagBack = tp the player back without taking any action or alerting admin
-        const lagBack = ((player.lastXZLogged - xz > speedMaxV[player.id] + 1 || (solidBlock && player.lastXZLogged - xz > speedMaxV[player.id] + 0.1)) && speedLog[player.id] >= 1) || player.lastXZLogged - x >= 25;
+        const lagBack = (((player.lastXZLogged - xz > speedMaxV[player.id] + 0.8 || (solidBlock && player.lastXZLogged - xz > speedMaxV[player.id] + 0.1)) && speedLog[player.id] >= 1) || player.lastXZLogged - x >= 25) && !config.slient;
         //if the player dBLNV bigger than max value + 1 lag back for escape bypasses
         if (lagBack) player.teleport(safePos);
         //check if speedLog reached the max which is 3 flag
-        if (speedLog[player.id] >= config.antiSpeed.minSpeedLog && player.lastXZLogged - xz > speedMaxV[player.id] && player.lastXZLogged - xz - lastVelocity.get(player.id) <= 0.3) {
-            flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" + (player.lastXZLogged - xz).toFixed(2)]);
-            player.teleport(safePos);
+        if (speedLog[player.id] >= 3 && player.lastXZLogged - xz > speedMaxV[player.id] && player.lastXZLogged - xz - lastVelocity.get(player.id) <= 0.3) {
+            flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" + (player.lastXZLogged - xz).toFixed(2)]);
+            if (!config.slient) player.teleport(safePos);
             speedLog[player.id] = 0;
         }
         //saving last high velocity

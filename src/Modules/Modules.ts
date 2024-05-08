@@ -93,10 +93,13 @@ export async function moduleStart() {
     const exN = (world.getDynamicProperty("exN") as number) ?? 0;
     for (const module of keys) {
         if (getModuleState(module) !== true) continue;
+     //the bug is config[module] module must be a number not string 
+     try {
         if ((config as { [key: string]: any })[module].experimental && exN != config.exN) {
             antiCheatModules[module].disable();
             continue;
         }
+    } catch {} 
         antiCheatModules[module].enable();
     }
     if (exN != config.exN) world.setDynamicProperty("exN", config.exN);
