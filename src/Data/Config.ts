@@ -357,9 +357,8 @@ export default {
     },
 
     antiAim: {
-        enabled: false,
-        punishment: "none",
-        experimental: true,
+        enabled: true,
+        punishment: "kick",
         maxVL: 4,
     },
 

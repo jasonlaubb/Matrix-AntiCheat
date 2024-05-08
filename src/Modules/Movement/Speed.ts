@@ -78,7 +78,7 @@ async function AntiSpeed() {
         //if the player dBLNV bigger than max value + 1 lag back for escape bypasses
         if (lagBack) player.teleport(safePos);
         //check if speedLog reached the max which is 3 flag
-        if (speedLog[player.id] >= 3 && player.lastXZLogged - xz > speedMaxV[player.id] && player.lastXZLogged - xz - lastVelocity.get(player.id) <= 0.3) {
+        if (!player.hasTag("matrix:riding") && !player.getComponent("riding")?.entityRidingOn && speedLog[player.id] >= 3 && player.lastXZLogged - xz > speedMaxV[player.id] && player.lastXZLogged - xz - lastVelocity.get(player.id) <= 0.3) {
             flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" + (player.lastXZLogged - xz).toFixed(2)]);
             if (!config.slient) player.teleport(safePos);
             speedLog[player.id] = 0;
