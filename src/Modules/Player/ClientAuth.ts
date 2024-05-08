@@ -1,23 +1,29 @@
 import { GameMode, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
-import { isAdmin, kick } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
+import { c, flag, isAdmin } from "../../Assets/Util";
 
 /**
  * @author jasonlaubb
  * @description A simple client authentication to detect bot client
  */
-function clientAuth({ player, initialSpawn }: PlayerSpawnAfterEvent) {
-    if (!initialSpawn || isAdmin(player) || player.getGameMode() == GameMode.spectator) return;
-    const currentLocation = JSON.stringify(player.location);
-    // Apply a small knockback to the player
-    player.applyKnockback(0, -1.5, 0, 1);
-    system.run(() => {
-        const locationNow = JSON.stringify(player.location);
-        if (locationNow == currentLocation) {
-            kick(player, "Client authentication failed", lang(".Bot.by"));
-            console.warn(`ClientAuth :: ${player.name} >> Bot client is blocked`);
+async function clientAuth({ player, initialSpawn }: PlayerSpawnAfterEvent) {
+    if (!initialSpawn || isAdmin(player) || player.getGameMode() == GameMode.spectator || player.isFlying) return;
+    const config = c();
+    player.teleport({ x: player.location.x, y: player.location.y + config.clientAuth.tpOffset, z: player.location.z });
+    await sleep();
+    // Log the location
+    const spawnLocation = JSON.stringify(player.location);
+    await sleep();
+    let isBotClient = true;
+    for (let i = 0; i < config.clientAuth.checkForTick; i++) {
+        if (JSON.stringify(player.location) != JSON.stringify(spawnLocation)) {
+            isBotClient = false;
+            break;
         }
-    });
+        await sleep();
+    }
+    if (isBotClient) {
+        flag (player, "Bad Client", "A", config.clientAuth.maxVL, config.clientAuth.punishment, undefined);
+    }
 }
 export default {
     enable() {
@@ -26,4 +32,7 @@ export default {
     disable() {
         world.afterEvents.playerSpawn.unsubscribe(clientAuth);
     },
-};
+}
+function sleep (): Promise<void> {
+    return new Promise(resolve => system.run(() => resolve()));
+}
