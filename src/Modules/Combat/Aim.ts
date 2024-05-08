@@ -11,7 +11,7 @@ const aimData: Map<string, AimData> = new Map();
 function AntiAim (player: Player) {
     const data = aimData.get(player.id)
     const { x: rotationX, y: rotationY } = player.getRotation();
-    if (!aimData) {
+    if (!data) {
         aimData.set(player.id, { lastRotationX: rotationX, lastRotationY: rotationY, previousRotationX: undefined, previousRotationY: undefined, strightRotContinue: 0, vibrateRotContinue: 0, lastRotDifferent: 0 });
         return;
     } else if (!data?.previousRotationX) {
