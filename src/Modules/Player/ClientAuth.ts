@@ -22,7 +22,7 @@ async function clientAuth({ player, initialSpawn }: PlayerSpawnAfterEvent) {
         await sleep();
     }
     if (isBotClient) {
-        flag (player, "Bad Client", "A", config.clientAuth.maxVL, config.clientAuth.punishment, undefined);
+        flag(player, "Bad Client", "A", config.clientAuth.maxVL, config.clientAuth.punishment, undefined);
     }
 }
 export default {
@@ -32,7 +32,7 @@ export default {
     disable() {
         world.afterEvents.playerSpawn.unsubscribe(clientAuth);
     },
-}
-function sleep (): Promise<void> {
-    return new Promise(resolve => system.run(() => resolve()));
+};
+function sleep(): Promise<void> {
+    return new Promise((resolve) => system.run(() => resolve()));
 }

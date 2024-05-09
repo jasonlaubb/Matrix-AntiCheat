@@ -667,3 +667,5 @@ async function box(regax: string[], player: Player, prefix: string, config: type
         }
     }
 }
+
+// Write a RegExp which match and replace the player.sendMessage(`§bMatrix §7>§g ` + lang("-key.key_key").replace("%a", prefix, "%b", prefix2)) similar thing to send(player, false, "key.key_key", prefix, prefix2) 
