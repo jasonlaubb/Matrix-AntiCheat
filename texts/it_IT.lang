@@ -1,5 +1,3 @@
-## Pack description
-pack.description=§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock\n§cBeta-API required
 help.helpcdlist=Help command list:
 help.help=help - Show this help message
 help.toggles=toggles - Show all module's toggle
@@ -140,10 +138,6 @@ util.has_failed=has failed
 util.formkick=%s is automatically kicked from the game
 util.formban=%s is automatically banned from the game
 banhandler.banned=You have been banned!
-banhandler.format=§c§lYour have been banned!
-§r§7Time Left:§c %s
-§7Reason: §c%s§r
-§7By: §c%s
 adminchat.adminchat=adminchat
 chathandler.muted=You are muted!
 dimensionlock.stop=You are not allowed to go to other dimensions!
@@ -162,6 +156,7 @@ click per second=Click Per Second
 rotspeed=RotSpeed
 rotspeedx=RotSpeedX
 rotspeedy=RotSpeedY
+typ1=Type
 type=Type
 pos=Pos
 posdeff=PosDeff
