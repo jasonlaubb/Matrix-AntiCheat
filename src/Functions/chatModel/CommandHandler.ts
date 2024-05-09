@@ -119,7 +119,7 @@ class CommandBuilder {
 }
 
 
-class Command {
+export class Command {
     constructor(data, types, parent, root) {
         this.data = {};
         this.callback = null;
@@ -194,13 +194,13 @@ function sendCommandCallback(event, command, args, selectedArgs) {
 
 export function blockUsage(player: Player, setting: Cmds) {
     if (setting.enabled !== true) {
-        system.run(() => send(player, 'commandSystem.command_disabled'));
+        system.run(() => send(player, true, "commandsystem.command_disabled"));
         return true;
     } else if (setting.adminOnly === true && !isAdmin(player)) {
-        system.run(() => system.run(() => send(player, 'commandSystem.command_disabled_reaspn')));
+        system.run(() => system.run(() => send(player, true, "commandsystem.command_disabled_reason")));
         return true;
     } else if (setting.requireTag.length > 0 && !player.getTags().some((tag) => setting.requireTag.includes(tag))) {
-        system.run(() => player.sendMessage(`§bMatrix §7>§g ` + lang(".CommandSystem.no_permission")));
+        system.run(() => send(player, true, "commandsystem.no_permission"));
         return true;
     }
     return false;
