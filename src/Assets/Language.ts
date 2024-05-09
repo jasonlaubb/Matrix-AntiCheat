@@ -1,6 +1,6 @@
 import { World, Player } from "@minecraft/server";
 
-export default function send(object: World | Player, warn: boolean, id: string, ...args: Translate[]) {
+export default function send(object: World | Player, warn: boolean, id: Translate, ...args: string[]) {
     object.sendMessage({
         rawtext: [
             {
