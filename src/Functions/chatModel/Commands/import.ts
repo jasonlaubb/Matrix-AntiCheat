@@ -2,7 +2,8 @@ import "./helps/about";
 import "./helps/help";
 import "./moderations/op";
 import "./moderations/deop";
-import "./moderations/rank"
+import "./moderations/rank";
+import "./moderations/rankclear";
 import "./settings/toggles";
 import "./settings/toggle";
 import "./settings/passwords";
