@@ -269,6 +269,7 @@ async function box(regax: string[], player: Player, prefix: string, config: type
             system.run(() => world.sendMessage(`§bMatrix §7>§g ${lang("-ban.has").replace("%a", target.name).replace("%b", player.name)}`));
             break;
         }
+        // Doing rewrite since here, unban is needed to do
         case "unban": {
             if (blockUsage(player, config.commands.unban as Cmds)) return;
             if (regax[1] === undefined) return system.run(() => player.sendMessage(`§bMatrix §7> §c ${lang(".CommandSystem.no_player")}`));
