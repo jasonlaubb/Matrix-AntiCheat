@@ -1,7 +1,7 @@
 import { registerCommand, sendRawText } from "../../CommandHandler";
 import version from "../../../../version";
 
-registerCommand ({
+registerCommand({
     name: "about",
     description: "About Matrix AntiCheat",
     parent: false,
@@ -9,10 +9,11 @@ registerCommand ({
     require: (_player) => true,
     executor: async (player, _args) => {
         // Send the About message
-        sendRawText(player,
+        sendRawText(
+            player,
             { text: "§bMatrix §7>§c " },
             { translate: "about.line1", with: [] },
-            { text: "\n"},
+            { text: "\n" },
             { translate: "about.version", with: [] },
             { text: `§cV${version.join(".")}\n§g` },
             { translate: "about.author", with: [] },
@@ -20,5 +21,5 @@ registerCommand ({
             { translate: "about.github", with: [] },
             { text: `§chttps://github.com/jasonlaubb/Matrix-AntiCheat` }
         );
-    }
+    },
 });

@@ -106,7 +106,7 @@ function antiFly(player: Player, now: number) {
         if (velocity > config.antiFly.maxVelocity && skip1) {
             data.velocityLog += 1;
             data.lastHighVelocity = velocity;
-        } else if (velocity <= config.antiFly.maxVelocity && velocity > 0 || (velocity == 0 && player.isOnGround) || !skip1) {
+        } else if ((velocity <= config.antiFly.maxVelocity && velocity > 0) || (velocity == 0 && player.isOnGround) || !skip1) {
             data.velocityLog = 0;
             data.lastVelocity = velocity;
         }

@@ -3,23 +3,23 @@ import { isPlayer, registerCommand, sendRawText, verifier } from "../../CommandH
 import { world } from "@minecraft/server";
 import { SHA256 } from "../../../../node_modules/crypto-es/lib/sha256";
 
-registerCommand ({
+registerCommand({
     name: "op",
     description: "Op a player, or op yourself with password",
     parent: false,
     maxArgs: 1,
     minArgs: 1,
-    require: (player) => verifier (player, c().commands.op),
+    require: (player) => verifier(player, c().commands.op),
     requireSupportPlayer: true,
     argRequire: [
         (value, player) => {
             if (!isAdmin(player)) return true;
-            return !!isPlayer (value as string, true, false)
-        }
+            return !!isPlayer(value as string, true, false);
+        },
     ],
     executor: async (player, args) => {
         if (isAdmin(player)) {
-            const target = isPlayer (args[0]);
+            const target = isPlayer(args[0]);
             target.setDynamicProperty("isAdmin", true);
         } else {
             const config = c();
@@ -28,10 +28,7 @@ registerCommand ({
 
             if (now - lastTry < config.passwordCold) {
                 const wait = ((config.passwordCold - (now - lastTry)) / 1000).toFixed(1);
-                sendRawText (player, 
-                    { text: "§bMatrix §7>§c " },
-                    { translate: "op.wait", with: [wait] },
-                )
+                sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "op.wait", with: [wait] });
                 return;
             }
             player.lastOpTry = now;
@@ -41,16 +38,10 @@ registerCommand ({
 
             if (String(SHA256(password)) == correctPassword) {
                 player.setDynamicProperty("isAdmin", true);
-                sendRawText (player, 
-                    { text: "§bMatrix §7>§g " },
-                    { translate: "op.now" },
-                );
+                sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "op.now" });
             } else {
-                sendRawText (player, 
-                    { text: "§bMatrix §7>§c " },
-                    { translate: "op.wrong" },
-                );
+                sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "op.wrong" });
             }
         }
-    }
-})
+    },
+});
