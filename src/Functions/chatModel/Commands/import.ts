@@ -9,3 +9,4 @@ import "./settings/toggle";
 import "./settings/passwords";
 import "./settings/flagmode";
 import "./settings/defaultrank";
+import "./settings/showallrank";
