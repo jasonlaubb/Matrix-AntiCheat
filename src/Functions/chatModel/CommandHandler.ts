@@ -99,7 +99,7 @@ export function triggerCommand (player: Minecraft.Player, message: string): numb
     return 0;
 }
 
-async function syntaxRun (targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): Promise<number> {
+export function syntaxRun (targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): number {
     if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
         return system.run(() => sendRawText (player,
             { text: "§bMatrix §7>§c " },
@@ -143,12 +143,12 @@ interface CommandHandleData {
     argRequire?: ((value: unknown) => boolean)[];
     minArgs?: number;
     maxArgs?: number;
-    executor?: (player: Minecraft.Player, args: string[]) => Promise<any>;
+    executor?: (player: Minecraft.Player, args: string[]) => Promise<void>;
 }
 interface CommandProperties {
     name: string;
     description: string;
-    executor: null | ((player: Minecraft.Player, args: string[]) => Promise<any>);
+    executor: null | ((player: Minecraft.Player, args: string[]) => Promise<void>);
     require?: (player: Minecraft.Player) => boolean;
     argRequire?: ((value: unknown) => boolean)[];
     subCommand: CommandProperties[];

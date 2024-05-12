@@ -1,5 +1,4 @@
 # Matrix language file
-# This is the example
 help.helpcdlist=Help command list:
 help.help=help - Show this help message
 help.toggles=toggles - Show all module's toggle
