@@ -11,7 +11,7 @@ registerCommand ({
     executor: async (player, _args) => {
         sendRawText (player, 
             { text: "§bMatrix §7>§g \n" },
-            { translate: "toggles.togglelist" },
+            { translate: "toggles.togglelist", with: [] },
             { text: `${toggleList(c().commands.prefix)}` },
         )
     }

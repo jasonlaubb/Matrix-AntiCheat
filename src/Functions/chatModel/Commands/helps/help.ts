@@ -12,7 +12,7 @@ registerCommand ({
         const helps = helpList(c().commands.prefix);
         sendRawText (player, 
             { text: "§bMatrix §7>§g " },
-            { translate: "help.helpcdlist" },
+            { translate: "help.helpcdlist", with: [] },
             { text: `\n${helps}` },
         )
     }
