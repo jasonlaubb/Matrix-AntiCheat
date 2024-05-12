@@ -1,3 +1,5 @@
+//@ts-nocheck
+//This is removed due to the new rewrite. No longer in use
 import { EntityEquippableComponent, EntityInventoryComponent, EquipmentSlot, ItemStack, Player, system, world } from "@minecraft/server";
 import { helpList, toggleList, validModules } from "../../Data/Help";
 import { isAdmin, isTimeStr, kick, timeToMs, c } from "../../Assets/Util";
@@ -15,7 +17,7 @@ import { lastSafePos } from "../../Modules/Movement/World Border";
 import { sendLog } from "../moderateModel/log";
 import Config from "../../Data/Config";
 
-export { inputCommand };
+//export { inputCommand };
 
 const turnRegax = (message: string, prefix?: string) => (message.slice(prefix?.length ?? 0).match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g) || []).map((regax) => regax.replace(/^"(.*)"$/, "$1").replace(/\\"/g, '"'));
 class Cmds {
@@ -667,5 +669,3 @@ async function box(regax: string[], player: Player, prefix: string, config: type
         }
     }
 }
-
-// Write a RegExp which match and replace the player.sendMessage(`§bMatrix §7>§g ` + lang("-key.key_key").replace("%a", prefix, "%b", prefix2)) similar thing to send(player, false, "key.key_key", prefix, prefix2)
