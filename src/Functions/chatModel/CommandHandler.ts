@@ -20,6 +20,10 @@ interface CommandConfig {
 }
 const commands: CommandProperties[] = [];
 
+/**
+ * @author jasonlaubb
+ * @description Simple and useful command handler to handle different command and subcommand
+ */
 export function registerCommand (command: CommandHandleData, ...subCommand: CommandHandleData[]) {
     if (!command) throw new Error("registerCmd :: Command is not defined");
     const save: CommandProperties = {
@@ -151,4 +155,3 @@ interface CommandProperties {
     minArgs?: number;
     maxArgs?: number;
 }
-//event.message.slice(PREFIX.length).trim().match(/"[^"]+"|[^\s]+/g).map((arg) => arg.replace(/"(.+)"/, "$1").toString());
