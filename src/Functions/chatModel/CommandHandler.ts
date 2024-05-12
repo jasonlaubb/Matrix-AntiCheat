@@ -32,6 +32,7 @@ export function registerCommand (command: CommandHandleData, ...subCommand: Comm
         executor: null,
         subCommand: [],
         require: command?.require,
+        requireSupportPlayer: command?.requireSupportPlayer,
     }
     if (command.parent === true) {
         if (subCommand.length == 0) throw new Error("regsiterCmd :: Parent command must have sub command");
@@ -115,7 +116,7 @@ export function syntaxRun (targetCommand: CommandProperties, player: Minecraft.P
     if (targetCommand.argRequire) {
         for (let i = 0; i < targetCommand.argRequire.length; i++) {
             if (!targetCommand.argRequire[i] || !args[i]) continue;
-            if (!targetCommand.argRequire[i](args[i])) {
+            if (!targetCommand.argRequire[i](args[i], targetCommand.requireSupportPlayer ? player : undefined, targetCommand.requireSupportArgs ? args : undefined)) {
                 return system.run(() => sendRawText (player,
                     { text: "§bMatrix §7>§c " },
                     { translate: "commands.generic.syntax", with: [before + args.slice(0, i).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] },
@@ -135,12 +136,25 @@ export function sendRawText (player: Minecraft.Player | Minecraft.World, ...mess
     return player.sendMessage({ rawtext: message })
 }
 
+export function isPlayer (player: string, exclude: boolean = false, isadmin: boolean = null): Minecraft.Player {
+    if (player.startsWith("@")) player.slice(1);
+    const target = Minecraft.world.getPlayers({
+        name: player,
+    })[0]
+    if (!target) return undefined;
+    if (exclude && target.name == player) return undefined;
+    if (isadmin != null && isadmin != isAdmin(target)) return undefined;
+    return target;
+}
+
 interface CommandHandleData {
     name: string;
     description: string;
     parent?: boolean;
     require?: (player: Minecraft.Player) => boolean;
-    argRequire?: ((value: unknown) => boolean)[];
+    argRequire?: ((value: unknown, player?: Minecraft.Player, args?: string[]) => boolean)[];
+    requireSupportPlayer?: boolean;
+    requireSupportArgs?: boolean;
     minArgs?: number;
     maxArgs?: number;
     executor?: (player: Minecraft.Player, args: string[]) => Promise<void>;
@@ -150,8 +164,10 @@ interface CommandProperties {
     description: string;
     executor: null | ((player: Minecraft.Player, args: string[]) => Promise<void>);
     require?: (player: Minecraft.Player) => boolean;
-    argRequire?: ((value: unknown) => boolean)[];
+    argRequire?: ((value: unknown, player?: Minecraft.Player, args?: string[]) => boolean)[];
     subCommand: CommandProperties[];
+    requireSupportPlayer?: boolean;
+    requireSupportArgs?: boolean;
     minArgs?: number;
     maxArgs?: number;
 }
