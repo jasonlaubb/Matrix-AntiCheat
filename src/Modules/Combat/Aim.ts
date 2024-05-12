@@ -14,7 +14,7 @@ function AntiAim(player: Player) {
     if (!data) {
         aimData.set(player.id, { lastRotationX: rotationX, lastRotationY: rotationY, previousRotationX: undefined, previousRotationY: undefined, strightRotContinue: 0, similarRotContinue: 0, vibrateRotContinue: 0, lastRotDifferent: 0 });
         return;
-    } else if (!data?.previousRotationX || player.getComponent("riding")?.entityRidingOn) {
+    } else if (!data?.previousRotationX || player.getComponent("riding")?.entityRidingOn || player.isSleeping || player.isSwimming || player.isGliding) {
         aimData.set(player.id, {
             lastRotationX: rotationX,
             lastRotationY: rotationY,
