@@ -27,7 +27,7 @@ import "./Functions/moderateModel/log";
 //start all modules
 import { moduleStart } from "./Modules/Modules";
 moduleStart();
-
+import "./Functions/chatModel/Commands/import.ts";
 import { world, system } from "@minecraft/server";
 import { c } from "./Assets/Util";
 
