@@ -1,5 +1,5 @@
 import { c } from "../../../../Assets/Util";
-import { toggleList } from "../../../../Data/Help";
+import { toggleList, validModules } from "../../../../Data/Help";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
 
 registerCommand ({

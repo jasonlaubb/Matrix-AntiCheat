@@ -114,7 +114,7 @@ export function syntaxRun (targetCommand: CommandProperties, player: Minecraft.P
     }
     if (targetCommand.argRequire) {
         for (let i = 0; i < targetCommand.argRequire.length; i++) {
-            if (!targetCommand.argRequire[i]) continue;
+            if (!targetCommand.argRequire[i] || !args[i]) continue;
             if (!targetCommand.argRequire[i](args[i])) {
                 return system.run(() => sendRawText (player,
                     { text: "§bMatrix §7>§c " },

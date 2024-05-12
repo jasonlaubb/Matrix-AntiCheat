@@ -226,3 +226,5 @@ ui.exit=Exit
 ui.i=Admin GUI
 ui.i.a=Moderate Players
 ui.i.b=Settings
+# 3.2.2
+toggles.warning=You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it
