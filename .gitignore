@@ -4,3 +4,5 @@ docs/
 .github
 LICENSE
 README.md
+texts/*.lang
+texts/*.po

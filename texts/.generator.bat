@@ -1,0 +1,2 @@
+node .generator.js
+pause

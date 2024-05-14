@@ -6,6 +6,9 @@
   "dependencies": {
     "@minecraft/server": "^1.11.0-beta.1.20.80-stable",
     "@minecraft/server-ui": "^1.2.0-beta.1.20.40-stable",
+    "fs": "^0.0.1-security",
+    "gettext-parser": "^8.0.0",
+    "path": "^0.12.7",
     "typescript": "^5.3.3"
   },
   "devDependencies": {

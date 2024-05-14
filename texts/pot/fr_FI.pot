@@ -1,0 +1,914 @@
+msgid ""
+msgstr ""
+"Language: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: PhraseApp (phraseapp.com)\n"
+
+#: rank.already
+msgid "NEW_%1 already has %2 §r§crank"
+msgstr "%1 a déjà %2 §r§crank"
+
+#: rank.norank
+msgid "NEW_%1 doesn't have %2 §r§c rank"
+msgstr "%1 n'a pas %2 §r§c rang"
+
+#: ban.has
+msgid "NEW_%1 has been banned by %2"
+msgstr "%1 a été interdit par %2"
+
+#: deop.hasbeen
+msgid "NEW_%1 has been deopped by %2"
+msgstr "%1 a été supprimée par %2"
+
+#: freeze.has
+msgid "NEW_%1 has been frozen by %2"
+msgstr "%1 a été gelée par %2"
+
+#: mute.has
+msgid "NEW_%1 has been muted by %2"
+msgstr "%1 a été atténuée par %2"
+
+#: op.hasbeen
+msgid "NEW_%1 has been opped by %2"
+msgstr "%1 a été ouverte par %2"
+
+#: unfreeze.has
+msgid "NEW_%1 has been unfrozen by %2"
+msgstr "%1 a été dégelé par %2"
+
+#: unmute.has
+msgid "NEW_%1 has been unmuted by %2"
+msgstr "%1 a été mis en sourdine par %2"
+
+#: toggles.togglechange
+msgid "NEW_%1 module has been %2d"
+msgstr "%1 Le module a été %2d"
+
+#: rank.hasadd
+msgid "NEW_%1's rank has been added %2"
+msgstr "%1Le rang de \"M.\" a été ajouté %2"
+
+#: rank.hasset
+msgid "NEW_%1's rank has been set to %2"
+msgstr "%1Le rang de l'agent a été fixé à %2"
+
+#: rank.empty rankclear.empty
+msgid "NEW_%s doesn't have any rank"
+msgstr "%s n'a pas de rang"
+
+#: unban.add
+msgid "NEW_%s has been joined to the unban queue"
+msgstr "%s a été ajouté à la file d'attente de déban"
+
+#: unbanremove.yes
+msgid "NEW_%s has been removed from unban queue"
+msgstr "%s a été retiré de la file d'attente d'unban"
+
+#: freeze.already
+msgid "NEW_%s is already frozen"
+msgstr "%s est déjà gelé"
+
+#: mute.already
+msgid "NEW_%s is already muted"
+msgstr "%s est déjà en sourdine"
+
+#: util.formban
+msgid "NEW_%s is automatically banned from the game"
+msgstr "%s est automatiquement exclu du jeu"
+
+#: util.formkick
+msgid "NEW_%s is automatically kicked from the game"
+msgstr "%s est automatiquement exclu du jeu"
+
+#: deop.notadmin
+msgid "NEW_%s is not admin"
+msgstr "%s n'est pas administrateur"
+
+#: unban.notban
+msgid "NEW_%s is not banned"
+msgstr "%s n'est pas interdit"
+
+#: unfreeze.not
+msgid "NEW_%s is not frozen"
+msgstr "%s n'est pas gelé"
+
+#: unbanremove.not
+msgid "NEW_%s is not in unban queue"
+msgstr "%s n'est pas dans la file d'attente d'unban"
+
+#: unmute.not
+msgid "NEW_%s is not muted"
+msgstr "%s n'est pas en sourdine"
+
+#: rankclear.has
+msgid "NEW_%s's rank has been cleared"
+msgstr "%sLe rang du député a été effacé"
+
+#: rank.hasremove
+msgid "NEW_%s's rank has been removed"
+msgstr "%sLe grade de l'ancien président a été supprimé"
+
+#: spam.by
+msgid "NEW_(Anti spam automatic action)"
+msgstr "(Action automatique anti-spam)"
+
+#: bot.by
+msgid "NEW_(Bot defensive action)"
+msgstr "(Action défensive de Bot)"
+
+#: util.by
+msgid "NEW_(Immediate behavioral defense)"
+msgstr "(Défense comportementale immédiate)"
+
+#: ui.i
+msgid "NEW_Admin GUI"
+msgstr "Interface graphique d'administration"
+
+#: amount
+msgid "NEW_Amount"
+msgstr "Montant"
+
+#: angle
+msgid "NEW_Angle"
+msgstr "Angle"
+
+#: bot.title
+msgid "NEW_Anti Bot Verification"
+msgstr "Vérification anti-bot"
+
+#: attacktime
+msgid "NEW_AttackTime"
+msgstr "Temps d'attaque"
+
+#: about.author
+msgid "NEW_Author"
+msgstr "Auteur"
+
+#: blockpersecond
+msgid "NEW_BPS"
+msgstr "BPS"
+
+#: spam.blacklisted
+msgid "NEW_Blacklisted message"
+msgstr "Message sur liste noire"
+
+#: spam.blacklist
+msgid "NEW_Blacklisted message, warning"
+msgstr "Message de liste noire, avertissement"
+
+#: block
+msgid "NEW_Block"
+msgstr "Bloc"
+
+#: bordersize.between
+msgid "NEW_Border size should between 100 to 1M!"
+msgstr "La taille des frontières doit être comprise entre 100 et 1M !"
+
+#: break
+msgid "NEW_Break"
+msgstr "Pause"
+
+#: util.operator
+msgid "NEW_By"
+msgstr "Par"
+
+#: centredis
+msgid "NEW_CentreDis"
+msgstr "CentreDis"
+
+#: click per second
+msgid "NEW_Click Per Second"
+msgstr "Clics par seconde"
+
+#: container
+msgid "NEW_Container"
+msgstr "Conteneur"
+
+#: invcopy.not
+msgid "NEW_Copied inventory from %s"
+msgstr "Inventaire copié à partir de %s"
+
+#: defaultrank.has
+msgid "NEW_Default rank has been set to %s"
+msgstr "Le rang par défaut a été fixé à %s"
+
+#: delay
+msgid "NEW_Delay"
+msgstr "Délai"
+
+#: distance
+msgid "NEW_Distance"
+msgstr "Distance"
+
+#: enchantconflict
+msgid "NEW_EnchantConflict"
+msgstr "Enchanter le conflit"
+
+#: enchantlevel
+msgid "NEW_EnchantLevel"
+msgstr "Niveau d'enchantement"
+
+#: echestwipe.has
+msgid "NEW_Ender chest of %1 has been wiped by %2"
+msgstr "Le coffre d'Ender de %1 a été nettoyé par %2"
+
+#: ui.exit
+msgid "NEW_Exit"
+msgstr "Sortie"
+
+#: bot.expired
+msgid "NEW_Expired verification"
+msgstr "Vérification expirée"
+
+#: flagmode.changed
+msgid "NEW_Flag mode has been changed to %s"
+msgstr "Le mode drapeau a été modifié en %s"
+
+#: bot.waitui
+msgid ""
+"NEW_For security reason, you cannot chat untill you finished verify "
+"process. Please wait until the verify ui be shown"
+msgstr ""
+"Pour des raisons de sécurité, vous ne pouvez pas chatter tant que vous "
+"n'avez pas terminé la procédure de vérification. Veuillez attendre que "
+"l'interface de vérification s'affiche."
+
+#: gamemode
+msgid "NEW_GameMode"
+msgstr "Mode de jeu"
+
+#: help.helpcdlist
+msgid "NEW_Help command list:"
+msgstr "Liste des commandes d'aide :"
+
+#: hitlength
+msgid "NEW_HitLength"
+msgstr "Longueur d'impact"
+
+#: invsee.of
+msgid "NEW_Inventory of %s"
+msgstr "Inventaire des %s"
+
+#: itemamount
+msgid "NEW_ItemAmount"
+msgstr "Montant de l'article"
+
+#: itemenchantable
+msgid "NEW_ItemEnchantAble"
+msgstr "ObjetEnchantAble"
+
+#: itemenchantrepeat
+msgid "NEW_ItemEnchantRepeat"
+msgstr "ObjetEnchanterRépéter"
+
+#: itemlore
+msgid "NEW_ItemLore"
+msgstr "ItemLore"
+
+#: itemnamelength
+msgid "NEW_ItemNameLength"
+msgstr "Longueur du nom de l'article"
+
+#: itemtag
+msgid "NEW_ItemTag"
+msgstr "Etiquette de l'objet"
+
+#: itemtype
+msgid "NEW_ItemType"
+msgstr "Type d'objet"
+
+#: lang.has
+msgid "NEW_Language has been changed to %s"
+msgstr "La langue a été modifiée en %s"
+
+#: langlist.list
+msgid "NEW_Language list:"
+msgstr "Liste des langues :"
+
+#: length
+msgid "NEW_Length"
+msgstr "Longueur"
+
+#: limit
+msgid "NEW_Limit"
+msgstr "Limite"
+
+#: lockdowncode.get
+msgid "NEW_Lockdown code: %s"
+msgstr "Code de verrouillage : %s"
+
+#: unlock.has
+msgid "NEW_Lockdown has been disabled by %s"
+msgstr "Le verrouillage a été désactivé par %s"
+
+#: unlock.not
+msgid "NEW_Lockdown hasn't enabled yet"
+msgstr "Lockdown n'a pas encore été activé"
+
+#: about.line1
+msgid "NEW_Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
+msgstr "Matrix est un anticheat de minecraft bedrock basé sur l'API @minecraft."
+
+#: mode
+msgid "NEW_Mode"
+msgstr "Mode"
+
+#: ui.i.a
+msgid "NEW_Moderate Players"
+msgstr "Joueurs modérés"
+
+#: moving
+msgid "NEW_Moving"
+msgstr "Déménagement"
+
+#: mph
+msgid "NEW_Mph"
+msgstr "Mph"
+
+#: util.noreason
+msgid "NEW_No reason provided"
+msgstr "Aucune raison n'a été fournie"
+
+#: bordersize.notanum
+msgid "NEW_Not a number!"
+msgstr "Pas un numéro !"
+
+#: passwords.changed
+msgid "NEW_Password has been changed"
+msgstr "Le mot de passe a été modifié"
+
+#: place
+msgid "NEW_Place"
+msgstr "Lieu"
+
+#: bordersize.enter
+msgid "NEW_Please enter a border size."
+msgstr "Veuillez saisir une taille de bordure."
+
+#: lockdowncode.unknown
+msgid "NEW_Please enter the action you want"
+msgstr "Veuillez saisir l'action souhaitée"
+
+#: lockdowncode.enter lockdown.enter
+msgid "NEW_Please enter the code"
+msgstr "Veuillez saisir le code"
+
+#: lockdowncode.length
+msgid "NEW_Please enter the code length between 1 and 128"
+msgstr "Veuillez saisir la longueur du code entre 1 et 128"
+
+#: lang.enter
+msgid "NEW_Please enter the language"
+msgstr "Veuillez saisir la langue"
+
+#: passwords.oldnew
+msgid "NEW_Please enter the old password and the new password"
+msgstr "Veuillez saisir l'ancien mot de passe et le nouveau mot de passe"
+
+#: op.please
+msgid "NEW_Please enter the password"
+msgstr "Veuillez saisir le mot de passe"
+
+#: rank.enter defaultrank.enter
+msgid "NEW_Please enter the rank"
+msgstr "Veuillez saisir le rang"
+
+#: ban.reason
+msgid "NEW_Please enter the reason"
+msgstr "Veuillez indiquer la raison"
+
+#: ban.time
+msgid "NEW_Please enter the time, example: 1d20h30m40s"
+msgstr "Veuillez saisir l'heure, exemple : 1d20h30m40s"
+
+#: spam.slowdown
+msgid "NEW_Please send messages slowly"
+msgstr "Veuillez envoyer vos messages lentement"
+
+#: commandsystem.no.player
+msgid "NEW_Please specify the player"
+msgstr "Veuillez préciser le joueur"
+
+#: op.wait
+msgid "NEW_Please wait %s more seconds before you try again"
+msgstr "Veuillez attendre %s secondes supplémentaires avant de réessayer."
+
+#: pos
+msgid "NEW_Pos"
+msgstr "Pos"
+
+#: posdeff
+msgid "NEW_PosDeff"
+msgstr "PosDeff"
+
+#: ratio
+msgid "NEW_Ratio"
+msgstr "Ratio"
+
+#: reach
+msgid "NEW_Reach"
+msgstr "Atteindre"
+
+#: util.reason
+msgid "NEW_Reason"
+msgstr "Raison"
+
+#: rotspeed
+msgid "NEW_RotSpeed"
+msgstr "Vitesse de rotation"
+
+#: rotspeedx
+msgid "NEW_RotSpeedX"
+msgstr "RotSpeedX"
+
+#: rotspeedy
+msgid "NEW_RotSpeedY"
+msgstr "RotSpeedY"
+
+#: rotationx
+msgid "NEW_RotationX"
+msgstr "RotationX"
+
+#: rotationy
+msgid "NEW_RotationY"
+msgstr "RotationY"
+
+#: ui.i.b
+msgid "NEW_Settings"
+msgstr "Paramètres"
+
+#: showallrank.has
+msgid "NEW_Show all rank has been set to %s"
+msgstr "Afficher tous les rangs a été réglé sur %s"
+
+#: spam.spamming
+msgid "NEW_Spamming chat"
+msgstr "Spamming chat"
+
+#: lockdowncode.set
+msgid "NEW_Sucessfully changed lockdown code to %s"
+msgstr "Modification réussie du code de verrouillage en %s"
+
+#: bordersize.ok
+msgid "NEW_Sucessfully changed world border size to %s"
+msgstr "Modification réussie de la taille de la bordure du monde en %s"
+
+#: lockdowncode.random
+msgid "NEW_Sucessfully random a lockdown code - %s"
+msgstr "Réussir un code de verrouillage aléatoire - %s"
+
+#: lockdowncode.number
+msgid "NEW_The code length should be a number"
+msgstr "La longueur du code doit être un nombre"
+
+#: lockdown.already
+msgid "NEW_The server has been turned to lockdown mode by %s"
+msgstr "Le serveur a été mis en mode \"lockdown\" par %s"
+
+#: deop.lockdown
+msgid "NEW_The server is in lockdown mode"
+msgstr "Le serveur est en mode verrouillage"
+
+#: lockdown.has
+msgid "NEW_The server is now in lockdown mode"
+msgstr "Le serveur est maintenant en mode verrouillage"
+
+#: unbanlist.none
+msgid "NEW_There is no player in unban queue"
+msgstr "Il n'y a pas de joueur dans la file d'attente de débanquage"
+
+#: commandsystem.command.disabled
+msgid "NEW_This command is disabled"
+msgstr "Cette commande est désactivée"
+
+#: toggles.already
+msgid "NEW_This module is %sd already"
+msgstr "Ce module est déjà %sd"
+
+#: toggles.toggle
+msgid "NEW_Toggle"
+msgstr "Toggle"
+
+#: toggles.togglelist
+msgid "NEW_Toggle list:"
+msgstr "Liste de bascules :"
+
+#: typ1 type
+msgid "NEW_Type"
+msgstr "Type"
+
+#: unbanlist.list
+msgid "NEW_Unban list"
+msgstr "Liste de débanalisation"
+
+#: util.unfair
+msgid "NEW_Unfair advantage of %s"
+msgstr "Avantage déloyal de %s"
+
+#: util.unknown
+msgid "NEW_Unknown"
+msgstr "Inconnu"
+
+#: flagmode.unknown
+msgid "NEW_Unknown action, please use all/bypass/admin/tag/none only"
+msgstr "Action inconnue, veuillez utiliser uniquement all/bypass/admin/tag/none"
+
+#: toggles.unknownaction
+msgid "NEW_Unknown action, please use enable/disable only"
+msgstr "Action inconnue, veuillez utiliser uniquement l'activation/désactivation"
+
+#: lockdowncode.unknownaction
+msgid "NEW_Unknown action, please use get/set/random only"
+msgstr "Action inconnue, veuillez utiliser uniquement get/set/random"
+
+#: rank.unknownaction
+msgid "NEW_Unknown action, please use set/add/remove only"
+msgstr "Action inconnue, veuillez utiliser uniquement set/add/remove"
+
+#: showallrank.unknown
+msgid "NEW_Unknown action, please use true/false only"
+msgstr "Action inconnue, veuillez utiliser uniquement vrai/faux"
+
+#: commandsystem.unknown
+msgid "NEW_Unknown command, try %shelp"
+msgstr "Commande inconnue, essayez l'aide %s"
+
+#: commandsystem.unknown.command
+msgid "NEW_Unknown command. Type \"help\" for help."
+msgstr "Commande inconnue. Tapez \"help\" pour obtenir de l'aide."
+
+#: lang.unknown
+msgid "NEW_Unknown language, try %slanglist"
+msgstr "Langue inconnue, essayez %slanglist"
+
+#: toggles.unknownmodule
+msgid "NEW_Unknown module, try %stoggles"
+msgstr "Module inconnu, essayez %stoggles"
+
+#: commandsystem.unknown.player
+msgid "NEW_Unknown player"
+msgstr "Joueur inconnu"
+
+#: commandsystem.about
+msgid "NEW_Use -about to see more information"
+msgstr "Utilisez -about pour obtenir plus d'informations"
+
+#: usingitem
+msgid "NEW_UsingItem"
+msgstr "Utilisation d'un élément"
+
+#: bot.failed
+msgid "NEW_Verification failed"
+msgstr "Échec de la vérification"
+
+#: about.version
+msgid "NEW_Version"
+msgstr "Version"
+
+#: lockdown.wrong
+msgid "NEW_Wrong code"
+msgstr "Code erroné"
+
+#: op.wrong passwords.wrong
+msgid "NEW_Wrong password"
+msgstr "Mot de passe erroné"
+
+#: chathandler.muted
+msgid "NEW_You are muted!"
+msgstr "Vous êtes en sourdine !"
+
+#: dimensionlock.stop
+msgid "NEW_You are not allowed to go to other dimensions!"
+msgstr "Vous n'avez pas le droit d'aller dans d'autres dimensions !"
+
+#: commandsystem.command.disabled.reason
+msgid "NEW_You are not an admin to use this command"
+msgstr "Vous n'êtes pas administrateur pour utiliser cette commande"
+
+#: op.now
+msgid "NEW_You are now admin"
+msgstr "Vous êtes maintenant administrateur"
+
+#: adminchat.has
+msgid "NEW_You are now in admin channel"
+msgstr "Vous êtes maintenant dans le canal d'administration"
+
+#: adminchat.out
+msgid "NEW_You are now in public channel"
+msgstr "Vous êtes maintenant dans le canal public"
+
+#: vanish.out
+msgid "NEW_You are now no longer vanished"
+msgstr "Vous n'avez plus disparu"
+
+#: vanish.has
+msgid "NEW_You are now vanished"
+msgstr "Vous avez disparu"
+
+#: ban.admin
+msgid "NEW_You can't ban an admin"
+msgstr "Vous ne pouvez pas bannir un administrateur"
+
+#: ban.self
+msgid "NEW_You can't ban yourself"
+msgstr "Vous ne pouvez pas vous interdire"
+
+#: invcopy.self
+msgid "NEW_You can't copy your own inventory"
+msgstr "Vous ne pouvez pas copier votre propre inventaire"
+
+#: freeze.admin
+msgid "NEW_You can't freeze an admin"
+msgstr "Vous ne pouvez pas geler un administrateur"
+
+#: freeze.self
+msgid "NEW_You can't freeze yourself"
+msgstr "Vous ne pouvez pas vous congeler"
+
+#: mute.admin
+msgid "NEW_You can't mute an admin"
+msgstr "Vous ne pouvez pas mettre un administrateur en sourdine"
+
+#: mute.self
+msgid "NEW_You can't mute yourself"
+msgstr "Vous ne pouvez pas vous mettre en sourdine"
+
+#: unban.self
+msgid "NEW_You can't unban yourself"
+msgstr "Vous ne pouvez pas vous débanquer vous-même"
+
+#: unfreeze.admin
+msgid "NEW_You can't unfreeze an admin"
+msgstr "Vous ne pouvez pas débloquer un administrateur"
+
+#: unfreeze.self
+msgid "NEW_You can't unfreeze yourself"
+msgstr "Vous ne pouvez pas vous dégeler vous-même"
+
+#: unmute.admin
+msgid "NEW_You can't unmute an admin"
+msgstr "Il n'est pas possible de rétablir le son d'un administrateur"
+
+#: unmute.self
+msgid "NEW_You can't unmute yourself"
+msgstr "Vous ne pouvez pas rétablir le son vous-même"
+
+#: invsee.self
+msgid "NEW_You can't view your own inventory"
+msgstr "Vous ne pouvez pas consulter votre propre inventaire"
+
+#: echestwipe.admin
+msgid "NEW_You can't wipe an admin's ender chest"
+msgstr "Vous ne pouvez pas effacer le coffre d'un administrateur."
+
+#: echestwipe.self
+msgid "NEW_You can't wipe your own ender chest"
+msgstr "Vous ne pouvez pas essuyer votre propre coffre d'ender"
+
+#: border.outside
+msgid "NEW_You cannot access a location which is outside the world border."
+msgstr ""
+"Vous ne pouvez pas accéder à un lieu situé en dehors des frontières du "
+"monde."
+
+#: border.reached
+msgid "NEW_You cannot access that location, you have reached the world border."
+msgstr ""
+"Vous ne pouvez pas accéder à cet endroit, vous avez atteint la frontière "
+"mondiale."
+
+#: border.interact
+msgid ""
+"NEW_You cannot interact with a block or entity which is outside the world "
+"border."
+msgstr ""
+"Vous ne pouvez pas interagir avec un bloc ou une entité qui se trouve en "
+"dehors de la frontière du monde."
+
+#: spam.repeated
+msgid "NEW_You cannot send the same message again"
+msgstr "Vous ne pouvez pas renvoyer le même message"
+
+#: commandsystem.no.permisson
+msgid "NEW_You don't have enough permission to use this command"
+msgstr "Vous n'avez pas le droit d'utiliser cette commande"
+
+#: commandsystem.no.permission
+msgid "NEW_You don't have permission to use this command"
+msgstr "Vous n'avez pas l'autorisation d'utiliser cette commande"
+
+#: banhandler.banned
+msgid "NEW_You have been banned!"
+msgstr "Vous avez été banni !"
+
+#: util.kicked
+msgid "NEW_You have been kicked"
+msgstr "Vous avez été chassé"
+
+#: bot.ok
+msgid "NEW_You have been verified successfully"
+msgstr "Vous avez été vérifié avec succès"
+
+#: toggles.warning
+msgid ""
+"NEW_You're trying to open an experimental module, this might cause bugs and "
+"false positives! Please use '%1toggle %2 enable force' to enable it"
+msgstr ""
+"Vous essayez d'ouvrir un module expérimental, cela peut causer des bogues "
+"et des faux positifs ! Veuillez utiliser '%1 toggle %2 enable force' pour "
+"l'activer."
+
+#: spam.filter
+msgid "NEW_Your message contains a filtered word"
+msgstr "Votre message contient un mot filtré"
+
+#: spam.long
+msgid "NEW_Your message is too long"
+msgstr "Votre message est trop long"
+
+#: adminchat.adminchat
+msgid "NEW_adminchat"
+msgstr "adminchat"
+
+#: help.adminchat
+msgid "NEW_adminchat - switch between admin channel and public channel"
+msgstr "adminchat - bascule entre le canal administrateur et le canal public"
+
+#: help.ban
+msgid "NEW_ban <player> <reason> <timeRegax/forever> - Ban a player"
+msgstr "ban <player> <reason> <timeRegax>- Bannir un joueur"
+
+#: help.bordersize
+msgid "NEW_borderSize <size/default> - Change the world border size"
+msgstr "borderSize <taille>- Modifie la taille de la bordure du monde"
+
+#: help.defaultrank
+msgid "NEW_defaultrank <rank> - Change the default rank"
+msgstr "defaultrank <rank>- Modifier le rang par défaut"
+
+#: help.deop
+msgid "NEW_deop <player> - Remove player's admin permission"
+msgstr "deop <player>- Retirer l'autorisation d'administration du joueur"
+
+#: help.echestwipe
+msgid "NEW_echestwipe <player> - Wipe a player's ender chest"
+msgstr "echestwipe <player>- Nettoyer le coffre de l'ender d'un joueur"
+
+#: help.flagmode
+msgid "NEW_flagmode <all/tag/bypass/admin> - Change the flag mode"
+msgstr "flagmode <all>- Modifier le mode de drapeau"
+
+#: help.freeze
+msgid "NEW_freeze <player> - Freeze a player"
+msgstr "freeze <player>- Geler un joueur"
+
+#: util.has.failed
+msgid "NEW_has failed"
+msgstr "a échoué"
+
+#: help.help
+msgid "NEW_help - Show this help message"
+msgstr "help - Afficher ce message d'aide"
+
+#: illegallength
+msgid "NEW_illegalLength"
+msgstr "illegalLength"
+
+#: illegalregax
+msgid "NEW_illegalRegax"
+msgstr "illegalRegax"
+
+#: help.invcopy
+msgid "NEW_invcopy <player> - Copy a player's inventory to yours"
+msgstr "invcopy <player>- Copie l'inventaire d'un joueur dans le vôtre"
+
+#: help.invsee
+msgid "NEW_invsee <player> - View a player's inventory"
+msgstr "invsee <player>- Voir l'inventaire d'un joueur"
+
+#: help.lang
+msgid "NEW_lang <language> - Change the language"
+msgstr "lang <language>- Changer la langue"
+
+#: help.langlist
+msgid "NEW_langlist - Show all language"
+msgstr "langlist - Afficher toutes les langues"
+
+#: help.lockdown
+msgid "NEW_lockdown <code> - Lockdown the server with a code"
+msgstr "lockdown <code>- Verrouiller le serveur à l'aide d'un code"
+
+#: help.lockdowncode
+msgid ""
+"NEW_lockdowncode <get/set/random> <set: code>/[random: length] - Do with "
+"the lockdown code"
+msgstr ""
+"lockdowncode <get><set: code>/[random : length] - Fait avec le code de "
+"verrouillage"
+
+#: toggles.module
+msgid "NEW_module"
+msgstr "module"
+
+#: namelength
+msgid "NEW_nameLength"
+msgstr "longueur du nom"
+
+#: help.op
+msgid "NEW_op <player> - Give player admin permission"
+msgstr "op <player>- Permettre au joueur de s'administrer"
+
+#: help.passwords
+msgid "NEW_passwords <oldPassword> <newPassword> - Change the password"
+msgstr "mots de passe <oldPassword> <newPassword>- Modifier le mot de passe"
+
+#: playerspeed
+msgid "NEW_playerSpeed"
+msgstr "vitesse du joueur"
+
+#: help.rank
+msgid "NEW_rank <set/add/remove> <player> <rank> - Change the rank on a player"
+msgstr "rank <set> <player> <rank>- Modifier le rang d'un joueur"
+
+#: help.rankclear
+msgid "NEW_rankclear <player> - Clear all rank on a player"
+msgstr "rankclear <player>- Efface tous les rangs d'un joueur"
+
+#: relative
+msgid "NEW_relative"
+msgstr "relatif"
+
+#: help.showallrank
+msgid "NEW_showallrank <true/false> - Show all rank in chat"
+msgstr "showallrank <true>- Affiche tous les rangs dans le chat"
+
+#: help.toggle
+msgid "NEW_toggle <module> <enable/disable> - Toggle a module"
+msgstr "toggle <module> <enable>- Basculer un module"
+
+#: help.toggles
+msgid "NEW_toggles - Show all module's toggle"
+msgstr "toggles - Affiche les toggles de tous les modules"
+
+#: typeid
+msgid "NEW_typeId"
+msgstr "typeId"
+
+#: help.unban
+msgid "NEW_unban <player> - Unban a player"
+msgstr "unban <player>- Débanquer un joueur"
+
+#: help.unbanlist
+msgid "NEW_unbanlist - Show all player in unban queue"
+msgstr "unbanlist - Affiche tous les joueurs dans la file d'attente d'interdictions"
+
+#: help.unbanremove
+msgid "NEW_unbanremove <player> - Remove a player from unban queue"
+msgstr ""
+"unbanremove <player>- Retire un joueur de la file d'attente des joueurs "
+"interdits."
+
+#: help.unfreeze
+msgid "NEW_unfreeze <player> - Unfreeze a player"
+msgstr "unfreeze <player>- Déverrouiller un joueur"
+
+#: help.unlock
+msgid "NEW_unlock <code> - Unlock the server"
+msgstr "unlock <code>- Déverrouiller le serveur"
+
+#: help.unvanish
+msgid "NEW_unvanish - Unvanish yourself"
+msgstr "unvanish - Se défaire de soi-même"
+
+#: help.vanish
+msgid "NEW_vanish - Vanish yourself"
+msgstr "vanish - Se volatiliser"
+
+#: velocityxz
+msgid "NEW_velocityXZ"
+msgstr "vitesseXZ"
+
+#: velocityy
+msgid "NEW_velocityY"
+msgstr "vitesseY"
+
+#: yreach
+msgid "NEW_yReach"
+msgstr "yReach"
+
+#: bot.ui
+msgid "NEW_§a[This server is protected by Matrix AntiCheat]"
+msgstr "§a[Ce serveur est protégé par Matrix AntiCheat]"
+
+#: spam.kickedblacklist
+msgid "NEW_§c%s§g has been kicked for saying a blacklisted message"
+msgstr ""
+"§c%s §g a reçu un coup de pied pour avoir dit un message figurant sur la "
+"liste noire"
+
+#: spam.kicked
+msgid "NEW_§c%s§g has been kicked for spamming"
+msgstr "§c%s §g a été kické pour spamming"
