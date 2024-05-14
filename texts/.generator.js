@@ -73,7 +73,7 @@ import('fs').then(fsModule => {
                             } else if (line.startsWith('#:')) {
                                 const msgid = line.substring(2, line.length).trim();
                                 let msgstr = lines[i + 2];
-                                if (!msgstr.startsWith("msgstr") || msgstr.slice(7).length == 2) {
+                                if (!msgstr.startsWith("msgstr") || msgstr.slice(7).length == 3) {
                                     msgstr = lines[i + 1].replace('msgid', 'msgstr');
                                 }
                                 updatedContent += `msgid "${msgid}"` + "\n"+ msgstr + "\n\n";
