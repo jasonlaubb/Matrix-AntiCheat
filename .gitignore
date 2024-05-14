@@ -5,4 +5,4 @@ docs/
 LICENSE
 README.md
 texts/*.lang
-texts/*.po
+texts/po/*.po
