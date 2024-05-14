@@ -34,7 +34,7 @@ export function registerCommand(command: CommandHandleData, ...subCommand: Comma
         require: command?.require,
         requireSupportPlayer: command?.requireSupportPlayer,
     };
-    if (command.parent === true) {
+    if (command?.parent === true) {
         if (subCommand.length == 0) throw new Error("regsiterCmd :: Parent command must have sub command");
         subCommand.forEach((subCommand) => {
             save.subCommand.push({
@@ -49,10 +49,10 @@ export function registerCommand(command: CommandHandleData, ...subCommand: Comma
         commands.push(save);
     } else {
         save.executor = command.executor;
-        save.argRequire = command.argRequire;
+        save.argRequire = command?.argRequire;
         save.minArgs = command?.minArgs;
         save.maxArgs = command?.maxArgs;
-        if (!command.executor || !command.argRequire) throw new Error("registerCmd :: Unhandled command properties");
+        if (!command.executor || command.argRequire?.length == 0) throw new Error("registerCmd :: Unhandled command properties");
         commands.push(save);
     }
 }
@@ -131,6 +131,11 @@ export function isPlayer(player: string, exclude: boolean = false, isadmin: bool
     if (exclude && target.name == player) return undefined;
     if (isadmin != null && isadmin != isAdmin(target)) return undefined;
     return target;
+}
+
+export function onStart () {
+    // Log the command amount
+    system.runTimeout(() => console.log("CommandHandler :: Successfully registered " + commands.length + " application command(s)"), 20);
 }
 
 interface CommandHandleData {

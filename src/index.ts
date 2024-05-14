@@ -5,7 +5,7 @@
  * @license AGPLv3
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
-
+const runTime = Date.now();
 // Watch dog, get out
 import { watchDog } from "./Modules/Misc/Crasher";
 watchDog();
@@ -27,9 +27,11 @@ import "./Functions/moderateModel/log";
 //start all modules
 import { moduleStart } from "./Modules/Modules";
 moduleStart();
-
+import "./Functions/chatModel/Commands/import.ts";
 import { world, system } from "@minecraft/server";
 import { c } from "./Assets/Util";
+import { onStart } from "./Functions/ChatModel/CommandHandler":
+onStart();
 
 if (c().createScoreboard) {
     system.runTimeout(() => {
@@ -38,3 +40,7 @@ if (c().createScoreboard) {
         } catch {}
     }, 10);
 }
+
+system.run(() => {
+    console.log("Index :: Successfully load the program (" + Date.now() - runTime - 50 + "ms)")
+})
