@@ -31,16 +31,17 @@ const validLanguage = [
 ];
 import("fs").then((fsModule) => {
     import("path").then((pathModule) => {
-        let root = module.require.main.filename;
-        root = root.endsWith("texts/.generator.js") ? "./" : "./texts/";
         const fs = fsModule.default;
         const path = pathModule.default;
+        const checkRoot = fs.existsSync("./texts");
+        const root = checkRoot ? "./texts/" : "./";
 
         async function convertPotFilesToPo() {
-            const { po } = await import("gettext-parser");
             console.log("Process: Preparing to convert pot files to po files");
+            const { po } = await import("gettext-parser");
             fs.readdir(root + "pot", async (err, files) => {
                 if (err) {
+                    await new Promise((resolve) => setTimeout(resolve, 500));
                     console.error(err);
                     return;
                 }
@@ -57,7 +58,7 @@ import("fs").then((fsModule) => {
                     convertPotFilesToPo();
                     return;
                 }
-
+                console.log("Process: Start reading pot files");
                 files.forEach(async (file) => {
                     if (file.endsWith(".pot")) {
                         const potFilePath = path.join(root + "pot", file);
@@ -82,65 +83,11 @@ import("fs").then((fsModule) => {
                             }
                         }
 
-                        if (!file.includes("en_US") && fs.existsSync(root + `po/${file.replace(".pot", ".po")}`)) {
-                            const basePath = fs.readFileSync(root + "po/en_US.po", "utf8");
-                            const basePoV = po.parse(basePath);
-                            const baseIds = Object.values(basePoV.translations[""]);
-
-                            const otherPoV = po.parse(fs.readFileSync(root + `po/${file.replace(".pot", ".po")}`, "utf8"));
-                            const otherIds = Object.values(otherPoV.translations[""]);
-
-                            if (baseIds.length != otherIds.length) {
-                                const notIncluded = baseIds.filter(({ msgid }) => msgid.length > 0 && !otherIds.includes(msgid));
-                                const overLoaded = otherIds.filter(({ msgid }) => msgid.length > 0 && !baseIds.includes(msgid))?.map((a) => a.msgid);
-                                if (notIncluded || overLoaded) {
-                                    console.log(`Warning: Overloaded or not included in base file: ${file}`);
-                                    fs.readFile(root + `pot/${file.replace(".pot", ".po")}`, "utf8", (err, potSource) => {
-                                        if (err) {
-                                            console.error(err);
-                                            return;
-                                        }
-
-                                        let potLines = potSource.split("\n");
-                                        let newPot = "";
-
-                                        if (overLoaded) {
-                                            for (let i = 0; i < potLines.length; i++) {
-                                                const line = potLines[i];
-                                                if (line.startsWith("#:") && overLoaded.some((a) => line.includes(a))) {
-                                                    i += 2;
-                                                } else {
-                                                    newPot += line + "\n";
-                                                }
-                                            }
-                                        }
-
-                                        if (notIncluded) {
-                                            notIncluded.forEach(({ msgid, msgstr: [msgstr] }) => {
-                                                newPot += "\n\n" + `#: ${msgid}` + "\n" + `msgid "${msgstr}"` + "\n" + 'msgstr ""';
-                                            });
-                                        }
-
-                                        fs.writeFileSync(root + `pot/${file}`, potLines.join("\n"));
-                                        console.log(`Warning Overloaded or not included in base file: ${file}`);
-                                        convertPotFilesToPo();
-                                    });
-                                }
-
-                                fs.writeFileSync(root + `pot/${file}`, potLines.join("\n"));
-                                console.log(`Warning Overloaded or not included in base file: ${file}`);
-                                await new Promise((pro) => setTimeout(() => pro(), 50));
-                                convertPotFilesToPo();
-                            }
-                        }
+                        fs.writeFileSync(root + "po/" + file.replace(".pot", ".po"), updatedContent);
+                        console.log("Process: Converted " + file);
                     }
                 });
-
-                const poFilePath = root + `po/${file.replace(".pot", ".po")}`;
-                fs.writeFileSync(poFilePath, updatedContent);
-
-                console.log(`Process: Modified to po file from pot file: ${poFilePath}`);
-            });
+            })
             console.log("Process: Preparing to convert po files to lang files");
             await new Promise((pro) => setTimeout(() => pro(), 50));
             fs.readdir(root + "po", (err, files) => {
