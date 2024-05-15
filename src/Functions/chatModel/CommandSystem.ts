@@ -17,7 +17,7 @@ import { lastSafePos } from "../../Modules/Movement/World Border";
 import { sendLog } from "../moderateModel/log";
 import Config from "../../Data/Config";
 
-//export { inputCommand };
+export { inputCommand };
 
 const turnRegax = (message: string, prefix?: string) => (message.slice(prefix?.length ?? 0).match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g) || []).map((regax) => regax.replace(/^"(.*)"$/, "$1").replace(/\\"/g, '"'));
 class Cmds {
@@ -40,7 +40,10 @@ function blockUsage(player: Player, setting: Cmds) {
     return false;
 }
 
-async function inputCommand(player: Player, message: string, prefix?: string): Promise<any> {
+async function input_command (): void {
+    // VOID
+}
+async function _inputCommand(player: Player, message: string, prefix?: string): Promise<any> {
     const config = c();
     const regax = turnRegax(message, prefix);
 
