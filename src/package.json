@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@minecraft/vanilla-data": "^1.20.70",
-    "crypto-es": "^2.1.0"
+    "crypto-es": "^2.1.0",
+    "matrix-anticheat": "file:.."
   }
 }

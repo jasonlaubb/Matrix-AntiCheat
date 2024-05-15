@@ -30,7 +30,7 @@ moduleStart();
 import "./Functions/chatModel/Commands/import.ts";
 import { world, system } from "@minecraft/server";
 import { c } from "./Assets/Util";
-import { onStart } from "./Functions/ChatModel/CommandHandler":
+import { onStart } from "./Functions/chatModel/CommandHandler";
 onStart();
 
 if (c().createScoreboard) {
@@ -42,5 +42,5 @@ if (c().createScoreboard) {
 }
 
 system.run(() => {
-    console.log("Index :: Successfully load the program (" + Date.now() - runTime - 50 + "ms)")
+    console.log("Index :: Successfully load the program (" + (Date.now() - runTime - 50) + "ms)")
 })
