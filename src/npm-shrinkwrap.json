@@ -1,12 +1,10 @@
 {
   "name": "matrix-anticheat-src",
-  "version": "Give you a chance to think what version is it? >w<",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "matrix-anticheat-src",
-      "version": "Give you a chance to think what version is it? >w<",
       "dependencies": {
         "@minecraft/vanilla-data": "^1.20.70",
         "crypto-es": "^2.1.0",
@@ -28,9 +26,9 @@
       }
     },
     "node_modules/@minecraft/vanilla-data": {
-      "version": "1.20.70",
-      "resolved": "https://registry.npmjs.org/@minecraft/vanilla-data/-/vanilla-data-1.20.70.tgz",
-      "integrity": "sha512-t6NGlfaI7d/HyQFrHe2rvqPujdlRkTz7futtKoFilC7bh/9ZjA8Hu4LTPI597zJd3SdR1I9Rp8dwooK2apDLSg=="
+      "version": "1.20.80",
+      "resolved": "https://registry.npmjs.org/@minecraft/vanilla-data/-/vanilla-data-1.20.80.tgz",
+      "integrity": "sha512-eQUBaDy1RtZxcu74Gpv4k5uEGzDseB+QruuokXgfcC/dHaZkpD4KCNFSsbDbISBpJ+6BbnidTQLVQai8OCkxpg=="
     },
     "node_modules/crypto-es": {
       "version": "2.1.0",

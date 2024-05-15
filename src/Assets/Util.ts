@@ -273,7 +273,7 @@ interface BlockObject {
 function logBreak(block: BlockPermutation, location: Vector3, id: string) {
     const now = Date.now();
     const blockObject: BlockObject = {
-        permutation: block.clone(),
+        permutation: block,
         time: now,
         location: location,
     };

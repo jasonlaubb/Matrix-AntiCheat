@@ -23,9 +23,9 @@
       "integrity": "sha512-stbUtINCXbcLNRlGNVX68xRC6ZYq3k3CYmfptwrCcPBEUjVOpVkSj3H4Y0qiSYB+1rVWv7DgiP7Uf9++50Ne5g=="
     },
     "node_modules/@minecraft/server": {
-      "version": "1.11.0-rc.1.21.0-preview.25",
-      "resolved": "https://registry.npmjs.org/@minecraft/server/-/server-1.11.0-rc.1.21.0-preview.25.tgz",
-      "integrity": "sha512-gkqNxw5vl2cjvlqmjy/JeCpc2mBPj/ER8E6W/x7Tx4hFSDRxGeg9TqOOr0bHFgeeSNFXQWtZVwpDEbYKT6acpw==",
+      "version": "1.11.0-beta.1.20.80-stable",
+      "resolved": "https://registry.npmjs.org/@minecraft/server/-/server-1.11.0-beta.1.20.80-stable.tgz",
+      "integrity": "sha512-nedguYKlNHbwe34YlmwF4R1K3ZDW3qzD7xnxODt9PuSwyFfmQzTG0JbN6ulBrMdE60VwQ3qBr46sGO6xtaNJSA==",
       "dependencies": {
         "@minecraft/common": "^1.1.0"
       }
