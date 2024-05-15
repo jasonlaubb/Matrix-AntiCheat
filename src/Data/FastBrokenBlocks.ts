@@ -2,7 +2,7 @@ import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib
 
 export default [
     MinecraftBlockTypes.YellowFlower,
-    MinecraftBlockTypes.RedFlower,
+    // MinecraftBlockTypes.RedFlower,
     MinecraftBlockTypes.DoublePlant,
     MinecraftBlockTypes.WitherRose,
     MinecraftBlockTypes.Tallgrass,
@@ -39,7 +39,7 @@ export default [
     MinecraftBlockTypes.Pumpkin,
     MinecraftBlockTypes.CarvedPumpkin,
     MinecraftBlockTypes.PumpkinStem,
-    MinecraftBlockTypes.Sapling,
+    // MinecraftBlockTypes.Sapling,
     MinecraftBlockTypes.Seagrass,
     MinecraftBlockTypes.SmallDripleafBlock,
     MinecraftBlockTypes.SporeBlossom,
