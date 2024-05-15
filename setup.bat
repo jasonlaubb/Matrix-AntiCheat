@@ -6,6 +6,7 @@ call npm install
 call npm install --prefix ./src
 call node ./texts/.generator.js
 call tsc --build tsconfig.json
+call del "%~dp0\src\node_modules\*.lnk"
 call Xcopy "%~dp0\src\node_modules" "%~dp0\scripts\node_modules" /E /H /C /I
 echo "Sucessfully auto-setup/re-install Matrix AntiCheat"
 pause
