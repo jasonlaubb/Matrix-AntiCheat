@@ -31,7 +31,7 @@ function AntiAim(player: Player) {
     const rotSpeedY = Math.abs(rotationY - data.lastRotationY);
     const lastRotSpeedX = Math.abs(rotationX - data.previousRotationX);
     const lastRotSpeedY = Math.abs(rotationY - data.previousRotationY);
-x   const config = c();
+    const config = c();
     // Integer rotation
     if ((rotationX % 5 == 0 && rotationX != 0 && Math.abs(rotationX) != 90) || (rotationY % 5 == 0 && rotationY != 0)) {
         if (!player.hasTag("matrix:riding")) {
