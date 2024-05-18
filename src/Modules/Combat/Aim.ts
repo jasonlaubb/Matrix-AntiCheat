@@ -71,7 +71,14 @@ function AntiAim(player: Player) {
     if ((rotationX == 0 || rotationX % 90 == 0) && Math.abs(rotationY) % 90 == 0) {
         flag(player, "Aim", "F", config.antiAim.maxVL, config.antiAim.punishment, undefined);
     }
-
+    const unnaturalRots = (rotationx == rotationx.toFixed(4) && (rotationX != 0 || rotSpeedY > 0 && lastRotationX == 0 && rotationX == 0)) || rotationY == rotation.toFixed(4) && (rotationY != 0) || rotSpeedX == rotSpeedX.toFixed(4) || rotSpeedY == rotSpeedY.toFixed(4)) 
+    if (unnaturalRots){
+       flag(player, "Aim", "G", config.antiAim.maxVL, config.antiAim.punishment, undefined);
+    } 
+    const instantRot = (lastRotSpeedX >= 30 && rotSpeedX <= 2 && (rotationX != 0 || rotSpeedY > 0 && lastRotationX == 0 && rotationX == 0) || lastRotSpeedY >= 30 && rotSpeedY <= 2 && (rotationY != 0 || rotSpeedX > 0 && lastRotationY == 0 && rotationY == 0)) 
+    if (instantRot){
+       flag(player, "Aim", "H", config.antiAim.maxVL, config.antiAim.punishment, undefined);
+    }
     aimData.set(player.id, {
         lastRotationX: rotationX,
         lastRotationY: rotationY,
