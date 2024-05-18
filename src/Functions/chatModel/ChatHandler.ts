@@ -17,12 +17,6 @@ world.beforeEvents.chatSend.subscribe((event) => {
 
     const { message, sender: player } = event;
 
-    if (message.startsWith(prefix)) {
-        event.cancel = true;
-        inputCommand(player, message, prefix);
-        return;
-    }
-
     if (player.getDynamicProperty("mute") === true) {
         event.cancel = true;
         system.run(() => player.sendMessage("§2§l§¶Matrix >§4 " + lang(".ChatHandler.muted")));

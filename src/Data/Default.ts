@@ -1,13 +1,8 @@
 /**
  * @author Matrix Team
- * @description The config json of the AntiCheat
- *
- * @warning
- * The anticheat will compare this with the default preset, if you want to reset it to default, please use function provided in game.
- *
- * @docs https://transform.tools/json-to-typescript
+ * @description Default preset for AntiCheat
+ * @warning Change it might cause some problem
  */
-
 export default {
     "configVersion": 1,
     "language": "en_US",
