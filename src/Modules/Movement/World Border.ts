@@ -14,10 +14,10 @@ export { lastSafePos };
 const worldBorder = () => {
     const players = world.getAllPlayers();
     const config = c();
-    radius = (world.getDynamicProperty("worldBorderSize") as number) ?? config.worldBorder.radius;
+    radius = config.worldBorder.radius;
     spawn = world.getDefaultSpawnLocation();
-    centerX = config.worldBorder.centerX ?? spawn.x;
-    centerZ = config.worldBorder.centerZ ?? spawn.z;
+    centerX = config.worldBorder.centerX;
+    centerZ = config.worldBorder.centerZ;
     //world.getAllPlayers()[0].runCommand(`title @s actionbar spawn = ${[centerX,centerZ].join(", ")}\nradius = ${radius}\ndistanceX = ${Math.abs(centerX - world.getAllPlayers()[0].location.x)}`)
 
     for (const player of players) {
