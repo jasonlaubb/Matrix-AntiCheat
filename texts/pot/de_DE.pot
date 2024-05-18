@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Language: English\n"
+"Language: N/A\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -715,44 +715,8 @@ msgstr ""
 msgid "adminchat"
 msgstr ""
 
-#: help.adminchat
-msgid "adminchat - switch between admin channel and public channel"
-msgstr ""
-
-#: help.ban
-msgid "ban <player> <reason> <timeRegax/forever> - Ban a player"
-msgstr ""
-
-#: help.bordersize
-msgid "borderSize <size/default> - Change the world border size"
-msgstr ""
-
-#: help.defaultrank
-msgid "defaultrank <rank> - Change the default rank"
-msgstr ""
-
-#: help.deop
-msgid "deop <player> - Remove player's admin permission"
-msgstr ""
-
-#: help.echestwipe
-msgid "echestwipe <player> - Wipe a player's ender chest"
-msgstr ""
-
-#: help.flagmode
-msgid "flagmode <all/tag/bypass/admin> - Change the flag mode"
-msgstr ""
-
-#: help.freeze
-msgid "freeze <player> - Freeze a player"
-msgstr ""
-
 #: util.has.failed
 msgid "has failed"
-msgstr ""
-
-#: help.help
-msgid "help - Show this help message"
 msgstr ""
 
 #: illegallength
@@ -763,30 +727,6 @@ msgstr ""
 msgid "illegalRegax"
 msgstr ""
 
-#: help.invcopy
-msgid "invcopy <player> - Copy a player's inventory to yours"
-msgstr ""
-
-#: help.invsee
-msgid "invsee <player> - View a player's inventory"
-msgstr ""
-
-#: help.lang
-msgid "lang <language> - Change the language"
-msgstr ""
-
-#: help.langlist
-msgid "langlist - Show all language"
-msgstr ""
-
-#: help.lockdown
-msgid "lockdown <code> - Lockdown the server with a code"
-msgstr ""
-
-#: help.lockdowncode
-msgid "lockdowncode <get/set/random> <set: code>/[random: length] - Do with the lockdown code"
-msgstr ""
-
 #: toggles.module
 msgid "module"
 msgstr ""
@@ -795,72 +735,16 @@ msgstr ""
 msgid "nameLength"
 msgstr ""
 
-#: help.op
-msgid "op <player> - Give player admin permission"
-msgstr ""
-
-#: help.passwords
-msgid "passwords <oldPassword> <newPassword> - Change the password"
-msgstr ""
-
 #: playerspeed
 msgid "playerSpeed"
-msgstr ""
-
-#: help.rank
-msgid "rank <set/add/remove> <player> <rank> - Change the rank on a player"
-msgstr ""
-
-#: help.rankclear
-msgid "rankclear <player> - Clear all rank on a player"
 msgstr ""
 
 #: relative
 msgid "relative"
 msgstr ""
 
-#: help.showallrank
-msgid "showallrank <true/false> - Show all rank in chat"
-msgstr ""
-
-#: help.toggle
-msgid "toggle <module> <enable/disable> - Toggle a module"
-msgstr ""
-
-#: help.toggles
-msgid "toggles - Show all module's toggle"
-msgstr ""
-
 #: typeid
 msgid "typeId"
-msgstr ""
-
-#: help.unban
-msgid "unban <player> - Unban a player"
-msgstr ""
-
-#: help.unbanlist
-msgid "unbanlist - Show all player in unban queue"
-msgstr ""
-
-#: help.unbanremove
-msgid "unbanremove <player> - Remove a player from unban queue"
-msgstr ""
-
-#: help.unfreeze
-msgid "unfreeze <player> - Unfreeze a player"
-msgstr ""
-
-#: help.unlock
-msgid "unlock <code> - Unlock the server"
-msgstr ""
-
-#: help.unvanish
-msgid "unvanish - Unvanish yourself"
-msgstr ""
-
-#: help.vanish
-msgid "vanish - Vanish yourself"
 msgstr ""
 
 #: velocityxz

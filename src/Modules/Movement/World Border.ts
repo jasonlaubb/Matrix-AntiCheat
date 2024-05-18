@@ -16,8 +16,8 @@ const worldBorder = () => {
     const config = c();
     radius = config.worldBorder.radius;
     spawn = world.getDefaultSpawnLocation();
-    centerX = config.worldBorder.centerX;
-    centerZ = config.worldBorder.centerZ;
+    centerX = config.worldBorder.useSpawnLoc ? spawn.x : config.worldBorder.centerX;
+    centerZ = config.worldBorder.useSpawnLoc ? spawn.z : config.worldBorder.centerZ;
     //world.getAllPlayers()[0].runCommand(`title @s actionbar spawn = ${[centerX,centerZ].join(", ")}\nradius = ${radius}\ndistanceX = ${Math.abs(centerX - world.getAllPlayers()[0].location.x)}`)
 
     for (const player of players) {

@@ -772,6 +772,9 @@ export default {
         checkEvery: 2,
         radius: 250000,
         stopAdmin: false,
+        centerX: 0,
+        centerZ: 0,
+        useSpawnLoc: true,
     },
     clientAuth: {
         enabled: false,
