@@ -23,6 +23,7 @@ export function initialize() {
 }
 
 export default class Dynamic {
+    readonly config = () => common;
     static get(key: string[]) {
         let current = common;
 
