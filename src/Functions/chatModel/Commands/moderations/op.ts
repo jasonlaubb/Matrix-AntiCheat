@@ -1,6 +1,5 @@
 import { c, isAdmin } from "../../../../Assets/Util";
 import { isPlayer, registerCommand, sendRawText, verifier } from "../../CommandHandler";
-import { world } from "@minecraft/server";
 import { SHA256 } from "../../../../node_modules/crypto-es/lib/sha256";
 
 registerCommand({
@@ -34,7 +33,7 @@ registerCommand({
             player.lastOpTry = now;
 
             const password: string = args[0];
-            const correctPassword: string = (world.getDynamicProperty("sha_password") as string) ?? String(SHA256(config.commands.password));
+            const correctPassword: string = config.commands.passwordSetting.usingHash ? config.commands.passwordSetting.password : String(SHA256(config.commands.passwordSetting.password));
 
             if (String(SHA256(password)) == correctPassword) {
                 player.setDynamicProperty("isAdmin", true);

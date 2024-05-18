@@ -1,9 +1,13 @@
-import { config, dynamic } from "../../Data/Default";
+//@ts-nocheck
+import * as dy from "../../Data/Default";
+import Config from "../../Data/Config";
+const dynamic = dy.dynamic;
+const config = dynamic.followUserConfig ? dy.default : config;
 import userConfig from "../../Data/Config";
 import { AES } from "../../node_modules/crypto-es/lib/aes";
 import { world } from "@minecraft/server";
 
-let common = dynamic.followUserConfig ? userConfig : config;
+let common = config;
 
 export function initialize() {
     const cypher = world.getDynamicProperty("config") as string;
@@ -23,7 +27,8 @@ export function initialize() {
 }
 
 export default class Dynamic {
-    readonly config = () => common;
+    readonly static config = (): typeof dy.default => common;
+    readonly static default = (): typeof dy.default => config;
     static get(key: string[]) {
         let current = common;
 
@@ -47,12 +52,13 @@ export default class Dynamic {
         const cypher = world.getDynamicProperty("config") as string;
         let plaintext = JSON.parse(AES.decrypt(cypher, dynamic.key).toString()) as Changer[];
         const index = plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key));
-        if (index == -1) return;
+        if (index == -1) return false;
         plaintext[index] = undefined;
         plaintext = plaintext.filter((changer) => changer);
         world.setDynamicProperty("config", AES.encrypt(JSON.stringify(plaintext), dynamic.key).toString());
         // Reload the dynamic config
         initialize();
+        return true;
     }
 }
 
@@ -144,6 +150,8 @@ function change(path: string[], value: string | boolean | number | (string | boo
             case 26:
                 object[a][b][c][d][e][f][g][h][i][j][k][l][m][n][o][p][q][r][s][t][u][v][w][x][y][z] = value;
                 break;
+            default:
+                throw new Error("Dynamic :: Max length is 26");
         }
         return object;
     } catch (error) {

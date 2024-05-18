@@ -3,8 +3,8 @@ import { ban } from "../Functions/moderateModel/banHandler";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../Data/Languages/lang";
-import Config from "../Data/Config";
 import { saveLog } from "../Functions/moderateModel/log";
+import Dynamic from "../Functions/Config/dynamic_config";
 //import { Root } from "../Data/ConfigDocs";
 
 export { getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
@@ -62,7 +62,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
 
     if (punishment && Vl[player.id][modules] > maxVL) {
         let punishmentDone = false;
-        const banrun = world.getDynamicProperty("banrun");
+        const banrun = config.banrun.command;
         if (config.commands.banrun && banrun && ["kick", "ban"].includes(punishment)) {
             player.runCommandAsync(banrun as string);
         } else {
@@ -88,7 +88,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
         }
     }
 
-    const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode;
+    const flagMode = config.flagMode;
     switch (flagMode) {
         case "tag": {
             const targets = world.getPlayers({ tags: ["matrix:notify"] });
@@ -197,7 +197,7 @@ const c = (): Root => {
         return Config
     }
 }*/
-const c = () => Config;
+const c = () => Dynamic.config();
 
 function inAir(dimension: Dimension, location: Vector3) {
     location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z) };

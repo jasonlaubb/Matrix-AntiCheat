@@ -40,9 +40,6 @@ function blockUsage(player: Player, setting: Cmds) {
     return false;
 }
 
-async function input_command(): void {
-    // VOID
-}
 async function _inputCommand(player: Player, message: string, prefix?: string): Promise<any> {
     const config = c();
     const regax = turnRegax(message, prefix);

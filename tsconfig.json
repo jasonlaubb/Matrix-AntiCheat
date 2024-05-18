@@ -1,12 +1,12 @@
 {
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts", "gobal.d.ts"],
   "exclude": ["node_modules"],
   "libChecking": false,
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "lib": ["DOM", "ESNext"],
+    "lib": ["ESNext"],
     "noEmit": false,
     "strict": true,
     "allowJs": true,

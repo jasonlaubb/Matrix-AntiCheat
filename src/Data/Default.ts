@@ -14,7 +14,7 @@ export const dynamic = {
 };
 
 // Don't change this config!
-export const config: any = {
+export default {
     configVersion: 1,
     language: "en_US",
     createScoreboard: true,
@@ -24,7 +24,11 @@ export const config: any = {
     slient: false,
     otherPrefix: [],
     commands: {
-        password: "password",
+        passwordSetting: {
+            password: "password",
+            hash: "",
+            usingHash: false,
+        },
         prefix: "-",
         example: {
             enabled: true,
@@ -649,6 +653,10 @@ export const config: any = {
         punishment: "kick",
         maxVL: 0,
         tpOffset: 1,
+    },
+    banrun: {
+        command: "",
+        enabled: false,
     },
     blacklistedMessages: ["discord.gg", "dsc.gg", "@outlook.com", "@gmail.com", "@hotmail.com", "discordapp.com", "discord.com/invite/", "https://", "http://", "the best minecraft bedrock utility mod", "disepi/ambrosial", "aras"],
     exN: 1,

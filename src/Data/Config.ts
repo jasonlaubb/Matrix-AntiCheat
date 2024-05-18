@@ -645,6 +645,10 @@ export default {
         maxVL: 0,
         tpOffset: 1,
     },
+    banrun: {
+        command: "",
+        enabled: false,
+    },
     blacklistedMessages: ["discord.gg", "dsc.gg", "@outlook.com", "@gmail.com", "@hotmail.com", "discordapp.com", "discord.com/invite/", "https://", "http://", "the best minecraft bedrock utility mod", "disepi/ambrosial", "aras"],
     exN: 1,
 };

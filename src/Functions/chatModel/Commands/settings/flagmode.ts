@@ -1,6 +1,6 @@
-import { world } from "@minecraft/server";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
 import { c } from "../../../../Assets/Util";
+import Dynamic from "../../../Config/dynamic_config";
 
 registerCommand({
     name: "flagmode",
@@ -11,7 +11,7 @@ registerCommand({
     argRequire: [(value) => ["all", "tag", "bypass", "admin", "none"].includes(value as string)],
     require: (player) => verifier(player, c().commands.flagmode),
     executor: async (player, args) => {
-        world.setDynamicProperty("flagmode", args[0]);
+        Dynamic.set(["flagMode"], args[0]);
         sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "flagmode.changed", with: [args[0]] });
     },
 });

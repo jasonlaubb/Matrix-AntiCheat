@@ -28,6 +28,7 @@ interface ScaffoldData {
     diagSpeed: number;
     avgExt: number;
     lastDis: number;
+    maxExt: number;
 }
 const scaffoldData = new Map<string, ScaffoldData>();
 function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEvent) {
@@ -53,6 +54,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
             blockPlace: [],
             diagSpeed: 500,
             lastDis: 0,
+            avgExt: 0,
             maxExt: undefined,
         };
         scaffoldData.set(player.id, data);
@@ -92,6 +94,8 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
     if (rotation.x > 60) data.avgExt = 1;
     else data.avgExt = (60 - rotation.x) / 10 + 1;
     if (rotation.x <= 20) data.avgExt = 8;
+    const { x: velocityX, z: velocityZ } = player.getVelocity();
+    const xz = Math.hypot(velocityX, velocityZ);
     //choosing maximum diag speed
     if (xz > 0 && xz < 0.3 && player.isOnGround && extender < 1 && data.lastXRot == rotation.x) data.diagSpeed = 150;
     if ((xz > 0.1 && !player.isOnGround) || extender >= 1 || xz > 0.5 || rotation.x >= 80) data.diagSpeed = 500;

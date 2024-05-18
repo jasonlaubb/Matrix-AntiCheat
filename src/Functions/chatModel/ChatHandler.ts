@@ -1,11 +1,10 @@
 import { world, system } from "@minecraft/server";
-
-import config from "../../Data/Config";
 import { antiSpamModule } from "../../Modules/Misc/Spam";
-import { inputCommand } from "./CommandSystem";
+import { triggerCommand } from "./CommandHandler";
 import { chatRank } from "./ChatRank";
 import { adminChat } from "./AdminChat";
 import lang from "../../Data/Languages/lang";
+import { c } from "../../Assets/Util";
 
 world.beforeEvents.chatSend.subscribe((event) => {
     // Defend the spam bot from sending the chat packets
@@ -13,9 +12,14 @@ world.beforeEvents.chatSend.subscribe((event) => {
         event.cancel = true;
         return;
     }
-    const prefix: string = (world.getDynamicProperty("prefix") ?? config.commands.prefix) as string;
 
     const { message, sender: player } = event;
+    const config = c();
+
+    if (message.startsWith(config.commands.prefix) || config.otherPrefix.some((otherP) => message.startsWith(otherP))) {
+        triggerCommand(player, message);
+        return;
+    }
 
     if (player.getDynamicProperty("mute") === true) {
         event.cancel = true;
@@ -33,7 +37,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
         return;
     }
 
-    const chatRankToggle = (world.getDynamicProperty("chatRank") ?? config.chatRank.enabled) as boolean;
+    const chatRankToggle = config.chatRank.enabled;
 
     if (chatRankToggle && !config.otherPrefix.some((otherP) => message.startsWith(otherP))) {
         event.cancel = true;

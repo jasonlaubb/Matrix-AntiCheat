@@ -1,6 +1,6 @@
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
 import { c } from "../../../../Assets/Util";
-import { world } from "@minecraft/server";
+import Dynamic from "../../../Config/dynamic_config";
 
 registerCommand({
     name: "showallrank",
@@ -11,7 +11,7 @@ registerCommand({
     require: (player) => verifier(player, c().commands.defaultrank),
     argRequire: [(value) => ["true", "false"].includes(value as string)],
     executor: async (player, args) => {
-        world.setDynamicProperty("showAllRank", Boolean(args[0]));
+        Dynamic.set(["chatRank", "showAllRank"], args[0] === "true");
         sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "showallrank.has", with: [args[0]] });
     },
 });

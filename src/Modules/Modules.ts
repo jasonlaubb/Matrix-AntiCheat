@@ -1,6 +1,4 @@
 import { c } from "../Assets/Util";
-import { world } from "@minecraft/server";
-
 // import the toggle handler of each module
 import autoClicker from "./Combat/Auto Clicker";
 import killAura from "./Combat/Kill Aura";
@@ -75,35 +73,19 @@ export const antiCheatModules: { [key: string]: toggleHandler } = {
     clientAuth: clientAuth,
 };
 
-export const defaultLy = (key: string) => {
-    const config: { [key: string]: any } = c();
-    if (key == "antiCBE") return config.antiCommandBlockExplolit.enabled;
-    return config[key].enabled;
-};
-
 export const keys = Object.keys(antiCheatModules);
 
 export function getModuleState(module: string) {
     if (!keys.includes(module)) return undefined;
-    return (world.getDynamicProperty(module) as boolean) ?? defaultLy(module);
+    return (c() as { [key: string]: any })[module]?.enabled;
 }
 
 export function moduleStart() {
     const config = c();
-    const exN = (world.getDynamicProperty("exN") as number) ?? 0;
-    for (const module of keys) {
-        if (getModuleState(module) !== true) continue;
-        // the bug is config[module] module must be a number not string
-        try {
-            if ((config as { [key: string]: any })[module].experimental && exN != config.exN) {
-                world.setDynamicProperty(module, undefined);
-                continue;
-            }
-        } catch (error) {
-            console.warn(JSON.stringify(error));
+    const entry = Object.entries(antiCheatModules);
+    for (const [name, handler] of entry) {
+        if ((config as { [key: string]: any })[name]?.enabled) {
+            handler.enable();
         }
-        antiCheatModules[module].enable();
     }
-    if (exN != config.exN) world.setDynamicProperty("exN", config.exN);
-    return true;
 }
