@@ -3,15 +3,9 @@ import { flag, c, isAdmin } from "../../Assets/Util";
 
 /**
  * @author jasonlaubb
- * @description Prevent watchdog to terminating the scripts
+ * @description Prevent crasher works
+ * @warning This check won't work anymore as Minecraft patched it
  */
-
-// Prevent watchdog to terminating the scripts \:doge\:
-export const watchDog = () =>
-    system.beforeEvents.watchdogTerminate.subscribe((data) => {
-        //cancel the watchdog terminate
-        data.cancel = true;
-    });
 
 function AntiCrasher(player: Player) {
     const config = c();
