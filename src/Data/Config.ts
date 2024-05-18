@@ -19,12 +19,18 @@ export default {
     slient: false,
     otherPrefix: [],
     commands: {
-        password: "password",
+        passwordSetting: {
+            password: "password",
+            hash: "",
+            usingHash: false,
+        },
         prefix: "-",
         example: {
             enabled: true,
             adminOnly: true,
             requireTag: ["mod", "manager"],
+        },
+        about: {
         },
         help: {
             enabled: true,
