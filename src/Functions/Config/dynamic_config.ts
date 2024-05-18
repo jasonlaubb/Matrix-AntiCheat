@@ -27,8 +27,8 @@ export function initialize() {
 }
 
 export default class Dynamic {
-    readonly static config = (): typeof dy.default => common;
-    readonly static default = (): typeof dy.default => config;
+    static readonly config = (): typeof dy.default => common;
+    static readonly default = (): typeof dy.default => config;
     static get(key: string[]) {
         let current = common;
 

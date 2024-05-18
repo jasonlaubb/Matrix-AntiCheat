@@ -12,7 +12,7 @@ system.beforeEvents.watchdogTerminate.subscribe((event) => {
     system.run(() => {
         console.log(`Index :: ${new Date(Date.now()).toISOString()} | WatchdogTerminate cancelled, reason: ${event.terminateReason}`);
     });
-})
+});
 //Log the run time
 const runTime = Date.now();
 //Initialize the config

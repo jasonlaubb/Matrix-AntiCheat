@@ -22,7 +22,7 @@ registerCommand({
 
         sendRawText(world, { text: "§bMatrix §7>§g " }, { translate: "passwords.changed", with: [] });
 
-        if ((!args[2] ||args[2] == "true") && config.commands.passwordSetting.usingHash) {
+        if ((!args[2] || args[2] == "true") && config.commands.passwordSetting.usingHash) {
             Dynamic.set(["commands", "passwordSetting", "hash"], SHA256(newPassword).toString());
             Dynamic.set(["commands", "passwordSetting", "usingHash"], true);
             Dynamic.delete(["commands", "passwordSetting", "password"]);
