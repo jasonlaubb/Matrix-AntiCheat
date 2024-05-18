@@ -10,6 +10,10 @@ const runTime = Date.now();
 import { watchDog } from "./Modules/Misc/Crasher";
 watchDog();
 
+//Initialize the config
+import { initialize } from "./Functions/Config/dynamic_config";
+initialize();
+
 //Load the language
 import "./Assets/Language";
 
@@ -42,5 +46,5 @@ if (c().createScoreboard) {
 }
 
 system.run(() => {
-    console.log("Index :: Successfully load the program (" + (Date.now() - runTime - 50) + "ms)")
-})
+    console.log("Index :: Successfully load the program (" + (Date.now() - runTime - 50) + "ms)");
+});

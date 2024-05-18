@@ -1,412 +1,402 @@
 /**
  * @author Matrix Team
  * @description Default preset for AntiCheat
- * @warning Change it might cause some problem
+ * @warning NEVER CHANGE THIS FILE IF YOU DON'T KNOW WHAT YOU ARE DOING
  */
-export default {
-    "configVersion": 1,
-    "language": "en_US",
-    "createScoreboard": true,
-    "flagMode": "admin",
-    "lockdowncode": "AbCdEfGh",
-    "passwordCold": 5000,
-    "slient": false,
-    "otherPrefix": [],
-    "commands": {
-        "password": "password",
-        "prefix": "-",
-        "example": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": [
-                "mod",
-                "manager"
-            ]
+
+/**
+ * @param {string} AES_key
+ * @description AES key for loading config
+ */
+export const dynamic = {
+    key: "ImEZlA6w8Y9mUUNtc/kpCG4MFBn7laQ5N3DeVMPEHO6nQEIQqTlmp8tp2vOmU+GC",
+    followUserConfig: false, // State if we use UserConfig or not
+};
+
+// Don't change this config!
+export const config: any = {
+    configVersion: 1,
+    language: "en_US",
+    createScoreboard: true,
+    flagMode: "admin",
+    lockdowncode: "AbCdEfGh",
+    passwordCold: 5000,
+    slient: false,
+    otherPrefix: [],
+    commands: {
+        password: "password",
+        prefix: "-",
+        example: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: ["mod", "manager"],
         },
-        "help": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        help: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "toggles": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        toggles: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "toggle": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        toggle: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "op": {
-            "enabled": true,
-            "adminOnly": false,
-            "requireTag": []
+        op: {
+            enabled: true,
+            adminOnly: false,
+            requireTag: [],
         },
-        "deop": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        deop: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "passwords": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        passwords: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "flagmode": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        flagmode: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "rank": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        rank: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "rankclear": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        rankclear: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "defaultrank": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        defaultrank: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "showallrank": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        showallrank: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "ban": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        ban: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "unban": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        unban: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "unbanremove": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        unbanremove: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "unbanlist": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        unbanlist: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "freeze": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        freeze: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "unfreeze": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        unfreeze: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "mute": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        mute: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "unmute": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        unmute: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "vanish": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        vanish: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "unvanish": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        unvanish: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "invcopy": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        invcopy: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "invsee": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        invsee: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "echestwipe": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        echestwipe: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "lockdowncode": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        lockdowncode: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "lockdown": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        lockdown: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "unlock": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        unlock: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "adminchat": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        adminchat: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "lang": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        lang: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "langlist": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        langlist: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "borderSize": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        borderSize: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "matrixui": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        matrixui: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "banrun": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
+        banrun: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
         },
-        "openLog": {
-            "enabled": true,
-            "adminOnly": true,
-            "requireTag": []
-        }
+        openLog: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
     },
-    "punishment_kick": {
-        "reason": "Bad behavior"
+    punishment_kick: {
+        reason: "Bad behavior",
     },
-    "punishment_ban": {
-        "minutes": 1440,
-        "reason": "Unfair advantage"
+    punishment_ban: {
+        minutes: 1440,
+        reason: "Unfair advantage",
     },
-    "example_anticheat_module": {
-        "enabled": true,
-        "punishment": "ban"
+    example_anticheat_module: {
+        enabled: true,
+        punishment: "ban",
     },
-    "chatRank": {
-        "enabled": true,
-        "defaultRank": "§pMember",
-        "showAllRank": true
+    chatRank: {
+        enabled: true,
+        defaultRank: "§pMember",
+        showAllRank: true,
     },
-    "dimensionLock": {
-        "enabled": false
+    dimensionLock: {
+        enabled: false,
     },
-    "logsettings": {
-        "maxStorge": 200,
-        "pageShows": 20,
-        "utc": 0,
-        "logCommandUsage": false,
-        "logPlayerRegister": false,
-        "logCheatFlag": true,
-        "logCheatPunishment": true
+    logsettings: {
+        maxStorge: 200,
+        pageShows: 20,
+        utc: 0,
+        logCommandUsage: false,
+        logPlayerRegister: false,
+        logCheatFlag: true,
+        logCheatPunishment: true,
     },
-    "antiAutoClicker": {
-        "enabled": true,
-        "maxClicksPerSecond": 24,
-        "timeout": 200,
-        "punishment": "kick",
-        "maxVL": 4
+    antiAutoClicker: {
+        enabled: true,
+        maxClicksPerSecond: 24,
+        timeout: 200,
+        punishment: "kick",
+        maxVL: 4,
     },
-    "antiKillAura": {
-        "enabled": true,
-        "minAngle": 160,
-        "timeout": 200,
-        "maxEntityHit": 2,
-        "punishment": "ban",
-        "maxVL": 3
+    antiKillAura: {
+        enabled: true,
+        minAngle: 160,
+        timeout: 200,
+        maxEntityHit: 2,
+        punishment: "ban",
+        maxVL: 3,
     },
-    "antiReach": {
-        "enabled": true,
-        "maxReach": 4.21,
-        "maxYReach": 4.8,
-        "punishment": "kick",
-        "maxVL": 3
+    antiReach: {
+        enabled: true,
+        maxReach: 4.21,
+        maxYReach: 4.8,
+        punishment: "kick",
+        maxVL: 3,
     },
-    "antiFly": {
-        "enabled": true,
-        "punishment": "ban",
-        "maxVelocity": 0.7,
-        "maxVL": 4
+    antiFly: {
+        enabled: true,
+        punishment: "ban",
+        maxVelocity: 0.7,
+        maxVL: 4,
     },
-    "antiNoFall": {
-        "enabled": true,
-        "punishment": "ban",
-        "float": 15,
-        "maxVL": 3
+    antiNoFall: {
+        enabled: true,
+        punishment: "ban",
+        float: 15,
+        maxVL: 3,
     },
-    "antiNoClip": {
-        "enabled": true,
-        "punishment": "ban",
-        "clipMove": 1.6,
-        "maxVL": 4
+    antiNoClip: {
+        enabled: true,
+        punishment: "ban",
+        clipMove: 1.6,
+        maxVL: 4,
     },
-    "antiSpeed": {
-        "enabled": true,
-        "punishment": "kick",
-        "maxVL": 4,
-        "minSpeedLog": 3
+    antiSpeed: {
+        enabled: true,
+        punishment: "kick",
+        maxVL: 4,
+        minSpeedLog: 3,
     },
-    "antiTimer": {
-        "enabled": true,
-        "punishment": "ban",
-        "maxVL": 4,
-        "minTimerLog": 3
+    antiTimer: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 4,
+        minTimerLog: 3,
     },
-    "antiNuker": {
-        "enabled": true,
-        "maxBreakPerTick": 6,
-        "timeout": 100,
-        "punishment": "ban",
-        "solidOnly": true,
-        "maxVL": 0
+    antiNuker: {
+        enabled: true,
+        maxBreakPerTick: 6,
+        timeout: 100,
+        punishment: "ban",
+        solidOnly: true,
+        maxVL: 0,
     },
-    "antiScaffold": {
-        "enabled": true,
-        "timeout": 20,
-        "maxAngle": 175,
-        "factor": 1,
-        "minRotation": 20,
-        "maxBPS": 5,
-        "punishment": "kick",
-        "maxVL": 4
+    antiScaffold: {
+        enabled: true,
+        timeout: 20,
+        maxAngle: 175,
+        factor: 1,
+        minRotation: 20,
+        maxBPS: 5,
+        punishment: "kick",
+        maxVL: 4,
     },
-    "antiNoSlow": {
-        "enabled": true,
-        "maxWebSpeed": 0.85,
-        "maxItemSpeed": 0.2,
-        "itemUseTime": 350,
-        "timeout": 60,
-        "punishment": "ban",
-        "maxVL": 4
+    antiNoSlow: {
+        enabled: true,
+        maxWebSpeed: 0.85,
+        maxItemSpeed: 0.2,
+        itemUseTime: 350,
+        timeout: 60,
+        punishment: "ban",
+        maxVL: 4,
     },
-    "antiBreaker": {
-        "enabled": false,
-        "timeout": 60,
-        "writeList": [
-            "minecraft:cake",
-            "minecraft:dragon_egg"
-        ],
-        "punishment": "ban",
-        "maxVL": 4,
-        "experimental": true
+    antiBreaker: {
+        enabled: false,
+        timeout: 60,
+        writeList: ["minecraft:cake", "minecraft:dragon_egg"],
+        punishment: "ban",
+        maxVL: 4,
+        experimental: true,
     },
-    "antiSpam": {
-        "enabled": true,
-        "maxMessagesPerSecond": 3,
-        "timer": 500,
-        "maxCharacterLimit": 200,
-        "kickThreshold": 3,
-        "timeout": 200
+    antiSpam: {
+        enabled: true,
+        maxMessagesPerSecond: 3,
+        timer: 500,
+        maxCharacterLimit: 200,
+        kickThreshold: 3,
+        timeout: 200,
     },
-    "antiSpammer": {
-        "enabled": true,
-        "punishment": "ban",
-        "maxVL": 0
+    antiSpammer: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 0,
     },
-    "antiBlockReach": {
-        "enabled": true,
-        "maxPlaceDistance": 8,
-        "maxBreakDistance": 8,
-        "timeout": 60,
-        "punishment": "ban",
-        "maxVL": 0
+    antiBlockReach: {
+        enabled: true,
+        maxPlaceDistance: 8,
+        maxBreakDistance: 8,
+        timeout: 60,
+        punishment: "ban",
+        maxVL: 0,
     },
-    "antiAim": {
-        "enabled": true,
-        "punishment": "kick",
-        "maxVL": 4
+    antiAim: {
+        enabled: true,
+        punishment: "kick",
+        maxVL: 4,
     },
-    "antiTower": {
-        "enabled": true,
-        "minDelay": 200,
-        "timeout": 60,
-        "punishment": "kick",
-        "maxVL": 2,
-        "experimental": true
+    antiTower: {
+        enabled: true,
+        minDelay: 200,
+        timeout: 60,
+        punishment: "kick",
+        maxVL: 2,
+        experimental: true,
     },
-    "antiGameMode": {
-        "enabled": false,
-        "bannedGameMode": [
-            1
-        ],
-        "returnDefault": true,
-        "returnGameMode": 0,
-        "punishment": "ban",
-        "maxVL": 4
+    antiGameMode: {
+        enabled: false,
+        bannedGameMode: [1],
+        returnDefault: true,
+        returnGameMode: 0,
+        punishment: "ban",
+        maxVL: 4,
     },
-    "antiNameSpoof": {
-        "enabled": true,
-        "punishment": "ban"
+    antiNameSpoof: {
+        enabled: true,
+        punishment: "ban",
     },
-    "antiAutoTool": {
-        "enabled": false,
-        "punishment": "kick",
-        "maxVL": 4,
-        "toolType": [
-            "axe",
-            "shovel",
-            "pickaxe",
-            "sword"
-        ],
-        "experimental": true
+    antiAutoTool: {
+        enabled: false,
+        punishment: "kick",
+        maxVL: 4,
+        toolType: ["axe", "shovel", "pickaxe", "sword"],
+        experimental: true,
     },
-    "antiFastBreak": {
-        "enabled": false,
-        "punishment": "ban",
-        "maxVL": 4,
-        "solidOnly": true,
-        "maxBPS": 1.2,
-        "toolLimit": 4.2,
-        "toolType": [
-            "axe",
-            "shovel",
-            "pickaxe",
-            "sword"
-        ],
-        "matchType": {
-            "wood": 3.9,
-            "stone": 5.1
+    antiFastBreak: {
+        enabled: false,
+        punishment: "ban",
+        maxVL: 4,
+        solidOnly: true,
+        maxBPS: 1.2,
+        toolLimit: 4.2,
+        toolType: ["axe", "shovel", "pickaxe", "sword"],
+        matchType: {
+            wood: 3.9,
+            stone: 5.1,
         },
-        "experimental": true
+        experimental: true,
     },
-    "antiXray": {
-        "enabled": false,
-        "notifyAt": [
-            "diamond_ore",
-            "ancient_debris"
-        ],
-        "experimental": true
+    antiXray: {
+        enabled: false,
+        notifyAt: ["diamond_ore", "ancient_debris"],
+        experimental: true,
     },
-    "antiDisabler": {
-        "enabled": true,
-        "maxVL": 0,
-        "punishment": "ban"
+    antiDisabler: {
+        enabled: true,
+        maxVL: 0,
+        punishment: "ban",
     },
-    "antiIllegalItem": {
-        "enabled": false,
-        "illegalItem": [
+    antiIllegalItem: {
+        enabled: false,
+        illegalItem: [
             "minecraft:unknown",
             "minecraft:reserved",
             "minecraft:command_block",
@@ -558,135 +548,108 @@ export default {
             "minecraft:item.wooden_door",
             "minecraft:cave_vines",
             "minecraft:cave_vines_body_with",
-            "minecraft:npc_spawn_egg"
+            "minecraft:npc_spawn_egg",
         ],
-        "state": {
-            "typeCheck": {
-                "enabled": true,
-                "punishment": "ban"
+        state: {
+            typeCheck: {
+                enabled: true,
+                punishment: "ban",
             },
-            "nameLength": {
-                "enabled": true,
-                "punishment": "ban",
-                "maxItemNameLength": 32
+            nameLength: {
+                enabled: true,
+                punishment: "ban",
+                maxItemNameLength: 32,
             },
-            "itemTag": {
-                "enabled": true,
-                "punishment": "ban",
-                "maxAllowedTag": 0
+            itemTag: {
+                enabled: true,
+                punishment: "ban",
+                maxAllowedTag: 0,
             },
-            "loreCheck": {
-                "enabled": true,
-                "punishment": "ban"
+            loreCheck: {
+                enabled: true,
+                punishment: "ban",
             },
-            "itemAmount": {
-                "enabled": true,
-                "punishment": "ban"
+            itemAmount: {
+                enabled: true,
+                punishment: "ban",
             },
-            "enchantLevel": {
-                "enabled": true,
-                "punishment": "ban",
-                "whiteList": []
+            enchantLevel: {
+                enabled: true,
+                punishment: "ban",
+                whiteList: [],
             },
-            "enchantConflict": {
-                "enabled": true,
-                "punishment": "ban",
-                "whitList": []
+            enchantConflict: {
+                enabled: true,
+                punishment: "ban",
+                whitList: [],
             },
-            "enchantAble": {
-                "enabled": true,
-                "punishment": "ban",
-                "whiteList": []
+            enchantAble: {
+                enabled: true,
+                punishment: "ban",
+                whiteList: [],
             },
-            "enchantRepeat": {
-                "enabled": true,
-                "punishment": "ban"
-            }
+            enchantRepeat: {
+                enabled: true,
+                punishment: "ban",
+            },
         },
-        "checkCreativeMode": true,
-        "timeout": 60
+        checkCreativeMode: true,
+        timeout: 60,
     },
-    "antiElytraFly": {
-        "enabled": true,
-        "maxVL": 4,
-        "fallDiscycle": 4,
-        "maxFallDis": 1.05,
-        "maxRatio": 10,
-        "punishment": "kick",
-        "experimental": true
+    antiElytraFly: {
+        enabled: true,
+        maxVL: 4,
+        fallDiscycle: 4,
+        maxFallDis: 1.05,
+        maxRatio: 10,
+        punishment: "kick",
+        experimental: true,
     },
-    "antiFastUse": {
-        "enabled": true,
-        "minUseTime": 20,
-        "timeout": 60,
-        "punishment": "ban",
-        "maxVL": 2
+    antiFastUse: {
+        enabled: true,
+        minUseTime: 20,
+        timeout: 60,
+        punishment: "ban",
+        maxVL: 2,
     },
-    "antiAuto": {
-        "enabled": true,
-        "punishment": "ban",
-        "maxVL": 2
+    antiAuto: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 2,
     },
-    "antiCommandBlockExplolit": {
-        "enabled": false,
-        "punishment": "ban",
-        "maxVL": 0,
-        "cancelPlacement": [
-            "minecraft:bee_nest",
-            "minecraft:beehive",
-            "minecraft:moving_block",
-            "minecraft:movingBlock",
-            "minecraft:movingblock"
-        ],
-        "cancelUsage": [
-            "minecraft:axolotl_bucket",
-            "minecraft:cod_bucket",
-            "minecraft:powder_snow_bucket",
-            "minecraft:pufferfish_bucket",
-            "minecraft:salmon_bucket",
-            "minecraft:tadpole_bucket",
-            "minecraft:tropical_fish_bucket"
-        ]
+    antiCommandBlockExplolit: {
+        enabled: false,
+        punishment: "ban",
+        maxVL: 0,
+        cancelPlacement: ["minecraft:bee_nest", "minecraft:beehive", "minecraft:moving_block", "minecraft:movingBlock", "minecraft:movingblock"],
+        cancelUsage: ["minecraft:axolotl_bucket", "minecraft:cod_bucket", "minecraft:powder_snow_bucket", "minecraft:pufferfish_bucket", "minecraft:salmon_bucket", "minecraft:tadpole_bucket", "minecraft:tropical_fish_bucket"],
     },
-    "antiCrasher": {
-        "enabled": true,
-        "punishment": "ban",
-        "maxVL": 0
+    antiCrasher: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 0,
     },
-    "antiBot": {
-        "enabled": false,
-        "punishment": "ban",
-        "maxVL": 0,
-        "clickSpeedThershold": 6,
-        "timer": 1,
-        "maxTry": 3
+    antiBot: {
+        enabled: false,
+        punishment: "ban",
+        maxVL: 0,
+        clickSpeedThershold: 6,
+        timer: 1,
+        maxTry: 3,
     },
-    "worldBorder": {
-        "enabled": false,
-        "checkEvery": 2,
-        "radius": 250000,
-        "stopAdmin": false
+    worldBorder: {
+        enabled: false,
+        checkEvery: 2,
+        radius: 250000,
+        stopAdmin: false,
     },
-    "clientAuth": {
-        "enabled": false,
-        "checkForTick": 5,
-        "punishment": "kick",
-        "maxVL": 0,
-        "tpOffset": 1
+    clientAuth: {
+        enabled: false,
+        checkForTick: 5,
+        punishment: "kick",
+        maxVL: 0,
+        tpOffset: 1,
     },
-    "blacklistedMessages": [
-        "discord.gg",
-        "dsc.gg",
-        "@outlook.com",
-        "@gmail.com",
-        "@hotmail.com",
-        "discordapp.com",
-        "discord.com/invite/",
-        "https://",
-        "http://",
-        "the best minecraft bedrock utility mod",
-        "disepi/ambrosial",
-        "aras"
-    ],
-    "exN": 1
-}
+    blacklistedMessages: ["discord.gg", "dsc.gg", "@outlook.com", "@gmail.com", "@hotmail.com", "discordapp.com", "discord.com/invite/", "https://", "http://", "the best minecraft bedrock utility mod", "disepi/ambrosial", "aras"],
+    exN: 1,
+};

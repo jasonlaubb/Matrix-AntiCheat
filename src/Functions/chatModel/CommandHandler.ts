@@ -133,7 +133,7 @@ export function isPlayer(player: string, exclude: boolean = false, isadmin: bool
     return target;
 }
 
-export function onStart () {
+export function onStart() {
     // Log the command amount
     system.runTimeout(() => console.log("CommandHandler :: Successfully registered " + commands.length + " application command(s)"), 20);
 }
