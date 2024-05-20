@@ -42,7 +42,7 @@ function AntiAim(player: Player) {
     if ((rotSpeedX % 1 == 0 && rotSpeedX != 0) || (rotSpeedY % 1 == 0 && rotSpeedY != 0)) {
         flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
     }
-    // Stright rotation movement
+    // Straight rotation movement
     if (rotSpeedY > 5 && rotSpeedX < 0.05 && !player.isSwimming) {
         data.straightRotContinue++;
         if (data.straightRotContinue > 20) {
