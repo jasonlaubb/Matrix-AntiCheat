@@ -97,8 +97,8 @@ async function AntiNoClip(player: Player, now: number) {
         safePos &&
         player?.lastClip &&
         player?.backClip &&
-        player?.befoClip &&
-        ((movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25) || (player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.befoClip < 0.25)) &&
+        player?.beforeClip &&
+        ((movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25) || (player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.beforeClip < 0.25)) &&
         (y == 0 || (Math.abs(y) < 1.75 && player.isJumping)) &&
         !player.isGliding &&
         !player.isFlying &&
@@ -112,7 +112,7 @@ async function AntiNoClip(player: Player, now: number) {
         }
         lastFlag.set(player.id, now);
     }
-    player.befoClip = player.backClip;
+    player.beforeClip = player.backClip;
     player.backClip = player.lastClip;
     player.lastClip = movementClip;
     const { x: x1, y: y1, z: z1 } = player.getHeadLocation();
