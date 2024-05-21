@@ -99,7 +99,7 @@ async function AntiNoClip(player: Player, now: number) {
         player?.backClip &&
         player?.beforeClip &&
         ((movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25) || (player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.beforeClip < 0.25)) &&
-        (y == 0 || (Math.abs(y) < 1.75 && player.isJumping)) &&
+        /*(y == 0 || (Math.abs(y) < 1.75 && player.isJumping)) &&*/
         !player.isGliding &&
         !player.isFlying &&
         !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) &&
@@ -108,7 +108,11 @@ async function AntiNoClip(player: Player, now: number) {
     ) {
         if (!config.slient) player.teleport(player.lastSafePos);
         if (lastflag && now - lastflag < 850) {
-            flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)]);
+            if (Math.abs(y) < 1.75) {
+                flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)]);
+            } else if (!player.hasTag("matrix:riding")) {
+                flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, [lang(">velocityXZ") + ":" + movementClip.toFixed(2)]);
+            }
         }
         lastFlag.set(player.id, now);
     }
