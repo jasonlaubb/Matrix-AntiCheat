@@ -30,8 +30,7 @@ export default {
             adminOnly: true,
             requireTag: ["mod", "manager"],
         },
-        about: {
-        },
+        about: {},
         help: {
             enabled: true,
             adminOnly: true,

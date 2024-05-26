@@ -41,7 +41,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "about",
-                description: {text:"About Matrix AntiCheat"},
+                description: { text: "About Matrix AntiCheat" },
             },
         },
         help: {
@@ -50,7 +50,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "help",
-                description: {text:"Help Menu"},
+                description: { text: "Help Menu" },
             },
         },
         toggles: {
@@ -59,7 +59,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "toggles",
-                description: {text:"Toggles Menu"},
+                description: { text: "Toggles Menu" },
             },
         },
         toggle: {
@@ -68,7 +68,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "toggle <module>",
-                description: {text:"Toggle the module"},
+                description: { text: "Toggle the module" },
             },
         },
         op: {
@@ -77,7 +77,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "op <player name>",
-                description: {text:"Give the matrix admin permission to a player"},
+                description: { text: "Give the matrix admin permission to a player" },
             },
         },
         deop: {
@@ -86,7 +86,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "deop <player name>",
-                description: {text:"Rmove the matrix admin permission from a player"},
+                description: { text: "Rmove the matrix admin permission from a player" },
             },
         },
         passwords: {
@@ -95,7 +95,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "passwords <current password> <new password>",
-                description: {text:"Give the matrix admin permission to a player"},
+                description: { text: "Give the matrix admin permission to a player" },
             },
         },
         flagmode: {
@@ -104,7 +104,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "flagmode <flagmode: all/tag/bypass/admin/none>",
-                description: {text:"Change the flagmode mode used for flag message in chat"},
+                description: { text: "Change the flagmode mode used for flag message in chat" },
             },
         },
         rank: {
@@ -113,7 +113,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "rank <add/remove/set> <player> <rank>",
-                description: {text:"Rank related commands"},
+                description: { text: "Rank related commands" },
             },
         },
         rankclear: {
@@ -122,7 +122,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "rankclear <player>",
-                description: {text:"Clear all the ranks of a player"},
+                description: { text: "Clear all the ranks of a player" },
             },
         },
         defaultrank: {
@@ -131,7 +131,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "defaultrank <rank>",
-                description: {text:"Change the default rank be showed when player don't have any rank"},
+                description: { text: "Change the default rank be showed when player don't have any rank" },
             },
         },
         showallrank: {
@@ -140,7 +140,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "showallrank <state: true/false>",
-                description: {text:"State if show all rank or not"},
+                description: { text: "State if show all rank or not" },
             },
         },
         ban: {
@@ -149,7 +149,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "ban <player> <target> <reason> <time: forever/?d?h?m?s>",
-                description: {text:"Give the matrix admin permission to a player"},
+                description: { text: "Give the matrix admin permission to a player" },
             },
         },
         unban: {
@@ -158,7 +158,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "unban <player name>",
-                description: {text:"Unban a player with their unique name"},
+                description: { text: "Unban a player with their unique name" },
             },
         },
         unbanremove: {
@@ -167,7 +167,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "unbanremove <player name>",
-                description: {text:"Stop continuing unban of a player"},
+                description: { text: "Stop continuing unban of a player" },
             },
         },
         unbanlist: {
@@ -176,7 +176,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "about",
-                description: {text:"List the player is waiting for unban"},
+                description: { text: "List the player is waiting for unban" },
             },
         },
         freeze: {
@@ -185,7 +185,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "freeze <player>",
-                description: {text:"Freeze a player"},
+                description: { text: "Freeze a player" },
             },
         },
         unfreeze: {
@@ -193,7 +193,7 @@ export default {
             adminOnly: true,
             helper: {
                 usage: "unfreeze <player>",
-                description: {text:"Unfreeze a player"},
+                description: { text: "Unfreeze a player" },
             },
         },
         mute: {
@@ -202,7 +202,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "mute <player>",
-                description: {text:"Mute a player"},
+                description: { text: "Mute a player" },
             },
         },
         unmute: {
@@ -211,7 +211,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "unmute <player>",
-                description: {text:"Unmute a muted player"},
+                description: { text: "Unmute a muted player" },
             },
         },
         vanish: {
@@ -220,7 +220,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "vanish",
-                description: {text:"Vanish yourself"},
+                description: { text: "Vanish yourself" },
             },
         },
         unvanish: {
@@ -229,7 +229,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "unvanish",
-                description: {text:"Stop vanishing of yourself"},
+                description: { text: "Stop vanishing of yourself" },
             },
         },
         invcopy: {
@@ -238,7 +238,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "invcopy <player>",
-                description: {text:"Copy a player inventory to yours"},
+                description: { text: "Copy a player inventory to yours" },
             },
         },
         invsee: {
@@ -247,7 +247,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "invsee <player>",
-                description: {text:"View a player inventory"},
+                description: { text: "View a player inventory" },
             },
         },
         echestwipe: {
@@ -256,7 +256,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "echestwipe <player>",
-                description: {text:"Wipe a player ender chest"},
+                description: { text: "Wipe a player ender chest" },
             },
         },
         lockdowncode: {
@@ -265,7 +265,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "lockdowncode <action: random/set> [code]",
-                description: {text:"Change lockdown code"},
+                description: { text: "Change lockdown code" },
             },
         },
         lockdown: {
@@ -274,7 +274,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "lockdown <code>",
-                description: {text:"Lockdown the server"},
+                description: { text: "Lockdown the server" },
             },
         },
         unlock: {
@@ -283,7 +283,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "unlock",
-                description: {text:"Unlock the server from endless lockdown"},
+                description: { text: "Unlock the server from endless lockdown" },
             },
         },
         adminchat: {
@@ -292,7 +292,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "adminchat",
-                description: {text:"Switch to admin channel"},
+                description: { text: "Switch to admin channel" },
             },
         },
         bordersize: {
@@ -301,7 +301,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "bordersize <size>",
-                description: {text:"Change boarder sizes"},
+                description: { text: "Change boarder sizes" },
             },
         },
         matrixui: {
@@ -310,7 +310,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "matrixui",
-                description: {text:"Open the ui for matrix"},
+                description: { text: "Open the ui for matrix" },
             },
         },
         banrun: {
@@ -319,7 +319,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "banrun <command: command/disable>",
-                description: {text:"Run a command instead for a punishment"},
+                description: { text: "Run a command instead for a punishment" },
             },
         },
         openlog: {
@@ -328,7 +328,7 @@ export default {
             requireTag: [],
             helper: {
                 usage: "openlog",
-                description: {text:"Open the log system"},
+                description: { text: "Open the log system" },
             },
         },
     },
