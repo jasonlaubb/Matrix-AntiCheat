@@ -7,6 +7,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: PhraseApp (phraseapp.com)\n"
 
+#: pack.description
+msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock\n§cBeta-API required"
+msgstr ""
+
+#: crash.reload
+msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
+msgstr ""
+
 #: rank.already
 msgid "%1 already has %2 §r§crank"
 msgstr ""
