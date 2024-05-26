@@ -1,5 +1,4 @@
 import { c } from "../../../../Assets/Util";
-import { helpList } from "../../../../Data/Help";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
 
 registerCommand({
@@ -9,7 +8,7 @@ registerCommand({
     maxArgs: 0,
     require: (player) => verifier(player, c().commands.help),
     executor: async (player, _args) => {
-        const helps = helpList(c().commands.prefix);
+        const helps = 'Sorry, this command hasn\'t been implemented yet. Please check back later!';
         sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "help.helpcdlist", with: [] }, { text: `\n${helps}` });
     },
 });

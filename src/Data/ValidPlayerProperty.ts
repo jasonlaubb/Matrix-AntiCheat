@@ -17,7 +17,7 @@ export default [
     "lastApplyDamage",
     "backClip",
     "lastSafePos",
-    "befoClip",
+    "beforeClip",
     "lastBreakSolid",
     "verifyTimer",
     "verifyClickSpeed",

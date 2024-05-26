@@ -22,7 +22,7 @@ declare module "@minecraft/server" {
         lastApplyDamage: number;
         backClip: number;
         lastSafePos: Vector3;
-        befoClip: number;
+        beforeClip: number;
         lastBreakSolid: number;
         verifyTimer: number;
         verifyClickSpeed: number;
