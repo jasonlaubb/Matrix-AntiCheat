@@ -9,7 +9,7 @@
         },
         "components": {
             "minecraft:instant_despawn":{
-                "remove_child_entities":true
+                "remove_child_entities": true
             }
         }
     }
