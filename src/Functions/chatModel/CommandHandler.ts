@@ -122,7 +122,7 @@ export function sendRawText(player: Minecraft.Player | Minecraft.World, ...messa
 }
 
 function error (error: string) {
-    player.sendMessage(`§bMatrix §7>§c Error:\n"` + JSON.stringify(error))
+    player.sendMessage(`§bMatrix §7>§c Unexpected Error:\n` + error)
 }
 
 export function isPlayer(player: string, exclude: boolean = false, isadmin: boolean = null): Minecraft.Player {
