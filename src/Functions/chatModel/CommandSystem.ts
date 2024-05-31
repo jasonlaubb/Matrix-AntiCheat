@@ -1,5 +1,10 @@
 //@ts-nocheck
-//This is removed due to the new rewrite. No longer in use
+
+/**
+ * @author jasonlaubb
+ * @description This is removed due to the new rewrite. No longer in use
+*/
+
 import { EntityEquippableComponent, EntityInventoryComponent, EquipmentSlot, ItemStack, Player, system, world } from "@minecraft/server";
 import { helpList, toggleList, validModules } from "../../Data/Help";
 import { isAdmin, isTimeStr, kick, timeToMs, c } from "../../Assets/Util";
@@ -17,7 +22,7 @@ import { lastSafePos } from "../../Modules/Movement/World Border";
 import { sendLog } from "../moderateModel/log";
 import Config from "../../Data/Config";
 
-export { inputCommand };
+// export { inputCommand };
 
 const turnRegax = (message: string, prefix?: string) => (message.slice(prefix?.length ?? 0).match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g) || []).map((regax) => regax.replace(/^"(.*)"$/, "$1").replace(/\\"/g, '"'));
 class Cmds {
