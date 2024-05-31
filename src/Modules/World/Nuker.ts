@@ -22,13 +22,7 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack) {
 
     //get the block break count in the 1 tick
     let blockBreakCount: number[] = blockBreakData.get(player.id)?.filter((time) => timeNow - time < 50) ?? [];
-    let hasEfficiency: number;
-    // Thank you mojang, you add more case for throw
-    try {
-        hasEfficiency = itemStack.getComponent(ItemEnchantableComponent.componentId).getEnchantment(MinecraftEnchantmentTypes.Efficiency).level;
-    } catch {
-        hasEfficiency = 0;
-    }
+    const hasEfficiency: number = itemStack?.getComponent(ItemEnchantableComponent.componentId).getEnchantment(MinecraftEnchantmentTypes.Efficiency).level || 0;
     //if the block not the fast broken block, push the block right now
     if (!fastBrokenBlocks.includes(block.typeId as MinecraftBlockTypes)) {
         blockBreakCount.push(timeNow);
