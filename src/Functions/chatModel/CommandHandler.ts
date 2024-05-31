@@ -108,18 +108,21 @@ export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Pl
         }
     }
     // Run the command and catch the unexpected error
-    system.run(() => {
-        targetCommand
+    system.run(async () =>
+        await targetCommand
             .executor(player, args)
-            .catch((error) => player.sendMessage(`§bMatrix §7>§c Error:\n"` + JSON.stringify(error)))
-            .then(() => null);
-    });
+            .catch(error)
+    );
 
     return 0;
 }
 
 export function sendRawText(player: Minecraft.Player | Minecraft.World, ...message: Minecraft.RawMessage[]): void {
     return player.sendMessage({ rawtext: message });
+}
+
+function error (error: string) {
+    player.sendMessage(`§bMatrix §7>§c Error:\n"` + JSON.stringify(error))
 }
 
 export function isPlayer(player: string, exclude: boolean = false, isadmin: boolean = null): Minecraft.Player {
