@@ -43,7 +43,7 @@ function AntiAim(player: Player) {
         flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
     }
     // Straight rotation movement
-    if (rotSpeedY > 5 && rotSpeedX < 0.05 && !player.isSwimming) {
+    if ((rotSpeedY > 0 && Math.abs(lastRotSpeedY - rotSpeedY) > 0.1 && (rotSpeedX < 0.05 && rotSpeedX > 0.001 || rotSpeedX == 0) || rotSpeedX > 0 && Math.abs(lastRotSpeedX - rotSpeedX) > 0.1 && (rotSpeedY < 0.05 && rotSpeedY > 0.001 || rotSpeedY == 0) && !player.isSwimming) {
         data.straightRotContinue++;
         if (data.straightRotContinue > 20) {
             flag(player, "Aim", "C", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
@@ -74,8 +74,8 @@ function AntiAim(player: Player) {
     const unnaturalRots =
         (rotationX.toString() == rotationX.toFixed(4) && (rotationX != 0 || (rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0))) ||
         (rotationY.toString() == rotationY.toFixed(4) && rotationY != 0) ||
-        rotSpeedX.toString() == rotSpeedX.toFixed(4) ||
-        rotSpeedY.toString() == rotSpeedY.toFixed(4);
+        rotSpeedX.toString() == rotSpeedX.toFixed(1) && rotSpeedX > 10 ||
+        rotSpeedY.toString() == rotSpeedY.toFixed(1) && rotSpeedY > 20;
     if (unnaturalRots) {
         flag(player, "Aim", "G", config.antiAim.maxVL, config.antiAim.punishment, undefined);
     }
