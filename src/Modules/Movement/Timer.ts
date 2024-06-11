@@ -23,7 +23,7 @@ export async function AntiTimer(player: Player, now: number) {
     //loading data
     //const data = locationData.get(player.id);
     //skip the code for some reasons
-    if (player.isGliding || player.hasTag("matrix:riding") || tps.getTps() <= 18.5) return;
+    if (player.isGliding || player.hasTag("matrix:riding")) return;
     //define some cool things
     const config = c();
     //dBVD == difference between velocity and moved distance
@@ -31,9 +31,9 @@ export async function AntiTimer(player: Player, now: number) {
     const dBVD2 = yDisLog[player.id] - yLog[player.id];
     //setting max value of dBVD
     //iSL = is spike lagging
-    maxDBVD[player.id] = 1;
+    maxDBVD[player.id] = tps.getTps()/20;
     //check if dBVD lower than 1 and higher than 0.5 add one to timerLog and when timerLog reach 3 flag (check for low timer)
-    if ((dBVD < maxDBVD[player.id] && dBVD > 0.5) || (dBVD2 < maxDBVD[player.id] && dBVD2 > 0.5)) timerLog[player.id]++;
+    if ((dBVD < maxDBVD[player.id] && dBVD > tps.getTps()/40) || (dBVD2 < maxDBVD[player.id] && dBVD2 > tps.getTps()/40)) timerLog[player.id]++;
     else timerLog[player.id] = 0;
     //flag time if dBVD is greater than 1 blocks or timerLog reach 3 (low timer will flag in 3 secs probably but maybe i will downgrade the max from 1 to 1 after make sure no falses)
     if (((dBVD > maxDBVD[player.id] || dBVD2 > maxDBVD[player.id]) && Date.now() - lastReset.get(player.id) >= 700) || timerLog[player.id] >= config.antiTimer.minTimerLog) {
@@ -61,7 +61,7 @@ export async function SystemEvent(player: Player, now: number) {
     //getting data
     const data = locationData.get(player.id);
     //skip the code for for some reasons
-    if (player.isGliding || player.hasTag("matrix:riding")) return;
+    if (player.isGliding) return;
     locationData.set(player.id, { location: player.location, recordTime: now });
     //just defineing everything we need
     const { x: x1, y: y1, z: z1 } = player.location;
@@ -89,12 +89,12 @@ export async function SystemEvent(player: Player, now: number) {
     }
     disLog[player.id] = disLog[player.id] + Math.hypot(x1 - x2, z1 - z2);
     //reset velocity xz log and distance log if player used /tp or using high y velocity
-    if ((xz == 0 && Math.hypot(x1 - x2, z1 - z2) > 0.5) || y > 0.5) {
+    if (xz == 0 && Math.hypot(x1 - x2, z1 - z2) > 0.5 || player.hasTag("matrix:riding")) {
         xzLog[player.id] = 0;
         disLog[player.id] = 0;
     }
     //reset anti y timer if player used /tp or using high velocity
-    if ((y == 0 && Math.abs(y1 - y2) > 0.1) || y > 0.5) yDisLog[player.id] = 0;
+    if ((y == 0 && Math.abs(y1 - y2) > 0.1) || y > 0.5 || player.hasTag("matrix:riding")) yDisLog[player.id] = 0;
     //check if the player is spike lagging
     if (dBVD > 0.5) iSL[player.id]++;
     if (dBVD < 0.5 && iSL[player.id] <= 4 && iSL[player.id] > 0) iSL[player.id] = true;
