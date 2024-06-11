@@ -12,10 +12,12 @@ function AntiAim(player: Player) {
     const data = aimData.get(player.id);
     const { x: rotationX, y: rotationY } = player.getRotation();
     if (!data) {
-        aimData.set(player.id, { lastRotationX: rotationX, lastRotationY: rotationY, previousRotationX: undefined, previousRotationY: undefined, straightRotContinue: 0, similarRotContinue: 0, vibrateRotContinue: 0, lastRotDifferent: 0 });
+        aimData.set(player.id, { previousRotSpeedY: 0, previousRotSpeedX: 0, lastRotationX: rotationX, lastRotationY: rotationY, previousRotationX: undefined, previousRotationY: undefined, straightRotContinue: 0, similarRotContinue: 0, vibrateRotContinue: 0, lastRotDifferent: 0 });
         return;
     } else if (!data?.previousRotationX || player.getComponent("riding")?.entityRidingOn || player.isSleeping || player.isSwimming || player.isGliding) {
         aimData.set(player.id, {
+            previousRotSpeedY: data.previousRotSpeedY, 
+            previousRotSpeedX: data.previousRotSpeedX,
             lastRotationX: rotationX,
             lastRotationY: rotationY,
             previousRotationX: data.lastRotationX,
@@ -79,13 +81,16 @@ function AntiAim(player: Player) {
     if (unnaturalRots) {
         flag(player, "Aim", "G", config.antiAim.maxVL, config.antiAim.punishment, undefined);
     }
-    const instantRot =
-        (lastRotSpeedX >= 30 && rotSpeedX <= 2 && (rotationX != 0 || (rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0))) ||
-        (lastRotSpeedY >= 30 && rotSpeedY <= 2 && (rotationY != 0 || (rotSpeedX > 0 && data.lastRotationY == 0 && rotationY == 0)));
-    if (instantRot) {
-        flag(player, "Aim", "H", config.antiAim.maxVL, config.antiAim.punishment, undefined);
+    
+    const instantRot = (data.previousRotSpeedX <= 0.03 && lastRotSpeedX >= 15 && lastRotSpeedX <= 140 && rotSpeedX <= 0.03 && (rotationX != 0 || rotSpeedY > 0 && lastRotationX == 0 && rotationX == 0) || data.previousRotSpeedY <= 0.03 && lastRotSpeedY >= 30 && lastRotSpeedY <= 260 && rotSpeedY <= 0.03 && (rotationY != 0 || rotSpeedX > 0 && lastRotationY == 0 && rotationY == 0)) 
+    if (instantRot){
+       flag(player, "Aim", "H", config.antiAim.maxVL, config.antiAim.punishment, undefined);
     }
+    data.previousRotSpeedX = lastRotSpeedX 
+    data.previousRotSpeedY = lastRotSpeedY
     aimData.set(player.id, {
+        previousRotSpeedY: data.previousRotSpeedY, 
+        previousRotSpeedX: data.previousRotSpeedX, 
         lastRotationX: rotationX,
         lastRotationY: rotationY,
         previousRotationX: data.lastRotationX,
