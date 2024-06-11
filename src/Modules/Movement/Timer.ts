@@ -1,6 +1,7 @@
 import { world, system, Player } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
 import { tps } from "../../Assets/Public.js";
+import { lastReset } from "./Speed.js"
 import lang from "../../Data/Languages/lang.js";
 
 const safeZone: Map<string, any> = new Map();
@@ -36,7 +37,7 @@ export async function AntiTimer(player: Player, now: number) {
     if ((dBVD < maxDBVD[player.id] && dBVD > tps.getTps()/40) || (dBVD2 < maxDBVD[player.id] && dBVD2 > tps.getTps()/40)) timerLog[player.id]++;
     else timerLog[player.id] = 0;
     //flag time if dBVD is greater than 1 blocks or timerLog reach 3 (low timer will flag in 3 secs probably but maybe i will downgrade the max from 1 to 1 after make sure no falses)
-    if (((dBVD > maxDBVD[player.id] || dBVD2 > maxDBVD[player.id]) && Date.now() - lastReset.get(player.id) >= 700) || timerLog[player.id] >= config.antiTimer.minTimerLog) {
+    if (((dBVD > maxDBVD[player.id] || dBVD2 > maxDBVD[player.id]) && Date.now() - lastReset.get(player.id) >= 1025) || timerLog[player.id] >= config.antiTimer.minTimerLog) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - lastFlag.get(player.id);
         //if the dBLFN is lower than the given value flag
