@@ -63,7 +63,7 @@ function AntiAim(player: Player) {
     // Vibrate rotation movement
     if ((lastRotSpeedY - rotSpeedY > 0 && data.lastRotDifferent < 0) || (lastRotSpeedY - rotSpeedY < 0 && data.lastRotDifferent > 0)) {
         data.vibrateRotContinue++;
-        if (data.vibrateRotContinue >= 4) {
+        if (data.vibrateRotContinue >= 15) {
             flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
             data.vibrateRotContinue = 0;
         }
