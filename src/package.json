@@ -1,0 +1,12 @@
+{
+  "name": "matrix-anticheat-src",
+  "version": "Give you a chance to think what version is it? >w<",
+  "productName": "Matrix-AntiCheat-SRC",
+  "description": "The TypeScript src in Matrix AntiCheat",
+  "private": true,
+  "dependencies": {
+    "@minecraft/vanilla-data": "^1.21.0",
+    "crypto-es": "^2.1.0",
+    "matrix-anticheat": "file:.."
+  }
+}
