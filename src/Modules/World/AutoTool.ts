@@ -9,10 +9,10 @@ import { flag, c, isAdmin } from "../../Assets/Util";
 const antiAutoTool = ({ damagingEntity: player }: EntityHitBlockAfterEvent) => {
     if (!(player instanceof Player) || isAdmin(player) || !player.lastSelectSlot) return;
     const config = c();
-    const itemStack = player.getComponent(EntityInventoryComponent.componentId).container.getItem(player.selectedSlot)?.typeId ?? "air";
+    const itemStack = player.getComponent(EntityInventoryComponent.componentId).container.getItem(player.selectedSlotIndex)?.typeId ?? "air";
     if (config.antiAutoTool.toolType.some((eit) => itemStack.endsWith(eit)) == false) return;
 
-    if (player.lastSelectSlot != player.selectedSlot) {
+    if (player.lastSelectSlot != player.selectedSlotIndex) {
         player.applyDamage(4);
         flag(player, "Auto Tool", "A", config.antiAutoTool.maxVL, config.antiAutoTool.punishment, undefined);
     }
@@ -22,7 +22,7 @@ const slotLogger = () => {
     const players = world.getAllPlayers();
     for (const player of players) {
         if (isAdmin(player)) continue;
-        const selectSlot = player.selectedSlot;
+        const selectSlot = player.selectedSlotIndex;
         system.run(() => (player.lastSelectSlot = selectSlot));
     }
 };
