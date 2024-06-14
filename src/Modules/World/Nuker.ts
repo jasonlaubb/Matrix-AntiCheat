@@ -22,7 +22,13 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack) {
 
     //get the block break count in the 1 tick
     let blockBreakCount: number[] = blockBreakData.get(player.id)?.filter((time) => timeNow - time < 50) ?? [];
-    const hasEfficiency: number = itemStack?.getComponent(ItemEnchantableComponent.componentId)?.getEnchantment(MinecraftEnchantmentTypes.Efficiency).level || 0;
+    let hasEfficiency: number;
+    // Thank you mojang, you add more case for throw
+    try {
+        hasEfficiency = itemStack.getComponent(ItemEnchantableComponent.componentId).getEnchantment(MinecraftEnchantmentTypes.Efficiency).level;
+    } catch {
+        hasEfficiency = 0;
+    }
     //if the block not the fast broken block, push the block right now
     if (!fastBrokenBlocks.includes(block.typeId as MinecraftBlockTypes)) {
         blockBreakCount.push(timeNow);
@@ -35,7 +41,7 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack) {
         system.run(() => {
             player.addTag("matrix:break-disabled");
             block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => item.kill());
-            block.setPermutation(block.permutation.clone());
+            block.setPermutation(Object.assign({},block.permutation));
 
             //prevent the player from breaking blocks for 3 seconds
             system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
