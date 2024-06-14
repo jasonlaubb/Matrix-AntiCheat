@@ -4,7 +4,7 @@ import { clearBlockBreakLog, findSlime, logBreak } from "./Util";
 
 world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
     if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
-        const getItemInSlot = (player.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent).container.getItem(player.selectedSlot);
+        const getItemInSlot = (player.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent).container.getItem(player.selectedSlotIndex);
         if (getItemInSlot === undefined) return;
         if (getItemInSlot.typeId == MinecraftItemTypes.Trident) {
             const checkRipTide = (getItemInSlot.getComponent(ItemEnchantableComponent.componentId) as ItemEnchantableComponent).hasEnchantment(MinecraftEnchantmentTypes.Riptide);
@@ -51,9 +51,9 @@ world.afterEvents.playerBreakBlock.subscribe(({ player: { id }, player, brokenBl
             .forEach((item) => {
                 item.kill();
             });
-        block.setPermutation(block.permutation.clone());
+        block.setPermutation(Object.assign({}, block.permutation));
     } else {
-        if (brokenBlockPermutation.type.id !== MinecraftBlockTypes.Air) logBreak(brokenBlockPermutation.clone(), location, id);
+        if (brokenBlockPermutation.type.id !== MinecraftBlockTypes.Air) logBreak(Object.assign({}, brokenBlockPermutation), location, id);
     }
 });
 
