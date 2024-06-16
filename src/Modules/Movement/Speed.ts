@@ -104,7 +104,7 @@ export default {
     enable() {
         id = system.runInterval(AntiSpeed, 1);
         world.afterEvents.playerLeave.subscribe(playerLeave);
-        world.afterEvents.entityHurt.subscribe(entityHurt, { type: "player" });
+        world.afterEvents.entityHurt.subscribe(entityHurt, { entityTypes: ["minecraft:player"] });
     },
     disable() {
         speedData.clear();
