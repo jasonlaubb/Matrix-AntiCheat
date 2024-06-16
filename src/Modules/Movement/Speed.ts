@@ -1,4 +1,4 @@
-import { world, system, PlayerLeaveAfterEvent, Player } from "@minecraft/server";
+import { world, system, PlayerLeaveAfterEvent, Player, EntityDamageCause, EntitHurtAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
@@ -16,15 +16,11 @@ let speedMaxV: any = {};
  */
 const locationData: Map<string, any> = new Map();
 
-world.afterEvents.entityHurt.subscribe((event: any) => {
-    //for skip any error msgs we use try  and catch
-    try {
-        //define attacker and target
-        const attacker = event.damageSource.damagingEntity;
-        //check if the attacker is a player then save the time
-        if (attacker instanceof Player) lastAttack.set(attacker.id, Date.now());
-    } catch {}
-});
+function entityHurt ({ damageSource: { hurtEntity, cause }}: EntitHurtAfterEvent) {
+    if (cause == EntityDamageCause.entityAttack || cause == EntityDamageCause.blockExplosion) {
+        lastAttack.set(player.id, Date.now());
+    }
+};
 
 async function AntiSpeed() {
     //getting players
@@ -108,6 +104,7 @@ export default {
     enable() {
         id = system.runInterval(AntiSpeed, 1);
         world.afterEvents.playerLeave.subscribe(playerLeave);
+        world.afterEvents.entityHurt.subscribe(entityHurt, { type: "player" });
     },
     disable() {
         speedData.clear();
@@ -120,5 +117,6 @@ export default {
         speedMaxV = {};
         system.clearRun(id);
         world.afterEvents.playerLeave.unsubscribe(playerLeave);
+        world.afterEvents.entityHurt.unsubscribe(entityHurt);
     },
 };
