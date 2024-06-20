@@ -74,8 +74,8 @@ function AntiAim(player: Player) {
         flag(player, "Aim", "F", config.antiAim.maxVL, config.antiAim.punishment, undefined);
     }
     const unnaturalRots =
-        (rotationX.toString() == rotationX.toFixed(4) && (rotationX != 0 || (rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0))) ||
-        (rotationY.toString() == rotationY.toFixed(4) && rotationY != 0) ||
+        (rotationX.toString() == rotationX.toFixed(2) && (rotationX != 0 || (rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0))) ||
+        (rotationY.toString() == rotationY.toFixed(2) && rotationY != 0) ||
         rotSpeedX.toString() == rotSpeedX.toFixed(1) && rotSpeedX > 10 ||
         rotSpeedY.toString() == rotSpeedY.toFixed(1) && rotSpeedY > 20;
     if (unnaturalRots) {
