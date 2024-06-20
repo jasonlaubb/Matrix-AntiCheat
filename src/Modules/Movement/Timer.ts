@@ -32,9 +32,9 @@ export async function AntiTimer(player: Player, now: number) {
     const dBVD2 = yDisLog[player.id] - yLog[player.id];
     //setting max value of dBVD
     //iSL = is spike lagging
-    maxDBVD[player.id] = tps.getTps()/20;
+    maxDBVD[player.id] = 20/tps.getTps();
     //check if dBVD lower than 1 and higher than 0.5 add one to timerLog and when timerLog reach 3 flag (check for low timer)
-    if ((dBVD < maxDBVD[player.id] && dBVD > tps.getTps()/40) || (dBVD2 < maxDBVD[player.id] && dBVD2 > tps.getTps()/40)) timerLog[player.id]++;
+    if ((dBVD < maxDBVD[player.id] && dBVD > 20/(tps.getTps()*2)) || (dBVD2 < maxDBVD[player.id] && dBVD2 > 20/(tps.getTps()*2))) timerLog[player.id]++;
     else timerLog[player.id] = 0;
     //flag time if dBVD is greater than 1 blocks or timerLog reach 3 (low timer will flag in 3 secs probably but maybe i will downgrade the max from 1 to 1 after make sure no falses)
     if (((dBVD > maxDBVD[player.id] || dBVD2 > maxDBVD[player.id]) && Date.now() - lastReset.get(player.id) >= 1025) || timerLog[player.id] >= config.antiTimer.minTimerLog) {
