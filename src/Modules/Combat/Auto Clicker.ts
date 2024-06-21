@@ -1,6 +1,5 @@
 import { world, system, Player, EntityHitEntityAfterEvent, EntityHitBlockAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
-import lang from "../../Data/Languages/lang.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { tps } from "../../Assets/Public.js";
 
@@ -31,7 +30,7 @@ function AutoClicker(player: Player) {
     // If the cps is higher than the max clicks per second, flag the player
     if (!player.hasTag("matrix:pvp-disabled") && tps.getTps() > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
         // A - false positive: very low, efficiency: high
-        flag(player, "Auto Clicker", "A", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, [`${lang(">Click Per Second")}:${cps.toFixed(0)}`]);
+        flag(player, "Auto Clicker", "A", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Click Per Second" + ":" + cps.toFixed(0)]);
 
         if (!config.slient) {
             player.applyDamage(6);
