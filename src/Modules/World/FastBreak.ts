@@ -2,7 +2,6 @@ import { EntityHitBlockAfterEvent, ItemEnchantableComponent, Player, PlayerBreak
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import { c, flag, isAdmin, isTargetGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import lang from "../../Data/Languages/lang";
 
 /**
  * @author jasonlaubb
@@ -34,7 +33,7 @@ const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
         event.cancel = true;
         system.run(() => {
             player.addTag("matrix:break-disabled");
-            flag(player, "Fast Break", "A", config.antiFastBreak.maxVL, config.antiFastBreak.punishment, [lang(">BlockPerSecond") + ":" + breakBPS.toFixed(2)]);
+            flag(player, "Fast Break", "A", config.antiFastBreak.maxVL, config.antiFastBreak.punishment, ["BlockPerSecond" + ":" + breakBPS.toFixed(2)]);
         });
         system.runTimeout(() => {
             player.removeTag("matrix:break-disabled");
