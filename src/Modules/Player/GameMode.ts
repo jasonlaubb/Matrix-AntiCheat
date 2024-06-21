@@ -1,6 +1,5 @@
 import { world, system, PlayerGameModeChangeBeforeEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 
 /**
  * @author jasonlaubb
@@ -15,7 +14,7 @@ async function AntiGameMode(event: PlayerGameModeChangeBeforeEvent) {
         event.cancel = true;
         //A - false positive: never, efficiency: very high
         system.run(() => {
-            flag(event.player, "GameMode", "A", config.antiGameMode.maxVL, config.antiGameMode.punishment, [lang(">GameMode") + ":" + String(event.toGameMode)]);
+            flag(event.player, "GameMode", "A", config.antiGameMode.maxVL, config.antiGameMode.punishment, ["GameMode" + ":" + String(event.toGameMode)]);
         });
     }
 }
