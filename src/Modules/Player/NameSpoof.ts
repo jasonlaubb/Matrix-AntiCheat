@@ -1,6 +1,5 @@
 import { world, Player, system, PlayerSpawnAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 
 /**
  * @author jasonlaubb
@@ -15,7 +14,7 @@ async function AntiNameSpoof(player: Player, playerName: string) {
     const matches = playerName.match(/\([1-9]|[1-3][0-9]|40\)/g);
     const absName = matches[0] ? playerName.replace(matches[0], "") : playerName;
     if (absName?.length < 3 || absName?.length > 16) {
-        flag(player, "NameSpoof", "A", 0, config.antiNameSpoof.punishment, [lang(">Type") + ":" + lang(">illegalLength"), lang(">Length") + ":" + playerName.length]);
+        flag(player, "NameSpoof", "A", 0, config.antiNameSpoof.punishment, ["Type" + ":" + "illegalLength", "Length" + ":" + playerName.length]);
         return;
     }
 
@@ -39,7 +38,7 @@ async function AntiNameSpoof(player: Player, playerName: string) {
 
         //if the player name is illegal, flag the player
         if (illegalName === true) {
-            flag(player, "NameSpoof", "B", 0, config.antiNameSpoof.punishment, [lang(">Type") + ":" + lang(">illegalRegax")]);
+            flag(player, "NameSpoof", "B", 0, config.antiNameSpoof.punishment, ["Type" + ":" + "illegalRegax"]);
         }
     }
 }
