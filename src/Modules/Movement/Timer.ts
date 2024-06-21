@@ -40,7 +40,7 @@ export async function AntiTimer(player: Player, now: number) {
         const dBLFN = now - lastFlag.get(player.id);
         //if the dBLFN is lower than the given value flag
         if (!iSL[player.id] && ((dBLFN < 5000 && timerLog[player.id] >= 3) || (dBLFN < 2000 && dBVD > maxDBVD[player.id])))
-            flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, { rawtext: [{ translate: "blockpersecond", with: [] }, { text: disLog[player.id].toFixed(2) * 2 }]});
+            flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + disLog[player.id].toFixed(2) * 2]);
         //lag back the player
         if (!config.slient) player.teleport(safeZone.get(player.id));
         //setting new lastFlag

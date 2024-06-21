@@ -1,7 +1,6 @@
 import { world, system, PlayerLeaveAfterEvent, EntityDamageCause, EntityHurtAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
-import lang from "../../Data/Languages/lang.js";
-
+import { lang } from "../Data/Lanuages/lang.js";
 const speedData: Map<string, any> = new Map();
 const lastSpeedLog: Map<string, any> = new Map();
 const lastAttack: Map<string, any> = new Map();
