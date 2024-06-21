@@ -7,7 +7,6 @@ import lang from "../../Data/Languages/lang.js";
 const safeZone: Map<string, any> = new Map();
 const lastFlag: Map<string, any> = new Map();
 const locationData: Map<string, any> = new Map();
-import { lastReset } from "./Speed.js";
 let iSL: any = {};
 let maxDBVD: any = {};
 let xzLog: any = {};
