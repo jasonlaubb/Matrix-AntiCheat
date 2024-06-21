@@ -2,7 +2,6 @@ import { Block, Player, PlayerBreakBlockBeforeEvent, PlayerLeaveAfterEvent, syst
 import { flag, isAdmin, c, recoverBlockBreak, isTargetGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
-import lang from "../../Data/Languages/lang";
 
 const blockBreakData = new Map<string, number[]>();
 
@@ -48,7 +47,7 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack) {
             recoverBlockBreak(player.id, 200, player.dimension);
             blockBreakData.delete(player.id);
             if (hasEfficiency <= 2) {
-                flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, [lang(">Block") + ":" + block.typeId]);
+                flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, ["Block" + ":" + block.typeId]);
             }
         });
     }
