@@ -1,7 +1,6 @@
 import { world, system, PlayerBreakBlockBeforeEvent, Player, Block, PlayerPlaceBlockBeforeEvent, Vector3 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { isTargetGamemode } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang.js";
 
 /**
  * @author jasonlaubb
@@ -25,7 +24,7 @@ async function AntiBlockReachA(event: PlayerBreakBlockBeforeEvent, player: Playe
                 system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBlockReach.timeout);
             }
             //A - false positive: low, efficiency: high
-            flag(player, "BlockReach", "A", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + ":" + distance.toFixed(2), lang(">Mode") + ":" + lang(">Break")]);
+            flag(player, "BlockReach", "A", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, ["Reach" + ":" + distance.toFixed(2), "Mode" + ":" + "Break"]);
         });
     }
 }
@@ -47,7 +46,7 @@ async function AntiBlockReachB(event: PlayerPlaceBlockBeforeEvent, player: Playe
                 system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiBlockReach.timeout);
             }
             //B - false positive: low, efficiency: high
-            flag(player, "BlockReach", "B", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, [lang(">Reach") + ":" + distance.toFixed(2), lang(">Mode") + ":" + lang(">Place")]);
+            flag(player, "BlockReach", "B", config.antiBlockReach.maxVL, config.antiBlockReach.punishment, ["Reach" + ":" + distance.toFixed(2), "Mode" + ":" + "Place"]);
         });
     }
 }
