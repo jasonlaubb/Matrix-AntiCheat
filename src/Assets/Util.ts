@@ -1,19 +1,38 @@
-import { world, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation } from "@minecraft/server";
+import { world, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage, RawText } from "@minecraft/server";
 import { ban } from "../Functions/moderateModel/banHandler";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
-import lang from "../Data/Languages/lang";
 import Config from "../Data/Default";
 import { saveLog } from "../Functions/moderateModel/log";
+import { Translate } from "./Language";
+import { truncateSync } from "fs";
 
-export { getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
+export { rawstr, getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
+
+class rawstr {
+    private storge: RawMessage[] = [];
+    public constructor (coloured?: boolean, colour: string = "g") {
+        if (coloured) {
+            if (colour.length != 1) throw new Error ("Rawstr :: Unexpect colour :: " + colour);
+            this.storge.push({ text: "§bMatrix §7> §" + colour });
+        }
+    };
+    public parse () {
+        return this.storge;
+    }
+    public str (text: string) {
+        this.storge.push({ text: text });
+        return this;
+    }
+    public tra (id: Translate, ...withargs: string[]) {
+        this.storge.push({ translate: id, with: withargs });
+        return this;
+    }
+}
 
 function kick(player: Player, reason?: string, by?: string) {
-    try {
-        player.runCommand(`kick "${player.name}" §r\n§c§l${lang(".Util.kicked")}§r\n§7${lang(".Util.reason")}: §e${reason ?? lang(".Util.noreason")}\n§7${lang(".Util.operator")}: §e${by ?? lang(".Util.unknown")}`);
-    } catch {
-        triggerEvent(player, "matrix:kick");
-    }
+    const textreason = "§c§lYou have been kicked\n§r§7Reason: §c" + reason ?? "--\n§7By: §c" + by ?? "--";
+    world.getDimension(player.dimension.id).runCommandAsync(`kick "${player.name}" ${textreason}`).catch(() => triggerEvent(player, "matrix:kick"));
 }
 
 function formatInformation(arr: string[]) {
@@ -46,7 +65,7 @@ let Vl: any = {};
 
 type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I";
 
-function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
+function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: RawMessage[] | undefined) {
     const config = c();
     Vl[player.id] ??= {};
     Vl[player.id][modules] ??= 0;

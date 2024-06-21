@@ -4,6 +4,7 @@ import * as VanillaData from "./src/node_modules/@minecraft/vanilla-data/lib/ind
 
 declare module "@minecraft/server" {
     interface Player {
+        sendMsg: (...arg: (string | RawText)[]) => void;
         threwTridentAt: number;
         lastExplosionTime: number;
         blockData: any[];
@@ -45,6 +46,7 @@ declare module "@minecraft/server" {
     }
     interface World {
         antiBotEnabled: boolean;
+        sendMsg: (...arg: (string | RawText)[]) => void;
     }
 }
 

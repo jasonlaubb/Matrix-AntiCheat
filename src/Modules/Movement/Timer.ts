@@ -2,7 +2,6 @@ import { world, system, Player } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
 import { tps } from "../../Assets/Public.js";
 import { lastReset } from "./Speed.js"
-import lang from "../../Data/Languages/lang.js";
 
 const safeZone: Map<string, any> = new Map();
 const lastFlag: Map<string, any> = new Map();
@@ -41,7 +40,7 @@ export async function AntiTimer(player: Player, now: number) {
         const dBLFN = now - lastFlag.get(player.id);
         //if the dBLFN is lower than the given value flag
         if (!iSL[player.id] && ((dBLFN < 5000 && timerLog[player.id] >= 3) || (dBLFN < 2000 && dBVD > maxDBVD[player.id])))
-            flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, [lang(">BlockPerSecond") + ":" + disLog[player.id].toFixed(2) * 2]);
+            flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, { rawtext: [{ translate: "blockpersecond", with: [] }, { text: disLog[player.id].toFixed(2) * 2 }]});
         //lag back the player
         if (!config.slient) player.teleport(safeZone.get(player.id));
         //setting new lastFlag

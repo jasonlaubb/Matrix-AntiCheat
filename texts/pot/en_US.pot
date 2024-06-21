@@ -179,10 +179,6 @@ msgstr ""
 msgid "Break"
 msgstr ""
 
-#: util.operator
-msgid "By"
-msgstr ""
-
 #: centredis
 msgid "CentreDis"
 msgstr ""
@@ -413,10 +409,6 @@ msgstr ""
 
 #: reach
 msgid "Reach"
-msgstr ""
-
-#: util.reason
-msgid "Reason"
 msgstr ""
 
 #: rotspeed
@@ -697,10 +689,6 @@ msgstr ""
 
 #: banhandler.banned
 msgid "You have been banned!"
-msgstr ""
-
-#: util.kicked
-msgid "You have been kicked"
 msgstr ""
 
 #: bot.ok

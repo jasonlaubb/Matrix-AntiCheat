@@ -14,7 +14,7 @@ export default function send(object: World | Player, warn: boolean, id: Translat
     });
 }
 
-type Translate =
+export type Translate =
     | "help.helpcdlist"
     | "help.help"
     | "help.toggles"
@@ -224,9 +224,6 @@ type Translate =
     | "bot.waitui"
     | "bot.expired"
     | "bot.ui"
-    | "§gYou need to verify if you're not a bot §7(%s/%s)§g"
-    | "You have §e%s§gseconds left"
-    | "Enter the code §e§l%s§r§g below"
     | "bot.title"
     | "bot.failed"
     | "bot.ok"
