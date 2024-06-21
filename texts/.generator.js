@@ -29,6 +29,7 @@ const validLanguage = [
     "zh_CN",
     "zh_TW",
 ];
+const doTranslate = false;
 import("fs").then((fsModule) => {
     import("path").then((pathModule) => {
         const fs = fsModule.default;
@@ -39,6 +40,17 @@ import("fs").then((fsModule) => {
         async function convertPotFilesToPo() {
             console.log("Process: Preparing to convert pot files to po files");
             const { po } = await import("gettext-parser");
+            if (doTranslate) {
+                const poContent = fs.readFileSync(root + "pot/en_US.pot", "utf8");
+                const output = poContent.split("\n").filter((a) => a.startsWith("#: ")).map((a) => a.slice(3)).map((v) => '    | "' + v.replace("\r", "") + '"')
+                const filed = fs.readFileSync(root == "./" ? "../src/Assets/Language.ts" : "./src/Assets/Language.ts", "utf8");
+                const lines = filed.split("export");
+                let there = lines[0] + "export type Translate = \n";
+                there += output.join("\n");
+
+                fs.writeFileSync(root == "./" ? "../src/Assets/Language.ts" : "./src/Assets/Language.ts", there);
+                return;
+            };
             fs.readdir(root + "pot", async (err, files) => {
                 if (err) {
                     await new Promise((resolve) => setTimeout(resolve, 500));

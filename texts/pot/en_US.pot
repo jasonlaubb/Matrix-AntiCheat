@@ -19,6 +19,86 @@ msgstr ""
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
 msgstr ""
 
+#: ui.title
+msgid "Admin GUI"
+msgstr ""
+
+#: ui.moderateplayer
+msgid "Moderate Players"
+msgstr ""
+
+#: ui.setting
+msgid "Settings"
+msgstr ""
+
+#: ui.exit
+msgid "Exit"
+msgstr ""
+
+#: ui.banplayer
+msgid "Ban Player"
+msgstr ""
+
+#: ui.ban.reason
+msgid "Reason:"
+msgstr ""
+
+#: ui.ban.placeholder
+msgid "Type your reason here"
+msgstr ""
+
+#: ui.toggle.enabled
+msgid "§aEnabled§r"
+msgstr ""
+
+#: ui.toggle.disabled
+msgid "§aDisabled§r"
+msgstr ""
+
+#: ui.toggle.enable
+msgid "§aEnable§r"
+msgstr ""
+
+#: ui.toggle.disable
+msgid "§cDisable§r"
+msgstr ""
+
+#: ui.ban.length
+msgid "Ban Duration"
+msgstr ""
+
+#: ui.ban.button
+msgid "Ban players §8(ban)"
+msgstr ""
+
+#: ui.freeze.button
+msgid "Freeze players §8(freeze)"
+msgstr ""
+
+#: ui.unfreeze.button
+msgid "Unfreeze players §8(unfreeze)"
+msgstr ""
+
+#: ui.mute.button
+msgid "Mute players §8(mute)"
+msgstr ""
+
+#: ui.unmute.button
+msgid "Unmute players §8(unmute)"
+msgstr ""
+
+#: ui.invcopy.button
+msgid "Invcopy players §8(invcopy)"
+msgstr ""
+
+#: ui.invsee.button
+msgid "Invsee players §8(invsee)"
+msgstr ""
+
+#: ui.echestwipe.button
+msgid "Echestwipe players §8(echestwipe)"
+msgstr ""
+
 #: rank.already
 msgid "%1 already has %2 §r§crank"
 msgstr ""
@@ -67,7 +147,11 @@ msgstr ""
 msgid "%1's rank has been set to %2"
 msgstr ""
 
-#: rank.empty rankclear.empty
+#: rank.empty
+msgid "%s doesn't have any rank"
+msgstr ""
+
+#: rankclear.empty
 msgid "%s doesn't have any rank"
 msgstr ""
 
@@ -135,10 +219,6 @@ msgstr ""
 msgid "(Immediate behavioral defense)"
 msgstr ""
 
-#: ui.i
-msgid "Admin GUI"
-msgstr ""
-
 #: amount
 msgid "Amount"
 msgstr ""
@@ -181,10 +261,6 @@ msgstr ""
 
 #: echestwipe.has
 msgid "Ender chest of %1 has been wiped by %2"
-msgstr ""
-
-#: ui.exit
-msgid "Exit"
 msgstr ""
 
 #: bot.expired
@@ -267,10 +343,6 @@ msgstr ""
 msgid "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
 msgstr ""
 
-#: ui.i.a
-msgid "Moderate Players"
-msgstr ""
-
 #: util.noreason
 msgid "No reason provided"
 msgstr ""
@@ -305,10 +377,6 @@ msgstr ""
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
-msgstr ""
-
-#: ui.i.b
-msgid "Settings"
 msgstr ""
 
 #: showallrank.has

@@ -1,9 +1,8 @@
 import { system, Player, world } from "@minecraft/server";
 import { ActionFormData, FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
 import { triggerCommand } from "../chatModel/CommandHandler";
-import { isAdmin } from "../../Assets/Util";
-import { antiCheatModules, keys, getModuleState } from "../../Modules/Modules";
-import l from "../../Data/Languages/lang";
+import { c, isAdmin, rawstr } from "../../Assets/Util";
+import { getModulesIds } from "../../Modules/Modules";
 
 export const adminUI = (player: Player) => system.run(() => menu(player));
 function menu(player: Player) {
@@ -14,10 +13,10 @@ function menu(player: Player) {
     }
 
     new ActionFormData()
-        .title(l(".UI.i"))
-        .button(l(".UI.i.a"), "textures/ui/FriendsDiversity.png")
-        .button(l(".UI.i.b"), "textures/ui/gear.png")
-        .button(l(".UI.exit"), "textures/ui/redX1.png")
+        .title(rawstr.drt("ui.title"))
+        .button(rawstr.drt("ui.moderateplayer"), "textures/ui/FriendsDiversity.png")
+        .button(rawstr.drt("ui.setting"), "textures/ui/gear.png")
+        .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
         .show(player)
         .then((res) => {
             if (res.canceled) {
@@ -104,15 +103,15 @@ const moderateUI: { [key: number]: (player: Player, target: string) => Promise<A
 async function moderatePlayer(player: Player, target: Player) {
     const action = await new ActionFormData()
         .title("Moderate " + target.name)
-        .button("Ban player §8(ban)")
-        .button("Freeze player §8(freeze)")
-        .button("Unfreeze player §8(unfreeze)")
-        .button("Mute player §8(mute)")
-        .button("Unmute player §8(unmute)")
-        .button("Invcopy player §8(invcopy)")
-        .button("Invsee player §8(invsee)")
-        .button("Echestwipe player §8(echestwipe)")
-        .button(l(".UI.exit"), "textures/ui/redX1.png")
+        .button(rawstr.drt("ui.ban.button"))
+        .button(rawstr.drt("ui.freeze.button"))
+        .button(rawstr.drt("ui.unfreeze.button"))
+        .button(rawstr.drt("ui.mute.button"))
+        .button(rawstr.drt("ui.unmute.button"))
+        .button(rawstr.drt("ui.invcopy.button"))
+        .button(rawstr.drt("ui.invsee.button"))
+        .button(rawstr.drt("ui.echestwipe.button"))
+        .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
         .show(player);
     if (action.canceled) return;
     const actionData = moderateUI[action.selection];
@@ -125,43 +124,37 @@ async function moderatePlayer(player: Player, target: Player) {
     // Run an chat command for the player
     triggerCommand(player, moderateAction[action.selection](abcSelection));
 }
-const banForm = new ModalFormData().title("Ban player").textField("Reason:", "Type your reason here").textField("Ban Length:", "1d2h3m4s", "forever");
+const banForm = new ModalFormData().title(rawstr.drt("ui.banplayer")).textField(rawstr.drt("ui.ban.reason"), rawstr.drt("ui.ban.placeholder")).textField(rawstr.drt("ui.ban.length"), "1d2h3m4s", "forever");
 async function moduleUI(player: Player) {
     const moduleForm = new ActionFormData();
     moduleForm.title("Module UI");
-    for (let i = 0; i < keys.length; i++) {
-        let state = getModuleState(keys[i]);
-        if (state == true) state = "§aEnabled";
-        else state = "§cDisabled";
-        moduleForm.button("§8" + keys[i] + " §8[§r" + state + "§8]§r");
+    const ids = getModulesIds();
+    const config = c() as { [key: string]: any };
+    for (const moduleId of ids) {
+        const state = (config[moduleId]?.enabled);
+        const buttontext = new rawstr().str(`§8${moduleId} §8[§r`).tra(state ? "ui.toggle.enabled" : "ui.toggle.disabled").str("§r§8]§r");
+        moduleForm.button(buttontext.parse());
     }
     moduleForm.show(player).then((data) => {
         if (data.canceled) return;
-        const moduleData = keys[data.selection];
+        const moduleData = ids[data.selection];
         if (moduleData) {
             toggleUI(player, moduleData);
         }
     });
 }
 async function toggleUI(player: Player, moduleData: string) {
-    let state = getModuleState(moduleData);
+    let state = (c() as { [key: string]: any })[moduleData]?.enabled;
     if (state == true) state = "§aEnabled";
     else state = "§cDisabled";
     const moduleForm = new ActionFormData();
     moduleForm.title("toggle module");
     moduleForm.body("module: §8" + moduleData + "\n§rstatus: §8" + state);
-    moduleForm.button("§aEnable§r");
-    moduleForm.button("§cDisable§r");
+    moduleForm.button(rawstr.drt("ui.toggle.enable"));
+    moduleForm.button(rawstr.drt("ui.toggle.disable"));
     moduleForm.show(player).then((data) => {
         if (data.canceled) return;
-        if (data.selection == 0) {
-            player.sendMessage(`§bMatrix §7>§g ${l("-toggles.toggleChange").replace("%a", moduleData).replace("%b", "enable")}`);
-            antiCheatModules[moduleData].enable();
-            world.setDynamicProperty(moduleData, true);
-        } else {
-            player.sendMessage(`§bMatrix §7>§g ${l("-toggles.toggleChange").replace("%a", moduleData).replace("%b", "disable")}`);
-            antiCheatModules[moduleData].disable();
-            world.setDynamicProperty(moduleData, false);
-        }
+        // use the command for the user.
+        triggerCommand(player, `toggle ${moduleData} ${data.selection == 0 ? "enable" : "disable"}`);
     });
 }

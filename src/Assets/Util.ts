@@ -1,4 +1,4 @@
-import { world, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage } from "@minecraft/server";
+import { world, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage, RawText } from "@minecraft/server";
 import { ban } from "../Functions/moderateModel/banHandler";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
@@ -6,23 +6,35 @@ import Config from "../Data/Default";
 import { saveLog } from "../Functions/moderateModel/log";
 import { Translate } from "./Language";
 
+/**
+ * @author jasonlaubb
+ * @description Utility function for script.
+ * @warning This is very important, you cannot remove this.
+ */
 export { rawstr, getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
 
 class rawstr {
     private storge: RawMessage[] = [];
+    /** @description Direct rawtext translation */
+    static drt (id: Translate, ...withargs: string[]) {
+        return { rawtext: [{ translate: id, with: withargs }]}
+    }
     public constructor (coloured?: boolean, colour: string = "g") {
         if (coloured) {
             if (colour.length != 1) throw new Error ("Rawstr :: Unexpect colour :: " + colour);
             this.storge.push({ text: "§bMatrix §7> §" + colour });
         }
     };
+    /** @description Return the full rawtext */
     public parse () {
-        return this.storge;
+        return { rawtext: [this.storge] } as RawText;
     }
+    /** @description Add text to rawtext */
     public str (text: string) {
         this.storge.push({ text: text });
         return this;
     }
+    /** @description Add translation to rawtext */
     public tra (id: Translate, ...withargs: string[]) {
         this.storge.push({ translate: id, with: withargs });
         return this;
