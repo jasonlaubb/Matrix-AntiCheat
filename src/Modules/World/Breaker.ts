@@ -1,7 +1,6 @@
 import { Block, Player, PlayerBreakBlockBeforeEvent, PlayerLeaveAfterEvent, /*Vector3,*/ system, world } from "@minecraft/server";
 import config from "../../Data/Config";
 import { flag, isAdmin } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 //import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 //offset~
@@ -38,7 +37,7 @@ async function AntiBreaker(player: Player, block: Block, event: PlayerBreakBlock
                     system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout)
                 }
                 system.run(() =>
-                    flag (player, "Breaker", "A", config.antiBreaker.maxVL, config.antiBreaker.punishment, [lang(">Type") + ":" + block.typeId])
+                    flag (player, "Breaker", "A", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId])
                 )
                 return
             }
@@ -56,7 +55,7 @@ async function AntiBreaker(player: Player, block: Block, event: PlayerBreakBlock
                 system.run(() => player.addTag("matrix:break-disabled"));
                 system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout);
             }
-            system.run(() => flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, [lang(">Type") + ":" + block.typeId]));
+            system.run(() => flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId]));
         }
         lastFlag.set(player.id, Date.now());
     }
@@ -73,7 +72,7 @@ async function AntiBreaker(player: Player, block: Block, event: PlayerBreakBlock
             system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout)
         }
         system.run(() => 
-            flag (player, "Breaker", "C", config.antiBreaker.maxVL, config.antiBreaker.punishment, [lang(">Type") + ":" + block.typeId])
+            flag (player, "Breaker", "C", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId])
         )
     }*/
 }
