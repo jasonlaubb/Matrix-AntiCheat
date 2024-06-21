@@ -1,4 +1,4 @@
-import { world, system, PlayerLeaveAfterEvent, Player, EntityDamageCause, EntitHurtAfterEvent } from "@minecraft/server";
+import { world, system, PlayerLeaveAfterEvent, EntityDamageCause, EntityHurtAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
 import lang from "../../Data/Languages/lang.js";
 
@@ -16,9 +16,9 @@ let speedMaxV: any = {};
  */
 const locationData: Map<string, any> = new Map();
 
-function entityHurt ({ damageSource: { hurtEntity, cause }}: EntitHurtAfterEvent) {
+function entityHurt ({ damageSource: { cause }, hurtEntity }: EntityHurtAfterEvent) {
     if (cause == EntityDamageCause.entityAttack || cause == EntityDamageCause.blockExplosion) {
-        lastAttack.set(player.id, Date.now());
+        lastAttack.set(hurtEntity.id, Date.now());
     }
 };
 

@@ -1,6 +1,6 @@
 import { system, Player, world } from "@minecraft/server";
 import { ActionFormData, FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
-import { inputCommand } from "../chatModel/CommandSystem";
+import { triggerCommand } from "../chatModel/CommandHandler";
 import { isAdmin } from "../../Assets/Util";
 import { antiCheatModules, keys, getModuleState } from "../../Modules/Modules";
 import l from "../../Data/Languages/lang";
@@ -123,7 +123,7 @@ async function moderatePlayer(player: Player, target: Player) {
         if (abcSelection === null) return;
     } else if (action.selection >= Object.keys(moderateAction).length) return;
     // Run an chat command for the player
-    inputCommand(player, moderateAction[action.selection](abcSelection));
+    triggerCommand(player, moderateAction[action.selection](abcSelection));
 }
 const banForm = new ModalFormData().title("Ban player").textField("Reason:", "Type your reason here").textField("Ban Length:", "1d2h3m4s", "forever");
 async function moduleUI(player: Player) {

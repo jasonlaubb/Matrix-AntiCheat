@@ -3,9 +3,8 @@ import { ban } from "../Functions/moderateModel/banHandler";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import lang from "../Data/Languages/lang";
-import Config from "../Data/Config";
+import Config from "../Data/Default";
 import { saveLog } from "../Functions/moderateModel/log";
-//import { Root } from "../Data/ConfigDocs";
 
 export { getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
 
@@ -189,14 +188,7 @@ function isTimeStr(timeStr: string) {
     return timeUnits.some((unit) => new RegExp(`\\d+${unit}`).test(timeStr));
 }
 
-/*
-const c = (): Root => {
-    try {
-        return JSON.parse(world.getDynamicProperty("matrix_config") as string)
-    } catch {
-        return Config
-    }
-}*/
+
 const c = () => Config;
 
 function inAir(dimension: Dimension, location: Vector3) {

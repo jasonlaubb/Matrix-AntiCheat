@@ -111,7 +111,7 @@ export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Pl
     system.run(async () =>
         await targetCommand
             .executor(player, args)
-            .catch(error)
+            .catch((err) => error(player, err))
     );
 
     return 0;
@@ -121,8 +121,8 @@ export function sendRawText(player: Minecraft.Player | Minecraft.World, ...messa
     return player.sendMessage({ rawtext: message });
 }
 
-function error (error: string) {
-    player.sendMessage(`§bMatrix §7>§c Unexpected Error:\n` + error)
+function error (target: Minecraft.Player | Minecraft.World, error: string) {
+    target.sendMessage(`§bMatrix §7>§c Unexpected Error:\n` + error)
 }
 
 export function isPlayer(player: string, exclude: boolean = false, isadmin: boolean = null): Minecraft.Player {
