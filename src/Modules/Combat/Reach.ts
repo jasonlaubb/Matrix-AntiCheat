@@ -1,6 +1,5 @@
 import { world, system, Player, Entity, EntityDamageCause, EntityHurtAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
-import lang from "../../Data/Languages/lang.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 const reachData: Map<string, number> = new Map<string, number>();
@@ -62,7 +61,7 @@ function AntiReach(hurtEntity: Player, damagingEntity: Player) {
     //if the vl is higher than 2, flag the player
     if (reachData.get(damagingEntity.id) >= 2) {
         //A - false positive: very low, efficiency: high
-        flag(damagingEntity, "Reach", "A", config.antiReach.maxVL, config.antiReach.punishment, [lang(">distance") + ":" + distance.toFixed(2), lang(">yReach") + ":" + yReach.toFixed(2)]);
+        flag(damagingEntity, "Reach", "A", config.antiReach.maxVL, config.antiReach.punishment, ["distance" + ":" + distance.toFixed(2), "yReach" + ":" + yReach.toFixed(2)]);
         if (!config.slient) damagingEntity.applyDamage(6);
         reachData.delete(damagingEntity.id);
     }

@@ -1,5 +1,4 @@
 import { Player, world, system, ItemUseAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
-import lang from "../../Data/Languages/lang";
 import { flag, isAdmin, c } from "../../Assets/Util";
 
 const lastItemUse = new Map<string, number>();
@@ -15,7 +14,7 @@ async function AntiFastUse(player: Player) {
 
     if (delay > 0 && delay < config.antiFastUse.minUseTime && !player.hasTag("matrix:item-disabled")) {
         //A - false positive: very low, efficiency: mid
-        flag(player, "FastUse", "A", config.antiFastUse.maxVL, config.antiFastUse.punishment, [lang(">Delay") + ":" + delay.toFixed(2)]);
+        flag(player, "FastUse", "A", config.antiFastUse.maxVL, config.antiFastUse.punishment, ["Delay" + ":" + delay.toFixed(2)]);
         if (!config.slient) {
             player.addTag("matrix:item-disabled");
             system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiFastUse.timeout);

@@ -1,6 +1,5 @@
 import { world, system, ChatSendAfterEvent } from "@minecraft/server";
 import { flag, c, isAdmin } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 
 /**
  * @author ravriv
@@ -15,7 +14,7 @@ function antiSpammer({ sender: player }: ChatSendAfterEvent) {
         if (player.hasTag("matrix:attack_time")) {
             //A - false positive: very low, efficiency: mid
             if (Date.now() - lastFlag.get(player.id) < 3000) {
-                flag(player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type") + ":" + lang(">AttackTime")]);
+                flag(player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "AttackTime"]);
                 if (!config.slient) player.applyDamage(6);
             }
             lastFlag.set(player.id, Date.now());
@@ -25,7 +24,7 @@ function antiSpammer({ sender: player }: ChatSendAfterEvent) {
         else if (player.hasTag("matrix:using_item")) {
             //B - false positive: mid, efficiency: mid
             if (Date.now() - lastFlag.get(player.id) < 3000) {
-                flag(player, "Spammer", "B", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type") + ":" + lang(">UsingItem")]);
+                flag(player, "Spammer", "B", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "UsingItem"]);
             }
             lastFlag.set(player.id, Date.now());
             if (!config.slient) player.applyDamage(6);
@@ -46,7 +45,7 @@ function antiSpammer({ sender: player }: ChatSendAfterEvent) {
             ) {
                 //C - false positive: low, efficiency: high
                 if (Date.now() - lastFlag.get(player.id) < 3000) {
-                    flag(player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type") + ":" + lang(">Moving")]);
+                    flag(player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "Moving"]);
                 }
                 lastFlag.set(player.id, Date.now());
                 if (!config.slient) player.applyDamage(6);
@@ -55,7 +54,7 @@ function antiSpammer({ sender: player }: ChatSendAfterEvent) {
             else if (player.hasTag("matrix:container")) {
                 //D - false positive: low, efficiency: mid
                 if (Date.now() - lastFlag.get(player.id) < 3000) {
-                    flag(player, "Spammer", "D", config.antiSpammer.maxVL, config.antiSpammer.punishment, [lang(">Type") + ":" + lang(">Container")]);
+                    flag(player, "Spammer", "D", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "Container"]);
                 }
                 lastFlag.set(player.id, Date.now());
                 if (!config.slient) player.applyDamage(6);

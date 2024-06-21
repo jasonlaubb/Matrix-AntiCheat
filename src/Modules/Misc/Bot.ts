@@ -1,7 +1,6 @@
 import { world, system, PlayerSpawnAfterEvent, Player, ChatSendAfterEvent } from "@minecraft/server";
 import { FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
 import { flag, c, isAdmin, kick } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 
 /**
  * @author RaMiGanerDev
@@ -70,7 +69,7 @@ const antiBot = () => {
                             }
                             return;
                         } else if (Date.now() - player.verifyClickSpeed <= config.antiBot.clickSpeedThershold * 50) {
-                            flag(player, "Bot", "A", config.antiBot.maxVL, config.antiBot.punishment, [lang(">Delay") + ":" + (now - player.verifyClickSpeed)]);
+                            flag(player, "Bot", "A", config.antiBot.maxVL, config.antiBot.punishment, ["Delay" + ":" + (now - player.verifyClickSpeed)]);
                             return;
                         }
                         player.sendMessage(`§bMatrix §7> §a${lang(".Bot.ok")}`);

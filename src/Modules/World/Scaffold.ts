@@ -1,7 +1,6 @@
 import { world, system, PlayerPlaceBlockAfterEvent, PlayerLeaveAfterEvent, Vector3 } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import lang from "../../Data/Languages/lang";
 
 /**
  * @author jasonlaubb & RaMiGamerDev
@@ -70,12 +69,12 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
     //check if rotation is a number that can be divided by the factor
     if ((rotation.x % factor === 0 || rotation.y % factor === 0) && Math.abs(rotation.x) !== 90) {
         detected = true;
-        flag(player, "Scaffold", "A", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`, `${lang(">RotationY")}:${rotation.y.toFixed(2)}°`]);
+        flag(player, "Scaffold", "A", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["RotationX" + ":" + `${rotation.x.toFixed(2)}°`, "RotationY" + ":" + `${rotation.y.toFixed(2)}°`]);
     }
     //check if the angle is higher than the max angle
     if (angle > config.antiScaffold.maxAngle && Math.hypot(pos1.x - pos2.x, pos1.z - pos2.z) > 1.75 && Math.abs(rotation.x) < 69.5) {
         detected = true;
-        flag(player, "Scaffold", "B", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`]);
+        flag(player, "Scaffold", "B", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Angle" + ":" + `${angle.toFixed(2)}°`]);
     }
     const floorPos = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) };
     if (player.isJumping && !player.isOnGround && !isUnderPlayer(floorPos, block.location)) {
@@ -85,7 +84,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
     //check if the rotation is lower than the min rotation and the block is under the player
     if (rotation.x < config.antiScaffold.minRotation && isUnder) {
         detected = true;
-        flag(player, "Scaffold", "C", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">RotationX")}:${rotation.x.toFixed(2)}°`]);
+        flag(player, "Scaffold", "C", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["RotationX" + ":" + `${rotation.x.toFixed(2)}°`]);
     }
     //diag scaffold check
     //false postive: very low | efficiency: high
@@ -113,7 +112,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
             data.scaffoldFlags = 0;
             data.scaffoldFlags2++;
             if (data.scaffoldFlags2 >= 1) {
-                flag(player, "Scaffold", "E", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+                flag(player, "Scaffold", "E", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
                 detected = true;
             }
         }
@@ -128,7 +127,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
         if (now - data.lastPlace < 200 && now - data.lastPlace >= 100 && Math.abs(data.lastXRot - rotation.x) > 5 && !diagScaffold) {
             data.scaffoldFlagsF++;
             if (data.scaffoldFlagsF >= 3) {
-                flag(player, "Scaffold", "F", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+                flag(player, "Scaffold", "F", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
                 data.scaffoldFlagsF = 0;
                 detected = true;
             }
@@ -137,7 +136,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
         if (yLoc > -2.1 && yLoc <= -1 && extender - data.avgExt >= 0.5) {
             data.scaffoldFlagsG++;
             if (data.scaffoldFlagsG >= 3) {
-                flag(player, "Scaffold", "G", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+                flag(player, "Scaffold", "G", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
                 data.scaffoldFlagsG = 0;
                 detected = true;
             }
@@ -146,7 +145,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
         if (data.avgExt - extender >= 1.5 && (!player.isOnGround || extender > 1) && data.avgExt != 8) {
             data.scaffoldFlagsH++;
             if (data.scaffoldFlagsH >= 3) {
-                flag(player, "Scaffold", "H", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+                flag(player, "Scaffold", "H", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
                 data.scaffoldFlagsH = 0;
                 detected = true;
             }
@@ -166,7 +165,7 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
         if (data.blockPlace.length > config.antiScaffold.maxBPS && !(player.getEffect(MinecraftEffectTypes.JumpBoost) && player.isJumping) && !player.getEffect(MinecraftEffectTypes.Speed)) {
             detected = true;
             data.blockPlace = [];
-            flag(player, "Scaffold", "D", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+            flag(player, "Scaffold", "D", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
         }
     }
     data.lastX = x;

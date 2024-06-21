@@ -1,6 +1,5 @@
 import { world, Player, system, GameMode, PlayerLeaveAfterEvent, ItemUseAfterEvent, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c, getPing } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 const fallDistances = new Map<string, number[]>();
@@ -30,7 +29,7 @@ async function ElytraFly(player: Player, now: number) {
                 }
                 player.addTag("matrix:stop-gliding");
                 system.runTimeout(() => player.removeTag("matrix:stop-gliding"), 10);
-                flag(player, "Elytra Fly", "A", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">velocityY") + ":" + +velocity.toFixed(2)]);
+                flag(player, "Elytra Fly", "A", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, ["velocityY" + ":" + velocity.toFixed(2)]);
             }
         } else {
             fallDistances.set(player.id, data);
@@ -52,7 +51,7 @@ async function ElytraFly(player: Player, now: number) {
                 if (!config.slient) player.teleport(lastPos);
                 player.addTag("matrix:stop-gliding");
                 system.runTimeout(() => player.removeTag("matrix:stop-gliding"), 10);
-                flag(player, "Elytra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, [lang(">Ratio") + ":" + +ratio.toFixed(2)]);
+                flag(player, "Elytra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, ["Ratio" + ":" + ratio.toFixed(2)]);
             });
         }
     } else {

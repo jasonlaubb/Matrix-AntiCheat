@@ -1,6 +1,5 @@
 import { world, Player, DataDrivenEntityTriggerAfterEvent, EntityDataDrivenTriggerEventOptions } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
@@ -16,22 +15,22 @@ import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data
 async function AntiAutoTotem(player: Player) {
     const config = c();
     if (player.hasTag("matrix:moving") && player.isOnGround && !player.isJumping && !player.isGliding && !player.hasTag("matrix:riding")) {
-        flag(player, "Auto Totem", "A", config.antiAuto.maxVL, config.antiAuto.punishment, [lang(">Type") + ":" + lang(">Moving")]);
+        flag(player, "Auto Totem", "A", config.antiAuto.maxVL, config.antiAuto.punishment, ["Type" + ":" + "Moving"]);
     } else if (player.hasTag("matrix:usingItem")) {
-        flag(player, "Auto Totem", "B", config.antiAuto.maxVL, config.antiAuto.punishment, [lang(">Type") + ":" + lang(">UsingItem")]);
+        flag(player, "Auto Totem", "B", config.antiAuto.maxVL, config.antiAuto.punishment, ["Type" + ":" + "UsingItem"]);
     } else if (player.hasTag("matrix:container")) {
-        flag(player, "Auto Totem", "C", config.antiAuto.maxVL, config.antiAuto.punishment, [lang(">Type") + ":" + lang(">Container")]);
+        flag(player, "Auto Totem", "C", config.antiAuto.maxVL, config.antiAuto.punishment, ["Type" + ":" + "Container"]);
     }
 }
 
 async function AntiAutoShield(player: Player) {
     const config = c();
     if (player.hasTag("matrix:moving") && player.isOnGround && !player.isJumping && !player.isGliding && !player.hasTag("matrix:riding")) {
-        flag(player, "Auto Shield", "A", config.antiAuto.maxVL, config.antiAuto.punishment, [lang(">Type") + ":" + lang(">Moving")]);
+        flag(player, "Auto Shield", "A", config.antiAuto.maxVL, config.antiAuto.punishment, ["Type" + ":" + "Moving"]);
     } else if (player.hasTag("matrix:usingItem")) {
-        flag(player, "Auto Shield", "B", config.antiAuto.maxVL, config.antiAuto.punishment, [lang(">Type") + ":" + lang(">UsingItem")]);
+        flag(player, "Auto Shield", "B", config.antiAuto.maxVL, config.antiAuto.punishment, ["Type" + ":" + "UsingItem"]);
     } else if (player.hasTag("matrix:container")) {
-        flag(player, "Auto Shield", "C", config.antiAuto.maxVL, config.antiAuto.punishment, [lang(">Type") + ":" + lang(">Container")]);
+        flag(player, "Auto Shield", "C", config.antiAuto.maxVL, config.antiAuto.punishment, ["Type" + ":" + "Container"]);
     }
 }
 

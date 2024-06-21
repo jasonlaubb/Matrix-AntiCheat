@@ -1,7 +1,6 @@
 import { world, system, Player, Block, Vector3, PlayerPlaceBlockAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import lang from "../../Data/Languages/lang";
 
 interface TowerData {
     towerBlock: Vector3;
@@ -76,7 +75,7 @@ async function AntiTower(player: Player, block: Block) {
             vL.set(player.id, vl + 1);
         }
 
-        flag(player, "Tower", "A", config.antiTower.maxVL, config.antiTower.punishment, [lang(">Delay") + ":" + delay.toFixed(2), lang(">PosDeff") + ":" + playerPosDeff.toFixed(2), lang(">CentreDis") + ":" + playerCentreDis.toFixed(2)]);
+        flag(player, "Tower", "A", config.antiTower.maxVL, config.antiTower.punishment, ["Delay" + ":" + delay.toFixed(2), "PosDeff" + ":" + playerPosDeff.toFixed(2), "CentreDis" + ":" + playerCentreDis.toFixed(2)]);
     } else {
         vL.set(player.id, undefined);
     }

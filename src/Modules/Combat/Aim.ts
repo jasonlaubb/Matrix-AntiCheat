@@ -1,7 +1,5 @@
 import { Player, PlayerLeaveAfterEvent, system, world } from "@minecraft/server";
 import { c, flag, isAdmin } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
-
 /**
  * @author jasonlaubb
  * @description Detect the suspicious aiming
@@ -37,18 +35,18 @@ function AntiAim(player: Player) {
     // Integer rotation
     if ((rotationX % 5 == 0 && rotationX != 0 && Math.abs(rotationX) != 90) || (rotationY % 5 == 0 && rotationY != 0)) {
         if (!player.hasTag("matrix:riding")) {
-            flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotationX") + ":" + rotationX, lang(">RotationY") + ":" + rotationY]);
+            flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, ["RotationX" + ":" + rotationX, "RotationY" + ":" + rotationY]);
         }
     }
     // Interger rot speed
     if ((rotSpeedX % 1 == 0 && rotSpeedX != 0) || (rotSpeedY % 1 == 0 && rotSpeedY != 0)) {
-        flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
+        flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
     }
     // Straight rotation movement
     if ((rotSpeedY > 0 && Math.abs(lastRotSpeedY - rotSpeedY) > 0.1 && (rotSpeedX < 0.05 && rotSpeedX > 0.001 || rotSpeedX == 0) || rotSpeedX > 0 && Math.abs(lastRotSpeedX - rotSpeedX) > 0.1 && (rotSpeedY < 0.05 && rotSpeedY > 0.001 || rotSpeedY == 0) && !player.isSwimming)) {
         data.straightRotContinue++;
         if (data.straightRotContinue > 20) {
-            flag(player, "Aim", "C", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
+            flag(player, "Aim", "C", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
             data.straightRotContinue = 0;
         }
     } else data.straightRotContinue = 0;
@@ -56,7 +54,7 @@ function AntiAim(player: Player) {
     if (rotSpeedX > 0 && rotSpeedY > 0 && rotSpeedY > 35 && Math.abs(lastRotSpeedX - rotSpeedX) < 0.01 && Math.abs(rotationX) < 79) {
         data.similarRotContinue++;
         if (data.similarRotContinue > 5) {
-            flag(player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
+            flag(player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
             data.similarRotContinue = 0;
         }
     } else data.similarRotContinue = 0;
@@ -64,7 +62,7 @@ function AntiAim(player: Player) {
     if ((lastRotSpeedY - rotSpeedY > 0 && data.lastRotDifferent < 0) || (lastRotSpeedY - rotSpeedY < 0 && data.lastRotDifferent > 0)) {
         data.vibrateRotContinue++;
         if (data.vibrateRotContinue >= 15) {
-            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
+            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
             data.vibrateRotContinue = 0;
         }
     } else data.vibrateRotContinue = 0;
