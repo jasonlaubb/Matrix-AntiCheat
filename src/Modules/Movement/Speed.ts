@@ -1,6 +1,5 @@
 import { world, system, PlayerLeaveAfterEvent, EntityDamageCause, EntityHurtAfterEvent } from "@minecraft/server";
 import { flag, isAdmin, c } from "../../Assets/Util.js";
-import { lang } from "../Data/Lanuages/lang.js";
 const speedData: Map<string, any> = new Map();
 const lastSpeedLog: Map<string, any> = new Map();
 const lastAttack: Map<string, any> = new Map();
@@ -74,7 +73,7 @@ async function AntiSpeed() {
         if (lagBack) player.teleport(safePos);
         //check if speedLog reached the max which is 3 flag
         if (!player.hasTag("matrix:riding") && !player.getComponent("riding")?.entityRidingOn && speedLog[player.id] >= 3 && player.lastXZLogged - xz > speedMaxV[player.id] && player.lastXZLogged - xz - lastVelocity.get(player.id) <= 0.3) {
-            flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, [lang(">velocityXZ") + ":" + (player.lastXZLogged - xz).toFixed(2)]);
+            flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + (player.lastXZLogged - xz).toFixed(2)]);
             if (!config.slient) player.teleport(safePos);
             speedLog[player.id] = 0;
         }
