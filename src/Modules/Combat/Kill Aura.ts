@@ -1,6 +1,5 @@
 import { world, system, Player, Vector3, Entity, EntityHitEntityAfterEvent, PlayerLeaveAfterEvent, EntityHurtAfterEvent, EntityDamageCause } from "@minecraft/server";
 import { flag, isAdmin, c, getPing } from "../../Assets/Util.js";
-import lang from "../../Data/Languages/lang.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 /**
  * @author ravriv & jasonlaubb & RaMiGamerDev
@@ -31,7 +30,7 @@ function KillAura(player: Player, hitEntity: Entity, onFirstHit: boolean) {
     if (getPing(player) < 4 && playerHitEntity.length > config.antiKillAura.maxEntityHit) {
         hitLength.delete(player.id);
         //A - false positive: very low, efficiency: high
-        flag(player, "Kill Aura", "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">HitLength")}:${playerHitEntity.length}`]);
+        flag(player, "Kill Aura", "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["HitLength" + ":" + playerHitEntity.length]);
         flagged = true;
     }
 
@@ -48,7 +47,7 @@ function KillAura(player: Player, hitEntity: Entity, onFirstHit: boolean) {
         //if the angle is higher than the max angle, flag the player
         if (angle > config.antiKillAura.minAngle && rotationFloat < 79 && !(player.threwTridentAt && Date.now() - player.threwTridentAt < 3000)) {
             //B - false positive: low, efficiency: mid
-            flag(player, "Kill Aura", "B", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">Angle")}:${angle.toFixed(2)}°`]);
+            flag(player, "Kill Aura", "B", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + `${angle.toFixed(2)}°`]);
             flagged = true;
         }
 
@@ -58,7 +57,7 @@ function KillAura(player: Player, hitEntity: Entity, onFirstHit: boolean) {
         if (distance > limitOfXZ && velocity >= 0) {
             const lastflag = lastFlag.get(player.id);
             if (lastflag && Date.now() - lastflag < 4000) {
-                flag(player, "Kill Aura", "C", config.antiKillAura.maxVL, config.antiKillAura.punishment, [`${lang(">distance")}:${distance.toFixed(2)}`, `${lang(">Limit")}:${limitOfXZ.toFixed(2)}`]);
+                flag(player, "Kill Aura", "C", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["distance" + ":" + distance.toFixed(2), "Limit" + ":" + limitOfXZ.toFixed(2)]);
                 flagged = true;
             }
             lastFlag.set(player.id, Date.now());
@@ -137,28 +136,28 @@ const tickEvent = () => {
         if (kAFlags[player.id] >= 40) {
             player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
-            flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + horizontalAngle.toFixed(5)]);
+            flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + horizontalAngle.toFixed(5)]);
             kAFlags[player.id] = 0;
         }
         //killaura/G check for instant rotation to the target
         if (rotatedMove == 0 && kAFlags[player.id] == "G" && verticalRotation != 0) {
             player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
-            flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + rotatedMove.toFixed(5)]);
+            flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + rotatedMove.toFixed(5)]);
             kAFlags[player.id] = 0;
         }
         //killaura/H check for smooth y Pitch movement
         if (invalidPitch[player.id] >= 20) {
             player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
-            flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + (yPitch - data.lastPitch).toFixed(5)]);
+            flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);
             invalidPitch[player.id] = 0;
         }
         //killaura/I check for if the player rotation can be divided by 1
         if ((verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
             player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
-            flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, [lang(">Angle") + ":" + (yPitch - data.lastPitch).toFixed(5)]);
+            flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);
         }
     }
 };
