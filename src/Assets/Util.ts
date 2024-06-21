@@ -1,11 +1,10 @@
-import { world, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage, RawText } from "@minecraft/server";
+import { world, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage } from "@minecraft/server";
 import { ban } from "../Functions/moderateModel/banHandler";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import Config from "../Data/Default";
 import { saveLog } from "../Functions/moderateModel/log";
 import { Translate } from "./Language";
-import { truncateSync } from "fs";
 
 export { rawstr, getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
 
@@ -65,7 +64,7 @@ let Vl: any = {};
 
 type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I";
 
-function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: RawMessage[] | undefined) {
+function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
     const config = c();
     Vl[player.id] ??= {};
     Vl[player.id][modules] ??= 0;
@@ -74,9 +73,9 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
         Vl[player.id][modules]++;
     } catch {}
 
-    let flagMsg = !config.slient ? `§bMatrix §7>§c ${player.name}§g ` + lang(".Util.has_failed") + ` §4${modules}§r §7[§c${lang(">Type")} ${type}§7] §7[§dx${Vl[player.id][modules]}§7]§r` : ``;
+    const flagMsg = new rawstr(true).tra("flag.style", player.name, modules, type, Vl[player.id][modules]);
     if (config.logsettings.logCheatFlag) saveLog("Flag", player.name, `${modules} ${type} (x${Vl[player.id][modules]})`);
-    if (infos !== undefined && !config.slient) flagMsg = flagMsg + "\n" + formatInformation(infos);
+    if (infos !== undefined && !config.slient) flagMsg.str("\n" + formatInformation(infos));
 
     if (punishment && Vl[player.id][modules] > maxVL) {
         let punishmentDone = false;
@@ -88,15 +87,15 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
                 case "kick": {
                     punishmentDone = true;
                     if (config.logsettings.logCheatPunishment) saveLog("Kick", player.name, `${modules} ${type}`);
-                    kick(player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"));
-                    flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formkick").replace("%a", player.name);
+                    kick(player, `Unfair adventage [${modules} ${type}]`, "Matrix AntiCheat");
+                    flagMsg.str("\n§bMatrix §7>§g ").tra("util.formkick", player.name);
                     break;
                 }
                 case "ban": {
                     punishmentDone = true;
                     if (config.logsettings.logCheatPunishment) saveLog("Ban", player.name, `${modules} ${type}`);
-                    ban(player, lang(".Util.unfair").replace("%a", `${modules} ${type}`), lang(".Util.by"), (config.punishment_ban.minutes as number | "forever") === "forever" ? "forever" : Date.now() + config.punishment_ban.minutes * 60000);
-                    flagMsg += "\n§bMatrix §7>§g " + lang(".Util.formban").replace("%a", player.name);
+                    ban(player, `Unfair adventage [${modules} ${type}]`, "Matrix AntiCheat", (config.punishment_ban.minutes as number | "forever") === "forever" ? "forever" : Date.now() + config.punishment_ban.minutes * 60000);
+                    flagMsg.str("\n§bMatrix §7>§g ").tra("util.formban", player.name);
                     break;
                 }
             }
@@ -110,25 +109,25 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
     switch (flagMode) {
         case "tag": {
             const targets = world.getPlayers({ tags: ["matrix:notify"] });
-            targets.forEach((players) => players.sendMessage(flagMsg));
+            targets.forEach((players) => players.sendMessage(flagMsg.parse()));
             break;
         }
         case "bypass": {
             const targets = world.getPlayers({ excludeNames: [player.name] });
-            targets.forEach((players) => players.sendMessage(flagMsg));
+            targets.forEach((players) => players.sendMessage(flagMsg.parse()));
             break;
         }
         case "admin": {
             const allPlayers = world.getAllPlayers();
             const targets = allPlayers.filter((players) => isAdmin(players));
-            targets.forEach((players) => players.sendMessage(flagMsg));
+            targets.forEach((players) => players.sendMessage(flagMsg.parse()));
             break;
         }
         case "none": {
             break;
         }
         default: {
-            world.sendMessage(flagMsg);
+            world.sendMessage(flagMsg.parse());
             break;
         }
     }

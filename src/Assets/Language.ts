@@ -15,6 +15,7 @@ export default function send(object: World | Player, warn: boolean, id: Translat
 }
 
 export type Translate =
+    "flag.style"
     | "help.helpcdlist"
     | "help.help"
     | "help.toggles"
