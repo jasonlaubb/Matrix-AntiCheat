@@ -1,6 +1,5 @@
 import { PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerInteractWithEntityBeforeEvent, PlayerPlaceBlockBeforeEvent, Vector3, system, world } from "@minecraft/server";
 import { c, isAdmin } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 
 // delcare the variable
 let radius: number;
