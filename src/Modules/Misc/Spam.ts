@@ -1,7 +1,6 @@
 import { world, system, Player, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { c } from "../../Assets/Util";
 import { isAdmin, kick } from "../../Assets/Util.js";
-import lang from "../../Data/Languages/lang.js";
 
 export { antiSpamModule };
 
