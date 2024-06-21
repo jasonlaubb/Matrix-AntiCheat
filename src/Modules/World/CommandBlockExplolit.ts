@@ -1,6 +1,5 @@
 import { world, system, PlayerPlaceBlockBeforeEvent, EntityEquippableComponent, EquipmentSlot, ItemUseOnBeforeEvent } from "@minecraft/server";
 import { c, flag, isAdmin } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 
 /**
  * @author jasonlaubb
@@ -15,7 +14,7 @@ const blockPlace = (event: PlayerPlaceBlockBeforeEvent) => {
         event.cancel = true;
         system.run(() => {
             player.getComponent(EntityEquippableComponent.componentId).setEquipment(EquipmentSlot.Mainhand); // bye bye item
-            flag(player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + permutation.type.id]);
+            flag(player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, ["Block" + ":" + permutation.type.id]);
         });
     }
 };
@@ -28,7 +27,7 @@ const itemUse = (event: ItemUseOnBeforeEvent) => {
         event.cancel = true;
         system.run(() => {
             player.getComponent(EntityEquippableComponent.componentId).setEquipment(EquipmentSlot.Mainhand); // bye bye item
-            flag(player, "Command Block Explolit", "B", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, [lang(">Block") + ":" + itemStack.typeId]);
+            flag(player, "Command Block Explolit", "B", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, ["Block" + ":" + itemStack.typeId]);
         });
     }
 };
