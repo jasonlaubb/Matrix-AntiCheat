@@ -1,8 +1,9 @@
 import { PlayerBreakBlockAfterEvent, world } from "@minecraft/server";
 import { flag, isAdmin, isTargetGamemode } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
+import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
-function first(config: configi, { player, brokenBlockPermutation: { type: { id }, }, block: { location }, }: PlayerBreakBlockAfterEvent) {
+function firstEvent (config: configi, { player, brokenBlockPermutation: { type: { id }, }, block: { location }, }: PlayerBreakBlockAfterEvent) {
     if (isAdmin(player) || isTargetGamemode(player, 1) || id == "minecraft:air" || player.hasTag("matrix:break-disabled")) return;
     if (config.antiXray.notifyAt.some((type) => id.endsWith(type))) {
         flag(player, "Xray", "A", 0, "none", ["Block" + ":" + id, "Break" + ":" + Object.values(location).join(" ")]);
