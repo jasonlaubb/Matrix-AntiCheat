@@ -1,4 +1,4 @@
-import { GameMode, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
+import { GameMode, PlayerSpawnAfterEvent, system, world, MinecraftEntityTypes} from "@minecraft/server";
 import { isAdmin, kick } from "../../Assets/Util";
 import lang from "../../Data/Languages/lang";
 
@@ -6,7 +6,7 @@ import lang from "../../Data/Languages/lang";
  * @author jasonlaubb
  * @description A simple client authentication to detect bot client
  */
-function clientAuth({ player, initialSpawn }: PlayerSpawnAfterEvent) {
+function firstEvent({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn || isAdmin(player) || player.getGameMode() == GameMode.spectator) return;
     // Apply a small knockback to the player
     player.teleport({ x: player.location.x, y: player.location.y + 1, z: player.location.z });
@@ -19,11 +19,13 @@ function clientAuth({ player, initialSpawn }: PlayerSpawnAfterEvent) {
         }
     }, 5);
 }
-export default {
-    enable() {
-        world.afterEvents.playerSpawn.subscribe(clientAuth);
-    },
-    disable() {
-        world.afterEvents.playerSpawn.unsubscribe(clientAuth);
-    },
-};
+
+registerModule("clientAuth", false, [], 
+    {
+        worldSignal: world.afterEvents.playerSpawn,
+        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+        then: async (config, event: PlayerSpawnAfterEvent) => {
+            firstEvent(config, event);
+        },
+    }
+);
