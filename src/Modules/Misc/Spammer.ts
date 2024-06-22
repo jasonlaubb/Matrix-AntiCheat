@@ -1,15 +1,16 @@
 import { world, system, ChatSendAfterEvent } from "@minecraft/server";
-import { flag, c, isAdmin } from "../../Assets/Util";
+import { flag, isAdmin } from "../../Assets/Util";
+import { registerModule, configi } from "../Modules.js";
 
 /**
  * @author ravriv
  * @description This check can detect players with spammer clients
  */
 
-function antiSpammer({ sender: player }: ChatSendAfterEvent) {
-    const config = c();
+const lastFlag: Map<string, number> = new Map<string, number>();
+
+function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
     if (isAdmin(player)) return;
-    const lastFlag = new Map();
     system.run(() => {
         if (player.hasTag("matrix:attack_time")) {
             //A - false positive: very low, efficiency: mid
@@ -63,11 +64,12 @@ function antiSpammer({ sender: player }: ChatSendAfterEvent) {
     });
 }
 
-export default {
-    enable() {
-        world.beforeEvents.chatSend.subscribe(antiSpammer);
-    },
-    disable() {
-        world.beforeEvents.chatSend.unsubscribe(antiSpammer);
-    },
-};
+registerModule("antiSpammer", false, [lastFlag], 
+    {
+        worldSignal: world.afterEvents.chatSend,
+        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+        then: async (config, event: ChatSendAfterEvent) => {
+            firstEvent(config, event);
+        },
+    }
+);
