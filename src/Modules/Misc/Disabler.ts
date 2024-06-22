@@ -26,7 +26,7 @@ function intickEvent(config: configi, player: Player) {
     }
 };
 
-const doubleEvent = (config: configi, damagingEntity, hurtEntity) => {
+function doubleEvent(config: configi, damagingEntity, hurtEntity) {
     if (hurtEntity.id == damagingEntity.id) {
         const location = hurtEntity.location;
         system.run(() => hurtEntity.teleport(location));
@@ -34,7 +34,7 @@ const doubleEvent = (config: configi, damagingEntity, hurtEntity) => {
     }
 };
 
-const playerSpawn = ({ player, initialSpawn }: PlayerSpawnAfterEvent) => {
+function tripleEvent({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
     player.removeTag("matrix:disabler-patched");
 };
@@ -50,6 +50,13 @@ registerModule("antiDisabler", false, [],
         then: async (config, { damageSource: { damagingEntity, damagingProjectile, cause }, hurtEntity }: EntityHurtAfterEvent) => {
             if (!(hurtEntity instanceof Player) || isAdmin(hurtEntity as Player) || !damagingEntity || cause != EntityDamageCause.entityAttack || damagingProjectile || !damagingEntity) return;
             doubleEvent(config, damagingEntity, hurtEntity);
+        },
+    },
+    {
+        worldSignal: world.afterEvents.playerSpawn,
+        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+        then: async (config, event) => {
+            tripleEvent(event);
         },
     }
 );
