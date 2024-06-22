@@ -55,7 +55,7 @@ registerModule("antiDisabler", false, [],
     {
         worldSignal: world.afterEvents.playerSpawn,
         playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
-        then: async (config, event) => {
+        then: async (config, event: PlayerSpawnAfterEvent) => {
             tripleEvent(event);
         },
     }
