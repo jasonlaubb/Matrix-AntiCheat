@@ -1,6 +1,6 @@
 import { world, system, PlayerSpawnAfterEvent, Player, ChatSendAfterEvent } from "@minecraft/server";
 import { FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
-import { flag, c, isAdmin, kick } from "../../Assets/Util";
+import { flag, c, isAdmin, kick, rawstr } from "../../Assets/Util";
 
 /**
  * @author RaMiGanerDev
@@ -8,7 +8,7 @@ import { flag, c, isAdmin, kick } from "../../Assets/Util";
  * It works by making a verification for the player.
  */
 
-const playerSpawn = ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) => {
+function playerSpawn ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
     if (!spawn) return;
     if (isAdmin(player)) {
         player.verified = true;
@@ -21,18 +21,18 @@ const playerSpawn = ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) => 
         player.removeTag("matrix:verified");
         player.verifyTimer = Date.now();
         player.notVerified = true;
-        player.sendMessage(`§bMatrix §7> §c${lang(".Bot.waitUI")}`);
+        player.sendMessage(new rawstr(true, "c").tra("bot.waitui").parse());
     });
 };
 
-const antiBot = () => {
+function antiBot () {
     const players = world.getPlayers({ excludeTags: ["matrix:verified"] });
     const now = Date.now();
     const config = c();
     for (const player of players) {
         if (!player.notVerified) continue;
         if (now - player.verifyTimer >= config.antiBot.timer * 1000 * 60) {
-            kick(player, lang(".Bot.expired"), lang(".Bot.by"));
+            kick(player, "VERIFY_EXPIRED", "Matrix AntiCheat");
         }
 
         try {
@@ -43,15 +43,18 @@ const antiBot = () => {
                 const codeNow = [0, 0, 0, 0, 0, 0, 0].map(() => Math.floor(Math.random() * 10)).join("");
                 player.tryVerify ??= 0;
                 new ModalFormData()
-                    .title(lang(".Bot.title"))
+                    .title(rawstr.drt("bot.title"))  
                     .textField(
-                        lang(".Bot.ui")
-                            .replace("%a", String(player.tryVerify))
-                            .replace("%b", String(config.antiBot.maxTry))
-                            .replace("%c", String(Math.floor((config.antiBot.timer * 60000 - now + player.verifyTimer) / 1000)))
-                            .replace("%d", codeNow),
-                        "0000000"
-                    )
+                        new rawstr()
+                            .tra("bot.ui.headline")
+                            .str("\n")
+                            .tra("bot.ui.need", String(player.tryVerify), String(config.antiBot.maxTry))
+                            .str("\n")
+                            .tra("bot.ui.haveleft", String(Math.floor((config.antiBot.timer * 60000 - now + player.verifyTimer) / 1000)))
+                            .str("\n")
+                            .tra("bot.ui.enterbelow", codeNow)
+                            .parse()
+                    , "0000000")
                     .show(player)
                     .then(({ formValues, canceled, cancelationReason }) => {
                         if (!player.notVerified) return;
@@ -63,7 +66,7 @@ const antiBot = () => {
                                 player.tryVerify += 1;
 
                                 if (player.tryVerify > config.antiBot.maxTry) {
-                                    kick(player, lang(".Bot.failed"), lang(".Bot.by"));
+                                    kick(player, "VERIFY_FAILED", "Matrix AntiCheat");
                                     return;
                                 }
                             }
@@ -72,7 +75,7 @@ const antiBot = () => {
                             flag(player, "Bot", "A", config.antiBot.maxVL, config.antiBot.punishment, ["Delay" + ":" + (now - player.verifyClickSpeed)]);
                             return;
                         }
-                        player.sendMessage(`§bMatrix §7> §a${lang(".Bot.ok")}`);
+                        player.sendMessage(new rawstr(true, "a").tra("bot.ok").parse());
                         player.notVerified = undefined;
                         player.verified = true;
                         player.addTag("matrix:verified");
@@ -86,7 +89,7 @@ const antiBot = () => {
     }
 };
 
-const chatSend = ({ sender: player }: ChatSendAfterEvent) => {
+function chatSend ({ sender: player }: ChatSendAfterEvent) {
     const config = c();
     if (player.notVerified && player.verifying) {
         if (isAdmin(player)) return;

@@ -211,10 +211,6 @@ msgstr ""
 msgid "(Anti spam automatic action)"
 msgstr ""
 
-#: bot.by
-msgid "(Bot defensive action)"
-msgstr ""
-
 #: util.by
 msgid "(Immediate behavioral defense)"
 msgstr ""
@@ -451,10 +447,6 @@ msgstr ""
 msgid "Unknown module, try %stoggles"
 msgstr ""
 
-#: bot.failed
-msgid "Verification failed"
-msgstr ""
-
 #: about.version
 msgid "Version"
 msgstr ""
@@ -543,8 +535,20 @@ msgstr ""
 msgid "adminchat"
 msgstr ""
 
-#: bot.ui
+#: bot.ui.headline
 msgid "§a[This server is protected by Matrix AntiCheat]"
+msgstr ""
+
+#: bot.ui.need
+msgid "§gYou need to verify if you're not a bot §7(%1/%2)"
+msgstr ""
+
+#: bot.ui.haveleft
+msgid "§gYou have §e%s§gseconds left"
+msgstr ""
+
+#: bot.ui.enterbelow
+msgid "Enter the code §e§l%s§r§g below"
 msgstr ""
 
 #: spam.kickedblacklist
