@@ -42,7 +42,7 @@ import Default from "../Data/Default";
 
 let MODULES: Module[] = [];
 
-export function registerModule(id: string, checkAdmin: boolean, varargs: (Map<string, any> | { [key: string]: any })[], ...event: (TickEvent | WorldEvent)[]): void {
+export function registerModule(id: string, checkAdmin: boolean, varargs: (Map<string, any> | { [key: string]: any })[], ...event: (TickEvent | WorldEvent | IntilizeEvent)[]): void {
     const tickEvent = (event as TickEvent[]).filter((ev) => ev?.tickInterval);
     const worldEvent = (event as WorldEvent[]).filter((ev) => ev?.worldSignal);
     MODULES.push({
@@ -57,7 +57,9 @@ export function registerModule(id: string, checkAdmin: boolean, varargs: (Map<st
 export function getModulesIds () {
     return MODULES.map((module) => module.id);
 }
-export function intilizeModules(): void {
+export async function intilizeModules(): Promise<void> {
+    // Await for a tick
+    await new Promise<void>((resolve) => system.run(() => resolve()));
     const config = c();
     let mapvalues: Map<string, any>[] = [];
     MODULES.filter((module) => module.enabled).forEach((module) => {
@@ -71,8 +73,13 @@ export function intilizeModules(): void {
         }
     });
 }
+/**
+ * @description This is the type of the Config.
+ * @warning Don't touch this constant
+ * */
 export type configi = typeof Default;
-function setup(config: typeof Default, element: Module) {
+
+function setup(config: configi, element: Module) {
     let runIds = [];
     if ((config as any)[element.id]?.enabled) {
         // Method for state module is enabled
@@ -147,12 +154,16 @@ interface Module {
 
 interface TickEvent {
     tickInterval: number;
-    intick?: (config: typeof Default, player: Player) => Promise<void | number>;
-    onTick?: (_config: typeof Default) => Promise<void | number>;
+    intick?: (config: configi, player: Player) => Promise<void | number>;
+    onTick?: (_config: configi) => Promise<void | number>;
     playerOption?: EntityQueryOptions;
 }
 interface WorldEvent {
     worldSignal: any;
     playerOption?: EntityEventOptions;
-    then: (config: typeof Default, event: any) => Promise<void | number>;
+    then: (config: configi, event: any) => Promise<void | number>;
+}
+interface IntilizeEvent {
+    onIntilize: (config: configi) => Promise<void | number>;
+    runAfterSubsribe: number;
 }
