@@ -19,6 +19,17 @@ class rawstr {
     static drt (id: Translate, ...withargs: string[]) {
         return { rawtext: [{ translate: id, with: withargs }]}
     }
+    static new (coloured?: boolean, colour?: string) {
+        return new rawstr(coloured!, colour!);
+    }
+    static compare (...rstr: rawstr[]): rawstr {
+        const newawa = new rawstr();
+        // Double loop to compare each rawstr
+        rstr.forEach(({ storge }) => {
+            storge.forEach((s) => newawa.storge.push(s));
+        })
+        return newawa;
+    }
     public constructor (coloured?: boolean, colour: string = "g") {
         if (coloured) {
             if (colour.length != 1) throw new Error ("Rawstr :: Unexpect colour :: " + colour);

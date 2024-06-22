@@ -3,8 +3,7 @@ import { antiSpamModule } from "../../Modules/Misc/Spam";
 import { triggerCommand } from "./CommandHandler";
 import { chatRank } from "./ChatRank";
 import { adminChat } from "./AdminChat";
-import lang from "../../Data/Languages/lang";
-import { c } from "../../Assets/Util";
+import { c, rawstr } from "../../Assets/Util";
 
 world.beforeEvents.chatSend.subscribe((event) => {
     // Defend the spam bot from sending the chat packets
@@ -23,7 +22,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
 
     if (player.getDynamicProperty("mute") === true) {
         event.cancel = true;
-        system.run(() => player.sendMessage("§2§l§¶Matrix >§4 " + lang(".ChatHandler.muted")));
+        system.run(() => player.sendMessage(rawstr.drt("chathandler.muted")));
         return;
     }
 

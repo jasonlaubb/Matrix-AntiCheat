@@ -424,7 +424,7 @@ msgid "This module is %sd already"
 msgstr ""
 
 #: toggles.toggle
-msgid "Toggle"
+msgid "Toggle %s module"
 msgstr ""
 
 #: toggles.togglelist
