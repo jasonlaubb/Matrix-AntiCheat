@@ -1,5 +1,5 @@
 import { world, system, Player, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { c } from "../../Assets/Util";
+import { c, rawstr } from "../../Assets/Util";
 import { isAdmin, kick } from "../../Assets/Util.js";
 
 export { antiSpamModule };
@@ -22,7 +22,7 @@ function spammingWarner(player: Player, data: Data) {
     data.warnings++;
 
     if (data.warnings <= config.antiSpam.kickThreshold) {
-        player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.slowdown")} §8(${data.warnings}/${config.antiSpam.kickThreshold})`);
+        player.sendMessage(rawstr.new(true, "c").tra("spam.slowdown").str(` §8(${data.warnings}/${config.antiSpam.kickThreshold})`).parse());
     }
 
     system.runTimeout(() => {
@@ -31,8 +31,8 @@ function spammingWarner(player: Player, data: Data) {
     }, config.antiSpam.timeout);
 
     if (data.warnings > config.antiSpam.kickThreshold) {
-        system.run(() => kick(player, lang(".Spam.spamming"), lang(".Spam.by")));
-        world.sendMessage(`§bMatrix §7>§g ${lang(".Spam.kicked").replace("%a", player.name)}`);
+        system.run(() => kick(player, "SPAMMING_MESSAGE", "Matric AntiCheat"));
+        world.sendMessage(rawstr.new(true, "g").tra("spam.kicked", player.name).parse());
     }
 }
 
@@ -47,7 +47,7 @@ function antiSpamModule(message: string, player: Player) {
     let isSpamming = false;
 
     if (previousMessage.has(player.id) && previousMessage.get(player.id) === message) {
-        system.run(() => player.sendMessage("§bMatrix §7>§g " + lang(".Spam.repeated")));
+        system.run(() => player.sendMessage(rawstr.new().tra("spam.repeated").parse()));
         isSpamming = true;
     } else {
         previousMessage.set(player.id, message);
@@ -56,10 +56,11 @@ function antiSpamModule(message: string, player: Player) {
     const lowerCase = message.toLowerCase();
 
     if (message.length > config.antiSpam.maxCharacterLimit) {
-        player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.long")} §8(${message.length}/${config.antiSpam.maxCharacterLimit})`);
+        player.sendMessage(rawstr.new().tra("spam.long").str(`§8(${message.length}/${config.antiSpam.maxCharacterLimit})`).parse());
         isSpamming = true;
+        // WILL CHANGE IN THE FUTURE
     } else if (ChatFilterData.some((word) => lowerCase.includes(word))) {
-        system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.filter")}`));
+        system.run(() => player.sendMessage(rawstr.new().tra("spam.filter").parse()));
         isSpamming = true;
     }
 
@@ -75,12 +76,12 @@ function antiSpamModule(message: string, player: Player) {
 
         // if warning time is smaller than 2, send a warning message else kick them
         if (warningTime < 5) {
-            system.run(() => player.sendMessage(`§bMatrix §7>§g ${lang(".Spam.blacklist")} §8(${warningTime}/4)`));
+            system.run(() => player.sendMessage(rawstr.new(true, "c").tra("spam.spamming").str(` §8(${warningTime}/4)`).parse()));
             isSpamming = true;
         } else
             system.run(() => {
-                kick(player, lang(".Spam.blacklisted"), lang(".Spam.by"));
-                world.sendMessage(`§bMatrix §7>§g ${lang(".Spam.kickedBlacklist").replace("%a", player.name)}`);
+                kick(player, "BLACKLISTED_MESSAGE", "Matrix AntiCheat");
+                world.sendMessage(rawstr.new(true, "g").tra("spam.kickedblacklist", player.name).parse());
             });
         isSpamming = true;
     } else {
