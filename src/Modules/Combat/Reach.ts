@@ -1,6 +1,7 @@
-import { world, system, Player, Entity, EntityDamageCause, EntityHurtAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util.js";
+import { world, system, Player, Entity, EntityDamageCause, EntityHurtAfterEvent } from "@minecraft/server";
+import { flag, isAdmin } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { configi, registerModule } from "../Modules.js";
 
 const reachData: Map<string, number> = new Map<string, number>();
 
@@ -26,8 +27,7 @@ function calculateDistance(b1: Entity, b2: Entity) {
     return Math.floor(Math.hypot(dx, dz)) - (velocityB1 + velocityB2);
 }
 
-function AntiReach(hurtEntity: Player, damagingEntity: Player) {
-    const config = c();
+function antiReach (hurtEntity: Player, damagingEntity: Player, config: configi) {
     //calculate the y reach
     const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y) - Math.abs(damagingEntity.getVelocity().y);
 
@@ -67,25 +67,15 @@ function AntiReach(hurtEntity: Player, damagingEntity: Player) {
     }
 }
 
-const antiReach = ({ damageSource, hurtEntity }: EntityHurtAfterEvent) => {
-    const damagingEntity: Entity = damageSource.damagingEntity;
-    if (damageSource.cause !== EntityDamageCause.entityAttack || damageSource.damagingProjectile || !(damagingEntity instanceof Player) || isAdmin(damagingEntity)) return;
+// Register the module
+registerModule ("antiReach", false, [reachData], 
+    {
+        worldSignal: world.afterEvents.entityHurt,
+        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+        then: async (config, { hurtEntity, damageSource: { cause, damagingEntity, damagingProjectile }}: EntityHurtAfterEvent) => {
+            if (cause !== EntityDamageCause.entityAttack || damagingProjectile || !(damagingEntity instanceof Player) || isAdmin(damagingEntity)) return;
 
-    AntiReach(hurtEntity as Player, damagingEntity);
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    reachData.delete(playerId);
-};
-
-export default {
-    enable() {
-        world.afterEvents.entityHurt.subscribe(antiReach, { entityTypes: [MinecraftEntityTypes.Player] });
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-    },
-    disable() {
-        reachData.clear();
-        world.afterEvents.entityHurt.unsubscribe(antiReach);
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-    },
-};
+            antiReach(hurtEntity as Player, damagingEntity, config);
+        },
+    }
+);

@@ -1,34 +1,46 @@
-import { world, system, Player, Vector3, Entity, EntityHitEntityAfterEvent, PlayerLeaveAfterEvent, EntityHurtAfterEvent, EntityDamageCause } from "@minecraft/server";
-import { flag, isAdmin, c, getPing } from "../../Assets/Util.js";
+import { world, system, Player, Vector3, Entity, EntityHitEntityAfterEvent, EntityHurtAfterEvent, EntityDamageCause } from "@minecraft/server";
+import { flag, isAdmin, getPing } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { registerModule, configi } from "../Modules.js";
+
 /**
  * @author ravriv & jasonlaubb & RaMiGamerDev
  * @description This checks if the player is hitting another player from a impossible angle.
  */
 
-const hitLength = new Map<string, any[]>();
-const lastFlag = new Map<string, number>();
-let invalidPitch: { [key: string]: any } = {};
-let kAFlags: { [key: string]: any } = {};
+interface KillAuraData {
+    hitLength: string[];
+    lastFlag: number;
+    invalidPitch: number;
+    kAFlags: number;
+}
 
-function KillAura(player: Player, hitEntity: Entity, onFirstHit: boolean) {
+const killauradata = new Map<string, KillAuraData>();
+
+function doubleEvent (config: configi, player: Player, hitEntity: Entity, onFirstHit: boolean) {
+    if (isAdmin(player)) return;
+    const data = killauradata.get(player.id) ?? {
+        hitLength: [],
+        lastFlag: 0,
+        invalidPitch: 0,
+        kAFlags: 0,
+    }
     if (player.hasTag("matrix:pvp-disabled")) return;
     //constant the infomation
-    let playerHitEntity = hitLength.get(player.id) ?? [];
+    const playerHitEntity = data.hitLength;
     let flagged = false;
-    const config = c();
     const direction: Vector3 = calculateVector(player.location, hitEntity.location) as Vector3;
     const distance: number = calculateMagnitude(direction);
 
     //if the player hit a target that is not in the list, add it to the list
     if (!playerHitEntity.includes(hitEntity.id)) {
         playerHitEntity.push(hitEntity.id);
-        hitLength.set(player.id, playerHitEntity);
+        data.hitLength = playerHitEntity;
     }
 
     //if the player hit more than 1 targets in 2 ticks, flag the player
     if (getPing(player) < 4 && playerHitEntity.length > config.antiKillAura.maxEntityHit) {
-        hitLength.delete(player.id);
+        data.hitLength = [];
         //A - false positive: very low, efficiency: high
         flag(player, "Kill Aura", "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["HitLength" + ":" + playerHitEntity.length]);
         flagged = true;
@@ -55,12 +67,12 @@ function KillAura(player: Player, hitEntity: Entity, onFirstHit: boolean) {
         const limitOfXZ = Math.cos((rotationFloat * Math.PI) / 180) * 6.1 + 2.4;
         //if player attack higher than the limit, flag him
         if (distance > limitOfXZ && velocity >= 0) {
-            const lastflag = lastFlag.get(player.id);
+            const lastflag = data.lastFlag;
             if (lastflag && Date.now() - lastflag < 4000) {
                 flag(player, "Kill Aura", "C", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["distance" + ":" + distance.toFixed(2), "Limit" + ":" + limitOfXZ.toFixed(2)]);
                 flagged = true;
             }
-            lastFlag.set(player.id, Date.now());
+            data.lastFlag = Date.now();
         }
     }
 
@@ -95,10 +107,7 @@ function KillAura(player: Player, hitEntity: Entity, onFirstHit: boolean) {
 }*/
 
 const lastRotateData = new Map();
-const tickEvent = () => {
-    const players = world.getAllPlayers();
-    for (const player of players) {
-        if (isAdmin(player)) continue;
+function intickEvent (config: configi, player: Player) {
         const data = lastRotateData.get(player.id);
         const pos1 = player.getHeadLocation();
         const raycast = player.getEntitiesFromViewDirection()[0];
@@ -110,11 +119,11 @@ const tickEvent = () => {
         } catch {
             lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity });
         }
-        if (!raycast) continue;
+        if (!raycast) return;
         const nearestPlayer = raycast?.entity;
-        if (!(raycast.entity instanceof Player) || raycast.distance > 7.5 || player.hasTag("matrix:pvp_disabled")) continue;
+        if (!(raycast.entity instanceof Player) || raycast.distance > 7.5 || player.hasTag("matrix:pvp_disabled")) return;
         const pos2 = nearestPlayer.getHeadLocation();
-        if (!data) continue;
+        if (!data) return;
         let horizontalAngle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / Math.PI - horizontalRotation - 90;
         horizontalAngle = Math.abs(horizontalAngle <= -180 ? (horizontalAngle += 360) : horizontalAngle);
         const { /*x: floatX, */ y: floatY /*, z: floatZ*/ } = playerVelocity;
@@ -124,34 +133,33 @@ const tickEvent = () => {
         const rotatedMove = Math.abs(data.horizonR - horizontalRotation);
         const yPitch = Math.abs(data.verticalR - verticalRotation);
         const instantRot = rotatedMove > 60;
-        const config = c();
-        if (Math.abs(yPitch - data.lastPitch) > 1 && Math.abs(yPitch - data.lastPitch) < 3 && ((verticalRotation < 0 && moveY + floatY > 0) || (verticalRotation > 0 && moveY + floatY < 0)) && move > 0.1) invalidPitch[player.id]++;
-        else invalidPitch[player.id] = 0;
+        if (Math.abs(yPitch - data.lastPitch) > 1 && Math.abs(yPitch - data.lastPitch) < 3 && ((verticalRotation < 0 && moveY + floatY > 0) || (verticalRotation > 0 && moveY + floatY < 0)) && move > 0.1) data.invalidPitch++;
+        else data.invalidPitch = 0;
         if ((rotatedMove > 0 && rotatedMove < 60 && move > 0) || instantRot) {
-            kAFlags[player.id]++;
-            if (instantRot) kAFlags[player.id] = "G";
-        } else if ((rotatedMove == 0 && move > 0) || (rotatedMove > 0 && move == 0) || rotatedMove > 40) kAFlags[player.id] = 0;
+            data.kAFlags++;
+            if (instantRot) data.kAFlags = "G";
+        } else if ((rotatedMove == 0 && move > 0) || (rotatedMove > 0 && move == 0) || rotatedMove > 40) data.kAFlags = 0;
         //   player.onScreenDisplay.setActionBar(`${Math.abs(yPitch - data.lastPitch)}`)
         //killaura/F check for head rotation
-        if (kAFlags[player.id] >= 40) {
+        if (data.kAFlags >= 40) {
             player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
             flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + horizontalAngle.toFixed(5)]);
-            kAFlags[player.id] = 0;
+            data.kAFlags = 0;
         }
         //killaura/G check for instant rotation to the target
-        if (rotatedMove == 0 && kAFlags[player.id] == "G" && verticalRotation != 0) {
+        if (rotatedMove == 0 && data.kAFlags == "G" && verticalRotation != 0) {
             player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
             flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + rotatedMove.toFixed(5)]);
-            kAFlags[player.id] = 0;
+            data.kAFlags = 0;
         }
         //killaura/H check for smooth y Pitch movement
-        if (invalidPitch[player.id] >= 20) {
+        if (data.invalidPitch >= 20) {
             player.addTag("matrix:pvp-disabled");
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
             flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);
-            invalidPitch[player.id] = 0;
+            data.invalidPitch = 0;
         }
         //killaura/I check for if the player rotation can be divided by 1
         if ((verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
@@ -159,9 +167,7 @@ const tickEvent = () => {
             system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
             flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);
         }
-    }
-};
-tickEvent; // no killaura is in beta LOL
+    };
 
 function calculateVector(l1: Vector3, l2: Vector3) {
     const { x: x1, y: y1, z: z1 } = l1;
@@ -195,49 +201,28 @@ function calculateAngle(attacker: Vector3, target: Vector3, attackerV: Vector3, 
     return Math.abs(angle);
 }
 
-const antiKillAura = ({ damagingEntity: player, hitEntity }: EntityHitEntityAfterEvent) => {
-    if (isAdmin(player as Player)) return;
-
-    KillAura(player as Player, hitEntity, false);
-};
-
-const antiKillAura2 = (event: EntityHurtAfterEvent) => {
-    if (event.damageSource.cause !== EntityDamageCause.entityAttack || event.damageSource.damagingProjectile) return;
-
-    const player = event.damageSource.damagingEntity;
-    const hitEntity = event.hurtEntity;
-    if (!(player instanceof Player) || isAdmin(player)) return;
-
-    KillAura(player, hitEntity, true);
-};
-
-const systemEvent = () => {
-    const allplayers = world.getAllPlayers();
-    const players = allplayers.filter((player) => hitLength.get(player.id) !== undefined);
-    players.forEach((player) => hitLength.delete(player.id));
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    hitLength.delete(playerId);
-};
-
-let id: number;
-//let id2: number
-
-export default {
-    enable() {
-        world.afterEvents.entityHitEntity.subscribe(antiKillAura, { entityTypes: [MinecraftEntityTypes.Player] });
-        world.afterEvents.entityHurt.subscribe(antiKillAura2);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-        id = system.runInterval(systemEvent, 2);
-        //id2 = system.runInterval(tickEvent, 1)
+// Register the module
+registerModule("antiKillAura", false, [killauradata], 
+    {
+        intick: async (config, player) => intickEvent(config, player),
+        tickInterval: 1,
     },
-    disable() {
-        hitLength.clear();
-        world.afterEvents.entityHitEntity.unsubscribe(antiKillAura);
-        world.afterEvents.entityHurt.unsubscribe(antiKillAura2);
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-        system.clearRun(id);
-        //system.clearRun(id2)
+    {
+        worldSignal: world.afterEvents.entityHurt,
+        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+        then: async (config, { damageSource: { damagingEntity, damagingProjectile, cause }, hurtEntity }: EntityHurtAfterEvent) => {
+            if (damagingEntity instanceof Player && !isAdmin(damagingEntity) && cause == EntityDamageCause.entityAttack && !damagingProjectile) {
+                doubleEvent(config, damagingEntity, hurtEntity, true);
+            }
+        },
     },
-};
+    {
+        worldSignal: world.afterEvents.entityHitEntity,
+        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+        then: async (config, event: EntityHitEntityAfterEvent) => {
+            if (event.hitEntity instanceof Player && !isAdmin(event.hitEntity)) {
+                doubleEvent(config, event.damagingEntity as Player, event.hitEntity, false);
+            }
+        },
+    }
+);
