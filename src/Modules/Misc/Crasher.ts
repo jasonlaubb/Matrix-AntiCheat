@@ -1,5 +1,6 @@
 import { world, Player, system } from "@minecraft/server";
-import { flag, c, isAdmin } from "../../Assets/Util";
+import { flag, isAdmin } from "../../Assets/Util";
+import { registerModule, configi } from "../Modules.js";
 
 /**
  * @author jasonlaubb
@@ -7,8 +8,7 @@ import { flag, c, isAdmin } from "../../Assets/Util";
  * @warning This check won't work anymore as Minecraft patched it
  */
 
-function AntiCrasher(player: Player) {
-    const config = c();
+function intickEvent(config: configi, player: Player) {
     const { x, y, z } = player.location;
     const max = 30000000;
 
@@ -28,20 +28,9 @@ function AntiCrasher(player: Player) {
     }
 }
 
-const antiCrasher = () => {
-    const players = world.getAllPlayers();
-    for (const player of players) {
-        AntiCrasher(player);
+registerModule("antiCrasher", false, [], 
+    {
+        intick: async (config, player) => intickEvent(config, player),
+        tickInterval: 1,
     }
-};
-
-let id: number;
-
-export default {
-    enable() {
-        id = system.runInterval(antiCrasher, 0);
-    },
-    disable() {
-        system.clearRun(id);
-    },
-};
+);
