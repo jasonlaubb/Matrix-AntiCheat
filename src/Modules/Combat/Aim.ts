@@ -1,12 +1,14 @@
-import { Player, PlayerLeaveAfterEvent, system, world } from "@minecraft/server";
-import { c, flag, isAdmin } from "../../Assets/Util";
+import { Player } from "@minecraft/server";
+import { flag } from "../../Assets/Util";
+import { registerModule, configi } from "../Modules";
 /**
  * @author jasonlaubb
  * @description Detect the suspicious aiming
  */
+
 const aimData: Map<string, AimData> = new Map();
 
-function AntiAim(player: Player) {
+function antiAim (config: configi, player: Player) {
     const data = aimData.get(player.id);
     const { x: rotationX, y: rotationY } = player.getRotation();
     if (!data) {
@@ -31,7 +33,6 @@ function AntiAim(player: Player) {
     const rotSpeedY = Math.abs(rotationY - data.lastRotationY);
     const lastRotSpeedX = Math.abs(rotationX - data.previousRotationX);
     const lastRotSpeedY = Math.abs(rotationY - data.previousRotationY);
-    const config = c();
     // Integer rotation
     if ((rotationX % 5 == 0 && rotationX != 0 && Math.abs(rotationX) != 90) || (rotationY % 5 == 0 && rotationY != 0)) {
         if (!player.hasTag("matrix:riding")) {
@@ -99,28 +100,7 @@ function AntiAim(player: Player) {
         lastRotDifferent: Math.abs(rotationX - data.lastRotationX),
     });
 }
-function playerLeaveAfterEvent({ playerId }: PlayerLeaveAfterEvent) {
-    aimData.delete(playerId);
-}
-function antiAim() {
-    const allPlayers = world.getAllPlayers();
-    for (const player of allPlayers) {
-        if (isAdmin(player)) continue;
-        AntiAim(player);
-    }
-}
-let id: number;
-export default {
-    enable() {
-        id = system.runInterval(antiAim, 1);
-        world.afterEvents.playerLeave.subscribe(playerLeaveAfterEvent);
-    },
-    disable() {
-        aimData.clear();
-        system.clearRun(id);
-        world.afterEvents.playerLeave.unsubscribe(playerLeaveAfterEvent);
-    },
-};
+
 interface AimData {
     lastRotationX: number;
     lastRotationY: number;
@@ -133,3 +113,11 @@ interface AimData {
     previousRotSpeedY: number;
     previousRotSpeedX: number;
 }
+
+// Register the module.
+registerModule ("antiAim", false, [aimData], 
+    {
+        intick: async (config: configi, player: Player) => antiAim (config, player),
+        tickInterval: 1
+    }
+)

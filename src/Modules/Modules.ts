@@ -32,7 +32,7 @@ import "./Movement/World Border";
 import "./Misc/Disabler";
 import "./Player/ClientAuth";
 
-import { EntityQueryOptions, Player, system, world } from "@minecraft/server";
+import { EntityEventOptions, EntityQueryOptions, Player, system, world } from "@minecraft/server";
 import Default from "../Data/Default";
 
 /**
@@ -71,6 +71,7 @@ export function intilizeModules(): void {
         }
     });
 }
+export type configi = typeof Default;
 function setup(config: typeof Default, element: Module) {
     let runIds = [];
     if ((config as any)[element.id]?.enabled) {
@@ -152,6 +153,6 @@ interface TickEvent {
 }
 interface WorldEvent {
     worldSignal: any;
-    playerOption?: EntityQueryOptions;
-    then: (config: typeof Default, event: unknown) => Promise<void | number>;
+    playerOption?: EntityEventOptions;
+    then: (config: typeof Default, event: any) => Promise<void | number>;
 }

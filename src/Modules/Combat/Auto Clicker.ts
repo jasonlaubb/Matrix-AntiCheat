@@ -1,7 +1,8 @@
-import { world, system, Player, EntityHitEntityAfterEvent, EntityHitBlockAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util.js";
+import { world, system, Player, EntityHitEntityAfterEvent } from "@minecraft/server";
+import { flag, isAdmin } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { tps } from "../../Assets/Public.js";
+import { registerModule, configi } from "../Modules.js";
 
 interface ClickData {
     clicks: number[];
@@ -14,8 +15,7 @@ const clickData: Map<string, ClickData> = new Map<string, ClickData>();
  * @description This checks if the player is clicking more than 22 times per second.
  */
 
-function AutoClicker(player: Player) {
-    const config = c();
+function antiAutoClicker (config: configi, player: Player) {
     const currentTime = Date.now();
     const { id } = player;
     const { clicks } = clickData.get(id) || { clicks: [] };
@@ -47,24 +47,22 @@ function AutoClicker(player: Player) {
     clickData.set(id, { clicks: filteredClicks });
 }
 
-const antiAutoClicker = ({ damagingEntity }: EntityHitEntityAfterEvent | EntityHitBlockAfterEvent) => {
-    if (isAdmin(damagingEntity as Player)) return;
+function entityHitEntityAfterEvent (_config: configi, { damagingEntity }: EntityHitEntityAfterEvent) {
+    if (damagingEntity instanceof Player && !isAdmin(damagingEntity)) {
+        const click = clickData.get(damagingEntity.id)?.clicks
+        click.push(Date.now())
+        clickData.set(damagingEntity.id, { clicks: click })
+    }
+}
 
-    AutoClicker(damagingEntity as Player);
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    clickData.delete(playerId);
-};
-
-export default {
-    enable() {
-        world.afterEvents.entityHitEntity.subscribe(antiAutoClicker, { entityTypes: [MinecraftEntityTypes.Player] });
-        world.afterEvents.playerLeave.subscribe(playerLeave);
+registerModule("antiAutoClicker", false, [clickData],
+    {
+        intick: async (config, player) => antiAutoClicker(config, player),
+        tickInterval: 1
     },
-    disable() {
-        clickData.clear();
-        world.afterEvents.entityHitEntity.unsubscribe(antiAutoClicker);
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-    },
-};
+    {
+        worldSignal: world.afterEvents.entityHitEntity,
+        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+        then: async (config, event) => entityHitEntityAfterEvent(config, event),
+    }
+)
