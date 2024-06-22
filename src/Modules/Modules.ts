@@ -45,11 +45,13 @@ let MODULES: Module[] = [];
 export function registerModule(id: string, checkAdmin: boolean, varargs: (Map<string, any> | { [key: string]: any })[], ...event: (TickEvent | WorldEvent | IntilizeEvent)[]): void {
     const tickEvent = (event as TickEvent[]).filter((ev) => ev?.tickInterval);
     const worldEvent = (event as WorldEvent[]).filter((ev) => ev?.worldSignal);
+    const intilizeEvent = (event as IntilizeEvent[]).filter((ev) => ev?.runAfterSubsribe);
     MODULES.push({
         id: id,
         checkAdmin: checkAdmin,
         tickEvent: tickEvent.length > 0 ? tickEvent : undefined,
         worldEvent: worldEvent.length > 0 ? worldEvent : undefined,
+        intilizeEvent: intilizeEvent.length > 0 ? intilizeEvent : undefined,
         enabled: false,
         mapclears: varargs.filter((arg) => arg?.delete) as Map<string, any>[],
     });
@@ -82,6 +84,13 @@ export type configi = typeof Default;
 function setup(config: configi, element: Module) {
     let runIds = [];
     if ((config as any)[element.id]?.enabled) {
+        element.intilizeEvent?.forEach(async (iE) => {
+            if (Number.isInteger(iE.runAfterSubsribe) && iE.runAfterSubsribe > 0)
+                await new Promise<void>((resolve) => system.runTimeout(() => resolve(), iE.runAfterSubsribe));
+            iE.onIntilize(config).catch((error) => {
+                rejected("Module rejected :: " + element.id + " :: " + String(error));
+            })
+        })
         // Method for state module is enabled
         for (const tE of element.tickEvent) {
             runIds.push(
@@ -147,6 +156,7 @@ interface Module {
     checkAdmin: boolean;
     tickEvent?: TickEvent[];
     worldEvent?: WorldEvent[];
+    intilizeEvent?: IntilizeEvent[];
     runId?: number[]; // for module handler
     enabled: boolean;
     mapclears: Map<string, any>[];
