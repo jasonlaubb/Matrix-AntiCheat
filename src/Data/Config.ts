@@ -298,7 +298,7 @@ export default {
         minRotation: 20,
         maxBPS: 5,
         punishment: "kick",
-        maxVL: 4,
+        maxVL: 6,
     },
     antiNoSlow: {
         enabled: true,
@@ -340,7 +340,7 @@ export default {
     },
     antiAim: {
         enabled: true,
-        punishment: "kick",
+        punishment: "none",
         maxVL: 4,
     },
     antiTower: {
@@ -372,7 +372,7 @@ export default {
     },
     antiFastBreak: {
         enabled: false,
-        punishment: "ban",
+        punishment: "kick",
         maxVL: 4,
         solidOnly: true,
         maxBPS: 1.2,
@@ -602,7 +602,7 @@ export default {
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "kick",
+        punishment: "none",
         experimental: true,
     },
     antiFastUse: {
