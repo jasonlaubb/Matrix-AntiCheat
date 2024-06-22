@@ -1,4 +1,4 @@
-import { world, Player, system } from "@minecraft/server";
+import { Player, system } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 
