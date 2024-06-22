@@ -35,12 +35,15 @@ import { c } from "./Assets/Util";
 import { onStart } from "./Functions/chatModel/CommandHandler";
 onStart();
 //start all modules
-import { moduleStart } from "./Modules/Modules";
-moduleStart();
-if (c().createScoreboard)
+import "./Modules/Modules";
+import { intilizeModules } from "./Modules/Modules";
+world.afterEvents.worldInitialize.subscribe(intilizeModules);
+
+if (c().createScoreboard) {
     world.afterEvents.worldInitialize.subscribe(() => {
         world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
     });
+}
 system.run(() => {
     console.log("Index :: Successfully load the program (" + (Date.now() - runTime - 50) + "ms)");
 });
