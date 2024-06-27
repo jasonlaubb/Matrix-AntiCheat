@@ -29,6 +29,12 @@ const validLanguage = [
     "zh_CN",
     "zh_TW",
 ];
+const fixedStart = `"Language: N/A\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: PhraseApp (phraseapp.com)\n"`;
 const doTranslate = false;
 import("fs").then((fsModule) => {
     import("path").then((pathModule) => {
@@ -71,13 +77,54 @@ import("fs").then((fsModule) => {
                     return;
                 }
                 console.log("Process: Start reading pot files");
+                const enusBase = fs.readFileSync(root + "pot/en_US.pot", "utf8");
+                const acceptedStr = enusBase.match(/#\: [a-z|\.]+/gi).map((a) => a.slice(3));
+                const valueCatch = enusBase.match(/msgid ".*"/g).map((a) => a.slice(8).slice(0, -1));
+                const biu = [];
+                for (let i = 0; i < acceptedStr.length; i++) {
+                    biu.push([acceptedStr[i], valueCatch[i]]);
+                }
                 files.forEach(async (file) => {
                     if (file.endsWith(".pot")) {
                         const potFilePath = path.join(root + "pot", file);
-                        const potContent = fs.readFileSync(potFilePath, "utf8");
+                        let potContent = fs.readFileSync(potFilePath, "utf8");
 
                         let lines = potContent.split("\n").filter((a) => !a.startsWith("#") || a.startsWith("#:"));
                         let updatedContent = "";
+
+                        const properties = potContent.match(/#\: [a-z|\.]+/gi).map((a) => a.slice(3));
+                        const property = potContent.match(/msgid ".*"/g).map((a) => a.slice(8).slice(0, -1));
+                        const kakaka = potContent.match(/msgstr ".*"/g).map((a) => a.slice(8).slice(0, -1));
+                        const biu2 = [];
+                        for (let i = 0; i < properties.length; i++) {
+                            biu2.push([properties[i], property[i]]);
+                        }
+                        let potUpdateFile = fixedStart;
+                        let hasChanged = false;
+                        for (let i = 0; i < biu.length; i++) {
+                            const [lore, msgid] = biu[i];
+                            const index = biu2.indexOf([lore, msgid]);
+                            if (index != -1) {
+                                potUpdateFile += `
+                                #: ${lore}
+                                msgid "${msgid}"
+                                msgstr "${kakaka[index]}"
+                                `;
+                            } else {
+                                potUpdateFile += `
+                                #: ${lore}
+                                msgid "${msgid}"
+                                msgstr ""
+                                `;
+                                hasChanged = true;
+                                console.log("Warning: Missing property or other language: " + lore.replace(/\n|\r/g, ""));
+                            }
+                        }
+
+                        if (hasChanged) {
+                            fs.writeFileSync(potFilePath, potUpdateFile);
+                            console.log("Process: Updated " + file);
+                        }
 
                         for (let i = 0; i < lines.length; i++) {
                             const line = lines[i];
