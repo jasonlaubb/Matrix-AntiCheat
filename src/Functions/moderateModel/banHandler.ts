@@ -1,6 +1,5 @@
 import { world, Player, system } from "@minecraft/server";
 import { msToTime } from "../../Assets/Util";
-import lang from "../../Data/Languages/lang";
 import { triggerEvent } from "./eventHandler";
 
 interface BanInfo {
@@ -55,7 +54,7 @@ function checksBan(player: Player): void {
     }
 
     try {
-        player.runCommand(`kick "${player.name}" §r\n${lang(".banHandler.format").replace("%a", timeTherShold).replace("%b", reason).replace("%c", by)}`);
+        player.runCommand(`kick "${player.name}" §r\n§c§lYour have been banned!\n§r§7Time Left:§c ${timeTherShold}\n§7Reason: §c${reason}§r\n§7By: §c${by}`);
     } catch {
         triggerEvent(player, "matrix:kick");
     }
