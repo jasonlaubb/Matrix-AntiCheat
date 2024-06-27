@@ -1,12 +1,9 @@
-msgid ""
-msgstr ""
 "Language: N/A\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: PhraseApp (phraseapp.com)\n"
-
 #: pack.description
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock\n§cBeta-API required"
 msgstr ""
@@ -335,7 +332,7 @@ msgstr ""
 msgid "Lockdown hasn't enabled yet"
 msgstr ""
 
-#: about.line1
+#: about.line
 msgid "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
 msgstr ""
 
@@ -431,7 +428,7 @@ msgstr ""
 msgid "Toggle list:"
 msgstr ""
 
-#: typ1 type
+#: typ
 msgid "Type"
 msgstr ""
 
@@ -455,7 +452,7 @@ msgstr ""
 msgid "Wrong code"
 msgstr ""
 
-#: op.wrong passwords.wrong
+#: op.wrong
 msgid "Wrong password"
 msgstr ""
 
