@@ -27,7 +27,7 @@ function calculateDistance(b1: Entity, b2: Entity) {
     return Math.floor(Math.hypot(dx, dz)) - (velocityB1 + velocityB2);
 }
 
-function antiReach (hurtEntity: Player, damagingEntity: Player, config: configi) {
+function antiReach(hurtEntity: Player, damagingEntity: Player, config: configi) {
     //calculate the y reach
     const yReach: number = Math.abs(damagingEntity.location.y - hurtEntity.location.y) - Math.abs(damagingEntity.getVelocity().y);
 
@@ -68,14 +68,12 @@ function antiReach (hurtEntity: Player, damagingEntity: Player, config: configi)
 }
 
 // Register the module
-registerModule ("antiReach", false, [reachData], 
-    {
-        worldSignal: world.afterEvents.entityHurt,
-        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
-        then: async (config, { hurtEntity, damageSource: { cause, damagingEntity, damagingProjectile }}: EntityHurtAfterEvent) => {
-            if (cause !== EntityDamageCause.entityAttack || damagingProjectile || !(damagingEntity instanceof Player) || isAdmin(damagingEntity)) return;
+registerModule("antiReach", false, [reachData], {
+    worldSignal: world.afterEvents.entityHurt,
+    playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+    then: async (config, { hurtEntity, damageSource: { cause, damagingEntity, damagingProjectile } }: EntityHurtAfterEvent) => {
+        if (cause !== EntityDamageCause.entityAttack || damagingProjectile || !(damagingEntity instanceof Player) || isAdmin(damagingEntity)) return;
 
-            antiReach(hurtEntity as Player, damagingEntity, config);
-        },
-    }
-);
+        antiReach(hurtEntity as Player, damagingEntity, config);
+    },
+});

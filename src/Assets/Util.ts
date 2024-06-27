@@ -16,37 +16,37 @@ export { rawstr, getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemo
 class rawstr {
     private storge: RawMessage[] = [];
     /** @description Direct rawtext translation */
-    static drt (id: Translate, ...withargs: string[]) {
-        return { rawtext: [{ translate: id, with: withargs }]}
+    static drt(id: Translate, ...withargs: string[]) {
+        return { rawtext: [{ translate: id, with: withargs }] };
     }
-    static new (coloured?: boolean, colour?: string) {
+    static new(coloured?: boolean, colour?: string) {
         return new rawstr(coloured!, colour!);
     }
-    static compare (...rstr: rawstr[]): rawstr {
+    static compare(...rstr: rawstr[]): rawstr {
         const newawa = new rawstr();
         // Double loop to compare each rawstr
         rstr.forEach(({ storge }) => {
             storge.forEach((s) => newawa.storge.push(s));
-        })
+        });
         return newawa;
     }
-    public constructor (coloured?: boolean, colour: string = "g") {
+    public constructor(coloured?: boolean, colour: string = "g") {
         if (coloured) {
-            if (colour.length != 1) throw new Error ("Rawstr :: Unexpect colour :: " + colour);
+            if (colour.length != 1) throw new Error("Rawstr :: Unexpect colour :: " + colour);
             this.storge.push({ text: "§bMatrix §7> §" + colour });
         }
-    };
+    }
     /** @description Return the full rawtext */
-    public parse () {
+    public parse() {
         return { rawtext: [this.storge] } as RawText;
     }
     /** @description Add text to rawtext */
-    public str (text: string) {
+    public str(text: string) {
         this.storge.push({ text: text });
         return this;
     }
     /** @description Add translation to rawtext */
-    public tra (id: Translate, ...withargs: string[]) {
+    public tra(id: Translate, ...withargs: string[]) {
         this.storge.push({ translate: id, with: withargs });
         return this;
     }
@@ -54,7 +54,10 @@ class rawstr {
 
 function kick(player: Player, reason?: string, by?: string) {
     const textreason = "§c§lYou have been kicked\n§r§7Reason: §c" + reason ?? "--\n§7By: §c" + by ?? "--";
-    world.getDimension(player.dimension.id).runCommandAsync(`kick "${player.name}" ${textreason}`).catch(() => triggerEvent(player, "matrix:kick"));
+    world
+        .getDimension(player.dimension.id)
+        .runCommandAsync(`kick "${player.name}" ${textreason}`)
+        .catch(() => triggerEvent(player, "matrix:kick"));
 }
 
 function formatInformation(arr: string[]) {
@@ -228,7 +231,6 @@ function isTimeStr(timeStr: string) {
     const timeUnits = ["d", "h", "m", "s"];
     return timeUnits.some((unit) => new RegExp(`\\d+${unit}`).test(timeStr));
 }
-
 
 const c = () => Config;
 

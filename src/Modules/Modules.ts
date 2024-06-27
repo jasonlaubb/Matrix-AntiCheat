@@ -56,7 +56,7 @@ export function registerModule(id: string, checkAdmin: boolean, varargs: (Map<st
         mapclears: varargs.filter((arg) => arg?.delete) as Map<string, any>[],
     });
 }
-export function getModulesIds () {
+export function getModulesIds() {
     return MODULES.map((module) => module.id);
 }
 export async function intilizeModules(): Promise<void> {
@@ -85,12 +85,11 @@ function setup(config: configi, element: Module) {
     let runIds = [];
     if ((config as any)[element.id]?.enabled) {
         element.intilizeEvent?.forEach(async (iE) => {
-            if (Number.isInteger(iE.runAfterSubsribe) && iE.runAfterSubsribe > 0)
-                await new Promise<void>((resolve) => system.runTimeout(() => resolve(), iE.runAfterSubsribe));
+            if (Number.isInteger(iE.runAfterSubsribe) && iE.runAfterSubsribe > 0) await new Promise<void>((resolve) => system.runTimeout(() => resolve(), iE.runAfterSubsribe));
             iE.onIntilize(config).catch((error) => {
                 rejected("Module rejected :: " + element.id + " :: " + String(error));
-            })
-        })
+            });
+        });
         // Method for state module is enabled
         for (const tE of element.tickEvent) {
             runIds.push(

@@ -40,7 +40,7 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack) {
         system.run(() => {
             player.addTag("matrix:break-disabled");
             block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => item.kill());
-            block.setPermutation(Object.assign({},block.permutation));
+            block.setPermutation(Object.assign({}, block.permutation));
 
             //prevent the player from breaking blocks for 3 seconds
             system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);

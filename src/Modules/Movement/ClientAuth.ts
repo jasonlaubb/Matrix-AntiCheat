@@ -1,4 +1,4 @@
-import { GameMode, PlayerSpawnAfterEvent, system, world, MinecraftEntityTypes} from "@minecraft/server";
+import { GameMode, PlayerSpawnAfterEvent, system, world, MinecraftEntityTypes } from "@minecraft/server";
 import { isAdmin, kick } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 import lang from "../../Data/Languages/lang";
@@ -21,12 +21,10 @@ function firstEvent(config: configi, { player, initialSpawn }: PlayerSpawnAfterE
     }, 5);
 }
 
-registerModule("clientAuth", false, [], 
-    {
-        worldSignal: world.afterEvents.playerSpawn,
-        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
-        then: async (config: configi, event: PlayerSpawnAfterEvent) => {
-            firstEvent(config, event);
-        },
-    }
-);
+registerModule("clientAuth", false, [], {
+    worldSignal: world.afterEvents.playerSpawn,
+    playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+    then: async (config: configi, event: PlayerSpawnAfterEvent) => {
+        firstEvent(config, event);
+    },
+});

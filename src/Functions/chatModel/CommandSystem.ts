@@ -3,7 +3,7 @@
 /**
  * @author jasonlaubb
  * @description This is removed due to the new rewrite. No longer in use
-*/
+ */
 
 import { EntityEquippableComponent, EntityInventoryComponent, EquipmentSlot, ItemStack, Player, system, world } from "@minecraft/server";
 import { helpList, toggleList, validModules } from "../../Data/Help";

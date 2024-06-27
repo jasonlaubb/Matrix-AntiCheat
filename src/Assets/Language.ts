@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate = 
+export type Translate =
     | "pack.description"
     | "crash.reload"
     | "flag.style"
@@ -140,4 +140,4 @@ export type Translate =
     | "bot.ui.haveleft"
     | "bot.ui.enterbelow"
     | "spam.kickedblacklist"
-    | "spam.kicked"
+    | "spam.kicked";

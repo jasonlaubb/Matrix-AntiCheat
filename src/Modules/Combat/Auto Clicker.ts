@@ -15,7 +15,7 @@ const clickData: Map<string, ClickData> = new Map<string, ClickData>();
  * @description This checks if the player is clicking more than 22 times per second.
  */
 
-function antiAutoClicker (config: configi, player: Player) {
+function antiAutoClicker(config: configi, player: Player) {
     const currentTime = Date.now();
     const { id } = player;
     const { clicks } = clickData.get(id) || { clicks: [] };
@@ -47,22 +47,25 @@ function antiAutoClicker (config: configi, player: Player) {
     clickData.set(id, { clicks: filteredClicks });
 }
 
-function entityHitEntityAfterEvent (_config: configi, { damagingEntity }: EntityHitEntityAfterEvent) {
+function entityHitEntityAfterEvent(_config: configi, { damagingEntity }: EntityHitEntityAfterEvent) {
     if (damagingEntity instanceof Player && !isAdmin(damagingEntity)) {
-        const click = clickData.get(damagingEntity.id)?.clicks
-        click.push(Date.now())
-        clickData.set(damagingEntity.id, { clicks: click })
+        const click = clickData.get(damagingEntity.id)?.clicks;
+        click.push(Date.now());
+        clickData.set(damagingEntity.id, { clicks: click });
     }
 }
 
-registerModule("antiAutoClicker", false, [clickData],
+registerModule(
+    "antiAutoClicker",
+    false,
+    [clickData],
     {
         intick: async (config, player) => antiAutoClicker(config, player),
-        tickInterval: 1
+        tickInterval: 1,
     },
     {
         worldSignal: world.afterEvents.entityHitEntity,
         playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
         then: async (config, event) => entityHitEntityAfterEvent(config, event),
     }
-)
+);

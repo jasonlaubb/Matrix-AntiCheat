@@ -14,11 +14,11 @@ let speedMaxV: any = {};
  */
 const locationData: Map<string, any> = new Map();
 
-function entityHurt ({ damageSource: { cause }, hurtEntity }: EntityHurtAfterEvent) {
+function entityHurt({ damageSource: { cause }, hurtEntity }: EntityHurtAfterEvent) {
     if (cause == EntityDamageCause.entityAttack || cause == EntityDamageCause.blockExplosion) {
         lastAttack.set(hurtEntity.id, Date.now());
     }
-};
+}
 
 async function AntiSpeed() {
     //getting players

@@ -46,12 +46,12 @@ function worldBorder(config: configi) {
             if (Math.hypot(x, z) == 0) lastSafePos.set(player.id, player.location);
         }
     }
-};
+}
 /**
  * Cancels a block break or place event if the player is outside the world border.
  * @param event - The event object containing the player and block information.
  */
-function blockCancel (event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent) {
+function blockCancel(event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent) {
     // Check if the event is admin triggered and the config says to skip
     if (c().worldBorder.stopAdmin && isAdmin(event.player)) return;
 
@@ -62,13 +62,13 @@ function blockCancel (event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBefor
         event.cancel = true;
         system.run(() => event.player.sendMessage(new rawstr(true).tra("border.outside").parse()));
     }
-};
+}
 
 /**
  * Cancels a block interact event if the player is outside the world border.
  * @param event - The event object containing the player and block information.
  */
-function playerInteractBlock (event: PlayerInteractWithBlockBeforeEvent) {
+function playerInteractBlock(event: PlayerInteractWithBlockBeforeEvent) {
     // Check if the event is admin triggered and the config says to skip
     if (c().worldBorder.stopAdmin && isAdmin(event.player)) return;
 
@@ -83,14 +83,14 @@ function playerInteractBlock (event: PlayerInteractWithBlockBeforeEvent) {
         event.cancel = true;
         system.run(() => event.player.sendMessage(new rawstr(true).tra("border.interact").parse()));
     }
-};
+}
 
 /**
  * Cancels a block interact event if the player is outside the world border.
  * This function specifically handles entity interactions.
  * @param event - The event object containing the player and entity information.
  */
-function playerInteractEntity (event: PlayerInteractWithEntityBeforeEvent) {
+function playerInteractEntity(event: PlayerInteractWithEntityBeforeEvent) {
     // Check if the event is admin triggered and the config says to skip
     if (c().worldBorder.stopAdmin && isAdmin(event.player)) return;
 
@@ -105,13 +105,16 @@ function playerInteractEntity (event: PlayerInteractWithEntityBeforeEvent) {
         event.cancel = true;
         system.run(() => event.player.sendMessage(new rawstr(true).tra("border.interact").parse()));
     }
-};
+}
 
 // Register the module
-registerModule("worldBoarder", true, [lastSafePos],
+registerModule(
+    "worldBoarder",
+    true,
+    [lastSafePos],
     {
         onTick: async (config) => worldBorder(config),
-        tickInterval: 1
+        tickInterval: 1,
     },
     {
         worldSignal: world.beforeEvents.playerBreakBlock,
@@ -128,5 +131,5 @@ registerModule("worldBoarder", true, [lastSafePos],
     {
         worldSignal: world.beforeEvents.playerInteractWithEntity,
         then: async (_config, event: PlayerInteractWithEntityBeforeEvent) => playerInteractEntity(event),
-    },
-)
+    }
+);

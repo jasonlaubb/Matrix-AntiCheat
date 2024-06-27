@@ -8,15 +8,26 @@ import { registerModule, configi } from "../Modules";
 
 const aimData: Map<string, AimData> = new Map();
 
-function antiAim (config: configi, player: Player) {
+function antiAim(config: configi, player: Player) {
     const data = aimData.get(player.id);
     const { x: rotationX, y: rotationY } = player.getRotation();
     if (!data) {
-        aimData.set(player.id, { previousRotSpeedY: 0, previousRotSpeedX: 0, lastRotationX: rotationX, lastRotationY: rotationY, previousRotationX: undefined, previousRotationY: undefined, straightRotContinue: 0, similarRotContinue: 0, vibrateRotContinue: 0, lastRotDifferent: 0 });
+        aimData.set(player.id, {
+            previousRotSpeedY: 0,
+            previousRotSpeedX: 0,
+            lastRotationX: rotationX,
+            lastRotationY: rotationY,
+            previousRotationX: undefined,
+            previousRotationY: undefined,
+            straightRotContinue: 0,
+            similarRotContinue: 0,
+            vibrateRotContinue: 0,
+            lastRotDifferent: 0,
+        });
         return;
     } else if (!data?.previousRotationX || player.getComponent("riding")?.entityRidingOn || player.isSleeping || player.isSwimming || player.isGliding) {
         aimData.set(player.id, {
-            previousRotSpeedY: data.previousRotSpeedY, 
+            previousRotSpeedY: data.previousRotSpeedY,
             previousRotSpeedX: data.previousRotSpeedX,
             lastRotationX: rotationX,
             lastRotationY: rotationY,
@@ -44,7 +55,10 @@ function antiAim (config: configi, player: Player) {
         flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
     }
     // Straight rotation movement
-    if ((rotSpeedY > 0 && Math.abs(lastRotSpeedY - rotSpeedY) > 0.1 && (rotSpeedX < 0.05 && rotSpeedX > 0.001 || rotSpeedX == 0) || rotSpeedX > 0 && Math.abs(lastRotSpeedX - rotSpeedX) > 0.1 && (rotSpeedY < 0.05 && rotSpeedY > 0.001 || rotSpeedY == 0) && !player.isSwimming)) {
+    if (
+        (rotSpeedY > 0 && Math.abs(lastRotSpeedY - rotSpeedY) > 0.1 && ((rotSpeedX < 0.05 && rotSpeedX > 0.001) || rotSpeedX == 0)) ||
+        (rotSpeedX > 0 && Math.abs(lastRotSpeedX - rotSpeedX) > 0.1 && ((rotSpeedY < 0.05 && rotSpeedY > 0.001) || rotSpeedY == 0) && !player.isSwimming)
+    ) {
         data.straightRotContinue++;
         if (data.straightRotContinue > 20) {
             flag(player, "Aim", "C", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
@@ -75,21 +89,23 @@ function antiAim (config: configi, player: Player) {
     const unnaturalRots =
         (rotationX.toString() == rotationX.toFixed(2) && (rotationX != 0 || (rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0))) ||
         (rotationY.toString() == rotationY.toFixed(2) && rotationY != 0) ||
-        rotSpeedX.toString() == rotSpeedX.toFixed(1) && rotSpeedX > 10 ||
-        rotSpeedY.toString() == rotSpeedY.toFixed(1) && rotSpeedY > 20;
+        (rotSpeedX.toString() == rotSpeedX.toFixed(1) && rotSpeedX > 10) ||
+        (rotSpeedY.toString() == rotSpeedY.toFixed(1) && rotSpeedY > 20);
     if (unnaturalRots) {
         flag(player, "Aim", "G", config.antiAim.maxVL, config.antiAim.punishment, undefined);
     }
-    
-    const instantRot = (data.previousRotSpeedX <= 0.03 && lastRotSpeedX >= 15 && lastRotSpeedX <= 140 && rotSpeedX <= 0.03 && (rotationX != 0 || rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0) || data.previousRotSpeedY <= 0.03 && lastRotSpeedY >= 30 && lastRotSpeedY <= 260 && rotSpeedY <= 0.03 && (rotationY != 0 || rotSpeedX > 0 && data.lastRotationY == 0 && rotationY == 0)) 
-    if (instantRot){
-       flag(player, "Aim", "H", config.antiAim.maxVL, config.antiAim.punishment, undefined);
+
+    const instantRot =
+        (data.previousRotSpeedX <= 0.03 && lastRotSpeedX >= 15 && lastRotSpeedX <= 140 && rotSpeedX <= 0.03 && (rotationX != 0 || (rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0))) ||
+        (data.previousRotSpeedY <= 0.03 && lastRotSpeedY >= 30 && lastRotSpeedY <= 260 && rotSpeedY <= 0.03 && (rotationY != 0 || (rotSpeedX > 0 && data.lastRotationY == 0 && rotationY == 0)));
+    if (instantRot) {
+        flag(player, "Aim", "H", config.antiAim.maxVL, config.antiAim.punishment, undefined);
     }
-    data.previousRotSpeedX = lastRotSpeedX 
-    data.previousRotSpeedY = lastRotSpeedY
+    data.previousRotSpeedX = lastRotSpeedX;
+    data.previousRotSpeedY = lastRotSpeedY;
     aimData.set(player.id, {
-        previousRotSpeedY: data.previousRotSpeedY, 
-        previousRotSpeedX: data.previousRotSpeedX, 
+        previousRotSpeedY: data.previousRotSpeedY,
+        previousRotSpeedX: data.previousRotSpeedX,
         lastRotationX: rotationX,
         lastRotationY: rotationY,
         previousRotationX: data.lastRotationX,
@@ -115,9 +131,7 @@ interface AimData {
 }
 
 // Register the module.
-registerModule ("antiAim", false, [aimData], 
-    {
-        intick: async (config: configi, player: Player) => antiAim (config, player),
-        tickInterval: 1
-    }
-)
+registerModule("antiAim", false, [aimData], {
+    intick: async (config: configi, player: Player) => antiAim(config, player),
+    tickInterval: 1,
+});

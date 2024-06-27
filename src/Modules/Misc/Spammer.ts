@@ -64,12 +64,10 @@ function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
     });
 }
 
-registerModule("antiSpammer", false, [lastFlag], 
-    {
-        worldSignal: world.afterEvents.chatSend,
-        playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
-        then: async (config, event: ChatSendAfterEvent) => {
-            firstEvent(config, event);
-        },
-    }
-);
+registerModule("antiSpammer", false, [lastFlag], {
+    worldSignal: world.afterEvents.chatSend,
+    playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
+    then: async (config, event: ChatSendAfterEvent) => {
+        firstEvent(config, event);
+    },
+});

@@ -28,9 +28,7 @@ function intickEvent(config: configi, player: Player) {
     }
 }
 
-registerModule("antiCrasher", false, [], 
-    {
-        intick: async (config, player) => intickEvent(config, player),
-        tickInterval: 1,
-    }
-);
+registerModule("antiCrasher", false, [], {
+    intick: async (config, player) => intickEvent(config, player),
+    tickInterval: 1,
+});

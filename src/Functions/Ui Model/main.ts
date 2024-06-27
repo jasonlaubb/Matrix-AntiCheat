@@ -131,8 +131,11 @@ async function moduleUI(player: Player) {
     const ids = getModulesIds();
     const config = c() as { [key: string]: any };
     for (const moduleId of ids) {
-        const state = (config[moduleId]?.enabled);
-        const buttontext = new rawstr().str(`§8${moduleId} §8[§r`).tra(state ? "ui.toggle.enabled" : "ui.toggle.disabled").str("§r§8]§r");
+        const state = config[moduleId]?.enabled;
+        const buttontext = new rawstr()
+            .str(`§8${moduleId} §8[§r`)
+            .tra(state ? "ui.toggle.enabled" : "ui.toggle.disabled")
+            .str("§r§8]§r");
         moduleForm.button(buttontext.parse());
     }
     moduleForm.show(player).then((data) => {

@@ -8,7 +8,7 @@ import { flag, c, isAdmin, kick, rawstr } from "../../Assets/Util";
  * It works by making a verification for the player.
  */
 
-function playerSpawn ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
+function playerSpawn({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
     if (!spawn) return;
     if (isAdmin(player)) {
         player.verified = true;
@@ -23,9 +23,9 @@ function playerSpawn ({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
         player.notVerified = true;
         player.sendMessage(new rawstr(true, "c").tra("bot.waitui").parse());
     });
-};
+}
 
-function antiBot () {
+function antiBot() {
     const players = world.getPlayers({ excludeTags: ["matrix:verified"] });
     const now = Date.now();
     const config = c();
@@ -43,7 +43,7 @@ function antiBot () {
                 const codeNow = [0, 0, 0, 0, 0, 0, 0].map(() => Math.floor(Math.random() * 10)).join("");
                 player.tryVerify ??= 0;
                 new ModalFormData()
-                    .title(rawstr.drt("bot.title"))  
+                    .title(rawstr.drt("bot.title"))
                     .textField(
                         new rawstr()
                             .tra("bot.ui.headline")
@@ -53,8 +53,9 @@ function antiBot () {
                             .tra("bot.ui.haveleft", String(Math.floor((config.antiBot.timer * 60000 - now + player.verifyTimer) / 1000)))
                             .str("\n")
                             .tra("bot.ui.enterbelow", codeNow)
-                            .parse()
-                    , "0000000")
+                            .parse(),
+                        "0000000"
+                    )
                     .show(player)
                     .then(({ formValues, canceled, cancelationReason }) => {
                         if (!player.notVerified) return;
@@ -87,15 +88,15 @@ function antiBot () {
             console.error(error);
         }
     }
-};
+}
 
-function chatSend ({ sender: player }: ChatSendAfterEvent) {
+function chatSend({ sender: player }: ChatSendAfterEvent) {
     const config = c();
     if (player.notVerified && player.verifying) {
         if (isAdmin(player)) return;
         flag(player, "Bot", "B", config.antiBot.maxVL, config.antiBot.punishment, undefined);
     }
-};
+}
 
 let id: number;
 

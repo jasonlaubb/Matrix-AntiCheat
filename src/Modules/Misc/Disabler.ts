@@ -24,7 +24,7 @@ function intickEvent(config: configi, player: Player) {
     } else {
         player.lastNonGlidingPoint = player.location;
     }
-};
+}
 
 function doubleEvent(config: configi, damagingEntity, hurtEntity) {
     if (hurtEntity.id == damagingEntity.id) {
@@ -32,14 +32,17 @@ function doubleEvent(config: configi, damagingEntity, hurtEntity) {
         system.run(() => hurtEntity.teleport(location));
         flag(hurtEntity as Player, "Disabler", "B", config.antiDisabler.maxVL, config.antiDisabler.punishment, undefined);
     }
-};
+}
 
 function tripleEvent({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
     player.removeTag("matrix:disabler-patched");
-};
+}
 
-registerModule("antiDisabler", false, [], 
+registerModule(
+    "antiDisabler",
+    false,
+    [],
     {
         intick: async (config, player) => intickEvent(config, player),
         tickInterval: 1,
