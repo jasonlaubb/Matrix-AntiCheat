@@ -5,8 +5,8 @@
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: PhraseApp (phraseapp.com)\n"
 #: pack.description
-msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock\n§cBeta-API required"
-msgstr "§7§¶Le Meilleur Auti-Cheat pour Minecraft Bedrock\n§cBeta-API requis§r"
+msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
+msgstr "§7§¶Le Meilleur Auti-Cheat pour Minecraft Bedrock §c(Beta-API requis§r)"
 
 #: crash.reload
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
