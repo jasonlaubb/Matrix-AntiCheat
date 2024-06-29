@@ -5,7 +5,7 @@
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: PhraseApp (phraseapp.com)\n"
 #: pack.description
-msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock\n§cBeta-API required"
+msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
 msgstr ""
 
 #: crash.reload
