@@ -95,25 +95,24 @@ const upperlimit = vanillaItems.length - 1;
 const middlevalue = Math.trunc(upperlimit / 2);
 
 // At least decrease some lag.
-function binarySearchItem (itemId: string) {
-    let found = false;
+function binarySearchItem (itemId: string): boolean {
     let index = middlevalue;
     let step = 1;
-    if (itemId > vanillaItems[middle]) {
+    if (itemId > vanillaItems[middlevalue]) {
         step = -1
-    } else if (itemId == vanillaItems[middle]) return true;
+    } else if (itemId == vanillaItems[middlevalue]) return true;
     while (index >= 0 && index <= upperlimit) {
         if (vanillaItems[index] == itemId) {
-            found = true;
-            break;
+            return true;
         }
-        if (vanillaItems[index] < itemId) {
-            index++;
-        } else {
-            index--;
+        if (step > 0 && vanillaItems[index] > itemId) {
+            return false;
+        } else if (step < 0 && vanillaItems[index] < itemId) {
+            return false;
         }
+        index += step;
     }
-    return found;
+    return false;
 }
 
 registerModule("antiIllegalItem", false, [], {
