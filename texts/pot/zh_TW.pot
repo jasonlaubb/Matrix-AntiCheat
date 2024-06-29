@@ -206,19 +206,11 @@ msgstr "%s 的稱號已被移除"
 
 #: bot.title
 msgid "Anti Bot Verification"
-msgstr ""
+msgstr "你不是機器人嗎?"
 
 #: about.author
 msgid "Author"
-msgstr ""
-
-#: spam.blacklisted
-msgid "Blacklisted message"
-msgstr ""
-
-#: spam.blacklist
-msgid "Blacklisted message, warning"
-msgstr ""
+msgstr "作者"
 
 #: invcopy.not
 msgid "Copied inventory from %s"
@@ -296,10 +288,6 @@ msgstr ""
 msgid "Show all rank has been set to %s"
 msgstr ""
 
-#: spam.spamming
-msgid "Spamming chat"
-msgstr ""
-
 #: lockdowncode.set
 msgid "Sucessfully changed lockdown code to %s"
 msgstr ""
@@ -342,10 +330,6 @@ msgstr ""
 
 #: unbanlist.list
 msgid "Unban list"
-msgstr ""
-
-#: util.unfair
-msgid "Unfair advantage of %s"
 msgstr ""
 
 #: toggles.unknownmodule
@@ -442,12 +426,4 @@ msgstr ""
 
 #: bot.ui.enterbelow
 msgid "Enter the code §e§l%s§r§g below"
-msgstr ""
-
-#: spam.kickedblacklist
-msgid "§c%s§g has been kicked for saying a blacklisted message"
-msgstr ""
-
-#: spam.kicked
-msgid "§c%s§g has been kicked for spamming"
 msgstr ""
