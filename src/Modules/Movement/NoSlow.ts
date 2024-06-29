@@ -1,6 +1,7 @@
-import { Player, system, world, Effect, Vector3, GameMode, PlayerLeaveAfterEvent } from "@minecraft/server";
+import { Player, Effect, Vector3, GameMode } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { flag } from "../../Assets/Util";
+import { configi, registerModule } from "../Modules";
 
 function getSpeedIncrease(speedEffect: Effect | undefined) {
     if (speedEffect === undefined) return 0;
@@ -17,8 +18,7 @@ const lastflag2 = new Map<string, number>();
  * @description A strong check for no slow, it detect no slow in a high accuracy
  */
 
-async function AntiNoSlow(player: Player, now: number) {
-    const config = c();
+async function AntiNoSlow(player: Player, config: configi, now: number) {
     //get the player location
     const playerLocation = player.location;
 
@@ -93,33 +93,10 @@ async function AntiNoSlow(player: Player, now: number) {
     }*/
 }
 
-const antiNoSlow = () => {
-    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative] });
-    const now = Date.now();
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-        AntiNoSlow(player, now);
+registerModule("antiNoSlow", false, [lastPosition, lastflag, lastflag2],
+    {
+        intick: async (config, player) => AntiNoSlow (player, config, Date.now()),
+        tickInterval: 1,
+        playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
     }
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    lastPosition.delete(playerId);
-    lastflag.delete(playerId);
-    lastflag2.delete(playerId);
-};
-
-let id: number;
-
-export default {
-    enable() {
-        id = system.runInterval(antiNoSlow);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-    },
-    disable() {
-        lastPosition.clear();
-        lastflag.clear();
-        lastflag2.clear();
-        system.clearRun(id);
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-    },
-};
+)
