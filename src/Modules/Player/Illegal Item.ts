@@ -3,11 +3,12 @@ import { configi, registerModule } from "../Modules";
 import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { flag } from "../../Assets/Util";
 import OperatorItemList from "../../Data/OperatorItemList";
+import EducationItemList from "../../Data/EducationItemList";
 
 const vanillaItems = Object.values(MinecraftItemTypes);
 function checkIllegalItem (player: Player, item: ItemStack, config: configi): boolean {
     if (config.antiIllegalItem.checkIllegal) {
-        if (item.typeId.startsWith("minecraft:")) {
+        if (item.typeId.startsWith("minecraft:") && !EducationItemList.includes(item.typeId)) {
             const isVanillaItem = binarySearchItem (item.typeId);
             if (!isVanillaItem) {
                 flag(player, "Illegal Item", "A", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId]);
@@ -60,8 +61,12 @@ function checkIllegalItem (player: Player, item: ItemStack, config: configi): bo
             }
         }
     }
+    // Extra check for educational item
     if (config.antiIllegalItem.checkEducationalItem) {
-
+        if (EducationItemList.includes(item.typeId)) {
+            flag(player, "Illegal Item", "K", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId]);
+            return true;
+        }
     }
     if (config.antiIllegalItem.checkUnatural) {
         const itemlore = item.getLore();
