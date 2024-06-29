@@ -6,55 +6,55 @@
 "X-Generator: PhraseApp (phraseapp.com)\n"
 #: pack.description
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
-msgstr ""
+msgstr "§7§¶Minecraft 基岩版最佳對抗外掛的解決方案 §c(需要啟動實驗性 API)"
 
 #: crash.reload
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
-msgstr ""
+msgstr "§cMatrix 防外掛已經崩潰, 使用 /reload 來恢復§r"
 
 #: flag.style
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
-msgstr ""
+msgstr "%1§g 已被攔截 §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
 
 #: ui.title
 msgid "Admin GUI"
-msgstr ""
+msgstr "管理員選單"
 
 #: ui.moderateplayer
 msgid "Moderate Players"
-msgstr ""
+msgstr "管理玩家"
 
 #: ui.setting
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: ui.exit
 msgid "Exit"
-msgstr ""
+msgstr "離開"
 
 #: ui.banplayer
 msgid "Ban Player"
-msgstr ""
+msgstr "封禁玩家"
 
 #: ui.ban.reason
 msgid "Reason:"
-msgstr ""
+msgstr "原因:"
 
 #: ui.ban.placeholder
 msgid "Type your reason here"
-msgstr ""
+msgstr "在此輸入您的原因"
 
 #: ui.toggle.enabled
 msgid "§aEnabled§r"
-msgstr ""
+msgstr "§a啟用§r"
 
 #: ui.toggle.disabled
-msgid "§aDisabled§r"
-msgstr ""
+msgid "§cDisabled§r"
+msgstr "§c啟用§r"
 
 #: ui.toggle.enable
 msgid "§aEnable§r"
-msgstr ""
+msgstr "§a啟用§r"
 
 #: ui.toggle.disable
 msgid "§cDisable§r"

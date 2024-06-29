@@ -49,7 +49,7 @@ msgid "§aEnabled§r"
 msgstr ""
 
 #: ui.toggle.disabled
-msgid "§aDisabled§r"
+msgid "§cDisabled§r"
 msgstr ""
 
 #: ui.toggle.enable
