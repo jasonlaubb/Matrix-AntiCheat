@@ -1,5 +1,6 @@
-import { world, Player, system, PlayerSpawnAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { world, Player, PlayerSpawnAfterEvent } from "@minecraft/server";
+import { flag } from "../../Assets/Util";
+import { registerModule, configi } from "../Modules";
 
 /**
  * @author jasonlaubb
@@ -7,9 +8,7 @@ import { flag, isAdmin, c } from "../../Assets/Util";
  * It basically checks if the player name contains any non-ASCII characters or invalid length
  */
 
-async function AntiNameSpoof(player: Player, playerName: string) {
-    const config = c();
-
+async function AntiNameSpoof(config: configi, player: Player, playerName: string) {
     //check if the player name is too long or too short
     const matches = playerName.match(/\([1-9]|[1-3][0-9]|40\)/g);
     const absName = matches[0] ? playerName.replace(matches[0], "") : playerName;
@@ -43,16 +42,13 @@ async function AntiNameSpoof(player: Player, playerName: string) {
     }
 }
 
-const antiNameSpoof = ({ player }: PlayerSpawnAfterEvent) => {
-    if (isAdmin(player)) return;
-    system.run(() => AntiNameSpoof(player, player.name));
-};
-
-export default {
-    enable() {
-        world.afterEvents.playerSpawn.subscribe(antiNameSpoof);
-    },
-    disable() {
-        world.afterEvents.playerSpawn.unsubscribe(antiNameSpoof);
-    },
-};
+registerModule ("antiNameSpoof", false, [], 
+    {
+        worldSignal: world.afterEvents.playerSpawn,
+        then: async (config, event: PlayerSpawnAfterEvent) => {
+            if (!event.initialSpawn) return;
+            const player = event.player;
+            AntiNameSpoof(config, player, player.name);
+        }
+    }
+)
