@@ -224,10 +224,6 @@ msgstr "Le Grade par défaut a été Défini sur %s"
 msgid "Ender chest of %1 has been wiped by %2"
 msgstr "L'EnderChest de %1 a été Vider par %2"
 
-#: bot.expired
-msgid "Expired verification"
-msgstr ""
-
 #: flagmode.changed
 msgid "Flag mode has been changed to %s"
 msgstr "Le Mode de Notification a été Modifier en %s"
@@ -266,10 +262,6 @@ msgstr ""
 
 #: util.noreason
 msgid "No reason provided"
-msgstr ""
-
-#: bordersize.notanum
-msgid "Not a number!"
 msgstr ""
 
 #: passwords.changed
