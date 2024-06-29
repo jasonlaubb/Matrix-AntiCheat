@@ -72,6 +72,6 @@ registerModule ("antiNoFall", false, [lastLocation, lastFlag, playerVL],
     },
     {
         worldSignal: world.afterEvents.playerSpawn,
-        then: async (_config, player) => playerSpawn (player)
+        then: async (_config, event: PlayerSpawnAfterEvent) => playerSpawn (event)
     }
 )
