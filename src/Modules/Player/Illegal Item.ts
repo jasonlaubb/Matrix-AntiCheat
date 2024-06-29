@@ -98,6 +98,10 @@ const middlevalue = Math.trunc(upperlimit / 2);
 function binarySearchItem (itemId: string) {
     let found = false;
     let index = middlevalue;
+    let step = 1;
+    if (itemId > vanillaItems[middle]) {
+        step = -1
+    } else if (itemId == vanillaItems[middle]) return true;
     while (index >= 0 && index <= upperlimit) {
         if (vanillaItems[index] == itemId) {
             found = true;
