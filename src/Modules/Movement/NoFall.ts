@@ -1,18 +1,18 @@
-import { world, GameMode, Player, Vector3, system, PlayerLeaveAfterEvent, PlayerSpawnAfterEvent } from "@minecraft/server";
-import { c, flag, isAdmin, getPing } from "../../Assets/Util";
+import { world, GameMode, Player, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
+import { flag, getPing } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { configi, registerModule } from "../Modules";
 
 const lastLocation = new Map<string, Vector3>();
 const lastFlag = new Map<string, number>();
-let playerVL: { [key: string]: number } = {};
+const playerVL = new Map<string, number>();
 
 /**
  * @author jasonlaubb
  * @description A simple check for nofall hacking
  */
 
-async function AntiNoFall(player: Player, now: number) {
-    const config = c();
+async function AntiNoFall(player: Player, config: configi, now: number) {
     const { id, isFlying, isClimbing, isOnGround, isInWater, isGliding, threwTridentAt, lastExplosionTime } = player;
     const jumpEffect = player.getEffect(MinecraftEffectTypes.JumpBoost);
     const prevLoc = lastLocation.get(id);
@@ -20,6 +20,7 @@ async function AntiNoFall(player: Player, now: number) {
     if (prevLoc === undefined) return;
     const { x, y, z } = player.getVelocity();
     const xz = Math.hypot(x, z);
+    const vl = playerVL.get(id);
 
     //stop false positive
     if (
@@ -36,22 +37,22 @@ async function AntiNoFall(player: Player, now: number) {
         (threwTridentAt && now - threwTridentAt < 3000) ||
         (lastExplosionTime && now - lastExplosionTime < 5000)
     ) {
-        playerVL[player.id] ??= 0;
-        playerVL[player.id] = 0;
+        vl ?? playerVL.set(player.id, 0)
+        playerVL.set(player.id, 0)
         return;
     }
 
     if (y == 0) {
-        playerVL[player.id] ??= 0;
-        playerVL[player.id]++;
-    } else playerVL[player.id] = 0;
+        vl ?? playerVL.set(player.id, 0)
+        vl ?? playerVL.set(player.id, vl + 1)
+    } else playerVL.set(player.id, 0)
 
     //velocityY is 0, flag the player
-    if (y == 0 && playerVL[player.id] >= config.antiNoFall.float && getPing(player) < 5) {
+    if (y == 0 && playerVL.get(player.id) >= config.antiNoFall.float && getPing(player) < 5) {
         if (xz == 0 || xz == 0 || (player.spawnTime && now - player.spawnTime < 12000)) return;
         if (!config.slient) player.teleport(prevLoc);
         const lastflag = lastFlag.get(player.id);
-        playerVL[player.id] = 0;
+        playerVL.set(player.id, 0)
         if (lastflag && now - lastflag < 2000 && now - lastflag > 80) {
             flag(player, "NoFall", "A", config.antiNoFall.maxVL, config.antiNoFall.punishment, ["velocityY" + ":" + +y.toFixed(2), "velocityXZ" + ":" + +xz.toFixed(2)]);
         }
@@ -59,37 +60,18 @@ async function AntiNoFall(player: Player, now: number) {
     }
 }
 
-const antiNofall = () => {
-    const now = Date.now();
-    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator, GameMode.creative] });
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-
-        AntiNoFall(player, now);
-    }
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    lastLocation.delete(playerId);
-    lastFlag.delete(playerId);
-    delete playerVL[playerId];
-};
-
 const playerSpawn = ({ player, initialSpawn: spawn }: PlayerSpawnAfterEvent) => spawn && (player.spawnTime = Date.now());
 
-let id: number;
-
-export default {
-    enable() {
-        id = system.runInterval(antiNofall, 1);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-        world.afterEvents.playerSpawn.subscribe(playerSpawn);
+registerModule ("antiNoFall", false, [lastLocation, lastFlag, playerVL],
+    {
+        tickInterval: 1,
+        playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
+        intick: async (config, player) => {
+            AntiNoFall (player, config, Date.now());
+        }
     },
-    disable() {
-        lastLocation.clear();
-        system.clearRun(id);
-        playerVL = {};
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-        world.afterEvents.playerSpawn.unsubscribe(playerSpawn);
-    },
-};
+    {
+        worldSignal: world.afterEvents.playerSpawn,
+        then: async (_config, player) => playerSpawn (player)
+    }
+)

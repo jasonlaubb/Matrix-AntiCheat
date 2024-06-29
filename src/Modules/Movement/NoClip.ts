@@ -1,6 +1,7 @@
-import { world, system, Block, Vector3, GameMode, Player, PlayerLeaveAfterEvent, EntityHurtAfterEvent, PlayerBreakBlockAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAfterEvent, GameMode } from "@minecraft/server";
+import { flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { configi, registerModule } from "../Modules";
 
 const powderBlock = [
     MinecraftBlockTypes.RedConcretePowder,
@@ -21,10 +22,13 @@ const powderBlock = [
     MinecraftBlockTypes.WhiteConcretePowder,
 ] as string[];
 
-const safeLocation = new Map<string, Vector3>();
-const lastLocation = new Map<string, Vector3>();
-const lastFlag = new Map<string, number>();
-const lastFlag2 = new Map<string, number>();
+interface NoClipData {
+    safeLocation: Vector3;
+    lastLocation: Vector3;
+    lastFlag: number;
+    lastFlag2: number;
+}
+const noclipdata = new Map<string, NoClipData>();
 const passableBlocks = [MinecraftBlockTypes.Sand, MinecraftBlockTypes.Gravel, MinecraftBlockTypes.SoulSand] as string[];
 
 const isSolidBlock = (block: Block) => {
@@ -63,34 +67,38 @@ function straight(start: Vector3, end: Vector3): Vector3[] {
  * @description Check if player phase more than 1 block
  */
 
-async function AntiNoClip(player: Player, now: number) {
-    const config = c();
+async function AntiNoClip(player: Player, config: configi, now: number) {
+    const data = noclipdata.get(player.id) ?? {
+        lastLocation: player.location,
+        safeLocation: player.location,
+        lastFlag: 0,
+        lastFlag2: 0,
+    };
     const { x, y, z }: Vector3 = player.getVelocity();
     const movementClip = Math.hypot(x, z);
-    const lastPos = lastLocation.get(player.id);
     const bodyBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.typeId as MinecraftBlockTypes;
     if (
-        lastPos &&
+        data.lastLocation &&
         movementClip > 1.2 &&
         !player.isGliding &&
         !(player.lastBreakSolid && now - player.lastBreakSolid < 1750) &&
         Math.abs(y) < 1.7 &&
         !passableBlocks.includes(bodyBlock) &&
         !powderBlock.includes(bodyBlock) &&
-        straight(lastPos, player.location).some((loc) => isSolidBlock(player.dimension.getBlock(loc)))
+        straight(data.lastLocation, player.location).some((loc) => isSolidBlock(player.dimension.getBlock(loc)))
     ) {
-        const lastflag = lastFlag2.get(player.id);
-        if (!config.slient) player.teleport(lastPos);
+        const lastflag = data.lastFlag2;
+        if (!config.slient) player.teleport(data.lastLocation);
         if (lastflag && now - lastflag < 2000) {
             flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined);
         }
-        lastFlag2.set(player.id, now);
+        data.lastFlag2 = now;
     }
-    lastLocation.set(player.id, player.location);
+    data.lastLocation = player.location;
 
     /*     emmm     */
-    const safePos = safeLocation.get(player.id);
-    const lastflag = lastFlag.get(player.id);
+    const safePos = data.safeLocation;
+    const lastflag = data.lastFlag;
     if (
         player?.lastSafePos &&
         safePos &&
@@ -113,7 +121,7 @@ async function AntiNoClip(player: Player, now: number) {
                 flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
             }
         }
-        lastFlag.set(player.id, now);
+        data.lastFlag = now;
     }
     player.beforeClip = player.backClip;
     player.backClip = player.lastClip;
@@ -124,47 +132,28 @@ async function AntiNoClip(player: Player, now: number) {
     const floorBody = { x: Math.floor(x2), y: Math.floor(y2), z: Math.floor(z2) };
     const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)) || isSolidBlock(player.dimension.getBlock(floorBody));
     if (!inSolid) {
-        safeLocation.set(player.id, player.location);
+        data.safeLocation = player.location;
         player.lastSafePos = safePos;
     }
 }
-
-const antiNoClip = () => {
-    const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] });
-    const now = Date.now();
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-
-        AntiNoClip(player, now);
-    }
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    safeLocation.delete(playerId);
-    lastFlag.delete(playerId);
-    lastFlag2.delete(playerId);
-};
 
 const playerBreakBlock = ({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) => isSolid && (player.lastBreakSolid = Date.now());
 
 const entityHurt = ({ hurtEntity: player }: EntityHurtAfterEvent) => ((player as Player).lastApplyDamage = Date.now());
 
-let id: number;
-
-export default {
-    enable() {
-        id = system.runInterval(antiNoClip, 1);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-        world.afterEvents.entityHurt.subscribe(entityHurt, { entityTypes: ["minecraft:player"] });
-        world.afterEvents.playerBreakBlock.subscribe(playerBreakBlock);
+registerModule("antiNoClip", false, [noclipdata],
+    {
+        tickInterval: 1,
+        playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
+        intick: async (config, player) => AntiNoClip (player, config, Date.now()),
     },
-    disable() {
-        safeLocation.clear();
-        lastFlag.clear();
-        lastFlag2.clear();
-        system.clearRun(id);
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-        world.afterEvents.entityHurt.unsubscribe(entityHurt);
-        world.afterEvents.playerBreakBlock.unsubscribe(playerBreakBlock);
+    {
+        worldSignal: world.afterEvents.entityHurt,
+        playerOption: { entityTypes: ["player"] },
+        then: async (_config, event) => entityHurt(event as EntityHurtAfterEvent),
     },
-};
+    {
+        worldSignal: world.afterEvents.playerBreakBlock,
+        then: async (_config, event) => playerBreakBlock(event as PlayerBreakBlockAfterEvent),
+    }
+)
