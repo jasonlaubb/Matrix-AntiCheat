@@ -1,7 +1,6 @@
 import { world, system } from "@minecraft/server";
-import { isAdmin } from "../../Assets/Util";
+import { isAdmin, rawstr } from "../../Assets/Util";
 import config from "../../Data/Config";
-import lang from "../../Data/Languages/lang";
 
 world.afterEvents.playerDimensionChange.subscribe((event) => {
     const { player, toDimension, fromDimension } = event;
@@ -15,7 +14,7 @@ world.afterEvents.playerDimensionChange.subscribe((event) => {
             })
         );
     } else if (fromDimension.id !== "minecraft:overworld") {
-        player.sendMessage("§bMatrix §7>§c " + lang(".dimensionLock.stop"));
+        player.sendMessage(rawstr.new(true, "c").tra("dimensionlock.stop").parse());
     }
 });
 

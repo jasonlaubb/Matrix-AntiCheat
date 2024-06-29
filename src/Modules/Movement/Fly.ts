@@ -1,6 +1,7 @@
-import { world, system, GameMode, Vector3, Dimension, Player, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { GameMode, Vector3, Dimension, Player } from "@minecraft/server";
+import { flag } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { configi, registerModule } from "../Modules";
 
 interface FlyData {
     previousLocations: Vector3;
@@ -32,8 +33,7 @@ const includeStair = ({ location: { x: px, y: py, z: pz }, dimension }: IncludeS
         return false;
     }
 };
-function antiFly(player: Player, now: number) {
-    const config = c();
+function antiFly(player: Player, now: number, config: configi) {
     let data = flyData.get(player.id);
     if (!data) {
         data = {} as any;
@@ -113,26 +113,12 @@ function antiFly(player: Player, now: number) {
     }
 }
 
-function systemEvent() {
-    const now = Date.now();
-    const players = world.getPlayers({ excludeGameModes: [GameMode.creative, GameMode.spectator] });
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-        antiFly(player, now);
+registerModule("antiFly", false, [flyData],
+    {
+        tickInterval: 1,
+        playerOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
+        intick: async (config, player) => {
+            antiFly(player, Date.now(), config);
+        }
     }
-}
-function playerLeaveAfterEvent({ playerId }: PlayerLeaveAfterEvent) {
-    flyData.delete(playerId);
-}
-let id: number;
-export default {
-    enable() {
-        id = system.runInterval(systemEvent);
-        world.afterEvents.playerLeave.subscribe(playerLeaveAfterEvent);
-    },
-    disable() {
-        flyData.clear();
-        system.clearRun(id);
-        world.afterEvents.playerLeave.unsubscribe(playerLeaveAfterEvent);
-    },
-};
+);

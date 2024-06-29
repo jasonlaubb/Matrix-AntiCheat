@@ -1,6 +1,7 @@
-import { world, Player, system, GameMode, PlayerLeaveAfterEvent, ItemUseAfterEvent, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c, getPing } from "../../Assets/Util";
+import { world, Player, system, GameMode, ItemUseAfterEvent, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
+import { flag, getPing } from "../../Assets/Util";
 import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { configi, registerModule } from "../Modules";
 
 const fallDistances = new Map<string, number[]>();
 const lastLocation = new Map<string, Vector3>();
@@ -10,8 +11,7 @@ const lastLocation = new Map<string, Vector3>();
  * @description Check if player change speed with a high range while high speed
  */
 
-async function ElytraFly(player: Player, now: number) {
-    const config = c();
+async function ElytraFly(player: Player, now: number, config: configi) {
     const data = fallDistances.get(player.id) ?? [];
     const lastPos = lastLocation.get(player.id);
     lastLocation.set(player.id, player.location);
@@ -60,39 +60,24 @@ async function ElytraFly(player: Player, now: number) {
     }
 }
 
-const elyraFly = () => {
-    const DateNow = Date.now();
-    const players = world.getPlayers({ excludeGameModes: [GameMode.spectator] });
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-        ElytraFly(player, DateNow);
-    }
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    fallDistances.delete(playerId);
-};
-
 const playerSpawn = ({ player }: PlayerSpawnAfterEvent) => {
     player.removeTag("matrix:stop-gliding");
 };
 
 const itemUseAfter = ({ source: player, itemStack: { typeId } }: ItemUseAfterEvent) => player.isGliding && typeId === MinecraftItemTypes.FireworkRocket && (player.lastGlidingFire = Date.now());
 
-let id: number;
-
-export default {
-    enable() {
-        id = system.runInterval(elyraFly);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-        world.afterEvents.itemUse.subscribe(itemUseAfter);
-        world.afterEvents.playerSpawn.subscribe(playerSpawn);
+registerModule ("antiElytraFly", false, [fallDistances],
+    {
+        tickInterval: 1,
+        playerOption: { excludeGameModes: [GameMode.spectator] },
+        intick: async (config, player) => ElytraFly (player, Date.now(), config),
     },
-    disable() {
-        fallDistances.clear();
-        system.clearRun(id);
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-        world.afterEvents.itemUse.unsubscribe(itemUseAfter);
-        world.afterEvents.playerSpawn.unsubscribe(playerSpawn);
+    {
+        worldSignal: world.afterEvents.itemUse,
+        then: async (_config, event) => itemUseAfter (event),
     },
-};
+    {
+        worldSignal: world.afterEvents.playerSpawn,
+        then: async (_config, event) => playerSpawn (event),
+    }
+)

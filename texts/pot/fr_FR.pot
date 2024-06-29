@@ -419,3 +419,7 @@ msgstr ""
 #: bot.ui.enterbelow
 msgid "Enter the code §e§l%s§r§g below"
 msgstr ""
+
+#: xray.broken
+msgid "%1 mined %2 at %3"
+msgstr ""

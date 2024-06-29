@@ -1,6 +1,7 @@
 import { world, system, ChatSendAfterEvent } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
+import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
  * @author ravriv

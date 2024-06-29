@@ -1,4 +1,4 @@
-import { EntityDamageCause, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, ItemDurabilityComponent, Player, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
+import { Entity, EntityDamageCause, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, ItemDurabilityComponent, Player, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
 import { isAdmin, flag } from "../../Assets/Util";
 import { MinecraftEntityTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
@@ -10,12 +10,11 @@ import { registerModule, configi } from "../Modules.js";
  */
 
 function intickEvent(config: configi, player: Player) {
-    if (isAdmin(player) || player.hasTag("matrix:disabler-patched") || !player.hasTag("matrix:alive")) continue;
+    if (isAdmin(player) || player.hasTag("matrix:disabler-patched") || !player.hasTag("matrix:alive")) return;
     if (player.isGliding) {
         const elytra = player.getComponent(EntityEquippableComponent.componentId)!?.getEquipment(EquipmentSlot.Chest)!;
         const durability = elytra?.getComponent(ItemDurabilityComponent.componentId);
         if (elytra?.typeId != MinecraftItemTypes.Elytra || (elytra?.typeId == MinecraftItemTypes.Elytra && durability.maxDurability - durability.damage <= 1)) {
-            const config = c();
             player.addTag("matrix:disabler-patched");
             system.runTimeout(() => player.removeTag("matrix:disabler-patched"), 10);
             player.teleport(player.lastNonGlidingPoint);
@@ -26,7 +25,7 @@ function intickEvent(config: configi, player: Player) {
     }
 }
 
-function doubleEvent(config: configi, damagingEntity, hurtEntity) {
+function doubleEvent(config: configi, damagingEntity: Entity, hurtEntity: Entity) {
     if (hurtEntity.id == damagingEntity.id) {
         const location = hurtEntity.location;
         system.run(() => hurtEntity.teleport(location));
@@ -58,7 +57,7 @@ registerModule(
     {
         worldSignal: world.afterEvents.playerSpawn,
         playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
-        then: async (config, event: PlayerSpawnAfterEvent) => {
+        then: async (_config, event: PlayerSpawnAfterEvent) => {
             tripleEvent(event);
         },
     }
