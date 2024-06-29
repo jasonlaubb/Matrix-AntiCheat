@@ -204,36 +204,12 @@ msgstr "Les Grades de %s ont été Retirer"
 msgid "%s's rank has been removed"
 msgstr "Le Grade de %s a été Retirer"
 
-#: spam.by
-msgid "(Anti spam automatic action)"
-msgstr ""
-
-#: util.by
-msgid "(Immediate behavioral defense)"
-msgstr ""
-
-#: amount
-msgid "Amount"
-msgstr ""
-
-#: angle
-msgid "Angle"
-msgstr ""
-
 #: bot.title
 msgid "Anti Bot Verification"
 msgstr ""
 
-#: attacktime
-msgid "AttackTime"
-msgstr ""
-
 #: about.author
 msgid "Author"
-msgstr ""
-
-#: blockpersecond
-msgid "BPS"
 msgstr ""
 
 #: spam.blacklisted
@@ -268,57 +244,17 @@ msgstr "Le Mode de Notification a été Modifier en %s"
 msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
 msgstr ""
 
-#: gamemode
-msgid "GameMode"
-msgstr ""
-
 #: help.helpcdlist
 msgid "Help command list:"
 msgstr "Liste des commandes de MatrixAC:"
-
-#: hitlength
-msgid "HitLength"
-msgstr ""
 
 #: invsee.of
 msgid "Inventory of %s"
 msgstr "Inventaire de %s"
 
-#: itemamount
-msgid "ItemAmount"
-msgstr ""
-
-#: itemenchantable
-msgid "ItemEnchantAble"
-msgstr ""
-
-#: itemenchantrepeat
-msgid "ItemEnchantRepeat"
-msgstr ""
-
-#: itemlore
-msgid "ItemLore"
-msgstr ""
-
-#: itemnamelength
-msgid "ItemNameLength"
-msgstr ""
-
-#: itemtag
-msgid "ItemTag"
-msgstr ""
-
-#: itemtype
-msgid "ItemType"
-msgstr ""
-
 #: lang.has
 msgid "Language has been changed to %s"
 msgstr "La langue a été Modifiée en %s"
-
-#: langlist.list
-msgid "Language list:"
-msgstr ""
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"
@@ -348,24 +284,8 @@ msgstr ""
 msgid "Password has been changed"
 msgstr "Le Mot de Passe a été Modifier"
 
-#: bordersize.enter
-msgid "Please enter a border size."
-msgstr ""
-
-#: lockdowncode.unknown
-msgid "Please enter the action you want"
-msgstr ""
-
-#: passwords.oldnew
-msgid "Please enter the old password and the new password"
-msgstr "Veuillez saisir l'ancien Mot de Passe et le nouveau Mot de Passe"
-
 #: spam.slowdown
 msgid "Please send messages slowly"
-msgstr ""
-
-#: commandsystem.no.player
-msgid "Please specify the player"
 msgstr ""
 
 #: op.wait
@@ -392,10 +312,6 @@ msgstr "Modification Réussie de la Bordure du Monde en %a"
 msgid "Sucessfully random a lockdown code - %s"
 msgstr "Génération Réussie du code de Verrouillage en %s"
 
-#: lockdowncode.number
-msgid "The code length should be a number"
-msgstr "La Longueur du code doit être un Nombre"
-
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
 msgstr "Le Serveur a été mis en mode Verrouillage par %s"
@@ -412,10 +328,6 @@ msgstr "Le serveur est maintenant en mode Verrouillage"
 msgid "There is no player in unban queue"
 msgstr "Il n'y a aucun joueur dans la file d'attente de Dé-Bannissement"
 
-#: commandsystem.command.disabled
-msgid "This command is disabled"
-msgstr ""
-
 #: toggles.already
 msgid "This module is %sd already"
 msgstr ""
@@ -426,10 +338,6 @@ msgstr ""
 
 #: toggles.togglelist
 msgid "Toggle list:"
-msgstr ""
-
-#: typ
-msgid "Type"
 msgstr ""
 
 #: unbanlist.list
@@ -499,18 +407,6 @@ msgstr "Vous ne pouvez pas interagir avec un Bloc ou une Entité située en deho
 #: spam.repeated
 msgid "You cannot send the same message again"
 msgstr ""
-
-#: commandsystem.no.permisson
-msgid "You don't have enough permission to use this command"
-msgstr "Vous ne disposez pas des autorisations suffisantes pour utiliser cette commande"
-
-#: commandsystem.no.permission
-msgid "You don't have permission to use this command"
-msgstr "Vous n'êtes pas autorisé à utiliser cette commande"
-
-#: banhandler.banned
-msgid "You have been banned!"
-msgstr "Vous avez été Banni"
 
 #: bot.ok
 msgid "You have been verified successfully"

@@ -204,36 +204,12 @@ msgstr ""
 msgid "%s's rank has been removed"
 msgstr ""
 
-#: spam.by
-msgid "(Anti spam automatic action)"
-msgstr ""
-
-#: util.by
-msgid "(Immediate behavioral defense)"
-msgstr ""
-
-#: amount
-msgid "Amount"
-msgstr ""
-
-#: angle
-msgid "Angle"
-msgstr ""
-
 #: bot.title
 msgid "Anti Bot Verification"
 msgstr ""
 
-#: attacktime
-msgid "AttackTime"
-msgstr ""
-
 #: about.author
 msgid "Author"
-msgstr ""
-
-#: blockpersecond
-msgid "BPS"
 msgstr ""
 
 #: spam.blacklisted
@@ -268,56 +244,16 @@ msgstr ""
 msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
 msgstr ""
 
-#: gamemode
-msgid "GameMode"
-msgstr ""
-
 #: help.helpcdlist
 msgid "Help command list:"
-msgstr ""
-
-#: hitlength
-msgid "HitLength"
 msgstr ""
 
 #: invsee.of
 msgid "Inventory of %s"
 msgstr ""
 
-#: itemamount
-msgid "ItemAmount"
-msgstr ""
-
-#: itemenchantable
-msgid "ItemEnchantAble"
-msgstr ""
-
-#: itemenchantrepeat
-msgid "ItemEnchantRepeat"
-msgstr ""
-
-#: itemlore
-msgid "ItemLore"
-msgstr ""
-
-#: itemnamelength
-msgid "ItemNameLength"
-msgstr ""
-
-#: itemtag
-msgid "ItemTag"
-msgstr ""
-
-#: itemtype
-msgid "ItemType"
-msgstr ""
-
 #: lang.has
 msgid "Language has been changed to %s"
-msgstr ""
-
-#: langlist.list
-msgid "Language list:"
 msgstr ""
 
 #: lockdowncode.get
@@ -348,24 +284,8 @@ msgstr ""
 msgid "Password has been changed"
 msgstr ""
 
-#: bordersize.enter
-msgid "Please enter a border size."
-msgstr ""
-
-#: lockdowncode.unknown
-msgid "Please enter the action you want"
-msgstr ""
-
-#: passwords.oldnew
-msgid "Please enter the old password and the new password"
-msgstr ""
-
 #: spam.slowdown
 msgid "Please send messages slowly"
-msgstr ""
-
-#: commandsystem.no.player
-msgid "Please specify the player"
 msgstr ""
 
 #: op.wait
@@ -392,10 +312,6 @@ msgstr ""
 msgid "Sucessfully random a lockdown code - %s"
 msgstr ""
 
-#: lockdowncode.number
-msgid "The code length should be a number"
-msgstr ""
-
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
 msgstr ""
@@ -412,10 +328,6 @@ msgstr ""
 msgid "There is no player in unban queue"
 msgstr ""
 
-#: commandsystem.command.disabled
-msgid "This command is disabled"
-msgstr ""
-
 #: toggles.already
 msgid "This module is %sd already"
 msgstr ""
@@ -426,10 +338,6 @@ msgstr ""
 
 #: toggles.togglelist
 msgid "Toggle list:"
-msgstr ""
-
-#: typ
-msgid "Type"
 msgstr ""
 
 #: unbanlist.list
@@ -498,18 +406,6 @@ msgstr ""
 
 #: spam.repeated
 msgid "You cannot send the same message again"
-msgstr ""
-
-#: commandsystem.no.permisson
-msgid "You don't have enough permission to use this command"
-msgstr ""
-
-#: commandsystem.no.permission
-msgid "You don't have permission to use this command"
-msgstr ""
-
-#: banhandler.banned
-msgid "You have been banned!"
 msgstr ""
 
 #: bot.ok

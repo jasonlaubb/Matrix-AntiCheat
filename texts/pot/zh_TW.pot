@@ -50,7 +50,7 @@ msgstr "§a啟用§r"
 
 #: ui.toggle.disabled
 msgid "§cDisabled§r"
-msgstr "§c啟用§r"
+msgstr "§c禁用§r"
 
 #: ui.toggle.enable
 msgid "§aEnable§r"
@@ -58,182 +58,158 @@ msgstr "§a啟用§r"
 
 #: ui.toggle.disable
 msgid "§cDisable§r"
-msgstr ""
+msgstr "§c禁用§r"
 
 #: ui.ban.length
 msgid "Ban Duration"
-msgstr ""
+msgstr "封禁持續時間"
 
 #: ui.ban.button
 msgid "Ban players §8(ban)"
-msgstr ""
+msgstr "封禁玩家 §8(ban)"
 
 #: ui.freeze.button
 msgid "Freeze players §8(freeze)"
-msgstr ""
+msgstr "凍結玩家 §8(freeze)"
 
 #: ui.unfreeze.button
 msgid "Unfreeze players §8(unfreeze)"
-msgstr ""
+msgstr "解除凍結玩家 §8(unfreeze)"
 
 #: ui.mute.button
 msgid "Mute players §8(mute)"
-msgstr ""
+msgstr "靜音玩家 §8(mute)"
 
 #: ui.unmute.button
 msgid "Unmute players §8(unmute)"
-msgstr ""
+msgstr "解除靜音玩家 §8(unmute)"
 
 #: ui.invcopy.button
 msgid "Invcopy players §8(invcopy)"
-msgstr ""
+msgstr "複製背包 §8(invcopy)"
 
 #: ui.invsee.button
 msgid "Invsee players §8(invsee)"
-msgstr ""
+msgstr "查看背包 §8(invsee)"
 
 #: ui.echestwipe.button
 msgid "Echestwipe players §8(echestwipe)"
-msgstr ""
+msgstr "清除終界箱 §8(echestwipe)"
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
-msgstr ""
+msgstr "%1 已經有 %2 §r§c稱號了"
 
 #: rank.norank
 msgid "%1 doesn't have %2 §r§c rank"
-msgstr ""
+msgstr "%1 沒有 %2 §r§c 稱號"
 
 #: ban.has
 msgid "%1 has been banned by %2"
-msgstr ""
+msgstr "%1 已被 %2 封禁了"
 
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
-msgstr ""
+msgstr "%1 的管理員權限已被 %2 褫奪"
 
 #: freeze.has
 msgid "%1 has been frozen by %2"
-msgstr ""
+msgstr "%1 已被 %2 凍結"
 
 #: mute.has
 msgid "%1 has been muted by %2"
-msgstr ""
+msgstr "%1 已被 %2 靜音"
 
 #: op.hasbeen
 msgid "%1 has been opped by %2"
-msgstr ""
+msgstr "%1 已被 %2 設定為管理員"
 
 #: unfreeze.has
 msgid "%1 has been unfrozen by %2"
-msgstr ""
+msgstr "%1 已被 %2 解除凍結"
 
 #: unmute.has
 msgid "%1 has been unmuted by %2"
-msgstr ""
+msgstr "%1 已被 %2 解除靜音"
 
 #: toggles.togglechange
 msgid "%1 module has been %2d"
-msgstr ""
+msgstr "%1 模組的狀態已被設定為 %2"
 
 #: rank.hasadd
 msgid "%1's rank has been added %2"
-msgstr ""
+msgstr "%1 已被新增了稱號 %2"
 
 #: rank.hasset
 msgid "%1's rank has been set to %2"
-msgstr ""
+msgstr "%1 的稱號已被設定為 %2"
 
 #: rank.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s 沒有任何可用的稱號"
 
 #: rankclear.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s 沒有任何可用的稱號"
 
 #: unban.add
 msgid "%s has been joined to the unban queue"
-msgstr ""
+msgstr "%s 已被加入到解除封禁名單"
 
 #: unbanremove.yes
 msgid "%s has been removed from unban queue"
-msgstr ""
+msgstr "%s 已被移出解除封禁名單"
 
 #: freeze.already
 msgid "%s is already frozen"
-msgstr ""
+msgstr "%s 目前已經被凍結"
 
 #: mute.already
 msgid "%s is already muted"
-msgstr ""
+msgstr "%s 目前已經被靜音"
 
 #: util.formban
 msgid "%s is automatically banned from the game"
-msgstr ""
+msgstr "%s 已被防外掛從伺服器封禁"
 
 #: util.formkick
 msgid "%s is automatically kicked from the game"
-msgstr ""
+msgstr "%s 已被防外掛自動移出遊戲"
 
 #: deop.notadmin
 msgid "%s is not admin"
-msgstr ""
+msgstr "%s 不是一名管理員"
 
 #: unban.notban
 msgid "%s is not banned"
-msgstr ""
+msgstr "%s 還沒有被封禁"
 
 #: unfreeze.not
 msgid "%s is not frozen"
-msgstr ""
+msgstr "%s 目前沒有被凍結"
 
 #: unbanremove.not
 msgid "%s is not in unban queue"
-msgstr ""
+msgstr "%s 不在解除封禁名單之中"
 
 #: unmute.not
 msgid "%s is not muted"
-msgstr ""
+msgstr "%s 目前沒有被靜音"
 
 #: rankclear.has
 msgid "%s's rank has been cleared"
-msgstr ""
+msgstr "%s 的所有稱號已被清除"
 
 #: rank.hasremove
 msgid "%s's rank has been removed"
-msgstr ""
-
-#: spam.by
-msgid "(Anti spam automatic action)"
-msgstr ""
-
-#: util.by
-msgid "(Immediate behavioral defense)"
-msgstr ""
-
-#: amount
-msgid "Amount"
-msgstr ""
-
-#: angle
-msgid "Angle"
-msgstr ""
+msgstr "%s 的稱號已被移除"
 
 #: bot.title
 msgid "Anti Bot Verification"
 msgstr ""
 
-#: attacktime
-msgid "AttackTime"
-msgstr ""
-
 #: about.author
 msgid "Author"
-msgstr ""
-
-#: blockpersecond
-msgid "BPS"
 msgstr ""
 
 #: spam.blacklisted
@@ -268,56 +244,16 @@ msgstr ""
 msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
 msgstr ""
 
-#: gamemode
-msgid "GameMode"
-msgstr ""
-
 #: help.helpcdlist
 msgid "Help command list:"
-msgstr ""
-
-#: hitlength
-msgid "HitLength"
 msgstr ""
 
 #: invsee.of
 msgid "Inventory of %s"
 msgstr ""
 
-#: itemamount
-msgid "ItemAmount"
-msgstr ""
-
-#: itemenchantable
-msgid "ItemEnchantAble"
-msgstr ""
-
-#: itemenchantrepeat
-msgid "ItemEnchantRepeat"
-msgstr ""
-
-#: itemlore
-msgid "ItemLore"
-msgstr ""
-
-#: itemnamelength
-msgid "ItemNameLength"
-msgstr ""
-
-#: itemtag
-msgid "ItemTag"
-msgstr ""
-
-#: itemtype
-msgid "ItemType"
-msgstr ""
-
 #: lang.has
 msgid "Language has been changed to %s"
-msgstr ""
-
-#: langlist.list
-msgid "Language list:"
 msgstr ""
 
 #: lockdowncode.get
@@ -348,24 +284,8 @@ msgstr ""
 msgid "Password has been changed"
 msgstr ""
 
-#: bordersize.enter
-msgid "Please enter a border size."
-msgstr ""
-
-#: lockdowncode.unknown
-msgid "Please enter the action you want"
-msgstr ""
-
-#: passwords.oldnew
-msgid "Please enter the old password and the new password"
-msgstr ""
-
 #: spam.slowdown
 msgid "Please send messages slowly"
-msgstr ""
-
-#: commandsystem.no.player
-msgid "Please specify the player"
 msgstr ""
 
 #: op.wait
@@ -392,10 +312,6 @@ msgstr ""
 msgid "Sucessfully random a lockdown code - %s"
 msgstr ""
 
-#: lockdowncode.number
-msgid "The code length should be a number"
-msgstr ""
-
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
 msgstr ""
@@ -412,10 +328,6 @@ msgstr ""
 msgid "There is no player in unban queue"
 msgstr ""
 
-#: commandsystem.command.disabled
-msgid "This command is disabled"
-msgstr ""
-
 #: toggles.already
 msgid "This module is %sd already"
 msgstr ""
@@ -426,10 +338,6 @@ msgstr ""
 
 #: toggles.togglelist
 msgid "Toggle list:"
-msgstr ""
-
-#: typ
-msgid "Type"
 msgstr ""
 
 #: unbanlist.list
@@ -498,18 +406,6 @@ msgstr ""
 
 #: spam.repeated
 msgid "You cannot send the same message again"
-msgstr ""
-
-#: commandsystem.no.permisson
-msgid "You don't have enough permission to use this command"
-msgstr ""
-
-#: commandsystem.no.permission
-msgid "You don't have permission to use this command"
-msgstr ""
-
-#: banhandler.banned
-msgid "You have been banned!"
 msgstr ""
 
 #: bot.ok
