@@ -1,15 +1,15 @@
 import { world, system, PlayerPlaceBlockBeforeEvent, EntityEquippableComponent, EquipmentSlot, ItemUseOnBeforeEvent } from "@minecraft/server";
-import { c, flag, isAdmin } from "../../Assets/Util";
+import { flag, isAdmin } from "../../Assets/Util";
+import { registerModule, configi } from "../Modules.js";
 
 /**
  * @author jasonlaubb
  * @description flag player nears command block minecart.
  */
 
-const blockPlace = (event: PlayerPlaceBlockBeforeEvent) => {
+function firstEvent (config: configi, event: PlayerPlaceBlockBeforeEvent) {
     const { player, permutationBeingPlaced: permutation } = event;
     if (isAdmin(player) || !permutation) return;
-    const config = c();
     if (config.antiCommandBlockExplolit.cancelPlacement.includes(permutation.type.id)) {
         event.cancel = true;
         system.run(() => {
@@ -19,10 +19,9 @@ const blockPlace = (event: PlayerPlaceBlockBeforeEvent) => {
     }
 };
 
-const itemUse = (event: ItemUseOnBeforeEvent) => {
+function doubleEvent (config: configi, event: ItemUseOnBeforeEvent) {
     const { source: player, itemStack } = event;
     if (isAdmin(player)) return;
-    const config = c();
     if (config.antiCommandBlockExplolit.cancelUsage.includes(itemStack?.typeId)) {
         event.cancel = true;
         system.run(() => {
@@ -32,13 +31,19 @@ const itemUse = (event: ItemUseOnBeforeEvent) => {
     }
 };
 
-export default {
-    enable() {
-        world.beforeEvents.playerPlaceBlock.subscribe(blockPlace);
-        world.beforeEvents.itemUseOn.subscribe(itemUse);
+registerModule("antiCBE", false, [], 
+    {
+        worldSignal: world.beforeEvents.playerPlaceBlock,
+        playerOption: { entityTypes: ["minecraft:player"] },
+        then: async (config, event: PlayerPlaceBlockBeforeEvent) => {
+            firstEvent(config, event);
+        },
     },
-    disable() {
-        world.beforeEvents.playerPlaceBlock.unsubscribe(blockPlace);
-        world.beforeEvents.itemUseOn.unsubscribe(itemUse);
-    },
-};
+    {
+        worldSignal: world.beforeEvents.itemUseOn,
+        playerOption: { entityTypes: ["minecraft:player"] },
+        then: async (config, event: ItemUseOnBeforeEvent) => {
+            doubleEvent(config, event);
+        },
+    }
+);
