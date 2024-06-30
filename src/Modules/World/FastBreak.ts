@@ -1,7 +1,8 @@
 import { EntityHitBlockAfterEvent, ItemEnchantableComponent, Player, PlayerBreakBlockAfterEvent, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
-import { c, flag, isAdmin, isTargetGamemode } from "../../Assets/Util";
+import { flag, isAdmin, isTargetGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { registerModule, configi } from "../Modules.js";
 
 /**
  * @author jasonlaubb
@@ -11,10 +12,9 @@ import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } 
  * The limit value is reference from RaMiGamerDev
  */
 
-const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
+function firstEvent(config: configi, event: PlayerBreakBlockBeforeEvent) {
     const { player, block, itemStack } = event;
     if (isAdmin(player) || block.isAir || player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
-    const config = c();
     const typeId = itemStack?.typeId ?? "minecraft:air";
 
     const hasEfficiency = itemStack ? itemStack.getComponent(ItemEnchantableComponent.componentId).hasEnchantment(MinecraftEnchantmentTypes.Efficiency) : false;
@@ -51,18 +51,29 @@ const antiFastBreak = (event: PlayerBreakBlockBeforeEvent) => {
     }*/
 };
 
-const breakBlockAfter = ({ player }: PlayerBreakBlockAfterEvent) => (player.lastTouchBlock = Date.now());
-const hitBlock = ({ damagingEntity: player, hitBlock: { location } }: EntityHitBlockAfterEvent) => player instanceof Player && (player.lastTouchBlockId = JSON.stringify(location));
+const doubleEvent = ({ player }: PlayerBreakBlockAfterEvent) => (player.lastTouchBlock = Date.now());
+const tripleEvent = ({ damagingEntity: player, hitBlock: { location } }: EntityHitBlockAfterEvent) => player instanceof Player && (player.lastTouchBlockId = JSON.stringify(location));
 
-export default {
-    enable() {
-        world.beforeEvents.playerBreakBlock.subscribe(antiFastBreak);
-        world.afterEvents.playerBreakBlock.subscribe(breakBlockAfter);
-        world.afterEvents.entityHitBlock.subscribe(hitBlock);
+registerModule("antiFastBreak", false, [], 
+    {
+        worldSignal: world.beforeEvents.playerBreakBlock,
+        playerOption: { entityTypes: ["minecraft:player"] },
+        then: async (config, event: PlayerBreakBlockBeforeEvent) => {
+            firstEvent(config, event);
+        },
     },
-    disable() {
-        world.beforeEvents.playerBreakBlock.unsubscribe(antiFastBreak);
-        world.afterEvents.playerBreakBlock.unsubscribe(breakBlockAfter);
-        world.afterEvents.entityHitBlock.unsubscribe(hitBlock);
+    {
+        worldSignal: world.afterEvents.playerBreakBlock,
+        playerOption: { entityTypes: ["minecraft:player"] },
+        then: async (config, event: PlayerBreakBlockAfterEvent) => {
+            doubleEvent(event);
+        },
     },
-};
+    {
+        worldSignal: world.beforeEvents.playerBreakBlock,
+        playerOption: { entityTypes: ["minecraft:player"] },
+        then: async (config, event: EntityHitBlockAfterEvent) => {
+            tripleEvent(event);
+        },
+    }
+);
