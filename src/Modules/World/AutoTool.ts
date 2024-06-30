@@ -1,12 +1,13 @@
 import { world, system, EntityHitBlockAfterEvent, Player, EntityInventoryComponent } from "@minecraft/server";
-import { flag, c, isAdmin } from "../../Assets/Util";
+import { flag, isAdmin } from "../../Assets/Util";
+import { registerModule, configi } from "../Modules.js";
 
 /**
  * @author jasonlaubb
  * @description A simple check to caught slient autotool hacker
  */
 
-const antiAutoTool = ({ damagingEntity: player }: EntityHitBlockAfterEvent) => {
+function doubleEvent({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player) || isAdmin(player) || !player.lastSelectSlot) return;
     const config = c();
     const itemStack = player.getComponent(EntityInventoryComponent.componentId).container.getItem(player.selectedSlotIndex)?.typeId ?? "air";
@@ -18,24 +19,22 @@ const antiAutoTool = ({ damagingEntity: player }: EntityHitBlockAfterEvent) => {
     }
 };
 
-const slotLogger = () => {
-    const players = world.getAllPlayers();
-    for (const player of players) {
-        if (isAdmin(player)) continue;
-        const selectSlot = player.selectedSlotIndex;
-        system.run(() => (player.lastSelectSlot = selectSlot));
+function intickEvent(config: configi, player: Player) {
+    if (isAdmin(player)) continue;
+    const selectSlot = player.selectedSlotIndex;
+    system.run(() => (player.lastSelectSlot = selectSlot));
+};
+
+registerModule("antiAutoTool", false, [], 
+    {
+        intick: async (config, player) => intickEvent(config, player),
+        tickInterval: 1,
+    },
+    {
+        worldSignal: world.afterEvents.entityHitBlock,
+        playerOption: { entityTypes: ["minecraft:player"] },
+        then: async (config, event: EntityHitBlockAfterEvent) => {
+            doubleEvent(config, event);
+        },
     }
-};
-
-let id: number;
-
-export default {
-    enable() {
-        world.afterEvents.entityHitBlock.subscribe(antiAutoTool);
-        id = system.runInterval(slotLogger);
-    },
-    disable() {
-        world.afterEvents.entityHitBlock.unsubscribe(antiAutoTool);
-        system.clearRun(id);
-    },
-};
+);
