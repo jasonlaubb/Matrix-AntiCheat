@@ -1,5 +1,6 @@
 import { Player } from "@minecraft/server";
 import ChatFilterData from "../../Data/ChatFilterData"
+import LatinNormalize from "../../Assets/LatinNormalize";
 const special_characters = {
     '0': 'o',
     '1': 'i',
@@ -26,4 +27,8 @@ function chatFilter (player: Player, message: string) {
         const currentWord = message.slice(indexRange[0], indexRange[1]);
         const possibleMatch = ChatFilterData.fi
     }
+}
+
+function latinNormalizer (message: string) {
+    LatinNormalize
 }

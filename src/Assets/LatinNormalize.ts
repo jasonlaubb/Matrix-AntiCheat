@@ -5,7 +5,8 @@
  * @file latinise.js
  * @lines 3-993
  */
-export default { // Edited `Latinise.latin_map = {` to `export default {`
+var Latinise = {};
+Latinise.latin_map = {
 'Á': 'A', // LATIN CAPITAL LETTER A WITH ACUTE
 'Ă': 'A', // LATIN CAPITAL LETTER A WITH BREVE
 'Ắ': 'A', // LATIN CAPITAL LETTER A WITH BREVE AND ACUTE
@@ -995,4 +996,15 @@ export default { // Edited `Latinise.latin_map = {` to `export default {`
 'ᵤ': 'u', // LATIN SUBSCRIPT SMALL LETTER U
 'ᵥ': 'v', // LATIN SUBSCRIPT SMALL LETTER V
 'ₓ': 'x' // LATIN SUBSCRIPT SMALL LETTER X
+};
+
+String.prototype.latinise = function() {
+	return this.replace(/[^A-Za-z0-9\[\] ]/g, function(x) { return Latinise.latin_map[x] || x; });
+};
+
+// American English spelling :)
+String.prototype.latinize = String.prototype.latinise;
+
+String.prototype.isLatin = function() {
+	return this == this.latinise();
 };
