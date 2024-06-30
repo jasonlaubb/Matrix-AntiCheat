@@ -86,6 +86,7 @@ import("fs").then((fsModule) => {
                         }
                     })
                 })
+                return;
             };
             fs.readdir(root + "pot", async (err, files) => {
                 if (err) {
