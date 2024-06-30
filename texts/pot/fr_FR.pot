@@ -268,10 +268,6 @@ msgstr ""
 msgid "Password has been changed"
 msgstr "Le Mot de Passe a été Modifier"
 
-#: spam.slowdown
-msgid "Please send messages slowly"
-msgstr ""
-
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
 msgstr ""
@@ -380,24 +376,12 @@ msgstr "Vous ne pouvez pas accéder à cet endroit, vous avez atteint la Bordure
 msgid "You cannot interact with a block or entity which is outside the world border."
 msgstr "Vous ne pouvez pas interagir avec un Bloc ou une Entité située en dehors de la Bordure du Monde"
 
-#: spam.repeated
-msgid "You cannot send the same message again"
-msgstr ""
-
 #: bot.ok
 msgid "You have been verified successfully"
 msgstr ""
 
 #: toggles.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
-msgstr ""
-
-#: spam.filter
-msgid "Your message contains a filtered word"
-msgstr ""
-
-#: spam.long
-msgid "Your message is too long"
 msgstr ""
 
 #: adminchat.adminchat
@@ -422,4 +406,32 @@ msgstr ""
 
 #: xray.broken
 msgid "%1 mined %2 at %3"
+msgstr ""
+
+#: spam.sensitiveword
+msgid "Your message contains a sensitive word"
+msgstr ""
+
+#: spam.messagerate
+msgid "Please slow down your messages"
+msgstr ""
+
+#: spam.repeated
+msgid "Please don't send the messages repeatly"
+msgstr ""
+
+#: spam.spamming
+msgid "Please don't spam message"
+msgstr ""
+
+#: spam.lengthlimit
+msgid "Your message is too long"
+msgstr ""
+
+#: spam.includelink
+msgid "Sorry, but link is not allowed on this server"
+msgstr ""
+
+#: spam.email
+msgid "Sorry, but you cannot send an email on chat"
 msgstr ""

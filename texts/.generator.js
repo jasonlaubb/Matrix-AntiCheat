@@ -35,7 +35,7 @@ const fixedStart = `"Language: N/A\\n"
 "Content-Transfer-Encoding: 8bit\\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\\n"
 "X-Generator: PhraseApp (phraseapp.com)\\n"`;
-const doTranslate = false;
+let doTranslate = false;
 import("fs").then((fsModule) => {
     import("path").then((pathModule) => {
         const fs = fsModule.default;
@@ -124,6 +124,11 @@ import("fs").then((fsModule) => {
                             fs.writeFileSync(potFilePath, potUpdateFile);
                             console.log("Process: Missing updated " + file);
                             potContent = potUpdateFile;
+                            if (!doTranslate) {
+                                doTranslate = true;
+                                await new Promise((resolve) => setTimeout(resolve, 1000));
+                                convertPotFilesToPo();
+                            }
                         }
 
                         for (let i = 0; i < lines.length; i++) {

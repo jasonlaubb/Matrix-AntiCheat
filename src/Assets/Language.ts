@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate =
+export type Translate = 
     | "pack.description"
     | "crash.reload"
     | "flag.style"
@@ -69,7 +69,6 @@ export type Translate =
     | "about.line"
     | "util.noreason"
     | "passwords.changed"
-    | "spam.slowdown"
     | "op.wait"
     | "showallrank.has"
     | "lockdowncode.set"
@@ -97,14 +96,18 @@ export type Translate =
     | "border.outside"
     | "border.reached"
     | "border.interact"
-    | "spam.repeated"
     | "bot.ok"
     | "toggles.warning"
-    | "spam.filter"
-    | "spam.long"
     | "adminchat.adminchat"
     | "bot.ui.headline"
     | "bot.ui.need"
     | "bot.ui.haveleft"
     | "bot.ui.enterbelow"
-    | "xray.broken";
+    | "xray.broken"
+    | "spam.sensitiveword"
+    | "spam.messagerate"
+    | "spam.repeated"
+    | "spam.spamming"
+    | "spam.lengthlimit"
+    | "spam.includelink"
+    | "spam.email"

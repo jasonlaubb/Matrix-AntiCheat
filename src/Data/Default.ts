@@ -353,6 +353,15 @@ export default {
         chatFilter: {
             enabled: true,
         },
+        linkEmailFilter: {
+            enabled: true,
+        },
+        spamFilter: {
+            enabled: true,
+            maxRepeats: 3,
+            maxLength: 128,
+            maxMessagesInFiveSeconds: 3,
+        }
     },
     dimensionLock: {
         enabled: false,

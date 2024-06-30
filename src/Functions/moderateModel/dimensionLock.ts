@@ -1,9 +1,9 @@
 import { world, system } from "@minecraft/server";
-import { isAdmin, rawstr } from "../../Assets/Util";
-import config from "../../Data/Config";
+import { c, isAdmin, rawstr } from "../../Assets/Util";
 
 world.afterEvents.playerDimensionChange.subscribe((event) => {
     const { player, toDimension, fromDimension } = event;
+    const config = c();
     const toggle: boolean = (world.getDynamicProperty("dimensionLock") ?? config.dimensionLock.enabled) as boolean;
     if (!toggle || isAdmin(player)) return;
     if (toDimension.id !== "minecraft:overworld") {
@@ -20,6 +20,7 @@ world.afterEvents.playerDimensionChange.subscribe((event) => {
 
 world.afterEvents.playerSpawn.subscribe((event) => {
     const { player, initialSpawn } = event;
+    const config = c();
     const toggle: boolean = (world.getDynamicProperty("dimensionLock") ?? config.dimensionLock.enabled) as boolean;
     if (!toggle || !initialSpawn || isAdmin(player)) return;
 
