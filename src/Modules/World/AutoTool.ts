@@ -7,9 +7,8 @@ import { registerModule, configi } from "../Modules.js";
  * @description A simple check to caught slient autotool hacker
  */
 
-function doubleEvent({ damagingEntity: player }: EntityHitBlockAfterEvent) {
+function doubleEvent(config: configi, { damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player) || isAdmin(player) || !player.lastSelectSlot) return;
-    const config = c();
     const itemStack = player.getComponent(EntityInventoryComponent.componentId).container.getItem(player.selectedSlotIndex)?.typeId ?? "air";
     if (config.antiAutoTool.toolType.some((eit) => itemStack.endsWith(eit)) == false) return;
 
