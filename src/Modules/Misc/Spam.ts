@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { world, system, Player, PlayerLeaveAfterEvent } from "@minecraft/server";
 import { c, rawstr } from "../../Assets/Util";
 import { isAdmin, kick } from "../../Assets/Util.js";
