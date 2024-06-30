@@ -55,35 +55,32 @@ import("fs").then((fsModule) => {
                 let there = lines[0] + "export type Translate = \n";
                 there += output.join("\n");
 
-                fs.writeFileSync(root == "./" ? "../src/Assets/Language.ts" : "./src/Assets/Language.ts", there);
+                fs.writeFileSync(root == "./" ? "../src/Data/Language.ts" : "./src/Assets/Language.ts", there);
                 return;
             };
             if (getLanguages) {
-                let allFiles = fs.readdirSync(root + "../scripts/Assets/Language");
-                allFiles = allFiles.filter((a) => validLanguage.includes(a.replace(".ts", "")));
-                allFiles.forEach((a) => {
-                    import(root + "../scripts/Assets/Language/" + a + ".ts").then((a) => {
+                let allFiles = fs.readdirSync(root + "../scripts/Data/Languages");
+                console.log(allFiles);
+                allFiles = allFiles.filter((a) => validLanguage.includes(a.replace(".js", "")));
+                console.log(allFiles);
+                allFiles.forEach((K) => {
+                    import(root + "../scripts/Data/Languages/" + K).then((a) => {
+                        const lines = fs.readFileSync(root + "pot/" + K.replace(".js",".pot"), "utf-8").split("\n")
                         const list = Object.entries(a.default);
                         for (const [key, str] of list) {
                             const cleankey = key.toLowerCase().slice(1);
-                            let cleanstr;
+                            let cleanstr = str;
                             if (str.includes("\n")) continue;
                             if (str.includes("%a") && !str.includes("%b")) {
                                 cleanstr = str.replace("%a", "%s")
-                            } else if (!str.includes("%a")) {
-                                cleanstr = str
                             } else {
-                                cleanstr = str;
-                                const c = ['a','b','c','d','e','f']
-                                c.forEach((b) => {
-                                    str.replace(`%${b}`, `%${c.indexOf(b) + 1}`)
-                                })
+                                cleanstr = str.replace("%a", "%1").replace("%b", "%2").replace("%c", "%3").replace("%d", "%4").replace("%e", "%5".replace("%f", "%6"))
                             }
-                            const lines = fs.readFileSync(root + "pot/" + a + ".pot", "utf-8").split("\n")
                             const index = lines.indexOf(`#: ${cleankey}`)
                             if (index == -1) continue;
-                            lines[index + 2] = str
+                            lines[index + 2] = `msgstr "${cleanstr}"`
                         }
+                        fs.writeFileSync(root + "pot/" + K.replace(".js",".pot"), lines.join("\n"))
                     })
                 })
                 return;

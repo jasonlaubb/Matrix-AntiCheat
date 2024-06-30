@@ -30,7 +30,7 @@ msgstr ""
 
 #: ui.exit
 msgid "Exit"
-msgstr ""
+msgstr "Exit"
 
 #: ui.banplayer
 msgid "Ban Player"
@@ -98,163 +98,163 @@ msgstr ""
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
-msgstr ""
+msgstr "%1 已经有 %2 §r§crank"
 
 #: rank.norank
 msgid "%1 doesn't have %2 §r§c rank"
-msgstr ""
+msgstr "%1 没有 %2 §r§c 聊天称号"
 
 #: ban.has
 msgid "%1 has been banned by %2"
-msgstr ""
+msgstr "%1 已被 %2 停权"
 
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
-msgstr ""
+msgstr "%1 已被 %2 解除管理员权限"
 
 #: freeze.has
 msgid "%1 has been frozen by %2"
-msgstr ""
+msgstr "%1 已被 %2 冻结"
 
 #: mute.has
 msgid "%1 has been muted by %2"
-msgstr ""
+msgstr "%1 已被 %2 静音"
 
 #: op.hasbeen
 msgid "%1 has been opped by %2"
-msgstr ""
+msgstr "%1 已被 %2 给予管理员权限"
 
 #: unfreeze.has
 msgid "%1 has been unfrozen by %2"
-msgstr ""
+msgstr "%1 已被 %2 解冻"
 
 #: unmute.has
 msgid "%1 has been unmuted by %2"
-msgstr ""
+msgstr "%1 已被 %2 取消静音"
 
 #: toggles.togglechange
 msgid "%1 module has been %2d"
-msgstr ""
+msgstr "%1 模组已 %2d"
 
 #: rank.hasadd
 msgid "%1's rank has been added %2"
-msgstr ""
+msgstr "%1 的聊天称号已新增 %2"
 
 #: rank.hasset
 msgid "%1's rank has been set to %2"
-msgstr ""
+msgstr "%1 的聊天称号已设定为 %2"
 
 #: rank.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s 没有任何聊天称号"
 
 #: rankclear.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s 没有任何聊天称号"
 
 #: unban.add
 msgid "%s has been joined to the unban queue"
-msgstr ""
+msgstr "%s 已被加入至解禁队列"
 
 #: unbanremove.yes
 msgid "%s has been removed from unban queue"
-msgstr ""
+msgstr "%s 已从解禁队列中删除"
 
 #: freeze.already
 msgid "%s is already frozen"
-msgstr ""
+msgstr "%s 已经冻结"
 
 #: mute.already
 msgid "%s is already muted"
-msgstr ""
+msgstr "%s 已经静音"
 
 #: util.formban
 msgid "%s is automatically banned from the game"
-msgstr ""
+msgstr "%s 已被自动封禁"
 
 #: util.formkick
 msgid "%s is automatically kicked from the game"
-msgstr ""
+msgstr "%s 已被自动踢出"
 
 #: deop.notadmin
 msgid "%s is not admin"
-msgstr ""
+msgstr "%s 不是管理者"
 
 #: unban.notban
 msgid "%s is not banned"
-msgstr ""
+msgstr "%s 未被停权"
 
 #: unfreeze.not
 msgid "%s is not frozen"
-msgstr ""
+msgstr "%s 没有冻结"
 
 #: unbanremove.not
 msgid "%s is not in unban queue"
-msgstr ""
+msgstr "%s 不在解禁队列"
 
 #: unmute.not
 msgid "%s is not muted"
-msgstr ""
+msgstr "%s 未静音"
 
 #: rankclear.has
 msgid "%s's rank has been cleared"
-msgstr ""
+msgstr "%s的聊天称号已被清除"
 
 #: rank.hasremove
 msgid "%s's rank has been removed"
-msgstr ""
+msgstr "%s 的聊天称号已删除"
 
 #: bot.title
 msgid "Anti Bot Verification"
-msgstr ""
+msgstr "Anti Bot Verification"
 
 #: about.author
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: invcopy.not
 msgid "Copied inventory from %s"
-msgstr ""
+msgstr "从 %s 複製背包"
 
 #: defaultrank.has
 msgid "Default rank has been set to %s"
-msgstr ""
+msgstr "预设聊天称号已设定为 %s"
 
 #: echestwipe.has
 msgid "Ender chest of %1 has been wiped by %2"
-msgstr ""
+msgstr "%1 的终界箱已被 %2 擦拭"
 
 #: flagmode.changed
 msgid "Flag mode has been changed to %s"
-msgstr ""
+msgstr "警示模式已变更为 %s"
 
 #: bot.waitui
 msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
-msgstr ""
+msgstr "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
 
 #: help.helpcdlist
 msgid "Help command list:"
-msgstr ""
+msgstr "帮助指令清单："
 
 #: invsee.of
 msgid "Inventory of %s"
-msgstr ""
+msgstr "%s 的背包"
 
 #: lang.has
 msgid "Language has been changed to %s"
-msgstr ""
+msgstr "语言已更改为 %s"
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"
-msgstr ""
+msgstr "锁定锁定码：%s"
 
 #: unlock.has
 msgid "Lockdown has been disabled by %s"
-msgstr ""
+msgstr "%s 已停用锁定"
 
 #: unlock.not
 msgid "Lockdown hasn't enabled yet"
-msgstr ""
+msgstr "锁定尚未启用"
 
 #: about.line
 msgid "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
@@ -262,123 +262,123 @@ msgstr ""
 
 #: util.noreason
 msgid "No reason provided"
-msgstr ""
+msgstr "未提供原因"
 
 #: passwords.changed
 msgid "Password has been changed"
-msgstr ""
+msgstr "密码已更改"
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
-msgstr ""
+msgstr "请你在 %s 秒后再次尝试"
 
 #: showallrank.has
 msgid "Show all rank has been set to %s"
-msgstr ""
+msgstr "显示所有聊天称号已设定为 %s"
 
 #: lockdowncode.set
 msgid "Sucessfully changed lockdown code to %s"
-msgstr ""
+msgstr "成功将锁定锁定码变更为 %s"
 
 #: bordersize.ok
 msgid "Sucessfully changed world border size to %s"
-msgstr ""
+msgstr "Sucessfully changed world border size to %s"
 
 #: lockdowncode.random
 msgid "Sucessfully random a lockdown code - %s"
-msgstr ""
+msgstr "成功随机锁定锁定码 - %s"
 
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
-msgstr ""
+msgstr "伺服器已被 %s 转为锁定模式"
 
 #: deop.lockdown
 msgid "The server is in lockdown mode"
-msgstr ""
+msgstr "伺服器处于锁定模式"
 
 #: lockdown.has
 msgid "The server is now in lockdown mode"
-msgstr ""
+msgstr "伺服器现在处于锁定模式"
 
 #: unbanlist.none
 msgid "There is no player in unban queue"
-msgstr ""
+msgstr "解封队列中没有玩家"
 
 #: toggles.already
 msgid "This module is %sd already"
-msgstr ""
+msgstr "这个模组已被 %sd, 无法执行该操作"
 
 #: toggles.toggle
 msgid "Toggle %s module"
-msgstr ""
+msgstr "切换"
 
 #: toggles.togglelist
 msgid "Toggle list:"
-msgstr ""
+msgstr "切换清单："
 
 #: unbanlist.list
 msgid "Unban list"
-msgstr ""
+msgstr "解禁队列"
 
 #: toggles.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr ""
+msgstr "未知模组，尝试 %stoggles"
 
 #: about.version
 msgid "Version"
-msgstr ""
+msgstr "版本"
 
 #: lockdown.wrong
 msgid "Wrong code"
-msgstr ""
+msgstr "锁定码错误"
 
 #: op.wrong
 msgid "Wrong password"
-msgstr ""
+msgstr "密码错误!"
 
 #: chathandler.muted
 msgid "You are muted!"
-msgstr ""
+msgstr "你已静音！"
 
 #: dimensionlock.stop
 msgid "You are not allowed to go to other dimensions!"
-msgstr ""
+msgstr "你不可以去其他维度！"
 
 #: op.now
 msgid "You are now admin"
-msgstr ""
+msgstr "您现在是管理员"
 
 #: adminchat.has
 msgid "You are now in admin channel"
-msgstr ""
+msgstr "您现在处于管理频道"
 
 #: adminchat.out
 msgid "You are now in public channel"
-msgstr ""
+msgstr "您现在处于公共频道"
 
 #: vanish.out
 msgid "You are now no longer vanished"
-msgstr ""
+msgstr "你现在不再消失了"
 
 #: vanish.has
 msgid "You are now vanished"
-msgstr ""
+msgstr "你现在消失了"
 
 #: border.outside
 msgid "You cannot access a location which is outside the world border."
-msgstr ""
+msgstr "You cannot access a location which is outside the world border."
 
 #: border.reached
 msgid "You cannot access that location, you have reached the world border."
-msgstr ""
+msgstr "You cannot access that location, you have reached the world border."
 
 #: border.interact
 msgid "You cannot interact with a block or entity which is outside the world border."
-msgstr ""
+msgstr "You cannot interact with a block or entity which is outside the world border."
 
 #: bot.ok
 msgid "You have been verified successfully"
-msgstr ""
+msgstr "You have been verified successfully"
 
 #: toggles.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: adminchat.adminchat
 msgid "adminchat"
-msgstr ""
+msgstr "管理聊天"
 
 #: bot.ui.headline
 msgid "§a[This server is protected by Matrix AntiCheat]"
@@ -418,11 +418,11 @@ msgstr ""
 
 #: spam.repeated
 msgid "Please don't send the messages repeatly"
-msgstr ""
+msgstr "您不能再发送相同的讯息"
 
 #: spam.spamming
 msgid "Please don't spam message"
-msgstr ""
+msgstr "Spamming chat"
 
 #: spam.lengthlimit
 msgid "Your message is too long"

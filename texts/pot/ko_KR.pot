@@ -30,7 +30,7 @@ msgstr ""
 
 #: ui.exit
 msgid "Exit"
-msgstr ""
+msgstr "나가기"
 
 #: ui.banplayer
 msgid "Ban Player"
@@ -98,163 +98,163 @@ msgstr ""
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
-msgstr ""
+msgstr "%1는 이미 %2 칭호를 가지고 있습니다."
 
 #: rank.norank
 msgid "%1 doesn't have %2 §r§c rank"
-msgstr ""
+msgstr "%1는 %2 칭호를 가지고 있지 않습니다."
 
 #: ban.has
 msgid "%1 has been banned by %2"
-msgstr ""
+msgstr "%1님이 %2님의 처리로 벤 처리되었습니다."
 
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
-msgstr ""
+msgstr "%1님이 %2님을 통하여 DE-OP 처리되었습니다."
 
 #: freeze.has
 msgid "%1 has been frozen by %2"
-msgstr ""
+msgstr "%1님이 %2님의 처리로 프리즈 처리되었습니다."
 
 #: mute.has
 msgid "%1 has been muted by %2"
-msgstr ""
+msgstr "%1님이 %2님의 처리로 뮤트되었습니다."
 
 #: op.hasbeen
 msgid "%1 has been opped by %2"
-msgstr ""
+msgstr "%1가 %2를 통하여 OP처리 되었습니다. 부적절한 상황으로 의심될 시 즉시 DE-OP처리하세요."
 
 #: unfreeze.has
 msgid "%1 has been unfrozen by %2"
-msgstr ""
+msgstr "%1님이 %2님을 통하여 언프리즈 되었습니다."
 
 #: unmute.has
 msgid "%1 has been unmuted by %2"
-msgstr ""
+msgstr "%1님이 %2님의 처리로 언뮤트되었습니다."
 
 #: toggles.togglechange
 msgid "%1 module has been %2d"
-msgstr ""
+msgstr "%1 모듈이 %2d 로 설정되었습니다."
 
 #: rank.hasadd
 msgid "%1's rank has been added %2"
-msgstr ""
+msgstr "%1에게 칭호 %2가 추가되었습니다."
 
 #: rank.hasset
 msgid "%1's rank has been set to %2"
-msgstr ""
+msgstr "%1의 칭호가 %2로 설정되었습니다."
 
 #: rank.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s는 아무 칭호도 가지고 있지 않습니다."
 
 #: rankclear.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s는 아무 칭호도 가지고 있지 않습니다."
 
 #: unban.add
 msgid "%s has been joined to the unban queue"
-msgstr ""
+msgstr "%s님이 언벤 목록에 접속했습니다."
 
 #: unbanremove.yes
 msgid "%s has been removed from unban queue"
-msgstr ""
+msgstr "%s님이 언벤 목록에서 제거되었습니다."
 
 #: freeze.already
 msgid "%s is already frozen"
-msgstr ""
+msgstr "%s님은 이미 프리즈 처리되어있습니다."
 
 #: mute.already
 msgid "%s is already muted"
-msgstr ""
+msgstr "%s님은 이미 뮤트입니다."
 
 #: util.formban
 msgid "%s is automatically banned from the game"
-msgstr ""
+msgstr "%s님이 게임에서 자동 벤되었습니다."
 
 #: util.formkick
 msgid "%s is automatically kicked from the game"
-msgstr ""
+msgstr "%s님이 게임에서 자동 추방되었습니다."
 
 #: deop.notadmin
 msgid "%s is not admin"
-msgstr ""
+msgstr "%s는 어드민이 아닙니다."
 
 #: unban.notban
 msgid "%s is not banned"
-msgstr ""
+msgstr "%s님은 벤 되지 않았습니다."
 
 #: unfreeze.not
 msgid "%s is not frozen"
-msgstr ""
+msgstr "%s는 프리즈 되어있지 않습니다."
 
 #: unbanremove.not
 msgid "%s is not in unban queue"
-msgstr ""
+msgstr "%s님은 언벤 목록에 없습니다."
 
 #: unmute.not
 msgid "%s is not muted"
-msgstr ""
+msgstr "%s님은 뮤트되지 않았습니다."
 
 #: rankclear.has
 msgid "%s's rank has been cleared"
-msgstr ""
+msgstr "%s의 칭호가 제거되었습니다."
 
 #: rank.hasremove
 msgid "%s's rank has been removed"
-msgstr ""
+msgstr "%s의 칭호가 제거되었습니다."
 
 #: bot.title
 msgid "Anti Bot Verification"
-msgstr ""
+msgstr "안티=봇인증"
 
 #: about.author
 msgid "Author"
-msgstr ""
+msgstr "저자"
 
 #: invcopy.not
 msgid "Copied inventory from %s"
-msgstr ""
+msgstr "%s의 인벤토리가 복사되었습니다."
 
 #: defaultrank.has
 msgid "Default rank has been set to %s"
-msgstr ""
+msgstr "기본 칭호가 %s로 번경되었습니다."
 
 #: echestwipe.has
 msgid "Ender chest of %1 has been wiped by %2"
-msgstr ""
+msgstr "%1님의 엔더상자가 %2님의 처리로 클리어 되었습니다."
 
 #: flagmode.changed
 msgid "Flag mode has been changed to %s"
-msgstr ""
+msgstr "Flag 모드가 %s로 번경되었습니다."
 
 #: bot.waitui
 msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
-msgstr ""
+msgstr "보안상의 이유로, 인증 절차를 밟기 전 채팅을 입력할 수 없습니다. 인증 UI가 나올 때 까지 기다려주세요."
 
 #: help.helpcdlist
 msgid "Help command list:"
-msgstr ""
+msgstr "명령어 목록 :"
 
 #: invsee.of
 msgid "Inventory of %s"
-msgstr ""
+msgstr "%s의 인벤토리"
 
 #: lang.has
 msgid "Language has been changed to %s"
-msgstr ""
+msgstr "언어가 %s님에 의해 번경되었습니다."
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"
-msgstr ""
+msgstr "잠금 코드: %s"
 
 #: unlock.has
 msgid "Lockdown has been disabled by %s"
-msgstr ""
+msgstr "락다운이 %s님에 의해 해제되었습니다."
 
 #: unlock.not
 msgid "Lockdown hasn't enabled yet"
-msgstr ""
+msgstr "락다운이 켜져있지 않습니다."
 
 #: about.line
 msgid "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
@@ -262,123 +262,123 @@ msgstr ""
 
 #: util.noreason
 msgid "No reason provided"
-msgstr ""
+msgstr "제공된 사유 없음"
 
 #: passwords.changed
 msgid "Password has been changed"
-msgstr ""
+msgstr "비밀번호가 번경되었습니다."
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
-msgstr ""
+msgstr "비밀번호를 입력하기 위해 %s초 기다려주세요."
 
 #: showallrank.has
 msgid "Show all rank has been set to %s"
-msgstr ""
+msgstr "모든 칭호가 %s로 설정되었습니다."
 
 #: lockdowncode.set
 msgid "Sucessfully changed lockdown code to %s"
-msgstr ""
+msgstr "성공적으로 코드가 %s로 번경되었습니다."
 
 #: bordersize.ok
 msgid "Sucessfully changed world border size to %s"
-msgstr ""
+msgstr "보더 크기가 %s로 번경되었습니다."
 
 #: lockdowncode.random
 msgid "Sucessfully random a lockdown code - %s"
-msgstr ""
+msgstr "성공적으로 코드가 번경되었습니다. - %s"
 
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
-msgstr ""
+msgstr "서버는 %s님에 의해 현재 락다운 모드입니다."
 
 #: deop.lockdown
 msgid "The server is in lockdown mode"
-msgstr ""
+msgstr "현재 서버는 LockDown 모드입니다.[Whitelist]"
 
 #: lockdown.has
 msgid "The server is now in lockdown mode"
-msgstr ""
+msgstr "서버는 현재 락다운 모드입니다."
 
 #: unbanlist.none
 msgid "There is no player in unban queue"
-msgstr ""
+msgstr "언벤 목록에 아무도 없습니다."
 
 #: toggles.already
 msgid "This module is %sd already"
-msgstr ""
+msgstr "이 모듈은 이미 %sd입니다!"
 
 #: toggles.toggle
 msgid "Toggle %s module"
-msgstr ""
+msgstr "토클"
 
 #: toggles.togglelist
 msgid "Toggle list:"
-msgstr ""
+msgstr "토글 목록:"
 
 #: unbanlist.list
 msgid "Unban list"
-msgstr ""
+msgstr "언벤 목록"
 
 #: toggles.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr ""
+msgstr "없는 모듈입니다. - %stoggles"
 
 #: about.version
 msgid "Version"
-msgstr ""
+msgstr "버전"
 
 #: lockdown.wrong
 msgid "Wrong code"
-msgstr ""
+msgstr "잘못된 코드"
 
 #: op.wrong
 msgid "Wrong password"
-msgstr ""
+msgstr "잘못된 비밀번호"
 
 #: chathandler.muted
 msgid "You are muted!"
-msgstr ""
+msgstr "당신은 뮤트되었습니다! 채팅을 칠 수 없습니다."
 
 #: dimensionlock.stop
 msgid "You are not allowed to go to other dimensions!"
-msgstr ""
+msgstr "다른 차원으로 이동할 권한이 없습니다."
 
 #: op.now
 msgid "You are now admin"
-msgstr ""
+msgstr "당신은 이제 어드민입니다."
 
 #: adminchat.has
 msgid "You are now in admin channel"
-msgstr ""
+msgstr "당신은 현재 어드민 채널입니다. §e어드민만 채팅을 볼 수 있습니다."
 
 #: adminchat.out
 msgid "You are now in public channel"
-msgstr ""
+msgstr "당신은 현재 전체 채널입니다."
 
 #: vanish.out
 msgid "You are now no longer vanished"
-msgstr ""
+msgstr "더 이상 숨김 처리되지 않습니다."
 
 #: vanish.has
 msgid "You are now vanished"
-msgstr ""
+msgstr "숨김 처리되었습니다."
 
 #: border.outside
 msgid "You cannot access a location which is outside the world border."
-msgstr ""
+msgstr "월드보더를 넘어선 위치로 벗어날 수 없습니다."
 
 #: border.reached
 msgid "You cannot access that location, you have reached the world border."
-msgstr ""
+msgstr "월드보더에 도달해 해당 위치로 더 나아갈 수 없습니다."
 
 #: border.interact
 msgid "You cannot interact with a block or entity which is outside the world border."
-msgstr ""
+msgstr "월드 보더를 넘어선 곳에서 엔티티 및 블록과 상호작용할 수 없습니다."
 
 #: bot.ok
 msgid "You have been verified successfully"
-msgstr ""
+msgstr "성공적으로 인증 되었습니다!"
 
 #: toggles.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: adminchat.adminchat
 msgid "adminchat"
-msgstr ""
+msgstr "관리자 채팅"
 
 #: bot.ui.headline
 msgid "§a[This server is protected by Matrix AntiCheat]"
@@ -418,11 +418,11 @@ msgstr ""
 
 #: spam.repeated
 msgid "Please don't send the messages repeatly"
-msgstr ""
+msgstr "같은 채팅을 반복해서 입력할 수 없습니다."
 
 #: spam.spamming
 msgid "Please don't spam message"
-msgstr ""
+msgstr "스팸 채팅"
 
 #: spam.lengthlimit
 msgid "Your message is too long"

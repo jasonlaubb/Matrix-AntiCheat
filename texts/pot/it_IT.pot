@@ -30,7 +30,7 @@ msgstr ""
 
 #: ui.exit
 msgid "Exit"
-msgstr ""
+msgstr "Esci"
 
 #: ui.banplayer
 msgid "Ban Player"
@@ -98,35 +98,35 @@ msgstr ""
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
-msgstr ""
+msgstr "%1 ha già %2 §r§crank"
 
 #: rank.norank
 msgid "%1 doesn't have %2 §r§c rank"
-msgstr ""
+msgstr "%1 non ha %2 §r§c rank"
 
 #: ban.has
 msgid "%1 has been banned by %2"
-msgstr ""
+msgstr "%1 è stato bannato con successo da %2"
 
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
-msgstr ""
+msgstr "%1 è stato deoppato correttamente da %2"
 
 #: freeze.has
 msgid "%1 has been frozen by %2"
-msgstr ""
+msgstr "%1 è stato congelato con successo da %2"
 
 #: mute.has
 msgid "%1 has been muted by %2"
-msgstr ""
+msgstr "%1 è stato mutato con successo da %2"
 
 #: op.hasbeen
 msgid "%1 has been opped by %2"
-msgstr ""
+msgstr "%1 è stato oppatto correttamente da %2"
 
 #: unfreeze.has
 msgid "%1 has been unfrozen by %2"
-msgstr ""
+msgstr "%1 è stato scongelato con successo da %2"
 
 #: unmute.has
 msgid "%1 has been unmuted by %2"
@@ -134,63 +134,63 @@ msgstr ""
 
 #: toggles.togglechange
 msgid "%1 module has been %2d"
-msgstr ""
+msgstr "%1 Modulo è stato %2d"
 
 #: rank.hasadd
 msgid "%1's rank has been added %2"
-msgstr ""
+msgstr "%1's rank è stato aggiunto con successo %2"
 
 #: rank.hasset
 msgid "%1's rank has been set to %2"
-msgstr ""
+msgstr "%1's rank è stato settatto con successo a %2"
 
 #: rank.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s non ha nessun rank"
 
 #: rankclear.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s non ha nessun rank"
 
 #: unban.add
 msgid "%s has been joined to the unban queue"
-msgstr ""
+msgstr "%s è entrato nella coda di sban con successo"
 
 #: unbanremove.yes
 msgid "%s has been removed from unban queue"
-msgstr ""
+msgstr "%s è stato rimosso dalla coda di sban"
 
 #: freeze.already
 msgid "%s is already frozen"
-msgstr ""
+msgstr "%s è già congelato"
 
 #: mute.already
 msgid "%s is already muted"
-msgstr ""
+msgstr "%s è già mutato"
 
 #: util.formban
 msgid "%s is automatically banned from the game"
-msgstr ""
+msgstr "%s è stato bannato dal gioco automaticamente"
 
 #: util.formkick
 msgid "%s is automatically kicked from the game"
-msgstr ""
+msgstr "%s è stato espulso dal gioco automaticamente"
 
 #: deop.notadmin
 msgid "%s is not admin"
-msgstr ""
+msgstr "%s non è un admin"
 
 #: unban.notban
 msgid "%s is not banned"
-msgstr ""
+msgstr "%s non è bannato"
 
 #: unfreeze.not
 msgid "%s is not frozen"
-msgstr ""
+msgstr "%s non è congelato"
 
 #: unbanremove.not
 msgid "%s is not in unban queue"
-msgstr ""
+msgstr "%s non è nella coda di sban"
 
 #: unmute.not
 msgid "%s is not muted"
@@ -198,63 +198,63 @@ msgstr ""
 
 #: rankclear.has
 msgid "%s's rank has been cleared"
-msgstr ""
+msgstr "%s's rank sono stati cancellati con successo"
 
 #: rank.hasremove
 msgid "%s's rank has been removed"
-msgstr ""
+msgstr "%s's rank è stato rimosso con successo"
 
 #: bot.title
 msgid "Anti Bot Verification"
-msgstr ""
+msgstr "Verifica Anti Bot"
 
 #: about.author
 msgid "Author"
-msgstr ""
+msgstr "Autore"
 
 #: invcopy.not
 msgid "Copied inventory from %s"
-msgstr ""
+msgstr "è stato copiato l'inventario da %s"
 
 #: defaultrank.has
 msgid "Default rank has been set to %s"
-msgstr ""
+msgstr "Il rank predefinito è stato settato con successo a %s"
 
 #: echestwipe.has
 msgid "Ender chest of %1 has been wiped by %2"
-msgstr ""
+msgstr "L'enderchest di %1 è stato cancellato con successo da %2"
 
 #: flagmode.changed
 msgid "Flag mode has been changed to %s"
-msgstr ""
+msgstr "Flag mode è stata cambiata con successo a %s"
 
 #: bot.waitui
 msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
-msgstr ""
+msgstr "Per una questione di sicurezza, non puoi usare la chat fino alla fine del processo di verifica. Perfavore aspetta fino a quando non ti esce il pannello di verifica"
 
 #: help.helpcdlist
 msgid "Help command list:"
-msgstr ""
+msgstr "Lista dei comandi:"
 
 #: invsee.of
 msgid "Inventory of %s"
-msgstr ""
+msgstr "Inventario di %s"
 
 #: lang.has
 msgid "Language has been changed to %s"
-msgstr ""
+msgstr "Il linguaggio è stato cambiato con successo a %s"
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"
-msgstr ""
+msgstr "Codice di blocco: %s"
 
 #: unlock.has
 msgid "Lockdown has been disabled by %s"
-msgstr ""
+msgstr "Il server è stato sbloccato con successo da %s"
 
 #: unlock.not
 msgid "Lockdown hasn't enabled yet"
-msgstr ""
+msgstr "Il blocco non è abilitato"
 
 #: about.line
 msgid "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
@@ -262,123 +262,123 @@ msgstr ""
 
 #: util.noreason
 msgid "No reason provided"
-msgstr ""
+msgstr "Nessuna ragione specificata"
 
 #: passwords.changed
 msgid "Password has been changed"
-msgstr ""
+msgstr "La password è stata cambiata con successo"
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
-msgstr ""
+msgstr "Perfavore aspetta %s altri secondi prima di riprovare"
 
 #: showallrank.has
 msgid "Show all rank has been set to %s"
-msgstr ""
+msgstr "Mostra tutti i rank è stato settato con successo a %s"
 
 #: lockdowncode.set
 msgid "Sucessfully changed lockdown code to %s"
-msgstr ""
+msgstr "Il codice di blocco è stato cambiato con successo a %s"
 
 #: bordersize.ok
 msgid "Sucessfully changed world border size to %s"
-msgstr ""
+msgstr "è stata cambiata la misura del bordo con successo in %s"
 
 #: lockdowncode.random
 msgid "Sucessfully random a lockdown code - %s"
-msgstr ""
+msgstr "Un codice di blocco casuale è stato messo con successo - %s"
 
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
-msgstr ""
+msgstr "Il server è stato bloccato con successo da %s"
 
 #: deop.lockdown
 msgid "The server is in lockdown mode"
-msgstr ""
+msgstr "Il server è in modalità di blocco"
 
 #: lockdown.has
 msgid "The server is now in lockdown mode"
-msgstr ""
+msgstr "Il server adesso è nella modalità blocco"
 
 #: unbanlist.none
 msgid "There is no player in unban queue"
-msgstr ""
+msgstr "Non c'è nessun giocatore nella coda di sban"
 
 #: toggles.already
 msgid "This module is %sd already"
-msgstr ""
+msgstr "Questo modulo è %sd già"
 
 #: toggles.toggle
 msgid "Toggle %s module"
-msgstr ""
+msgstr "Toggle"
 
 #: toggles.togglelist
 msgid "Toggle list:"
-msgstr ""
+msgstr "Toggle list:"
 
 #: unbanlist.list
 msgid "Unban list"
-msgstr ""
+msgstr "Lista di sban"
 
 #: toggles.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr ""
+msgstr "Modulo sconosciuto, prova %stoggles"
 
 #: about.version
 msgid "Version"
-msgstr ""
+msgstr "Versione"
 
 #: lockdown.wrong
 msgid "Wrong code"
-msgstr ""
+msgstr "Codice errato"
 
 #: op.wrong
 msgid "Wrong password"
-msgstr ""
+msgstr "Password errata"
 
 #: chathandler.muted
 msgid "You are muted!"
-msgstr ""
+msgstr "Sei stato mutato!"
 
 #: dimensionlock.stop
 msgid "You are not allowed to go to other dimensions!"
-msgstr ""
+msgstr "Non ti è permesso andare in altre dimensioni!"
 
 #: op.now
 msgid "You are now admin"
-msgstr ""
+msgstr "Ora sei un admin"
 
 #: adminchat.has
 msgid "You are now in admin channel"
-msgstr ""
+msgstr "Adesso sei nella chat admin"
 
 #: adminchat.out
 msgid "You are now in public channel"
-msgstr ""
+msgstr "Adesso sei nella chat pubblica"
 
 #: vanish.out
 msgid "You are now no longer vanished"
-msgstr ""
+msgstr "Non sei più invisibile agli altri"
 
 #: vanish.has
 msgid "You are now vanished"
-msgstr ""
+msgstr "Sei invisibile agli altri"
 
 #: border.outside
 msgid "You cannot access a location which is outside the world border."
-msgstr ""
+msgstr "You cannot access a location which is outside the world border."
 
 #: border.reached
 msgid "You cannot access that location, you have reached the world border."
-msgstr ""
+msgstr "You cannot access that location, you have reached the world border."
 
 #: border.interact
 msgid "You cannot interact with a block or entity which is outside the world border."
-msgstr ""
+msgstr "You cannot interact with a block or entity which is outside the world border."
 
 #: bot.ok
 msgid "You have been verified successfully"
-msgstr ""
+msgstr "Ti sei verificato con successo"
 
 #: toggles.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: adminchat.adminchat
 msgid "adminchat"
-msgstr ""
+msgstr "adminchat"
 
 #: bot.ui.headline
 msgid "§a[This server is protected by Matrix AntiCheat]"
@@ -418,11 +418,11 @@ msgstr ""
 
 #: spam.repeated
 msgid "Please don't send the messages repeatly"
-msgstr ""
+msgstr "Non è possibile inviare per più volte lo stesso messaggio"
 
 #: spam.spamming
 msgid "Please don't spam message"
-msgstr ""
+msgstr "Spam in chat"
 
 #: spam.lengthlimit
 msgid "Your message is too long"
