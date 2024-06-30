@@ -61,7 +61,6 @@ export async function SystemEvent(player: Player, now: number) {
     //getting data
     const locdata = data.locationData;
     //skip the code for for some reasons
-    if (player.isGliding) return;
     data.locationData = { location: player.location, recordTime: now };
     //just defineing everything we need
     const { x: x1, y: y1, z: z1 } = player.location;
@@ -89,7 +88,7 @@ export async function SystemEvent(player: Player, now: number) {
     }
     data.disLog += Math.hypot(x1 - x2, z1 - z2);
     //reset velocity xz log and distance log if player used /tp or using high y velocity
-    if ((xz == 0 && Math.hypot(x1 - x2, z1 - z2) > 0.5) || player.hasTag("matrix:riding")) {
+    if ((xz == 0 && Math.hypot(x1 - x2, z1 - z2) > 0.5) || player.hasTag("matrix:riding") || player.isGliding) {
         data.xzLog = 0;
         data.disLog = 0;
     }
