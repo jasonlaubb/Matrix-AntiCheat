@@ -2,7 +2,6 @@
  * @author freayd
  * @link https://gist.github.com/freayd/5256985
  */
-
 export default {
 'Á': 'A', // LATIN CAPITAL LETTER A WITH ACUTE
 'Ă': 'A', // LATIN CAPITAL LETTER A WITH BREVE
