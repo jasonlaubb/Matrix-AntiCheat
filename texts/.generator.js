@@ -36,6 +36,7 @@ const fixedStart = `"Language: N/A\\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\\n"
 "X-Generator: PhraseApp (phraseapp.com)\\n"`;
 let doTranslate = false;
+let getLanguages = false;
 import("fs").then((fsModule) => {
     import("path").then((pathModule) => {
         const fs = fsModule.default;
@@ -56,6 +57,35 @@ import("fs").then((fsModule) => {
 
                 fs.writeFileSync(root == "./" ? "../src/Assets/Language.ts" : "./src/Assets/Language.ts", there);
                 return;
+            };
+            if (getLanguages) {
+                let allFiles = fs.readdirSync(root + "../scripts/Assets/Language");
+                allFiles = allFiles.filter((a) => validLanguage.includes(a.replace(".ts", "")));
+                allFiles.forEach((a) => {
+                    import(root + "../scripts/Assets/Language/" + a + ".ts").then((a) => {
+                        const list = Object.entries(a.default);
+                        for (const [key, str] of list) {
+                            const cleankey = key.toLowerCase().slice(1);
+                            let cleanstr;
+                            if (str.includes("\n")) continue;
+                            if (str.includes("%a") && !str.includes("%b")) {
+                                cleanstr = str.replace("%a", "%s")
+                            } else if (!str.includes("%a")) {
+                                cleanstr = str
+                            } else {
+                                cleanstr = str;
+                                const c = ['a','b','c','d','e','f']
+                                c.forEach((b) => {
+                                    str.replace(`%${b}`, `%${c.indexOf(b) + 1}`)
+                                })
+                            }
+                            const lines = fs.readFileSync(root + "pot/" + a + ".pot", "utf-8").split("\n")
+                            const index = lines.indexOf(`#: ${cleankey}`)
+                            if (index == -1) continue;
+                            lines[index + 2] = str
+                        }
+                    })
+                })
             };
             fs.readdir(root + "pot", async (err, files) => {
                 if (err) {
