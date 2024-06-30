@@ -141,11 +141,14 @@ const playerBreakBlock = ({ player, block: { isSolid } }: PlayerBreakBlockAfterE
 
 const entityHurt = ({ hurtEntity: player }: EntityHurtAfterEvent) => ((player as Player).lastApplyDamage = Date.now());
 
-registerModule("antiNoClip", false, [noclipdata],
+registerModule(
+    "antiNoClip",
+    false,
+    [noclipdata],
     {
         tickInterval: 1,
         playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
-        intick: async (config, player) => AntiNoClip (player, config, Date.now()),
+        intick: async (config, player) => AntiNoClip(player, config, Date.now()),
     },
     {
         worldSignal: world.afterEvents.entityHurt,
@@ -156,4 +159,4 @@ registerModule("antiNoClip", false, [noclipdata],
         worldSignal: world.afterEvents.playerBreakBlock,
         then: async (_config, event) => playerBreakBlock(event as PlayerBreakBlockAfterEvent),
     }
-)
+);

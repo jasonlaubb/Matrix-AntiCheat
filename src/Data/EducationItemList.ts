@@ -23,4 +23,4 @@ export default [
     "minecraft:sparkler",
     "minecraft:glow_stick",
     "minecraft:balloon",
-]
+];

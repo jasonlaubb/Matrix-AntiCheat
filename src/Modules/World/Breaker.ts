@@ -1,6 +1,6 @@
-import { Block, Player, PlayerBreakBlockBeforeEvent, PlayerLeaveAfterEvent, /*Vector3,*/ system, world } from "@minecraft/server";
-import config from "../../Data/Config";
-import { flag, isAdmin } from "../../Assets/Util";
+import { Block, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server";
+import { flag } from "../../Assets/Util";
+import { configi, registerModule } from "../Modules";
 //import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 //offset~
@@ -15,9 +15,9 @@ const offset = [
 
 const lastFlag = new Map<string, number>();
 
-async function AntiBreaker(player: Player, block: Block, event: PlayerBreakBlockBeforeEvent) {
+async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) {
+    const { block, player } = event;
     if (player.hasTag("matrix:break-disabled") || block?.isAir) return;
-
     /* This check is not fixed
     if (block.typeId === MinecraftBlockTypes.Bed) {
         let allBlock: Block[] = []
@@ -113,25 +113,9 @@ function pointsBetween (pos1: Vector3, pos2: Vector3): Vector3[] {
     return points.filter(pos => pos.x !== pos2.x && pos.y !== pos2.y && pos.z !== pos2.z && pos.x !== pos1.x && pos.y !== pos1.y && pos.z !== pos1.z)
 }*/
 
-const antiBreaker = (event: PlayerBreakBlockBeforeEvent) => {
-    const { player, block } = event;
-    if (isAdmin(player)) return;
-
-    AntiBreaker(player, block, event);
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    lastFlag.delete(playerId);
-};
-
-export default {
-    enable() {
-        world.beforeEvents.playerBreakBlock.subscribe(antiBreaker);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-    },
-    disable() {
-        lastFlag.clear();
-        world.beforeEvents.playerBreakBlock.unsubscribe(antiBreaker);
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-    },
-};
+registerModule ("antiBreaker", false, [lastFlag],
+    {
+        worldSignal: world.beforeEvents.playerBreakBlock,
+        then: async (config, event) => AntiBreaker (event, config),
+    }
+)

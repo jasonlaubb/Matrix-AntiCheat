@@ -348,6 +348,12 @@ export default {
         defaultRank: "§pMember",
         showAllRank: true,
     },
+    intergradedAntiSpam: {
+        enabled: true,
+        chatFilter: {
+            enabled: true,
+        },
+    },
     dimensionLock: {
         enabled: false,
     },
@@ -446,14 +452,6 @@ export default {
         punishment: "ban",
         maxVL: 4,
         experimental: true,
-    },
-    antiSpam: {
-        enabled: true,
-        maxMessagesPerSecond: 3,
-        timer: 500,
-        maxCharacterLimit: 200,
-        kickThreshold: 3,
-        timeout: 200,
     },
     antiSpammer: {
         enabled: true,

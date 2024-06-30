@@ -4,16 +4,16 @@ import { tps } from "../../Assets/Public.js";
 import { configi, registerModule } from "../Modules.js";
 
 interface timerData {
-    safeZone: any,
-    lastFlag: any,
-    locationData: any,
-    iSL: any,
-    maxDBVD: any,
-    xzLog: any,
-    disLog: any,
-    timerLog: any,
-    yLog: any,
-    yDisLog: any
+    safeZone: any;
+    lastFlag: any;
+    locationData: any;
+    iSL: any;
+    maxDBVD: any;
+    xzLog: any;
+    disLog: any;
+    timerLog: any;
+    yLog: any;
+    yDisLog: any;
 }
 
 const timerData = new Map<string, timerData>();
@@ -23,7 +23,7 @@ const timerData = new Map<string, timerData>();
  * @description Checks if the player moved without the same between velocity and moved distance.
  */
 export async function AntiTimer(config: configi, player: Player, now: number) {
-    const data = timerData.get(player.id) ?? {} as timerData;
+    const data = timerData.get(player.id) ?? ({} as timerData);
     //skip the code for some reasons
     if (player.isGliding || player.hasTag("matrix:riding")) return;
     //dBVD == difference between velocity and moved distance
@@ -39,8 +39,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - data.lastFlag;
         //if the dBLFN is lower than the given value flag
-        if (!data.iSL && ((dBLFN < 5000 && data.timerLog >= 3) || (dBLFN < 2000 && dBVD > data.maxDBVD)))
-            flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
+        if (!data.iSL && ((dBLFN < 5000 && data.timerLog >= 3) || (dBLFN < 2000 && dBVD > data.maxDBVD))) flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
         //lag back the player
         if (!config.slient) player.teleport(data.safeZone);
         //setting new lastFlag
@@ -57,7 +56,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
 }
 /** @description For Anti Timer */
 export async function SystemEvent(player: Player, now: number) {
-    const data = timerData.get(player.id) ?? {} as timerData;
+    const data = timerData.get(player.id) ?? ({} as timerData);
     //getting data
     const locdata = data.locationData;
     //skip the code for for some reasons
@@ -100,13 +99,16 @@ export async function SystemEvent(player: Player, now: number) {
     timerData.set(player.id, data);
 }
 
-registerModule("antiTimer", false, [timerData],
+registerModule(
+    "antiTimer",
+    false,
+    [timerData],
     {
-        intick: async (config, player) => AntiTimer (config, player, Date.now()),
+        intick: async (config, player) => AntiTimer(config, player, Date.now()),
         tickInterval: 20,
     },
     {
-        intick: async (_config, player) => SystemEvent (player, Date.now()),
+        intick: async (_config, player) => SystemEvent(player, Date.now()),
         tickInterval: 1,
-    },
-)
+    }
+);

@@ -19,5 +19,5 @@ export default [
     m.MonsterEgg,
     m.BuddingAmethyst,
     m.FrostedIce,
-    m.Farmland
-]
+    m.Farmland,
+];

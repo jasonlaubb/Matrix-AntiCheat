@@ -53,7 +53,10 @@ function absCentrePos(pos: Vector3) {
     return { x: pos.x - 0.5, y: pos.y - 0.5, z: pos.z - 0.5 } as Vector3;
 }
 
-registerModule("antiBlockReach", false, [],
+registerModule(
+    "antiBlockReach",
+    false,
+    [],
     {
         worldSignal: world.beforeEvents.playerBreakBlock,
         then: async (config, event) => AntiBlockReachA(event as PlayerBreakBlockBeforeEvent, event.player, config),
@@ -62,4 +65,4 @@ registerModule("antiBlockReach", false, [],
         worldSignal: world.beforeEvents.playerPlaceBlock,
         then: async (config, event) => AntiBlockReachB(event as PlayerPlaceBlockBeforeEvent, event.player, config),
     }
-)
+);

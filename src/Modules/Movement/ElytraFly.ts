@@ -66,18 +66,21 @@ const playerSpawn = ({ player }: PlayerSpawnAfterEvent) => {
 
 const itemUseAfter = ({ source: player, itemStack: { typeId } }: ItemUseAfterEvent) => player.isGliding && typeId === MinecraftItemTypes.FireworkRocket && (player.lastGlidingFire = Date.now());
 
-registerModule ("antiElytraFly", false, [fallDistances],
+registerModule(
+    "antiElytraFly",
+    false,
+    [fallDistances],
     {
         tickInterval: 1,
         playerOption: { excludeGameModes: [GameMode.spectator] },
-        intick: async (config, player) => ElytraFly (player, Date.now(), config),
+        intick: async (config, player) => ElytraFly(player, Date.now(), config),
     },
     {
         worldSignal: world.afterEvents.itemUse,
-        then: async (_config, event) => itemUseAfter (event),
+        then: async (_config, event) => itemUseAfter(event),
     },
     {
         worldSignal: world.afterEvents.playerSpawn,
-        then: async (_config, event) => playerSpawn (event),
+        then: async (_config, event) => playerSpawn(event),
     }
-)
+);

@@ -4,7 +4,6 @@ import * as VanillaData from "./src/node_modules/@minecraft/vanilla-data/lib/ind
 
 declare module "@minecraft/server" {
     interface Player {
-        sendMsg: (...arg: (string | RawText)[]) => void;
         threwTridentAt: number;
         lastExplosionTime: number;
         blockData: any[];
@@ -53,8 +52,13 @@ declare module "@minecraft/server" {
 declare global {
     var console: Console;
     interface Console {
-        log: (...arg: any) => void
-        error: (...arg: any) => void
-        warn: (...arg: any) => void
+        log: (...arg: any) => void;
+        error: (...arg: any) => void;
+        warn: (...arg: any) => void;
+    }
+    interface String {
+        latinise: () => string;
+        latinize: () => string;
+        isLatin: () => boolean;
     }
 }

@@ -22,9 +22,7 @@ async function AntiFastUse(config: configi, player: Player) {
     }
 }
 
-registerModule ("antiFastUse", false, [lastItemUse],
-    {
-        worldSignal: world.afterEvents.itemUse,
-        then: async (config, player) => AntiFastUse(config, player)
-    }
-)
+registerModule("antiFastUse", false, [lastItemUse], {
+    worldSignal: world.afterEvents.itemUse,
+    then: async (config, player) => AntiFastUse(config, player),
+});

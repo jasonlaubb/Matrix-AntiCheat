@@ -37,22 +37,22 @@ async function AntiNoFall(player: Player, config: configi, now: number) {
         (threwTridentAt && now - threwTridentAt < 3000) ||
         (lastExplosionTime && now - lastExplosionTime < 5000)
     ) {
-        vl ?? playerVL.set(player.id, 0)
-        playerVL.set(player.id, 0)
+        vl ?? playerVL.set(player.id, 0);
+        playerVL.set(player.id, 0);
         return;
     }
 
     if (y == 0) {
-        vl ?? playerVL.set(player.id, 0)
-        vl ?? playerVL.set(player.id, vl + 1)
-    } else playerVL.set(player.id, 0)
+        vl ?? playerVL.set(player.id, 0);
+        vl ?? playerVL.set(player.id, vl + 1);
+    } else playerVL.set(player.id, 0);
 
     //velocityY is 0, flag the player
     if (y == 0 && playerVL.get(player.id) >= config.antiNoFall.float && getPing(player) < 5) {
         if (xz == 0 || xz == 0 || (player.spawnTime && now - player.spawnTime < 12000)) return;
         if (!config.slient) player.teleport(prevLoc);
         const lastflag = lastFlag.get(player.id);
-        playerVL.set(player.id, 0)
+        playerVL.set(player.id, 0);
         if (lastflag && now - lastflag < 2000 && now - lastflag > 80) {
             flag(player, "NoFall", "A", config.antiNoFall.maxVL, config.antiNoFall.punishment, ["velocityY" + ":" + +y.toFixed(2), "velocityXZ" + ":" + +xz.toFixed(2)]);
         }
@@ -62,16 +62,19 @@ async function AntiNoFall(player: Player, config: configi, now: number) {
 
 const playerSpawn = ({ player, initialSpawn: spawn }: PlayerSpawnAfterEvent) => spawn && (player.spawnTime = Date.now());
 
-registerModule ("antiNoFall", false, [lastLocation, lastFlag, playerVL],
+registerModule(
+    "antiNoFall",
+    false,
+    [lastLocation, lastFlag, playerVL],
     {
         tickInterval: 1,
         playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
         intick: async (config, player) => {
-            AntiNoFall (player, config, Date.now());
-        }
+            AntiNoFall(player, config, Date.now());
+        },
     },
     {
         worldSignal: world.afterEvents.playerSpawn,
-        then: async (_config, event: PlayerSpawnAfterEvent) => playerSpawn (event)
+        then: async (_config, event: PlayerSpawnAfterEvent) => playerSpawn(event),
     }
-)
+);

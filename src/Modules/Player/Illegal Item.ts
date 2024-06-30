@@ -6,10 +6,10 @@ import OperatorItemList from "../../Data/OperatorItemList";
 import EducationItemList from "../../Data/EducationItemList";
 
 const vanillaItems = Object.values(MinecraftItemTypes);
-function checkIllegalItem (player: Player, item: ItemStack, config: configi): boolean {
+function checkIllegalItem(player: Player, item: ItemStack, config: configi): boolean {
     if (config.antiIllegalItem.checkIllegal) {
         if (item.typeId.startsWith("minecraft:") && !EducationItemList.includes(item.typeId)) {
-            const isVanillaItem = binarySearchItem (item.typeId);
+            const isVanillaItem = binarySearchItem(item.typeId);
             if (!isVanillaItem) {
                 flag(player, "Illegal Item", "A", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId]);
                 return true;
@@ -22,8 +22,8 @@ function checkIllegalItem (player: Player, item: ItemStack, config: configi): bo
                 }
             }
         }
-    
-        const itemNameLength = item.nameTag.length
+
+        const itemNameLength = item.nameTag.length;
         if (itemNameLength > 64 || itemNameLength < 1) {
             flag(player, "Illegal Item", "B", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Length:" + itemNameLength]);
             return true;
@@ -48,7 +48,10 @@ function checkIllegalItem (player: Player, item: ItemStack, config: configi): bo
         const enchantments = encomp.getEnchantments();
         const newItemStack = new ItemStack(item.typeId, item.amount).getComponent("enchantable");
         for (const enchantment of enchantments) {
-            const { type: { maxLevel, id }, level } = enchantment;
+            const {
+                type: { maxLevel, id },
+                level,
+            } = enchantment;
             if (newItemStack.canAddEnchantment(enchantment)) {
                 newItemStack.addEnchantment(enchantment);
             } else {
@@ -71,7 +74,7 @@ function checkIllegalItem (player: Player, item: ItemStack, config: configi): bo
     if (config.antiIllegalItem.checkUnatural) {
         const itemlore = item.getLore();
         if (itemlore.length > 0) {
-            flag(player, "Illegal Item", "D", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Lore:" + (itemlore[0].length > 8 ? itemlore[0].slice(0,8) + "..." : itemlore[0])]);
+            flag(player, "Illegal Item", "D", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Lore:" + (itemlore[0].length > 8 ? itemlore[0].slice(0, 8) + "..." : itemlore[0])]);
             return true;
         }
         const adventurePlaceLength = [...item.getCanDestroy(), ...item.getCanPlaceOn()].length;
@@ -87,12 +90,12 @@ function checkIllegalItem (player: Player, item: ItemStack, config: configi): bo
     return false;
 }
 
-function inventoryCheck (config: configi, player: Player) {
+function inventoryCheck(config: configi, player: Player) {
     const container = player.getComponent("inventory")?.container;
     for (let i = 0; i < container.size; i++) {
         const item = container.getItem(i);
         if (!item) continue;
-        checkIllegalItem (player, item, config);
+        checkIllegalItem(player, item, config);
     }
 }
 
@@ -100,11 +103,11 @@ const upperlimit = vanillaItems.length - 1;
 const middlevalue = Math.trunc(upperlimit / 2);
 
 // At least decrease some lag.
-function binarySearchItem (itemId: string): boolean {
+function binarySearchItem(itemId: string): boolean {
     let index = middlevalue;
     let step = 1;
     if (itemId > vanillaItems[middlevalue]) {
-        step = -1
+        step = -1;
     } else if (itemId == vanillaItems[middlevalue]) return true;
     while (index >= 0 && index <= upperlimit) {
         if (vanillaItems[index] == itemId) {
@@ -122,5 +125,5 @@ function binarySearchItem (itemId: string): boolean {
 
 registerModule("antiIllegalItem", false, [], {
     tickInterval: 20,
-    intick: async (config, player) => inventoryCheck(config, player)
-})
+    intick: async (config, player) => inventoryCheck(config, player),
+});

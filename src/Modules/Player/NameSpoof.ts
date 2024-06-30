@@ -42,13 +42,11 @@ async function AntiNameSpoof(config: configi, player: Player, playerName: string
     }
 }
 
-registerModule ("antiNameSpoof", false, [], 
-    {
-        worldSignal: world.afterEvents.playerSpawn,
-        then: async (config, event: PlayerSpawnAfterEvent) => {
-            if (!event.initialSpawn) return;
-            const player = event.player;
-            AntiNameSpoof(config, player, player.name);
-        }
-    }
-)
+registerModule("antiNameSpoof", false, [], {
+    worldSignal: world.afterEvents.playerSpawn,
+    then: async (config, event: PlayerSpawnAfterEvent) => {
+        if (!event.initialSpawn) return;
+        const player = event.player;
+        AntiNameSpoof(config, player, player.name);
+    },
+});

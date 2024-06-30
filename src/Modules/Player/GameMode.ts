@@ -29,11 +29,11 @@ const gamemodes: { [key: string]: number } = {
     creative: 1,
     adventure: 2,
     spectator: 3,
-}
+};
 
-registerModule ("antiGameMode", false, [], {
+registerModule("antiGameMode", false, [], {
     worldSignal: world.beforeEvents.playerGameModeChange,
     then: async (config, event) => {
         AntiGameMode(config, event);
-    }
-})
+    },
+});

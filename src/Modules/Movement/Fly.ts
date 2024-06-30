@@ -113,12 +113,10 @@ function antiFly(player: Player, now: number, config: configi) {
     }
 }
 
-registerModule("antiFly", false, [flyData],
-    {
-        tickInterval: 1,
-        playerOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
-        intick: async (config, player) => {
-            antiFly(player, Date.now(), config);
-        }
-    }
-);
+registerModule("antiFly", false, [flyData], {
+    tickInterval: 1,
+    playerOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
+    intick: async (config, player) => {
+        antiFly(player, Date.now(), config);
+    },
+});
