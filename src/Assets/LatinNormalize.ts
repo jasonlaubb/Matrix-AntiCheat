@@ -1,8 +1,11 @@
+//@ts-nocheck
 /**
  * @author freayd
  * @link https://gist.github.com/freayd/5256985
+ * @file latinise.js
+ * @lines 3-993
  */
-export default {
+export default { // Edited `Latinise.latin_map = {` to `export default {`
 'Á': 'A', // LATIN CAPITAL LETTER A WITH ACUTE
 'Ă': 'A', // LATIN CAPITAL LETTER A WITH BREVE
 'Ắ': 'A', // LATIN CAPITAL LETTER A WITH BREVE AND ACUTE
