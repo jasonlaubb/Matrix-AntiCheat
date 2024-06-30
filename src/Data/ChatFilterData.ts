@@ -1096,18 +1096,6 @@ export default [
     "enfoire",
     "Enfoire",
     "fils de pute",
-    //link
-    "https",
-    ".best",
-    "discord.gg",
-    "realm.gg",
-    ".mcpe.fr",
-    ".mcpe",
-    ".com",
-    ".fr",
-    "vWDA8XAdHW",
-    "19132",
-    "2004",
     // italian
     "cazzo",
     "c4zzo",

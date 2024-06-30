@@ -1,5 +1,4 @@
 import { world, system } from "@minecraft/server";
-import { antiSpamModule } from "../../Modules/Misc/Spam";
 import { triggerCommand } from "./CommandHandler";
 import { chatRank } from "./ChatRank";
 import { adminChat } from "./AdminChat";
@@ -27,11 +26,6 @@ world.beforeEvents.chatSend.subscribe((event) => {
     }
 
     if (adminChat(player, message)) {
-        event.cancel = true;
-        return;
-    }
-
-    if (antiSpamModule(message, player) === true) {
         event.cancel = true;
         return;
     }
