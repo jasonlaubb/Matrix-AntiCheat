@@ -4,6 +4,6 @@ docs/
 .github
 LICENSE
 README.md
-texts/*.lang
-texts/po/*.po
+*.lang
+*.po
 generated-package/
