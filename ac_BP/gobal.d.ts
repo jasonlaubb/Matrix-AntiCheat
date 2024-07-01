@@ -1,5 +1,5 @@
-import * as Server from "./node_modules/@minecraft/server/index";
-import * as Ui from "./node_modules/@minecraft/server-ui/index";
+import * as Server from "../node_modules/@minecraft/server/index";
+import * as Ui from "../node_modules/@minecraft/server-ui/index";
 import * as VanillaData from "./src/node_modules/@minecraft/vanilla-data/lib/index";
 
 declare module "@minecraft/server" {

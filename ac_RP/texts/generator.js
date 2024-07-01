@@ -37,6 +37,7 @@ const fixedStart = `"Language: N/A\\n"
 "X-Generator: PhraseApp (phraseapp.com)\\n"`;
 let doTranslate = false;
 let getLanguages = false;
+let createPackDes = true;
 import("fs").then((fsModule) => {
     import("path").then((pathModule) => {
         const fs = fsModule.default;
@@ -215,6 +216,19 @@ import("fs").then((fsModule) => {
                     }
                 });
             });
+            if (createPackDes) {
+                for (const K of validLanguage) {
+                    let thiss;
+                    const poContent = fs.readFileSync(`${root}texts/pot/${K}.pot`, "utf8").split("\n");
+                    const index = poContent.indexOf("#: pack.description");
+                    if (poContent[index + 2] == `msgstr ""`) {
+                        thiss = `pack.description=§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)`
+                    } else {
+                        thiss = `pack.description=${poContent[index + 2].slice(8, -1)}`;
+                    }
+                    fs.writeFileSync(`${root}../ac_BP/texts/${K}.lang`, thiss);
+                }
+            }
         }
         convertPotFilesToPo();
     });
