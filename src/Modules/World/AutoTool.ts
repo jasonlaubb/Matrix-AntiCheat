@@ -1,5 +1,5 @@
 import { world, system, EntityHitBlockAfterEvent, Player, EntityInventoryComponent } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
+import { flag } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 
 /**
@@ -8,7 +8,7 @@ import { registerModule, configi } from "../Modules.js";
  */
 
 function doubleEvent(config: configi, { damagingEntity: player }: EntityHitBlockAfterEvent) {
-    if (!(player instanceof Player) || isAdmin(player) || !player.lastSelectSlot) return;
+    if (!(player instanceof Player) || !player.lastSelectSlot) return;
     const itemStack = player.getComponent(EntityInventoryComponent.componentId).container.getItem(player.selectedSlotIndex)?.typeId ?? "air";
     if (config.antiAutoTool.toolType.some((eit) => itemStack.endsWith(eit)) == false) return;
 
