@@ -42,7 +42,6 @@ import { intilizeModules } from "./Modules/Modules";
 world.afterEvents.worldInitialize.subscribe(intilizeModules);
 
 if (c().createScoreboard) {
-    system.runTimeout(() => world.sendMessage(JSON.stringify(c().intergradedAntiSpam)), 40);
     world.afterEvents.worldInitialize.subscribe(() => {
         try {
             world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
