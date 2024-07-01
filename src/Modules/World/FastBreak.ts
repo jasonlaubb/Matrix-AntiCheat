@@ -65,14 +65,14 @@ registerModule("antiFastBreak", false, [],
     {
         worldSignal: world.afterEvents.playerBreakBlock,
         playerOption: { entityTypes: ["minecraft:player"] },
-        then: async (config, event: PlayerBreakBlockAfterEvent) => {
+        then: async (_config, event: PlayerBreakBlockAfterEvent) => {
             doubleEvent(event);
         },
     },
     {
         worldSignal: world.beforeEvents.playerBreakBlock,
         playerOption: { entityTypes: ["minecraft:player"] },
-        then: async (config, event: EntityHitBlockAfterEvent) => {
+        then: async (_config, event: EntityHitBlockAfterEvent) => {
             tripleEvent(event);
         },
     }
