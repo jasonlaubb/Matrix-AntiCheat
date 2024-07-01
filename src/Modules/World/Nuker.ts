@@ -1,7 +1,8 @@
-import { Block, Player, PlayerBreakBlockBeforeEvent, PlayerLeaveAfterEvent, system, world, ItemStack, ItemEnchantableComponent } from "@minecraft/server";
-import { flag, isAdmin, c, recoverBlockBreak, isTargetGamemode } from "../../Assets/Util";
+import { Block, Player, PlayerBreakBlockBeforeEvent, system, world, ItemStack, ItemEnchantableComponent } from "@minecraft/server";
+import { flag, recoverBlockBreak, isTargetGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
+import { configi, registerModule } from "../Modules";
 
 const blockBreakData = new Map<string, number[]>();
 
@@ -11,11 +12,10 @@ const blockBreakData = new Map<string, number[]>();
  * it detects if a player breaks more than 5 blocks in a tick.
  */
 
-async function AntiNuker(player: Player, block: Block, itemStack: ItemStack) {
+async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, config: configi) {
     if (player.hasTag("matrix:break-disabled") || block?.isAir || isTargetGamemode(player, 1)) {
         return;
     }
-    const config = c();
 
     const timeNow = Date.now();
 
@@ -53,25 +53,9 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack) {
     }
 }
 
-const antiNuker = (event: PlayerBreakBlockBeforeEvent) => {
-    const { player, block, itemStack } = event;
-    if (isAdmin(player)) return;
-
-    AntiNuker(player, block, itemStack);
-};
-
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    blockBreakData.delete(playerId);
-};
-
-export default {
-    enable() {
-        world.beforeEvents.playerBreakBlock.subscribe(antiNuker);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-    },
-    disable() {
-        blockBreakData.clear();
-        world.beforeEvents.playerBreakBlock.unsubscribe(antiNuker);
-        world.afterEvents.playerLeave.unsubscribe(playerLeave);
-    },
-};
+registerModule ("antiNuker", false, [blockBreakData],
+    {
+        worldSignal: world.beforeEvents.playerBreakBlock,
+        then: async (config, { player, block, itemStack }: PlayerBreakBlockBeforeEvent) => AntiNuker(player, block, itemStack, config),
+    }
+)
