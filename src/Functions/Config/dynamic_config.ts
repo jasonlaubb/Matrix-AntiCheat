@@ -2,7 +2,7 @@
 import * as dy from "../../Data/Default";
 import Config from "../../Data/Config";
 const dynamic = dy.dynamic;
-const config = dynamic.followUserConfig ? dy.default : config;
+const config = dynamic.followUserConfig ? dy.default : Config;
 import userConfig from "../../Data/Config";
 import { AES } from "../../node_modules/crypto-es/lib/aes";
 import { world } from "@minecraft/server";
