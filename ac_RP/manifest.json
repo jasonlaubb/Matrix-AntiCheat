@@ -3,7 +3,7 @@
     "header": {
         "name": "Matrix Anti-Cheat RP V3.2.40-beta",
         "description": "pack.description",
-        "uuid": "22cc8811-023a-42dc-9f1b-45065f9d33b2",
+        "uuid": "a6e5b00c-7080-4ee7-a5f8-bc787a482c93",
         "version": [3, 2, 40],
         "min_engine_version": [1, 21, 0]
     },
@@ -14,13 +14,10 @@
     },
     "modules": [
         {
+            "description": "Resources pack for Matrix Anti-Cheat",
             "type": "resources",
             "uuid": "7cb1c36d-b2a8-4426-a03a-79340fed3ed3",
             "version": [1, 0, 0]
         }
-    ],
-    "capabilities": {
-        "experimental_custom_ui": false,
-        "chemistry": false
-    }
+    ]
 }
