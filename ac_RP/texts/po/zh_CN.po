@@ -1,0 +1,438 @@
+"Language: N/A\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: PhraseApp (phraseapp.com)\n"
+msgid "pack.description"
+msgstr "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
+
+
+msgid "crash.reload"
+msgstr "§cMatrix AntCheat has crashed! Do /reload to recover§r"
+
+
+msgid "flag.style"
+msgstr "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
+
+
+msgid "ui.title"
+msgstr "Admin GUI"
+
+
+msgid "ui.moderateplayer"
+msgstr "Moderate Players"
+
+
+msgid "ui.setting"
+msgstr "Settings"
+
+
+msgid "ui.exit"
+msgstr "Exit"
+
+
+msgid "ui.banplayer"
+msgstr "Ban Player"
+
+
+msgid "ui.ban.reason"
+msgstr "Reason:"
+
+
+msgid "ui.ban.placeholder"
+msgstr "Type your reason here"
+
+
+msgid "ui.toggle.enabled"
+msgstr "§aEnabled§r"
+
+
+msgid "ui.toggle.disabled"
+msgstr "§cDisabled§r"
+
+
+msgid "ui.toggle.enable"
+msgstr "§aEnable§r"
+
+
+msgid "ui.toggle.disable"
+msgstr "§cDisable§r"
+
+
+msgid "ui.ban.length"
+msgstr "Ban Duration"
+
+
+msgid "ui.ban.button"
+msgstr "Ban players §8(ban)"
+
+
+msgid "ui.freeze.button"
+msgstr "Freeze players §8(freeze)"
+
+
+msgid "ui.unfreeze.button"
+msgstr "Unfreeze players §8(unfreeze)"
+
+
+msgid "ui.mute.button"
+msgstr "Mute players §8(mute)"
+
+
+msgid "ui.unmute.button"
+msgstr "Unmute players §8(unmute)"
+
+
+msgid "ui.invcopy.button"
+msgstr "Invcopy players §8(invcopy)"
+
+
+msgid "ui.invsee.button"
+msgstr "Invsee players §8(invsee)"
+
+
+msgid "ui.echestwipe.button"
+msgstr "Echestwipe players §8(echestwipe)"
+
+
+msgid "rank.already"
+msgstr "%1 已经有 %2 §r§crank"
+
+
+msgid "rank.norank"
+msgstr "%1 没有 %2 §r§c 聊天称号"
+
+
+msgid "ban.has"
+msgstr "%1 已被 %2 停权"
+
+
+msgid "deop.hasbeen"
+msgstr "%1 已被 %2 解除管理员权限"
+
+
+msgid "freeze.has"
+msgstr "%1 已被 %2 冻结"
+
+
+msgid "mute.has"
+msgstr "%1 已被 %2 静音"
+
+
+msgid "op.hasbeen"
+msgstr "%1 已被 %2 给予管理员权限"
+
+
+msgid "unfreeze.has"
+msgstr "%1 已被 %2 解冻"
+
+
+msgid "unmute.has"
+msgstr "%1 已被 %2 取消静音"
+
+
+msgid "toggles.togglechange"
+msgstr "%1 模组已 %2d"
+
+
+msgid "rank.hasadd"
+msgstr "%1 的聊天称号已新增 %2"
+
+
+msgid "rank.hasset"
+msgstr "%1 的聊天称号已设定为 %2"
+
+
+msgid "rank.empty"
+msgstr "%s 没有任何聊天称号"
+
+
+msgid "rankclear.empty"
+msgstr "%s 没有任何聊天称号"
+
+
+msgid "unban.add"
+msgstr "%s 已被加入至解禁队列"
+
+
+msgid "unbanremove.yes"
+msgstr "%s 已从解禁队列中删除"
+
+
+msgid "freeze.already"
+msgstr "%s 已经冻结"
+
+
+msgid "mute.already"
+msgstr "%s 已经静音"
+
+
+msgid "util.formban"
+msgstr "%s 已被自动封禁"
+
+
+msgid "util.formkick"
+msgstr "%s 已被自动踢出"
+
+
+msgid "deop.notadmin"
+msgstr "%s 不是管理者"
+
+
+msgid "unban.notban"
+msgstr "%s 未被停权"
+
+
+msgid "unfreeze.not"
+msgstr "%s 没有冻结"
+
+
+msgid "unbanremove.not"
+msgstr "%s 不在解禁队列"
+
+
+msgid "unmute.not"
+msgstr "%s 未静音"
+
+
+msgid "rankclear.has"
+msgstr "%s的聊天称号已被清除"
+
+
+msgid "rank.hasremove"
+msgstr "%s 的聊天称号已删除"
+
+
+msgid "bot.title"
+msgstr "Anti Bot Verification"
+
+
+msgid "about.author"
+msgstr "作者"
+
+
+msgid "invcopy.not"
+msgstr "从 %s 複製背包"
+
+
+msgid "defaultrank.has"
+msgstr "预设聊天称号已设定为 %s"
+
+
+msgid "echestwipe.has"
+msgstr "%1 的终界箱已被 %2 擦拭"
+
+
+msgid "flagmode.changed"
+msgstr "警示模式已变更为 %s"
+
+
+msgid "bot.waitui"
+msgstr "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
+
+
+msgid "help.helpcdlist"
+msgstr "帮助指令清单："
+
+
+msgid "invsee.of"
+msgstr "%s 的背包"
+
+
+msgid "lang.has"
+msgstr "语言已更改为 %s"
+
+
+msgid "lockdowncode.get"
+msgstr "锁定锁定码：%s"
+
+
+msgid "unlock.has"
+msgstr "%s 已停用锁定"
+
+
+msgid "unlock.not"
+msgstr "锁定尚未启用"
+
+
+msgid "about.line"
+msgstr "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
+
+
+msgid "util.noreason"
+msgstr "未提供原因"
+
+
+msgid "passwords.changed"
+msgstr "密码已更改"
+
+
+msgid "op.wait"
+msgstr "请你在 %s 秒后再次尝试"
+
+
+msgid "showallrank.has"
+msgstr "显示所有聊天称号已设定为 %s"
+
+
+msgid "lockdowncode.set"
+msgstr "成功将锁定锁定码变更为 %s"
+
+
+msgid "bordersize.ok"
+msgstr "Sucessfully changed world border size to %s"
+
+
+msgid "lockdowncode.random"
+msgstr "成功随机锁定锁定码 - %s"
+
+
+msgid "lockdown.already"
+msgstr "伺服器已被 %s 转为锁定模式"
+
+
+msgid "deop.lockdown"
+msgstr "伺服器处于锁定模式"
+
+
+msgid "lockdown.has"
+msgstr "伺服器现在处于锁定模式"
+
+
+msgid "unbanlist.none"
+msgstr "解封队列中没有玩家"
+
+
+msgid "toggles.already"
+msgstr "这个模组已被 %sd, 无法执行该操作"
+
+
+msgid "toggles.toggle"
+msgstr "切换"
+
+
+msgid "toggles.togglelist"
+msgstr "切换清单："
+
+
+msgid "unbanlist.list"
+msgstr "解禁队列"
+
+
+msgid "toggles.unknownmodule"
+msgstr "未知模组，尝试 %stoggles"
+
+
+msgid "about.version"
+msgstr "版本"
+
+
+msgid "lockdown.wrong"
+msgstr "锁定码错误"
+
+
+msgid "op.wrong"
+msgstr "密码错误!"
+
+
+msgid "chathandler.muted"
+msgstr "你已静音！"
+
+
+msgid "dimensionlock.stop"
+msgstr "你不可以去其他维度！"
+
+
+msgid "op.now"
+msgstr "您现在是管理员"
+
+
+msgid "adminchat.has"
+msgstr "您现在处于管理频道"
+
+
+msgid "adminchat.out"
+msgstr "您现在处于公共频道"
+
+
+msgid "vanish.out"
+msgstr "你现在不再消失了"
+
+
+msgid "vanish.has"
+msgstr "你现在消失了"
+
+
+msgid "border.outside"
+msgstr "You cannot access a location which is outside the world border."
+
+
+msgid "border.reached"
+msgstr "You cannot access that location, you have reached the world border."
+
+
+msgid "border.interact"
+msgstr "You cannot interact with a block or entity which is outside the world border."
+
+
+msgid "bot.ok"
+msgstr "You have been verified successfully"
+
+
+msgid "toggles.warning"
+msgstr "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
+
+
+msgid "adminchat.adminchat"
+msgstr "管理聊天"
+
+
+msgid "bot.ui.headline"
+msgstr "§a[This server is protected by Matrix AntiCheat]"
+
+
+msgid "bot.ui.need"
+msgstr "§gYou need to verify if you're not a bot §7(%1/%2)"
+
+
+msgid "bot.ui.haveleft"
+msgstr "§gYou have §e%s§gseconds left"
+
+
+msgid "bot.ui.enterbelow"
+msgstr "Enter the code §e§l%s§r§g below"
+
+
+msgid "xray.broken"
+msgstr "%1 mined %2 at %3"
+
+
+msgid "spam.sensitiveword"
+msgstr "Your message contains a sensitive word"
+
+
+msgid "spam.messagerate"
+msgstr "Please slow down your messages"
+
+
+msgid "spam.repeated"
+msgstr "您不能再发送相同的讯息"
+
+
+msgid "spam.spamming"
+msgstr "Spamming chat"
+
+
+msgid "spam.lengthlimit"
+msgstr "Your message is too long"
+
+
+msgid "spam.includelink"
+msgstr "Sorry, but link is not allowed on this server"
+
+
+msgid "spam.email"
+msgstr "Sorry, but you cannot send an email on chat"
+
+

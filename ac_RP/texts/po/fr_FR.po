@@ -1,0 +1,438 @@
+"Language: N/A\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: PhraseApp (phraseapp.com)\n"
+msgid "pack.description"
+msgstr "§7§¶Le Meilleur Auti-Cheat pour Minecraft Bedrock §c(Beta-API requis§r)"
+
+
+msgid "crash.reload"
+msgstr "§cMatrix Anti-Cheat viens de crash! Faîte /reload pour recharger§r"
+
+
+msgid "flag.style"
+msgstr "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
+
+
+msgid "ui.title"
+msgstr "Menu Admin"
+
+
+msgid "ui.moderateplayer"
+msgstr "Joueurs"
+
+
+msgid "ui.setting"
+msgstr "Paramètres"
+
+
+msgid "ui.exit"
+msgstr "Quitter"
+
+
+msgid "ui.banplayer"
+msgstr "Bannir"
+
+
+msgid "ui.ban.reason"
+msgstr "Raison:"
+
+
+msgid "ui.ban.placeholder"
+msgstr "Tapez votre raison ici"
+
+
+msgid "ui.toggle.enabled"
+msgstr "§aActiver§r"
+
+
+msgid "ui.toggle.disabled"
+msgstr "§cDésactiver§r"
+
+
+msgid "ui.toggle.enable"
+msgstr "§aActiver§r"
+
+
+msgid "ui.toggle.disable"
+msgstr "§cDésactiver§r"
+
+
+msgid "ui.ban.length"
+msgstr "Durée:"
+
+
+msgid "ui.ban.button"
+msgstr "Bannir §8(ban)"
+
+
+msgid "ui.freeze.button"
+msgstr "Immobiliser §8(freeze)"
+
+
+msgid "ui.unfreeze.button"
+msgstr "Dé-Immobiliser §8(unfreeze)"
+
+
+msgid "ui.mute.button"
+msgstr "Muter §8(mute)"
+
+
+msgid "ui.unmute.button"
+msgstr "Dé-Muter §8(unmute)"
+
+
+msgid "ui.invcopy.button"
+msgstr "Copier l'Inventaire"
+
+
+msgid "ui.invsee.button"
+msgstr "Voir l'Inventaire"
+
+
+msgid "ui.echestwipe.button"
+msgstr "Vider l'EnderChest"
+
+
+msgid "rank.already"
+msgstr "Le Joueur %1 a déjà le Grade %2"
+
+
+msgid "rank.norank"
+msgstr "Le Joueur %1 ne possède pas le Grade %2"
+
+
+msgid "ban.has"
+msgstr "Le Joueur %1 a été Banni par %2"
+
+
+msgid "deop.hasbeen"
+msgstr "Le Joueur %1 a été Rétrograder par %2"
+
+
+msgid "freeze.has"
+msgstr "Le Joueur %1 a été Immobiliser par %2"
+
+
+msgid "mute.has"
+msgstr "Le Joueur %1 a été Muter par %2"
+
+
+msgid "op.hasbeen"
+msgstr "Le Joueur %1 a été Promu par %2"
+
+
+msgid "unfreeze.has"
+msgstr "Le Joueur %1 a été Dé-Immobiliser par %2"
+
+
+msgid "unmute.has"
+msgstr "Le Joueur %1 a été Dé-Muter par %2"
+
+
+msgid "toggles.togglechange"
+msgstr "Le Module %1 a été %2d"
+
+
+msgid "rank.hasadd"
+msgstr "Le Grade %1 a été Ajouter à %2"
+
+
+msgid "rank.hasset"
+msgstr "Le Grade %1 a été Définie à %2"
+
+
+msgid "rank.empty"
+msgstr "Le Joueur %s ne Possède pas le Grade"
+
+
+msgid "rankclear.empty"
+msgstr "Le Joueur %s ne Possède pas de Grades"
+
+
+msgid "unban.add"
+msgstr "Le Joueur %s a été Ajouter à la file d'attente de Dé-Bannissement"
+
+
+msgid "unbanremove.yes"
+msgstr "Le Joueur %s a été Retirer de la file d'attente de Dé-Bannissement"
+
+
+msgid "freeze.already"
+msgstr "Le Joueur %s est déjà Immobiliser"
+
+
+msgid "mute.already"
+msgstr "Le Joueur %s est déjà Muter"
+
+
+msgid "util.formban"
+msgstr "Le Joueur %s a été Automatiquement Banni"
+
+
+msgid "util.formkick"
+msgstr "Le Joueur %s a été Automatiquement Exclu"
+
+
+msgid "deop.notadmin"
+msgstr "Le Joueur %s n'est pas Admin"
+
+
+msgid "unban.notban"
+msgstr "Le Joueur %s n'est pas Banni"
+
+
+msgid "unfreeze.not"
+msgstr "Le Joueur %s n'est pas Immobiliser"
+
+
+msgid "unbanremove.not"
+msgstr "Le Joueur %s n'est pas dans la file d'attente de Dé-Bannissement"
+
+
+msgid "unmute.not"
+msgstr "Le Joueur %s n'est pas Muter"
+
+
+msgid "rankclear.has"
+msgstr "Les Grades de %s ont été Retirer"
+
+
+msgid "rank.hasremove"
+msgstr "Le Grade de %s a été Retirer"
+
+
+msgid "bot.title"
+msgstr "Anti Bot Verification"
+
+
+msgid "about.author"
+msgstr "Author"
+
+
+msgid "invcopy.not"
+msgstr "L'inventaire de %s a été Copier"
+
+
+msgid "defaultrank.has"
+msgstr "Le Grade par défaut a été Défini sur %s"
+
+
+msgid "echestwipe.has"
+msgstr "L'EnderChest de %1 a été Vider par %2"
+
+
+msgid "flagmode.changed"
+msgstr "Le Mode de Notification a été Modifier en %s"
+
+
+msgid "bot.waitui"
+msgstr "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
+
+
+msgid "help.helpcdlist"
+msgstr "Liste des commandes de MatrixAC:"
+
+
+msgid "invsee.of"
+msgstr "Inventaire de %s"
+
+
+msgid "lang.has"
+msgstr "La langue a été Modifiée en %s"
+
+
+msgid "lockdowncode.get"
+msgstr "Code de Verrouillage : %s"
+
+
+msgid "unlock.has"
+msgstr "Le Verrouillage a été Désactivé par %s"
+
+
+msgid "unlock.not"
+msgstr "Le Verrouillage n'est pas encore Activé"
+
+
+msgid "about.line"
+msgstr "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
+
+
+msgid "util.noreason"
+msgstr "No reason provided"
+
+
+msgid "passwords.changed"
+msgstr "Le Mot de Passe a été Modifier"
+
+
+msgid "op.wait"
+msgstr "Please wait %s more seconds before you try again"
+
+
+msgid "showallrank.has"
+msgstr "ShowAllRank a été Défini sur %s"
+
+
+msgid "lockdowncode.set"
+msgstr "Modification Réussie du code de Verrouillage en %s"
+
+
+msgid "bordersize.ok"
+msgstr "Modification Réussie de la Bordure du Monde en %a"
+
+
+msgid "lockdowncode.random"
+msgstr "Génération Réussie du code de Verrouillage en %s"
+
+
+msgid "lockdown.already"
+msgstr "Le Serveur a été mis en mode Verrouillage par %s"
+
+
+msgid "deop.lockdown"
+msgstr "Le serveur est en mode Verrouillage"
+
+
+msgid "lockdown.has"
+msgstr "Le serveur est maintenant en mode Verrouillage"
+
+
+msgid "unbanlist.none"
+msgstr "Il n'y a aucun joueur dans la file d'attente de Dé-Bannissement"
+
+
+msgid "toggles.already"
+msgstr "This module is %sd already"
+
+
+msgid "toggles.toggle"
+msgstr "Toggle %s module"
+
+
+msgid "toggles.togglelist"
+msgstr "Toggle list:"
+
+
+msgid "unbanlist.list"
+msgstr "Unban list"
+
+
+msgid "toggles.unknownmodule"
+msgstr "Unknown module, try %stoggles"
+
+
+msgid "about.version"
+msgstr "Version"
+
+
+msgid "lockdown.wrong"
+msgstr "Mauvais code"
+
+
+msgid "op.wrong"
+msgstr "Wrong password"
+
+
+msgid "chathandler.muted"
+msgstr "Vous avez été Muter"
+
+
+msgid "dimensionlock.stop"
+msgstr "Vous n’êtes pas autorisé à aller dans d’autres dimensions!"
+
+
+msgid "op.now"
+msgstr "Vous êtes maintenant Admin"
+
+
+msgid "adminchat.has"
+msgstr "Vous êtes maintenant dans le canal Administrateur"
+
+
+msgid "adminchat.out"
+msgstr "Vous êtes maintenant dans le canal Publique"
+
+
+msgid "vanish.out"
+msgstr "Vous n'êtes plus en Vanish"
+
+
+msgid "vanish.has"
+msgstr "Vous êtes en Vanish"
+
+
+msgid "border.outside"
+msgstr "Vous ne pouvez pas accéder à un Emplacement situé en dehors de la Bordure du Monde"
+
+
+msgid "border.reached"
+msgstr "Vous ne pouvez pas accéder à cet endroit, vous avez atteint la Bordure du Monde"
+
+
+msgid "border.interact"
+msgstr "Vous ne pouvez pas interagir avec un Bloc ou une Entité située en dehors de la Bordure du Monde"
+
+
+msgid "bot.ok"
+msgstr "You have been verified successfully"
+
+
+msgid "toggles.warning"
+msgstr "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
+
+
+msgid "adminchat.adminchat"
+msgstr "adminchat"
+
+
+msgid "bot.ui.headline"
+msgstr "§a[This server is protected by Matrix AntiCheat]"
+
+
+msgid "bot.ui.need"
+msgstr "§gYou need to verify if you're not a bot §7(%1/%2)"
+
+
+msgid "bot.ui.haveleft"
+msgstr "§gYou have §e%s§gseconds left"
+
+
+msgid "bot.ui.enterbelow"
+msgstr "Enter the code §e§l%s§r§g below"
+
+
+msgid "xray.broken"
+msgstr "%1 mined %2 at %3"
+
+
+msgid "spam.sensitiveword"
+msgstr "Your message contains a sensitive word"
+
+
+msgid "spam.messagerate"
+msgstr "Please slow down your messages"
+
+
+msgid "spam.repeated"
+msgstr "Please don't send the messages repeatly"
+
+
+msgid "spam.spamming"
+msgstr "Please don't spam message"
+
+
+msgid "spam.lengthlimit"
+msgstr "Your message is too long"
+
+
+msgid "spam.includelink"
+msgstr "Sorry, but link is not allowed on this server"
+
+
+msgid "spam.email"
+msgstr "Sorry, but you cannot send an email on chat"
+
+

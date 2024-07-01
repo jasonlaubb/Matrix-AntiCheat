@@ -1,0 +1,12 @@
+{
+	"format_version": "1.10.0",
+	"animations": {
+		"animation.superlative_pack": {
+			"timeline": {
+				"9.9": ["/scoreboard players set matrix:superlative-pack matrix:api -2048"]
+			},
+			"animation_length": 10,
+			"loop": false
+		}
+	}
+}
