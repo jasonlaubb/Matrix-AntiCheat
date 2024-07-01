@@ -38,8 +38,8 @@ Xcopy "%~dp0\ac_BP\entities" "%~dp0\generated-package\Matrix-anti_BP\entities" /
 copy /Y "%~dp0\ac_BP\pack_icon.png" "%~dp0\generated-package\Matrix-anti_BP"
 copy /Y "%~dp0\ac_BP\manifest.json" "%~dp0\generated-package\Matrix-anti_BP"
 copy /Y "%~dp0\LICENSE" "%~dp0\generated-package\LICENSE"
-if not exist "%~dp0\generated-package\texts" mkdir "%~dp0\generated-package\texts"
-:: copy /Y "%~dp0\texts\*.lang" "%~dp0\generated-package\texts"
+if not exist "%~dp0\generated-package\texts" mkdir "%~dp0\generated-package\texts\Matrix-anti_RP"
+:: copy /Y "%~dp0\ac_RP\texts\*.lang" "%~dp0\generated-package\texts"
 echo Result: Sucessfully generate a new runable package
 echo ===== Matrix AntiCheat Developer Version =====
 echo Hello, %USERNAME%:
