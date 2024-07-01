@@ -1,22 +1,30 @@
-import { Player } from "@minecraft/server";
+import { Player, Vector3 } from "@minecraft/server";
 import { flag } from "../../Assets/Util.js";
 import { tps } from "../../Assets/Public.js";
 import { configi, registerModule } from "../Modules.js";
 
 interface timerData {
-    safeZone: any;
-    lastFlag: any;
-    locationData: any;
-    iSL: any;
-    maxDBVD: any;
-    xzLog: any;
-    disLog: any;
-    timerLog: any;
-    yLog: any;
-    yDisLog: any;
+    safeZone: Vector3;
+    lastFlag: number;
+    locationData: {
+        location: Vector3;
+        recordTime: number;
+    };
+    iSL: number | false;
+    maxDBVD: number;
+    xzLog: number;
+    disLog: number;
+    timerLog: number;
+    yLog: number;
+    yDisLog: number;
 }
 
 const timerData = new Map<string, timerData>();
+
+/** @description Return that player is spike lagging */
+export function isISL (player: Player): boolean {
+    return !!timerData.get(player.id)?.iSL;
+}
 
 /**
  * @author RamiGamerDev
@@ -94,8 +102,8 @@ export async function SystemEvent(player: Player, now: number) {
     //reset anti y timer if player used /tp or using high velocity
     if ((y == 0 && Math.abs(y1 - y2) > 0.1) || y > 0.5 || player.hasTag("matrix:riding")) data.yDisLog = 0;
     //check if the player is spike lagging
-    if (dBVD > 0.5) data.iSL++;
-    if (dBVD < 0.5 && data.iSL <= 4 && data.iSL > 0) data.iSL = true;
+    if (dBVD > 0.5) (data.iSL as number)++;
+    if (dBVD < 0.5 &&(data.iSL as number) <= 4 && (data.iSL as number) > 0) (data.iSL as boolean) = true;
     timerData.set(player.id, data);
 }
 

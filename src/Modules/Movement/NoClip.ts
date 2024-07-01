@@ -2,6 +2,7 @@ import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAf
 import { flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
+import { isISL } from "./Timer";
 
 const powderBlock = [
     MinecraftBlockTypes.RedConcretePowder,
@@ -89,7 +90,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     ) {
         const lastflag = data.lastFlag2;
         if (!config.slient) player.teleport(data.lastLocation);
-        if (lastflag && now - lastflag < 2000) {
+        if (lastflag && now - lastflag < 2000 && !isISL(player)) {
             flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined);
         }
         data.lastFlag2 = now;
@@ -114,7 +115,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         !(player.lastApplyDamage && now - player.lastApplyDamage < 250)
     ) {
         if (!config.slient) player.teleport(player.lastSafePos);
-        if (lastflag && now - lastflag < 850) {
+        if (lastflag && now - lastflag < 850 && !isISL(player)) {
             if (Math.abs(y) < 1.75) {
                 flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
             } else if (!player.hasTag("matrix:riding")) {
