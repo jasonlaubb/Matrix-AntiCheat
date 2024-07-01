@@ -153,9 +153,9 @@ import "./Misc/Spammer";
 import "./Misc/Crasher";
 import "./Movement/Fly";
 import "./Movement/NoFall";
+import "./Movement/Timer"; //* Timer > NoClip
 import "./Movement/NoClip";
 import "./Movement/Speed";
-import "./Movement/Timer";
 import "./Movement/NoSlow";
 import "./Movement/ElytraFly";
 import "./World/Nuker";
