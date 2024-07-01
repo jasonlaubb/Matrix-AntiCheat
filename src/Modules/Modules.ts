@@ -1,36 +1,4 @@
 import { c, isAdmin } from "../Assets/Util";
-import "./Combat/Auto Clicker";
-import "./Combat/Kill Aura";
-import "./Combat/Reach";
-import "./Combat/Aim";
-import "./Misc/Spammer";
-import "./Misc/Crasher";
-import "./Movement/Fly";
-import "./Movement/NoFall";
-import "./Movement/NoClip";
-import "./Movement/Speed";
-import "./Movement/Timer";
-import "./Movement/NoSlow";
-import "./Movement/ElytraFly";
-import "./World/Nuker";
-import "./World/Scaffold";
-import "./World/Tower";
-import "./World/CommandBlockExplolit";
-import "./World/Breaker";
-import "./Player/BlockReach";
-import "./Player/Illegal Item";
-import "./Player/NameSpoof";
-import "./Player/Auto";
-import "./Player/FastUse";
-import "./Player/GameMode";
-import "./Misc/Spam";
-import "./World/AutoTool";
-import "./Misc/Bot";
-import "./World/FastBreak";
-import "./Misc/Xray";
-import "./Movement/World Border";
-import "./Misc/Disabler";
-import "./Player/ClientAuth";
 
 import { EntityEventOptions, EntityQueryOptions, Player, system, world } from "@minecraft/server";
 import Default from "../Data/Default";
@@ -40,7 +8,7 @@ import Default from "../Data/Default";
  * @description Module Handler
  */
 
-let MODULES: Module[] = [];
+const MODULES: Module[] = [];
 
 export function registerModule(id: string, checkAdmin: boolean, varargs: (Map<string, any> | { [key: string]: any })[], ...event: (TickEvent | WorldEvent | IntilizeEvent)[]): void {
     const tickEvent = (event as TickEvent[]).filter((ev) => ev?.tickInterval);
@@ -176,3 +144,36 @@ interface IntilizeEvent {
     onIntilize: (config: configi) => Promise<void | number>;
     runAfterSubsribe: number;
 }
+
+import "./Combat/Auto Clicker";
+import "./Combat/Kill Aura";
+import "./Combat/Reach";
+import "./Combat/Aim";
+import "./Misc/Spammer";
+import "./Misc/Crasher";
+import "./Movement/Fly";
+import "./Movement/NoFall";
+import "./Movement/NoClip";
+import "./Movement/Speed";
+import "./Movement/Timer";
+import "./Movement/NoSlow";
+import "./Movement/ElytraFly";
+import "./World/Nuker";
+import "./World/Scaffold";
+import "./World/Tower";
+import "./World/CommandBlockExplolit";
+import "./World/Breaker";
+import "./Player/BlockReach";
+import "./Player/Illegal Item";
+import "./Player/NameSpoof";
+import "./Player/Auto";
+import "./Player/FastUse";
+import "./Player/GameMode";
+import "./Misc/Spam";
+import "./World/AutoTool";
+import "./Misc/Bot";
+import "./World/FastBreak";
+import "./Misc/Xray";
+import "./Movement/World Border";
+import "./Misc/Disabler";
+import "./Player/ClientAuth";
