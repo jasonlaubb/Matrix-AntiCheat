@@ -1,6 +1,7 @@
-import { world, system, PlayerPlaceBlockAfterEvent, PlayerLeaveAfterEvent, Vector3 } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { world, system, PlayerPlaceBlockAfterEvent, Vector3 } from "@minecraft/server";
+import { flag } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { configi, registerModule } from "../Modules";
 
 /**
  * @author jasonlaubb & RaMiGamerDev
@@ -30,9 +31,8 @@ interface ScaffoldData {
     maxExt: number;
 }
 const scaffoldData = new Map<string, ScaffoldData>();
-function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEvent) {
-    if (isAdmin(player) || player.hasTag("matrix:place-disabled")) return;
-    const config = c();
+function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPlaceBlockAfterEvent) {
+    if (player.hasTag("matrix:place-disabled")) return;
     let data = scaffoldData.get(player.id);
     const { x, y, z } = block.location;
     if (!data) {
@@ -177,9 +177,6 @@ function playerPlaceBlockAfterEvent({ player, block }: PlayerPlaceBlockAfterEven
         system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiScaffold.timeout);
     }
 }
-function playerLeaveAfterEvent({ playerId }: PlayerLeaveAfterEvent) {
-    scaffoldData.delete(playerId);
-}
 function calculateAngle(pos1: Vector3, pos2: Vector3, rotation = -90) {
     let angle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / Math.PI - rotation - 90;
     angle = angle <= -180 ? (angle += 360) : angle;
@@ -190,14 +187,10 @@ function isUnderPlayer(p: Vector3, pos2: Vector3) {
     const offsets = [-1, 0, 1];
     return offsets.includes(p.x - pos2.x) && offsets.includes(p.z - pos2.z);
 }
-export default {
-    enable() {
-        world.afterEvents.playerPlaceBlock.subscribe(playerPlaceBlockAfterEvent);
-        world.afterEvents.playerLeave.subscribe(playerLeaveAfterEvent);
-    },
-    disable() {
-        scaffoldData.clear();
-        world.afterEvents.playerPlaceBlock.unsubscribe(playerPlaceBlockAfterEvent);
-        world.afterEvents.playerLeave.unsubscribe(playerLeaveAfterEvent);
-    },
-};
+
+registerModule ("antiScaffold", false, [scaffoldData],
+    {
+        worldSignal: world.afterEvents.playerPlaceBlock,
+        then: async (config, event) => playerPlaceBlockAfterEvent (config, event),
+    }
+)
