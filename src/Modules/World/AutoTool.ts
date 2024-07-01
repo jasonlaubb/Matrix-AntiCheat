@@ -18,15 +18,14 @@ function doubleEvent(config: configi, { damagingEntity: player }: EntityHitBlock
     }
 };
 
-function intickEvent(config: configi, player: Player) {
-    if (isAdmin(player)) continue;
+function intickEvent(player: Player) {
     const selectSlot = player.selectedSlotIndex;
     system.run(() => (player.lastSelectSlot = selectSlot));
 };
 
 registerModule("antiAutoTool", false, [], 
     {
-        intick: async (config, player) => intickEvent(config, player),
+        intick: async (_config, player) => intickEvent(player),
         tickInterval: 1,
     },
     {
