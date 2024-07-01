@@ -14,6 +14,7 @@
     "outDir": "./scripts",
     "typeRoots": ["./node_modules/@minecraft"],
     "strictNullChecks": false,
+    "strictFunctionTypes": false,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noImplicitAny": true,
@@ -21,5 +22,11 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
     "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "sourceMap": false,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": false,
+    "compileOnSave": true
   }
 }
