@@ -28,6 +28,7 @@ copy "%~dp0ac_BP\manifest.json" "%~dp0generated-package\Matrix-anti_BP" /Y
 copy "%~dp0LICENSE" "%~dp0generated-package\Matrix-anti_BP" /Y
 if not exist "%~dp0generated-package\Matrix-anti_BP\texts" mkdir "%~dp0generated-package\Matrix-anti_BP\texts"
 copy "%~dp0ac_BP\texts\*.lang" "%~dp0generated-package\Matrix-anti_BP\texts" /Y
+copy "%~dp0ac_BP\texts\languages.json" "%~dp0generated-package\Matrix-anti_BP\texts" /Y
 Xcopy "%~dp0ac_BP\scripts" "%~dp0generated-package\Matrix-anti_BP\scripts" /Y /E /H /C /I
 Xcopy "%~dp0ac_BP\animations" "%~dp0generated-package\Matrix-anti_BP\animations" /Y /E /H /C /I
 Xcopy "%~dp0ac_BP\functions" "%~dp0generated-package\Matrix-anti_BP\functions" /Y /E /H /C /I

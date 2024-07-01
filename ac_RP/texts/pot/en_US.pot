@@ -212,6 +212,10 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
+#: about.github
+msgid "Github"
+msgstr ""
+
 #: invcopy.not
 msgid "Copied inventory from %s"
 msgstr ""
