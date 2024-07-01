@@ -1,5 +1,7 @@
 @echo off
 echo Please check if you have installed NodeJS. It's required when building.
+echo This anticheat project is under AGPL 3.0 license. Please follow it.
+echo Github link: https://github.com/jasonlaubb/Matrix-AntiCheat
 set /p user_input=Would you like to continue? (Y/N)
 if /i "%user_input%" neq "Y" (
     echo Process ended.
