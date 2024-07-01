@@ -41,25 +41,25 @@ import("fs").then((fsModule) => {
     import("path").then((pathModule) => {
         const fs = fsModule.default;
         const path = pathModule.default;
-        const checkRoot = fs.existsSync("./texts");
-        const root = checkRoot ? "./texts/" : "./";
+        const root = "./ac_RP/";
 
         async function convertPotFilesToPo() {
             console.log("Process: Preparing to convert pot files to po files");
             const { po } = await import("gettext-parser");
             if (doTranslate) {
-                const poContent = fs.readFileSync(root + "pot/en_US.pot", "utf8");
+                const poContent = fs.readFileSync(`${root}texts/pot/en_US.pot`, "utf8");
                 const output = poContent.split("\n").filter((a) => a.startsWith("#: ")).map((a) => a.slice(3)).map((v) => '    | "' + v.replace("\r", "") + '"')
-                const filed = fs.readFileSync(root == "./" ? "../src/Assets/Language.ts" : "./src/Assets/Language.ts", "utf8");
+                const filed = fs.readFileSync(`${root}../ac_BP/scr/Assets/Language.ts`, "utf8");
                 const lines = filed.split("export");
                 let there = lines[0] + "export type Translate = \n";
                 there += output.join("\n");
 
-                fs.writeFileSync(root == "./" ? "../src/Data/Language.ts" : "./src/Assets/Language.ts", there);
+                fs.writeFileSync(`${root}../ac_BP/scr/Assets/Language.ts`, there);
                 return;
             };
+            /*
             if (getLanguages) {
-                let allFiles = fs.readdirSync(root + "../scripts/Data/Languages");
+                let allFiles = fs.readdirSync(``);
                 console.log(allFiles);
                 allFiles = allFiles.filter((a) => validLanguage.includes(a.replace(".js", "")));
                 console.log(allFiles);
@@ -84,20 +84,20 @@ import("fs").then((fsModule) => {
                     })
                 })
                 return;
-            };
-            fs.readdir(root + "pot", async (err, files) => {
+            };*/
+            fs.readdir(`${root}texts/pot`, async (err, files) => {
                 if (err) {
                     await new Promise((resolve) => setTimeout(resolve, 500));
                     console.error(err);
                     return;
                 }
 
-                const copyFiles = fs.readFileSync(root + "pot/en_US.pot", "utf8");
+                const copyFiles = fs.readFileSync(`${root}texts/pot/en_US.pot`, "utf8");
 
                 if (files.length < validLanguage.length) {
                     const notAdded = validLanguage.filter((x) => !files.includes(x + ".pot"));
                     notAdded.forEach((file) => {
-                        fs.writeFileSync(root + "pot/" + file + ".pot", copyFiles);
+                        fs.writeFileSync(`${root}texts/pot/` + file + ".pot", copyFiles);
                     });
                     console.log("Missing .pot files");
                     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -105,7 +105,7 @@ import("fs").then((fsModule) => {
                     return;
                 }
                 console.log("Process: Start reading pot files");
-                const enusBase = fs.readFileSync(root + "pot/en_US.pot", "utf8").replace(/\r/g, "").split("\n").map((a) => a.trim()).join("\n");
+                const enusBase = fs.readFileSync(root + "texts/pot/en_US.pot", "utf8").replace(/\r/g, "").split("\n").map((a) => a.trim()).join("\n");
                 const acceptedStr = enusBase.match(/#\: .*/g).map((a) => a.slice(3));
                 const valueCatch = enusBase.match(/msgid ".*"/g).map((a) => a.slice(7).slice(0,-1));
                 const biu = [];
@@ -114,7 +114,7 @@ import("fs").then((fsModule) => {
                 }
                 files.forEach(async (file) => {
                     if (file.endsWith(".pot")) {
-                        const potFilePath = path.join(root + "pot", file);
+                        const potFilePath = path.join(root + "texts/pot/" + file);
                         let potContent = fs.readFileSync(potFilePath, "utf8");
                         const crpotContent = potContent.replace(/\r/g, "").split("\n").map((a) => a.trim()).join("\n");
 
@@ -175,26 +175,26 @@ import("fs").then((fsModule) => {
                             }
                         }
                         //console.log(potUpdateFile);
-                        fs.writeFileSync(root + "po/" + file.replace(".pot", ".po"), updatedContent);
+                        fs.writeFileSync(root + "texts/po/" + file.replace(".pot", ".po"), updatedContent);
                         console.log("Process: Converted " + file);
                     }
                 });
             })
             console.log("Process: Preparing to convert po files to lang files");
             await new Promise((pro) => setTimeout(() => pro(), 50));
-            fs.readdir(root + "po", (err, files) => {
+            fs.readdir(root + "texts/po", (err, files) => {
                 if (err) {
                     console.error(err);
                     return;
                 }
 
-                const reader2 = fs.readFileSync(root + `po/en_US.po`, "utf-8");
+                const reader2 = fs.readFileSync(root + `texts/po/en_US.po`, "utf-8");
                 const pos2 = po.parse(reader2);
                 const poValues2 = Object.values(pos2.translations[""]);
 
                 files.forEach((file) => {
                     if (file.endsWith(".po")) {
-                        const reader = fs.readFileSync(root + `po/${file}`, "utf-8");
+                        const reader = fs.readFileSync(root + `texts/po/${file}`, "utf-8");
                         const pos = po.parse(reader);
                         const lines = reader.split("\n");
                         let item = "";
@@ -209,7 +209,7 @@ import("fs").then((fsModule) => {
                             }
                         });
 
-                        fs.writeFileSync(root + `${file.replace(".po", ".lang")}`, item.slice(0,-1));
+                        fs.writeFileSync(root + `texts/${file.replace(".po", ".lang")}`, item.slice(0,-1));
 
                         reader.forEach;
                     }

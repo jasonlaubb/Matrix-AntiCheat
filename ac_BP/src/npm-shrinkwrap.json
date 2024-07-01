@@ -8,10 +8,25 @@
       "dependencies": {
         "@minecraft/vanilla-data": "^1.21.0",
         "crypto-es": "^2.1.0",
-        "matrix-anticheat": "file:.."
+        "matrix-anticheat": "file:../.."
       }
     },
     "..": {
+      "name": "matrix-anticheat",
+      "extraneous": true,
+      "dependencies": {
+        "@minecraft/server": "^1.12.0-beta.1.21.0-stable",
+        "@minecraft/server-ui": "^1.2.0-beta.1.20.40-stable",
+        "fs": "^0.0.1-security",
+        "gettext-parser": "^8.0.0",
+        "path": "^0.12.7",
+        "typescript": "^5.3.3"
+      },
+      "devDependencies": {
+        "prettier": "3.2.5"
+      }
+    },
+    "../..": {
       "name": "matrix-anticheat",
       "dependencies": {
         "@minecraft/server": "^1.12.0-beta.1.21.0-stable",
@@ -36,7 +51,7 @@
       "integrity": "sha512-C5Dbuv4QTPGuloy5c5Vv/FZHtmK+lobLAypFfuRaBbwCsk3qbCWWESCH3MUcBsrgXloRNMrzwUAiPg4U6+IaKA=="
     },
     "node_modules/matrix-anticheat": {
-      "resolved": "..",
+      "resolved": "../..",
       "link": true
     }
   }

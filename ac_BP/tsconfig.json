@@ -22,11 +22,8 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
     "noUnusedParameters": true,
-    "noUnusedLocals": true,
     "sourceMap": false,
     "removeComments": false,
-    "noImplicitAny": true,
-    "allowSyntheticDefaultImports": false,
-    "compileOnSave": true
+    "allowSyntheticDefaultImports": false
   }
 }
