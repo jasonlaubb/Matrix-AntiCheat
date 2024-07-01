@@ -1,23 +1,17 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Matrix Anti-Cheat RP V3.2.40-beta",
-        "description": "pack.description",
-        "uuid": "a6e5b00c-7080-4ee7-a5f8-bc787a482c93",
+	"format_version": 2,
+	"header": {
+		"name": "Matrix Anti-Cheat RP V3.2.40-beta",
+		"description": "pack.description",
+		"uuid": "8a0fbe45-e0fb-41e3-8c2e-e187420717ba",
         "version": [3, 2, 40],
-        "min_engine_version": [1, 21, 0]
-    },
-    "metadata": {
-        "authors": ["jasonlaubb, Hutao999999, ravriv, RaMiGamerDev, notthinghere, amico_nabbo, kris02, Selder578"],
-        "license": "AGPLv3",
-        "url": "https://github.com/jasonlaubb/Matrix-AntiCheat"
-    },
-    "modules": [
-        {
-            "description": "Resources pack for Matrix Anti-Cheat",
-            "type": "resources",
-            "uuid": "7cb1c36d-b2a8-4426-a03a-79340fed3ed3",
-            "version": [1, 0, 0]
-        }
-    ]
+		"min_engine_version": [1, 21, 0]
+	},
+	"modules": [
+		{
+			"type": "resources",
+			"uuid": "cdd2bd47-1f3b-4bcf-a603-6e611dbdac68",
+			"version": [1, 0, 0]
+		}
+	]
 }
