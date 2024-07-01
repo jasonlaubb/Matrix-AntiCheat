@@ -1,5 +1,5 @@
 import { world, system, Player, Block, Vector3, PlayerPlaceBlockAfterEvent } from "@minecraft/server";
-import { flag } from "../../Assets/Util";
+import { flag, isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 
@@ -30,7 +30,7 @@ async function AntiTower(player: Player, block: Block, config: configi) {
     if (data === undefined) return;
 
     //prevent false positive and disable check when player has tag
-    if (player.hasTag("matrix:place-disabled") || player.isOnGround || !player.isJumping || player.isFlying || player.isInWater || player.getEffect(MinecraftEffectTypes.JumpBoost)) return;
+    if (isAdmin(player) || player.hasTag("matrix:place-disabled") || player.isOnGround || !player.isJumping || player.isFlying || player.isInWater || player.getEffect(MinecraftEffectTypes.JumpBoost)) return;
 
     const { x, y, z }: Vector3 = block.location;
 

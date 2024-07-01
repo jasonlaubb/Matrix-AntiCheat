@@ -1,5 +1,5 @@
-import { Block, Player, PlayerBreakBlockBeforeEvent, system, world, ItemStack, ItemEnchantableComponent } from "@minecraft/server";
-import { flag, recoverBlockBreak, isTargetGamemode } from "../../Assets/Util";
+import { Block, Player, PlayerBreakBlockBeforeEvent, system, world, ItemStack, ItemEnchantableComponent, GameMode } from "@minecraft/server";
+import { flag, recoverBlockBreak } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import { configi, registerModule } from "../Modules";
@@ -13,7 +13,7 @@ const blockBreakData = new Map<string, number[]>();
  */
 
 async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, config: configi) {
-    if (player.hasTag("matrix:break-disabled") || block?.isAir || isTargetGamemode(player, 1)) {
+    if (player.hasTag("matrix:break-disabled") || block?.isAir || player.getGameMode() == GameMode.creative) {
         return;
     }
 

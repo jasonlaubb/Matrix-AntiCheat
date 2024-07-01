@@ -1,5 +1,5 @@
 import { Block, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server";
-import { flag } from "../../Assets/Util";
+import { flag, isAdmin } from "../../Assets/Util";
 import { configi, registerModule } from "../Modules";
 //import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
@@ -17,7 +17,7 @@ const lastFlag = new Map<string, number>();
 
 async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) {
     const { block, player } = event;
-    if (player.hasTag("matrix:break-disabled") || block?.isAir) return;
+    if (isAdmin(player) ||player.hasTag("matrix:break-disabled") || block?.isAir) return;
     /* This check is not fixed
     if (block.typeId === MinecraftBlockTypes.Bed) {
         let allBlock: Block[] = []

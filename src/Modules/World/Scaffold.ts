@@ -1,5 +1,5 @@
 import { world, system, PlayerPlaceBlockAfterEvent, Vector3 } from "@minecraft/server";
-import { flag } from "../../Assets/Util";
+import { flag, isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 
@@ -32,7 +32,7 @@ interface ScaffoldData {
 }
 const scaffoldData = new Map<string, ScaffoldData>();
 function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPlaceBlockAfterEvent) {
-    if (player.hasTag("matrix:place-disabled")) return;
+    if (isAdmin(player) ||player.hasTag("matrix:place-disabled")) return;
     let data = scaffoldData.get(player.id);
     const { x, y, z } = block.location;
     if (!data) {
