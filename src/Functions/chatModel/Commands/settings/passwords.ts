@@ -1,6 +1,6 @@
 import { c } from "../../../../Assets/Util";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
-import { SHA256 } from "crypto-es/lib/sha256";
+import { SHA256 } from "../../../../node_modules/crypto-es/lib/sha256";
 import { world } from "@minecraft/server";
 import Dynamic from "../../../Config/dynamic_config";
 
