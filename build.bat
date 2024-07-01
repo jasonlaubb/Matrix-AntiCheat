@@ -38,5 +38,6 @@ copy "%~dp0ac_RP\manifest.json" "%~dp0generated-package\Matrix-anti_RP" /Y
 copy "%~dp0LICENSE" "%~dp0generated-package\Matrix-anti_RP" /Y
 if not exist "%~dp0generated-package\Matrix-anti_RP\texts" mkdir "%~dp0generated-package\Matrix-anti_RP\texts"
 copy "%~dp0ac_RP\texts\*.lang" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
+copy "%~dp0ac_RP\texts\languages.json" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
 echo Process ended.
 pause
