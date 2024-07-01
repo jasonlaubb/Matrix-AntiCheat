@@ -7,7 +7,7 @@ import { registerModule, configi } from "../Modules.js";
  * @description flag player nears command block minecart.
  */
 
-function firstEvent (config: configi, event: PlayerPlaceBlockBeforeEvent) {
+function firstEvent(config: configi, event: PlayerPlaceBlockBeforeEvent) {
     const { player, permutationBeingPlaced: permutation } = event;
     if (isAdmin(player) || !permutation) return;
     if (config.antiCommandBlockExplolit.cancelPlacement.includes(permutation.type.id)) {
@@ -17,9 +17,9 @@ function firstEvent (config: configi, event: PlayerPlaceBlockBeforeEvent) {
             flag(player, "Command Block Explolit", "A", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, ["Block" + ":" + permutation.type.id]);
         });
     }
-};
+}
 
-function doubleEvent (config: configi, event: ItemUseOnBeforeEvent) {
+function doubleEvent(config: configi, event: ItemUseOnBeforeEvent) {
     const { source: player, itemStack } = event;
     if (isAdmin(player)) return;
     if (config.antiCommandBlockExplolit.cancelUsage.includes(itemStack?.typeId)) {
@@ -29,9 +29,12 @@ function doubleEvent (config: configi, event: ItemUseOnBeforeEvent) {
             flag(player, "Command Block Explolit", "B", config.antiCommandBlockExplolit.maxVL, config.antiCommandBlockExplolit.punishment, ["Block" + ":" + itemStack.typeId]);
         });
     }
-};
+}
 
-registerModule("antiCBE", false, [], 
+registerModule(
+    "antiCBE",
+    false,
+    [],
     {
         worldSignal: world.beforeEvents.playerPlaceBlock,
         playerOption: { entityTypes: ["minecraft:player"] },

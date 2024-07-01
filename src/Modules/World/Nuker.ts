@@ -53,9 +53,7 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, con
     }
 }
 
-registerModule ("antiNuker", false, [blockBreakData],
-    {
-        worldSignal: world.beforeEvents.playerBreakBlock,
-        then: async (config, { player, block, itemStack }: PlayerBreakBlockBeforeEvent) => AntiNuker(player, block, itemStack, config),
-    }
-)
+registerModule("antiNuker", false, [blockBreakData], {
+    worldSignal: world.beforeEvents.playerBreakBlock,
+    then: async (config, { player, block, itemStack }: PlayerBreakBlockBeforeEvent) => AntiNuker(player, block, itemStack, config),
+});

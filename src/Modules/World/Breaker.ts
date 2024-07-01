@@ -17,7 +17,7 @@ const lastFlag = new Map<string, number>();
 
 async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) {
     const { block, player } = event;
-    if (isAdmin(player) ||player.hasTag("matrix:break-disabled") || block?.isAir) return;
+    if (isAdmin(player) || player.hasTag("matrix:break-disabled") || block?.isAir) return;
     /* This check is not fixed
     if (block.typeId === MinecraftBlockTypes.Bed) {
         let allBlock: Block[] = []
@@ -113,9 +113,7 @@ function pointsBetween (pos1: Vector3, pos2: Vector3): Vector3[] {
     return points.filter(pos => pos.x !== pos2.x && pos.y !== pos2.y && pos.z !== pos2.z && pos.x !== pos1.x && pos.y !== pos1.y && pos.z !== pos1.z)
 }*/
 
-registerModule ("antiBreaker", false, [lastFlag],
-    {
-        worldSignal: world.beforeEvents.playerBreakBlock,
-        then: async (config, event) => AntiBreaker (event, config),
-    }
-)
+registerModule("antiBreaker", false, [lastFlag], {
+    worldSignal: world.beforeEvents.playerBreakBlock,
+    then: async (config, event) => AntiBreaker(event, config),
+});

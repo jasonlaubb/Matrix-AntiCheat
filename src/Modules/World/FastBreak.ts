@@ -49,12 +49,15 @@ function firstEvent(config: configi, event: PlayerBreakBlockBeforeEvent) {
             player.removeTag("matrix:break-disabled")
         }, 100)
     }*/
-};
+}
 
 const doubleEvent = ({ player }: PlayerBreakBlockAfterEvent) => (player.lastTouchBlock = Date.now());
 const tripleEvent = ({ damagingEntity: player, hitBlock: { location } }: EntityHitBlockAfterEvent) => player instanceof Player && (player.lastTouchBlockId = JSON.stringify(location));
 
-registerModule("antiFastBreak", false, [], 
+registerModule(
+    "antiFastBreak",
+    false,
+    [],
     {
         worldSignal: world.beforeEvents.playerBreakBlock,
         playerOption: { entityTypes: ["minecraft:player"] },

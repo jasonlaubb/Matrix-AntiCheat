@@ -361,7 +361,7 @@ export default {
             maxRepeats: 3,
             maxLength: 128,
             maxMessagesInFiveSeconds: 3,
-        }
+        },
     },
     dimensionLock: {
         enabled: false,

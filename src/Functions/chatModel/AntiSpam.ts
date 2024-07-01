@@ -22,14 +22,14 @@ const spamData = new Map<string, SpamData>();
 export function intergradedAntiSpam(player: Player, message: string) {
     const config = Dynamic.config().intergradedAntiSpam;
     message = message.latinise().toLowerCase();
-    if (config.chatFilter.enabled && chatFilter(player, message)) return true;  
+    if (config.chatFilter.enabled && chatFilter(player, message)) return true;
     if (config.linkEmailFilter.enabled && linkEmailFilter(player, message)) return true;
 
     if (config.spamFilter.enabled) {
         const data = spamData.get(player.id) ?? {
             lastMessage: "",
             messageRate: [],
-        }
+        };
 
         if (data.lastMessage == message) {
             system.run(() => player.sendMessage(rawstr.new(true, "c").tra("spam.repeated").parse()));
@@ -63,7 +63,7 @@ export function intergradedAntiSpam(player: Player, message: string) {
     return false;
 }
 
-function* cauisitspam (message: string) {
+function* cauisitspam(message: string) {
     let amount = 0;
     for (let x = 1; x < message.length; x++) {
         if (message[x - 1] == message[x]) {
@@ -108,17 +108,17 @@ function chatFilter(player: Player, message: string) {
     }
     return false;
 }
-function linkEmailFilter (player: Player, message: string) {
+function linkEmailFilter(player: Player, message: string) {
     if (/((http:\/\/|https:\/\/|www\.|download\.)([a-z]+\.)+[a-z]{2,8}(\/[\S]+)*\/*)|discord(\.gg|\.com\/invite)\/[\S]{1,}/gi.test(message)) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.includelink").parse());
-        })
+        });
         return true;
     }
     if (/[a-z0-9]+@([a-z0-9]+\.)+[a-z0-9]+/gi.test(message)) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.email").parse());
-        })
+        });
         return true;
     }
     return false;

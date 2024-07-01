@@ -81,9 +81,7 @@ async function AntiTower(player: Player, block: Block, config: configi) {
     }
 }
 
-registerModule ("antiTower", false, [towerData, vL],
-    {
-        worldSignal: world.afterEvents.playerPlaceBlock,
-        then: async (config, { player, block }: PlayerPlaceBlockAfterEvent) => AntiTower(player, block, config),
-    }
-)
+registerModule("antiTower", false, [towerData, vL], {
+    worldSignal: world.afterEvents.playerPlaceBlock,
+    then: async (config, { player, block }: PlayerPlaceBlockAfterEvent) => AntiTower(player, block, config),
+});

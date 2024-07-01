@@ -16,14 +16,17 @@ function doubleEvent(config: configi, { damagingEntity: player }: EntityHitBlock
         player.applyDamage(4);
         flag(player, "Auto Tool", "A", config.antiAutoTool.maxVL, config.antiAutoTool.punishment, undefined);
     }
-};
+}
 
 function intickEvent(player: Player) {
     const selectSlot = player.selectedSlotIndex;
     system.run(() => (player.lastSelectSlot = selectSlot));
-};
+}
 
-registerModule("antiAutoTool", false, [], 
+registerModule(
+    "antiAutoTool",
+    false,
+    [],
     {
         intick: async (_config, player) => intickEvent(player),
         tickInterval: 1,

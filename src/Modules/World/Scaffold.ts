@@ -32,7 +32,7 @@ interface ScaffoldData {
 }
 const scaffoldData = new Map<string, ScaffoldData>();
 function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPlaceBlockAfterEvent) {
-    if (isAdmin(player) ||player.hasTag("matrix:place-disabled")) return;
+    if (isAdmin(player) || player.hasTag("matrix:place-disabled")) return;
     let data = scaffoldData.get(player.id);
     const { x, y, z } = block.location;
     if (!data) {
@@ -188,9 +188,7 @@ function isUnderPlayer(p: Vector3, pos2: Vector3) {
     return offsets.includes(p.x - pos2.x) && offsets.includes(p.z - pos2.z);
 }
 
-registerModule ("antiScaffold", false, [scaffoldData],
-    {
-        worldSignal: world.afterEvents.playerPlaceBlock,
-        then: async (config, event) => playerPlaceBlockAfterEvent (config, event),
-    }
-)
+registerModule("antiScaffold", false, [scaffoldData], {
+    worldSignal: world.afterEvents.playerPlaceBlock,
+    then: async (config, event) => playerPlaceBlockAfterEvent(config, event),
+});

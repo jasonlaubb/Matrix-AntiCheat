@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate = 
+export type Translate =
     | "pack.description"
     | "crash.reload"
     | "flag.style"
@@ -110,4 +110,4 @@ export type Translate =
     | "spam.spamming"
     | "spam.lengthlimit"
     | "spam.includelink"
-    | "spam.email"
+    | "spam.email";
