@@ -28,6 +28,7 @@ Xcopy "%~dp0ac_BP\scripts" "%~dp0generated-package\Matrix-anti_BP\scripts" /Y /E
 Xcopy "%~dp0ac_BP\animations" "%~dp0generated-package\Matrix-anti_BP\animations" /Y /E /H /C /I
 Xcopy "%~dp0ac_BP\functions" "%~dp0generated-package\Matrix-anti_BP\functions" /Y /E /H /C /I
 Xcopy "%~dp0ac_BP\animation_controllers" "%~dp0generated-package\Matrix-anti_BP\animation_controllers" /Y /E /H /C /I
+Xcopy "%~dp0ac_BP\item" "%~dp0generated-package\Matrix-anti_BP\item" /Y /E /H /C /I
 : Copy the resource pack
 copy "%~dp0ac_RP\pack_icon.png" "%~dp0generated-package\Matrix-anti_RP" /Y
 copy "%~dp0ac_RP\manifest.json" "%~dp0generated-package\Matrix-anti_RP" /Y
