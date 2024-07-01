@@ -1,6 +1,7 @@
-import { world, system, Player, Block, Vector3, PlayerPlaceBlockAfterEvent, PlayerLeaveAfterEvent } from "@minecraft/server";
-import { flag, isAdmin, c } from "../../Assets/Util";
+import { world, system, Player, Block, Vector3, PlayerPlaceBlockAfterEvent } from "@minecraft/server";
+import { flag } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { configi, registerModule } from "../Modules";
 
 interface TowerData {
     towerBlock: Vector3;
@@ -16,8 +17,7 @@ const vL = new Map<string, number>();
  * It work by patching a very small delay between player towering and with a high velocity
  */
 
-async function AntiTower(player: Player, block: Block) {
-    const config = c();
+async function AntiTower(player: Player, block: Block, config: configi) {
     const data = towerData.get(player.id);
     //get the two value from Map
     const towerBlock = data?.towerBlock;
@@ -80,24 +80,10 @@ async function AntiTower(player: Player, block: Block) {
         vL.set(player.id, undefined);
     }
 }
-const antiTower = ({ player, block }: PlayerPlaceBlockAfterEvent) => {
-    if (isAdmin(player)) return;
-    AntiTower(player, block);
-};
-const playerLeave = ({ playerId }: PlayerLeaveAfterEvent) => {
-    towerData.delete(playerId);
-    vL.delete(playerId);
-};
 
-export default {
-    enable() {
-        world.afterEvents.playerPlaceBlock.subscribe(antiTower);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-    },
-    disable() {
-        towerData.clear();
-        vL.clear();
-        world.afterEvents.playerPlaceBlock.subscribe(antiTower);
-        world.afterEvents.playerLeave.subscribe(playerLeave);
-    },
-};
+registerModule ("antiTower", false, [towerData, vL],
+    {
+        worldSignal: world.afterEvents.playerPlaceBlock,
+        then: async (config, { player, block }: PlayerPlaceBlockAfterEvent) => AntiTower(player, block, config),
+    }
+)
