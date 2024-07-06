@@ -1,10 +1,10 @@
-import { world, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage, RawText } from "@minecraft/server";
+import { world, system, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage, RawText } from "@minecraft/server";
 import { ban } from "../Functions/moderateModel/banHandler";
 import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
-import Config from "../Data/Default";
 import { saveLog } from "../Functions/moderateModel/log";
 import { Translate } from "./Language";
+import Dynamic from "../Functions/Config/dynamic_config";
 
 /**
  * @author jasonlaubb
@@ -38,7 +38,7 @@ class rawstr {
     }
     /** @description Return the full rawtext */
     public parse() {
-        return { rawtext: [this.storge] } as RawText;
+        return { rawtext: this.storge } as RawText;
     }
     /** @description Add text to rawtext */
     public str(text: string) {
@@ -91,6 +91,7 @@ let Vl: any = {};
 type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z";
 
 function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
+    system.run(() => {
     const config = c();
     Vl[player.id] ??= {};
     Vl[player.id][modules] ??= 0;
@@ -132,6 +133,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
     }
 
     const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode;
+    player.sendMessage(JSON.stringify(flagMsg.parse()));
     switch (flagMode) {
         case "tag": {
             const targets = world.getPlayers({ tags: ["matrix:notify"] });
@@ -157,6 +159,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
             break;
         }
     }
+})
 }
 
 function msToTime(ms: number) {
@@ -232,7 +235,7 @@ function isTimeStr(timeStr: string) {
     return timeUnits.some((unit) => new RegExp(`\\d+${unit}`).test(timeStr));
 }
 
-const c = () => Config;
+const c = () => Dynamic.config();
 
 function inAir(dimension: Dimension, location: Vector3) {
     location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z) };

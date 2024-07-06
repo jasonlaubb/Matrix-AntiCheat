@@ -52,7 +52,7 @@ export function registerCommand(command: CommandHandleData, ...subCommand: Comma
         save.argRequire = command?.argRequire;
         save.minArgs = command?.minArgs;
         save.maxArgs = command?.maxArgs;
-        if (!command.executor || command.argRequire?.length == 0) throw new Error("registerCmd :: Unhandled command properties");
+        if (!command.executor || command?.argRequire?.length == 0) throw new Error("registerCmd :: Unhandled command properties");
         commands.push(save);
     }
 }

@@ -9,7 +9,6 @@
  * @description AES key for loading config
  */
 export const dynamic = {
-    key: "ImEZlA6w8Y9mUUNtc/kpCG4MFBn7laQ5N3DeVMPEHO6nQEIQqTlmp8tp2vOmU+GC",
     followUserConfig: false, // State if we use UserConfig or not
 };
 

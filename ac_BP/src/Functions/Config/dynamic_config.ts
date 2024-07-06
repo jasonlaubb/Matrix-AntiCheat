@@ -2,23 +2,24 @@
 import * as dy from "../../Data/Default";
 import Config from "../../Data/Config";
 const dynamic = dy.dynamic;
-const config = dynamic.followUserConfig ? dy.default : Config;
+const config: configi = dynamic.followUserConfig ? Config : dy.default;
 import userConfig from "../../Data/Config";
-import { AES } from "../../node_modules/crypto-es/lib/aes";
-import { world } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
+import { sendErr } from "../chatModel/CommandHandler";
+import { c } from "../../Assets/Util";
+import { configi } from "../../Modules/Modules";
 
 let common = config;
 
-export function initialize() {
+export async function initialize() {
+    await system.waitTicks(1);
     const cypher = world.getDynamicProperty("config") as string;
-
     if (!cypher) {
-        const normal = AES.encrypt(JSON.stringify([]), dynamic.key);
-        world.setDynamicProperty("dynamic", normal.toString());
+        world.setDynamicProperty("config", "[]");
     } else {
-        const normal = JSON.parse(AES.decrypt(cypher, dynamic.key).toString()) as Changer[];
+        const normal = JSON.parse(cypher) as Changer[];
 
-        for (const changer of normal) {
+        for (const changer of normal) {;
             const newCommon = change(changer.target, changer.value, common);
             if (!newCommon) continue; // Prevent path error
             common = newCommon;
@@ -40,22 +41,26 @@ export default class Dynamic {
         return current;
     }
     static set(key: string[], value: string | boolean | number | (string | boolean | number)[]): void {
+        // world.sendMessage(c().flagMode.toString());
         const cypher = world.getDynamicProperty("config") as string;
-        const plaintext = JSON.parse(AES.decrypt(cypher, dynamic.key).toString()) as Changer[];
+        // a
+        // world.sendMessage(`${cypher}\n${dynamic.key}`);
+        const plaintext = JSON.parse(cypher) as Changer[];
+        plaintext.splice(plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key)), 1);
         plaintext.push({ target: key, value: value });
-        world.setDynamicProperty("config", AES.encrypt(JSON.stringify(plaintext), dynamic.key).toString());
+        world.setDynamicProperty("config", JSON.stringify(plaintext));
         // Reload the dynamic config
         initialize();
     }
 
     static delete(key: string[]) {
         const cypher = world.getDynamicProperty("config") as string;
-        let plaintext = JSON.parse(AES.decrypt(cypher, dynamic.key).toString()) as Changer[];
+        let plaintext = JSON.parse(cypher) as Changer[];
         const index = plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key));
         if (index == -1) return false;
         plaintext[index] = undefined;
         plaintext = plaintext.filter((changer) => changer);
-        world.setDynamicProperty("config", AES.encrypt(JSON.stringify(plaintext), dynamic.key).toString());
+        world.setDynamicProperty("config", JSON.stringify(plaintext));
         // Reload the dynamic config
         initialize();
         return true;
@@ -65,9 +70,11 @@ export default class Dynamic {
 function change(path: string[], value: string | boolean | number | (string | boolean | number)[], object: { [key: string]: any }) {
     try {
         const pathLength = path.length;
-        for (let i = 0; i < 26 - pathLength; i++) {
-            path.push(null);
+        const arr = new Array(26)
+        for (let i = 0; i < path.length; i++) {
+            arr[i] = path[i];
         }
+        // world.sendMessage(JSON.stringify(arr) + "\n" + value + "\n" + pathLength);
         const [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z] = path;
         switch (pathLength) {
             case 0:
@@ -155,7 +162,7 @@ function change(path: string[], value: string | boolean | number | (string | boo
         }
         return object;
     } catch (error) {
-        console.warn(JSON.stringify(error));
+        sendErr(error);
         return null;
     }
 }
