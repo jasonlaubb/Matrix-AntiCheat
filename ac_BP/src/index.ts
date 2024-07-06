@@ -5,6 +5,8 @@
  * @license AGPLv3
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
+//Log the run time
+const runTime = Date.now();
 import { world, system } from "@minecraft/server";
 world.modules = [];
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
@@ -14,8 +16,6 @@ system.beforeEvents.watchdogTerminate.subscribe((event) => {
         console.log(`Index :: ${new Date(Date.now()).toISOString()} | WatchdogTerminate cancelled, reason: ${event.terminateReason}`);
     });
 });
-//Log the run time
-const runTime = Date.now();
 import "./Assets/LatinNormalize";
 //Initialize the config
 import { initialize } from "./Functions/Config/dynamic_config";
@@ -38,10 +38,9 @@ import { c } from "./Assets/Util";
 import "./Modules/Modules";
 import { intilizeModules } from "./Modules/Modules";
 world.afterEvents.worldInitialize.subscribe(async () => {
-    world.sendMessage(`Started to intilize modules...`);
-    await system.waitTicks(20);
+    // Cpu explode warning!
     intilizeModules().then((amount) => {
-        world.sendMessage(`Intilized ${amount} module(s) in ${Date.now() - runTime}ms.`);
+        world.sendMessage(`§bMatrix §7>§g Intilized ${amount} module(s) in ${Date.now() - runTime}ms.`);
     })
 });
 
