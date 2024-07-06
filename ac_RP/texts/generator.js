@@ -50,12 +50,12 @@ import("fs").then((fsModule) => {
             if (doTranslate) {
                 const poContent = fs.readFileSync(`${root}texts/pot/en_US.pot`, "utf8");
                 const output = poContent.split("\n").filter((a) => a.startsWith("#: ")).map((a) => a.slice(3)).map((v) => '    | "' + v.replace("\r", "") + '"')
-                const filed = fs.readFileSync(`${root}../ac_BP/scr/Assets/Language.ts`, "utf8");
+                const filed = fs.readFileSync(`${root}../ac_BP/src/Assets/Language.ts`, "utf8");
                 const lines = filed.split("export");
                 let there = lines[0] + "export type Translate = \n";
                 there += output.join("\n");
 
-                fs.writeFileSync(`${root}../ac_BP/scr/Assets/Language.ts`, there);
+                fs.writeFileSync(`${root}../ac_BP/src/Assets/Language.ts`, there);
                 return;
             };
             /*
@@ -65,7 +65,7 @@ import("fs").then((fsModule) => {
                 allFiles = allFiles.filter((a) => validLanguage.includes(a.replace(".js", "")));
                 console.log(allFiles);
                 allFiles.forEach((K) => {
-                    import(root + "../scripts/Data/Languages/" + K).then((a) => {
+                    import(root + "../srcipts/Data/Languages/" + K).then((a) => {
                         const lines = fs.readFileSync(root + "pot/" + K.replace(".js",".pot"), "utf-8").split("\n")
                         const list = Object.entries(a.default);
                         for (const [key, str] of list) {

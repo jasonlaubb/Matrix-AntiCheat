@@ -144,6 +144,10 @@ msgstr "Le Grade %1 a été Ajouter à %2"
 msgid "%1's rank has been set to %2"
 msgstr "Le Grade %1 a été Définie à %2"
 
+#: toggle.unknown
+msgid "Unknown modules: %s"
+msgstr ""
+
 #: rank.empty
 msgid "%s doesn't have any rank"
 msgstr "Le Joueur %s ne Possède pas le Grade"

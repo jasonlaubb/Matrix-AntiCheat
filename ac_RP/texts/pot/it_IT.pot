@@ -144,6 +144,10 @@ msgstr "%1's rank è stato aggiunto con successo %2"
 msgid "%1's rank has been set to %2"
 msgstr "%1's rank è stato settatto con successo a %2"
 
+#: toggle.unknown
+msgid "Unknown modules: %s"
+msgstr ""
+
 #: rank.empty
 msgid "%s doesn't have any rank"
 msgstr "%s non ha nessun rank"

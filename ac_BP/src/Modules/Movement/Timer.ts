@@ -2,7 +2,6 @@ import { Player, Vector3 } from "@minecraft/server";
 import { flag } from "../../Assets/Util.js";
 import { tps } from "../../Assets/Public.js";
 import { configi, registerModule } from "../Modules.js";
-
 interface timerData {
     safeZone: Vector3;
     lastFlag: number;
@@ -18,14 +17,11 @@ interface timerData {
     yLog: number;
     yDisLog: number;
 }
-
 const timerData = new Map<string, timerData>();
-
 /** @description Return that player is spike lagging */
 export function isISL(player: Player): boolean {
     return !!timerData.get(player.id)?.iSL;
 }
-
 /**
  * @author RamiGamerDev
  * @description Checks if the player moved without the same between velocity and moved distance.
@@ -66,7 +62,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
 export async function SystemEvent(player: Player, now: number) {
     const data = timerData.get(player.id) ?? ({} as timerData);
     //getting data
-    const locdata = data.locationData;
+    const locdata = data.locationData ?? { location: player.location, recordTime: now };
     //skip the code for for some reasons
     data.locationData = { location: player.location, recordTime: now };
     //just defineing everything we need

@@ -2,6 +2,7 @@ import { c, isAdmin } from "../Assets/Util";
 
 import { EntityEventOptions, EntityQueryOptions, Player, system, world } from "@minecraft/server";
 import Default from "../Data/Default";
+import { sendErr } from "../Functions/chatModel/CommandHandler";
 
 /**
  * @author jasonlaubb
@@ -12,6 +13,15 @@ export async function registerModule(id: string, checkAdmin: boolean, varargs: (
     const tickEvent = (event as TickEvent[]).filter((ev) => ev?.tickInterval);
     const worldEvent = (event as WorldEvent[]).filter((ev) => ev?.worldSignal);
     const intilizeEvent = (event as IntilizeEvent[]).filter((ev) => ev?.runAfterSubsribe);
+    let ida;
+    await new Promise<void>((resolve) => {
+        ida = system.runInterval(() => {
+            if (world.modules) {
+                resolve();
+            }
+        })
+    });
+    system.clearRun(ida);
     world.modules.push({
         id: id,
         checkAdmin: checkAdmin,
@@ -34,21 +44,43 @@ export async function getModulesIds() {
         }
     }
 }
+let mapvalues: Map<string, any>[] = [];
 export async function intilizeModules() {
     const config = c();
-    let mapvalues: Map<string, any>[] = [];
+    mapvalues = [];
+    let id;
+    await new Promise<void>((resolve) => {
+        id = system.runInterval(() => {
+            if (world.modules && world.modules.length > 0) {
+                resolve();
+            }
+            //world.sendMessage(String(world?.modules?.length) ?? "0");
+        })
+    });
+    system.clearRun(id);
     world.modules.filter((module) => module.enabled).forEach((module) => {
         unlisten(module.id);
     });
-    for (const element of world.modules) {
-        mapvalues.push(...element.mapclears);
-        if ((config as any)[element.id]?.enabled) {
-            // Method for state module is enabled
-            setup(config, element);
-        }
-        world.sendMessage(`Loading the ${element.id} Module (${world.modules.length})`);
-    };
+    system.runJob(looper(config));
     return world.modules?.length;
+}
+function* looper (config: configi): Generator<void, void, void> {
+    const len = world.modules.length
+    for (let i = 0; i < len; i++) {
+        try {
+            const element = world.modules[i];
+            if (element.mapclears) mapvalues.push(...element.mapclears);
+            if ((config as any)[element.id]?.enabled) {
+                // Method for state module is enabled
+                setup(config, element);
+            }
+            //world.sendMessage(`Loading the ${element.id} Module (${i + 1}/${len})`);
+        } catch (error) {
+            sendErr(error as Error);
+        } finally {
+            yield;
+        }
+    }
 }
 /**
  * @description This is the type of the Config.
@@ -66,6 +98,7 @@ function setup(config: configi, element: Module) {
             });
         });
         // Method for state module is enabled
+        if (element.tickEvent)
         for (const tE of element.tickEvent) {
             runIds.push(
                 system.runInterval(() => {
@@ -75,23 +108,24 @@ function setup(config: configi, element: Module) {
                         if (!element.checkAdmin) allPlayers = allPlayers.filter((player) => !isAdmin(player));
                         for (const player of allPlayers) {
                             tE.intick(currentConfig, player).catch((error) => {
-                                rejected("Module rejected :: " + element.id + " :: " + String(error));
+                                sendErr(error);
                             });
                         }
                     }
                     if (tE?.onTick) {
                         tE.onTick(currentConfig).catch((error) => {
-                            rejected("Module rejected :: " + element.id + " :: " + String(error));
+                            sendErr(error);
                         });
                     }
                 }, tE.tickInterval)
             );
         }
+        if (element.worldEvent)
         for (const wE of element.worldEvent) {
             wE.worldSignal.subscribe((event: any) => {
                 const currentConfig = c();
                 wE.then(currentConfig, event).catch((error) => {
-                    rejected("Module rejected :: " + element.id + " :: " + String(error));
+                    sendErr(error);
                 });
             });
         }

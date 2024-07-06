@@ -144,6 +144,10 @@ msgstr "%1 的聊天称号已新增 %2"
 msgid "%1's rank has been set to %2"
 msgstr "%1 的聊天称号已设定为 %2"
 
+#: toggle.unknown
+msgid "Unknown modules: %s"
+msgstr ""
+
 #: rank.empty
 msgid "%s doesn't have any rank"
 msgstr "%s 没有任何聊天称号"

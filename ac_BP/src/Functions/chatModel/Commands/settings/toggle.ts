@@ -1,6 +1,6 @@
 import { c } from "../../../../Assets/Util";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
-import { validModules } from "../../../../Data/Help";
+import { getValidModules } from "../../../../Data/Help";
 import { getModulesIds, intilizeModules } from "../../../../Modules/Modules";
 import Dynamic from "../../../Config/dynamic_config";
 
@@ -10,11 +10,12 @@ registerCommand({
     parent: false,
     maxArgs: 3,
     minArgs: 2,
-    argRequire: [(value) => validModules.includes(value as string), (value) => ["enable", "disable", "default"].includes(value as string), (value) => value == "force"],
+    argRequire: [undefined, (value) => ["enable", "disable", "default"].includes(value as string), (value) => value == "force"],
     require: (player) => verifier(player, c().commands.toggles),
     executor: async (player, args) => {
         const config = c();
         const prefix = config.commands.prefix;
+        if ((await getValidModules()).includes(args[0])) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.unknown", with: [args[0]] });
         if ((await getModulesIds()).includes(args[0])) {
             // const state = Dynamic.get([args[0], "enabled"]);
             if ((args[1] == "enable") == (config as any)[args[0]].enabled && args[1] != "default") return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.already", with: [args[1]] });

@@ -144,6 +144,10 @@ msgstr "%1에게 칭호 %2가 추가되었습니다."
 msgid "%1's rank has been set to %2"
 msgstr "%1의 칭호가 %2로 설정되었습니다."
 
+#: toggle.unknown
+msgid "Unknown modules: %s"
+msgstr ""
+
 #: rank.empty
 msgid "%s doesn't have any rank"
 msgstr "%s는 아무 칭호도 가지고 있지 않습니다."
