@@ -95,7 +95,6 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
 }
 
 export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): number {
-    player.sendMessage(args.toString() + "\n" + before + targetCommand.name)
     if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
         return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c1 " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] }));
     }
@@ -106,7 +105,7 @@ export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Pl
         for (let i = 0; i < targetCommand.argRequire.length; i++) {
             if (!targetCommand.argRequire[i] || !args[i]) continue;
             if (!targetCommand.argRequire[i](args[i], targetCommand.requireSupportPlayer ? player : undefined, targetCommand.requireSupportArgs ? args : undefined)) {
-                return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c 3" }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
+                return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c 3" }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
             }
         }
     }
