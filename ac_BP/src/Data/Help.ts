@@ -13,4 +13,4 @@ export function toggleList(p: string): rawstr {
     );
 }
 
-export const validModules: string[] = ["chatRank", "dimensionLock", ...getModulesIds()];
+export const validModules: string[] = ["chatRank", "dimensionLock", ...await getModulesIds()];

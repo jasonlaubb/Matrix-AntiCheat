@@ -1,7 +1,7 @@
 import * as Server from "../node_modules/@minecraft/server/index";
 import * as Ui from "../node_modules/@minecraft/server-ui/index";
 import * as VanillaData from "./src/node_modules/@minecraft/vanilla-data/lib/index";
-
+import { Module } from "./src/Modules/Modules";
 declare module "@minecraft/server" {
     interface Player {
         threwTridentAt: number;
@@ -44,6 +44,7 @@ declare module "@minecraft/server" {
         lastNonGlidingPoint: Vector3;
     }
     interface World {
+        modules: Module[];
         antiBotEnabled: boolean;
         sendMsg: (...arg: (string | RawText)[]) => void;
     }

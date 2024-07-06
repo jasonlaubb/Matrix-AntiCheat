@@ -8,14 +8,11 @@ import Default from "../Data/Default";
  * @description Module Handler
  */
 
-const MODULES: Module[] = [];
-
 export async function registerModule(id: string, checkAdmin: boolean, varargs: (Map<string, any> | { [key: string]: any })[], ...event: (TickEvent | WorldEvent | IntilizeEvent)[]): Promise<void> {
     const tickEvent = (event as TickEvent[]).filter((ev) => ev?.tickInterval);
     const worldEvent = (event as WorldEvent[]).filter((ev) => ev?.worldSignal);
     const intilizeEvent = (event as IntilizeEvent[]).filter((ev) => ev?.runAfterSubsribe);
-    await new Promise<void>((resolve) => system.run(() => resolve()));
-    MODULES.push({
+    world.modules.push({
         id: id,
         checkAdmin: checkAdmin,
         tickEvent: tickEvent.length > 0 ? tickEvent : undefined,
@@ -25,24 +22,33 @@ export async function registerModule(id: string, checkAdmin: boolean, varargs: (
         mapclears: varargs.filter((arg) => arg?.delete) as Map<string, any>[],
     });
 }
-export function getModulesIds() {
-    return MODULES.map((module) => module.id);
+export async function getModulesIds() {
+    if (world.modules) {
+        return world.modules.map((module) => module.id);
+    } else {
+        while (true) {
+            await system.waitTicks(1);
+            if (world.modules) {
+                return world.modules.map((module) => module.id);
+            }
+        }
+    }
 }
-export async function intilizeModules(): Promise<void> {
-    // Await for a tick
-    await new Promise<void>((resolve) => system.runTimeout(() => resolve(), 2));
+export async function intilizeModules() {
     const config = c();
     let mapvalues: Map<string, any>[] = [];
-    MODULES.filter((module) => module.enabled).forEach((module) => {
+    world.modules.filter((module) => module.enabled).forEach((module) => {
         unlisten(module.id);
     });
-    MODULES.forEach((element) => {
+    for (const element of world.modules) {
         mapvalues.push(...element.mapclears);
         if ((config as any)[element.id]?.enabled) {
             // Method for state module is enabled
             setup(config, element);
         }
-    });
+        world.sendMessage(`Loading the ${element.id} Module (${world.modules.length})`);
+    };
+    return world.modules?.length;
 }
 /**
  * @description This is the type of the Config.
@@ -92,12 +98,12 @@ function setup(config: configi, element: Module) {
     }
     element.runId = runIds;
     element.enabled = true;
-    MODULES[MODULES.findIndex((a) => a.id == element.id)] = element;
+    world.modules[world.modules.findIndex((a) => a.id == element.id)] = element;
 }
 
 function unlisten(id: string) {
-    const index = MODULES.findIndex((a) => a.id == id);
-    const module = MODULES[index];
+    const index = world.modules.findIndex((a) => a.id == id);
+    const module = world.modules[index];
     if (!module) throw "Unlisten :: " + id + " :: No result";
     if (!module?.enabled) "Unlisten :: " + id + " :: Already disabled";
     for (const num of module.runId) {
@@ -111,7 +117,7 @@ function unlisten(id: string) {
     }
     module.runId = [];
     module.enabled = false;
-    MODULES[index] = module;
+    world.modules[index] = module;
 }
 
 let lastERROR: string = "";
@@ -125,7 +131,7 @@ function rejected(error: string) {
     if (amount < 3) console.warn(actualErrror);
 }
 
-interface Module {
+export interface Module {
     id: string;
     checkAdmin: boolean;
     tickEvent?: TickEvent[];

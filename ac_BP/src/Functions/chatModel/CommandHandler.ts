@@ -41,7 +41,7 @@ export function registerCommand(command: CommandHandleData, ...subCommand: Comma
                 name: subCommand.name,
                 description: subCommand.description,
                 executor: subCommand.executor,
-                subCommand: [],
+                subCommand: undefined,
                 minArgs: subCommand?.minArgs,
                 maxArgs: subCommand?.maxArgs,
             });
@@ -68,8 +68,8 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
         }
     }
     if (!isCommand) throw new Error("triggerCmd :: Unhandled command usage");
-    const args = message.match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g).map((regax) => regax.replace(/^"(.*)"$/, "$1").replace(/\\"/g, '"'));
-    
+    if (message.length == 0) return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.unknown", with: [command ?? ""] }));
+    const args = message.match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g)?.map((regax) => regax.replace(/^"(.*)"$/, "$1")?.replace(/\\"/g, '"'));
     const command = args.shift();
     // system.run(() => player.sendMessage(JSON.stringify(args) + "\n" + command));
     const targetCommand = commands.find(({ name }) => name == command);
@@ -77,7 +77,7 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
         return system.run(() => {
             sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.unknown", with: [command ?? " "] });
         });
-    player.sendMessage(JSON.stringify(targetCommand.subCommand))
+    //player.sendMessage(JSON.stringify(targetCommand.subCommand))
     if (targetCommand.subCommand.length > 1) {
         if (args.length < 2) {
             return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, "", ""] }));
@@ -95,17 +95,18 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
 }
 
 export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): number {
+    player.sendMessage(args.toString() + "\n" + before + targetCommand.name)
     if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
-        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] }));
+        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c1 " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] }));
     }
     if (targetCommand.maxArgs && args.length > targetCommand.maxArgs) {
-        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] }));
+        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c 2" }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] }));
     }
     if (targetCommand.argRequire) {
         for (let i = 0; i < targetCommand.argRequire.length; i++) {
             if (!targetCommand.argRequire[i] || !args[i]) continue;
             if (!targetCommand.argRequire[i](args[i], targetCommand.requireSupportPlayer ? player : undefined, targetCommand.requireSupportArgs ? args : undefined)) {
-                return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
+                return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c 3" }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
             }
         }
     }
@@ -114,13 +115,16 @@ export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Pl
 
     return 0;
 }
-
 export function sendRawText(player: Minecraft.Player | Minecraft.World, ...message: Minecraft.RawMessage[]): void {
     return player.sendMessage({ rawtext: message });
 }
 
-function error(target: Minecraft.Player | Minecraft.World, error: string) {
-    target.sendMessage(`§bMatrix §7>§c Unexpected Error:\n` + error);
+function error(target: Minecraft.Player | Minecraft.World, error: Error): void {
+    target.sendMessage(`§bMatrix §7>§g Command ran with error.\nName: §9${error.name}\n§gMessage: §9${error.message}\n§gStack: §9${error?.stack ?? "unknown"}`);
+}
+
+export function sendErr (err: Error) {
+    console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
 }
 
 export function isPlayer(player: string, exclude: boolean = false, isadmin: boolean = null): Minecraft.Player {
@@ -132,11 +136,6 @@ export function isPlayer(player: string, exclude: boolean = false, isadmin: bool
     if (exclude && target.name == player) return undefined;
     if (isadmin != null && isadmin != isAdmin(target)) return undefined;
     return target;
-}
-
-export function onStart() {
-    // Log the command amount
-    system.runTimeout(() => console.log("CommandHandler :: Successfully registered " + commands.length + " application command(s)"), 20);
 }
 
 interface CommandHandleData {

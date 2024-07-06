@@ -212,6 +212,10 @@ msgstr "안티=봇인증"
 msgid "Author"
 msgstr "저자"
 
+#: about.github
+msgid "Github"
+msgstr ""
+
 #: invcopy.not
 msgid "Copied inventory from %s"
 msgstr "%s의 인벤토리가 복사되었습니다."

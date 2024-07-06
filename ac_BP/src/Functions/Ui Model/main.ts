@@ -128,7 +128,7 @@ const banForm = new ModalFormData().title(rawstr.drt("ui.banplayer")).textField(
 async function moduleUI(player: Player) {
     const moduleForm = new ActionFormData();
     moduleForm.title("Module UI");
-    const ids = getModulesIds();
+    const ids = await getModulesIds();
     const config = c() as { [key: string]: any };
     for (const moduleId of ids) {
         const state = config[moduleId]?.enabled;

@@ -6,6 +6,7 @@
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
 import { world, system } from "@minecraft/server";
+world.modules = [];
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
     // Cancel watchdogTerminate event
     event.cancel = true;
@@ -13,7 +14,6 @@ system.beforeEvents.watchdogTerminate.subscribe((event) => {
         console.log(`Index :: ${new Date(Date.now()).toISOString()} | WatchdogTerminate cancelled, reason: ${event.terminateReason}`);
     });
 });
-
 //Log the run time
 const runTime = Date.now();
 import "./Assets/LatinNormalize";
@@ -34,12 +34,16 @@ import "./Functions/moderateModel/lockDown";
 import "./Functions/moderateModel/log";
 import "./Functions/chatModel/Commands/import";
 import { c } from "./Assets/Util";
-import { onStart } from "./Functions/chatModel/CommandHandler";
-onStart();
 //start all modules
 import "./Modules/Modules";
 import { intilizeModules } from "./Modules/Modules";
-world.afterEvents.worldInitialize.subscribe(intilizeModules);
+world.afterEvents.worldInitialize.subscribe(async () => {
+    world.sendMessage(`Started to intilize modules...`);
+    await system.waitTicks(20);
+    intilizeModules().then((amount) => {
+        world.sendMessage(`Intilized ${amount} module(s) in ${Date.now() - runTime}ms.`);
+    })
+});
 
 if (c().createScoreboard) {
     world.afterEvents.worldInitialize.subscribe(() => {
@@ -48,6 +52,3 @@ if (c().createScoreboard) {
         } catch {}
     });
 }
-system.run(() => {
-    console.log("Index :: Successfully load the program (" + (Date.now() - runTime - 50) + "ms)");
-});
