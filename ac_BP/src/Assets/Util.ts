@@ -47,7 +47,7 @@ class rawstr {
     }
     /** @description Add translation to rawtext */
     public tra(id: Translate, ...withargs: string[]) {
-        this.storge.push({ translate: id, with: withargs });
+        this.storge.push({ translate: id, with: withargs.map((i) => String(i)) });
         return this;
     }
 }
@@ -133,7 +133,6 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
     }
 
     const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode;
-    player.sendMessage(JSON.stringify(flagMsg.parse()));
     switch (flagMode) {
         case "tag": {
             const targets = world.getPlayers({ tags: ["matrix:notify"] });
