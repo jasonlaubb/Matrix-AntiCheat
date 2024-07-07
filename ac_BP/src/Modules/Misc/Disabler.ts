@@ -2,6 +2,7 @@ import { Entity, EntityDamageCause, EntityEquippableComponent, EntityHurtAfterEv
 import { isAdmin, flag } from "../../Assets/Util";
 import { MinecraftEntityTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
+import { AnimationControllerTags, MatrixUsedTags } from "../../Data/EnumData";
 
 /**
  * @author jasonlaubb
@@ -10,13 +11,13 @@ import { registerModule, configi } from "../Modules.js";
  */
 
 function intickEvent(config: configi, player: Player) {
-    if (isAdmin(player) || player.hasTag("matrix:disabler-patched") || !player.hasTag("matrix:alive")) return;
+    if (isAdmin(player) || player.hasTag(MatrixUsedTags.disabler) || !player.hasTag(AnimationControllerTags.alive)) return;
     if (player.isGliding) {
         const elytra = player.getComponent(EntityEquippableComponent.componentId)!?.getEquipment(EquipmentSlot.Chest)!;
         const durability = elytra?.getComponent(ItemDurabilityComponent.componentId);
         if (elytra?.typeId != MinecraftItemTypes.Elytra || (elytra?.typeId == MinecraftItemTypes.Elytra && durability.maxDurability - durability.damage <= 1)) {
-            player.addTag("matrix:disabler-patched");
-            system.runTimeout(() => player.removeTag("matrix:disabler-patched"), 10);
+            player.addTag(MatrixUsedTags.disabler);
+            system.runTimeout(() => player.removeTag(MatrixUsedTags.disabler), 10);
             player.teleport(player.lastNonGlidingPoint);
             flag(player, "Disabler", "A", config.antiDisabler.maxVL, config.antiDisabler.punishment, undefined);
         }
@@ -35,7 +36,7 @@ function doubleEvent(config: configi, damagingEntity: Entity, hurtEntity: Entity
 
 function tripleEvent({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
-    player.removeTag("matrix:disabler-patched");
+    player.removeTag(MatrixUsedTags.disabler);
 }
 
 registerModule(

@@ -3,6 +3,7 @@ import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import { flag, isAdmin, isTargetGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
+import { DisableTags } from "../../Data/EnumData";
 
 /**
  * @author jasonlaubb
@@ -14,7 +15,7 @@ import { registerModule, configi } from "../Modules.js";
 
 function firstEvent(config: configi, event: PlayerBreakBlockBeforeEvent) {
     const { player, block, itemStack } = event;
-    if (isAdmin(player) || block.isAir || player.hasTag("matrix:break-disabled") || isTargetGamemode(player, 1)) return;
+    if (isAdmin(player) || block.isAir || player.hasTag(DisableTags.break) || isTargetGamemode(player, 1)) return;
     const typeId = itemStack?.typeId ?? "minecraft:air";
 
     const hasEfficiency = itemStack ? itemStack.getComponent(ItemEnchantableComponent.componentId).hasEnchantment(MinecraftEnchantmentTypes.Efficiency) : false;
@@ -32,21 +33,21 @@ function firstEvent(config: configi, event: PlayerBreakBlockBeforeEvent) {
     if (breakBPS > speedLimit && !(config.antiFastBreak.solidOnly && !block.isSolid)) {
         event.cancel = true;
         system.run(() => {
-            player.addTag("matrix:break-disabled");
+            player.addTag(DisableTags.break);
             flag(player, "Fast Break", "A", config.antiFastBreak.maxVL, config.antiFastBreak.punishment, ["BlockPerSecond" + ":" + breakBPS.toFixed(2)]);
         });
         system.runTimeout(() => {
-            player.removeTag("matrix:break-disabled");
+            player.removeTag(DisableTags.break);
         }, 60);
     } //this is disabled until fix it
     /*else if (breakBPS < 11 && player.lastTouchBlockId != JSON.stringify(block.location) && block.isSolid) {
         event.cancel = true
         system.run(() => {
-            player.addTag("matrix:break-disabled")
+            player.addTag(DisableTags.break)
             flag (player, "Fast Break", "B", config.antiFastBreak.maxVL, config.antiFastBreak.punishment, undefined)
         })
         system.runTimeout(() => {
-            player.removeTag("matrix:break-disabled")
+            player.removeTag(DisableTags.break)
         }, 100)
     }*/
 }

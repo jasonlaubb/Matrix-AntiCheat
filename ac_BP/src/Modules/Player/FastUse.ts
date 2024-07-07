@@ -1,6 +1,7 @@
 import { Player, world, system } from "@minecraft/server";
 import { flag } from "../../Assets/Util";
 import { configi, registerModule } from "../Modules";
+import { DisableTags } from "../../Data/EnumData";
 
 const lastItemUse = new Map<string, number>();
 
@@ -12,12 +13,12 @@ async function AntiFastUse(config: configi, player: Player) {
 
     const delay = timeNow - timeLast;
 
-    if (delay > 0 && delay < config.antiFastUse.minUseTime && !player.hasTag("matrix:item-disabled")) {
+    if (delay > 0 && delay < config.antiFastUse.minUseTime && !player.hasTag(DisableTags.item)) {
         //A - false positive: very low, efficiency: mid
         flag(player, "FastUse", "A", config.antiFastUse.maxVL, config.antiFastUse.punishment, ["Delay" + ":" + delay.toFixed(2)]);
         if (!config.slient) {
-            player.addTag("matrix:item-disabled");
-            system.runTimeout(() => player.removeTag("matrix:item-disabled"), config.antiFastUse.timeout);
+            player.addTag(DisableTags.item);
+            system.runTimeout(() => player.removeTag(DisableTags.item), config.antiFastUse.timeout);
         }
     }
 }

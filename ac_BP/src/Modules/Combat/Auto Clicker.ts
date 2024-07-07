@@ -3,6 +3,7 @@ import { flag, isAdmin } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { tps } from "../../Assets/Public.js";
 import { registerModule, configi } from "../Modules.js";
+import { DisableTags } from "../../Data/EnumData.js";
 
 const clickData: Map<string, number[]> = new Map<string, number[]>();
 
@@ -24,16 +25,16 @@ function antiAutoClicker(config: configi, player: Player) {
     const cps = filteredClicks.length;
 
     // If the cps is higher than the max clicks per second, flag the player
-    if (!player.hasTag("matrix:pvp-disabled") && tps.getTps() > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
+    if (!player.hasTag(DisableTags.pvp) && tps.getTps() > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
         // A - false positive: very low, efficiency: high
         flag(player, "Auto Clicker", "A", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Click Per Second" + ":" + cps.toFixed(0)]);
 
         if (!config.slient) {
             player.applyDamage(6);
-            player.addTag("matrix:pvp-disabled");
+            player.addTag(DisableTags.pvp);
 
             system.runTimeout(() => {
-                player.removeTag("matrix:pvp-disabled");
+                player.removeTag(DisableTags.pvp);
                 clickData.delete(id);
             }, config.antiAutoClicker.timeout);
         }

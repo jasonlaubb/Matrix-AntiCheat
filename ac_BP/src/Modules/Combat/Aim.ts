@@ -1,6 +1,7 @@
 import { Player } from "@minecraft/server";
 import { flag } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules";
+import { AnimationControllerTags } from "../../Data/EnumData";
 /**
  * @author jasonlaubb
  * @description Detect the suspicious aiming
@@ -46,7 +47,7 @@ function antiAim(config: configi, player: Player) {
     const lastRotSpeedY = Math.abs(rotationY - data.previousRotationY);
     // Integer rotation
     if ((rotationX % 5 == 0 && rotationX != 0 && Math.abs(rotationX) != 90) || (rotationY % 5 == 0 && rotationY != 0)) {
-        if (!player.hasTag("matrix:riding")) {
+        if (!player.hasTag(AnimationControllerTags.riding)) {
             flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, ["RotationX" + ":" + rotationX, "RotationY" + ":" + rotationY]);
         }
     }

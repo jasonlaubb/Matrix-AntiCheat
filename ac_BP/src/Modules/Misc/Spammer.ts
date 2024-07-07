@@ -2,6 +2,7 @@ import { world, system, ChatSendAfterEvent } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { AnimationControllerTags } from "../../Data/EnumData";
 
 /**
  * @author ravriv
@@ -13,7 +14,7 @@ const lastFlag: Map<string, number> = new Map<string, number>();
 function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
     if (isAdmin(player)) return;
     system.run(() => {
-        if (player.hasTag("matrix:attack_time")) {
+        if (player.hasTag(AnimationControllerTags.attackTime)) {
             //A - false positive: very low, efficiency: mid
             if (Date.now() - lastFlag.get(player.id) < 3000) {
                 flag(player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "AttackTime"]);
@@ -23,7 +24,7 @@ function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
         }
 
         //check if the player send message while using item
-        else if (player.hasTag("matrix:using_item")) {
+        else if (player.hasTag(AnimationControllerTags.usingItem)) {
             //B - false positive: mid, efficiency: mid
             if (Date.now() - lastFlag.get(player.id) < 3000) {
                 flag(player, "Spammer", "B", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "UsingItem"]);
@@ -34,8 +35,8 @@ function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
             const { x, z } = player.getVelocity();
             //check if the player send message while moving
             if (
-                player.hasTag("matrix:moving") &&
-                !player.hasTag("matrix:riding") &&
+                player.hasTag(AnimationControllerTags.moving) &&
+                player.hasTag(AnimationControllerTags.alive) &&
                 player.isOnGround &&
                 !player.isJumping &&
                 !player.isInWater &&
@@ -53,14 +54,15 @@ function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
                 if (!config.slient) player.applyDamage(6);
             }
             //check if the player send message opening container
-            else if (player.hasTag("matrix:container")) {
+            /*
+            else if (player.hasTag(---)) {
                 //D - false positive: low, efficiency: mid
                 if (Date.now() - lastFlag.get(player.id) < 3000) {
                     flag(player, "Spammer", "D", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "Container"]);
                 }
                 lastFlag.set(player.id, Date.now());
                 if (!config.slient) player.applyDamage(6);
-            }
+            }*/
         }
     });
 }

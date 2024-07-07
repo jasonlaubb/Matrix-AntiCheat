@@ -1,6 +1,7 @@
 import { Player, system } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
+import { MatrixUsedTags } from "../../Data/EnumData";
 
 /**
  * @author jasonlaubb
@@ -15,10 +16,10 @@ function intickEvent(config: configi, player: Player) {
     // if the player location is out of the range, flag them
     if (Math.abs(x) > max || Math.abs(y) > max || Math.abs(z) > max || typeof x !== "number" || typeof y !== "number" || typeof z !== "number") {
         player.teleport({ x: 0, y: 0, z: 0 });
-        if (!player.hasTag("matrix:crasher")) {
-            player.addTag("matrix:crasher");
+        if (!player.hasTag(MatrixUsedTags.crasher)) {
+            player.addTag(MatrixUsedTags.crasher);
             system.runTimeout(() => {
-                player.removeTag("matrix:crasher");
+                player.removeTag(MatrixUsedTags.crasher);
             });
 
             if (isAdmin(player) !== true) {

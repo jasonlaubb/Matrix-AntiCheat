@@ -2,6 +2,7 @@ import { world, system, Player, Vector3, Entity, EntityHitEntityAfterEvent, Enti
 import { flag, isAdmin, getPing } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
+import { DisableTags } from "../../Data/EnumData.js";
 
 /**
  * @author ravriv & jasonlaubb & RaMiGamerDev
@@ -25,7 +26,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         invalidPitch: 0,
         kAFlags: 0,
     };
-    if (player.hasTag("matrix:pvp-disabled")) return;
+    if (player.hasTag(DisableTags.pvp)) return;
     //constant the infomation
     const playerHitEntity = data.hitLength;
     let flagged = false;
@@ -84,7 +85,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
             flagged = true
         }*/
         // bad packet -w-
-        if (player.isSleeping || player.hasTag("matrix:container")) {
+        if (player.isSleeping) {
             flag(player, "Kill Aura", "E", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
             flagged = true;
         }
@@ -92,9 +93,9 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
 
     if (flagged) {
         if (!config.slient) {
-            player.addTag("matrix:pvp-disabled");
+            player.addTag(DisableTags.pvp);
             system.runTimeout(() => {
-                player.removeTag("matrix:pvp-disabled");
+                player.removeTag(DisableTags.pvp);
             }, config.antiKillAura.timeout);
         }
     }
@@ -121,7 +122,7 @@ function intickEvent(config: configi, player: Player) {
     }
     if (!raycast) return;
     const nearestPlayer = raycast?.entity;
-    if (!(raycast.entity instanceof Player) || raycast.distance > 7.5 || player.hasTag("matrix:pvp_disabled")) return;
+    if (!(raycast.entity instanceof Player) || raycast.distance > 7.5 || player.hasTag(DisableTags.pvp)) return;
     const pos2 = nearestPlayer.getHeadLocation();
     if (!data) return;
     let horizontalAngle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / Math.PI - horizontalRotation - 90;
@@ -142,29 +143,29 @@ function intickEvent(config: configi, player: Player) {
     //   player.onScreenDisplay.setActionBar(`${Math.abs(yPitch - data.lastPitch)}`)
     //killaura/F check for head rotation
     if (data.kAFlags >= 40) {
-        player.addTag("matrix:pvp-disabled");
-        system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
+        player.addTag(DisableTags.pvp);
+        system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
         flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + horizontalAngle.toFixed(5)]);
         data.kAFlags = 0;
     }
     //killaura/G check for instant rotation to the target
     if (rotatedMove == 0 && data.kAFlags == "G" && verticalRotation != 0) {
-        player.addTag("matrix:pvp-disabled");
-        system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
+        player.addTag(DisableTags.pvp);
+        system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
         flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + rotatedMove.toFixed(5)]);
         data.kAFlags = 0;
     }
     //killaura/H check for smooth y Pitch movement
     if (data.invalidPitch >= 20) {
-        player.addTag("matrix:pvp-disabled");
-        system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
+        player.addTag(DisableTags.pvp);
+        system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
         flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);
         data.invalidPitch = 0;
     }
     //killaura/I check for if the player rotation can be divided by 1
     if ((verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
-        player.addTag("matrix:pvp-disabled");
-        system.runTimeout(() => player.removeTag("matrix:pvp-disabled"), config.antiKillAura.timeout);
+        player.addTag(DisableTags.pvp);
+        system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
         flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);
     }
 }

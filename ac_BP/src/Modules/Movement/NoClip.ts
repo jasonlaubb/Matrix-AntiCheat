@@ -3,6 +3,7 @@ import { flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { isISL } from "./Timer";
+import { AnimationControllerTags } from "../../Data/EnumData";
 
 const powderBlock = [
     MinecraftBlockTypes.RedConcretePowder,
@@ -118,7 +119,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         if (lastflag && now - lastflag < 850 && !isISL(player)) {
             if (Math.abs(y) < 1.75) {
                 flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
-            } else if (!player.hasTag("matrix:riding")) {
+            } else if (!player.hasTag(AnimationControllerTags.riding)) {
                 flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
             }
         }

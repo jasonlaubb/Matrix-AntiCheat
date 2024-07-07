@@ -20,7 +20,7 @@ export enum AnimationControllerTags {
     north = "north",
     south = "south",
     east = "east",
-    west = "west"
+    west = "west",
 }
 
 export enum DisableTags {
@@ -32,8 +32,11 @@ export enum DisableTags {
 
 export enum MatrixUsedTags {
     disabler = "matrix:disabler-patched",
+    crasher = "matrix:crasher",
     stopRiding = "matrix:stop-riding",
-    knockBack = "matrix:knockback"
+    knockBack = "matrix:knockback",
+    verified = "matrix:verified",
+    slime = "matrix:slime",
 }
 
 export enum MatrixEvents {

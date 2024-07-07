@@ -2,6 +2,7 @@ import { Player, Vector3 } from "@minecraft/server";
 import { flag } from "../../Assets/Util.js";
 import { tps } from "../../Assets/Public.js";
 import { configi, registerModule } from "../Modules.js";
+import { AnimationControllerTags } from "../../Data/EnumData.js";
 interface timerData {
     safeZone: Vector3;
     lastFlag: number;
@@ -29,7 +30,7 @@ export function isISL(player: Player): boolean {
 export async function AntiTimer(config: configi, player: Player, now: number) {
     const data = timerData.get(player.id) ?? ({} as timerData);
     //skip the code for some reasons
-    if (player.isGliding || player.hasTag("matrix:riding")) return;
+    if (player.isGliding || player.hasTag(AnimationControllerTags.riding)) return;
     //dBVD == difference between velocity and moved distance
     const dBVD = Math.abs(data.xzLog - data.disLog);
     const dBVD2 = data.yDisLog - data.yLog;
@@ -91,12 +92,12 @@ export async function SystemEvent(player: Player, now: number) {
     }
     data.disLog += Math.hypot(x1 - x2, z1 - z2);
     //reset velocity xz log and distance log if player used /tp or using high y velocity
-    if ((xz == 0 && Math.hypot(x1 - x2, z1 - z2) > 0.5) || player.hasTag("matrix:riding") || player.isGliding) {
+    if ((xz == 0 && Math.hypot(x1 - x2, z1 - z2) > 0.5) || player.hasTag(AnimationControllerTags.riding) || player.isGliding) {
         data.xzLog = 0;
         data.disLog = 0;
     }
     //reset anti y timer if player used /tp or using high velocity
-    if ((y == 0 && Math.abs(y1 - y2) > 0.1) || y > 0.5 || player.hasTag("matrix:riding")) data.yDisLog = 0;
+    if ((y == 0 && Math.abs(y1 - y2) > 0.1) || y > 0.5 || player.hasTag(AnimationControllerTags.riding)) data.yDisLog = 0;
     //check if the player is spike lagging
     if (dBVD > 0.5) (data.iSL as number)++;
     if (dBVD < 0.5 && (data.iSL as number) <= 4 && (data.iSL as number) > 0) (data.iSL as boolean) = true;

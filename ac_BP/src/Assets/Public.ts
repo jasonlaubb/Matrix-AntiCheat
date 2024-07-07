@@ -1,6 +1,7 @@
 import { world, Player, EntityInventoryComponent, ItemEnchantableComponent, EntityDamageCause, system, PlayerBreakBlockAfterEvent } from "@minecraft/server";
 import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { clearBlockBreakLog, findSlime, logBreak } from "./Util";
+import { MatrixUsedTags, AnimationControllerTags, DisableTags } from "../Data/EnumData";
 
 world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
     if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
@@ -21,10 +22,10 @@ world.afterEvents.entityHurt.subscribe(
         if (event.damageSource.cause == EntityDamageCause.blockExplosion || event.damageSource.cause == EntityDamageCause.entityExplosion || event.damageSource.cause === EntityDamageCause.entityAttack) {
             player.lastExplosionTime = Date.now();
 
-            if (!player.hasTag("matrix:knockback")) {
-                player.addTag("matrix:knockback");
+            if (!player.hasTag(MatrixUsedTags.knockBack)) {
+                player.addTag(MatrixUsedTags.knockBack);
             } else if (player.getVelocity().y <= 0) {
-                player.removeTag("matrix:knockback");
+                player.removeTag((MatrixUsedTags.knockBack));
             }
         }
         player.lastApplyDamage = Date.now();
@@ -34,13 +35,13 @@ world.afterEvents.entityHurt.subscribe(
 
 world.beforeEvents.itemUse.subscribe((event) => {
     const player = event.source;
-    if (player.hasTag("matrix:item-disabled")) {
+    if (player.hasTag(DisableTags.item)) {
         event.cancel = true;
     }
 });
 
 world.afterEvents.playerBreakBlock.subscribe(({ player: { id }, player, brokenBlockPermutation, block: { location }, block }: PlayerBreakBlockAfterEvent) => {
-    if (player.hasTag("matrix:break-disabled")) {
+    if (player.hasTag(DisableTags.break)) {
         block.dimension
             .getEntities({
                 location: block.location,
@@ -63,24 +64,25 @@ world.afterEvents.playerLeave.subscribe(({ playerId }) => {
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     const { player } = event;
-    if (player.hasTag("matrix:break-disabled")) {
+    if (player.hasTag(DisableTags.break)) {
         event.cancel = true;
     }
 });
 
 world.beforeEvents.playerPlaceBlock.subscribe((event) => {
     const { player } = event;
-    if (player.hasTag("matrix:place-disabled")) {
+    if (player.hasTag(DisableTags.place)) {
         event.cancel = true;
     }
 });
 
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (initialSpawn) {
-        player.removeTag("matrix:item-disabled");
-        player.removeTag("matrix:break-disabled");
-        player.removeTag("matrix:place-disabled");
-        player.removeTag("matrix:pvp-disabled");
+        player.removeTag(DisableTags.break);
+        player.removeTag(DisableTags.place);
+        player.removeTag(DisableTags.item);
+        player.removeTag(DisableTags.pvp);
+        player.removeTag(MatrixUsedTags.knockBack);
     }
 });
 
@@ -113,20 +115,20 @@ system.runInterval(async () => {
     for (const player of players) {
         // knockback
         const v = player.getVelocity();
-        if (v.y <= 0) player.removeTag("matrix:knockback");
+        if (v.y <= 0) player.removeTag(MatrixUsedTags.knockBack);
 
         // item use
-        if (player.hasTag("matrix:using_item") && !player.lastItemUsed) {
+        if (player.hasTag(AnimationControllerTags.usingItem) && !player.lastItemUsed) {
             player.lastItemUsed = now;
-        } else if (!player.hasTag("matrix:using_item")) {
+        } else if (!player.hasTag(AnimationControllerTags.usingItem)) {
             player.lastItemUsed = undefined;
         }
 
         // slime
         const slimeUnder = findSlime(player.dimension, player.location);
         if (slimeUnder) {
-            player.addTag("matrix:slime");
-        } else if (v.y <= 0) player.removeTag("matrix:slime");
+            player.addTag(MatrixUsedTags.slime);
+        } else if (v.y <= 0) player.removeTag(MatrixUsedTags.slime);
 
         // Not useful lmao
         if (player.lastVelObject && player.lastLocObject) {

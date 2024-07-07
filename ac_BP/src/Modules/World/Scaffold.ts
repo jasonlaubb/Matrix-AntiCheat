@@ -2,6 +2,7 @@ import { world, system, PlayerPlaceBlockAfterEvent, Vector3 } from "@minecraft/s
 import { flag, isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
+import { DisableTags } from "../../Data/EnumData";
 
 /**
  * @author jasonlaubb & RaMiGamerDev
@@ -32,7 +33,7 @@ interface ScaffoldData {
 }
 const scaffoldData = new Map<string, ScaffoldData>();
 function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPlaceBlockAfterEvent) {
-    if (isAdmin(player) || player.hasTag("matrix:place-disabled")) return;
+    if (isAdmin(player) || player.hasTag(DisableTags.place)) return;
     let data = scaffoldData.get(player.id);
     const { x, y, z } = block.location;
     if (!data) {
@@ -173,8 +174,8 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     data.lastPlace = now;
     if (detected && !config.slient) {
         block.setType(MinecraftBlockTypes.Air);
-        player.addTag("matrix:place-disabled");
-        system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiScaffold.timeout);
+        player.addTag(DisableTags.place);
+        system.runTimeout(() => player.removeTag(DisableTags.place), config.antiScaffold.timeout);
     }
 }
 function calculateAngle(pos1: Vector3, pos2: Vector3, rotation = -90) {

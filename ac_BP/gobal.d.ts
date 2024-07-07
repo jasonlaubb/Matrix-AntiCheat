@@ -43,7 +43,10 @@ declare module "@minecraft/server" {
         perfectMove: number;
         lastTouchEntity: number;
         lastNonGlidingPoint: Vector3;
+        // Nah
         hasTag: (tag: AnimationControllerTags | DisableTags | MatrixUsedTags) => boolean;
+        addTag: (tag: DisableTags | MatrixUsedTags) => boolean;
+        removeTag: (tag: DisableTags | MatrixUsedTags) => boolean;
     }
     interface World {
         modules: Module[];

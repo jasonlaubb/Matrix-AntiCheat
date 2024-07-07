@@ -2,6 +2,7 @@ import { world, Player, system, GameMode, ItemUseAfterEvent, Vector3, PlayerSpaw
 import { flag, getPing } from "../../Assets/Util";
 import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
+import { MatrixUsedTags } from "../../Data/EnumData";
 
 const fallDistances = new Map<string, number[]>();
 const lastLocation = new Map<string, Vector3>();
@@ -23,12 +24,12 @@ async function ElytraFly(player: Player, now: number, config: configi) {
     if (player.isGliding) {
         if (data.length > config.antiElytraFly.fallDiscycle) {
             data.shift();
-            if (getPing(player) < 4 && !player.hasTag("matrix:stop-gliding") && data.every((f) => player.fallDistance == f) && player.fallDistance !== 1 && player.fallDistance <= config.antiElytraFly.maxFallDis && velocity < -0.01) {
+            if (getPing(player) < 4 && !player.hasTag(MatrixUsedTags.stopRiding) && data.every((f) => player.fallDistance == f) && player.fallDistance !== 1 && player.fallDistance <= config.antiElytraFly.maxFallDis && velocity < -0.01) {
                 if (!config.slient) {
                     player.teleport(lastPos);
                 }
-                player.addTag("matrix:stop-gliding");
-                system.runTimeout(() => player.removeTag("matrix:stop-gliding"), 10);
+                player.addTag(MatrixUsedTags.stopRiding);
+                system.runTimeout(() => player.removeTag(MatrixUsedTags.stopRiding), 10);
                 flag(player, "Elytra Fly", "A", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, ["velocityY" + ":" + velocity.toFixed(2)]);
             }
         } else {
@@ -38,7 +39,7 @@ async function ElytraFly(player: Player, now: number, config: configi) {
         const ratio = ((player.fallDistance / velocity ** 2) * player.getRotation().x ** 2) / 56000;
 
         if (
-            !player.hasTag("matrix:stop-gliding") &&
+            !player.hasTag(MatrixUsedTags.stopRiding) &&
             ratio > config.antiElytraFly.maxRatio &&
             ratio !== Infinity &&
             player.fallDistance !== 1 &&
@@ -49,8 +50,8 @@ async function ElytraFly(player: Player, now: number, config: configi) {
             system.run(() => {
                 if (player.lastGlidingFire && now - player.lastGlidingFire < 90) return;
                 if (!config.slient) player.teleport(lastPos);
-                player.addTag("matrix:stop-gliding");
-                system.runTimeout(() => player.removeTag("matrix:stop-gliding"), 10);
+                player.addTag(MatrixUsedTags.stopRiding);
+                system.runTimeout(() => player.removeTag(MatrixUsedTags.stopRiding), 10);
                 flag(player, "Elytra Fly", "B", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, ["Ratio" + ":" + ratio.toFixed(2)]);
             });
         }
@@ -61,7 +62,7 @@ async function ElytraFly(player: Player, now: number, config: configi) {
 }
 
 const playerSpawn = ({ player }: PlayerSpawnAfterEvent) => {
-    player.removeTag("matrix:stop-gliding");
+    player.removeTag(MatrixUsedTags.stopRiding);
 };
 
 const itemUseAfter = ({ source: player, itemStack: { typeId } }: ItemUseAfterEvent) => player.isGliding && typeId === MinecraftItemTypes.FireworkRocket && (player.lastGlidingFire = Date.now());

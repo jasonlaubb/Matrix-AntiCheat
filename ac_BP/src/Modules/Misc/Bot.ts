@@ -1,6 +1,8 @@
 import { world, system, PlayerSpawnAfterEvent, Player, ChatSendAfterEvent } from "@minecraft/server";
 import { FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
-import { flag, c, isAdmin, kick, rawstr } from "../../Assets/Util";
+import { flag, c, isAdmin, rawstr } from "../../Assets/Util";
+import { Action } from "../../Assets/Action";
+import { MatrixUsedTags } from "../../Data/EnumData";
 
 /**
  * @author RaMiGanerDev
@@ -18,7 +20,7 @@ function playerSpawn({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
     // wait 0.1 seconds
     system.run(() => {
         player.verifying = false;
-        player.removeTag("matrix:verified");
+        player.removeTag(MatrixUsedTags.verified);
         player.verifyTimer = Date.now();
         player.notVerified = true;
         player.sendMessage(new rawstr(true, "c").tra("bot.waitui").parse());
@@ -32,7 +34,7 @@ function antiBot() {
     for (const player of players) {
         if (!player.notVerified) continue;
         if (now - player.verifyTimer >= config.antiBot.timer * 1000 * 60) {
-            kick(player, "VERIFY_EXPIRED", "Matrix AntiCheat");
+            Action.kick(player, "VERIFY_EXPIRED", "Matrix AntiCheat");
         }
 
         try {
@@ -67,7 +69,7 @@ function antiBot() {
                                 player.tryVerify += 1;
 
                                 if (player.tryVerify > config.antiBot.maxTry) {
-                                    kick(player, "VERIFY_FAILED", "Matrix AntiCheat");
+                                    Action.kick(player, "VERIFY_FAILED", "Matrix AntiCheat");
                                     return;
                                 }
                             }
@@ -79,7 +81,7 @@ function antiBot() {
                         player.sendMessage(new rawstr(true, "a").tra("bot.ok").parse());
                         player.notVerified = undefined;
                         player.verified = true;
-                        player.addTag("matrix:verified");
+                        player.addTag(MatrixUsedTags.verified);
                     });
             };
             if (!player.verifying) menu(player);

@@ -3,6 +3,7 @@ import { flag, recoverBlockBreak } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import { configi, registerModule } from "../Modules";
+import { DisableTags } from "../../Data/EnumData";
 
 const blockBreakData = new Map<string, number[]>();
 
@@ -13,7 +14,7 @@ const blockBreakData = new Map<string, number[]>();
  */
 
 async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, config: configi) {
-    if (player.hasTag("matrix:break-disabled") || block?.isAir || player.getGameMode() == GameMode.creative) {
+    if (player.hasTag(DisableTags.break) || block?.isAir || player.getGameMode() == GameMode.creative) {
         return;
     }
 
@@ -38,12 +39,12 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, con
     //if block break is in 1 tick is higher than the limit, flag them
     if (blockBreakCount.length > config.antiNuker.maxBreakPerTick && !(config.antiNuker.solidOnly && !block.isSolid)) {
         system.run(() => {
-            player.addTag("matrix:break-disabled");
+            player.addTag(DisableTags.break);
             block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => item.kill());
             block.setPermutation(Object.assign({}, block.permutation));
 
             //prevent the player from breaking blocks for 3 seconds
-            system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiNuker.timeout);
+            system.runTimeout(() => player.removeTag(DisableTags.break), config.antiNuker.timeout);
             recoverBlockBreak(player.id, 200, player.dimension);
             blockBreakData.delete(player.id);
             if (hasEfficiency <= 2) {

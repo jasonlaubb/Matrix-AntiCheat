@@ -1,6 +1,7 @@
 import { Block, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import { configi, registerModule } from "../Modules";
+import { DisableTags } from "../../Data/EnumData";
 //import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 //offset~
@@ -17,7 +18,7 @@ const lastFlag = new Map<string, number>();
 
 async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) {
     const { block, player } = event;
-    if (isAdmin(player) || player.hasTag("matrix:break-disabled") || block?.isAir) return;
+    if (isAdmin(player) || player.hasTag(DisableTags.break) || block?.isAir) return;
     /* This check is not fixed
     if (block.typeId === MinecraftBlockTypes.Bed) {
         let allBlock: Block[] = []
@@ -52,8 +53,8 @@ async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) 
         const lastflag = lastFlag.get(player.id);
         if (lastflag && Date.now() - lastflag < 35) {
             if (!config.slient) {
-                system.run(() => player.addTag("matrix:break-disabled"));
-                system.runTimeout(() => player.removeTag("matrix:break-disabled"), config.antiBreaker.timeout);
+                system.run(() => player.addTag(DisableTags.break));
+                system.runTimeout(() => player.removeTag(DisableTags.break), config.antiBreaker.timeout);
             }
             system.run(() => flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId]));
         }

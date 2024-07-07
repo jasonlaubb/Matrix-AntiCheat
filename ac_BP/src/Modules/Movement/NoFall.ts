@@ -2,6 +2,7 @@ import { world, GameMode, Player, Vector3, PlayerSpawnAfterEvent } from "@minecr
 import { flag, getPing } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
+import { AnimationControllerTags } from "../../Data/EnumData";
 
 const lastLocation = new Map<string, Vector3>();
 const lastFlag = new Map<string, number>();
@@ -24,14 +25,14 @@ async function AntiNoFall(player: Player, config: configi, now: number) {
 
     //stop false positive
     if (
-        player.hasTag("matrix:dead") ||
-        player.hasTag("matrix:riding") ||
+        !player.hasTag(AnimationControllerTags.alive) ||
+        player.hasTag(AnimationControllerTags.riding) ||
         isOnGround ||
         isFlying ||
         isClimbing ||
         isInWater ||
         isGliding ||
-        player.hasTag("matrix:levitating") ||
+        player.hasTag(AnimationControllerTags.levitating) ||
         player.getEffect(MinecraftEffectTypes.Speed) ||
         (jumpEffect && jumpEffect.amplifier > 2) ||
         (threwTridentAt && now - threwTridentAt < 3000) ||

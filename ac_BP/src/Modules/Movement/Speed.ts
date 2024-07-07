@@ -1,6 +1,7 @@
 import { EntityDamageCause, EntityHurtAfterEvent, Player, world } from "@minecraft/server";
 import { flag } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
+import { AnimationControllerTags } from "../../Data/EnumData.js";
 
 /**
  * @author RamiGamerDev
@@ -27,7 +28,7 @@ async function AntiSpeed(config: configi, player: Player) {
     const solidBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.isSolid;
     const safePos = data.speedData;
     //skip the code for some reasons
-    if (player.isFlying || player.isGliding || player.hasTag("matrix:riding")) return;
+    if (player.isFlying || player.isGliding || player.hasTag(AnimationControllerTags.riding)) return;
     //start complex things
     //changing value when needed to avoid false postives
     if (solidBlock) data.speedMaxV = 1.3;
@@ -68,7 +69,7 @@ async function AntiSpeed(config: configi, player: Player) {
     //if the player dBLNV bigger than max value + 1 lag back for escape bypasses
     if (lagBack) player.teleport(safePos);
     //check if speedLog reached the max which is 3 flag
-    if (!player.hasTag("matrix:riding") && !player.getComponent("riding")?.entityRidingOn && data.speedLog >= 3 && dBLNV > data.speedMaxV && dBLNV - data.lastVelocity < 0.3) {
+    if (!player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && data.speedLog >= 3 && dBLNV > data.speedMaxV && dBLNV - data.lastVelocity < 0.3) {
         flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + dBLNV.toFixed(2)]);
         if (!config.slient) player.teleport(safePos);
         data.speedLog = 0;

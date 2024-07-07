@@ -2,7 +2,7 @@ import { world, system, Player, Block, Vector3, PlayerPlaceBlockAfterEvent } fro
 import { flag, isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
-
+import { DisableTags } from "../../Data/EnumData";
 interface TowerData {
     towerBlock: Vector3;
     lastBlockPlace: number;
@@ -30,7 +30,7 @@ async function AntiTower(player: Player, block: Block, config: configi) {
     if (data === undefined) return;
 
     //prevent false positive and disable check when player has tag
-    if (isAdmin(player) || player.hasTag("matrix:place-disabled") || player.isOnGround || !player.isJumping || player.isFlying || player.isInWater || player.getEffect(MinecraftEffectTypes.JumpBoost)) return;
+    if (isAdmin(player) || player.hasTag(DisableTags.place) || player.isOnGround || !player.isJumping || player.isFlying || player.isInWater || player.getEffect(MinecraftEffectTypes.JumpBoost)) return;
 
     const { x, y, z }: Vector3 = block.location;
 
@@ -66,10 +66,10 @@ async function AntiTower(player: Player, block: Block, config: configi) {
                 block.setType(MinecraftBlockTypes.Air);
 
                 //stop player place block
-                player.addTag("matrix:place-disabled");
+                player.addTag(DisableTags.place);
 
                 //remove the tag after timeout
-                system.runTimeout(() => player.removeTag("matrix:place-disabled"), config.antiTower.timeout);
+                system.runTimeout(() => player.removeTag(DisableTags.place), config.antiTower.timeout);
             }
         } else {
             vL.set(player.id, vl + 1);
