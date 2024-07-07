@@ -116,6 +116,13 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
                     flagMsg.str("\n§bMatrix §7>§g ").tra("util.formban", player.name);
                     break;
                 }
+                case "tempkick": {
+                    punishmentDone = true;
+                    if (config.logsettings.logCheatPunishment) saveLog("TempKick", player.name, `${modules} ${type}`);
+                    // Tempkick the player, espectially for local world.
+                    Action.tempkick(player);
+                    break;
+                }
             }
         }
         if (punishmentDone) {
