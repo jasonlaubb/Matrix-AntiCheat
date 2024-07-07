@@ -1,17 +1,16 @@
 import { world, system, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage, RawText } from "@minecraft/server";
-import { ban } from "../Functions/moderateModel/banHandler";
-import { triggerEvent } from "../Functions/moderateModel/eventHandler";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { saveLog } from "../Functions/moderateModel/log";
 import { Translate } from "./Language";
 import Dynamic from "../Functions/Config/dynamic_config";
+import { Action } from "./Action";
 
 /**
  * @author jasonlaubb
  * @description Utility function for script.
  * @warning This is very important, you cannot remove this.
  */
-export { rawstr, getPing, kick, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
+export { rawstr, getPing, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, isHost, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
 
 class rawstr {
     private storge: RawMessage[] = [];
@@ -50,14 +49,6 @@ class rawstr {
         this.storge.push({ translate: id, with: withargs.map((i) => String(i)) });
         return this;
     }
-}
-
-function kick(player: Player, reason?: string, by?: string) {
-    const textreason = "§c§lYou have been kicked\n§r§7Reason: §c" + reason ?? "--\n§7By: §c" + by ?? "--";
-    world
-        .getDimension(player.dimension.id)
-        .runCommandAsync(`kick "${player.name}" ${textreason}`)
-        .catch(() => triggerEvent(player, "matrix:kick"));
 }
 
 function formatInformation(arr: string[]) {
@@ -114,14 +105,14 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
                 case "kick": {
                     punishmentDone = true;
                     if (config.logsettings.logCheatPunishment) saveLog("Kick", player.name, `${modules} ${type}`);
-                    kick(player, `Unfair adventage [${modules} ${type}]`, "Matrix AntiCheat");
+                    Action.kick(player, `Unfair adventage [${modules} ${type}]`, "Matrix AntiCheat");
                     flagMsg.str("\n§bMatrix §7>§g ").tra("util.formkick", player.name);
                     break;
                 }
                 case "ban": {
                     punishmentDone = true;
                     if (config.logsettings.logCheatPunishment) saveLog("Ban", player.name, `${modules} ${type}`);
-                    ban(player, `Unfair adventage [${modules} ${type}]`, "Matrix AntiCheat", (config.punishment_ban.minutes as number | "forever") === "forever" ? "forever" : Date.now() + config.punishment_ban.minutes * 60000);
+                    Action.ban(player, `Unfair adventage [${modules} ${type}]`, "Matrix AntiCheat", (config.punishment_ban.minutes as number | "forever") === "forever" ? "forever" : Date.now() + config.punishment_ban.minutes * 60000);
                     flagMsg.str("\n§bMatrix §7>§g ").tra("util.formban", player.name);
                     break;
                 }
@@ -194,6 +185,11 @@ function getGamemode(playerName: string) {
 
 function isAdmin(player: Player) {
     return !!player.getDynamicProperty("isAdmin");
+}
+
+// Host id is always -206158430207 for Local World
+function isHost ({ id }: Player) {
+    return id == "-206158430207"
 }
 
 function timeToMs(timeStr: string) {

@@ -13,7 +13,6 @@
                     "may_fly",
                     "alive",
                     "gliding",
-                    "jump_action",
                     "jumping",
                     "levitating",
                     "moving",
@@ -37,7 +36,6 @@
                 "alive": "controller.animation.alive",
                 "attack_time": "controller.animation.attack_time",
                 "gliding": "controller.animation.gliding",
-                "jump_action": "controller.animation.jump_action",
                 "jumping": "controller.animation.jumping",
                 "levitating": "controller.animation.levitating",
                 "moving": "controller.animation.moving",
@@ -89,7 +87,7 @@
                     "remove_effects": "bad_omen"
                 }
             },
-            "matrix:unvanished": {
+            "matrix:unvanish": {
                 "minecraft:damage_sensor": {
                   "triggers": [
                       {
@@ -114,7 +112,7 @@
                     "generates_bubbles": false
                 }
             },
-            "matrix:vanished": {
+            "matrix:vanish": {
                 "minecraft:damage_sensor": {
                     "triggers": [
                         {
@@ -139,7 +137,7 @@
                     "generates_bubbles": false
                 }
             },
-            "matrix:kick": {
+            "matrix:tempkick": {
                 "minecraft:explode": {
                     "fuse_length": 0,
                     "fuse_lit": true,
@@ -287,7 +285,7 @@
                                 }
                             ]
                         },
-                        "event": "matrix:containerOpen"
+                        "event": "containerOpen"
                     },
                     {
                         "filters": {
@@ -300,38 +298,25 @@
                                 }
                             ]
                         },
-                        "event": "matrix:containerClose"
+                        "event": "containerClose"
                     }
                 ]
             }
         },
         "events": {
-            "matrix:containerOpen": {},
-            "matrix:containerClose": {},
-            "matrix:totem": {},
-            "matrix:shield": {},
-            "matrix:kick": {
+            "matrix:tempkick": {
                 "add": {
-                    "component_groups": ["matrix:kick"]
-                },
-                "remove": {
-                    "component_groups": ["matrix:kick"]
+                    "component_groups": ["matrix:tempkick"]
                 }
             },
             "matrix:unvanish": {
                 "add": {
-                    "component_groups": ["matrix:unvanished"]
-                },
-                "remove": {
-                    "component_groups": ["matrix:vanished"]
+                    "component_groups": ["matrix:unvanish"]
                 }
             },
             "matrix:vanish": {
                 "add": {
-                    "component_groups": ["matrix:vanished"]
-                },
-                "remove": {
-                    "component_groups": ["matrix:unvanished"]
+                    "component_groups": ["matrix:vanish"]
                 }
             },
             "minecraft:gain_bad_omen": {

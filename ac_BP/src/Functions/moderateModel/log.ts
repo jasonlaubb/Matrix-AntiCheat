@@ -1,5 +1,5 @@
 import { Player, world, system } from "@minecraft/server";
-import { c } from "../../Assets/Util";
+import { c, rawstr } from "../../Assets/Util";
 import { ActionFormData, FormCancelationReason } from "@minecraft/server-ui";
 export { saveLog, sendLog };
 function saveLog(type: string, subject: string, object: string = "§cNo object") {
@@ -50,7 +50,7 @@ async function sendLog(player: Player, currentPage: number = 0) {
         .body(output);
     if (previousButtonActive) ui.button("Previous Page", "textures/ui/arrow_left.png");
     if (nextButtonActive) ui.button("Next Page", "textures/ui/arrow_right.png");
-    ui.button("Close", "textures/ui/redX1.png");
+    ui.button(rawstr.drt("ui.exit"), "textures/ui/redX1.png");
     const result = await ui.show(player);
     if (result.canceled && result.cancelationReason == FormCancelationReason.UserBusy) {
         // Retry every 40 ticks

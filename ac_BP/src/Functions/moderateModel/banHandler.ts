@@ -1,6 +1,6 @@
 import { world, Player, system } from "@minecraft/server";
-import { msToTime } from "../../Assets/Util";
-import { triggerEvent } from "./eventHandler";
+import { msToTime, isHost, isAdmin } from "../../Assets/Util";
+import { Action } from "../../Assets/Action";
 
 interface BanInfo {
     reason: string;
@@ -56,11 +56,12 @@ function checksBan(player: Player): void {
     try {
         player.runCommand(`kick "${player.name}" §r\n§c§lYour have been banned!\n§r§7Time Left:§c ${timeTherShold}\n§7Reason: §c${reason}§r\n§7By: §c${by}`);
     } catch {
-        triggerEvent(player, "matrix:kick");
+        Action.tempkick(player);
     }
 }
 
 function ban(player: Player, reason: string, by: string, time: number | "forever") {
+    if (isHost(player) || isAdmin(player)) return;
     system.run(() => {
         player.setDynamicProperty(
             "isBanned",

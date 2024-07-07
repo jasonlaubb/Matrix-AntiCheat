@@ -2,6 +2,7 @@ import * as Server from "../node_modules/@minecraft/server/index";
 import * as Ui from "../node_modules/@minecraft/server-ui/index";
 import * as VanillaData from "./src/node_modules/@minecraft/vanilla-data/lib/index";
 import { Module } from "./src/Modules/Modules";
+import { AnimationControllerTags, DisableTags, MatrixEvents, MatrixUsedTags } from "./src/Data/EnumData";
 declare module "@minecraft/server" {
     interface Player {
         threwTridentAt: number;
@@ -42,6 +43,7 @@ declare module "@minecraft/server" {
         perfectMove: number;
         lastTouchEntity: number;
         lastNonGlidingPoint: Vector3;
+        hasTag: (tag: AnimationControllerTags | DisableTags | MatrixUsedTags) => boolean;
     }
     interface World {
         modules: Module[];
