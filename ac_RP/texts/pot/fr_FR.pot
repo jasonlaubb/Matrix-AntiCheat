@@ -86,15 +86,15 @@ msgstr "Dé-Muter §8(unmute)"
 
 #: ui.invcopy.button
 msgid "Invcopy players §8(invcopy)"
-msgstr "Copier l'Inventaire"
+msgstr "Copier l'Inventaire §8(invcopy)"
 
 #: ui.invsee.button
 msgid "Invsee players §8(invsee)"
-msgstr "Voir l'Inventaire"
+msgstr "Voir l'Inventaire §8(invsee)"
 
 #: ui.echestwipe.button
 msgid "Echestwipe players §8(echestwipe)"
-msgstr "Vider l'EnderChest"
+msgstr "Vider l'EnderChest §8(echestwipe)"
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
@@ -242,7 +242,7 @@ msgstr ""
 
 #: help.helpcdlist
 msgid "Help command list:"
-msgstr "Liste des commandes de MatrixAC:"
+msgstr "Liste des Commandes:"
 
 #: invsee.of
 msgid "Inventory of %s"
@@ -290,7 +290,7 @@ msgstr "Modification Réussie du code de Verrouillage en %s"
 
 #: bordersize.ok
 msgid "Sucessfully changed world border size to %s"
-msgstr "Modification Réussie de la Bordure du Monde en %a"
+msgstr "Modification Réussie de la Bordure du Monde en %s"
 
 #: lockdowncode.random
 msgid "Sucessfully random a lockdown code - %s"
@@ -314,7 +314,7 @@ msgstr "Il n'y a aucun joueur dans la file d'attente de Dé-Bannissement"
 
 #: toggles.already
 msgid "This module is %sd already"
-msgstr ""
+msgstr "Ce Module est déjà %sd"
 
 #: toggles.toggle
 msgid "Toggle %s module"
@@ -322,11 +322,11 @@ msgstr ""
 
 #: toggles.togglelist
 msgid "Toggle list:"
-msgstr ""
+msgstr "Liste des Modules:"
 
 #: unbanlist.list
 msgid "Unban list"
-msgstr ""
+msgstr "Liste des Joueurs dans la file d'attente de Dé-Bannissement:"
 
 #: toggles.unknownmodule
 msgid "Unknown module, try %stoggles"
@@ -338,11 +338,11 @@ msgstr ""
 
 #: lockdown.wrong
 msgid "Wrong code"
-msgstr "Mauvais code"
+msgstr "Mauvais Code"
 
 #: op.wrong
 msgid "Wrong password"
-msgstr ""
+msgstr "Mauvais Mot de Passe"
 
 #: chathandler.muted
 msgid "You are muted!"
