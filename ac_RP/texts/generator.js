@@ -58,7 +58,7 @@ import("fs").then((fsModule) => {
                 fs.writeFileSync(`${root}../ac_BP/src/Assets/Language.ts`, there);
                 return;
             };
-            /*
+            
             if (getLanguages) {
                 let allFiles = fs.readdirSync(``);
                 console.log(allFiles);
@@ -85,7 +85,7 @@ import("fs").then((fsModule) => {
                     })
                 })
                 return;
-            };*/
+            };
             fs.readdir(`${root}texts/pot`, async (err, files) => {
                 if (err) {
                     await new Promise((resolve) => setTimeout(resolve, 500));
