@@ -52,6 +52,7 @@ export function registerCommand(command: CommandHandleData, ...subCommand: Comma
         save.argRequire = command?.argRequire;
         save.minArgs = command?.minArgs;
         save.maxArgs = command?.maxArgs;
+        save.subCommand = [];
         if (!command.executor || command?.argRequire?.length == 0) throw new Error("registerCmd :: Unhandled command properties");
         commands.push(save);
     }
@@ -78,11 +79,11 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
             sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.unknown", with: [command ?? " "] });
         });
     //player.sendMessage(JSON.stringify(targetCommand.subCommand))
-    if (targetCommand.subCommand.length > 1) {
-        if (args.length < 2) {
+    if (targetCommand.subCommand.length > 0) {
+        if (args.length <= 1) {
             return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, "", ""] }));
         }
-        const subCommand = targetCommand.subCommand.find(({ name }) => name == args[1]);
+        const subCommand = targetCommand.subCommand.find(({ name }) => name == args[0]);
         if (!subCommand) {
             const last = args.length > 1 ? args.join(" ").slice(1) : "";
             return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, args[0], last] }));
