@@ -447,3 +447,15 @@ msgstr "申し訳ありませんが、チャットでメールを送信するこ
 #: reset.sucess
 msgid "Sucessfully to rest all the property in the dynamc config"
 msgstr ""
+
+#: banrun.set
+msgid "Sucessfully sets the banrun command to '%s'"
+msgstr ""
+
+#: banrun.disabled
+msgid "Sucessfully removes the banrun command."
+msgstr ""
+
+#: banrun.invalid
+msgid "Invalid regex with '%s'"
+msgstr ""

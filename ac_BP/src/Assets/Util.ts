@@ -97,8 +97,8 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
 
     if (punishment && Vl[player.id][modules] > maxVL) {
         let punishmentDone = false;
-        const banrun = world.getDynamicProperty("banrun");
-        if (config.commands.banrun && banrun && ["kick", "ban"].includes(punishment)) {
+        const banrun = config.banrun.command;
+        if (config.commands.banrun && banrun.length > 0 && ["kick", "ban"].includes(punishment)) {
             player.runCommandAsync(banrun as string);
         } else {
             switch (punishment) {

@@ -114,3 +114,6 @@ export type Translate =
     | "spam.includelink"
     | "spam.email"
     | "reset.sucess"
+    | "banrun.set"
+    | "banrun.disabled"
+    | "banrun.invalid"

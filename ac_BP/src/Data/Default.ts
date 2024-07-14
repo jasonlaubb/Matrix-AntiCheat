@@ -34,7 +34,6 @@ export default {
             adminOnly: true,
             requireTag: ["mod", "manager"],
         },
-        commands: {
             about: {
                 enabled: true,
                 adminOnly: false,
@@ -204,8 +203,7 @@ export default {
                 enabled: true,
                 adminOnly: true,
                 requireTag: [],
-            }
-        },
+            },
     },
     punishment_kick: {
         reason: "Bad behavior",
