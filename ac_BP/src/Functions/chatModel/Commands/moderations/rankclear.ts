@@ -13,6 +13,7 @@ registerCommand({
         const target = isPlayer(args[0]);
         const ranks: string[] = target.getTags().filter((tag) => tag.startsWith("rank:"));
         if (ranks.length > 0) {
+            //@ts-expect-error
             ranks.forEach((rank) => target.removeTag(rank));
             sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "rankclear.has", with: [target.name] });
         } else {

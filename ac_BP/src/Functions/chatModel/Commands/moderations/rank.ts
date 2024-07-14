@@ -17,7 +17,9 @@ registerCommand(
         executor: async (player, args) => {
             const target = isPlayer(args[0]);
             const ranks = target.getTags().filter((rank) => rank.startsWith("rank:"));
+            //@ts-expect-error
             ranks.forEach((rank) => target.removeTag(rank));
+            //@ts-expect-error
             target.addTag(`rank:${args[1]}`);
             sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "rank.hasset", with: [target.name, args[1]] });
         },
@@ -30,7 +32,9 @@ registerCommand(
         argRequire: [(value) => !!isPlayer(value as string)],
         executor: async (player, args) => {
             const target = isPlayer(args[0]);
+            //@ts-expect-error
             if (!player.hasTag(`rank:${args[1]}`)) {
+                //@ts-expect-error
                 target.addTag(`rank:${args[1]}`);
                 sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "rank.hasadd", with: [target.name, args[1]] });
             } else {
@@ -47,8 +51,10 @@ registerCommand(
         executor: async (player, args) => {
             const target = isPlayer(args[0]);
             if (target.getTags().filter((rank) => rank.startsWith("rank:")).length > 0) {
+                //@ts-expect-error
                 if (target.hasTag(`rank:${args[1]}`)) {
                     sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "rank.hasremove", with: [target.name, args[1]] });
+                    //@ts-expect-error
                     target.removeTag(`rank:${args[1]}`);
                 } else {
                     sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "rank.norank", with: [target.name, args[1]] });
