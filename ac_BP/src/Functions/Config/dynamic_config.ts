@@ -1,12 +1,8 @@
-//@ts-nocheck
-import * as dy from "../../Data/Default";
-import Config from "../../Data/Config";
-const dynamic = dy.dynamic;
-const config: configi = dynamic.followUserConfig ? Config : dy.default;
+import defaultConfig, { dynamic as dy } from "../../Data/Default";
 import userConfig from "../../Data/Config";
+const config: configi = dy.followUserConfig ? userConfig as configi : defaultConfig;
 import { system, world } from "@minecraft/server";
 import { sendErr } from "../chatModel/CommandHandler";
-import { c } from "../../Assets/Util";
 import { configi } from "../../Modules/Modules";
 
 let common = config;
@@ -22,19 +18,19 @@ export async function initialize() {
         for (const changer of normal) {;
             const newCommon = change(changer.target, changer.value, common);
             if (!newCommon) continue; // Prevent path error
-            common = newCommon;
+            common = newCommon as configi;
         }
     }
 }
 
 export default class Dynamic {
-    static readonly config = (): typeof dy.default => common;
-    static readonly default = (): typeof dy.default => config;
+    static readonly config = (): typeof defaultConfig => common;
+    static readonly default = (): typeof defaultConfig => config;
     static get(key: string[]) {
         let current = common;
 
         for (let i = 0; i < key.length; i++) {
-            current = current[key[i]];
+            current = (current as { [key: string]: any })[key[i]];
             if (!current) return null;
         }
 
@@ -162,7 +158,7 @@ function change(path: string[], value: string | boolean | number | (string | boo
         }
         return object;
     } catch (error) {
-        sendErr(error);
+        sendErr(error as Error);
         return null;
     }
 }

@@ -114,6 +114,11 @@ export default {
                 adminOnly: true,
                 requireTag: [],
             },
+            tempkick: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
+            },
             freeze: {
                 enabled: true,
                 adminOnly: true,
