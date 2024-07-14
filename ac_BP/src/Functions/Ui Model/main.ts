@@ -4,6 +4,11 @@ import { triggerCommand } from "../chatModel/CommandHandler";
 import { c, isAdmin, rawstr } from "../../Assets/Util";
 import { getModulesIds } from "../../Modules/Modules";
 
+world.afterEvents.itemUse.subscribe(({ itemStack: { typeId }, source: player }) => {
+    if (typeId == "matrix:itemui" && isAdmin(player)) {
+        menu(player);
+    }
+})
 export const adminUI = (player: Player) => system.run(() => menu(player));
 function menu(player: Player) {
     if (!isAdmin(player)) {
