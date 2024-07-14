@@ -3,6 +3,7 @@ import * as Ui from "../node_modules/@minecraft/server-ui/index";
 import * as VanillaData from "./src/node_modules/@minecraft/vanilla-data/lib/index";
 import { Module } from "./src/Modules/Modules";
 import { AnimationControllerTags, DisableTags, MatrixEvents, MatrixUsedTags } from "./src/Data/EnumData";
+import { Translate } from "./src/Assets/Language";
 declare module "@minecraft/server" {
     interface Player {
         threwTridentAt: number;

@@ -12,6 +12,10 @@ msgstr ""
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr ""
 
+#: disconnectionScreen.badPacket
+msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
+msgstr ""
+
 #: flag.style
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
 msgstr ""
@@ -248,6 +252,10 @@ msgstr "명령어 목록 :"
 msgid "Inventory of %s"
 msgstr "%s의 인벤토리"
 
+#: invsee.item
+msgid "§eSlot: §c%1 | §eItem: §c%2"
+msgstr ""
+
 #: lang.has
 msgid "Language has been changed to %s"
 msgstr "언어가 %s님에 의해 번경되었습니다."
@@ -275,6 +283,10 @@ msgstr "제공된 사유 없음"
 #: passwords.changed
 msgid "Password has been changed"
 msgstr "비밀번호가 번경되었습니다."
+
+#: passwords.wrong
+msgid "Sorry, but you entered a wrong password"
+msgstr ""
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
@@ -458,4 +470,20 @@ msgstr ""
 
 #: banrun.invalid
 msgid "Invalid regex with '%s'"
+msgstr ""
+
+#: target.notadmin
+msgid "The target you selected is not an admin unexpectedly."
+msgstr ""
+
+#: target.isadmin
+msgid "The target you selected is an admin unexpectedly."
+msgstr ""
+
+#: target.selfselect
+msgid "You can't select yourself as the target."
+msgstr ""
+
+#: target.unable
+msgid "Unable to do the action to the target."
 msgstr ""

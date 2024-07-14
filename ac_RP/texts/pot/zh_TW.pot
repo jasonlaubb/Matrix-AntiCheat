@@ -12,6 +12,10 @@ msgstr "§7§¶Minecraft 基岩版最佳對抗外掛的解決方案 §c(需要�
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr "§cMatrix 防外掛已經崩潰, 使用 /reload 來恢復§r"
 
+#: disconnectionScreen.badPacket
+msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
+msgstr ""
+
 #: flag.style
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
 msgstr "%1§g 已被攔截 §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
@@ -248,6 +252,10 @@ msgstr "幫助指令清單："
 msgid "Inventory of %s"
 msgstr "%s 的背包"
 
+#: invsee.item
+msgid "§eSlot: §c%1 | §eItem: §c%2"
+msgstr ""
+
 #: lang.has
 msgid "Language has been changed to %s"
 msgstr "語言已更改為 %s"
@@ -275,6 +283,10 @@ msgstr "未提供原因"
 #: passwords.changed
 msgid "Password has been changed"
 msgstr "密碼已更改"
+
+#: passwords.wrong
+msgid "Sorry, but you entered a wrong password"
+msgstr ""
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
@@ -458,4 +470,20 @@ msgstr ""
 
 #: banrun.invalid
 msgid "Invalid regex with '%s'"
+msgstr ""
+
+#: target.notadmin
+msgid "The target you selected is not an admin unexpectedly."
+msgstr ""
+
+#: target.isadmin
+msgid "The target you selected is an admin unexpectedly."
+msgstr ""
+
+#: target.selfselect
+msgid "You can't select yourself as the target."
+msgstr ""
+
+#: target.unable
+msgid "Unable to do the action to the target."
 msgstr ""

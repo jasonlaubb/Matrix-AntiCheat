@@ -21,7 +21,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
         return;
     }
 
-    if (player.getDynamicProperty("mute") === true) {
+    if (player.getDynamicProperty("mute") == true) {
         event.cancel = true;
         system.run(() => player.sendMessage(rawstr.drt("chathandler.muted")));
         return;

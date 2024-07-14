@@ -1,5 +1,5 @@
-import { registerCommand, isPlayer, sendRawText } from "../../CommandHandler";
-import { isAdmin, isTimeStr, timeToMs } from "../../../../Assets/Util";
+import { registerCommand, isPlayer, sendRawText, verifier } from "../../CommandHandler";
+import { c, isTimeStr, timeToMs } from "../../../../Assets/Util";
 import { ban } from "../../../moderateModel/banHandler";
 
 registerCommand({
@@ -9,7 +9,7 @@ registerCommand({
     maxArgs: 3,
     minArgs: 3,
     argRequire: [(value) => !!isPlayer(value as string, true, true), undefined, (value) => isTimeStr(value as string) || value == "forever"],
-    require: (player) => isAdmin(player),
+    require: (player) => verifier(player, c().commands.ban),
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
         const reason = args[1];
