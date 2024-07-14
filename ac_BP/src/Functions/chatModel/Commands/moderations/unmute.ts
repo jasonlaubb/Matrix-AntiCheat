@@ -1,6 +1,7 @@
 import { registerCommand, isPlayer, sendRawText, verifier } from "../../CommandHandler";
 import { c } from "../../../../Assets/Util";
 import { Action } from "../../../../Assets/Action";
+import { world } from "@minecraft/server";
 
 registerCommand({
     name: "unmute",
@@ -13,7 +14,7 @@ registerCommand({
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
         if (Action.unmute(target)) {
-            sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "unmute.has", with: [target.name, player.name] });
+            sendRawText(world, { text: "§bMatrix §7>§g " }, { translate: "unmute.has", with: [target.name, player.name] });
         } else {
             sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "target.unable", with: [] });
         }

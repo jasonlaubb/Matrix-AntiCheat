@@ -1,6 +1,7 @@
 import { registerCommand, isPlayer, sendRawText, verifier } from "../../CommandHandler";
 import { c } from "../../../../Assets/Util";
 import { Action } from "../../../../Assets/Action";
+import { world } from "@minecraft/server";
 
 registerCommand({
     name: "tempkick",
@@ -13,6 +14,6 @@ registerCommand({
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
         Action.tempkick(target);
-        sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "deop.hasbeen", with: [target.name] });
+        sendRawText(world, { text: "§bMatrix §7>§g " }, { translate: "tempkick.has", with: [target.name, player.name] });
     },
 });

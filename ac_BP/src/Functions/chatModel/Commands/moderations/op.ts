@@ -1,6 +1,7 @@
-import { c, isAdmin } from "../../../../Assets/Util";
+import { c, isAdmin, rawstr } from "../../../../Assets/Util";
 import { isPlayer, registerCommand, sendRawText, verifier } from "../../CommandHandler";
 import { SHA256 } from "../../../../node_modules/crypto-es/lib/sha256";
+import { world } from "@minecraft/server";
 
 registerCommand({
     name: "op",
@@ -19,6 +20,7 @@ registerCommand({
     executor: async (player, args) => {
         if (isAdmin(player)) {
             const target = isPlayer(args[0]);
+            world.sendMessage(new rawstr(true, "g").tra("op.hasbeen", player.name, target.name).parse());
             target.setDynamicProperty("isAdmin", true);
         } else {
             const config = c();
