@@ -476,6 +476,10 @@ msgstr ""
 msgid "Invalid regex with '%s'"
 msgstr ""
 
+#: ui.closechat
+msgid "Close the chat to open the following ui."
+msgstr ""
+
 #: target.notadmin
 msgid "The target you selected is not an admin unexpectedly."
 msgstr ""

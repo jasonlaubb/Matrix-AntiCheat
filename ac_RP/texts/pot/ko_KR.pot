@@ -116,6 +116,10 @@ msgstr "%1님이 %2님의 처리로 벤 처리되었습니다."
 msgid "%1 has been deopped by %2"
 msgstr "%1님이 %2님을 통하여 DE-OP 처리되었습니다."
 
+#: tempkick.has
+msgid "%1 has been disconnected by %2"
+msgstr ""
+
 #: freeze.has
 msgid "%1 has been frozen by %2"
 msgstr "%1님이 %2님의 처리로 프리즈 처리되었습니다."
@@ -470,6 +474,10 @@ msgstr ""
 
 #: banrun.invalid
 msgid "Invalid regex with '%s'"
+msgstr ""
+
+#: ui.closechat
+msgid "Close the chat to open the following ui."
 msgstr ""
 
 #: target.notadmin

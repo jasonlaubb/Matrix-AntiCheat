@@ -116,6 +116,10 @@ msgstr ""
 msgid "%1 has been deopped by %2"
 msgstr ""
 
+#: tempkick.has
+msgid "%1 has been disconnected by %2"
+msgstr ""
+
 #: freeze.has
 msgid "%1 has been frozen by %2"
 msgstr ""
@@ -470,6 +474,10 @@ msgstr ""
 
 #: banrun.invalid
 msgid "Invalid regex with '%s'"
+msgstr ""
+
+#: ui.closechat
+msgid "Close the chat to open the following ui."
 msgstr ""
 
 #: target.notadmin

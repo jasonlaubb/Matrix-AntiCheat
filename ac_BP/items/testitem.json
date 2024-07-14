@@ -2,15 +2,11 @@
 	"format_version": "1.16.100",
 	"minecraft:item": {
 		"description": {
-			"identifier": "matrix:itemui",
-			"category": "Items"
+			"identifier": "matrix:testitem"
 		},
 		"components": {
 			"minecraft:display_name": {
 				"value": "§r§l§bMatrix §eUI§r"
-			},
-            "minecraft:icon": {
-				"texture": "matrix:itemui"
 			},
             "minecraft:render_offsets": {
 				"main_hand": {

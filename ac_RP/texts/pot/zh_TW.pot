@@ -116,6 +116,10 @@ msgstr "%1 已被 %2 停權"
 msgid "%1 has been deopped by %2"
 msgstr "%1 已被 %2 解除管理員權限"
 
+#: tempkick.has
+msgid "%1 has been disconnected by %2"
+msgstr ""
+
 #: freeze.has
 msgid "%1 has been frozen by %2"
 msgstr "%1 已被 %2 凍結"
@@ -470,6 +474,10 @@ msgstr ""
 
 #: banrun.invalid
 msgid "Invalid regex with '%s'"
+msgstr ""
+
+#: ui.closechat
+msgid "Close the chat to open the following ui."
 msgstr ""
 
 #: target.notadmin
