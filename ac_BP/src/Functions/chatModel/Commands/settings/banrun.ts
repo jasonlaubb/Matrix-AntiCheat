@@ -9,7 +9,7 @@ registerCommand({
     maxArgs: 1,
     minArgs: 0,
     argRequire: [(value) => (value as string).length > 2],
-    require: (player) => verifier(player, c().commands.flagmode),
+    require: (player) => verifier(player, c().commands.banrun),
     executor: async (player, args) => {
         if (!c().banrun.enabled) {
             Dynamic.set(["banrun","enabled"], true);
