@@ -1,7 +1,7 @@
 import { registerCommand } from "../../CommandHandler";
 import { initialize } from "../../../Config/dynamic_config";
 import { world } from "@minecraft/server";
-import { isAdmin } from "../../../../Assets/Util";
+import { isAdmin, rawstr } from "../../../../Assets/Util";
 registerCommand(
     {
         name: "reset",
@@ -13,7 +13,7 @@ registerCommand(
         executor: async (player, _args) => {
             world.setDynamicProperty("config");
             initialize()
-            player.sendMessage(`sucess!`)
+            player.sendMessage(new rawstr().str("§bMatrix §7>§g ").tra("rest.sucess").parse());
         }
     }
 )

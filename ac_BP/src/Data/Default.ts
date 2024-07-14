@@ -34,301 +34,177 @@ export default {
             adminOnly: true,
             requireTag: ["mod", "manager"],
         },
-        about: {
-            enabled: true,
-            adminOnly: false,
-            requireTag: [],
-            helper: {
-                usage: "about",
-                description: { text: "About Matrix AntiCheat" },
+        commands: {
+            about: {
+                enabled: true,
+                adminOnly: false,
+                requireTag: [],
             },
-        },
-        help: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "help",
-                description: { text: "Help Menu" },
+            help: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        toggles: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "toggles",
-                description: { text: "Toggles Menu" },
+            toggles: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        toggle: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "toggle <module>",
-                description: { text: "Toggle the module" },
+            toggle: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        op: {
-            enabled: true,
-            adminOnly: false,
-            requireTag: [],
-            helper: {
-                usage: "op <player name>",
-                description: { text: "Give the matrix admin permission to a player" },
+            op: {
+                enabled: true,
+                adminOnly: false,
+                requireTag: [],
             },
-        },
-        deop: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "deop <player name>",
-                description: { text: "Rmove the matrix admin permission from a player" },
+            deop: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        passwords: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "passwords <current password> <new password>",
-                description: { text: "Give the matrix admin permission to a player" },
+            passwords: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        flagmode: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "flagmode <flagmode: all/tag/bypass/admin/none>",
-                description: { text: "Change the flagmode mode used for flag message in chat" },
+            flagmode: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        rank: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "rank <add/remove/set> <player> <rank>",
-                description: { text: "Rank related commands" },
+            rank: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        rankclear: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "rankclear <player>",
-                description: { text: "Clear all the ranks of a player" },
+            rankclear: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        defaultrank: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "defaultrank <rank>",
-                description: { text: "Change the default rank be showed when player don't have any rank" },
+            defaultrank: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        showallrank: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "showallrank <state: true/false>",
-                description: { text: "State if show all rank or not" },
+            showallrank: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        ban: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "ban <player> <target> <reason> <time: forever/?d?h?m?s>",
-                description: { text: "Give the matrix admin permission to a player" },
+            ban: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        unban: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "unban <player name>",
-                description: { text: "Unban a player with their unique name" },
+            unban: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        unbanremove: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "unbanremove <player name>",
-                description: { text: "Stop continuing unban of a player" },
+            unbanremove: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        unbanlist: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "about",
-                description: { text: "List the player is waiting for unban" },
+            unbanlist: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        freeze: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "freeze <player>",
-                description: { text: "Freeze a player" },
+            freeze: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        unfreeze: {
-            enabled: true,
-            adminOnly: true,
-            helper: {
-                usage: "unfreeze <player>",
-                description: { text: "Unfreeze a player" },
+            unfreeze: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        mute: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "mute <player>",
-                description: { text: "Mute a player" },
+            mute: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        unmute: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "unmute <player>",
-                description: { text: "Unmute a muted player" },
+            unmute: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        vanish: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "vanish",
-                description: { text: "Vanish yourself" },
+            vanish: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        unvanish: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "unvanish",
-                description: { text: "Stop vanishing of yourself" },
+            unvanish: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        invcopy: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "invcopy <player>",
-                description: { text: "Copy a player inventory to yours" },
+            invcopy: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        invsee: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "invsee <player>",
-                description: { text: "View a player inventory" },
+            invsee: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        echestwipe: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "echestwipe <player>",
-                description: { text: "Wipe a player ender chest" },
+            echestwipe: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        lockdowncode: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "lockdowncode <action: random/set> [code]",
-                description: { text: "Change lockdown code" },
+            lockdowncode: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        lockdown: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "lockdown <code>",
-                description: { text: "Lockdown the server" },
+            lockdown: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        unlock: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "unlock",
-                description: { text: "Unlock the server from endless lockdown" },
+            unlock: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        adminchat: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "adminchat",
-                description: { text: "Switch to admin channel" },
+            adminchat: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        bordersize: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "bordersize <size>",
-                description: { text: "Change boarder sizes" },
+            bordersize: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        matrixui: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "matrixui",
-                description: { text: "Open the ui for matrix" },
+            matrixui: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        banrun: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "banrun <command: command/disable>",
-                description: { text: "Run a command instead for a punishment" },
+            banrun: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
-        },
-        openlog: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            helper: {
-                usage: "openlog",
-                description: { text: "Open the log system" },
+            openlog: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
             },
+            reset: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
+            }
         },
     },
     punishment_kick: {
