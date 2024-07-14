@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate =
+export type Translate = 
     | "pack.description"
     | "crash.reload"
     | "flag.style"
@@ -38,6 +38,7 @@ export type Translate =
     | "toggles.togglechange"
     | "rank.hasadd"
     | "rank.hasset"
+    | "toggle.unknown"
     | "rank.empty"
     | "rankclear.empty"
     | "unban.add"
@@ -55,6 +56,7 @@ export type Translate =
     | "rank.hasremove"
     | "bot.title"
     | "about.author"
+    | "about.github"
     | "invcopy.not"
     | "defaultrank.has"
     | "echestwipe.has"
@@ -110,4 +112,5 @@ export type Translate =
     | "spam.spamming"
     | "spam.lengthlimit"
     | "spam.includelink"
-    | "spam.email";
+    | "spam.email"
+    | "reset.sucess"

@@ -443,3 +443,7 @@ msgstr ""
 #: spam.email
 msgid "Sorry, but you cannot send an email on chat"
 msgstr ""
+
+#: reset.sucess
+msgid "Sucessfully to rest all the property in the dynamc config"
+msgstr ""

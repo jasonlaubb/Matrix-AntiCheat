@@ -1,4 +1,4 @@
-"Language: ja\n"
+"Language: N/A\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -442,4 +442,8 @@ msgstr "申し訳ありませんが、このサーバーではリンクは許可
 
 #: spam.email
 msgid "Sorry, but you cannot send an email on chat"
-msgstr "申し訳ありませんが、チャットでメールを送信することはできません" 
+msgstr "申し訳ありませんが、チャットでメールを送信することはできません"
+
+#: reset.sucess
+msgid "Sucessfully to rest all the property in the dynamc config"
+msgstr ""

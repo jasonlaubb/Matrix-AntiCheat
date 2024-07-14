@@ -13,7 +13,7 @@ registerCommand(
         executor: async (player, _args) => {
             world.setDynamicProperty("config");
             initialize()
-            player.sendMessage(new rawstr().str("§bMatrix §7>§g ").tra("rest.sucess").parse());
+            player.sendMessage(new rawstr().str("§bMatrix §7>§g ").tra("reset.sucess").parse());
         }
     }
 )
