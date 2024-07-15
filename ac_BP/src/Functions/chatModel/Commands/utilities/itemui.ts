@@ -3,8 +3,8 @@ import { registerCommand, verifier } from "../../CommandHandler";
 import { ItemStack } from "@minecraft/server";
 
 registerCommand({
-    name: "matrixui",
-    description: "Shows the Matrix UI",
+    name: "itemui",
+    description: "Get the item that can open the ui",
     parent: false,
     maxArgs: 0,
     minArgs: 0,
@@ -15,7 +15,8 @@ registerCommand({
         try {
             container.addItem(new ItemStack("matrix:itemui", 1));
             player.sendMessage(new rawstr(true, "g").tra("itemui.has").parse());
-        } catch {
+        } catch (error) {
+            console.error(error)
             player.sendMessage(new rawstr(true, "c").tra("setup.hcfeature").parse());
         }
     }
