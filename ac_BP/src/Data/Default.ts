@@ -194,6 +194,11 @@ export default {
                 adminOnly: true,
                 requireTag: [],
             },
+            itemui: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
+            },
             banrun: {
                 enabled: true,
                 adminOnly: true,

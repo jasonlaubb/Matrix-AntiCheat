@@ -12,6 +12,34 @@ msgstr ""
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr ""
 
+#: function.check.title
+msgid "Anti-Cheat setup checking:"
+msgstr ""
+
+#: function.check.betaapi
+msgid "§gBeta API usage: %s"
+msgstr ""
+
+#: function.check.helpa
+msgid "§7- If the 'Beta API usage' is stated 'FALSE', that's mean the anticheat cannot run the script of the behavior pack."
+msgstr ""
+
+#: function.check.helpb
+msgid "§7- To fix that, please check if you have enabled the 'Beta-API' of your world settings"
+msgstr ""
+
+#: function.check.helpc
+msgid "§7- If it's still not working, please check if your Minecraft version matches the anticheat supported one."
+msgstr ""
+
+#: function.version.title
+msgid "§gYou are now on version §eV%s"
+msgstr ""
+
+#: function.version.dsc
+msgid "§gSupport Server: §e%s"
+msgstr ""
+
 #: disconnectionScreen.badPacket
 msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr ""
@@ -163,6 +191,10 @@ msgstr "%s는 아무 칭호도 가지고 있지 않습니다."
 #: rankclear.empty
 msgid "%s doesn't have any rank"
 msgstr "%s는 아무 칭호도 가지고 있지 않습니다."
+
+#: itemui.has
+msgid "You have been given the ui item, right click the item to open the ui"
+msgstr ""
 
 #: unban.add
 msgid "%s has been joined to the unban queue"
@@ -480,18 +512,14 @@ msgstr ""
 msgid "Close the chat to open the following ui."
 msgstr ""
 
-#: target.notadmin
-msgid "The target you selected is not an admin unexpectedly."
-msgstr ""
-
-#: target.isadmin
-msgid "The target you selected is an admin unexpectedly."
-msgstr ""
-
 #: target.selfselect
 msgid "You can't select yourself as the target."
 msgstr ""
 
 #: target.unable
 msgid "Unable to do the action to the target."
+msgstr ""
+
+#: setup.hcfeature
+msgid "Hoilday creator feature is required."
 msgstr ""

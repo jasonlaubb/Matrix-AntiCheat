@@ -1,17 +1,18 @@
 {
-	"format_version": "1.16.100",
+	"format_version": "1.20.81",
 	"minecraft:item": {
 		"description": {
 			"identifier": "matrix:itemui",
-			"category": "Items"
+			"menu_category": {
+				"category": "items",
+				"is_hidden_in_commands": true
+			}
 		},
 		"components": {
 			"minecraft:display_name": {
 				"value": "§r§l§bMatrix §eUI§r"
 			},
-            "minecraft:icon": {
-				"texture": "matrix:itemui"
-			},
+			"minecraft:icon": "matrix:itemui",
             "minecraft:render_offsets": {
 				"main_hand": {
 					"third_person": {
@@ -23,8 +24,10 @@
 					}
 				}
 			},
-            "minecraft:foil": true,
-            "minecraft:max_stack_size": 1
+            "minecraft:max_stack_size": 1,
+			"minecraft:can_destroy_in_creative": false
+		},
+		"events": {
 		}
 	}
 }

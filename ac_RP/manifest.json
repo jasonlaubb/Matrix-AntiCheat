@@ -1,10 +1,10 @@
 {
 	"format_version": 2,
 	"header": {
-		"name": "Matrix Anti-Cheat RP V3.2.50-beta",
+		"name": "Matrix Anti-Cheat RP V3.2.51-beta",
 		"description": "pack.description",
 		"uuid": "8a0fbe45-e0fb-41e3-8c2e-e187420717ba",
-        "version": [3, 2, 50],
+        "version": [3, 2, 51],
 		"min_engine_version": [1, 21, 0]
 	},
 	"modules": [
