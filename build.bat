@@ -24,6 +24,7 @@ if not exist "%~dp0generated-package\Matrix-anti_BP" mkdir "%~dp0generated-packa
 if not exist "%~dp0generated-package\Matrix-anti_RP" mkdir "%~dp0generated-package\Matrix-anti_RP"
 : Copy the behavior pack
 copy "%~dp0ac_BP\pack_icon.png" "%~dp0generated-package\Matrix-anti_BP" /Y
+copy "%~dp0ac_BP\bug_pack_icon.png" "%~dp0generated-package\Matrix-anti_BP" /Y
 copy "%~dp0ac_BP\manifest.json" "%~dp0generated-package\Matrix-anti_BP" /Y
 copy "%~dp0LICENSE" "%~dp0generated-package\Matrix-anti_BP" /Y
 if not exist "%~dp0generated-package\Matrix-anti_BP\texts" mkdir "%~dp0generated-package\Matrix-anti_BP\texts"
@@ -37,6 +38,7 @@ Xcopy "%~dp0ac_BP\items" "%~dp0generated-package\Matrix-anti_BP\items" /Y /E /H 
 Xcopy "%~dp0ac_BP\recipes" "%~dp0generated-package\Matrix-anti_BP\recipes" /Y /E /H /C /I
 : Copy the resource pack
 copy "%~dp0ac_RP\pack_icon.png" "%~dp0generated-package\Matrix-anti_RP" /Y
+copy "%~dp0ac_BP\bug_pack_icon.png" "%~dp0generated-package\Matrix-anti_BP" /Y
 copy "%~dp0ac_RP\manifest.json" "%~dp0generated-package\Matrix-anti_RP" /Y
 copy "%~dp0LICENSE" "%~dp0generated-package\Matrix-anti_RP" /Y
 if not exist "%~dp0generated-package\Matrix-anti_RP\texts" mkdir "%~dp0generated-package\Matrix-anti_RP\texts"

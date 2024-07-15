@@ -10,12 +10,22 @@
 		},
 		"components": {
 			"minecraft:display_name": {
-				"value": "§r§l§bMatrix §eUI§r"
+				"value": "§r§l§bMatrix §eUI pannel§r"
 			},
 			"minecraft:icon": "matrix:itemui",
             "minecraft:max_stack_size": 1,
 			"minecraft:can_destroy_in_creative": false,
-			"minecraft:glint": true
+			"minecraft:glint": true,
+			"minecraft:damage": {
+				"value": 3
+			},
+			"minecraft:durability": {
+				"damage_chance": {
+					"min": 50,
+					"max": 100
+				},
+				"max_durability": 4500
+			}
 		}
 	}
 }
