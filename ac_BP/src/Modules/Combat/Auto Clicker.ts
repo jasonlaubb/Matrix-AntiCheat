@@ -19,11 +19,10 @@ function antiAutoClicker(config: configi, player: Player) {
 
     // Filter the clicks that are older than 1.5 seconds
     const filteredClicks = clicks.filter((clickTime) => currentTime - clickTime < 1500);
-    filteredClicks.push(currentTime);
 
     // Calculate clicks per second
     const cps = filteredClicks.length;
-
+    //player.runCommand(`title ${player.name} actionbar ${cps} cps`);
     // If the cps is higher than the max clicks per second, flag the player
     if (!player.hasTag(DisableTags.pvp) && tps.getTps() > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
         // A - false positive: very low, efficiency: high
@@ -32,10 +31,9 @@ function antiAutoClicker(config: configi, player: Player) {
         if (!config.slient) {
             player.applyDamage(6);
             player.addTag(DisableTags.pvp);
-
+            clickData.delete(id);
             system.runTimeout(() => {
                 player.removeTag(DisableTags.pvp);
-                clickData.delete(id);
             }, config.antiAutoClicker.timeout);
         }
     }
@@ -45,7 +43,7 @@ function antiAutoClicker(config: configi, player: Player) {
 }
 
 function entityHitEntityAfterEvent(_config: configi, { damagingEntity }: EntityHitEntityAfterEvent) {
-    if (damagingEntity instanceof Player && !isAdmin(damagingEntity)) {
+    if (damagingEntity instanceof Player && !isAdmin(damagingEntity) && !damagingEntity.hasTag(DisableTags.pvp)) {
         const click = clickData.get(damagingEntity.id);
         click.push(Date.now());
         clickData.set(damagingEntity.id, click);
@@ -58,7 +56,7 @@ registerModule(
     [clickData],
     {
         intick: async (config, player) => antiAutoClicker(config, player),
-        tickInterval: 1,
+        tickInterval: 20,
     },
     {
         worldSignal: world.afterEvents.entityHitEntity,
