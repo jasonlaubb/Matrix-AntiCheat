@@ -1,9 +1,9 @@
 import { system, Player, world } from "@minecraft/server";
-import { ActionFormData, FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
-import { triggerCommand } from "../chatModel/CommandHandler";
-import { c, isAdmin, rawstr } from "../../Assets/Util";
-import { getModulesIds } from "../../Modules/Modules";
-
+import { ActionFormData, FormCancelationReason } from "@minecraft/server-ui";
+import { isAdmin, rawstr } from "../../Assets/Util";
+import { configUI } from "./configui";
+import { moderatePlayer } from "./modui";
+import { moduleUI } from "./toggleui";
 world.afterEvents.itemUse.subscribe(({ itemStack: { typeId }, source: player }) => {
     if (typeId == "matrix:itemui" && isAdmin(player)) {
         menu(player);
@@ -42,7 +42,7 @@ function menu(player: Player) {
                 }
                 case 1: {
                     // If player wants to set the amticheat
-                    moduleUI(player);
+                    settingUI(player);
                     break;
                 }
             }
@@ -74,95 +74,23 @@ async function selectPlayer(player: Player): Promise<Player> {
     return pointAllPlayer[result.selection] ?? null;
 }
 
-interface AbcSelection {
-    a: string;
-    b?: string;
-    c?: string;
-}
-
-const groupAbc = ([a, b, c]: any[]): AbcSelection => ({ a, b, c });
-
-async function cpu(form: ModalFormData, player: Player, to: string): Promise<AbcSelection> {
-    const data = await form.show(player);
-    if (data.canceled) return null;
-    return groupAbc([to, ...data.formValues]);
-}
-
-// For state that how to form a command
-const moderateAction: { [key: number]: (arg: AbcSelection) => string } = {
-    0: ({ a, b, c }) => `ban "${a}" "${b}" "${c}"`,
-    1: ({ a }) => `freeze "${a}"`,
-    2: ({ a }) => `unfreeze "${a}"`,
-    3: ({ a }) => `mute "${a}"`,
-    4: ({ a }) => `unmute "${a}"`,
-    5: ({ a }) => `invcopy "${a}"`,
-    6: ({ a }) => `invsee "${a}"`,
-    7: ({ a }) => `echestwipe "${a}"`,
-};
-
-// Match the ui
-const moderateUI: { [key: number]: (player: Player, target: string) => Promise<AbcSelection> } = {
-    0: (p, t) => cpu(banForm, p, t),
-};
-
-async function moderatePlayer(player: Player, target: Player) {
-    const action = await new ActionFormData()
-        .title("Moderate " + target.name)
-        .button(rawstr.drt("ui.ban.button"))
-        .button(rawstr.drt("ui.freeze.button"))
-        .button(rawstr.drt("ui.unfreeze.button"))
-        .button(rawstr.drt("ui.mute.button"))
-        .button(rawstr.drt("ui.unmute.button"))
-        .button(rawstr.drt("ui.invcopy.button"))
-        .button(rawstr.drt("ui.invsee.button"))
-        .button(rawstr.drt("ui.echestwipe.button"))
+function settingUI (player: Player) {
+    new ActionFormData()
+        .title(rawstr.drt("ui.setting"))
+        .button(rawstr.drt("ui.config.button"), "textures/ui/gear.png")
+        .button(rawstr.drt("ui.toggle.button"), "textures/ui/gear.png")
         .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
-        .show(player);
-    if (action.canceled) return;
-    const actionData = moderateUI[action.selection];
-    let abcSelection: AbcSelection = { a: target.name };
-    if (actionData) {
-        // get the selection of player
-        abcSelection = await actionData(player, target.name);
-        if (abcSelection === null) return;
-    } else if (action.selection >= Object.keys(moderateAction).length) return;
-    // Run an chat command for the player
-    triggerCommand(player, moderateAction[action.selection](abcSelection));
-}
-const banForm = new ModalFormData().title(rawstr.drt("ui.banplayer")).textField(rawstr.drt("ui.ban.reason"), rawstr.drt("ui.ban.placeholder")).textField(rawstr.drt("ui.ban.length"), "1d2h3m4s", "forever");
-async function moduleUI(player: Player) {
-    const moduleForm = new ActionFormData();
-    moduleForm.title("Module UI");
-    const ids = await getModulesIds();
-    const config = c() as { [key: string]: any };
-    for (const moduleId of ids) {
-        const state = config[moduleId]?.enabled;
-        const buttontext = new rawstr()
-            .str(`§8${moduleId} §8[§r`)
-            .tra(state ? "ui.toggle.enabled" : "ui.toggle.disabled")
-            .str("§r§8]§r");
-        moduleForm.button(buttontext.parse());
-    }
-    moduleForm.show(player).then((data) => {
-        if (data.canceled) return;
-        const moduleData = ids[data.selection];
-        if (moduleData) {
-            toggleUI(player, moduleData);
-        }
-    });
-}
-async function toggleUI(player: Player, moduleData: string) {
-    let state = (c() as { [key: string]: any })[moduleData]?.enabled;
-    if (state == true) state = "§aEnabled";
-    else state = "§cDisabled";
-    const moduleForm = new ActionFormData();
-    moduleForm.title("toggle module");
-    moduleForm.body("module: §8" + moduleData + "\n§rstatus: §8" + state);
-    moduleForm.button(rawstr.drt("ui.toggle.enable"));
-    moduleForm.button(rawstr.drt("ui.toggle.disable"));
-    moduleForm.show(player).then((data) => {
-        if (data.canceled) return;
-        // use the command for the user.
-        triggerCommand(player, `toggle ${moduleData} ${data.selection == 0 ? "enable" : "disable"}`);
-    });
+        .show(player).then((res) => {
+            if (res.canceled) return;
+            switch (res.selection) {
+                case 0: {
+                    configUI(player);
+                    break;
+                }
+                case 1: {
+                    moduleUI(player);
+                    break;
+                }
+            }
+        })
 }

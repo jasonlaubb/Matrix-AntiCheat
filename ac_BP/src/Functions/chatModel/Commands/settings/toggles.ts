@@ -1,4 +1,4 @@
-import { c } from "../../../../Assets/Util";
+import { c, rawstr } from "../../../../Assets/Util";
 import { toggleList } from "../../../../Data/Help";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
 
@@ -9,6 +9,8 @@ registerCommand({
     maxArgs: 0,
     require: (player) => verifier(player, c().commands.toggles),
     executor: async (player, _args) => {
-        sendRawText(player, { text: "§bMatrix §7>§g \n" }, { translate: "toggles.togglelist", with: [] }, { text: `${toggleList(c().commands.prefix)}` });
+        const togglelist = await toggleList(c().commands.prefix)
+        const message = rawstr.compare(new rawstr(true, "g").tra("toggles.togglelist"), togglelist);
+        sendRawText(player, message.parse());
     },
 });

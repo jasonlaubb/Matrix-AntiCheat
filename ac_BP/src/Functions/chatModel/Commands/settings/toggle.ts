@@ -17,7 +17,7 @@ registerCommand({
         const prefix = config.commands.prefix;
         const validmodules = await getValidModules()
         const moduleids = await getModulesIds();
-        if (validmodules.includes(args[0])) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.unknown", with: [args[0]] });
+        if (!validmodules.includes(args[0])) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggle.unknown", with: [args[0]] });
         if (moduleids.includes(args[0])) {
             // const state = Dynamic.get([args[0], "enabled"]);
             if ((args[1] == "enable") == (config as any)[args[0]].enabled && args[1] != "default") return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.already", with: [args[1]] });

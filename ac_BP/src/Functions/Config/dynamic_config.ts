@@ -2,7 +2,6 @@ import defaultConfig, { dynamic as dy } from "../../Data/Default";
 import userConfig from "../../Data/Config";
 const config: configi = dy.followUserConfig ? userConfig as configi : defaultConfig;
 import { system, world } from "@minecraft/server";
-import { sendErr } from "../chatModel/CommandHandler";
 import { configi } from "../../Modules/Modules";
 
 let common = config;
@@ -10,7 +9,7 @@ let common = config;
 export async function initialize() {
     await system.waitTicks(1);
     const cypher = world.getDynamicProperty("config") as string;
-    if (!cypher) {
+    if (!cypher || !Array.isArray(JSON.parse(cypher))) {
         world.setDynamicProperty("config", "[]");
     } else {
         const normal = JSON.parse(cypher) as Changer[];
@@ -34,7 +33,7 @@ export default class Dynamic {
             if (!current) return null;
         }
 
-        return current;
+        return current as unknown as string | boolean | number | (string | boolean | number)[];
     }
     static set(key: string[], value: string | boolean | number | (string | boolean | number)[]): void {
         // world.sendMessage(c().flagMode.toString());
@@ -158,7 +157,6 @@ function change(path: string[], value: string | boolean | number | (string | boo
         }
         return object;
     } catch (error) {
-        sendErr(error as Error);
         return null;
     }
 }

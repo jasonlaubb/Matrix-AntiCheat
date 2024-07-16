@@ -128,6 +128,30 @@ msgstr ""
 msgid "Echestwipe players §8(echestwipe)"
 msgstr ""
 
+#: ui.config.button
+msgid "Edit config §8(config)"
+msgstr ""
+
+#: ui.config.title
+msgid "Config UI"
+msgstr ""
+
+#: ui.toggle.button
+msgid "Toggle modules §8(toggle)"
+msgstr ""
+
+#: ui.toggle.moduleui
+msgid "Module UI"
+msgstr ""
+
+#: ui.toggle.modulet
+msgid "module: §8%1"
+msgstr ""
+
+#: ui.toggle.statust
+msgid "§rstatus: §8%2"
+msgstr ""
+
 #: rank.already
 msgid "%1 already has %2 §r§crank"
 msgstr "%1 ha già %2 §r§crank"
@@ -510,6 +534,26 @@ msgstr ""
 
 #: ui.closechat
 msgid "Close the chat to open the following ui."
+msgstr ""
+
+#: config.nullpath
+msgid "Cannot find the path you provided: %s"
+msgstr ""
+
+#: config.invalidpath
+msgid "You can't select a path with JSON object."
+msgstr ""
+
+#: config.nan
+msgid "You have stated that the value is a number, but your value is not a number"
+msgstr ""
+
+#: config.naa
+msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
+msgstr ""
+
+#: config.set
+msgid "Sucessfully set '%1' to '%2'"
 msgstr ""
 
 #: target.selfselect
