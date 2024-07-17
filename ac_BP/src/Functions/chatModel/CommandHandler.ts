@@ -119,7 +119,7 @@ export function sendRawText(player: Minecraft.Player | Minecraft.World, ...messa
     return player.sendMessage({ rawtext: message });
 }
 
-function error(target: Minecraft.Player | Minecraft.World, error: Error): void {
+export function error(target: Minecraft.Player | Minecraft.World, error: Error): void {
     target.sendMessage(`§bMatrix §7>§g Command ran with error.\nName: §9${error.name}\n§gMessage: §9${error.message}\n§gStack: §9${error?.stack ?? "unknown"}`);
 }
 

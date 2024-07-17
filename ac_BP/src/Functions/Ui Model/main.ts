@@ -4,13 +4,14 @@ import { isAdmin, rawstr } from "../../Assets/Util";
 import { configUI } from "./configui";
 import { moderatePlayer } from "./modui";
 import { moduleUI } from "./toggleui";
+import { error } from "../chatModel/CommandHandler";
 world.afterEvents.itemUse.subscribe(({ itemStack: { typeId }, source: player }) => {
     if (typeId == "matrix:itemui" && isAdmin(player)) {
-        menu(player);
+        menu(player).catch((err) => error(player, err));
     }
 })
 export const adminUI = (player: Player) => system.run(() => menu(player));
-function menu(player: Player) {
+async function menu(player: Player) {
     if (!isAdmin(player)) {
         //prevent no admin open ui mistakenly
         player.sendMessage(`§bMatrix §7> §l§cAccess denied! §7No admin permission`);

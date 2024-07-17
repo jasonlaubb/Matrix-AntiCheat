@@ -13,19 +13,26 @@ registerCommand(
         name: "set",
         description: "Set a config value",
         argRequire: [
-            (value) => ["string","number","array"].includes(value as string),
+            (value) => ["string","number","array","boolean"].includes(value as string),
             (value) => new RegExp(/([a-zA-Z]+\.?)+/g).test(value as string),
             (value) => new RegExp(/^(\d+$|^\d+\.\d+)/).test(value as string),
         ],
+        maxArgs: 3,
+        minArgs: 3,
         executor: async (player, args) => {
             const [type, key, value] = args
             const loc = key.split(".")
             const path = Dynamic.get(loc);
             if (!path) return player.sendMessage(new rawstr(true, "c").tra("config.nullpath", key).parse());
-            if (!Array.isArray(path) && !["string","number"].includes(typeof path)) return player.sendMessage(new rawstr(true, "c").tra("config.invalidpath", typeof path).parse());
+            if (!Array.isArray(path) && !["string","number","boolean"].includes(typeof path)) return player.sendMessage(new rawstr(true, "c").tra("config.invalidpath", typeof path).parse());
             switch (type) {
                 case "string": {
                     Dynamic.set(loc, value);
+                    break;
+                }
+                case "boolean": {
+                    if (value != "true" && value != "false" && value != "undefined") return player.sendMessage(new rawstr(true, "c").tra("config.nan").parse());
+                    Dynamic.set(loc, value == "undefined" ? undefined : value == "true");
                     break;
                 }
                 case "number": {

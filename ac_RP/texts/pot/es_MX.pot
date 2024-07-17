@@ -567,3 +567,27 @@ msgstr ""
 #: setup.hcfeature
 msgid "Hoilday creator feature is required."
 msgstr ""
+
+#: ui.config.selector
+msgid "Configuration Selector"
+msgstr ""
+
+#: ui.config.editor
+msgid "Configuration Editor"
+msgstr ""
+
+#: ui.config.loc
+msgid "§gCurrent location: §c%s"
+msgstr ""
+
+#: ui.config.desc
+msgid "§gDescription: §c%s"
+msgstr ""
+
+#: ui.config.type
+msgid "§rProperty type:"
+msgstr ""
+
+#: ui.config.value
+msgid "Value:"
+msgstr ""
