@@ -91,7 +91,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     ) {
         const lastflag = data.lastFlag2;
         if (!config.slient) teleportMagic(player, data.safeLocation);
-        if (lastflag && now - lastflag < 2000 && !isISL(player)) {
+        if (lastflag && now - lastflag < 5000 && !isISL(player)) {
             flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined);
         }
         data.lastFlag2 = now;
@@ -116,7 +116,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         !(player.lastApplyDamage && now - player.lastApplyDamage < 250)
     ) {
         if (!config.slient) teleportMagic(player, safePos);
-        if (lastflag && now - lastflag < 850 && !isISL(player)) {
+        if (lastflag && now - lastflag < 5000 && !isISL(player)) {
             if (Math.abs(y) < 1.75) {
                 flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
             } else if (!player.hasTag(AnimationControllerTags.riding)) {
@@ -132,11 +132,13 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     const { x: x2, y: y2, z: z2 } = player.location;
     const floorHead = { x: Math.floor(x1), y: Math.floor(y1), z: Math.floor(z1) };
     const floorBody = { x: Math.floor(x2), y: Math.floor(y2), z: Math.floor(z2) };
-    const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)) || isSolidBlock(player.dimension.getBlock(floorBody));
+    const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)) || !player.dimension.getBlock(floorBody).isAir;
     if (!inSolid) {
         data.safeLocation = player.location;
         player.lastSafePos = safePos;
     }
+
+    noclipdata.set(player.id, data);
 }
 
 const playerBreakBlock = ({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) => isSolid && (player.lastBreakSolid = Date.now());
@@ -166,8 +168,12 @@ registerModule(
 // Anti teleport bypass
 function teleportMagic (player: Player, location: Vector3) {
     let i = 0;
+    location.x = Math.floor(location.x) + 0.5;
+    location.z = Math.floor(location.z) + 0.5;
     const id = system.runInterval(() => {
-        player.teleport(location);
+        player.teleport(location, {
+            rotation: player.getRotation(),
+        });
         if (i > 7) {
             system.clearRun(id);
         }
