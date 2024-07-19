@@ -27,6 +27,7 @@ import "./settings/banrun";
 import "./settings/lockdown";
 import "./settings/lockdowncode";
 import "./settings/unlock";
+import "./settings/antispam";
 import "./utilities/adminchat";
 import "./utilities/itemui";
 import "./utilities/matrixui";

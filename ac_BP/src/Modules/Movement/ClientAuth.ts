@@ -1,5 +1,5 @@
 import { GameMode, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
-import { isAdmin } from "../../Assets/Util";
+import { c, isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { Action } from "../../Assets/Action";
@@ -9,24 +9,33 @@ import { Action } from "../../Assets/Action";
  * @description A simple client authentication to detect bot client
  */
 
-async function firstEvent(_config: configi, { player, initialSpawn }: PlayerSpawnAfterEvent, i = 0) {
-    if (!initialSpawn || isAdmin(player) || player.getGameMode() == GameMode.spectator) return;
+async function firstEvent(_config: configi, { player, initialSpawn }: PlayerSpawnAfterEvent) {
+    if (!initialSpawn || isAdmin(player) || player.getGameMode() == GameMode.spectator || player.isFlying) return;
+    const config = c();
     // Apply a small knockback to the player
-    const tpState = player.tryTeleport({ x: player.location.x, y: player.location.y + 1, z: player.location.z });
+    player.teleport({ x: player.location.x, y: player.location.y + config.clientAuth.teleportHeight, z: player.location.z });
     await system.waitTicks(1);
-    // Max 20 tries to teleport the player
-    if (i > 20) return;
-    if (!tpState) {
-        // Try again
-        firstEvent(_config, { player, initialSpawn: true }, i + 1);
-        return;
-    }
-    const currentLocation = JSON.stringify({ x: player.location.x, y: player.location.y + 1, z: player.location.z });
+    if (player.isOnGround) return;
+    const playerlocation = JSON.stringify(player.location);
     await system.waitTicks(1);
-    const locationNow = JSON.stringify(player.location);
-    if (locationNow == currentLocation) {
-        Action.kick(player, "Client authentication failed", "Matrix AntiCheat");
-        console.warn(`ClientAuth :: ${player.name} :: Bot client is blocked`);
+    // Check if the player is bad client
+    const isBadClient = await new Promise<boolean>((resolve) => {
+        let i = 0;
+        const id = system.runInterval(() => {
+            if (JSON.stringify(player.location) != playerlocation || player.isOnGround) {
+                resolve(false);
+                system.clearRun(id);
+            } else if (i > config.clientAuth.trackTicks) {
+                resolve(true);
+                system.clearRun(id);
+            }
+            i++;
+        }, 1);
+    })
+    if (isBadClient) {
+        player.kill();
+        Action.tempkick(player);
+        world.sendMessage("§bMatrix §7>§c Your client is not allowed to use this server");
     }
 }
 

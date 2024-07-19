@@ -197,7 +197,6 @@ import "./Combat/Kill Aura";
 import "./Combat/Reach";
 import "./Combat/Aim";
 import "./Misc/Spammer";
-import "./Misc/Crasher";
 import "./Movement/Fly";
 import "./Movement/NoFall";
 import "./Movement/Timer"; //* Timer > NoClip
@@ -216,7 +215,6 @@ import "./Player/NameSpoof";
 import "./Player/Auto";
 import "./Player/FastUse";
 import "./Player/GameMode";
-import "./Misc/Spam";
 import "./World/AutoTool";
 import "./Misc/Bot";
 import "./World/FastBreak";

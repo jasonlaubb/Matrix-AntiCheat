@@ -15,7 +15,6 @@ export const dynamic = {
 // Don't change this config!
 export default {
     configVersion: 1,
-    language: "en_US",
     createScoreboard: true,
     flagMode: "admin",
     lockdowncode: "AbCdEfGh",
@@ -34,11 +33,11 @@ export default {
             adminOnly: true,
             requireTag: ["mod", "manager"],
         },
-            about: {
-                enabled: true,
-                adminOnly: false,
-                requireTag: [],
-            },
+        about: {
+            enabled: true,
+            adminOnly: false,
+            requireTag: [],
+        },
             help: {
                 enabled: true,
                 adminOnly: true,
@@ -214,6 +213,11 @@ export default {
                 adminOnly: true,
                 requireTag: [],
             },
+            antispam: {
+                enabled: true,
+                adminOnly: true,
+                requireTag: [],
+            }
     },
     punishment_kick: {
         reason: "Bad behavior",
@@ -221,10 +225,6 @@ export default {
     punishment_ban: {
         minutes: 1440,
         reason: "Unfair advantage",
-    },
-    example_anticheat_module: {
-        enabled: true,
-        punishment: "ban",
     },
     chatRank: {
         enabled: true,
@@ -270,8 +270,8 @@ export default {
         minAngle: 160,
         timeout: 200,
         maxEntityHit: 2,
-        punishment: "ban",
-        maxVL: 3,
+        punishment: "tempkick",
+        maxVL: 4,
     },
     antiReach: {
         enabled: true,
@@ -306,8 +306,8 @@ export default {
     },
     antiTimer: {
         enabled: true,
-        punishment: "ban",
-        maxVL: 4,
+        punishment: "tempkick",
+        maxVL: 5,
         minTimerLog: 3,
     },
     antiNuker: {
@@ -351,7 +351,7 @@ export default {
         maxVL: 0,
     },
     antiBlockReach: {
-        enabled: true,
+        enabled: false,
         maxPlaceDistance: 8,
         maxBreakDistance: 8,
         timeout: 60,
@@ -359,15 +359,16 @@ export default {
         maxVL: 0,
     },
     antiAim: {
-        enabled: true,
-        punishment: "kick",
-        maxVL: 4,
+        enabled: false,
+        experimental: true,
+        punishment: "none",
+        maxVL: 12,
     },
     antiTower: {
         enabled: true,
         minDelay: 200,
         timeout: 60,
-        punishment: "kick",
+        punishment: "tempkick",
         maxVL: 2,
         experimental: true,
     },
@@ -385,14 +386,14 @@ export default {
     },
     antiAutoTool: {
         enabled: false,
-        punishment: "kick",
+        punishment: "tempkick",
         maxVL: 4,
         toolType: ["axe", "shovel", "pickaxe", "sword"],
         experimental: true,
     },
     antiFastBreak: {
         enabled: false,
-        punishment: "ban",
+        punishment: "tempkick",
         maxVL: 4,
         solidOnly: true,
         maxBPS: 1.2,
@@ -430,7 +431,7 @@ export default {
         fallDiscycle: 4,
         maxFallDis: 1.05,
         maxRatio: 10,
-        punishment: "kick",
+        punishment: "tempkick",
         experimental: true,
     },
     antiFastUse: {
@@ -440,22 +441,12 @@ export default {
         punishment: "ban",
         maxVL: 2,
     },
-    antiAuto: {
-        enabled: true,
-        punishment: "ban",
-        maxVL: 2,
-    },
     antiCommandBlockExplolit: {
         enabled: false,
         punishment: "ban",
         maxVL: 0,
         cancelPlacement: ["minecraft:bee_nest", "minecraft:beehive", "minecraft:moving_block", "minecraft:movingBlock", "minecraft:movingblock"],
         cancelUsage: ["minecraft:axolotl_bucket", "minecraft:cod_bucket", "minecraft:powder_snow_bucket", "minecraft:pufferfish_bucket", "minecraft:salmon_bucket", "minecraft:tadpole_bucket", "minecraft:tropical_fish_bucket"],
-    },
-    antiCrasher: {
-        enabled: true,
-        punishment: "ban",
-        maxVL: 0,
     },
     antiBot: {
         enabled: false,
@@ -476,10 +467,8 @@ export default {
     },
     clientAuth: {
         enabled: false,
-        checkForTick: 5,
-        punishment: "kick",
-        maxVL: 0,
-        tpOffset: 1,
+        trackTicks: 20,
+        teleportHeight: 1,
     },
     banrun: {
         command: "",
