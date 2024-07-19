@@ -168,7 +168,7 @@ function teleportMagic (player: Player, location: Vector3) {
     let i = 0;
     const id = system.runInterval(() => {
         player.teleport(location);
-        if (i > 2) {
+        if (i > 4) {
             system.clearRun(id);
         }
         i++;
