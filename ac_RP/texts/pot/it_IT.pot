@@ -532,6 +532,14 @@ msgstr ""
 msgid "Invalid regex with '%s'"
 msgstr ""
 
+#: antispam.already
+msgid "%1 of antiSpam is already toggled to %2"
+msgstr ""
+
+#: antispam.toggle
+msgid "%1 of antiSpam has been toggled to %2"
+msgstr ""
+
 #: ui.closechat
 msgid "Close the chat to open the following ui."
 msgstr ""
@@ -566,6 +574,10 @@ msgstr ""
 
 #: setup.hcfeature
 msgid "Hoilday creator feature is required."
+msgstr ""
+
+#: clientauth.kicked
+msgid "%s has been detected as bot client, it is automatically disconnected"
 msgstr ""
 
 #: ui.config.selector
