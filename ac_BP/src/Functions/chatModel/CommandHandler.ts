@@ -60,15 +60,12 @@ export function registerCommand(command: CommandHandleData, ...subCommand: Comma
 
 export function triggerCommand(player: Minecraft.Player, message: string): number {
     const config = c();
-    let isCommand = false;
     for (const prefix of [config.commands.prefix, ...config.otherPrefix]) {
         if (message.startsWith(prefix)) {
             message = message.slice(prefix.length).trim();
-            isCommand = true;
             break;
         }
     }
-    if (!isCommand) throw new Error("triggerCmd :: Unhandled command usage");
     if (message.length == 0) return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.unknown", with: [command ?? ""] }));
     const args = message.match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g)?.map((regax) => regax.replace(/^"(.*)"$/, "$1")?.replace(/\\"/g, '"'));
     const command = args.shift();

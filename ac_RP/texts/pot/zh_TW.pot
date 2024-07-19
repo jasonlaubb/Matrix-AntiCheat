@@ -130,27 +130,27 @@ msgstr "清除終界箱 §8(echestwipe)"
 
 #: ui.config.button
 msgid "Edit config §8(config)"
-msgstr ""
+msgstr "更改配置 §8(config)"
 
 #: ui.config.title
 msgid "Config UI"
-msgstr ""
+msgstr "配置選單"
 
 #: ui.toggle.button
 msgid "Toggle modules §8(toggle)"
-msgstr ""
+msgstr "設置模組 §8(toggle)"
 
 #: ui.toggle.moduleui
 msgid "Module UI"
-msgstr ""
+msgstr "模組選單"
 
 #: ui.toggle.modulet
 msgid "module: §8%1"
-msgstr ""
+msgstr "模組: §8%1"
 
 #: ui.toggle.statust
 msgid "§rstatus: §8%2"
-msgstr ""
+msgstr "§r狀態: §8%2"
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
@@ -582,24 +582,24 @@ msgstr ""
 
 #: ui.config.selector
 msgid "Configuration Selector"
-msgstr ""
+msgstr "配置選擇器"
 
 #: ui.config.editor
 msgid "Configuration Editor"
-msgstr ""
+msgstr "配置修改器"
 
 #: ui.config.loc
 msgid "§gCurrent location: §c%s"
-msgstr ""
+msgstr "§g目前路徑: §c%s"
 
 #: ui.config.desc
 msgid "§gDescription: §c%s"
-msgstr ""
+msgstr "§g註解: §c%s"
 
 #: ui.config.type
 msgid "§rProperty type:"
-msgstr ""
+msgstr "§r屬性屬性:"
 
 #: ui.config.value
 msgid "Value:"
-msgstr ""
+msgstr "值:"
