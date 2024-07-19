@@ -14,7 +14,6 @@ export const dynamic = {
 
 // Don't change this config!
 export default {
-    configVersion: 1,
     createScoreboard: true,
     flagMode: "admin",
     lockdowncode: "AbCdEfGh",
