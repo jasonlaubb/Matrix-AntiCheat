@@ -1,4 +1,4 @@
-import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAfterEvent, GameMode } from "@minecraft/server";
+import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAfterEvent, GameMode, system } from "@minecraft/server";
 import { flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
@@ -90,7 +90,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         straight(data.lastLocation, player.location).some((loc) => isSolidBlock(player.dimension.getBlock(loc)))
     ) {
         const lastflag = data.lastFlag2;
-        if (!config.slient) player.teleport(data.lastLocation);
+        if (!config.slient) teleportMagic(player, data.safeLocation);
         if (lastflag && now - lastflag < 2000 && !isISL(player)) {
             flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined);
         }
@@ -115,7 +115,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         !(player.threwTridentAt && now - player.threwTridentAt < 2500) &&
         !(player.lastApplyDamage && now - player.lastApplyDamage < 250)
     ) {
-        if (!config.slient) player.teleport(player.lastSafePos);
+        if (!config.slient) teleportMagic(player, safePos);
         if (lastflag && now - lastflag < 850 && !isISL(player)) {
             if (Math.abs(y) < 1.75) {
                 flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
@@ -162,3 +162,15 @@ registerModule(
         then: async (_config, event) => playerBreakBlock(event as PlayerBreakBlockAfterEvent),
     }
 );
+
+// Anti teleport bypass
+function teleportMagic (player: Player, location: Vector3) {
+    let i = 0;
+    const id = system.runInterval(() => {
+        player.teleport(location);
+        if (i > 2) {
+            system.clearRun(id);
+        }
+        i++;
+    }, 1);
+}
