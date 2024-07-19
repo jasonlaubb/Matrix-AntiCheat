@@ -66,9 +66,9 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
             break;
         }
     }
-    if (message.length == 0) return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.unknown", with: [command ?? ""] }));
     const args = message.match(/"((?:\\.|[^"\\])*)"|[^"@\s]+/g)?.map((regax) => regax.replace(/^"(.*)"$/, "$1")?.replace(/\\"/g, '"'));
     const command = args.shift();
+    if (!command) return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.unknown", with: [" "] }));
     // system.run(() => player.sendMessage(JSON.stringify(args) + "\n" + command));
     const targetCommand = commands.find(({ name }) => name == command);
     if (!targetCommand || (targetCommand.require && !targetCommand.require(player)))
