@@ -11,7 +11,7 @@ registerCommand({
     require: (player) => verifier(player, c().commands.deop),
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
-        sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "deop.hasbeen", with: [target.name] });
+        sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "deop.hasbeen", with: [target.name, player.name] });
         target.setDynamicProperty("isAdmin");
     },
 });
