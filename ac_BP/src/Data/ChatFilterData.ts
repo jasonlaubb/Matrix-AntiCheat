@@ -1,7 +1,7 @@
 /**
  * @author Matrix Team
  * @warning Please use basic Latin if it's latin character.
- * Please don't add numbers like 0,1,3,4,5,6,7,8,@,€, they will be auto generated to character form
+ * Please don't add numbers like 0,1,3,4,5,6,7,8,@,€,$ they will be auto generated to character form
  **/
 
 export default [
@@ -350,6 +350,7 @@ export default [
     "lesbo",
     "lezbo",
     "lezzie",
+    "let sex",
     "mottherfukr",
     "motherfvker",
     "madonna puttana",
@@ -402,13 +403,11 @@ export default [
     "nigar",
     "nigge",
     "niggaz",
-    "nigglet",
     "niggr",
     "nigguh",
     "negros",
     "niggur",
     "niggy",
-    "niglet",
     "nignog",
     "nimpinin",
     "ninpinin",
@@ -861,3 +860,5 @@ export default [
     "madonna",
     "troia",
 ];
+
+/ta|t/g

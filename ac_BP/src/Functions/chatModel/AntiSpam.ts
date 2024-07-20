@@ -12,6 +12,7 @@ const special_characters = {
     "8": "b",
     "@": "a",
     "€": "e",
+    "$": "s",
 };
 interface SpamData {
     lastMessage: string;
@@ -95,13 +96,13 @@ function reverseLoc (target: string[], index1: number, index2: number) {
     target[index2] = newindex2
     return target;
 }*/
-const filterRegex = new RegExp(ChatFilterData.join("|"), "g");
+
 function chatFilter(player: Player, message: string) {
     let msg = message;
     Object.entries(special_characters).forEach(([key, value]) => {
         msg = msg.replaceAll(key, value);
     });
-    if (filterRegex.test(msg)) {
+    if (ChatFilterData.some((x) => msg.includes(x))) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
         });

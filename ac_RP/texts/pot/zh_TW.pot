@@ -41,8 +41,8 @@ msgid "§gSupport Server: §e%s"
 msgstr ""
 
 #: disconnectionScreen.unexpectedPacket
-msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
-msgstr ""
+msgid "§bMatrix §7> §cYou have been tempkicked§r"
+msgstr "§bMatrix §7> §c你已被強制斷開連線§r"
 
 #: flag.style
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
