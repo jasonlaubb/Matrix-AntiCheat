@@ -28,12 +28,12 @@ function antiAutoClicker(config: configi, player: Player) {
         // A - false positive: very low, efficiency: high
         flag(player, "Auto Clicker", "A", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Click Per Second" + ":" + cps.toFixed(0)]);
 
-            player.applyDamage(6);
-            player.addTag(DisableTags.pvp);
-            clickData.delete(id);
-            system.runTimeout(() => {
-                player.removeTag(DisableTags.pvp);
-            }, config.antiAutoClicker.timeout);
+        player.applyDamage(6);
+        player.addTag(DisableTags.pvp);
+        clickData.delete(id);
+        system.runTimeout(() => {
+            player.removeTag(DisableTags.pvp);
+        }, config.antiAutoClicker.timeout);
     }
 
     // Set the clicks to the map

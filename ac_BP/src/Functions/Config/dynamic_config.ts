@@ -1,6 +1,6 @@
 import defaultConfig, { dynamic as dy } from "../../Data/Default";
 import userConfig from "../../Data/Config";
-const config: configi = dy.followUserConfig ? userConfig as configi : defaultConfig;
+const config: configi = dy.followUserConfig ? (userConfig as configi) : defaultConfig;
 import { system, world } from "@minecraft/server";
 import { configi } from "../../Modules/Modules";
 
@@ -14,7 +14,7 @@ export async function initialize() {
     } else {
         const normal = JSON.parse(cypher) as Changer[];
 
-        for (const changer of normal) {;
+        for (const changer of normal) {
             const newCommon = change(changer.target, changer.value, common);
             if (!newCommon) continue; // Prevent path error
             common = newCommon as configi;
@@ -41,7 +41,10 @@ export default class Dynamic {
         // a
         // world.sendMessage(`${cypher}\n${dynamic.key}`);
         const plaintext = JSON.parse(cypher) as Changer[];
-        plaintext.splice(plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key)), 1);
+        plaintext.splice(
+            plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key)),
+            1
+        );
         plaintext.push({ target: key, value: value });
         world.setDynamicProperty("config", JSON.stringify(plaintext));
         // Reload the dynamic config
@@ -65,7 +68,7 @@ export default class Dynamic {
 function change(path: string[], value: string | boolean | number | (string | boolean | number)[], object: { [key: string]: any }) {
     try {
         const pathLength = path.length;
-        const arr = new Array(26)
+        const arr = new Array(26);
         for (let i = 0; i < path.length; i++) {
             arr[i] = path[i];
         }

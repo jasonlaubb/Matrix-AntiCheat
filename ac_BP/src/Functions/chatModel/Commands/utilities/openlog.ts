@@ -13,5 +13,5 @@ registerCommand({
     executor: async (player, _args) => {
         player.sendMessage(new rawstr(true, "g").tra("ui.closechat").parse());
         sendLog(player);
-    }
-})
+    },
+});

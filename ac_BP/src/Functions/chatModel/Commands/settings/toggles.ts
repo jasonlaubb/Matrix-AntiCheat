@@ -9,7 +9,7 @@ registerCommand({
     maxArgs: 0,
     require: (player) => verifier(player, c().commands.toggles),
     executor: async (player, _args) => {
-        const togglelist = await toggleList(c().commands.prefix)
+        const togglelist = await toggleList(c().commands.prefix);
         const message = rawstr.compare(new rawstr(true, "g").tra("toggles.togglelist"), togglelist);
         sendRawText(player, message.parse());
     },

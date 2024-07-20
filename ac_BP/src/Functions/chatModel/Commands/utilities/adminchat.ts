@@ -17,5 +17,5 @@ registerCommand({
             player.setDynamicProperty("adminchat", true);
             player.sendMessage(new rawstr(true, "g").tra("adminchat.has").parse());
         }
-    }
-})
+    },
+});

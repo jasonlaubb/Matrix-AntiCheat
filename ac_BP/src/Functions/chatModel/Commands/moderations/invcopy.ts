@@ -12,7 +12,7 @@ registerCommand({
     require: (player) => verifier(player, c().commands.invcopy),
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
-        
+
         const inputInv = target.getComponent(EntityInventoryComponent.componentId).container;
         const outputInv = player.getComponent(EntityInventoryComponent.componentId).container;
 

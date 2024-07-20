@@ -13,7 +13,7 @@ export async function toggleList(p: string): Promise<rawstr> {
         )
     );
 }
-export async function getValidModules () {
+export async function getValidModules() {
     const moduleIds = await getModulesIds();
     const validModules: string[] = ["chatRank", "dimensionLock", ...moduleIds];
     return validModules;

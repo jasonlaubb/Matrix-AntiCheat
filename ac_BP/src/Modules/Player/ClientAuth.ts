@@ -8,7 +8,7 @@ import { Action } from "../../Assets/Action";
  * @description A simple client authentication to detect bot client
  */
 
-async function clientAuth (config: configi, { player, initialSpawn }: PlayerSpawnAfterEvent) {
+async function clientAuth(config: configi, { player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn || player.isFlying || player.isGliding || isAdmin(player)) return;
     player.teleport({ x: player.location.x, y: player.location.y + 1, z: player.location.z });
     await system.waitTicks(1);
@@ -29,16 +29,14 @@ async function clientAuth (config: configi, { player, initialSpawn }: PlayerSpaw
                 i++;
             }, 1);
         }, 1);
-    })
+    });
     if (badClientState) {
         player.kill();
         Action.tempkick(player);
         world.sendMessage(new rawstr(true, "g").tra("clientauth.kicked", player.name).parse());
     }
 }
-registerModule("antiClientAuth", false, [],
-    {
-        worldSignal: world.afterEvents.playerSpawn,
-        then: async (config, event: PlayerSpawnAfterEvent) => clientAuth(config, event)
-    }
-)
+registerModule("antiClientAuth", false, [], {
+    worldSignal: world.afterEvents.playerSpawn,
+    then: async (config, event: PlayerSpawnAfterEvent) => clientAuth(config, event),
+});

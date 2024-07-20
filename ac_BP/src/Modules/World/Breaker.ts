@@ -55,7 +55,7 @@ async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) 
             system.runTimeout(() => player.removeTag(DisableTags.break), config.antiBreaker.timeout);
             system.run(() => {
                 player.addTag(DisableTags.break);
-                flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId])
+                flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId]);
             });
         }
         lastFlag.set(player.id, Date.now());

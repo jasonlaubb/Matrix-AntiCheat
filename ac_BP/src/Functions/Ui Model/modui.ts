@@ -1,5 +1,5 @@
 import { Player } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui"
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { rawstr } from "../../Assets/Util";
 import { triggerCommand } from "../chatModel/CommandHandler";
 

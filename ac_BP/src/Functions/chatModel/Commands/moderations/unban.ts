@@ -17,9 +17,9 @@ registerCommand(
         maxArgs: 1,
         argRequire: [undefined],
         executor: async (player, args) => {
-            Action.unban(args[0])
+            Action.unban(args[0]);
             player.sendMessage(new rawstr(true, "g").tra("unban.add", args[0]).parse());
-        }
+        },
     },
     {
         name: "remove",
@@ -33,7 +33,7 @@ registerCommand(
             } else {
                 player.sendMessage(new rawstr(true, "c").tra("unbanremove.not", args[0]).parse());
             }
-        }
+        },
     },
     {
         name: "list",
@@ -46,8 +46,13 @@ registerCommand(
             if (unbanlist.length == 0) {
                 player.sendMessage(new rawstr(true, "c").tra("unbanlist.none").parse());
             } else {
-                player.sendMessage(new rawstr(true, "g").tra("unbanlist.list").str(": " + unbanlist.join(", ")).parse());
+                player.sendMessage(
+                    new rawstr(true, "g")
+                        .tra("unbanlist.list")
+                        .str(": " + unbanlist.join(", "))
+                        .parse()
+                );
             }
-        }
+        },
     }
-)
+);

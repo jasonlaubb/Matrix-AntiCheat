@@ -3,20 +3,20 @@ import Dynamic from "../Config/dynamic_config";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { rawstr } from "../../Assets/Util";
 import { triggerCommand } from "../chatModel/CommandHandler";
-export function configUI (player: Player, path?: string[]) {
+export function configUI(player: Player, path?: string[]) {
     if (!path) {
-        selector(player, [])
+        selector(player, []);
         return;
     }
 
     if (!Array.isArray(Dynamic.get(path)) && typeof Dynamic.get(path) == "object") {
-        selector(player, path)
+        selector(player, path);
     } else {
-        editor(player, path)
+        editor(player, path);
     }
 }
 
-function selector (player: Player, path: string[]) {
+function selector(player: Player, path: string[]) {
     const object = Dynamic.get(path);
     const lulka = Object.entries(object).map((entries): [string, string] => {
         if (Array.isArray(entries[1])) {
@@ -31,14 +31,19 @@ function selector (player: Player, path: string[]) {
         return entries;
     });
 
-    const selectform = new ActionFormData()
-        .title(rawstr.drt("ui.config.selector"))
-        .body(rawstr.new().tra("ui.config.loc", path.join(".")).str("\n").tra("ui.config.desc", description[path.join(".")] ?? "No description").parse())
-    
+    const selectform = new ActionFormData().title(rawstr.drt("ui.config.selector")).body(
+        rawstr
+            .new()
+            .tra("ui.config.loc", path.join("."))
+            .str("\n")
+            .tra("ui.config.desc", description[path.join(".")] ?? "No description")
+            .parse()
+    );
+
     for (const [key, value] of lulka) {
-        selectform.button(`§g§l${key}§r\n§8${value}§r`)
+        selectform.button(`§g§l${key}§r\n§8${value}§r`);
     }
-    selectform.button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
+    selectform.button(rawstr.drt("ui.exit"), "textures/ui/redX1.png");
     selectform.show(player).then((data) => {
         if (data.canceled) return;
         const selection = lulka[data.selection];
@@ -46,32 +51,43 @@ function selector (player: Player, path: string[]) {
         configUI(player, path.concat(selection[0]));
     });
 }
-const strtypes = ["string", "number", "boolean", "array"]
-const boltypes = ["true", "false", "undefined"]
-function editor (player: Player, path: string[]) {
+const strtypes = ["string", "number", "boolean", "array"];
+const boltypes = ["true", "false", "undefined"];
+function editor(player: Player, path: string[]) {
     new ModalFormData()
         .title(rawstr.drt("ui.config.editor"))
-        .dropdown(rawstr.new().tra("ui.config.loc", path.join(".")).str("\n").tra("ui.config.desc", description[path.join(".")] ?? "No description").str("\n").tra("ui.config.type").parse(), strtypes, 0)
-        .show(player).then((data) => {
+        .dropdown(
+            rawstr
+                .new()
+                .tra("ui.config.loc", path.join("."))
+                .str("\n")
+                .tra("ui.config.desc", description[path.join(".")] ?? "No description")
+                .str("\n")
+                .tra("ui.config.type")
+                .parse(),
+            strtypes,
+            0
+        )
+        .show(player)
+        .then((data) => {
             if (data.canceled) return;
-            const type = strtypes[data.formValues[0] as number]
-            const form = new ModalFormData()
-                .title(rawstr.drt("ui.config.editor"))
+            const type = strtypes[data.formValues[0] as number];
+            const form = new ModalFormData().title(rawstr.drt("ui.config.editor"));
             switch (type) {
                 case "string": {
-                    form.textField(rawstr.drt("ui.config.value"), "string")
+                    form.textField(rawstr.drt("ui.config.value"), "string");
                     break;
                 }
                 case "number": {
-                    form.textField(rawstr.drt("ui.config.value"), "number")
+                    form.textField(rawstr.drt("ui.config.value"), "number");
                     break;
                 }
                 case "boolean": {
-                    form.dropdown(rawstr.drt("ui.config.value"), boltypes)
+                    form.dropdown(rawstr.drt("ui.config.value"), boltypes);
                     break;
                 }
                 case "array": {
-                    form.textField(rawstr.drt("ui.config.value"), '"abc","def",3.14,7')
+                    form.textField(rawstr.drt("ui.config.value"), '"abc","def",3.14,7');
                     break;
                 }
                 default: {
@@ -83,14 +99,14 @@ function editor (player: Player, path: string[]) {
                 const value = data.formValues[0];
                 let ans = value;
                 if (typeof value == "number") {
-                    ans = boltypes[value]
+                    ans = boltypes[value];
                 }
                 // Run the config set command.
-                triggerCommand(player, `config set ${type} ${path.join(".")} ${ans}`)
-            })
-        })
+                triggerCommand(player, `config set ${type} ${path.join(".")} ${ans}`);
+            });
+        });
 }
 
 const description: { [key: string]: string } = {
     "": "This is the config of Matrix AntiCheat.",
-}
+};

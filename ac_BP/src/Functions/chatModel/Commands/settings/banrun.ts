@@ -12,12 +12,12 @@ registerCommand({
     require: (player) => verifier(player, c().commands.banrun),
     executor: async (player, args) => {
         if (!c().banrun.enabled) {
-            Dynamic.set(["banrun","enabled"], true);
-            Dynamic.set(["banrun","command"], args[0]);
+            Dynamic.set(["banrun", "enabled"], true);
+            Dynamic.set(["banrun", "command"], args[0]);
             player.sendMessage(new rawstr(true, "g").tra("banrun.set", args[0]).parse());
         } else if (!args[0]) {
-            Dynamic.set(["banrun","enabled"], false);
-            Dynamic.delete(["banrun","command"]);
+            Dynamic.set(["banrun", "enabled"], false);
+            Dynamic.delete(["banrun", "command"]);
             player.sendMessage(new rawstr(true, "g").tra("banrun.disabled").parse());
         } else {
             player.sendMessage(new rawstr(true, "r").tra("banrun.invalid", args[0]).parse());

@@ -9,7 +9,7 @@ world.afterEvents.itemUse.subscribe(({ itemStack: { typeId }, source: player }) 
     if (typeId == "matrix:itemui" && isAdmin(player)) {
         menu(player).catch((err) => error(player, err));
     }
-})
+});
 export const adminUI = (player: Player) => system.run(() => menu(player));
 async function menu(player: Player) {
     if (!isAdmin(player)) {
@@ -75,13 +75,14 @@ async function selectPlayer(player: Player): Promise<Player> {
     return pointAllPlayer[result.selection] ?? null;
 }
 
-function settingUI (player: Player) {
+function settingUI(player: Player) {
     new ActionFormData()
         .title(rawstr.drt("ui.setting"))
         .button(rawstr.drt("ui.config.button"), "textures/ui/gear.png")
         .button(rawstr.drt("ui.toggle.button"), "textures/ui/gear.png")
         .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
-        .show(player).then((res) => {
+        .show(player)
+        .then((res) => {
             if (res.canceled) return;
             switch (res.selection) {
                 case 0: {
@@ -93,5 +94,5 @@ function settingUI (player: Player) {
                     break;
                 }
             }
-        })
+        });
 }

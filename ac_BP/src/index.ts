@@ -41,7 +41,7 @@ world.afterEvents.worldInitialize.subscribe(async () => {
     // Cpu explode warning!
     intilizeModules().then((amount) => {
         world.sendMessage(`§bMatrix §7>§g Intilized ${amount} module(s) in ${Date.now() - runTime}ms.`);
-    })
+    });
 });
 
 if (c().createScoreboard) {

@@ -19,7 +19,7 @@ export async function registerModule(id: string, checkAdmin: boolean, varargs: (
             if (world.modules) {
                 resolve();
             }
-        })
+        });
     });
     system.clearRun(ida);
     world.modules.push({
@@ -55,17 +55,19 @@ export async function intilizeModules() {
                 resolve();
             }
             //world.sendMessage(String(world?.modules?.length) ?? "0");
-        })
+        });
     });
     system.clearRun(id);
-    world.modules.filter((module) => module.enabled).forEach((module) => {
-        unlisten(module.id);
-    });
+    world.modules
+        .filter((module) => module.enabled)
+        .forEach((module) => {
+            unlisten(module.id);
+        });
     system.runJob(looper(config));
     return world.modules?.length;
 }
-function* looper (config: configi): Generator<void, void, void> {
-    const len = world.modules.length
+function* looper(config: configi): Generator<void, void, void> {
+    const len = world.modules.length;
     for (let i = 0; i < len; i++) {
         try {
             const element = world.modules[i];
@@ -99,36 +101,36 @@ function setup(config: configi, element: Module) {
         });
         // Method for state module is enabled
         if (element.tickEvent)
-        for (const tE of element.tickEvent) {
-            runIds.push(
-                system.runInterval(() => {
-                    const currentConfig = c();
-                    if (tE?.intick) {
-                        let allPlayers = tE?.playerOption ? world.getPlayers(tE.playerOption) : world.getAllPlayers();
-                        if (!element.checkAdmin) allPlayers = allPlayers.filter((player) => !isAdmin(player));
-                        for (const player of allPlayers) {
-                            tE.intick(currentConfig, player).catch((error) => {
+            for (const tE of element.tickEvent) {
+                runIds.push(
+                    system.runInterval(() => {
+                        const currentConfig = c();
+                        if (tE?.intick) {
+                            let allPlayers = tE?.playerOption ? world.getPlayers(tE.playerOption) : world.getAllPlayers();
+                            if (!element.checkAdmin) allPlayers = allPlayers.filter((player) => !isAdmin(player));
+                            for (const player of allPlayers) {
+                                tE.intick(currentConfig, player).catch((error) => {
+                                    sendErr(error);
+                                });
+                            }
+                        }
+                        if (tE?.onTick) {
+                            tE.onTick(currentConfig).catch((error) => {
                                 sendErr(error);
                             });
                         }
-                    }
-                    if (tE?.onTick) {
-                        tE.onTick(currentConfig).catch((error) => {
-                            sendErr(error);
-                        });
-                    }
-                }, tE.tickInterval)
-            );
-        }
+                    }, tE.tickInterval)
+                );
+            }
         if (element.worldEvent)
-        for (const wE of element.worldEvent) {
-            wE.worldSignal.subscribe((event: any) => {
-                const currentConfig = c();
-                wE.then(currentConfig, event).catch((error) => {
-                    sendErr(error);
+            for (const wE of element.worldEvent) {
+                wE.worldSignal.subscribe((event: any) => {
+                    const currentConfig = c();
+                    wE.then(currentConfig, event).catch((error) => {
+                        sendErr(error);
+                    });
                 });
-            });
-        }
+            }
     }
     element.runId = runIds;
     element.enabled = true;

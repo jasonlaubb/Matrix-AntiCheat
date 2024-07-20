@@ -5,8 +5,8 @@ import { ban, unban, unbanList, unbanRemove } from "../Functions/moderateModel/b
 import { freeze, unfreeze } from "../Functions/moderateModel/freezeHandler";
 
 export class Action {
-    private constructor () {};
-    public static tempkick (player: Player) {
+    private constructor() {}
+    public static tempkick(player: Player) {
         if (isHost(player) || isAdmin(player)) return;
         player.triggerEvent(MatrixEvents.tempkick);
     }

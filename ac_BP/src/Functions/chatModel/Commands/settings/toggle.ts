@@ -15,7 +15,7 @@ registerCommand({
     executor: async (player, args) => {
         const config = c();
         const prefix = config.commands.prefix;
-        const validmodules = await getValidModules()
+        const validmodules = await getValidModules();
         const moduleids = await getModulesIds();
         if (!validmodules.includes(args[0])) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggle.unknown", with: [args[0]] });
         if (moduleids.includes(args[0])) {

@@ -31,7 +31,7 @@ async function firstEvent(_config: configi, { player, initialSpawn }: PlayerSpaw
             }
             i++;
         }, 1);
-    })
+    });
     if (isBadClient) {
         player.kill();
         Action.tempkick(player);

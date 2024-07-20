@@ -25,7 +25,7 @@ async function ElytraFly(player: Player, now: number, config: configi) {
         if (data.length > config.antiElytraFly.fallDiscycle) {
             data.shift();
             if (getPing(player) < 4 && !player.hasTag(MatrixUsedTags.stopRiding) && data.every((f) => player.fallDistance == f) && player.fallDistance !== 1 && player.fallDistance <= config.antiElytraFly.maxFallDis && velocity < -0.01) {
-                    player.teleport(lastPos);
+                player.teleport(lastPos);
                 player.addTag(MatrixUsedTags.stopRiding);
                 system.runTimeout(() => player.removeTag(MatrixUsedTags.stopRiding), 10);
                 flag(player, "Elytra Fly", "A", config.antiElytraFly.maxVL, config.antiElytraFly.punishment, ["velocityY" + ":" + velocity.toFixed(2)]);

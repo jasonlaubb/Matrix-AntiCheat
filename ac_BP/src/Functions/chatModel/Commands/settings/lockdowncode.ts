@@ -17,7 +17,7 @@ registerCommand(
         argRequire: [],
         executor: async (player, _args) => {
             player.sendMessage(new rawstr(true, "g").tra("lockdowncode.get", c().lockdowncode).parse());
-        }
+        },
     },
     {
         name: "set",
@@ -28,20 +28,22 @@ registerCommand(
         executor: async (player, args) => {
             Dynamic.set(["lockdowncode"], args[0]);
             player.sendMessage(new rawstr(true, "g").tra("lockdowncode.set", c().lockdowncode).parse());
-        }
+        },
     },
     {
         name: "random",
         description: "Generate a random lockdowncode",
         maxArgs: 1,
         minArgs: 0,
-        argRequire: [(value) => {
-            const code = Number(value as string)
+        argRequire: [
+            (value) => {
+                const code = Number(value as string);
 
-            if (Number.isNaN(code)) return false;
+                if (Number.isNaN(code)) return false;
 
-            return code >= 1 && code <= 128
-        }],
+                return code >= 1 && code <= 128;
+            },
+        ],
         executor: async (player, args) => {
             const codeLength = args[0] ?? 6;
 
@@ -108,6 +110,6 @@ registerCommand(
             Dynamic.set(["lockdowncode"], code);
 
             player.sendMessage(new rawstr(true, "g").tra("lockdowncode.set", code).parse());
-        }
+        },
     }
-)
+);

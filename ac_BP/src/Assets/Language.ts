@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate = 
+export type Translate =
     | "pack.description"
     | "crash.reload"
     | "function.check.title"
@@ -152,4 +152,4 @@ export type Translate =
     | "ui.config.loc"
     | "ui.config.desc"
     | "ui.config.type"
-    | "ui.config.value"
+    | "ui.config.value";

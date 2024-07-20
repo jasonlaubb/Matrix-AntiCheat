@@ -10,7 +10,29 @@ import { Action } from "./Action";
  * @description Utility function for script.
  * @warning This is very important, you cannot remove this.
  */
-export { isSpawning, rawstr, getPing, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, isHost, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
+export {
+    isSpawning,
+    rawstr,
+    getPing,
+    checkBlockAround,
+    flag,
+    msToTime,
+    isTargetGamemode,
+    getGamemode,
+    timeToMs,
+    isTimeStr,
+    c,
+    inAir,
+    findSlime,
+    getSpeedIncrease1,
+    isAdmin,
+    isHost,
+    findWater,
+    getSpeedIncrease2,
+    logBreak,
+    recoverBlockBreak,
+    clearBlockBreakLog,
+};
 
 class rawstr {
     private storge: RawMessage[] = [];
@@ -83,80 +105,85 @@ type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L
 
 function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
     system.run(() => {
-    const config = c();
-    Vl[player.id] ??= {};
-    Vl[player.id][modules] ??= 0;
+        const config = c();
+        Vl[player.id] ??= {};
+        Vl[player.id][modules] ??= 0;
 
-    try {
-        Vl[player.id][modules]++;
-    } catch {}
+        try {
+            Vl[player.id][modules]++;
+        } catch {}
 
-    const flagMsg = new rawstr(true).tra("flag.style", player.name, modules, type, Vl[player.id][modules]);
-    if (config.logsettings.logCheatFlag) saveLog("Flag", player.name, `${modules} ${type} (x${Vl[player.id][modules]})`);
-    if (infos !== undefined) flagMsg.str("\n" + formatInformation(infos));
+        const flagMsg = new rawstr(true).tra("flag.style", player.name, modules, type, Vl[player.id][modules]);
+        if (config.logsettings.logCheatFlag) saveLog("Flag", player.name, `${modules} ${type} (x${Vl[player.id][modules]})`);
+        if (infos !== undefined) flagMsg.str("\n" + formatInformation(infos));
 
-    if (punishment && Vl[player.id][modules] > maxVL && !config.autoPunishment.observationMode) {
-        let punishmentDone = false;
-        const banrun = config.banrun.command;
-        if (config.commands.banrun && banrun.length > 0 && ["kick", "ban"].includes(punishment)) {
-            player.runCommandAsync(banrun as string);
-        } else {
-            switch (punishment) {
-                case "kick": {
-                    punishmentDone = true;
-                    if (config.logsettings.logCheatPunishment) saveLog("Kick", player.name, `${modules} ${type}`);
-                    Action.kick(player, `${config.autoPunishment.kick.reason} [${modules} ${type}]`, "Matrix AntiCheat");
-                    flagMsg.str("\n§bMatrix §7>§g ").tra("util.formkick", player.name);
-                    break;
-                }
-                case "ban": {
-                    punishmentDone = true;
-                    if (config.logsettings.logCheatPunishment) saveLog("Ban", player.name, `${modules} ${type}`);
-                    Action.ban(player, `${config.autoPunishment.ban.reason} [${modules} ${type}]`, "Matrix AntiCheat", (config.autoPunishment.ban.minutes as number | "forever") == "forever" ? "forever" : Date.now() + config.autoPunishment.ban.minutes * 60000);
-                    flagMsg.str("\n§bMatrix §7>§g ").tra("util.formban", player.name);
-                    break;
-                }
-                case "tempkick": {
-                    punishmentDone = true;
-                    if (config.logsettings.logCheatPunishment) saveLog("TempKick", player.name, `${modules} ${type}`);
-                    // Tempkick the player, espectially for local world.
-                    Action.tempkick(player);
-                    break;
+        if (punishment && Vl[player.id][modules] > maxVL && !config.autoPunishment.observationMode) {
+            let punishmentDone = false;
+            const banrun = config.banrun.command;
+            if (config.commands.banrun && banrun.length > 0 && ["kick", "ban"].includes(punishment)) {
+                player.runCommandAsync(banrun as string);
+            } else {
+                switch (punishment) {
+                    case "kick": {
+                        punishmentDone = true;
+                        if (config.logsettings.logCheatPunishment) saveLog("Kick", player.name, `${modules} ${type}`);
+                        Action.kick(player, `${config.autoPunishment.kick.reason} [${modules} ${type}]`, "Matrix AntiCheat");
+                        flagMsg.str("\n§bMatrix §7>§g ").tra("util.formkick", player.name);
+                        break;
+                    }
+                    case "ban": {
+                        punishmentDone = true;
+                        if (config.logsettings.logCheatPunishment) saveLog("Ban", player.name, `${modules} ${type}`);
+                        Action.ban(
+                            player,
+                            `${config.autoPunishment.ban.reason} [${modules} ${type}]`,
+                            "Matrix AntiCheat",
+                            (config.autoPunishment.ban.minutes as number | "forever") == "forever" ? "forever" : Date.now() + config.autoPunishment.ban.minutes * 60000
+                        );
+                        flagMsg.str("\n§bMatrix §7>§g ").tra("util.formban", player.name);
+                        break;
+                    }
+                    case "tempkick": {
+                        punishmentDone = true;
+                        if (config.logsettings.logCheatPunishment) saveLog("TempKick", player.name, `${modules} ${type}`);
+                        // Tempkick the player, espectially for local world.
+                        Action.tempkick(player);
+                        break;
+                    }
                 }
             }
+            if (punishmentDone) {
+                Vl[player.id][modules] = 0;
+            }
         }
-        if (punishmentDone) {
-            Vl[player.id][modules] = 0;
+        if (config.autoPunishment.silentMode) return;
+        const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode;
+        switch (flagMode) {
+            case "tag": {
+                const targets = world.getPlayers({ tags: ["matrix:notify"] });
+                targets.forEach((players) => players.sendMessage(flagMsg.parse()));
+                break;
+            }
+            case "bypass": {
+                const targets = world.getPlayers({ excludeNames: [player.name] });
+                targets.forEach((players) => players.sendMessage(flagMsg.parse()));
+                break;
+            }
+            case "admin": {
+                const allPlayers = world.getAllPlayers();
+                const targets = allPlayers.filter((players) => isAdmin(players));
+                targets.forEach((players) => players.sendMessage(flagMsg.parse()));
+                break;
+            }
+            case "none": {
+                break;
+            }
+            default: {
+                world.sendMessage(flagMsg.parse());
+                break;
+            }
         }
-    }
-    if (config.autoPunishment.silentMode) return;
-    const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode;
-    switch (flagMode) {
-        case "tag": {
-            const targets = world.getPlayers({ tags: ["matrix:notify"] });
-            targets.forEach((players) => players.sendMessage(flagMsg.parse()));
-            break;
-        }
-        case "bypass": {
-            const targets = world.getPlayers({ excludeNames: [player.name] });
-            targets.forEach((players) => players.sendMessage(flagMsg.parse()));
-            break;
-        }
-        case "admin": {
-            const allPlayers = world.getAllPlayers();
-            const targets = allPlayers.filter((players) => isAdmin(players));
-            targets.forEach((players) => players.sendMessage(flagMsg.parse()));
-            break;
-        }
-        case "none": {
-            break;
-        }
-        default: {
-            world.sendMessage(flagMsg.parse());
-            break;
-        }
-    }
-})
+    });
 }
 
 function msToTime(ms: number) {
@@ -195,8 +222,8 @@ function isAdmin(player: Player) {
 }
 
 // Host id is always -206158430207 for Local World
-function isHost ({ id }: Player) {
-    return id == "-206158430207"
+function isHost({ id }: Player) {
+    return id == "-206158430207";
 }
 
 function timeToMs(timeStr: string) {
@@ -352,6 +379,6 @@ const clearBlockBreakLog = (id: string) => delete blockBreakLogger[id];
 // The most useless function lol
 const getPing = (player: Player) => player.pingTick ?? 0;
 
-function isSpawning (player: Player) {
+function isSpawning(player: Player) {
     return player.isSpawning ?? true;
 }

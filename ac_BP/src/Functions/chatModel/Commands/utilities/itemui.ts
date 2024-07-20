@@ -16,8 +16,8 @@ registerCommand({
             container.addItem(new ItemStack("matrix:itemui", 1));
             player.sendMessage(new rawstr(true, "g").tra("itemui.has").parse());
         } catch (error) {
-            console.error(error)
+            console.error(error);
             player.sendMessage(new rawstr(true, "c").tra("setup.hcfeature").parse());
         }
-    }
-})
+    },
+});

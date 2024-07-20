@@ -25,7 +25,7 @@ world.afterEvents.entityHurt.subscribe(
             if (!player.hasTag(MatrixUsedTags.knockBack)) {
                 player.addTag(MatrixUsedTags.knockBack);
             } else if (player.getVelocity().y <= 0) {
-                player.removeTag((MatrixUsedTags.knockBack));
+                player.removeTag(MatrixUsedTags.knockBack);
             }
         }
         player.lastApplyDamage = Date.now();
@@ -86,7 +86,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     }
     system.runTimeout(() => {
         player.isSpawning = false;
-    }, c().spawnFinishDelay)
+    }, c().spawnFinishDelay);
 });
 
 class Tps {

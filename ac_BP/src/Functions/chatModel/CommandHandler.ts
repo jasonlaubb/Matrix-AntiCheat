@@ -120,7 +120,7 @@ export function error(target: Minecraft.Player | Minecraft.World, error: Error):
     target.sendMessage(`§bMatrix §7>§g Command ran with error.\nName: §9${error.name}\n§gMessage: §9${error.message}\n§gStack: §9${error?.stack ?? "unknown"}`);
 }
 
-export function sendErr (err: Error) {
+export function sendErr(err: Error) {
     console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
 }
 

@@ -22,186 +22,186 @@ export default {
             adminOnly: false,
             requireTag: [],
         },
-            help: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            toggles: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            toggle: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            op: {
-                enabled: true,
-                adminOnly: false,
-                requireTag: [],
-            },
-            deop: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            passwords: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            flagmode: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            rank: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            rankclear: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            defaultrank: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            showallrank: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            ban: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            unban: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            unbanremove: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            unbanlist: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            tempkick: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            freeze: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            unfreeze: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            mute: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            unmute: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            vanish: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            unvanish: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            invcopy: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            invsee: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            echestwipe: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            lockdowncode: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            lockdown: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            unlock: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            adminchat: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            bordersize: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            matrixui: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            itemui: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            banrun: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            openlog: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            reset: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            },
-            antispam: {
-                enabled: true,
-                adminOnly: true,
-                requireTag: [],
-            }
+        help: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        toggles: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        toggle: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        op: {
+            enabled: true,
+            adminOnly: false,
+            requireTag: [],
+        },
+        deop: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        passwords: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        flagmode: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        rank: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        rankclear: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        defaultrank: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        showallrank: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        ban: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        unban: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        unbanremove: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        unbanlist: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        tempkick: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        freeze: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        unfreeze: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        mute: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        unmute: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        vanish: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        unvanish: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        invcopy: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        invsee: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        echestwipe: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        lockdowncode: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        lockdown: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        unlock: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        adminchat: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        bordersize: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        matrixui: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        itemui: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        banrun: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        openlog: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        reset: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        antispam: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
     },
     autoPunishment: {
         observationMode: false,

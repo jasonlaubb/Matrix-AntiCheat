@@ -166,7 +166,7 @@ registerModule(
 );
 
 // Anti teleport bypass
-function teleportMagic (player: Player, location: Vector3) {
+function teleportMagic(player: Player, location: Vector3) {
     let i = 0;
     location.x = Math.floor(location.x) + 0.5;
     location.z = Math.floor(location.z) + 0.5;
