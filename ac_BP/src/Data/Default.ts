@@ -3,23 +3,13 @@
  * @description Default preset for AntiCheat
  * @warning NEVER CHANGE THIS FILE IF YOU DON'T KNOW WHAT YOU ARE DOING
  */
-
-/**
- * @param {string} AES_key
- * @description AES key for loading config
- */
-export const dynamic = {
-    followUserConfig: false, // State if we use UserConfig or not
-};
-
-// Don't change this config!
 export default {
     createScoreboard: true,
     flagMode: "admin",
     lockdowncode: "AbCdEfGh",
     passwordCold: 5000,
-    slient: false,
     otherPrefix: [],
+    spawnFinishDelay: 1200,
     commands: {
         passwordSetting: {
             password: "password",
@@ -27,11 +17,6 @@ export default {
             usingHash: false,
         },
         prefix: "-",
-        example: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: ["mod", "manager"],
-        },
         about: {
             enabled: true,
             adminOnly: false,
@@ -218,12 +203,25 @@ export default {
                 requireTag: [],
             }
     },
-    punishment_kick: {
-        reason: "Bad behavior",
+    autoPunishment: {
+        observationMode: false,
+        silentMode: false,
+        kick: {
+            reason: "Unfair advantage",
+        },
+        ban: {
+            minutes: 1440,
+            reason: "Unfair advantage",
+        },
     },
-    punishment_ban: {
-        minutes: 1440,
-        reason: "Unfair advantage",
+    logsettings: {
+        maxStorge: 200,
+        pageShows: 20,
+        utc: 0,
+        logCommandUsage: false,
+        logPlayerRegister: false,
+        logCheatFlag: true,
+        logCheatPunishment: true,
     },
     chatRank: {
         enabled: true,
@@ -247,15 +245,6 @@ export default {
     },
     dimensionLock: {
         enabled: false,
-    },
-    logsettings: {
-        maxStorge: 200,
-        pageShows: 20,
-        utc: 0,
-        logCommandUsage: false,
-        logPlayerRegister: false,
-        logCheatFlag: true,
-        logCheatPunishment: true,
     },
     antiAutoClicker: {
         enabled: true,
@@ -418,11 +407,11 @@ export default {
         enabled: false,
         punishment: "ban",
         maxVL: 0,
-        checkIllegal: true, // The true illegal item.
-        checkUnatural: true, // Ban extra nbt information
-        checkGivableItem: true, // Ban the item which cannot get in suurival
-        checkEnchantment: true, // Ban bad enchantment
-        checkEducationalItem: true, // Ban educational item
+        checkIllegal: true,
+        checkUnatural: true,
+        checkGivableItem: true,
+        checkEnchantment: true,
+        checkEducationalItem: true,
     },
     antiElytraFly: {
         enabled: true,
@@ -473,6 +462,8 @@ export default {
         command: "",
         enabled: false,
     },
-    blacklistedMessages: ["discord.gg", "dsc.gg", "@outlook.com", "@gmail.com", "@hotmail.com", "discordapp.com", "discord.com/invite/", "https://", "http://", "the best minecraft bedrock utility mod", "disepi/ambrosial", "aras"],
-    exN: 1,
+};
+
+export const dynamic = {
+    followUserConfig: false,
 };

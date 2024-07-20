@@ -93,9 +93,9 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
 
     const flagMsg = new rawstr(true).tra("flag.style", player.name, modules, type, Vl[player.id][modules]);
     if (config.logsettings.logCheatFlag) saveLog("Flag", player.name, `${modules} ${type} (x${Vl[player.id][modules]})`);
-    if (infos !== undefined && !config.slient) flagMsg.str("\n" + formatInformation(infos));
+    if (infos !== undefined) flagMsg.str("\n" + formatInformation(infos));
 
-    if (punishment && Vl[player.id][modules] > maxVL) {
+    if (punishment && Vl[player.id][modules] > maxVL && !config.autoPunishment.observationMode) {
         let punishmentDone = false;
         const banrun = config.banrun.command;
         if (config.commands.banrun && banrun.length > 0 && ["kick", "ban"].includes(punishment)) {
@@ -105,14 +105,14 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
                 case "kick": {
                     punishmentDone = true;
                     if (config.logsettings.logCheatPunishment) saveLog("Kick", player.name, `${modules} ${type}`);
-                    Action.kick(player, `Unfair adventage [${modules} ${type}]`, "Matrix AntiCheat");
+                    Action.kick(player, `${config.autoPunishment.kick.reason} [${modules} ${type}]`, "Matrix AntiCheat");
                     flagMsg.str("\n§bMatrix §7>§g ").tra("util.formkick", player.name);
                     break;
                 }
                 case "ban": {
                     punishmentDone = true;
                     if (config.logsettings.logCheatPunishment) saveLog("Ban", player.name, `${modules} ${type}`);
-                    Action.ban(player, `Unfair adventage [${modules} ${type}]`, "Matrix AntiCheat", (config.punishment_ban.minutes as number | "forever") === "forever" ? "forever" : Date.now() + config.punishment_ban.minutes * 60000);
+                    Action.ban(player, `${config.autoPunishment.ban.reason} [${modules} ${type}]`, "Matrix AntiCheat", (config.autoPunishment.ban.minutes as number | "forever") == "forever" ? "forever" : Date.now() + config.autoPunishment.ban.minutes * 60000);
                     flagMsg.str("\n§bMatrix §7>§g ").tra("util.formban", player.name);
                     break;
                 }
@@ -129,7 +129,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
             Vl[player.id][modules] = 0;
         }
     }
-
+    if (config.autoPunishment.silentMode) return;
     const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode;
     switch (flagMode) {
         case "tag": {

@@ -1,6 +1,6 @@
 import { world, Player, EntityInventoryComponent, ItemEnchantableComponent, EntityDamageCause, system, PlayerBreakBlockAfterEvent } from "@minecraft/server";
 import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
-import { clearBlockBreakLog, findSlime, logBreak } from "./Util";
+import { c, clearBlockBreakLog, findSlime, logBreak } from "./Util";
 import { MatrixUsedTags, AnimationControllerTags, DisableTags } from "../Data/EnumData";
 
 world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
@@ -84,6 +84,9 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         player.removeTag(DisableTags.pvp);
         player.removeTag(MatrixUsedTags.knockBack);
     }
+    system.runTimeout(() => {
+        
+    }, c().spawnFinishDelay)
 });
 
 class Tps {

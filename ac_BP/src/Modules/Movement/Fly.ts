@@ -1,5 +1,5 @@
 import { GameMode, Vector3, Dimension, Player } from "@minecraft/server";
-import { flag } from "../../Assets/Util";
+import { flag, isSpawning } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
@@ -92,7 +92,7 @@ function antiFly(player: Player, now: number, config: configi) {
             }
             else if (data.flyFlags >= 2)
                 data.flyFlags = 0;
-            if (player.location.y - data.previousLocations.y >= 0.5 && data.lastHighVelocity >= 0.7 && ) {
+            if (player.location.y - data.previousLocations.y >= 0.5 && data.lastHighVelocity >= 0.7 && isSpawning(player)) {
                 if (now - lastflag <= 2000)
                     flag(player, "Fly", "E", config.antiFly.maxVL, config.antiFly.punishment, ["velocityY" + ":" + data.lastHighVelocity.toFixed(2)]);
                 player.teleport(data.previousLocations);
