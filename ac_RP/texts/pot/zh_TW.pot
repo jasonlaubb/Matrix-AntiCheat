@@ -17,7 +17,7 @@ msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr "§cMatrix 防外掛已經崩潰, 使用 /reload 來恢復§r"
 
 #: function.check.title
-msgid "AntiCheat setup checking"
+msgid "Anti-Cheat setup checking:"
 msgstr "反外掛啟動檢測"
 
 #: function.check.betaapi
@@ -180,6 +180,26 @@ msgstr "%1 沒有 %2 §r§c 聊天稱號"
 msgid "%1 has been banned by %2"
 msgstr "%1 已被 %2 停權"
 
+#: banqueue.already
+msgid "%1 is already in the ban queue"
+msgstr ""
+
+#: banqueue.notfound
+msgid "Player name in the banqueue not found"
+msgstr ""
+
+#: banqueue.done
+msgid "Done!"
+msgstr ""
+
+#: banqueue.empty
+msgid "No player in the ban queue"
+msgstr ""
+
+#: banqueue.list
+msgid "Players in the ban queue: %s"
+msgstr ""
+
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
 msgstr "%1 已被 %2 解除管理員權限"
@@ -327,10 +347,6 @@ msgstr "%s 的背包"
 #: invsee.item
 msgid "§eSlot: §c%1 | §eItem: §c%2"
 msgstr "§e槽: §c%1 | §e物品: §c%2"
-
-#: lang.has
-msgid "Language has been changed to %s"
-msgstr "語言已更改為 %s"
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"

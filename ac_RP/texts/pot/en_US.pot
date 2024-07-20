@@ -180,6 +180,26 @@ msgstr ""
 msgid "%1 has been banned by %2"
 msgstr ""
 
+#: banqueue.already
+msgid "%1 is already in the ban queue"
+msgstr ""
+
+#: banqueue.notfound
+msgid "Player name in the banqueue not found"
+msgstr ""
+
+#: banqueue.done
+msgid "Done!"
+msgstr ""
+
+#: banqueue.empty
+msgid "No player in the ban queue"
+msgstr ""
+
+#: banqueue.list
+msgid "Players in the ban queue: %s"
+msgstr ""
+
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
 msgstr ""

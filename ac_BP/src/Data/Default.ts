@@ -82,6 +82,11 @@ export default {
             adminOnly: true,
             requireTag: [],
         },
+        banqueue: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
         unban: {
             enabled: true,
             adminOnly: true,
@@ -204,6 +209,8 @@ export default {
         },
     },
     autoPunishment: {
+        bypasslist: [],
+        bypassname: [],
         observationMode: false,
         silentMode: false,
         kick: {

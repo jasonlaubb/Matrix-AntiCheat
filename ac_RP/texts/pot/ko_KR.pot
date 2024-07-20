@@ -180,6 +180,26 @@ msgstr "%1는 %2 칭호를 가지고 있지 않습니다."
 msgid "%1 has been banned by %2"
 msgstr "%1님이 %2님의 처리로 벤 처리되었습니다."
 
+#: banqueue.already
+msgid "%1 is already in the ban queue"
+msgstr ""
+
+#: banqueue.notfound
+msgid "Player name in the banqueue not found"
+msgstr ""
+
+#: banqueue.done
+msgid "Done!"
+msgstr ""
+
+#: banqueue.empty
+msgid "No player in the ban queue"
+msgstr ""
+
+#: banqueue.list
+msgid "Players in the ban queue: %s"
+msgstr ""
+
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
 msgstr "%1님이 %2님을 통하여 DE-OP 처리되었습니다."
@@ -317,7 +337,7 @@ msgid "Flag mode has been changed to %s"
 msgstr "Flag 모드가 %s로 번경되었습니다."
 
 #: bot.waitui
-msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
+msgid "For security reason, you cannot chat until you finished verify process. Please wait until the verify ui be shown"
 msgstr "보안상의 이유로, 인증 절차를 밟기 전 채팅을 입력할 수 없습니다. 인증 UI가 나올 때 까지 기다려주세요."
 
 #: invsee.of
@@ -327,10 +347,6 @@ msgstr "%s의 인벤토리"
 #: invsee.item
 msgid "§eSlot: §c%1 | §eItem: §c%2"
 msgstr ""
-
-#: lang.has
-msgid "Language has been changed to %s"
-msgstr "언어가 %s님에 의해 번경되었습니다."
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"

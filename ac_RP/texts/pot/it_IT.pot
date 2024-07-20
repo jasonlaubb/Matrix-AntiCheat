@@ -180,6 +180,26 @@ msgstr "%1 non ha %2 §r§c rank"
 msgid "%1 has been banned by %2"
 msgstr "%1 è stato bannato con successo da %2"
 
+#: banqueue.already
+msgid "%1 is already in the ban queue"
+msgstr ""
+
+#: banqueue.notfound
+msgid "Player name in the banqueue not found"
+msgstr ""
+
+#: banqueue.done
+msgid "Done!"
+msgstr ""
+
+#: banqueue.empty
+msgid "No player in the ban queue"
+msgstr ""
+
+#: banqueue.list
+msgid "Players in the ban queue: %s"
+msgstr ""
+
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
 msgstr "%1 è stato deoppato correttamente da %2"
@@ -317,7 +337,7 @@ msgid "Flag mode has been changed to %s"
 msgstr "Flag mode è stata cambiata con successo a %s"
 
 #: bot.waitui
-msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
+msgid "For security reason, you cannot chat until you finished verify process. Please wait until the verify ui be shown"
 msgstr "Per una questione di sicurezza, non puoi usare la chat fino alla fine del processo di verifica. Perfavore aspetta fino a quando non ti esce il pannello di verifica"
 
 #: invsee.of
@@ -327,10 +347,6 @@ msgstr "Inventario di %s"
 #: invsee.item
 msgid "§eSlot: §c%1 | §eItem: §c%2"
 msgstr ""
-
-#: lang.has
-msgid "Language has been changed to %s"
-msgstr "Il linguaggio è stato cambiato con successo a %s"
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"
