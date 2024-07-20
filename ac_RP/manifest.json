@@ -4,7 +4,7 @@
 		"name": "Matrix Anti-Cheat RP V3.9.0-beta",
 		"description": "pack.description",
 		"uuid": "8a0fbe45-e0fb-41e3-8c2e-e187420717ba",
-        "version": [3, 0, 0],
+        "version": [3, 9, 0],
 		"min_engine_version": [1, 21, 0]
 	},
 	"modules": [
