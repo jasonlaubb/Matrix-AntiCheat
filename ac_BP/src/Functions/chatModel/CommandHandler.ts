@@ -77,7 +77,7 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
         });
     //player.sendMessage(JSON.stringify(targetCommand.subCommand))
     if (targetCommand.subCommand.length > 0) {
-        if (args.length <= 1) {
+        if (args.length == 0) {
             return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, "", ""] }));
         }
         const subCommand = targetCommand.subCommand.find(({ name }) => name == args[0]);
@@ -93,19 +93,15 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
 }
 
 export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): number {
-    if (targetCommand.maxArgs > 0) {
-        if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
-            return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] }));
-        }
-        if (targetCommand.maxArgs && args.length > targetCommand.maxArgs) {
-            return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] }));
-        }
-        if (targetCommand.argRequire) {
-            for (let i = 0; i < targetCommand.argRequire.length; i++) {
-                if (!targetCommand.argRequire[i] || !args[i]) continue;
-                if (!targetCommand.argRequire[i](args[i], targetCommand.requireSupportPlayer ? player : undefined, targetCommand.requireSupportArgs ? args : undefined)) {
-                    return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
-                }
+    if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
+        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] }));
+    } else if (targetCommand.maxArgs && args.length > targetCommand.maxArgs) {
+        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] }));
+    } else if (targetCommand.argRequire) {
+        for (let i = 0; i < targetCommand.argRequire.length; i++) {
+            if (!targetCommand.argRequire[i] || !args[i]) continue;
+            if (!targetCommand.argRequire[i](args[i], targetCommand.requireSupportPlayer ? player : undefined, targetCommand.requireSupportArgs ? args : undefined)) {
+                return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
             }
         }
     }
