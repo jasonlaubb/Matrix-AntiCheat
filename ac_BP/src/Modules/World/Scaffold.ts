@@ -172,7 +172,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     data.lastX = x;
     data.lastZ = z;
     data.lastPlace = now;
-    if (detected && !config.slient) {
+    if (detected) {
         block.setType(MinecraftBlockTypes.Air);
         player.addTag(DisableTags.place);
         system.runTimeout(() => player.removeTag(DisableTags.place), config.antiScaffold.timeout);

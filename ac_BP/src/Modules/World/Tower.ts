@@ -61,7 +61,6 @@ async function AntiTower(player: Player, block: Block, config: configi) {
     if (delay < config.antiTower.minDelay && locationState) {
         if (vl > 2) {
             vL.set(player.id, undefined);
-            if (!config.slient) {
                 //set the block to the air
                 block.setType(MinecraftBlockTypes.Air);
 
@@ -70,7 +69,6 @@ async function AntiTower(player: Player, block: Block, config: configi) {
 
                 //remove the tag after timeout
                 system.runTimeout(() => player.removeTag(DisableTags.place), config.antiTower.timeout);
-            }
         } else {
             vL.set(player.id, vl + 1);
         }

@@ -52,11 +52,11 @@ async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) 
         event.cancel = true;
         const lastflag = lastFlag.get(player.id);
         if (lastflag && Date.now() - lastflag < 35) {
-            if (!config.slient) {
-                system.run(() => player.addTag(DisableTags.break));
-                system.runTimeout(() => player.removeTag(DisableTags.break), config.antiBreaker.timeout);
-            }
-            system.run(() => flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId]));
+            system.runTimeout(() => player.removeTag(DisableTags.break), config.antiBreaker.timeout);
+            system.run(() => {
+                player.addTag(DisableTags.break);
+                flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId])
+            });
         }
         lastFlag.set(player.id, Date.now());
     }
