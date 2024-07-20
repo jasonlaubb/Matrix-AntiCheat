@@ -1,5 +1,5 @@
 import * as Minecraft from "@minecraft/server";
-import { c, isAdmin } from "../../Assets/Util";
+import { c, isAdmin, rawstr } from "../../Assets/Util";
 import { system } from "@minecraft/server";
 
 export function verifier(player: Minecraft.Player, setting: CommandConfig) {
@@ -116,10 +116,18 @@ export function sendRawText(player: Minecraft.Player | Minecraft.World, ...messa
     return player.sendMessage({ rawtext: message });
 }
 
-export function error(target: Minecraft.Player | Minecraft.World, error: Error): void {
-    target.sendMessage(`§bMatrix §7>§g Command ran with error.\nName: §9${error.name}\n§gMessage: §9${error.message}\n§gStack: §9${error?.stack ?? "unknown"}`);
-}
+export function error(target: Minecraft.Player | Minecraft.World, { name, message, stack }: Error): void {
+    const rawmessage = new rawstr(true, "g")
+        .tra("cmderror.title")
+        .str("\n")
+        .tra("cmderror.name", name)
+        .str("\n")
+        .tra("cmderror.message", message)
+        .str("\n")
+        .tra("cmderror.stack", stack);
 
+    target.sendMessage(rawmessage.parse());
+}
 export function sendErr(err: Error) {
     console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
 }
@@ -133,6 +141,9 @@ export function isPlayer(player: string, exclude: boolean = false, isadmin: bool
     if (exclude && target.name == player) return undefined;
     if (isadmin != null && isadmin != isAdmin(target)) return undefined;
     return target;
+}
+export function getAllCommandNames() {
+    return commands.map(({ name }) => name)
 }
 
 interface CommandHandleData {

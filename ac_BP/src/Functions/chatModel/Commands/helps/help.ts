@@ -1,5 +1,5 @@
-import { c } from "../../../../Assets/Util";
-import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
+import { c, rawstr } from "../../../../Assets/Util";
+import { getAllCommandNames, registerCommand, sendRawText, verifier } from "../../CommandHandler";
 
 registerCommand({
     name: "help",
@@ -8,7 +8,12 @@ registerCommand({
     maxArgs: 0,
     require: (player) => verifier(player, c().commands.help),
     executor: async (player, _args) => {
-        const helps = "<This command is not available currently>";
-        sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "help.helpcdlist", with: [] }, { text: `\n${helps}` });
+        const helpMessage = new rawstr(true, "g")
+            .tra("help.matrix")
+            .str("\n")
+            .tra("help.docs", "https://github.com/jasonlaubb/Matrix-AntiCheat/blob/main/docs/md/commands.md")
+            .str("\n")
+            .tra("help.valid", getAllCommandNames().join(", "))
+        sendRawText(player, helpMessage.parse());
     },
 });

@@ -8,6 +8,10 @@
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
 msgstr ""
 
+#: disconnectionScreen.unexpectedPacket
+msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
+msgstr ""
+
 #: crash.reload
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr ""
@@ -38,10 +42,6 @@ msgstr ""
 
 #: function.version.dsc
 msgid "§gSupport Server: §e%s"
-msgstr ""
-
-#: disconnectionScreen.unexpectedPacket
-msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr ""
 
 #: flag.style
@@ -150,6 +150,22 @@ msgstr ""
 
 #: ui.toggle.statust
 msgid "§rstatus: §8%2"
+msgstr ""
+
+#: cmderror.title
+msgid "Command ran with error."
+msgstr ""
+
+#: cmderror.name
+msgid "§gName: §9%s"
+msgstr ""
+
+#: cmderror.message
+msgid "§gMessage: §9%s"
+msgstr ""
+
+#: cmderror.stack
+msgid "§gStack: §9%s"
 msgstr ""
 
 #: rank.already
@@ -303,10 +319,6 @@ msgstr "Flag 모드가 %s로 번경되었습니다."
 #: bot.waitui
 msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
 msgstr "보안상의 이유로, 인증 절차를 밟기 전 채팅을 입력할 수 없습니다. 인증 UI가 나올 때 까지 기다려주세요."
-
-#: help.helpcdlist
-msgid "Help command list:"
-msgstr "명령어 목록 :"
 
 #: invsee.of
 msgid "Inventory of %s"
@@ -549,7 +561,7 @@ msgid "Valid commands: %s"
 msgstr ""
 
 #: help.docs
-msgid "View %s to view the docs about the commands"
+msgid "Visit %s to view the docs about the commands"
 msgstr ""
 
 #: ui.closechat
@@ -614,4 +626,8 @@ msgstr ""
 
 #: ui.config.value
 msgid "Value:"
+msgstr ""
+
+#: common.unknown
+msgid "unknown"
 msgstr ""

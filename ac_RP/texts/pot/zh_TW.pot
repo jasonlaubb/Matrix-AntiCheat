@@ -8,6 +8,10 @@
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
 msgstr "§7§¶Minecraft 基岩版最佳對抗外掛的解決方案 §c(需要啟動實驗性 API)"
 
+#: disconnectionScreen.unexpectedPacket
+msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
+msgstr "§bMatrix §7> §c你已被強制斷開連線§r"
+
 #: crash.reload
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr "§cMatrix 防外掛已經崩潰, 使用 /reload 來恢復§r"
@@ -39,10 +43,6 @@ msgstr ""
 #: function.version.dsc
 msgid "§gSupport Server: §e%s"
 msgstr ""
-
-#: disconnectionScreen.unexpectedPacket
-msgid "§bMatrix §7> §cYou have been tempkicked§r"
-msgstr "§bMatrix §7> §c你已被強制斷開連線§r"
 
 #: flag.style
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
@@ -151,6 +151,22 @@ msgstr "模組: §8%1"
 #: ui.toggle.statust
 msgid "§rstatus: §8%2"
 msgstr "§r狀態: §8%2"
+
+#: cmderror.title
+msgid "Command ran with error."
+msgstr ""
+
+#: cmderror.name
+msgid "§gName: §9%s"
+msgstr ""
+
+#: cmderror.message
+msgid "§gMessage: §9%s"
+msgstr ""
+
+#: cmderror.stack
+msgid "§gStack: §9%s"
+msgstr ""
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
@@ -303,10 +319,6 @@ msgstr "警示模式已變更為 %s"
 #: bot.waitui
 msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
 msgstr "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
-
-#: help.helpcdlist
-msgid "Help command list:"
-msgstr "幫助指令清單："
 
 #: invsee.of
 msgid "Inventory of %s"
@@ -549,7 +561,7 @@ msgid "Valid commands: %s"
 msgstr ""
 
 #: help.docs
-msgid "View %s to view the docs about the commands"
+msgid "Visit %s to view the docs about the commands"
 msgstr ""
 
 #: ui.closechat
@@ -615,3 +627,7 @@ msgstr "§r屬性屬性:"
 #: ui.config.value
 msgid "Value:"
 msgstr "值:"
+
+#: common.unknown
+msgid "unknown"
+msgstr ""

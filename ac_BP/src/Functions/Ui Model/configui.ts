@@ -19,8 +19,14 @@ export function configUI(player: Player, path?: string[]) {
 function selector(player: Player, path: string[]) {
     const object = Dynamic.get(path);
     const lulka = Object.entries(object).map((entries): [string, string] => {
-        if (Array.isArray(entries[1])) {
-            entries[1] = entries[1].join(", ");
+        if (!entries) {
+            entries[1] = "§cundefined";
+        } else if (Array.isArray(entries[1])) {
+            if (entries[1].length > 0) {
+                entries[1] = entries[1].join(", ");
+            } else {
+                entries[1] = "§c[]";
+            }
         } else if (typeof entries[1] == "object") {
             entries[1] = "Object";
         } else if (typeof entries[1] == "string") {
@@ -41,7 +47,7 @@ function selector(player: Player, path: string[]) {
     );
 
     for (const [key, value] of lulka) {
-        selectform.button(`§g§l${key}§r\n§8${value ?? "§cundefined"}§r`);
+        selectform.button(`§g§l${key}§r\n§8${value}§r`);
     }
     selectform.button(rawstr.drt("ui.exit"), "textures/ui/redX1.png");
     selectform.show(player).then((data) => {
