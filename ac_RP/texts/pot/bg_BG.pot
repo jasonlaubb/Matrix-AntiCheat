@@ -40,7 +40,7 @@ msgstr ""
 msgid "§gSupport Server: §e%s"
 msgstr ""
 
-#: disconnectionScreen.badPacket
+#: disconnectionScreen.unexpectedPacket
 msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr ""
 

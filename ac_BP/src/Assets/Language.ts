@@ -12,7 +12,7 @@ export type Translate =
     | "function.check.helpc"
     | "function.version.title"
     | "function.version.dsc"
-    | "disconnectionScreen.badPacket"
+    | "disconnectionScreen.unexpectedPacket"
     | "flag.style"
     | "ui.title"
     | "ui.moderateplayer"
