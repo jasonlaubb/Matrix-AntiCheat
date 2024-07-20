@@ -861,4 +861,4 @@ export default [
     "troia",
 ];
 
-/ta|t/g
+/ta|t/g;

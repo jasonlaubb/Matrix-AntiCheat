@@ -12,7 +12,7 @@ const special_characters = {
     "8": "b",
     "@": "a",
     "€": "e",
-    "$": "s",
+    $: "s",
 };
 interface SpamData {
     lastMessage: string;

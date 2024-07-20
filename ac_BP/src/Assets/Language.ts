@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate = 
+export type Translate =
     | "pack.description"
     | "disconnectionScreen.unexpectedPacket"
     | "crash.reload"
@@ -167,4 +167,4 @@ export type Translate =
     | "ui.config.desc"
     | "ui.config.type"
     | "ui.config.value"
-    | "common.unknown"
+    | "common.unknown";

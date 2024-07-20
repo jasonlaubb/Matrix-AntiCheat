@@ -117,14 +117,7 @@ export function sendRawText(player: Minecraft.Player | Minecraft.World, ...messa
 }
 
 export function error(target: Minecraft.Player | Minecraft.World, { name, message, stack }: Error): void {
-    const rawmessage = new rawstr(true, "g")
-        .tra("cmderror.title")
-        .str("\n")
-        .tra("cmderror.name", name)
-        .str("\n")
-        .tra("cmderror.message", message)
-        .str("\n")
-        .tra("cmderror.stack", stack);
+    const rawmessage = new rawstr(true, "g").tra("cmderror.title").str("\n").tra("cmderror.name", name).str("\n").tra("cmderror.message", message).str("\n").tra("cmderror.stack", stack);
 
     target.sendMessage(rawmessage.parse());
 }
@@ -143,7 +136,7 @@ export function isPlayer(player: string, exclude: boolean = false, isadmin: bool
     return target;
 }
 export function getAllCommandNames() {
-    return commands.map(({ name }) => name)
+    return commands.map(({ name }) => name);
 }
 
 interface CommandHandleData {

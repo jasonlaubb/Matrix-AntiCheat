@@ -8,12 +8,7 @@ registerCommand({
     maxArgs: 0,
     require: (player) => verifier(player, c().commands.help),
     executor: async (player, _args) => {
-        const helpMessage = new rawstr(true, "g")
-            .tra("help.matrix")
-            .str("\n")
-            .tra("help.docs", "https://github.com/jasonlaubb/Matrix-AntiCheat/blob/main/docs/md/commands.md")
-            .str("\n")
-            .tra("help.valid", getAllCommandNames().join(", "))
+        const helpMessage = new rawstr(true, "g").tra("help.matrix").str("\n").tra("help.docs", "https://github.com/jasonlaubb/Matrix-AntiCheat/blob/main/docs/md/commands.md").str("\n").tra("help.valid", getAllCommandNames().join(", "));
         sendRawText(player, helpMessage.parse());
     },
 });

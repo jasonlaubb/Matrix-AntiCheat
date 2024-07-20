@@ -24,14 +24,14 @@ function checksBan(player: Player): void {
     }
 
     if (baninfo === undefined) {
-        const banqueue: BanqueueData[] = JSON.parse(world.getDynamicProperty("banqueue") as string ?? "[]");
+        const banqueue: BanqueueData[] = JSON.parse((world.getDynamicProperty("banqueue") as string) ?? "[]");
         const queuedata = banqueue.find(({ name }) => name == player.name);
         if (queuedata) {
             Action.ban(player, queuedata.reason, queuedata.admin, queuedata.time);
             world.setDynamicProperty("banqueue", JSON.stringify(banqueue.filter(({ name }) => name != player.name)));
         }
-        return
-    };
+        return;
+    }
 
     let reason;
     let by;
@@ -72,7 +72,7 @@ function checksBan(player: Player): void {
 function ban(player: Player, reason: string, by: string, time: number | "forever") {
     if (isHost(player) || isAdmin(player)) return;
     // Prevent if the player is lately banned (negative time)
-    if (time != "forever" &&time < Date.now()) return;
+    if (time != "forever" && time < Date.now()) return;
     system.run(() => {
         player.setDynamicProperty(
             "isBanned",
