@@ -44,6 +44,7 @@ declare module "@minecraft/server" {
         perfectMove: number;
         lastTouchEntity: number;
         lastNonGlidingPoint: Vector3;
+        isSpawning: boolean;
         // Nah
         hasTag: (tag: AnimationControllerTags | DisableTags | MatrixUsedTags) => boolean;
         addTag: (tag: DisableTags | MatrixUsedTags) => boolean;

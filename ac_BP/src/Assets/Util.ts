@@ -10,7 +10,7 @@ import { Action } from "./Action";
  * @description Utility function for script.
  * @warning This is very important, you cannot remove this.
  */
-export { rawstr, getPing, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, isHost, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
+export { isSpawning, rawstr, getPing, checkBlockAround, flag, msToTime, isTargetGamemode, getGamemode, timeToMs, isTimeStr, c, inAir, findSlime, getSpeedIncrease1, isAdmin, isHost, findWater, getSpeedIncrease2, logBreak, recoverBlockBreak, clearBlockBreakLog };
 
 class rawstr {
     private storge: RawMessage[] = [];
@@ -350,3 +350,7 @@ const clearBlockBreakLog = (id: string) => delete blockBreakLogger[id];
 
 // The most useless function lol
 const getPing = (player: Player) => player.pingTick ?? 0;
+
+function isSpawning (player: Player) {
+    return player.isSpawning ?? true;
+}
