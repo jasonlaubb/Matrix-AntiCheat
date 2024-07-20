@@ -85,7 +85,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         player.removeTag(MatrixUsedTags.knockBack);
     }
     system.runTimeout(() => {
-        
+        player.isSpawning = false;
     }, c().spawnFinishDelay)
 });
 

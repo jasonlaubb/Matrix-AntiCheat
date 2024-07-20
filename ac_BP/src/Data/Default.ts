@@ -271,7 +271,9 @@ export default {
     antiFly: {
         enabled: true,
         punishment: "ban",
-        maxVelocity: 0.7,
+        highVelocity: 0.7,
+        maxGroundPrviousVelocity: 0.5,
+        maxHighVelocity: 22,
         maxVL: 4,
     },
     antiNoFall: {

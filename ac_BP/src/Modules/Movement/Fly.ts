@@ -55,7 +55,7 @@ function antiFly(player: Player, now: number, config: configi) {
     }
     const { y: velocity, x, z } = player.getVelocity();
     const xz = Math.hypot(x, z);
-    if (velocity <= config.antiFly.maxVelocity && velocity >= 0) {
+    if (velocity <= config.antiFly.highVelocity && velocity >= 0) {
         data.previousLocations = player.location;
         data.velocityLog = 0;
     }
@@ -69,7 +69,7 @@ function antiFly(player: Player, now: number, config: configi) {
         flyData.set(player.id, data);
         return;
     }
-    const flyMovement = (data.velocityLog > 1 && velocity <= 0) || (velocity < config.antiFly.maxVelocity && player.fallDistance < -1.5);
+    const flyMovement = (data.velocityLog > 1 && velocity <= 0) || (velocity < config.antiFly.highVelocity && player.fallDistance < -1.5);
     const clientFly = data.velocityLog > 0 && player?.lastVelLog == data.velocityLog;
     if (!player.isOnGround && clientFly && flyMovement && skip1 && skip2 && skip3 && velocity != 1 && !instair) {
         const lastflag = data.lastFlag;
@@ -92,27 +92,27 @@ function antiFly(player: Player, now: number, config: configi) {
             }
             else if (data.flyFlags >= 2)
                 data.flyFlags = 0;
-            if (player.location.y - data.previousLocations.y >= 0.5 && data.lastHighVelocity >= 0.7 && isSpawning(player)) {
+            if (player.location.y - data.previousLocations.y >= config.antiFly.maxGroundPrviousVelocity && data.lastHighVelocity >= 0.7 && !isSpawning(player)) {
                 if (now - lastflag <= 2000)
                     flag(player, "Fly", "E", config.antiFly.maxVL, config.antiFly.punishment, ["velocityY" + ":" + data.lastHighVelocity.toFixed(2)]);
                 player.teleport(data.previousLocations);
             }
         }
-            if (data.lastHighVelocity >= 0.5 && (player.isOnGround || player.isClimbing)) {
+            if (data.lastHighVelocity >= config.antiFly.maxGroundPrviousVelocity && (player.isOnGround || player.isClimbing)) {
                 if (now - lastflag <= 5000) flag(player, "Fly", "C", config.antiFly.maxVL, config.antiFly.punishment, ["velocityY" + ":" + data.lastHighVelocity.toFixed(2)]);
                 player.teleport(data.previousLocations);
             }
-            if (data.lastHighVelocity > 22) {
+            if (data.lastHighVelocity > config.antiFly.maxHighVelocity) {
                 flag(player, "Fly", "D", config.antiFly.maxVL, config.antiFly.punishment, ["velocityY" + ":" + data.lastHighVelocity.toFixed(2)]);
                 player.teleport(data.previousLocations);
             }
             data.lastFlag2 = now;
         }
-        if (velocity > config.antiFly.maxVelocity && skip1) {
+        if (velocity > config.antiFly.highVelocity && skip1) {
             data.velocityLog += 1;
             data.lastHighVelocity = velocity;
         }
-        else if (velocity <= config.antiFly.maxVelocity || (velocity == 0 && player.isOnGround) || !skip1) {
+        else if (velocity <= config.antiFly.highVelocity || (velocity == 0 && player.isOnGround) || !skip1) {
             data.velocityLog = 0;
             data.lastVelocity = velocity;
         }
