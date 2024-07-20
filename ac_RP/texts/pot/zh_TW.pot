@@ -17,32 +17,32 @@ msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr "§cMatrix 防外掛已經崩潰, 使用 /reload 來恢復§r"
 
 #: function.check.title
-msgid "Anti-Cheat setup checking:"
-msgstr ""
+msgid "AntiCheat setup checking"
+msgstr "反外掛啟動檢測"
 
 #: function.check.betaapi
 msgid "§gBeta API usage: %s"
-msgstr ""
+msgstr "§g成功啟用實驗性API: %s"
 
 #: function.check.helpa
 msgid "§7- If the 'Beta API usage' is stated 'FALSE', that's mean the anticheat cannot run the script of the behavior pack."
-msgstr ""
+msgstr "§7- 如果'成功啟用實驗性API'回傳'FALSE', 這意味著反外掛無法使用行為模式包中的script"
 
 #: function.check.helpb
 msgid "§7- To fix that, please check if you have enabled the 'Beta-API' of your world settings"
-msgstr ""
+msgstr "§7- 如果需要修復, 請檢查你已經在世界設定中啟用'實驗性API'"
 
 #: function.check.helpc
 msgid "§7- If it's still not working, please check if your Minecraft version matches the anticheat supported one."
-msgstr ""
+msgstr "§7- 如果這樣仍然不起作用, 請檢查你的minecraft版本匹配反外掛支持的版本"
 
 #: function.version.title
 msgid "§gYou are now on version §eV%s"
-msgstr ""
+msgstr "§g你現在的版本是 §eV%s"
 
 #: function.version.dsc
 msgid "§gSupport Server: §e%s"
-msgstr ""
+msgstr "§g支援伺服器: §e%s"
 
 #: flag.style
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
@@ -154,19 +154,19 @@ msgstr "§r狀態: §8%2"
 
 #: cmderror.title
 msgid "Command ran with error."
-msgstr ""
+msgstr "命令運行時發生了預期外的錯誤"
 
 #: cmderror.name
 msgid "§gName: §9%s"
-msgstr ""
+msgstr "名稱"
 
 #: cmderror.message
 msgid "§gMessage: §9%s"
-msgstr ""
+msgstr "§g信息: §9%s"
 
 #: cmderror.stack
 msgid "§gStack: §9%s"
-msgstr ""
+msgstr "§g錯誤疊層: §9%s"
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
@@ -186,7 +186,7 @@ msgstr "%1 已被 %2 解除管理員權限"
 
 #: tempkick.has
 msgid "%1 has been disconnected by %2"
-msgstr ""
+msgstr "%1 已被 %2 強制斷線"
 
 #: freeze.has
 msgid "%1 has been frozen by %2"
@@ -222,7 +222,7 @@ msgstr "%1 的聊天稱號已設定為 %2"
 
 #: toggle.unknown
 msgid "Unknown modules: %s"
-msgstr ""
+msgstr "未知的模組: %s"
 
 #: rank.empty
 msgid "%s doesn't have any rank"
@@ -234,7 +234,7 @@ msgstr "%s 沒有任何聊天稱號"
 
 #: itemui.has
 msgid "You have been given the ui item, right click the item to open the ui"
-msgstr ""
+msgstr "你已被給予ui選單物品, Right click 即可打開ui"
 
 #: unban.add
 msgid "%s has been joined to the unban queue"
@@ -290,7 +290,7 @@ msgstr "%s 的聊天稱號已刪除"
 
 #: bot.title
 msgid "Anti Bot Verification"
-msgstr "Anti Bot Verification"
+msgstr "反機器人驗證"
 
 #: about.author
 msgid "Author"
@@ -298,7 +298,7 @@ msgstr "作者"
 
 #: about.github
 msgid "Github"
-msgstr ""
+msgstr "Github"
 
 #: invcopy.not
 msgid "Copied inventory from %s"
@@ -317,8 +317,8 @@ msgid "Flag mode has been changed to %s"
 msgstr "警示模式已變更為 %s"
 
 #: bot.waitui
-msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
-msgstr "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
+msgid "For security reason, you cannot chat until you finished verify process. Please wait until the verify ui be shown"
+msgstr "基於安全原因, 你無法聊天直至你完成驗證過程, 請等待直至你驗證ui展示"
 
 #: invsee.of
 msgid "Inventory of %s"
@@ -326,7 +326,7 @@ msgstr "%s 的背包"
 
 #: invsee.item
 msgid "§eSlot: §c%1 | §eItem: §c%2"
-msgstr ""
+msgstr "§e槽: §c%1 | §e物品: §c%2"
 
 #: lang.has
 msgid "Language has been changed to %s"
@@ -346,7 +346,7 @@ msgstr "鎖定尚未啟用"
 
 #: about.line
 msgid "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
-msgstr ""
+msgstr "Matrix 是一款基岩版反外掛基於 @minecraft API"
 
 #: util.noreason
 msgid "No reason provided"
@@ -358,7 +358,7 @@ msgstr "密碼已更改"
 
 #: passwords.wrong
 msgid "Sorry, but you entered a wrong password"
-msgstr ""
+msgstr "抱歉, 但你輸入了一個錯誤的密碼"
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
@@ -374,7 +374,7 @@ msgstr "成功將鎖定鎖定碼變更為 %s"
 
 #: bordersize.ok
 msgid "Sucessfully changed world border size to %s"
-msgstr "Sucessfully changed world border size to %s"
+msgstr "成功設置 %s 邊界大小"
 
 #: lockdowncode.random
 msgid "Sucessfully random a lockdown code - %s"
@@ -462,19 +462,19 @@ msgstr "You cannot access a location which is outside the world border."
 
 #: border.reached
 msgid "You cannot access that location, you have reached the world border."
-msgstr "You cannot access that location, you have reached the world border."
+msgstr "你無法存取位於邊界之外的位置"
 
 #: border.interact
 msgid "You cannot interact with a block or entity which is outside the world border."
-msgstr "You cannot interact with a block or entity which is outside the world border."
+msgstr "你無法與邊界之外的方塊或實體進行交互"
 
 #: bot.ok
 msgid "You have been verified successfully"
-msgstr "You have been verified successfully"
+msgstr "你已成功驗證"
 
 #: toggles.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
-msgstr ""
+msgstr "你正在嘗試開啟一個實驗性模組, 這個或許會造成錯誤或者誤判, 請使用'%1toggle %2 enable force'指令來開啟"
 
 #: adminchat.adminchat
 msgid "adminchat"
@@ -482,31 +482,31 @@ msgstr "管理聊天"
 
 #: bot.ui.headline
 msgid "§a[This server is protected by Matrix AntiCheat]"
-msgstr ""
+msgstr "§a[這個伺服器受到 Matrix 反外掛保護]"
 
 #: bot.ui.need
 msgid "§gYou need to verify if you're not a bot §7(%1/%2)"
-msgstr ""
+msgstr "§g你需要驗證你不是一個機器人 §7(%1/%2)"
 
 #: bot.ui.haveleft
 msgid "§gYou have §e%s§gseconds left"
-msgstr ""
+msgstr "§g餘下§e%s§g秒"
 
 #: bot.ui.enterbelow
 msgid "Enter the code §e§l%s§r§g below"
-msgstr ""
+msgstr "請在下面輸入代碼 §e§l%s§r§g"
 
 #: xray.broken
 msgid "%1 mined %2 at %3"
-msgstr ""
+msgstr "%1 在 %3 採掘了 %2"
 
 #: spam.sensitiveword
 msgid "Your message contains a sensitive word"
-msgstr ""
+msgstr "你的訊息包含了敏感詞彙"
 
 #: spam.messagerate
 msgid "Please slow down your messages"
-msgstr ""
+msgstr "請你降低你發送訊息的速度"
 
 #: spam.repeated
 msgid "Please don't send the messages repeatly"
@@ -514,95 +514,95 @@ msgstr "您不能再發送相同的訊息"
 
 #: spam.spamming
 msgid "Please don't spam message"
-msgstr "Spamming chat"
+msgstr "不要刷屏! QWQ"
 
 #: spam.lengthlimit
 msgid "Your message is too long"
-msgstr ""
+msgstr "你的訊息太長了"
 
 #: spam.includelink
 msgid "Sorry, but link is not allowed on this server"
-msgstr ""
+msgstr "抱歉, 但是連結在這個伺服器已被禁止"
 
 #: spam.email
 msgid "Sorry, but you cannot send an email on chat"
-msgstr ""
+msgstr "抱歉, 但是電郵地址在這個伺服器已被禁止"
 
 #: reset.sucess
 msgid "Sucessfully to rest all the property in the dynamc config"
-msgstr ""
+msgstr "成功重設動態配置 .w."
 
 #: banrun.set
 msgid "Sucessfully sets the banrun command to '%s'"
-msgstr ""
+msgstr "Banrun 指令已設定為 '%s'"
 
 #: banrun.disabled
 msgid "Sucessfully removes the banrun command."
-msgstr ""
+msgstr "成功移除Ban run指令"
 
 #: banrun.invalid
 msgid "Invalid regex with '%s'"
-msgstr ""
+msgstr "無效 '%s'"
 
 #: antispam.already
 msgid "%1 of antiSpam is already toggled to %2"
-msgstr ""
+msgstr "聊天限制器的 %1 已經設定為 %2 了"
 
 #: antispam.toggle
 msgid "%1 of antiSpam has been toggled to %2"
-msgstr ""
+msgstr "聊天限制器的 %1 已被設定到 %2"
 
 #: help.matrix
 msgid "Help menu of Matrix AntiCheat"
-msgstr ""
+msgstr "Matrix 反外掛的協助選單"
 
 #: help.valid
 msgid "Valid commands: %s"
-msgstr ""
+msgstr "有效的命令: %s"
 
 #: help.docs
 msgid "Visit %s to view the docs about the commands"
-msgstr ""
+msgstr "拜訪 %s 查看一些關於指令的描述"
 
 #: ui.closechat
 msgid "Close the chat to open the following ui."
-msgstr ""
+msgstr "關閉聊天介面來開啟 UI"
 
 #: config.nullpath
 msgid "Cannot find the path you provided: %s"
-msgstr ""
+msgstr "無法找到你提供的路徑: %s"
 
 #: config.invalidpath
 msgid "You can't select a path with JSON object."
-msgstr ""
+msgstr "你不能選擇一個含有JSON物件的路徑"
 
 #: config.nan
 msgid "You have stated that the value is a number, but your value is not a number"
-msgstr ""
+msgstr "你已經指明該數值是一個數字, 但是你的數值不是一個數字"
 
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
-msgstr ""
+msgstr "你提供了一個無效的陣列, 正確的示範: 'abc','def',1.52"
 
 #: config.set
 msgid "Sucessfully set '%1' to '%2'"
-msgstr ""
+msgstr "成功設置 '%1' 到 '%2'"
 
 #: target.selfselect
 msgid "You can't select yourself as the target."
-msgstr ""
+msgstr "你不能在目標中選擇你自己"
 
 #: target.unable
 msgid "Unable to do the action to the target."
-msgstr ""
+msgstr "無法對你選擇的目標執行動作"
 
 #: setup.hcfeature
 msgid "Hoilday creator feature is required."
-msgstr ""
+msgstr "需要啟用夏日創作者功能"
 
 #: clientauth.kicked
 msgid "%s has been detected as bot client, it is automatically disconnected"
-msgstr ""
+msgstr "%s 已被檢測為機器人客戶端, 已被自動斷線"
 
 #: ui.config.selector
 msgid "Configuration Selector"
@@ -630,4 +630,4 @@ msgstr "值:"
 
 #: common.unknown
 msgid "unknown"
-msgstr ""
+msgstr "未知"

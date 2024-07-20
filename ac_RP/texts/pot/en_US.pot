@@ -317,7 +317,7 @@ msgid "Flag mode has been changed to %s"
 msgstr ""
 
 #: bot.waitui
-msgid "For security reason, you cannot chat untill you finished verify process. Please wait until the verify ui be shown"
+msgid "For security reason, you cannot chat until you finished verify process. Please wait until the verify ui be shown"
 msgstr ""
 
 #: invsee.of
@@ -326,10 +326,6 @@ msgstr ""
 
 #: invsee.item
 msgid "§eSlot: §c%1 | §eItem: §c%2"
-msgstr ""
-
-#: lang.has
-msgid "Language has been changed to %s"
 msgstr ""
 
 #: lockdowncode.get
