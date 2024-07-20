@@ -1,2 +1,6 @@
 # Matrix AntiCheat command
-` abc `
+The chat commands of Matrix AntiCheat
+-----
+## help
+Usage: `help`
+Description: Show the help of Matrix AntiCheat
