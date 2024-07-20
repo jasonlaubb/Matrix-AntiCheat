@@ -106,7 +106,7 @@ type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L
 function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
     const config = c();
     // Skip if the player is in the bypass list
-    if (Object.keys(config.autoPunishment.bypasslist.includes(player.id))) return;
+    if (config.autoPunishment.bypasslist.includes(player.id)) return;
     system.run(() => {
         Vl[player.id] ??= {};
         Vl[player.id][modules] ??= 0;
