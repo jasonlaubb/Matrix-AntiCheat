@@ -182,23 +182,39 @@ msgstr "%1 已被 %2 停權"
 
 #: banqueue.already
 msgid "%1 is already in the ban queue"
-msgstr ""
+msgstr "%1 已在停權隊列中"
 
 #: banqueue.notfound
 msgid "Player name in the banqueue not found"
-msgstr ""
+msgstr "停權隊列中未找到玩家姓名"
 
 #: banqueue.done
 msgid "Done!"
-msgstr ""
+msgstr "完畢!"
 
 #: banqueue.empty
 msgid "No player in the ban queue"
-msgstr ""
+msgstr "停權隊列中沒有玩家"
 
 #: banqueue.list
 msgid "Players in the ban queue: %s"
-msgstr ""
+msgstr "封鎖隊列中的玩家：%s"
+
+#: bypasslist.already
+msgid "%1 is already in the bypasslist"
+msgstr "%1 已在繞過清單中"
+
+#: bypasslist.notfound
+msgid "Player name in the bypasslist not found"
+msgstr "未在繞過清單中找到玩家姓名"
+
+#: bypasslist.empty
+msgid "No player in the bypasslist"
+msgstr "繞過清單中沒有玩家"
+
+#: bypasslist.list
+msgid "Players in the bypasslist: %s"
+msgstr "繞過清單中的玩家：%s"
 
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"

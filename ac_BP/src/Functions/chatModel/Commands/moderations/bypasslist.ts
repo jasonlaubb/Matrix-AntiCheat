@@ -49,7 +49,7 @@ registerCommand({
         const config = c();
         const bypasslist = config.autoPunishment.bypasslist;
         if (bypasslist.length == 0) {
-            sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "bypasslist.notfound" });
+            sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "bypasslist.empty" });
         } else {
             sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "bypasslist.list", with: [bypasslist.join(", ")] });
         }

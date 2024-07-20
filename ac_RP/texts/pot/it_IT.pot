@@ -200,6 +200,22 @@ msgstr ""
 msgid "Players in the ban queue: %s"
 msgstr ""
 
+#: bypasslist.already
+msgid "%1 is already in the bypasslist"
+msgstr ""
+
+#: bypasslist.notfound
+msgid "Player name in the bypasslist not found"
+msgstr ""
+
+#: bypasslist.empty
+msgid "No player in the bypasslist"
+msgstr ""
+
+#: bypasslist.list
+msgid "Players in the bypasslist: %s"
+msgstr ""
+
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
 msgstr "%1 è stato deoppato correttamente da %2"
