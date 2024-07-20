@@ -5,6 +5,8 @@ import "./moderations/deop";
 import "./moderations/rank";
 import "./moderations/rankclear";
 import "./moderations/ban";
+import "./moderations/banqueue";
+import "./moderations/bypasslist";
 import "./moderations/unban";
 import "./moderations/tempkick";
 import "./moderations/mute";
