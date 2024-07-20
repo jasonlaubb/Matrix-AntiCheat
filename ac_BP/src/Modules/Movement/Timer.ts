@@ -46,7 +46,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
         //if the dBLFN is lower than the given value flag
         if (!data.iSL && ((dBLFN < 5000 && data.timerLog >= 3) || (dBLFN < 2000 && dBVD > data.maxDBVD))) flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
         //lag back the player
-        if (!config.slient) player.teleport(data.safeZone);
+        player.teleport(data.safeZone);
         //setting new lastFlag
         data.lastFlag = now;
     }

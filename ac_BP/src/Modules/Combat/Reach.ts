@@ -62,7 +62,7 @@ function antiReach(hurtEntity: Player, damagingEntity: Player, config: configi) 
     if (reachData.get(damagingEntity.id) >= 2) {
         //A - false positive: very low, efficiency: high
         flag(damagingEntity, "Reach", "A", config.antiReach.maxVL, config.antiReach.punishment, ["distance" + ":" + distance.toFixed(2), "yReach" + ":" + yReach.toFixed(2)]);
-        if (!config.slient) damagingEntity.applyDamage(6);
+        damagingEntity.applyDamage(6);
         reachData.delete(damagingEntity.id);
     }
 }

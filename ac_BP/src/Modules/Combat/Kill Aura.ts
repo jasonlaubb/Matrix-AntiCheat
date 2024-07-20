@@ -92,12 +92,10 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
     }
 
     if (flagged) {
-        if (!config.slient) {
             player.addTag(DisableTags.pvp);
             system.runTimeout(() => {
                 player.removeTag(DisableTags.pvp);
             }, config.antiKillAura.timeout);
-        }
     }
 }
 

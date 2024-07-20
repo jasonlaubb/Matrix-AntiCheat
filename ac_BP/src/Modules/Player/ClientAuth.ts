@@ -1,38 +1,44 @@
-import { GameMode, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
-import { c, flag, isAdmin } from "../../Assets/Util";
+import { PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
+import { isAdmin, rawstr } from "../../Assets/Util";
+import { configi, registerModule } from "../Modules";
+import { Action } from "../../Assets/Action";
 
 /**
  * @author jasonlaubb
  * @description A simple client authentication to detect bot client
  */
-async function clientAuth({ player, initialSpawn }: PlayerSpawnAfterEvent) {
-    if (!initialSpawn || isAdmin(player) || player.getGameMode() == GameMode.spectator || player.isFlying) return;
-    const config = c();
-    player.teleport({ x: player.location.x, y: player.location.y + config.clientAuth.tpOffset, z: player.location.z });
-    await sleep();
-    // Log the location
-    const spawnLocation = JSON.stringify(player.location);
-    await sleep();
-    let isBotClient = true;
-    for (let i = 0; i < config.clientAuth.checkForTick; i++) {
-        if (JSON.stringify(player.location) != JSON.stringify(spawnLocation)) {
-            isBotClient = false;
-            break;
-        }
-        await sleep();
-    }
-    if (isBotClient) {
-        flag(player, "Bad Client", "A", config.clientAuth.maxVL, config.clientAuth.punishment, undefined);
+
+async function clientAuth (config: configi, { player, initialSpawn }: PlayerSpawnAfterEvent) {
+    if (!initialSpawn || player.isFlying || player.isGliding || isAdmin(player)) return;
+    player.teleport({ x: player.location.x, y: player.location.y + 1, z: player.location.z });
+    await system.waitTicks(1);
+    if (player.isOnGround) return;
+    const currentLocation = JSON.stringify(player.location);
+    await system.waitTicks(1);
+    const badClientState = await new Promise<boolean>((resolve) => {
+        system.runInterval(() => {
+            let i = 0;
+            const id = system.runInterval(() => {
+                if (JSON.stringify(player.location) != currentLocation || player.isOnGround) {
+                    resolve(false);
+                    system.clearRun(id);
+                } else if (i > config.clientAuth.trackTicks) {
+                    resolve(true);
+                    system.clearRun(id);
+                }
+                i++;
+            }, 1);
+        }, 1);
+    })
+    if (badClientState) {
+        player.kill();
+        Action.tempkick(player);
+        world.sendMessage(new rawstr(true, "g").tra("clientauth.kicked", player.name).parse());
     }
 }
-export default {
-    enable() {
-        world.afterEvents.playerSpawn.subscribe(clientAuth);
-    },
-    disable() {
-        world.afterEvents.playerSpawn.unsubscribe(clientAuth);
-    },
-};
-function sleep(): Promise<void> {
-    return new Promise((resolve) => system.run(() => resolve()));
-}
+registerModule("antiClientAuth", false, [],
+    {
+        worldSignal: world.afterEvents.playerSpawn,
+        then: async (config, event: PlayerSpawnAfterEvent) => clientAuth(config, event)
+    }
+)

@@ -457,7 +457,7 @@ export default {
     },
     clientAuth: {
         enabled: false,
-        trackTicks: 20,
+        trackTicks: 8,
         teleportHeight: 1,
     },
     banrun: {

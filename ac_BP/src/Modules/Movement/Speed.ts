@@ -65,13 +65,13 @@ async function AntiSpeed(config: configi, player: Player) {
         data.lastSpeedLog = Date.now();
     }
     //lagBack = tp the player back without taking any action or alerting admin
-    const lagBack = ((dBLNV > data.speedMaxV + 0.8 || (solidBlock && dBLNV > data.speedMaxV + 0.1)) && data.speedLog >= 1) || (dBLNV >= 25 && !config.slient);
+    const lagBack = ((dBLNV > data.speedMaxV + 0.8 || (solidBlock && dBLNV > data.speedMaxV + 0.1)) && data.speedLog >= 1) || dBLNV >= 25;
     //if the player dBLNV bigger than max value + 1 lag back for escape bypasses
     if (lagBack) player.teleport(safePos);
     //check if speedLog reached the max which is 3 flag
     if (!player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && data.speedLog >= 3 && dBLNV > data.speedMaxV && dBLNV - data.lastVelocity < 0.3) {
         flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + dBLNV.toFixed(2)]);
-        if (!config.slient) player.teleport(safePos);
+        player.teleport(safePos);
         data.speedLog = 0;
     }
     //saving last high velocity

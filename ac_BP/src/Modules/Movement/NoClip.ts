@@ -90,7 +90,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         straight(data.lastLocation, player.location).some((loc) => isSolidBlock(player.dimension.getBlock(loc)))
     ) {
         const lastflag = data.lastFlag2;
-        if (!config.slient) teleportMagic(player, data.safeLocation);
+        teleportMagic(player, data.safeLocation);
         if (lastflag && now - lastflag < 5000 && !isISL(player)) {
             flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined);
         }
@@ -115,7 +115,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         !(player.threwTridentAt && now - player.threwTridentAt < 2500) &&
         !(player.lastApplyDamage && now - player.lastApplyDamage < 250)
     ) {
-        if (!config.slient) teleportMagic(player, safePos);
+        teleportMagic(player, safePos);
         if (lastflag && now - lastflag < 5000 && !isISL(player)) {
             if (Math.abs(y) < 1.75) {
                 flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);

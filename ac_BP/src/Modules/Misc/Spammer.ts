@@ -1,4 +1,4 @@
-import { world, system, ChatSendAfterEvent } from "@minecraft/server";
+import { world, system, ChatSendBeforeEvent } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -11,14 +11,14 @@ import { AnimationControllerTags } from "../../Data/EnumData";
 
 const lastFlag: Map<string, number> = new Map<string, number>();
 
-function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
+function firstEvent(config: configi, event: ChatSendBeforeEvent) {
+    const player = event.sender;
     if (isAdmin(player)) return;
-    system.run(() => {
         if (player.hasTag(AnimationControllerTags.attackTime)) {
             //A - false positive: very low, efficiency: mid
             if (Date.now() - lastFlag.get(player.id) < 3000) {
-                flag(player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "AttackTime"]);
-                if (!config.slient) player.applyDamage(6);
+                event.cancel = true
+                system.run(() => flag(player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "AttackTime"]));
             }
             lastFlag.set(player.id, Date.now());
         }
@@ -27,10 +27,10 @@ function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
         else if (player.hasTag(AnimationControllerTags.usingItem)) {
             //B - false positive: mid, efficiency: mid
             if (Date.now() - lastFlag.get(player.id) < 3000) {
-                flag(player, "Spammer", "B", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "UsingItem"]);
+                event.cancel = true
+                system.run(() => flag(player, "Spammer", "B", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "UsingItem"]));
             }
             lastFlag.set(player.id, Date.now());
-            if (!config.slient) player.applyDamage(6);
         } else {
             const { x, z } = player.getVelocity();
             //check if the player send message while moving
@@ -48,29 +48,18 @@ function firstEvent(config: configi, { sender: player }: ChatSendAfterEvent) {
             ) {
                 //C - false positive: low, efficiency: high
                 if (Date.now() - lastFlag.get(player.id) < 3000) {
-                    flag(player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "Moving"]);
+                    event.cancel = true;
+                    system.run(() => flag(player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "Moving"]));
                 }
                 lastFlag.set(player.id, Date.now());
-                if (!config.slient) player.applyDamage(6);
             }
-            //check if the player send message opening container
-            /*
-            else if (player.hasTag(---)) {
-                //D - false positive: low, efficiency: mid
-                if (Date.now() - lastFlag.get(player.id) < 3000) {
-                    flag(player, "Spammer", "D", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "Container"]);
-                }
-                lastFlag.set(player.id, Date.now());
-                if (!config.slient) player.applyDamage(6);
-            }*/
         }
-    });
 }
 
 registerModule("antiSpammer", false, [lastFlag], {
-    worldSignal: world.afterEvents.chatSend,
+    worldSignal: world.beforeEvents.chatSend,
     playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
-    then: async (config, event: ChatSendAfterEvent) => {
+    then: async (config, event: ChatSendBeforeEvent) => {
         firstEvent(config, event);
     },
 });
