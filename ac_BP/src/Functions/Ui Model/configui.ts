@@ -24,7 +24,7 @@ function selector(player: Player, path: string[]) {
         } else if (typeof entries[1] == "object") {
             entries[1] = "Object";
         } else if (typeof entries[1] == "string") {
-            entries[1] = `"${entries[1]}"`;
+            entries[1] = `"${entries[1].replace(/§(.)/g, `§\u200C$1`)}"`;
         } else {
             entries[1] = String(entries[1]);
         }
@@ -41,7 +41,7 @@ function selector(player: Player, path: string[]) {
     );
 
     for (const [key, value] of lulka) {
-        selectform.button(`§g§l${key}§r\n§8${value}§r`);
+        selectform.button(`§g§l${key}§r\n§8${value ?? "§cundefined"}§r`);
     }
     selectform.button(rawstr.drt("ui.exit"), "textures/ui/redX1.png");
     selectform.show(player).then((data) => {

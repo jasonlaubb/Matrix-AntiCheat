@@ -48,13 +48,15 @@ export function intergradedAntiSpam(player: Player, message: string) {
         }
 
         data.messageRate.push(Date.now());
-        data.messageRate = data.messageRate.filter((x) => x < Date.now() - 5000);
+        data.messageRate = data.messageRate.filter((x) => Date.now() - x > 5000);
 
         const messageRate = data.messageRate.length;
         if (messageRate > config.spamFilter.maxMessagesInFiveSeconds) {
             system.run(() => player.sendMessage(rawstr.new(true, "c").tra("spam.messagerate").parse()));
             return true;
         }
+
+        data.lastMessage = message;
 
         spamData.set(player.id, data);
     }

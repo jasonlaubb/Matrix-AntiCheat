@@ -540,6 +540,18 @@ msgstr ""
 msgid "%1 of antiSpam has been toggled to %2"
 msgstr ""
 
+#: help.matrix
+msgid "Help menu of Matrix AntiCheat"
+msgstr ""
+
+#: help.valid
+msgid "Valid commands: %s"
+msgstr ""
+
+#: help.docs
+msgid "View %s to view the docs about the commands"
+msgstr ""
+
 #: ui.closechat
 msgid "Close the chat to open the following ui."
 msgstr ""

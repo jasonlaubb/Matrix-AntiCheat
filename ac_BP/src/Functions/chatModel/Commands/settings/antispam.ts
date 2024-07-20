@@ -17,6 +17,7 @@ registerCommand({
         if (args[1]) {
             if (status == (args[1] == "enable")) return player.sendMessage(new rawstr(true, "g").tra("antispam.already", args[0], args[1]).parse());
             Dynamic.set(["intergradedAntiSpam", args[0], "enabled"], args[1]);
+            player.sendMessage(new rawstr(true, "g").tra("antispam.toggle", args[0], args[1]).parse());
         } else {
             Dynamic.delete(["intergradedAntiSpam", args[0]]);
             player.sendMessage(new rawstr(true, "g").tra("antispam.toggle", args[0], "default").parse());

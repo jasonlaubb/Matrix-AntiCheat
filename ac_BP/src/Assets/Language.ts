@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate =
+export type Translate = 
     | "pack.description"
     | "crash.reload"
     | "function.check.title"
@@ -137,6 +137,9 @@ export type Translate =
     | "banrun.invalid"
     | "antispam.already"
     | "antispam.toggle"
+    | "help.matrix"
+    | "help.valid"
+    | "help.docs"
     | "ui.closechat"
     | "config.nullpath"
     | "config.invalidpath"
@@ -152,4 +155,4 @@ export type Translate =
     | "ui.config.loc"
     | "ui.config.desc"
     | "ui.config.type"
-    | "ui.config.value";
+    | "ui.config.value"
