@@ -7,7 +7,7 @@ export async function toggleList(p: string): Promise<rawstr> {
     return rawstr.compare(
         ...validModules.map((module) =>
             new rawstr()
-                .str(`§l§7(${(config as any)[module].enabled ? "§aenabled" : "§cdisabled"}§7)§r §g${p}toggle ${module} <enable/disable> - `)
+                .str(`§l§7(${(config as any)[module]?.enabled ? "§aenabled" : "§cdisabled"}§7)§r §g${p}toggle ${module} <enable/disable> - `)
                 .tra("toggles.toggle", module)
                 .str("\n")
         )
