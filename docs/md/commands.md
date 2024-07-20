@@ -2,6 +2,8 @@
 The chat commands of Matrix AntiCheat
 - - -
 ## help
-Usage: `help`
+### Usage
+Example: `help`
 
-Description: Show the help of Matrix AntiCheat
+### Description
+Show the help of Matrix AntiCheat
