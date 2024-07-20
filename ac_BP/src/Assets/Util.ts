@@ -237,7 +237,8 @@ function isTimeStr(timeStr: string) {
     return timeUnits.some((unit) => new RegExp(`\\d+${unit}`).test(timeStr));
 }
 
-const c = () => Dynamic.config();
+// Don't delete this, very important
+const c = Dynamic.config;
 
 function inAir(dimension: Dimension, location: Vector3) {
     location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z) };
