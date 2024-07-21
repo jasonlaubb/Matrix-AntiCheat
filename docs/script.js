@@ -5,7 +5,11 @@ window.$docsify = {
     repo: 'https://github.com/jasonlaubb/Matrix-AntiCheat',
     loadSidebar: true,
     name: "Matrix AntiCheat",
-    coverpage: "cover.md",
+    hideSidebar: false,
+    auto2top: true,
+    coverpage: true,
     onlyCover: true,
-    nativeEmoji: true
+    nativeEmoji: true,
+    relativePath: true,
+    themeColor: "#383838"
 }
