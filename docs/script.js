@@ -12,6 +12,5 @@ window.$docsify = {
     onlyCover: true,
     nativeEmoji: true,
     relativePath: true,
-
     themeColor: "#383838"
 }
