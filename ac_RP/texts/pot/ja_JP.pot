@@ -10,7 +10,7 @@ msgstr "§7§¶Minecraft Bedrock向け究極のアンチチートソリューシ
 
 #: disconnectionScreen.unexpectedPacket
 msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
-msgstr ""
+msgstr "§bMatrix §7> §c一時的にキックされました。§r"
 
 #: crash.reload
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
@@ -18,43 +18,43 @@ msgstr "§cMatrix AntiCheat がクラッシュしました！/reload を実行�
 
 #: function.check.title
 msgid "Anti-Cheat setup checking:"
-msgstr ""
+msgstr "アンチチート設定のチェック:"
 
 #: function.check.betaapi
 msgid "§gBeta API usage: %s"
-msgstr ""
+msgstr "§gBeta API の使用: %s"
 
 #: function.check.helpa
 msgid "§7- If the 'Beta API usage' is stated 'FALSE', that's mean the anticheat cannot run the script of the behavior pack."
-msgstr ""
+msgstr "§7- 「Beta API の使用」が「FALSE」と表示されている場合、アンチチートはビヘイビアーパックのスクリプトを実行できないことを意味します。"
 
 #: function.check.helpb
 msgid "§7- To fix that, please check if you have enabled the 'Beta-API' of your world settings"
-msgstr ""
+msgstr "§7- 修正するには、ワールド設定で「Beta API」が有効になっているかどうかを確認してください"
 
 #: function.check.helpc
 msgid "§7- If it's still not working, please check if your Minecraft version matches the anticheat supported one."
-msgstr ""
+msgstr "§7- それでも動作しない場合は、Minecraft のバージョンが、このアンチチートがサポートするバージョンと一致しているかどうかを確認してください。"
 
 #: function.version.title
 msgid "§gYou are now on version §eV%s"
-msgstr ""
+msgstr "§g現在のバージョン: §eV%s"
 
 #: function.version.dsc
 msgid "§gSupport Server: §e%s"
-msgstr ""
+msgstr "§gサポートサーバー: §e%s"
 
 #: flag.style
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
-msgstr "%1§g は §4%2§r に失敗しました §7[タイプ %3§7] §7[§dx%4§7]§r"
+msgstr "%1§g が不正行為 §4%2§r を試みました §7[Type %3§7] §7[§dx%4§7]§r"
 
 #: ui.title
 msgid "Admin GUI"
-msgstr "管理者GUI"
+msgstr "管理者 GUI"
 
 #: ui.moderateplayer
 msgid "Moderate Players"
-msgstr "プレイヤーを管理"
+msgstr "プレイヤー管理"
 
 #: ui.setting
 msgid "Settings"
@@ -130,51 +130,51 @@ msgstr "プレイヤーのエンダーチェストを消去する §8(echestwipe
 
 #: ui.config.button
 msgid "Edit config §8(config)"
-msgstr ""
+msgstr "設定の編集 §8(config)"
 
 #: ui.config.title
 msgid "Config UI"
-msgstr ""
+msgstr "設定UI"
 
 #: ui.toggle.button
 msgid "Toggle modules §8(toggle)"
-msgstr ""
+msgstr "モジュールの有効/無効切り替え §8(toggle)"
 
 #: ui.toggle.moduleui
 msgid "Module UI"
-msgstr ""
+msgstr "モジュールUI"
 
 #: ui.toggle.modulet
 msgid "module: §8%1"
-msgstr ""
+msgstr "モジュール: §8%1"
 
 #: ui.toggle.statust
 msgid "§rstatus: §8%2"
-msgstr ""
+msgstr "§rステータス: §8%2"
 
 #: cmderror.title
 msgid "Command ran with error."
-msgstr ""
+msgstr "コマンド実行中にエラーが発生しました。"
 
 #: cmderror.name
 msgid "§gName: §9%s"
-msgstr ""
+msgstr "§g名前: §9%s"
 
 #: cmderror.message
 msgid "§gMessage: §9%s"
-msgstr ""
+msgstr "§gメッセージ: §9%s"
 
 #: cmderror.stack
 msgid "§gStack: §9%s"
-msgstr ""
+msgstr "§gスタック: §9%s"
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
-msgstr "%1 はすでに %2 を持っています §r§crank"
+msgstr "%1 は既に %2 ランクを持っています §r§crank"
 
 #: rank.norank
 msgid "%1 doesn't have %2 §r§c rank"
-msgstr "%1 は %2 を持っていません §r§c rank"
+msgstr "%1 は %2 ランクを持っていません §r§c rank"
 
 #: ban.has
 msgid "%1 has been banned by %2"
@@ -182,39 +182,39 @@ msgstr "%1 は %2 によってBANされました"
 
 #: banqueue.already
 msgid "%1 is already in the ban queue"
-msgstr ""
+msgstr "%1 は既にBAN待機リストに追加されています"
 
 #: banqueue.notfound
 msgid "Player name in the banqueue not found"
-msgstr ""
+msgstr "BAN待機リストにプレイヤー名が見つかりません"
 
 #: banqueue.done
 msgid "Done!"
-msgstr ""
+msgstr "完了！"
 
 #: banqueue.empty
 msgid "No player in the ban queue"
-msgstr ""
+msgstr "BAN待機リストにプレイヤーがいません"
 
 #: banqueue.list
 msgid "Players in the ban queue: %s"
-msgstr ""
+msgstr "BAN待機リストのプレイヤー: %s"
 
 #: bypasslist.already
 msgid "%1 is already in the bypasslist"
-msgstr ""
+msgstr "%1 は既にバイパスリストに含まれています"
 
 #: bypasslist.notfound
 msgid "Player name in the bypasslist not found"
-msgstr ""
+msgstr "バイパスリストにプレイヤー名が見つかりません"
 
 #: bypasslist.empty
 msgid "No player in the bypasslist"
-msgstr ""
+msgstr "バイパスリストにプレイヤーがいません"
 
 #: bypasslist.list
 msgid "Players in the bypasslist: %s"
-msgstr ""
+msgstr "バイパスリスト内のプレイヤー: %s"
 
 #: deop.hasbeen
 msgid "%1 has been deopped by %2"
@@ -222,7 +222,7 @@ msgstr "%1 は %2 によってオペレーター権限を剥奪されました"
 
 #: tempkick.has
 msgid "%1 has been disconnected by %2"
-msgstr ""
+msgstr "%1 は %2 によって一時的にキックされました"
 
 #: freeze.has
 msgid "%1 has been frozen by %2"
@@ -246,15 +246,15 @@ msgstr "%1 は %2 によってミュートが解除されました"
 
 #: toggles.togglechange
 msgid "%1 module has been %2d"
-msgstr "%1 モジュールは %2 になりました"
+msgstr "%1 モジュールが %2 されました"
 
 #: rank.hasadd
 msgid "%1's rank has been added %2"
-msgstr "%1 のランクが %2 に追加されました"
+msgstr "%1 のランクに %2 が追加されました"
 
 #: rank.hasset
 msgid "%1's rank has been set to %2"
-msgstr "%1 のランクは %2 に設定されました"
+msgstr "%1 のランクが %2 に設定されました"
 
 #: toggle.unknown
 msgid "Unknown modules: %s"
@@ -262,39 +262,39 @@ msgstr "不明なモジュール: %s"
 
 #: rank.empty
 msgid "%s doesn't have any rank"
-msgstr "%s にランクは設定されていません"
+msgstr "%s にはランクが設定されていません"
 
 #: rankclear.empty
 msgid "%s doesn't have any rank"
-msgstr "%s にランクは設定されていません"
+msgstr "%s にはランクが設定されていません"
 
 #: itemui.has
 msgid "You have been given the ui item, right click the item to open the ui"
-msgstr ""
+msgstr "UIアイテムを受け取りました。アイテムを右クリックしてUIを開いてください"
 
 #: unban.add
 msgid "%s has been joined to the unban queue"
-msgstr "%s はアンバンキューに追加されました"
+msgstr "%s がアンバンキューに追加されました"
 
 #: unbanremove.yes
 msgid "%s has been removed from unban queue"
-msgstr "%s はアンバンキューから削除されました"
+msgstr "%s がアンバンキューから削除されました"
 
 #: freeze.already
 msgid "%s is already frozen"
-msgstr "%s はすでにフリーズされています"
+msgstr "%s は既にフリーズされています"
 
 #: mute.already
 msgid "%s is already muted"
-msgstr "%s はすでにミュートされています"
+msgstr "%s は既にミュートされています"
 
 #: util.formban
 msgid "%s is automatically banned from the game"
-msgstr "%s は自動的にゲームからBANされました"
+msgstr "%s はゲームから自動的にBANされました"
 
 #: util.formkick
 msgid "%s is automatically kicked from the game"
-msgstr "%s は自動的にゲームからキックされました"
+msgstr "%s はゲームから自動的にキックされました"
 
 #: deop.notadmin
 msgid "%s is not admin"
@@ -326,7 +326,7 @@ msgstr "%s のランクが削除されました"
 
 #: bot.title
 msgid "Anti Bot Verification"
-msgstr "アンチボット検証"
+msgstr "ボット対策認証"
 
 #: about.author
 msgid "Author"
@@ -342,7 +342,7 @@ msgstr "%s からインベントリをコピーしました"
 
 #: defaultrank.has
 msgid "Default rank has been set to %s"
-msgstr "デフォルトランクは %s に設定されました"
+msgstr "デフォルトランクが %s に設定されました"
 
 #: echestwipe.has
 msgid "Ender chest of %1 has been wiped by %2"
@@ -350,11 +350,11 @@ msgstr "%1 のエンダーチェストは %2 によって消去されました"
 
 #: flagmode.changed
 msgid "Flag mode has been changed to %s"
-msgstr "フラグモードは %s に変更されました"
+msgstr "フラグモードが %s に変更されました"
 
 #: bot.waitui
 msgid "For security reason, you cannot chat until you finished verify process. Please wait until the verify ui be shown"
-msgstr "セキュリティ上の理由により、検証UIが表示されるまでチャットはできません。"
+msgstr "セキュリティ上の理由により、検証プロセスが完了するまでチャットできません。検証UIが表示されるまでお待ちください"
 
 #: invsee.of
 msgid "Inventory of %s"
@@ -362,7 +362,7 @@ msgstr "%s のインベントリ"
 
 #: invsee.item
 msgid "§eSlot: §c%1 | §eItem: §c%2"
-msgstr ""
+msgstr "§eスロット: §c%1 | §eアイテム: §c%2"
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"
@@ -370,7 +370,7 @@ msgstr "ロックダウンコード: %s"
 
 #: unlock.has
 msgid "Lockdown has been disabled by %s"
-msgstr "ロックダウンは %s によって無効化されました"
+msgstr "ロックダウンは %s によって解除されました"
 
 #: unlock.not
 msgid "Lockdown hasn't enabled yet"
@@ -378,11 +378,11 @@ msgstr "ロックダウンはまだ有効化されていません"
 
 #: about.line
 msgid "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
-msgstr "Matrix は @minecraft API をベースにした Minecraft Bedrock 用のアンチチートです"
+msgstr "Matrix は @minecraft API ベースの Minecraft Bedrock 用アンチチートです"
 
 #: util.noreason
 msgid "No reason provided"
-msgstr "理由は提供されていません"
+msgstr "理由が提供されていません"
 
 #: passwords.changed
 msgid "Password has been changed"
@@ -390,55 +390,55 @@ msgstr "パスワードが変更されました"
 
 #: passwords.wrong
 msgid "Sorry, but you entered a wrong password"
-msgstr ""
+msgstr "パスワードが違います"
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
-msgstr "%s 秒後に再度お試しください"
+msgstr "%s 秒後にもう一度試してください"
 
 #: showallrank.has
 msgid "Show all rank has been set to %s"
-msgstr "すべてのランクを表示する設定は %s に設定されました"
+msgstr "すべてのランクを表示する設定が %s に設定されました"
 
 #: lockdowncode.set
 msgid "Sucessfully changed lockdown code to %s"
-msgstr "ロックダウンコードを %s に変更しました"
+msgstr "ロックダウンコードが %s に変更されました"
 
 #: bordersize.ok
 msgid "Sucessfully changed world border size to %s"
-msgstr "ワールドボーダーサイズを %s に変更しました"
+msgstr "ワールドボーダーのサイズが %s に変更されました"
 
 #: lockdowncode.random
 msgid "Sucessfully random a lockdown code - %s"
-msgstr "ロックダウンコードをランダムに生成しました - %s"
+msgstr "ロックダウンコードがランダムに生成されました - %s"
 
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
-msgstr "サーバーは %s によってロックダウンモードになっています"
+msgstr "サーバーは %s によってロックダウンモードに設定されました"
 
 #: deop.lockdown
 msgid "The server is in lockdown mode"
-msgstr "サーバーはロックダウンモードになっています"
+msgstr "サーバーはロックダウンモードです"
 
 #: lockdown.has
 msgid "The server is now in lockdown mode"
-msgstr "サーバーは現在ロックダウンモードになっています"
+msgstr "サーバーはロックダウンモードになりました"
 
 #: unbanlist.none
 msgid "There is no player in unban queue"
 msgstr "アンバンキューにプレイヤーはいません"
 
 #: toggles.already
-msgid "This module is %sd already"
-msgstr "このモジュールはすでに %sd になっています"
+msgid "This module is already %sd"
+msgstr "このモジュールは既に %sd です"
 
 #: toggles.toggle
 msgid "Toggle %s module"
-msgstr "%s モジュールをトグルする"
+msgstr "%s モジュールを切り替える"
 
 #: toggles.togglelist
 msgid "Toggle list:"
-msgstr "トグルリスト:"
+msgstr "切り替え可能なモジュールリスト:"
 
 #: unbanlist.list
 msgid "Unban list"
@@ -470,27 +470,27 @@ msgstr "他の次元への移動は許可されていません！"
 
 #: op.now
 msgid "You are now admin"
-msgstr "あなたは今管理者です"
+msgstr "あなたは管理者になりました"
 
 #: adminchat.has
 msgid "You are now in admin channel"
-msgstr "あなたは今管理者チャネルに参加しています"
+msgstr "管理者チャットに参加しました"
 
 #: adminchat.out
 msgid "You are now in public channel"
-msgstr "あなたは今パブリックチャネルに参加しています"
+msgstr "パブリックチャットに戻りました"
 
 #: vanish.out
 msgid "You are now no longer vanished"
-msgstr "あなたはもう透明ではありません"
+msgstr "あなたは見えなくなりました"
 
 #: vanish.has
 msgid "You are now vanished"
-msgstr "あなたは今透明になっています"
+msgstr "あなたは見えるようになりました"
 
 #: border.outside
 msgid "You cannot access a location which is outside the world border."
-msgstr "ワールドボーダーの外にある場所にアクセスできません。"
+msgstr "ワールドボーダーの外にある場所にはアクセスできません。"
 
 #: border.reached
 msgid "You cannot access that location, you have reached the world border."
@@ -498,19 +498,19 @@ msgstr "その場所にはアクセスできません。ワールドボーダー
 
 #: border.interact
 msgid "You cannot interact with a block or entity which is outside the world border."
-msgstr "ワールドボーダーの外にあるブロックやエンティティと相互作用できません。"
+msgstr "ワールドボーダーの外にあるブロックやエンティティと相互作用することはできません。"
 
 #: bot.ok
 msgid "You have been verified successfully"
-msgstr "あなたは正常に検証されました"
+msgstr "検証が完了しました"
 
 #: toggles.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
-msgstr "実験的なモジュールを開こうとしています。これはバグや誤検知を引き起こす可能性があります！ '%1toggle %2 enable force' を使用して有効にしてください。"
+msgstr "実験的なモジュールを開こうとしています。バグや誤検知の原因となる可能性があります！有効にするには '%1toggle %2 enable force' を使用してください"
 
 #: adminchat.adminchat
 msgid "adminchat"
-msgstr "adminchat"
+msgstr "管理者チャット"
 
 #: bot.ui.headline
 msgid "§a[This server is protected by Matrix AntiCheat]"
@@ -518,15 +518,15 @@ msgstr "§a[このサーバーは Matrix AntiCheat によって保護されて�
 
 #: bot.ui.need
 msgid "§gYou need to verify if you're not a bot §7(%1/%2)"
-msgstr "§gあなたはボットではないことを確認する必要があります §7(%1/%2)"
+msgstr "§gボットではないことを確認するために認証する必要があります §7(%1/%2)"
 
 #: bot.ui.haveleft
 msgid "§gYou have §e%s§gseconds left"
-msgstr "§gあなたは §e%s§g秒残っています"
+msgstr "§g残り時間: §e%s§g秒"
 
 #: bot.ui.enterbelow
 msgid "Enter the code §e§l%s§r§g below"
-msgstr "以下にコード §e§l%s§r§g を入力してください"
+msgstr "以下のコード §e§l%s§r§g を入力してください"
 
 #: xray.broken
 msgid "%1 mined %2 at %3"
@@ -534,15 +534,15 @@ msgstr "%1 は %2 を %3 で採掘しました"
 
 #: spam.sensitiveword
 msgid "Your message contains a sensitive word"
-msgstr "あなたのメッセージには、感受性の高い単語が含まれています"
+msgstr "メッセージに不適切な単語が含まれています"
 
 #: spam.messagerate
 msgid "Please slow down your messages"
-msgstr "メッセージの速度を落としてください"
+msgstr "メッセージを送信する間隔を空けてください"
 
 #: spam.repeated
 msgid "Please don't send the messages repeatly"
-msgstr "メッセージを繰り返し送信しないでください"
+msgstr "同じメッセージを繰り返し送信しないでください"
 
 #: spam.spamming
 msgid "Please don't spam message"
@@ -554,112 +554,112 @@ msgstr "メッセージが長すぎます"
 
 #: spam.includelink
 msgid "Sorry, but link is not allowed on this server"
-msgstr "申し訳ありませんが、このサーバーではリンクは許可されていません"
+msgstr "このサーバーではリンクは許可されていません"
 
 #: spam.email
 msgid "Sorry, but you cannot send an email on chat"
-msgstr "申し訳ありませんが、チャットでメールを送信することはできません"
+msgstr "チャットでメールアドレスを送信することはできません"
 
 #: reset.sucess
 msgid "Sucessfully to rest all the property in the dynamc config"
-msgstr ""
+msgstr "ダイナミック設定のすべてのプロパティが正常にリセットされました"
 
 #: banrun.set
 msgid "Sucessfully sets the banrun command to '%s'"
-msgstr ""
+msgstr "banrun コマンドが '%s' に設定されました"
 
 #: banrun.disabled
 msgid "Sucessfully removes the banrun command."
-msgstr ""
+msgstr "banrun コマンドが削除されました"
 
 #: banrun.invalid
 msgid "Invalid regex with '%s'"
-msgstr ""
+msgstr "'%s' は無効な正規表現です"
 
 #: antispam.already
 msgid "%1 of antiSpam is already toggled to %2"
-msgstr ""
+msgstr "スパム対策の %1 は既に %2 に設定されています"
 
 #: antispam.toggle
 msgid "%1 of antiSpam has been toggled to %2"
-msgstr ""
+msgstr "スパム対策の %1 が %2 に設定されました"
 
 #: help.matrix
 msgid "Help menu of Matrix AntiCheat"
-msgstr ""
+msgstr "Matrix AntiCheat ヘルプメニュー"
 
 #: help.valid
 msgid "Valid commands: %s"
-msgstr ""
+msgstr "有効なコマンド: %s"
 
 #: help.docs
 msgid "Visit %s to view the docs about the commands"
-msgstr ""
+msgstr "コマンドの詳細については、 %s をご覧ください"
 
 #: ui.closechat
 msgid "Close the chat to open the following ui."
-msgstr ""
+msgstr "チャットを閉じて、次のUIを開いてください。"
 
 #: config.nullpath
 msgid "Cannot find the path you provided: %s"
-msgstr ""
+msgstr "指定されたパスが見つかりません: %s"
 
 #: config.invalidpath
 msgid "You can't select a path with JSON object."
-msgstr ""
+msgstr "JSONオブジェクトを含むパスは選択できません。"
 
 #: config.nan
 msgid "You have stated that the value is a number, but your value is not a number"
-msgstr ""
+msgstr "値は数値でなければなりませんが、数値以外の値が入力されています"
 
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
-msgstr ""
+msgstr "無効な配列が入力されました。正しい例: 'abc','def',1.52,3"
 
 #: config.set
 msgid "Sucessfully set '%1' to '%2'"
-msgstr ""
+msgstr "'%1' が '%2' に設定されました"
 
 #: target.selfselect
 msgid "You can't select yourself as the target."
-msgstr ""
+msgstr "自分自身をターゲットとして選択することはできません。"
 
 #: target.unable
 msgid "Unable to do the action to the target."
-msgstr ""
+msgstr "ターゲットに対してアクションを実行できません。"
 
 #: setup.hcfeature
 msgid "Hoilday creator feature is required."
-msgstr ""
+msgstr "Holiday Creator 機能が必要です。"
 
 #: clientauth.kicked
 msgid "%s has been detected as bot client, it is automatically disconnected"
-msgstr ""
+msgstr "%s はボットクライアントとして検出されたため、自動的に切断されました"
 
 #: ui.config.selector
 msgid "Configuration Selector"
-msgstr ""
+msgstr "設定セレクター"
 
 #: ui.config.editor
 msgid "Configuration Editor"
-msgstr ""
+msgstr "設定エディター"
 
 #: ui.config.loc
 msgid "§gCurrent location: §c%s"
-msgstr ""
+msgstr "§g現在の場所: §c%s"
 
 #: ui.config.desc
 msgid "§gDescription: §c%s"
-msgstr ""
+msgstr "§g説明: §c%s"
 
 #: ui.config.type
 msgid "§rProperty type:"
-msgstr ""
+msgstr "§rプロパティタイプ:"
 
 #: ui.config.value
 msgid "Value:"
-msgstr ""
+msgstr "値:"
 
 #: common.unknown
 msgid "unknown"
-msgstr ""
+msgstr "不明"
