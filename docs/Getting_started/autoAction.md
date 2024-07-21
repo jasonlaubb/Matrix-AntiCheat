@@ -24,7 +24,7 @@ The different flag mode is `admin`.
 
 To change the flag mode, you can use the chat command `<prefix>flagmode <flag mode>`.
 
-<img src="../images/flag2kick.png">
+<img src="images/flag2kick.png">
 
 # VL upper limit
 
@@ -34,7 +34,7 @@ If you reached the VL upper limit of a module, you can get the punishment from t
 
 To change it you can use 'dynamic config' to archive that, this will be introduced later.
 
-<img src="../images/example_module_config.png">
+<img src="images/example_module_config.png">
 
 # Log record
 
@@ -42,4 +42,4 @@ If you wanna know what happened while you're not looking at the chat message, yo
 
 To open the log record, you can use the chat command `<prefix>openlog`.
 
-<img src="../images/openlog.png">
+<img src="images/openlog.png">
