@@ -10,7 +10,7 @@ Also, if you want to use custom item in the pack.
 
 For example item ui, you will need to also use the holiday creator feature.
 
-<img src="../images/addon_feature.png">
+<img src="images/addon_feature.png">
 
 # Install the addon
 
@@ -18,11 +18,11 @@ Use the pack (`Matrix-vX.X.X.mcaddon`) and install the pack to your client.
 
 Now, pull your pack to the world. The both behavior and the resource pack should **on the top** among all the other packs.
 
-<img src="../images/pull_top.png">
+<img src="images/pull_top.png">
 
 You **cannot remove the resource pack** while you installed the behavior pack.
 
-<img src="../images/need_res.png">
+<img src="images/need_res.png">
 
 # Get the admin permission
 
@@ -44,7 +44,7 @@ First, check if the anticheat modules you needed are toggled on in the server.
 
 You can check the toggle status by running the chat command `<prefix>toggles` on your chat.
 
-<img src="../images/toggles.png">
+<img src="images/toggles.png">
 
 # Everything is ready
 
