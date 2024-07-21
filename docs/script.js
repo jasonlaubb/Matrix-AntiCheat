@@ -16,4 +16,15 @@ window.$docsify = {
     themeColor: "#383838",
     externalLinkRel: false,
     subMaxLevel: 2,
+    search: {
+        maxAge: 1,
+        placeholder: {
+          '/': 'Type to search',
+        },
+        noData: {
+          '/': 'No Results Found',
+        },
+        depth: 6,
+        hideOtherSidebarContent: true,
+    },
 }

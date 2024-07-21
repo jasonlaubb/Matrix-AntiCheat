@@ -1,3 +1,7 @@
+# Command Usage
+
+This pages describes how to use the commands of Matrix AntiCheat.
+
 # Help
 
 - Description
