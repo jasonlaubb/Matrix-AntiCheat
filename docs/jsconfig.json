@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "CommonJS",
+      "checkJs": false,
+      "experimentalDecorators": true,
+    },
+    "include": ["script.js"],
+    "exclude": []
+}
