@@ -1,4 +1,4 @@
-<img src='https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/.github/PRIVATE_DATA/title.png'></img>
+<img src='https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/images/title.png'></img>
 
 ## Matrix AntiCheat - The best Minecraft bedrock AntiCheat solution
 
