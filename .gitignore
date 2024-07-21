@@ -2,8 +2,6 @@ scripts/
 node_modules/
 .github
 LICENSE
-README.md
 *.po
 *.lang
 generated-package/
-!docs/README.md
