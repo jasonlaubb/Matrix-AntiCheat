@@ -6,7 +6,6 @@ window.$docsify = {
     logo: './logo.png',
     coverpage: "cover.md",
     onlyCover: true,
-    loadSidebar: true,
     subMaxLevel: 2,
     search: {
         paths: 'auto',
