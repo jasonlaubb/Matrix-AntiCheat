@@ -6,5 +6,4 @@ window.$docsify = {
     loadSidebar: true,
     coverpage: "cover.md",
     onlyCover: true,
-    subMaxLevel: 2,
 }
