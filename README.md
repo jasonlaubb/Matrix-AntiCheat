@@ -16,4 +16,4 @@ This can be used in BDS server, realm or local world. Support the latest Minecra
 
 **Visit our webiste to learn more!**
 
-<button class="CBR" onclick="window.location.href = 'https\:\/\/ide.geeksforgeeks.org';">Learn More</button>
+<button class="CBR" onclick="window.location.href = 'https://jasonlaubb.github.io/Matrix-AntiCheat/';">Learn More</button>
