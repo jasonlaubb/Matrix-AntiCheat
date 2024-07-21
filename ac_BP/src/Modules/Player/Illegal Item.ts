@@ -23,13 +23,13 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
             }
         }
 
-        const itemNameLength = item.nameTag.length;
+        const itemNameLength = item?.nameTag?.length;
         if (itemNameLength > 64 || itemNameLength < 1) {
             flag(player, "Illegal Item", "B", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Length:" + itemNameLength]);
             return true;
         }
-
         const itemamount = item.amount;
+        player.sendMessage(String(item.maxAmount - itemamount));
         if (itemamount > item.maxAmount || itemamount < 1) {
             flag(player, "Illegal Item", "C", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Amount:" + itemamount]);
             return true;
@@ -45,22 +45,24 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
     }
     if (config.antiIllegalItem.checkEnchantment) {
         const encomp = item.getComponent("enchantable");
-        const enchantments = encomp.getEnchantments();
-        const newItemStack = new ItemStack(item.typeId, item.amount).getComponent("enchantable");
-        for (const enchantment of enchantments) {
-            const {
-                type: { maxLevel, id },
-                level,
-            } = enchantment;
-            if (newItemStack.canAddEnchantment(enchantment)) {
-                newItemStack.addEnchantment(enchantment);
-            } else {
-                flag(player, "Illegal Item", "I", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Enchantment:" + id, "Level:" + level]);
-                return true;
-            }
-            if (level > maxLevel || level < 0) {
-                flag(player, "Illegal Item", "J", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Enchantment:" + id, "Level:" + level]);
-                return true;
+        if (encomp) {
+            const enchantments = encomp.getEnchantments();
+            const newItemStack = new ItemStack(item.typeId, item.amount).getComponent("enchantable");
+            for (const enchantment of enchantments) {
+                const {
+                    type: { maxLevel, id },
+                    level,
+                } = enchantment;
+                if (newItemStack.canAddEnchantment(enchantment)) {
+                    newItemStack.addEnchantment(enchantment);
+                } else {
+                    flag(player, "Illegal Item", "I", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Enchantment:" + id, "Level:" + level]);
+                    return true;
+                }
+                if (level > maxLevel || level < 0) {
+                    flag(player, "Illegal Item", "J", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Enchantment:" + id, "Level:" + level]);
+                    return true;
+                }
             }
         }
     }

@@ -22,6 +22,8 @@ export async function registerModule(id: string, checkAdmin: boolean, varargs: (
         });
     });
     system.clearRun(ida);
+
+    world.sendMessage(id);
     world.modules.push({
         id: id,
         checkAdmin: checkAdmin,
@@ -223,4 +225,4 @@ import "./World/FastBreak";
 import "./Misc/Xray";
 import "./Movement/World Border";
 import "./Misc/Disabler";
-import "./Player/ClientAuth";
+import "./Movement/ClientAuth";

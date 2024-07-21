@@ -30,7 +30,7 @@ function selector(player: Player, path: string[]) {
         } else if (typeof entries[1] == "object") {
             entries[1] = "Object";
         } else if (typeof entries[1] == "string") {
-            entries[1] = `"${entries[1].replace(/§(.)/g, `§\u200C$1`)}"`;
+            entries[1] = `"${entries[1].replace(/§(.)/g, `\§$1`)}"`;
         } else {
             entries[1] = String(entries[1]);
         }

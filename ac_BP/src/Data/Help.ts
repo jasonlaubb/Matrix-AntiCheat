@@ -3,7 +3,7 @@ import { c, rawstr } from "../Assets/Util";
 
 export async function toggleList(p: string): Promise<rawstr> {
     const config = c();
-    const validModules: string[] = await getValidModules();
+    const validModules: string[] = await getModulesIds();
     return rawstr.compare(
         ...validModules.map((module) =>
             new rawstr()
@@ -12,9 +12,4 @@ export async function toggleList(p: string): Promise<rawstr> {
                 .str("\n")
         )
     );
-}
-export async function getValidModules() {
-    const moduleIds = await getModulesIds();
-    const validModules: string[] = ["chatRank", "dimensionLock", ...moduleIds];
-    return validModules;
 }

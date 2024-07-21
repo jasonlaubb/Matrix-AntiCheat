@@ -1,6 +1,5 @@
 import { c } from "../../../../Assets/Util";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
-import { getValidModules } from "../../../../Data/Help";
 import { getModulesIds, intilizeModules } from "../../../../Modules/Modules";
 import Dynamic from "../../../Config/dynamic_config";
 
@@ -15,9 +14,7 @@ registerCommand({
     executor: async (player, args) => {
         const config = c();
         const prefix = config.commands.prefix;
-        const validmodules = await getValidModules();
         const moduleids = await getModulesIds();
-        if (!validmodules.includes(args[0])) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggle.unknown", with: [args[0]] });
         if (moduleids.includes(args[0])) {
             // const state = Dynamic.get([args[0], "enabled"]);
             if ((args[1] == "enable") == (config as any)[args[0]].enabled && args[1] != "default") return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.already", with: [args[1]] });
@@ -33,15 +30,6 @@ registerCommand({
                 intilizeModules();
             }
             sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "toggles.toggleChange", with: [args[0], args[1]] });
-        } else {
-            if (args[0] != "default") {
-                if ((config as any)[args[1]].enabled == (args[1] == "enable")) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.already", with: [args[1]] });
-                Dynamic.set([args[0], "enabled"], args[1] == "enable");
-                sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "toggles.toggleChange", with: [args[0], args[1]] });
-            } else {
-                Dynamic.delete([args[0], "enabled"]);
-                sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "toggles.toggleChange", with: [args[0], args[1]] });
-            }
-        }
+        } else sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggle.unknown", with: [args[0]] });
     },
 });
