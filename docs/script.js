@@ -1,6 +1,7 @@
 //@ts-check
 //@ts-expect-error
 window.$docsify = {
+    el: "#app",
     name: "Matrix AntiCheat",
     repo: 'https://github.com/jasonlaubb/Matrix-AntiCheat',
     loadSidebar: true,
