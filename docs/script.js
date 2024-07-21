@@ -4,7 +4,6 @@ window.$docsify = {
     name: "Matrix AntiCheat",
     repo: 'https://github.com/jasonlaubb/Matrix-AntiCheat',
     loadSidebar: true,
-    logo: './logo.png',
     coverpage: "cover.md",
     onlyCover: true,
     subMaxLevel: 2,
