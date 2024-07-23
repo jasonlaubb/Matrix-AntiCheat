@@ -94,14 +94,14 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
 
 export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): number {
     if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
-        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] }));
+        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c1 " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] }));
     } else if (targetCommand.maxArgs && args.length > targetCommand.maxArgs) {
-        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] }));
+        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c2 " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] }));
     } else if (targetCommand.argRequire) {
         for (let i = 0; i < targetCommand.argRequire.length; i++) {
             if (!targetCommand.argRequire[i] || !args[i]) continue;
             if (!targetCommand.argRequire[i](args[i], targetCommand.requireSupportPlayer ? player : undefined, targetCommand.requireSupportArgs ? args : undefined)) {
-                return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
+                return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c3 " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
             }
         }
     }
