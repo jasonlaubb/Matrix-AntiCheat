@@ -6,21 +6,21 @@
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
 const runTime = Date.now();
-import { world, system } from "@minecraft/server";
+import * as Minecraft from "@minecraft/server";
+import { initialize } from "./Functions/Config/dynamic_config";
 import { intilizeModules } from "./Modules/Modules";
 import Dynamic from "./Functions/Config/dynamic_config";
-system.beforeEvents.watchdogTerminate.subscribe((event) => {
+Minecraft.system.beforeEvents.watchdogTerminate.subscribe((event) => {
     event.cancel = true;
 });
-import { initialize } from "./Functions/Config/dynamic_config";
-world.afterEvents.worldInitialize.subscribe(() => {
+Minecraft.world.afterEvents.worldInitialize.subscribe(() => {
     initialize();
-    world.modules = [];
+    Minecraft.world.modules = [];
     intilizeModules().then((amount) => {
-        world.sendMessage(`§bMatrix §7>§g Intilized ${amount} module(s) in ${Date.now() - runTime}ms.`);
+        Minecraft.world.sendMessage(`§bMatrix §7>§g Intilized ${amount} module(s) in ${Date.now() - runTime}ms.`);
     });
     if (Dynamic.config().createScoreboard && !world.scoreboard.getObjective("matrix:api")) {
-        world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
+        Minecraft.world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
     }
 });
 import "./Assets/LatinNormalize";
