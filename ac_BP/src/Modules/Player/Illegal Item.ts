@@ -5,11 +5,10 @@ import { flag } from "../../Assets/Util";
 import OperatorItemList from "../../Data/OperatorItemList";
 import EducationItemList from "../../Data/EducationItemList";
 
-const vanillaItems = Object.values(MinecraftItemTypes);
 function checkIllegalItem(player: Player, item: ItemStack, config: configi): boolean {
     if (config.antiIllegalItem.checkIllegal) {
         if (item.typeId.startsWith("minecraft:") && !EducationItemList.includes(item.typeId)) {
-            const isVanillaItem = binarySearchItem(item.typeId);
+            const isVanillaItem = Object.values(MinecraftItemTypes).includes(item.typeId as MinecraftItemTypes);
             if (!isVanillaItem) {
                 flag(player, "Illegal Item", "A", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId]);
                 return true;
@@ -29,7 +28,7 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
             return true;
         }
         const itemamount = item.amount;
-        player.sendMessage(String(item.maxAmount - itemamount));
+        // player.sendMessage(String(item.maxAmount - itemamount));
         if (itemamount > item.maxAmount || itemamount < 1) {
             flag(player, "Illegal Item", "C", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Amount:" + itemamount]);
             return true;
@@ -47,23 +46,25 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
         const encomp = item.getComponent("enchantable");
         if (encomp) {
             const enchantments = encomp.getEnchantments();
-            const newItemStack = new ItemStack(item.typeId, item.amount).getComponent("enchantable");
+            const newItemStack = new ItemStack(item.typeId, item.amount)?.getComponent("enchantable");
+            if (enchantments.length > 0) {
+            try {
+                newItemStack.addEnchantments(enchantments);
+            } catch (error) {
+                flag(player, "Illegal Item", "I", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Error:" + (error as Error).stack]);
+                return true;
+            }
             for (const enchantment of enchantments) {
                 const {
                     type: { maxLevel, id },
                     level,
                 } = enchantment;
-                if (newItemStack.canAddEnchantment(enchantment)) {
-                    newItemStack.addEnchantment(enchantment);
-                } else {
-                    flag(player, "Illegal Item", "I", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Enchantment:" + id, "Level:" + level]);
-                    return true;
-                }
                 if (level > maxLevel || level < 0) {
                     flag(player, "Illegal Item", "J", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Enchantment:" + id, "Level:" + level]);
                     return true;
                 }
             }
+        }
         }
     }
     // Extra check for educational item
@@ -94,35 +95,13 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
 
 function inventoryCheck(config: configi, player: Player) {
     const container = player.getComponent("inventory")?.container;
+    player.onScreenDisplay.setActionBar("Checking...");
     for (let i = 0; i < container.size; i++) {
         const item = container.getItem(i);
         if (!item) continue;
-        checkIllegalItem(player, item, config);
+        const illegal = checkIllegalItem(player, item, config);
+        if (illegal) container.setItem(i);
     }
-}
-
-const upperlimit = vanillaItems.length - 1;
-const middlevalue = Math.trunc(upperlimit / 2);
-
-// At least decrease some lag.
-function binarySearchItem(itemId: string): boolean {
-    let index = middlevalue;
-    let step = 1;
-    if (itemId > vanillaItems[middlevalue]) {
-        step = -1;
-    } else if (itemId == vanillaItems[middlevalue]) return true;
-    while (index >= 0 && index <= upperlimit) {
-        if (vanillaItems[index] == itemId) {
-            return true;
-        }
-        if (step > 0 && vanillaItems[index] > itemId) {
-            return false;
-        } else if (step < 0 && vanillaItems[index] < itemId) {
-            return false;
-        }
-        index += step;
-    }
-    return false;
 }
 
 registerModule("antiIllegalItem", false, [], {
