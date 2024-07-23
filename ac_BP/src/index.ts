@@ -19,7 +19,7 @@ Minecraft.world.afterEvents.worldInitialize.subscribe(() => {
     intilizeModules().then((amount) => {
         Minecraft.world.sendMessage(`§bMatrix §7>§g Intilized ${amount} module(s) in ${Date.now() - runTime}ms.`);
     });
-    if (Dynamic.config().createScoreboard && !world.scoreboard.getObjective("matrix:api")) {
+    if (Dynamic.config().createScoreboard && !Minecraft.world.scoreboard.getObjective("matrix:api")) {
         Minecraft.world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
     }
 });
