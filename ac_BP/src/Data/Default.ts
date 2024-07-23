@@ -37,6 +37,11 @@ export default {
             adminOnly: true,
             requireTag: [],
         },
+        setutil: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
         op: {
             enabled: true,
             adminOnly: false,
