@@ -123,14 +123,23 @@ export function sendErr(err: Error) {
     console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
 }
 
-export function isPlayer(player: string, exclude: boolean = false, isadmin: boolean = null): Minecraft.Player {
+export function isPlayer(player: string, exclude: boolean = false, isadmin: boolean | string = "no la", runner: Minecraft.Player = undefined): Minecraft.Player {
     if (player.startsWith("@")) player.slice(1);
     const target = Minecraft.world.getPlayers({
         name: player,
     })[0];
-    if (!target) return undefined;
-    if (exclude && target.name == player) return undefined;
-    if (isadmin != null && isadmin != isAdmin(target)) return undefined;
+    if (!target) {
+        system.run(() => console.warn(`Query :: Player ${player} not found`));
+        return undefined;
+    }
+    if (exclude && runner && target.name == runner.name) {
+        system.run(() => console.warn(`Query :: Player ${player} same as command runner`));
+        return undefined;
+    }
+    if (isadmin != "no la" && isadmin != isAdmin(target)) {
+        system.run(() => console.warn(`Query :: Player ${player} not match admin status`));
+        return undefined;
+    }
     return target;
 }
 export function getAllCommandNames() {
