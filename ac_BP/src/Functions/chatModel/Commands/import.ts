@@ -31,6 +31,7 @@ import "./settings/lockdowncode";
 import "./settings/unlock";
 import "./settings/antispam";
 import "./settings/config";
+import "./settings/setutil";
 import "./utilities/adminchat";
 import "./utilities/itemui";
 import "./utilities/matrixui";
