@@ -27,6 +27,6 @@ registerCommand({
             equupments.setEquipment(slot as EquipmentSlot, equupments.getEquipment(slot as EquipmentSlot));
         }
 
-        player.sendMessage(new rawstr(true, "g").tra("invcopy.not").parse());
+        player.sendMessage(new rawstr(true, "g").tra("invcopy.not", target.name).parse());
     },
 });
