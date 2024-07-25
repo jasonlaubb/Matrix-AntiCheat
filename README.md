@@ -18,4 +18,24 @@
     <a href="https://jasonlaubb.github.io/Matrix-AntiCheat/" target="_blank">
         <img src="./docs/images/learn_more.png">
     </a>
+    <h2>Developers</h2>
+    <h3>Lead Developer</h3>
+    <ul>
+        <li>jasonlaubb</li>
+    </ul>
+    <h3>Main Developers</h3>
+    <ul>
+        <li>notthinghere</li>
+        <li>ravriv</li>
+        <li>RaMiGamerDev</li>
+    </ul>
+    <h3>Translators</h3>
+    <ul>
+        <li>amico nabbo</li>
+        <li>kriska02</li>
+        <li>selder578</li>
+        <li>yummysheep</li>
+        <li>koukun</li>
+        <li>qt twenti</li>
+    </ul>
 </div>
