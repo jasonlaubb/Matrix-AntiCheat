@@ -20,6 +20,10 @@ msgstr ""
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr "§cMatrix AntiCheat がクラッシュしました！/reload を実行して復旧してください§r"
 
+#: index.initmodules
+msgid "Intilized %1 module(s) in %2ms."
+msgstr ""
+
 #: function.check.title
 msgid "Anti-Cheat setup checking:"
 msgstr "アンチチート設定のチェック:"

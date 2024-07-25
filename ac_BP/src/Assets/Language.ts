@@ -7,6 +7,7 @@ export type Translate =
     | "disconnectionScreen.unexpectedPacket"
     | "json.packet"
     | "crash.reload"
+    | "index.initmodules"
     | "function.check.title"
     | "function.check.betaapi"
     | "function.check.helpa"
