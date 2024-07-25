@@ -5,6 +5,7 @@
  */
 export default {
     sendInitMsg: true,
+    sendModuleInitMsg: false,
     createScoreboard: true,
     flagMode: "admin",
     lockdowncode: "AbCdEfGh",

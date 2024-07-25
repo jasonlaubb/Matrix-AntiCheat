@@ -7,12 +7,12 @@ import { sendErr } from "../Functions/chatModel/CommandHandler";
  * @author jasonlaubb
  * @description Module Handler
  */
-const antiCheatModules: Module[] = [];
+
 export async function registerModule(id: string, checkAdmin: boolean, varargs: (Map<string, any> | { [key: string]: any })[], ...event: (TickEvent | WorldEvent | IntilizeEvent)[]): Promise<void> {
     const tickEvent = (event as TickEvent[]).filter((ev) => ev?.tickInterval);
     const worldEvent = (event as WorldEvent[]).filter((ev) => ev?.worldSignal);
     const intilizeEvent = (event as IntilizeEvent[]).filter((ev) => ev?.runAfterSubsribe);
-    antiCheatModules.push({
+    world.modules.push({
         id: id,
         checkAdmin: checkAdmin,
         tickEvent: tickEvent.length > 0 ? tickEvent : undefined,
@@ -23,13 +23,13 @@ export async function registerModule(id: string, checkAdmin: boolean, varargs: (
     });
 }
 export async function getModulesIds() {
-    if (antiCheatModules) {
-        return antiCheatModules.map((module) => module.id);
+    if (world.modules) {
+        return world.modules.map((module) => module.id);
     } else {
         while (true) {
             await system.waitTicks(1);
-            if (antiCheatModules) {
-                return antiCheatModules.map((module) => module.id);
+            if (world.modules) {
+                return world.modules.map((module) => module.id);
             }
         }
     }
@@ -41,26 +41,26 @@ export async function intilizeModules() {
     let id;
     await new Promise<void>((resolve) => {
         id = system.runInterval(() => {
-            if (antiCheatModules && antiCheatModules.length > 0) {
+            if (world.modules && world.modules.length > 0) {
                 resolve();
             }
             //world.sendMessage(String(world?.modules?.length) ?? "0");
         });
     });
     system.clearRun(id);
-    antiCheatModules
+    world.modules
         .filter((module) => module.enabled)
         .forEach((module) => {
             unlisten(module.id);
         });
     system.runJob(looper(config));
-    return antiCheatModules?.length;
+    return world.modules?.length;
 }
 function* looper(config: configi): Generator<void, void, void> {
-    const len = antiCheatModules.length;
+    const len = world.modules.length;
     for (let i = 0; i < len; i++) {
         try {
-            const element = antiCheatModules[i];
+            const element = world.modules[i];
             if (element.mapclears) mapvalues.push(...element.mapclears);
             if ((config as any)[element.id]?.enabled) {
                 // Method for state module is enabled
@@ -124,12 +124,12 @@ function setup(config: configi, element: Module) {
     }
     element.runId = runIds;
     element.enabled = true;
-    antiCheatModules[antiCheatModules.findIndex((a) => a.id == element.id)] = element;
+    world.modules[world.modules.findIndex((a) => a.id == element.id)] = element;
 }
 
 function unlisten(id: string) {
-    const index = antiCheatModules.findIndex((a) => a.id == id);
-    const module = antiCheatModules[index];
+    const index = world.modules.findIndex((a) => a.id == id);
+    const module = world.modules[index];
     if (!module) throw "Unlisten :: " + id + " :: No result";
     if (!module?.enabled) throw "Unlisten :: " + id + " :: Already disabled";
 
@@ -144,7 +144,7 @@ function unlisten(id: string) {
     }
     module.runId = [];
     module.enabled = false;
-    antiCheatModules[index] = module;
+    world.modules[index] = module;
 }
 
 let lastERROR: string = "";
@@ -184,33 +184,3 @@ interface IntilizeEvent {
     onIntilize: (config: configi) => Promise<void | number>;
     runAfterSubsribe: number;
 }
-
-import "./Combat/Auto Clicker";
-import "./Combat/Kill Aura";
-import "./Combat/Reach";
-import "./Combat/Aim";
-import "./Misc/Spammer";
-import "./Movement/Fly";
-import "./Movement/NoFall";
-import "./Movement/Timer";
-import "./Movement/NoClip";
-import "./Movement/Speed";
-import "./Movement/NoSlow";
-import "./Movement/ElytraFly";
-import "./World/Nuker";
-import "./World/Scaffold";
-import "./World/Tower";
-import "./World/Breaker";
-import "./Player/BlockReach";
-import "./Player/Illegal Item";
-import "./Player/NameSpoof";
-import "./Player/Auto";
-import "./Player/FastUse";
-import "./Player/GameMode";
-import "./World/AutoTool";
-import "./Misc/Bot";
-import "./World/FastBreak";
-import "./Misc/Xray";
-import "./Movement/World Border";
-import "./Misc/Disabler";
-import "./Movement/ClientAuth";

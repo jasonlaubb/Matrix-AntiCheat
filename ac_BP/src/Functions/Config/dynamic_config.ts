@@ -25,12 +25,12 @@ export async function initialize() {
 export default class Dynamic {
     static readonly config = (): typeof defaultConfig => common;
     static readonly default = (): typeof defaultConfig => config;
-    static get(key: string[]) {
-        let current = common;
+    static get(key: string[]): string | boolean | number | (string | boolean | number)[] {
+        let current: any = common;
 
         for (let i = 0; i < key.length; i++) {
             current = (current as { [key: string]: any })[key[i]];
-            if (!current) return null;
+            if (!current && current !== false) return undefined; 
         }
 
         return current as unknown as string | boolean | number | (string | boolean | number)[];

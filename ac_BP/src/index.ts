@@ -5,37 +5,44 @@
  * @license AGPLv3
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
-const runTime = Date.now();
-import * as Minecraft from "@minecraft/server";
-import { initialize } from "./Functions/Config/dynamic_config";
-import { intilizeModules } from "./Modules/Modules";
-import Dynamic from "./Functions/Config/dynamic_config";
+
+const init = {
+    initialized: false,
+    runTime: Date.now()
+};
 Minecraft.system.beforeEvents.watchdogTerminate.subscribe((event) => {
     event.cancel = true;
 });
-const init = { initialized: false };
 Minecraft.world.afterEvents.worldInitialize.subscribe(async () => {
     // Initialize the anticheat.
     initialize();
     init.initialized = true;
+    Minecraft.world.modules = [];
     const config = Dynamic.config();
     if (config.createScoreboard && !Minecraft.world.scoreboard.getObjective("matrix:api")) {
         Minecraft.world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
     }
     // Import the import
     await importModules()
-    intilizeModules().then((amount) => {
-        if (config.sendInitMsg) Minecraft.world.sendMessage({ rawtext: [
-            {
-                text: `§bMatrix §7>§g `
-            },
-            {
-                translate: "index.initmodules",
-                with: [amount.toString(), (Date.now() - runTime).toString()]
-            }
-        ]});
-    });
-    console.log("Matrix has been completely initialized in " + (Date.now() - runTime) + "ms");
+    const moduleAmount = await intilizeModules()
+
+    if (config.sendModuleInitMsg) Minecraft.world.sendMessage({ rawtext: [
+        {
+            text: `§bMatrix §7>§g `
+        },
+        {
+            translate: "index.initmodules",
+            with: [moduleAmount.toString(), (Date.now() - init.runTime).toString()]
+        }
+    ]});
+
+    if (config.sendInitMsg) {
+        const initTakeTime = Date.now() - init.runTime;
+        Minecraft.system.runTimeout(() => {
+            console.warn("Matrix has been completely initialized in " + initTakeTime + "ms");
+        }, 40);
+        Minecraft.world.sendMessage("§bMatrix §7>§g Matrix has been completely initialized in " + initTakeTime + "ms");
+    }
 });
 export default class Index {
     private constructor () {}
@@ -51,71 +58,26 @@ export default class Index {
         }, 1);
     });
     static get initializeDate (): number {
-        return runTime;
+        return init.runTime;
     }
 }
-/*
-import "./Assets/LatinNormalize";
-import "./Assets/Language";
-import "./Assets/Public";
-import "./Functions/chatModel/ChatHandler";
-import "./Functions/moderateModel/banHandler";
-import "./Functions/moderateModel/freezeHandler";
-import "./Functions/moderateModel/eventHandler";
-import "./Functions/moderateModel/dimensionLock";
-import "./Functions/moderateModel/lockDown";
-import "./Functions/moderateModel/log";
-import "./Functions/chatModel/Commands/helps/about";
-import "./Functions/chatModel/Commands/helps/help";
-import "./Functions/chatModel/Commands/moderations/op";
-import "./Functions/chatModel/Commands/moderations/deop";
-import "./Functions/chatModel/Commands/moderations/rank";
-import "./Functions/chatModel/Commands/moderations/rankclear";
-import "./Functions/chatModel/Commands/moderations/ban";
-import "./Functions/chatModel/Commands/moderations/banqueue";
-import "./Functions/chatModel/Commands/moderations/bypasslist";
-import "./Functions/chatModel/Commands/moderations/unban";
-import "./Functions/chatModel/Commands/moderations/tempkick";
-import "./Functions/chatModel/Commands/moderations/mute";
-import "./Functions/chatModel/Commands/moderations/unmute";
-import "./Functions/chatModel/Commands/moderations/echestwipe";
-import "./Functions/chatModel/Commands/moderations/freeze";
-import "./Functions/chatModel/Commands/moderations/unfreeze";
-import "./Functions/chatModel/Commands/moderations/invsee";
-import "./Functions/chatModel/Commands/moderations/invcopy";
-import "./Functions/chatModel/Commands/moderations/vanish";
-import "./Functions/chatModel/Commands/moderations/unvanish";
-import "./Functions/chatModel/Commands/settings/toggles";
-import "./Functions/chatModel/Commands/settings/toggle";
-import "./Functions/chatModel/Commands/settings/passwords";
-import "./Functions/chatModel/Commands/settings/flagmode";
-import "./Functions/chatModel/Commands/settings/defaultrank";
-import "./Functions/chatModel/Commands/settings/showallrank";
-import "./Functions/chatModel/Commands/settings/reset";
-import "./Functions/chatModel/Commands/settings/banrun";
-import "./Functions/chatModel/Commands/settings/lockdown";
-import "./Functions/chatModel/Commands/settings/lockdowncode";
-import "./Functions/chatModel/Commands/settings/unlock";
-import "./Functions/chatModel/Commands/settings/antispam";
-import "./Functions/chatModel/Commands/settings/config";
-import "./Functions/chatModel/Commands/settings/setutil";
-import "./Functions/chatModel/Commands/settings/setprefix";
-import "./Functions/chatModel/Commands/utilities/adminchat";
-import "./Functions/chatModel/Commands/utilities/itemui";
-import "./Functions/chatModel/Commands/utilities/matrixui";
-import "./Functions/chatModel/Commands/utilities/openlog";
-import "./Functions/chatModel/Commands/utilities/packetlogger";
-*/
+
+export const ob = new Object();
+
+// All the file need to be launched
 async function importModules() {
+    // Assets
     await import("./Assets/LatinNormalize");
     await import("./Assets/Language");
     await import("./Assets/Public");
+    // Script unctions
     await import("./Functions/chatModel/ChatHandler");
     await import("./Functions/moderateModel/banHandler");
     await import("./Functions/moderateModel/freezeHandler");
     await import("./Functions/moderateModel/dimensionLock");
     await import("./Functions/moderateModel/lockDown");
     await import("./Functions/moderateModel/log");
+    // Register commands
     await import("./Functions/chatModel/Commands/helps/about");
     await import("./Functions/chatModel/Commands/helps/help");
     await import("./Functions/chatModel/Commands/moderations/op");
@@ -156,4 +118,36 @@ async function importModules() {
     await import("./Functions/chatModel/Commands/utilities/matrixui");
     await import("./Functions/chatModel/Commands/utilities/openlog");
     await import("./Functions/chatModel/Commands/utilities/packetlogger");
+    // Register the modules
+    await import("./Modules/Combat/Auto Clicker");
+    await import("./Modules/Combat/Kill Aura");
+    await import("./Modules/Combat/Reach");
+    await import("./Modules/Combat/Aim");
+    await import("./Modules/Misc/Spammer");
+    await import("./Modules/Movement/Fly");
+    await import("./Modules/Movement/NoFall");
+    await import("./Modules/Movement/Timer");
+    await import("./Modules/Movement/NoClip");
+    await import("./Modules/Movement/Speed");
+    await import("./Modules/Movement/NoSlow");
+    await import("./Modules/Movement/ElytraFly");
+    await import("./Modules/World/Nuker");
+    await import("./Modules/World/Scaffold");
+    await import("./Modules/World/Tower");
+    await import("./Modules/World/Breaker");
+    await import("./Modules/Player/Illegal Item");
+    await import("./Modules/Player/NameSpoof");
+    await import("./Modules/Player/FastUse");
+    await import("./Modules/Player/GameMode");
+    await import("./Modules/World/AutoTool");
+    await import("./Modules/Misc/Bot");
+    await import("./Modules/World/FastBreak");
+    await import("./Modules/Misc/Xray");
+    await import("./Modules/Movement/World Border");
+    await import("./Modules/Misc/Disabler");
+    await import("./Modules/Movement/ClientAuth");
 }
+import * as Minecraft from "@minecraft/server";
+import { initialize } from "./Functions/Config/dynamic_config";
+import { intilizeModules } from "./Modules/Modules";
+import Dynamic from "./Functions/Config/dynamic_config";

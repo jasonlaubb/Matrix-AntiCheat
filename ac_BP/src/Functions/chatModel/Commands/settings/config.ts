@@ -19,7 +19,7 @@ registerCommand(
             const [type, key, value] = args;
             const loc = key.split(".");
             const path = Dynamic.get(loc);
-            if (!path) return player.sendMessage(new rawstr(true, "c").tra("config.nullpath", key).parse());
+            if (path === undefined) return player.sendMessage(new rawstr(true, "c").tra("config.nullpath", key).parse());
             if (!Array.isArray(path) && !["string", "number", "boolean"].includes(typeof path)) return player.sendMessage(new rawstr(true, "c").tra("config.invalidpath", typeof path).parse());
             switch (type) {
                 case "string": {
@@ -27,8 +27,8 @@ registerCommand(
                     break;
                 }
                 case "boolean": {
-                    if (value != "true" && value != "false" && value != "undefined") return player.sendMessage(new rawstr(true, "c").tra("config.nan").parse());
-                    Dynamic.set(loc, value == "undefined" ? undefined : value == "true");
+                    if (value != "true" && value != "false" && value != "undefined") return player.sendMessage(new rawstr(true, "c").tra("config.nab").parse());
+                    Dynamic.set(loc, value == "true");
                     break;
                 }
                 case "number": {

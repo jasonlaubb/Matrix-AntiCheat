@@ -2,24 +2,23 @@ import { Player } from "@minecraft/server";
 import Dynamic from "../Config/dynamic_config";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { rawstr } from "../../Assets/Util";
-import { triggerCommand } from "../chatModel/CommandHandler";
-export function configUI(player: Player, path?: string[]) {
+import { error, triggerCommand } from "../chatModel/CommandHandler";
+export async function configUI(player: Player, path?: string[]) {
     if (!path) {
         selector(player, []);
         return;
     }
-
-    if (!Array.isArray(Dynamic.get(path)) && typeof Dynamic.get(path) == "object") {
-        selector(player, path);
-    } else {
+    const pvalue = Dynamic.get(path);
+    if (Array.isArray(pvalue) || typeof pvalue == "string" || typeof pvalue == "number" || typeof pvalue == "boolean" || pvalue === undefined) {
         editor(player, path);
+    } else {
+        selector(player, path);
     }
 }
-
 function selector(player: Player, path: string[]) {
     const object = Dynamic.get(path);
     const lulka = Object.entries(object).map((entries): [string, string] => {
-        if (!entries) {
+        if (entries[1] === undefined) {
             entries[1] = "§cundefined";
         } else if (Array.isArray(entries[1])) {
             if (entries[1].length > 0) {
@@ -54,12 +53,12 @@ function selector(player: Player, path: string[]) {
         if (data.canceled) return;
         const selection = lulka[data.selection];
         if (!selection) return;
-        configUI(player, path.concat(selection[0]));
+        configUI(player, [...path, selection[0]]).catch(e => error(player, e));
     });
 }
 const strtypes = ["string", "number", "boolean", "array"];
-const boltypes = ["true", "false", "undefined"];
-function editor(player: Player, path: string[]) {
+const boltypes = ["true", "false"];
+async function editor(player: Player, path: string[]) {
     new ModalFormData()
         .title(rawstr.drt("ui.config.editor"))
         .dropdown(

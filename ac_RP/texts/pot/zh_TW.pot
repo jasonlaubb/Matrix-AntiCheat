@@ -13,12 +13,8 @@ msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr "§bMatrix §7> §c你已被強制斷開連線§r"
 
 #: json.packet
-msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from %3"
+msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from "
 msgstr ""
-
-#: crash.reload
-msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
-msgstr "§cMatrix 防外掛已經崩潰, 使用 /reload 來恢復§r"
 
 #: index.initmodules
 msgid "Intilized %1 module(s) in %2ms."
