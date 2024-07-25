@@ -5,7 +5,15 @@
             "identifier":"minecraft:command_block_minecart",
             "is_spawnable": false,
             "is_summonable": false,
-            "is_experimental": false
+            "is_experimental": false,
+            "scripts": {
+                "animate": [
+                    "despawn"
+                ]
+            },
+            "animations": {
+                "despawn": "controller.animation.despawn"
+            }
         },
         "components": {
             "minecraft:instant_despawn":{

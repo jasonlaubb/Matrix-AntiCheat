@@ -8,8 +8,7 @@
             "is_experimental": false,
             "scripts": {
                 "animate": [
-                    "anti_disable",
-                    "superlative_pack",
+                    "everytick",
                     "may_fly",
                     "alive",
                     "gliding",
@@ -23,6 +22,11 @@
                     "sprinting",
                     "swimming",
                     "using_item",
+                    "eating",
+                    "emoting",
+                    "digging",
+                    "ignited",
+                    "wet",
                     "north",
                     "east",
                     "south",
@@ -30,8 +34,7 @@
                 ]
             },
             "animations": {
-                "anti_disable": "animation.anti_disable",
-                "superlative_pack": "animation.superlative_pack",
+                "everytick": "animation.everytick",
                 "may_fly": "controller.animation.may_fly",
                 "alive": "controller.animation.alive",
                 "attack_time": "controller.animation.attack_time",
@@ -46,6 +49,11 @@
                 "swimming": "controller.animation.swimming",
                 "sleeping": "controller.animation.sleeping",
                 "using_item": "controller.animation.using_item",
+                "eating": "controller.animation.eating",
+                "emoting": "controller.animation.emoting",
+                "digging": "controller.animation.digging",
+                "ignited": "controller.animation.ignited",
+                "wet": "controller.animation.wet",
                 "north": "controller.animation.facing_north",
                 "east": "controller.animation.facing_east",
                 "south": "controller.animation.facing_south",

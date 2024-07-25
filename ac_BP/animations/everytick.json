@@ -1,9 +1,9 @@
 {
 	"format_version": "1.10.0",
 	"animations": {
-		"animation.anti_disable": {
+		"animation.everytick": {
 			"timeline": {
-				"0.0": ["/gamerule randomtickspeed 1"]
+				"0.0": ["/gamerule randomtickspeed 1", "/gamerule functioncommandlimit 10000"]
 			},
 			"animation_length": 0.05,
 			"loop": true

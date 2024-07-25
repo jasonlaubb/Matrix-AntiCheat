@@ -12,6 +12,10 @@ msgstr "§7§¶Minecraft Bedrock向け究極のアンチチートソリューシ
 msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr "§bMatrix §7> §c一時的にキックされました。§r"
 
+#: json.packet
+msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from %3"
+msgstr ""
+
 #: crash.reload
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr "§cMatrix AntiCheat がクラッシュしました！/reload を実行して復旧してください§r"
@@ -429,7 +433,7 @@ msgid "There is no player in unban queue"
 msgstr "アンバンキューにプレイヤーはいません"
 
 #: toggles.already
-msgid "This module is already %sd"
+msgid "This module is %sd already"
 msgstr "このモジュールは既に %sd です"
 
 #: toggles.toggle

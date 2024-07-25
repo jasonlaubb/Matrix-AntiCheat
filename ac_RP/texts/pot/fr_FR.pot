@@ -12,6 +12,10 @@ msgstr "§7§¶Le Meilleur Auti-Cheat pour Minecraft Bedrock §c(Beta-API requis
 msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr ""
 
+#: json.packet
+msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from %3"
+msgstr ""
+
 #: crash.reload
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr "§cMatrix Anti-Cheat viens de crash! Faîte /reload pour recharger§r"

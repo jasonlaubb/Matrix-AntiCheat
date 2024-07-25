@@ -203,7 +203,7 @@ import "./Combat/Aim";
 import "./Misc/Spammer";
 import "./Movement/Fly";
 import "./Movement/NoFall";
-import "./Movement/Timer"; //* Timer > NoClip
+import "./Movement/Timer";
 import "./Movement/NoClip";
 import "./Movement/Speed";
 import "./Movement/NoSlow";
@@ -211,7 +211,6 @@ import "./Movement/ElytraFly";
 import "./World/Nuker";
 import "./World/Scaffold";
 import "./World/Tower";
-import "./World/CommandBlockExplolit";
 import "./World/Breaker";
 import "./Player/BlockReach";
 import "./Player/Illegal Item";

@@ -1,0 +1,13 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+        "controller.animation.despawn": {
+            "initial_state": "default",
+            "states": {
+                "default": {
+                    "on_entry": ["/kill @s"]
+                }
+            }
+        }
+    }
+}
