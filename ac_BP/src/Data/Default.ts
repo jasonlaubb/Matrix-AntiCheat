@@ -17,11 +17,6 @@ export default {
             usingHash: false,
         },
         prefix: "-",
-        about: {
-            enabled: true,
-            adminOnly: false,
-            requireTag: [],
-        },
         help: {
             enabled: true,
             adminOnly: true,

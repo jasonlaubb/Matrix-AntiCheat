@@ -143,11 +143,12 @@ function unlisten(id: string) {
     const index = world.modules.findIndex((a) => a.id == id);
     const module = world.modules[index];
     if (!module) throw "Unlisten :: " + id + " :: No result";
-    if (!module?.enabled) "Unlisten :: " + id + " :: Already disabled";
-    for (const num of module.runId) {
+    if (!module?.enabled) throw "Unlisten :: " + id + " :: Already disabled";
+
+    for (const num of module?.runId) {
         system.clearRun(num);
     }
-    for (const wor of module.worldEvent) {
+    for (const wor of module?.worldEvent) {
         wor.worldSignal.unsubscribe(wor.then);
     }
     for (const clear of module?.mapclears ?? []) {
