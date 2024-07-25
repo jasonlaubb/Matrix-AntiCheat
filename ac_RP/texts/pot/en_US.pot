@@ -20,6 +20,10 @@ msgstr ""
 msgid "§cMatrix AntCheat has crashed! Do /reload to recover§r"
 msgstr ""
 
+#: index.initmodules
+msgid "Intilized %1 module(s) in %2ms."
+msgstr ""
+
 #: function.check.title
 msgid "Anti-Cheat setup checking:"
 msgstr ""
@@ -616,12 +620,32 @@ msgstr ""
 msgid "You have stated that the value is a number, but your value is not a number"
 msgstr ""
 
+#: config.nab
+msgid "You have stated that the value is a boolean, but your value is not in a range of true, false and undefined"
+msgstr ""
+
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
 msgstr ""
 
 #: config.set
 msgid "Sucessfully set '%1' to '%2'"
+msgstr ""
+
+#: packetlogger.add
+msgid "You have been given the packet logger permission"
+msgstr ""
+
+#: packetlogger.remove
+msgid "You have removed the packet logger permission"
+msgstr ""
+
+#: setprefix.set
+msgid "You have set the prefix to %s"
+msgstr ""
+
+#: setprefix.reset
+msgid "You have reset the prefix to %s"
 msgstr ""
 
 #: target.selfselect

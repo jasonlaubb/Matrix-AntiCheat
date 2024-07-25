@@ -616,6 +616,10 @@ msgstr "JSONオブジェクトを含むパスは選択できません。"
 msgid "You have stated that the value is a number, but your value is not a number"
 msgstr "値は数値でなければなりませんが、数値以外の値が入力されています"
 
+#: config.nab
+msgid "You have stated that the value is a boolean, but your value is not in a range of true, false and undefined"
+msgstr ""
+
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
 msgstr "無効な配列が入力されました。正しい例: 'abc','def',1.52,3"
@@ -623,6 +627,22 @@ msgstr "無効な配列が入力されました。正しい例: 'abc','def',1.52
 #: config.set
 msgid "Sucessfully set '%1' to '%2'"
 msgstr "'%1' が '%2' に設定されました"
+
+#: packetlogger.add
+msgid "You have been given the packet logger permission"
+msgstr ""
+
+#: packetlogger.remove
+msgid "You have removed the packet logger permission"
+msgstr ""
+
+#: setprefix.set
+msgid "You have set the prefix to %s"
+msgstr ""
+
+#: setprefix.reset
+msgid "You have reset the prefix to %s"
+msgstr ""
 
 #: target.selfselect
 msgid "You can't select yourself as the target."

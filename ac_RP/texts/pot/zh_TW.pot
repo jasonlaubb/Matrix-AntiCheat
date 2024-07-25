@@ -616,6 +616,10 @@ msgstr "你不能選擇一個含有JSON物件的路徑"
 msgid "You have stated that the value is a number, but your value is not a number"
 msgstr "你已經指明該數值是一個數字, 但是你的數值不是一個數字"
 
+#: config.nab
+msgid "You have stated that the value is a boolean, but your value is not in a range of true, false and undefined"
+msgstr ""
+
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
 msgstr "你提供了一個無效的陣列, 正確的示範: 'abc','def',1.52"
@@ -623,6 +627,22 @@ msgstr "你提供了一個無效的陣列, 正確的示範: 'abc','def',1.52"
 #: config.set
 msgid "Sucessfully set '%1' to '%2'"
 msgstr "成功設置 '%1' 到 '%2'"
+
+#: packetlogger.add
+msgid "You have been given the packet logger permission"
+msgstr ""
+
+#: packetlogger.remove
+msgid "You have removed the packet logger permission"
+msgstr ""
+
+#: setprefix.set
+msgid "You have set the prefix to %s"
+msgstr ""
+
+#: setprefix.reset
+msgid "You have reset the prefix to %s"
+msgstr ""
 
 #: target.selfselect
 msgid "You can't select yourself as the target."

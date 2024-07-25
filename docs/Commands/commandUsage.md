@@ -557,3 +557,15 @@ Open the log record in a gui of the anticheat.
 Args: `No args`
 
 Example: `<prefix>openlog`
+
+# Packetlogger
+
+- Description
+
+Get or remove the packet logger permission.
+
+- Usage
+
+Args: `No args`
+
+Example: `<prefix>packetlogger`

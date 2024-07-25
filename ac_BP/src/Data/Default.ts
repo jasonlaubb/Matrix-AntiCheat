@@ -4,6 +4,7 @@
  * @warning NEVER CHANGE THIS FILE IF YOU DON'T KNOW WHAT YOU ARE DOING
  */
 export default {
+    sendInitMsg: true,
     createScoreboard: true,
     flagMode: "admin",
     lockdowncode: "AbCdEfGh",
@@ -208,6 +209,16 @@ export default {
             requireTag: [],
         },
         bypasslist: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        packetlogger: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        setprefix: {
             enabled: true,
             adminOnly: true,
             requireTag: [],

@@ -43,6 +43,7 @@ export enum MatrixUsedTags {
     knockBack = "matrix:knockback",
     verified = "matrix:verified",
     slime = "matrix:slime",
+    packetlogger = "matrix:packetLogger",
 }
 
 export enum MatrixEvents {
