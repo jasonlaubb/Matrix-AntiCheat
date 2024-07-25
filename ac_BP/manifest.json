@@ -8,7 +8,7 @@
         "min_engine_version": [1, 21, 0]
     },
     "metadata": {
-        "authors": ["jasonlaubb, Hutao999999, ravriv, RaMiGamerDev, notthinghere, amico_nabbo, kris02, Selder578"],
+        "authors": ["jasonlaubb"],
         "license": "AGPLv3",
         "url": "https://github.com/jasonlaubb/Matrix-AntiCheat"
     },
