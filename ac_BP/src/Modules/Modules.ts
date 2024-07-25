@@ -1,5 +1,4 @@
 import { c, isAdmin } from "../Assets/Util";
-import Index from "../index";
 import { EntityEventOptions, EntityQueryOptions, Player, system, world } from "@minecraft/server";
 import Default from "../Data/Default";
 import { sendErr } from "../Functions/chatModel/CommandHandler";
@@ -13,8 +12,6 @@ export async function registerModule(id: string, checkAdmin: boolean, varargs: (
     const tickEvent = (event as TickEvent[]).filter((ev) => ev?.tickInterval);
     const worldEvent = (event as WorldEvent[]).filter((ev) => ev?.worldSignal);
     const intilizeEvent = (event as IntilizeEvent[]).filter((ev) => ev?.runAfterSubsribe);
-    // Wait until world is ready
-    await Index.initializeAsync();
     antiCheatModules.push({
         id: id,
         checkAdmin: checkAdmin,
