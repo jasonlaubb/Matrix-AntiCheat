@@ -2,11 +2,12 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate =
+export type Translate = 
     | "pack.description"
     | "disconnectionScreen.unexpectedPacket"
     | "json.packet"
     | "index.initmodules"
+    | "index.complete"
     | "function.check.title"
     | "function.check.betaapi"
     | "function.check.helpa"
@@ -173,4 +174,4 @@ export type Translate =
     | "ui.config.desc"
     | "ui.config.type"
     | "ui.config.value"
-    | "common.unknown";
+    | "common.unknown"

@@ -13,11 +13,15 @@ msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr ""
 
 #: json.packet
-msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from "
+msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from %3"
 msgstr ""
 
 #: index.initmodules
 msgid "Intilized %1 module(s) in %2ms."
+msgstr ""
+
+#: index.complete
+msgid "Matrix has been completely initialized in %s ms"
 msgstr ""
 
 #: function.check.title
