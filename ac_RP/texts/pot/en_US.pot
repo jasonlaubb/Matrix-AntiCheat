@@ -7,7 +7,7 @@
 #: pack.description
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
 msgstr ""
-
+/tellraw @a[tag=matrix:packetLogger] {"rawtext":[{"translate":"json.packet","with":["EATING","REMOVE",{"rawtext":[{"selector":"@s"}]}]}]}
 #: disconnectionScreen.unexpectedPacket
 msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr ""

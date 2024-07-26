@@ -36,7 +36,7 @@ class Matrix_Anti_Cheat {
                                 {
                                     translate: "index.complete",
                                     with: [initTakeTime.toString()],
-                                },
+                                }
                             ],
                         });
                     }
