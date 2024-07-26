@@ -10,14 +10,14 @@ class Matrix_Anti_Cheat {
         runTime: Date.now(),
     };
     public constructor() {
-        Minecraft.system.beforeEvents.watchdogTerminate.subscribe((event) => {
+        const { system, world } = Minecraft;
+        system.beforeEvents.watchdogTerminate.subscribe((event) => {
             event.cancel = true;
         });
-        Minecraft.world.afterEvents.worldInitialize.subscribe(() => {
-            // Initialize the anticheat.
+        world.afterEvents.worldInitialize.subscribe(() => {
             initialize();
             Matrix_Anti_Cheat.init.initialized = true;
-            Minecraft.world.modules = [];
+            world.modules = [];
             // Launch the anticheat.
             this.importAll()
                 .catch((e) => console.error(e))
@@ -25,10 +25,10 @@ class Matrix_Anti_Cheat {
                     // Log the initialization time.
                     if (Dynamic.config().sendInitMsg) {
                         const initTakeTime = Date.now() - Matrix_Anti_Cheat.init.runTime;
-                        Minecraft.system.runTimeout(() => {
+                        system.runTimeout(() => {
                             console.log("Matrix has been completely initialized in " + initTakeTime + "ms");
                         }, 40);
-                        Minecraft.world.sendMessage({
+                        world.sendMessage({
                             rawtext: [
                                 {
                                     text: `§bMatrix §7>§g `,
