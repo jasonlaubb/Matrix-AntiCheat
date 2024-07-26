@@ -299,7 +299,7 @@
                 "eating": {
                     "transitions": [
                         {
-                            "is_facing": "!query.is_eating"
+                            "default": "!query.is_eating"
                         }
                     ],
                     "on_entry": ["/tag @s add eating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"EATING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
@@ -319,7 +319,7 @@
                 "eating": {
                     "transitions": [
                         {
-                            "is_facing": "!query.is_emoting"
+                            "default": "!query.is_emoting"
                         }
                     ],
                     "on_entry": ["/tag @s add emoting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"EMOTING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
@@ -339,7 +339,7 @@
                 "eating": {
                     "transitions": [
                         {
-                            "is_facing": "!query.is_digging"
+                            "default": "!query.is_digging"
                         }
                     ],
                     "on_entry": ["/tag @s add digging", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"DIGGING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
@@ -359,7 +359,7 @@
                 "eating": {
                     "transitions": [
                         {
-                            "is_facing": "!query.is_ignited && !query.is_on_fire"
+                            "default": "!query.is_ignited && !query.is_on_fire"
                         }
                     ],
                     "on_entry": ["/tag @s add ignited", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"IGNITED\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
@@ -379,7 +379,7 @@
                 "eating": {
                     "transitions": [
                         {
-                            "is_facing": "!query.is_in_contact_with_water"
+                            "default": "!query.is_in_contact_with_water"
                         }
                     ],
                     "on_entry": ["/tag @s add wet", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"WET\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
