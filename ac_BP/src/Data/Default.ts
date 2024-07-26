@@ -262,9 +262,9 @@ export default {
         },
         spamFilter: {
             enabled: true,
-            maxRepeats: 3,
+            maxRepeats: 4,
             maxLength: 128,
-            maxMessagesInFiveSeconds: 3,
+            maxMessagesInFiveSeconds: 2,
         },
     },
     dimensionLock: {
