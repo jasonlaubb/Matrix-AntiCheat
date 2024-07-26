@@ -1,11 +1,9 @@
 /**
  * @author jasonlaubb
- * @contributors ravriv, Hutao999999, RaMiGamerDev, notthinghere
- * @translate amico_nabbo, kris02, Selder578
+ * @contributors https://github.com/jasonlaubb/Matrix-AntiCheat?tab=readme-ov-file#developers
  * @license AGPLv3
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
-
 const init = {
     initialized: false,
     runTime: Date.now()
@@ -23,25 +21,32 @@ Minecraft.world.afterEvents.worldInitialize.subscribe(async () => {
         Minecraft.world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
     }
     // Import the import
-    await importModules()
+    await Matrix終於可以啟動了啊_讓外掛感受真正的防掛吧_hehehehe_Made_by_jasonlaubb ()
     const moduleAmount = await intilizeModules()
-
+    const initTakeTime = Date.now() - init.runTime;
     if (config.sendModuleInitMsg) Minecraft.world.sendMessage({ rawtext: [
         {
             text: `§bMatrix §7>§g `
         },
         {
             translate: "index.initmodules",
-            with: [moduleAmount.toString(), (Date.now() - init.runTime).toString()]
+            with: [moduleAmount.toString(), initTakeTime.toString()]
         }
     ]});
 
     if (config.sendInitMsg) {
-        const initTakeTime = Date.now() - init.runTime;
         Minecraft.system.runTimeout(() => {
             console.warn("Matrix has been completely initialized in " + initTakeTime + "ms");
         }, 40);
-        Minecraft.world.sendMessage("§bMatrix §7>§g Matrix has been completely initialized in " + initTakeTime + "ms");
+        Minecraft.world.sendMessage({ rawtext: [
+            {
+                text: `§bMatrix §7>§g `
+            },
+            {
+                translate: "index.complete",
+                with: [initTakeTime.toString()]
+            }
+        ]});
     }
 });
 export default class Index {
@@ -64,8 +69,8 @@ export default class Index {
 
 export const ob = new Object();
 
-// All the file need to be launched
-async function importModules() {
+// Don't change the name of this function, jasonlaubb won't be happy >:(
+async function Matrix終於可以啟動了啊_讓外掛感受真正的防掛吧_hehehehe_Made_by_jasonlaubb () {
     // Assets
     await import("./Assets/LatinNormalize");
     await import("./Assets/Language");
