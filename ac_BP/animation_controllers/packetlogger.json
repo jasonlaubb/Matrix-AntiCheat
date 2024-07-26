@@ -9,7 +9,7 @@
                             "may_fly": "query.can_fly"
                         }
                     ],
-                    "on_entry": ["/tag @s remove may_fly", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"MAY_FLY\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove may_fly", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"MAY_FLY\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "may_fly": {
                     "transitions": [
@@ -17,7 +17,7 @@
                             "default": "!query.can_fly"
                         }
                     ],
-                    "on_entry": ["/tag @s add may_fly", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"MAY_FLY\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add may_fly", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"MAY_FLY\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -29,7 +29,7 @@
                             "alive": "query.is_alive"
                         }
                     ],
-                    "on_entry": ["/tag @s remove alive", "/tag @s add dead", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"ALIVE\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove alive", "/tag @s add dead", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"ALIVE\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "alive": {
                     "transitions": [
@@ -41,7 +41,7 @@
                         "/tag @s add alive",
                         "/tag @s remove dead",
                         "/tag @s remove moving",
-                        "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"ALIVE\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"
+                        "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"ALIVE\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"
                     ]
                 }
             }
@@ -54,7 +54,7 @@
                             "attack_time": "variable.attack_time"
                         }
                     ],
-                    "on_entry": ["/tag @s remove attackTime", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"ATTACK_TIME\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove attackTime", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"ATTACK_TIME\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "attack_time": {
                     "transitions": [
@@ -62,7 +62,7 @@
                             "default": "!variable.attack_time"
                         }
                     ],
-                    "on_entry": ["/tag @s add attackTime", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"ATTACK_TIME\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add attackTime", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"ATTACK_TIME\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -74,7 +74,7 @@
                             "gliding": "query.is_gliding"
                         }
                     ],
-                    "on_entry": ["/tag @s remove gliding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"GLIDING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove gliding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"GLIDING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "gliding": {
                     "transitions": [
@@ -82,7 +82,7 @@
                             "default": "!query.is_gliding"
                         }
                     ],
-                    "on_entry": ["/tag @s add gliding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"GLIDING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add gliding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"GLIDING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -94,7 +94,7 @@
                             "jumping": "query.is_jumping"
                         }
                     ],
-                    "on_entry": ["/tag @s remove jumping", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"JUMPING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove jumping", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"JUMPING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "jumping": {
                     "transitions": [
@@ -102,7 +102,7 @@
                             "default": "!query.is_jumping && query.is_on_ground"
                         }
                     ],
-                    "on_entry": ["/tag @s add jumping", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"JUMPING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add jumping", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"JUMPING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -114,7 +114,7 @@
                             "levitating": "query.is_levitating"
                         }
                     ],
-                    "on_entry": ["/tag @s remove levitating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"LEVITATING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove levitating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"LEVITATING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "levitating": {
                     "transitions": [
@@ -122,7 +122,7 @@
                             "default": "!query.is_levitating"
                         }
                     ],
-                    "on_entry": ["/tag @s add levitating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"LEVITATING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add levitating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"LEVITATING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -134,7 +134,7 @@
                             "moving": "query.is_moving"
                         }
                     ],
-                    "on_entry": ["/tag @s remove moving", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"MOVING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove moving", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"MOVING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "moving": {
                     "transitions": [
@@ -142,7 +142,7 @@
                             "default": "!query.is_moving"
                         }
                     ],
-                    "on_entry": ["/tag @s add moving", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"MOVING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add moving", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"MOVING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -154,7 +154,7 @@
                             "on_ground": "query.is_on_ground"
                         }
                     ],
-                    "on_entry": ["/tag @s remove isOnGround", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"ON_GROUND\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove isOnGround", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"ON_GROUND\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "on_ground": {
                     "transitions": [
@@ -162,7 +162,7 @@
                             "default": "!query.is_on_ground"
                         }
                     ],
-                    "on_entry": ["/tag @s add isOnGround", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"ON_GROUND\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add isOnGround", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"ON_GROUND\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -174,7 +174,7 @@
                             "riding": "query.is_riding"
                         }
                     ],
-                    "on_entry": ["/tag @s remove riding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"RIDING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove riding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"RIDING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "riding": {
                     "transitions": [
@@ -182,7 +182,7 @@
                             "default": "!query.is_riding"
                         }
                     ],
-                    "on_entry": ["/tag @s add riding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"RIDING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add riding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"RIDING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -194,7 +194,7 @@
                             "sneaking": "query.is_sneaking"
                         }
                     ],
-                    "on_entry": ["/tag @s remove sneaking", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"SNEAKING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove sneaking", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"SNEAKING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "sneaking": {
                     "transitions": [
@@ -202,7 +202,7 @@
                             "default": "!query.is_sneaking"
                         }
                     ],
-                    "on_entry": ["/tag @s add sneaking", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"SNEAKING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add sneaking", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"SNEAKING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -214,7 +214,7 @@
                             "sprinting": "query.is_sprinting"
                         }
                     ],
-                    "on_entry": ["/tag @s remove sprinting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"SPRINTING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove sprinting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"SPRINTING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "sprinting": {
                     "transitions": [
@@ -222,7 +222,7 @@
                             "default": "!query.is_sprinting"
                         }
                     ],
-                    "on_entry": ["/tag @s add sprinting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"SPRINTING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add sprinting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"SPRINTING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -234,7 +234,7 @@
                             "swimming": "query.is_swimming || query.is_in_water"
                         }
                     ],
-                    "on_entry": ["/tag @s remove swimming", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"SWIMMING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove swimming", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"SWIMMING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "swimming": {
                     "transitions": [
@@ -242,7 +242,7 @@
                             "default": "!query.is_swimming && !query.is_in_water"
                         }
                     ],
-                    "on_entry": ["/tag @s add swimming", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"SWIMMING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add swimming", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"SWIMMING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -254,7 +254,7 @@
                             "sleeping": "query.is_sleeping"
                         }
                     ],
-                    "on_entry": ["/tag @s remove sleeping", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"SLEEPING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove sleeping", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"SLEEPING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "sleeping": {
                     "transitions": [
@@ -262,7 +262,7 @@
                             "default": "!query.is_sleeping"
                         }
                     ],
-                    "on_entry": ["/tag @s add sleeping", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"SLEEPING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add sleeping", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"SLEEPING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -274,7 +274,7 @@
                             "using_item": "query.is_using_item && query.get_equipped_item_name != 'fishing_rod'"
                         }
                     ],
-                    "on_entry": ["/tag @s remove using_item", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"USING_ITEM\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove using_item", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"USING_ITEM\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "using_item": {
                     "transitions": [
@@ -282,7 +282,7 @@
                             "default": "!query.is_using_item"
                         }
                     ],
-                    "on_entry": ["/tag @s add using_item", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"USING_ITEM\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add using_item", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"USING_ITEM\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -294,7 +294,7 @@
                             "eating": "query.is_eating"
                         }
                     ],
-                    "on_entry": ["/tag @s remove eating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"EATING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove eating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"EATING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "eating": {
                     "transitions": [
@@ -302,7 +302,7 @@
                             "default": "!query.is_eating"
                         }
                     ],
-                    "on_entry": ["/tag @s add eating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"EATING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add eating", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"EATING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -311,18 +311,18 @@
                 "default": {
                     "transitions": [
                         {
-                            "eating": "query.is_emoting"
+                            "emoting": "query.is_emoting"
                         }
                     ],
-                    "on_entry": ["/tag @s remove emoting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"EMOTING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove emoting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"EMOTING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
-                "eating": {
+                "emoting": {
                     "transitions": [
                         {
                             "default": "!query.is_emoting"
                         }
                     ],
-                    "on_entry": ["/tag @s add emoting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"EMOTING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add emoting", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"EMOTING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -331,18 +331,18 @@
                 "default": {
                     "transitions": [
                         {
-                            "eating": "query.is_digging"
+                            "digging": "query.is_digging"
                         }
                     ],
-                    "on_entry": ["/tag @s remove digging", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"DIGGING\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove digging", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"DIGGING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
-                "eating": {
+                "digging": {
                     "transitions": [
                         {
                             "default": "!query.is_digging"
                         }
                     ],
-                    "on_entry": ["/tag @s add digging", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"DIGGING\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add digging", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"DIGGING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -351,18 +351,18 @@
                 "default": {
                     "transitions": [
                         {
-                            "eating": "query.is_ignited || query.is_on_fire"
+                            "ignited": "query.is_ignited || query.is_on_fire"
                         }
                     ],
-                    "on_entry": ["/tag @s remove ignited", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"IGNITED\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove ignited", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"IGNITED\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
-                "eating": {
+                "ignited": {
                     "transitions": [
                         {
                             "default": "!query.is_ignited && !query.is_on_fire"
                         }
                     ],
-                    "on_entry": ["/tag @s add ignited", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"IGNITED\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add ignited", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"IGNITED\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -371,18 +371,18 @@
                 "default": {
                     "transitions": [
                         {
-                            "eating": "query.is_in_contact_with_water"
+                            "wet": "query.is_in_contact_with_water"
                         }
                     ],
-                    "on_entry": ["/tag @s remove wet", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"WET\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove wet", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"WET\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
-                "eating": {
+                "wet": {
                     "transitions": [
                         {
                             "default": "!query.is_in_contact_with_water"
                         }
                     ],
-                    "on_entry": ["/tag @s add wet", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"WET\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add wet", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"WET\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
@@ -391,10 +391,10 @@
                 "default": {
                     "transitions": [
                         {
-                            "eating": "query.is_first_person"
+                            "is_facing": "query.is_first_person"
                         }
                     ],
-                    "on_entry": ["/tag @s remove firstPerson", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"FIRST_PERSON\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s remove firstPerson", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"FIRST_PERSON\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "eating": {
                     "transitions": [
@@ -402,7 +402,7 @@
                             "is_facing": "!query.is_first_person"
                         }
                     ],
-                    "on_entry": ["/tag @s add firstPerson", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"FIRST_PERSON\",\"ADD\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
+                    "on_entry": ["/tag @s add firstPerson", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"FIRST_PERSON\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"]
                 }
             }
         },
