@@ -2,6 +2,7 @@ import { c, isAdmin } from "../Assets/Util";
 import { EntityEventOptions, EntityQueryOptions, Player, system, world } from "@minecraft/server";
 import Default from "../Data/Default";
 import { sendErr } from "../Functions/chatModel/CommandHandler";
+import Index from "../index";
 
 /**
  * @author jasonlaubb
@@ -26,28 +27,15 @@ export async function getModulesIds() {
     if (world.modules) {
         return world.modules.map((module) => module.id);
     } else {
-        while (true) {
-            await system.waitTicks(1);
-            if (world.modules) {
-                return world.modules.map((module) => module.id);
-            }
-        }
+        await Index.initializeAsync();
+        return world.modules.map((module) => module.id);
     }
 }
 let mapvalues: Map<string, any>[] = [];
 export async function intilizeModules() {
     const config = c();
     mapvalues = [];
-    let id;
-    await new Promise<void>((resolve) => {
-        id = system.runInterval(() => {
-            if (world.modules && world.modules.length > 0) {
-                resolve();
-            }
-            //world.sendMessage(String(world?.modules?.length) ?? "0");
-        });
-    });
-    system.clearRun(id);
+    Index.initializeAsync();
     world.modules
         .filter((module) => module.enabled)
         .forEach((module) => {
