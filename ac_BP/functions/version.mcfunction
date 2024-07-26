@@ -1,2 +1,2 @@
-tellraw @s {"rawtext":[{"texg":"§bMatrix §7>§g "},{"translate":"function.version.title","with":["3.9.20-beta"]}]}
-tellraw @s {"rawtext":[{"texg":"§bMatrix §7>§g "},{"translate":"function.version.dsc","with":["https://discord.gg/CqZGXeRKPJ"]}]}
+tellraw @s {"rawtext":[{"text":"§bMatrix §7>§g "},{"translate":"function.version.title","with":["3.9.20-beta"]}]}
+tellraw @s {"rawtext":[{"text":"§bMatrix §7>§g "},{"translate":"function.version.dsc","with":["https://discord.gg/CqZGXeRKPJ"]}]}
