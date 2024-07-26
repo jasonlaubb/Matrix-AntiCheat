@@ -128,6 +128,7 @@ class Matrix_Anti_Cheat {
         await import("./Modules/Movement/World Border");
         await import("./Modules/Misc/Disabler");
         await import("./Modules/Movement/ClientAuth");
+        // Use the register data to initialize the modules
         const sucessAmount = await intilizeModules();
         const config = Dynamic.config();
         if (config.sendModuleInitMsg)
