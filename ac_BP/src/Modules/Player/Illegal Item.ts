@@ -61,7 +61,10 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
                 }
             }
             const badEnchantlist: string[] = [];
-            for (const { level, type: { maxLevel, id }} of enchantments) {
+            for (const {
+                level,
+                type: { maxLevel, id },
+            } of enchantments) {
                 // Check if the enchantment level in the valid range
                 if (level > maxLevel || level <= 0) {
                     badEnchantlist.push(`Enchantment: ${id} ${level}`);
@@ -71,7 +74,7 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
                 flag(player, "Illegal Item", "J", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, ...badEnchantlist]);
                 return true;
             }
-            const commonEnchantList = enchantments.map(({ type: { id }}) => id);
+            const commonEnchantList = enchantments.map(({ type: { id } }) => id);
             const uniqueEnchantList = new Set(enchantments);
             // Check if the item contains duplicate enchantments
             if (commonEnchantList.length != uniqueEnchantList.size) {

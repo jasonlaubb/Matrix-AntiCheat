@@ -161,7 +161,7 @@ function intickEvent(config: configi, player: Player) {
         data.invalidPitch = 0;
     }
     //killaura/I check for if the player rotation can be divided by 1
-    if (!isSpawning(player) &&(verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
+    if (!isSpawning(player) && (verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
         player.addTag(DisableTags.pvp);
         system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
         flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);

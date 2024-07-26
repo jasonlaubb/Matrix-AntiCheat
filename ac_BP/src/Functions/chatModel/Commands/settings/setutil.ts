@@ -13,7 +13,7 @@ registerCommand({
     executor: async (player, args) => {
         const config = c();
         const prefix = config.commands.prefix;
-        const moduleids = ["chatRank", "dimensionLock"]
+        const moduleids = ["chatRank", "dimensionLock"];
         if (moduleids.includes(args[0])) {
             // const state = Dynamic.get([args[0], "enabled"]);
             if ((args[1] == "enable") == (config as any)[args[0]].enabled && args[1] != "default") return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.already", with: [args[1]] });

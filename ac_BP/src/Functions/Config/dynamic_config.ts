@@ -30,7 +30,7 @@ export default class Dynamic {
 
         for (let i = 0; i < key.length; i++) {
             current = (current as { [key: string]: any })[key[i]];
-            if (!current && current !== false) return undefined; 
+            if (!current && current !== false) return undefined;
         }
 
         return current as unknown as string | boolean | number | (string | boolean | number)[];

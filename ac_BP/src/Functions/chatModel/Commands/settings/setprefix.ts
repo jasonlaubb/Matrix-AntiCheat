@@ -21,7 +21,7 @@ registerCommand({
             system.run(() => {
                 const currentprefix = c().commands.prefix;
                 player.sendMessage(new rawstr(true, "g").tra("setprefix.reset", currentprefix).parse());
-            })
+            });
         }
     },
 });

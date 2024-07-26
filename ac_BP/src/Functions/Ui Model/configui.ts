@@ -53,7 +53,7 @@ function selector(player: Player, path: string[]) {
         if (data.canceled) return;
         const selection = lulka[data.selection];
         if (!selection) return;
-        configUI(player, [...path, selection[0]]).catch(e => error(player, e));
+        configUI(player, [...path, selection[0]]).catch((e) => error(player, e));
     });
 }
 const strtypes = ["string", "number", "boolean", "array"];

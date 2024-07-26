@@ -1,11 +1,11 @@
 {
-  "name": "matrix-anticheat-src",
-  "productName": "Matrix-AntiCheat-SRC",
-  "description": "The TypeScript src in Matrix AntiCheat",
-  "private": true,
-  "dependencies": {
-    "@minecraft/vanilla-data": "^1.21.0",
-    "crypto-es": "^2.1.0",
-    "matrix-anticheat": "file:../.."
-  }
+    "name": "matrix-anticheat-src",
+    "productName": "Matrix-AntiCheat-SRC",
+    "description": "The TypeScript src in Matrix AntiCheat",
+    "private": true,
+    "dependencies": {
+        "@minecraft/vanilla-data": "^1.21.0",
+        "crypto-es": "^2.1.0",
+        "matrix-anticheat": "file:../.."
+    }
 }

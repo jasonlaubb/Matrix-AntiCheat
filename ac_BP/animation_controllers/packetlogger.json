@@ -29,11 +29,7 @@
                             "alive": "query.is_alive"
                         }
                     ],
-                    "on_entry": [
-                        "/tag @s remove alive",
-                        "/tag @s add dead",
-                        "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"ALIVE\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"
-                    ]
+                    "on_entry": ["/tag @s remove alive", "/tag @s add dead", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":[\"ALIVE\",\"REMOVE\",{\"rawtext\":[{\"selector\":\"@s\"}]}]}]}"]
                 },
                 "alive": {
                     "transitions": [

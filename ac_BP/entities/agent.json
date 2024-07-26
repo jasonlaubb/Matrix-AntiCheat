@@ -1,22 +1,20 @@
 {
-    "format_version":"1.12.0",
+    "format_version": "1.12.0",
     "minecraft:entity": {
         "description": {
-            "identifier":"minecraft:agent",
+            "identifier": "minecraft:agent",
             "is_spawnable": false,
             "is_summonable": false,
             "is_experimental": false,
             "scripts": {
-                "animate": [
-                    "despawn"
-                ]
+                "animate": ["despawn"]
             },
             "animations": {
                 "despawn": "controller.animation.despawn"
             }
         },
         "components": {
-            "minecraft:instant_despawn":{
+            "minecraft:instant_despawn": {
                 "remove_child_entities": true
             }
         }

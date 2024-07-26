@@ -97,14 +97,13 @@
             },
             "matrix:unvanish": {
                 "minecraft:damage_sensor": {
-                  "triggers": [
-                      {
-                          "cause": "all",
-                          "on_damage": {
-                          },
-                          "deals_damage": true
-                      }
-                   ]
+                    "triggers": [
+                        {
+                            "cause": "all",
+                            "on_damage": {},
+                            "deals_damage": true
+                        }
+                    ]
                 },
                 "minecraft:scale": {
                     "value": 1
@@ -125,8 +124,7 @@
                     "triggers": [
                         {
                             "cause": "all",
-                            "on_damage": {
-                            },
+                            "on_damage": {},
                             "deals_damage": false
                         }
                     ]

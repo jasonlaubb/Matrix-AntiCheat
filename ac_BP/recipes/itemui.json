@@ -4,13 +4,9 @@
         "description": {
             "identifier": "matrix:itemui"
         },
-        
-        "tags": [ "crafting_table" ],
-        "pattern": [
-            " X ",
-            "X#X",
-            " X "
-        ],
+
+        "tags": ["crafting_table"],
+        "pattern": [" X ", "X#X", " X "],
         "key": {
             "#": {
                 "item": "minecraft:repeating_command_block"
