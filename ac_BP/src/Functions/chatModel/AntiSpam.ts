@@ -28,11 +28,11 @@ export function intergradedAntiSpam(player: Player, message: string) {
 
     if (config.spamFilter.enabled) {
         const data = spamData.get(player.id) ?? {
-            lastMessage: "",
+            lastMessage: undefined,
             messageRate: [],
         };
 
-        if (data.lastMessage == message) {
+        if (data.lastMessage && data.lastMessage == message && Date.now() - data.messageRate[data.messageRate.length - 1] < 15000) {
             system.run(() => player.sendMessage(rawstr.new(true, "c").tra("spam.repeated").parse()));
             return true;
         }

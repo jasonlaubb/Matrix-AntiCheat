@@ -4,7 +4,7 @@
  * @license AGPLv3
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
-class Matrix_Anti_Cheat {
+class MatrixAnti_MCPE {
     private static init = {
         initialized: false,
         runTime: Date.now(),
@@ -16,7 +16,7 @@ class Matrix_Anti_Cheat {
         });
         world.afterEvents.worldInitialize.subscribe(() => {
             initialize();
-            Matrix_Anti_Cheat.init.initialized = true;
+            MatrixAnti_MCPE.init.initialized = true;
             world.modules = [];
             // Launch the anticheat.
             this.importAll()
@@ -24,7 +24,7 @@ class Matrix_Anti_Cheat {
                 .then(() => {
                     // Log the initialization time.
                     if (Dynamic.config().sendInitMsg) {
-                        const initTakeTime = Date.now() - Matrix_Anti_Cheat.init.runTime;
+                        const initTakeTime = Date.now() - MatrixAnti_MCPE.init.runTime;
                         system.runTimeout(() => {
                             console.log("Matrix has been completely initialized in " + initTakeTime + "ms");
                         }, 40);
@@ -139,7 +139,7 @@ class Matrix_Anti_Cheat {
                     },
                     {
                         translate: "index.initmodules",
-                        with: [sucessAmount.toString(), (Date.now() - Matrix_Anti_Cheat.init.runTime).toString()],
+                        with: [sucessAmount.toString(), (Date.now() - MatrixAnti_MCPE.init.runTime).toString()],
                     },
                 ],
             });
@@ -148,22 +148,22 @@ class Matrix_Anti_Cheat {
         }
     };
     public get initialized(): boolean {
-        return Matrix_Anti_Cheat.init.initialized;
+        return MatrixAnti_MCPE.init.initialized;
     }
     public get initializeDate(): number {
-        return Matrix_Anti_Cheat.init.runTime;
+        return MatrixAnti_MCPE.init.runTime;
     }
     public readonly initializeAsync = () =>
         new Promise<void>((resolve) => {
             const runId = Minecraft.system.runInterval(() => {
-                if (Matrix_Anti_Cheat.init.initialized) {
+                if (MatrixAnti_MCPE.init.initialized) {
                     resolve();
                     Minecraft.system.clearRun(runId);
                 }
             }, 1);
         });
 }
-const Index = new Matrix_Anti_Cheat();
+const Index = new MatrixAnti_MCPE();
 export default Index;
 import * as Minecraft from "@minecraft/server";
 import { initialize } from "./Functions/Config/dynamic_config";
