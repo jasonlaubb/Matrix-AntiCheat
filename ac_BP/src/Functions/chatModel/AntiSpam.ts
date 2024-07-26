@@ -1,6 +1,7 @@
 import { Player, system } from "@minecraft/server";
 import ChatFilterData from "../../Data/ChatFilterData";
 import { c, rawstr } from "../../Assets/Util";
+import RegexBasedFilter from "../../Data/RegexBasedFilter";
 const special_characters = {
     "0": "o",
     "1": "i",
@@ -12,7 +13,7 @@ const special_characters = {
     "8": "b",
     "@": "a",
     "€": "e",
-    $: "s",
+    "$": "s",
 };
 interface SpamData {
     lastMessage: string;
@@ -96,13 +97,29 @@ function reverseLoc (target: string[], index1: number, index2: number) {
     target[index2] = newindex2
     return target;
 }*/
-
+const latinBased = ChatFilterData.filter((x) => !x.includes("-"));
+const latinWithWhiteSpace = ChatFilterData.filter((x) => x.includes("-"));
+const regexBased = RegexBasedFilter;
 function chatFilter(player: Player, message: string) {
     let msg = message;
     Object.entries(special_characters).forEach(([key, value]) => {
         msg = msg.replaceAll(key, value);
     });
-    if (ChatFilterData.some((x) => msg.includes(x))) {
+    const matchRegex = /([a-zA-Z]+)/g
+    if (msg.match(matchRegex).some((x) => latinBased.some((y) => y == x))) {
+        system.run(() => {
+            player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
+        });
+        return true;
+    }
+    if (latinWithWhiteSpace.includes(msg.replace(/\s+/g, "-"))) {
+        system.run(() => {
+            player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
+        });
+        return true;
+    }
+    const plaintext = message.replace(/[\-!@#$%^&*(){}\[\]|\\;:"'?.,\s0-9a-zA-Z\u3002\uFF1F\uFF01\u3010\u3011\uFF0C\u3001\uFF1B\uFF1A\u300C\u300D\u300E\u300F\u2019\u201C\u201D\u2018\uFF08\uFF09\u3014\u3015\u2026\u2013\uFF0E\u2014\u300A\u300B\u3008\u3009]/g, "");
+    if (plaintext.length > 0 && regexBased.some((x) => plaintext.includes(x))) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
         });

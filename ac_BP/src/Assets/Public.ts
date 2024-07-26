@@ -7,7 +7,7 @@ world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
     if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
         const getItemInSlot = (player.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent).container.getItem(player.selectedSlotIndex);
         if (getItemInSlot === undefined) return;
-        if (getItemInSlot.typeId == MinecraftItemTypes.Trident) {
+        if (getItemInSlot.typeId == MinecraftItemTypes.Trident && player.hasTag(AnimationControllerTags.wet)) {
             const checkRipTide = (getItemInSlot.getComponent(ItemEnchantableComponent.componentId) as ItemEnchantableComponent).hasEnchantment(MinecraftEnchantmentTypes.Riptide);
             if (checkRipTide) {
                 player.threwTridentAt = Date.now();
