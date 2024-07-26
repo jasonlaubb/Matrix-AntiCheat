@@ -106,7 +106,7 @@ function chatFilter(player: Player, message: string) {
         msg = msg.replaceAll(key, value);
     });
     const matchRegex = /([a-zA-Z]+)/g
-    if (msg.match(matchRegex).some((x) => latinBased.some((y) => y == x))) {
+    if (msg.match(matchRegex)?.some((x) => latinBased.some((y) => y == x))) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
         });
