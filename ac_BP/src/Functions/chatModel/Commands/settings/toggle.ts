@@ -2,6 +2,7 @@ import { c } from "../../../../Assets/Util";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
 import { getModulesIds, intilizeModules } from "../../../../Modules/Modules";
 import Dynamic from "../../../Config/dynamic_config";
+import { system } from "@minecraft/server";
 
 registerCommand({
     name: "toggle",
@@ -21,12 +22,15 @@ registerCommand({
             if ((config as { [key: string]: any })[args[0]].experimental && args[2] != "force" && args[1] == "enable") return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.warning", with: [prefix, args[0]] });
             if (args[1] === "enable") {
                 Dynamic.set([args[0], "enabled"], true);
+                await system.waitTicks(20);
                 intilizeModules();
             } else if (args[1] == "disable") {
                 Dynamic.set([args[0], "enabled"], false);
+                await system.waitTicks(20);
                 intilizeModules();
             } else {
                 Dynamic.delete([args[0], "enabled"]);
+                await system.waitTicks(20);
                 intilizeModules();
             }
             sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "toggles.toggleChange", with: [args[0], args[1]] });

@@ -52,7 +52,6 @@ function* looper(config: configi): Generator<void, void, void> {
             if (element.mapclears) mapvalues.push(...element.mapclears);
             if ((config as any)[element.id]?.enabled) {
                 // Method for state module is enabled
-                world.getAllPlayers()[0].sendMessage(`Loading the ${element.id} Module (${i + 1}/${len})`);
                 setup(config, element);
             }
             //world.sendMessage(`Loading the ${element.id} Module (${i + 1}/${len})`);
