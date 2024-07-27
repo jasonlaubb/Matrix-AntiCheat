@@ -229,7 +229,15 @@ export default {
             enabled: true,
             adminOnly: false,
             requireTag: [],
-        }
+            commandUsingCooldown: 120000,
+        },
+        warn: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+            maxWarns: 3,
+            maxWarnAction: "ban",
+        },
     },
     autoPunishment: {
         bypasslist: [],

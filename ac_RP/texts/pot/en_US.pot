@@ -695,3 +695,35 @@ msgstr ""
 #: acess.itemadmin
 msgid "You need to be an admin to use this item!"
 msgstr ""
+
+#: report.cooldown
+msgid "Report command is on cooldown, %s seconds remaining"
+msgstr ""
+
+#: warn.reset
+msgid "%s's warn has been reset."
+msgstr ""
+
+#: warn.first
+msgid "%s has been warned, this is the first warning."
+msgstr ""
+
+#: warn.second
+msgstr "%s has been warned again, this is the second warning."
+msgstr ""
+
+#: warn.third
+msgid "%s has been given the third warning."
+msgstr ""
+
+#: warn.for
+msgid "%1 has been warned for %2 time(s)."
+msgstr ""
+
+#: warn.final
+msgid "%1 has been given the final warning."
+msgstr ""
+
+#: warn.reached
+msgid "%1 has reached the maximum amount of warnings."
+msgstr ""

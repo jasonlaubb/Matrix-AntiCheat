@@ -85,6 +85,7 @@ class MatrixAnti_MCPE {
         await import("./Functions/chatModel/Commands/moderations/invcopy");
         await import("./Functions/chatModel/Commands/moderations/vanish");
         await import("./Functions/chatModel/Commands/moderations/unvanish");
+        await import("./Functions/chatModel/Commands/moderations/warn");
         await import("./Functions/chatModel/Commands/settings/toggles");
         await import("./Functions/chatModel/Commands/settings/toggle");
         await import("./Functions/chatModel/Commands/settings/passwords");
@@ -105,6 +106,7 @@ class MatrixAnti_MCPE {
         await import("./Functions/chatModel/Commands/utilities/matrixui");
         await import("./Functions/chatModel/Commands/utilities/openlog");
         await import("./Functions/chatModel/Commands/utilities/packetlogger");
+        await import("./Functions/chatModel/Commands/pcommands/report");
         // Register the modules
         Minecraft.world.modules = [];
         await import("./Modules/Combat/Auto Clicker");

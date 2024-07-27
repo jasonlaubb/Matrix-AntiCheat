@@ -288,6 +288,20 @@ Args: `vanish <player>`
 
 Example: `<prefix>vanish steve`
 
+# Warn
+
+- Description
+
+Warn a player. Kimochi will automatically kick the player if the warn count is higher than 3 or others.
+
+- Usage
+
+Args: `warn <player> [reset]`
+
+Example1: `<prefix>warn steve`
+
+Example2: `<prefix>warn steve reset`
+
 # Settings Commands
 
 Command to help you setup your own anticheat.
@@ -582,6 +596,6 @@ Report a player.
 
 - Usage
 
-Args: `report <player> <reason>`
+Args: `report <player> [reason]`
 
 Example: `<prefix>report steve "Bad cheat guys"`
