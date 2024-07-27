@@ -163,18 +163,27 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
         switch (flagMode) {
             case "tag": {
                 const targets = world.getPlayers({ tags: ["matrix:notify"] });
-                targets.forEach((players) => players.sendMessage(flagMsg.parse()));
+                targets.forEach((players) => {
+                    if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
+                    players.sendMessage(flagMsg.parse())
+                });
                 break;
             }
             case "bypass": {
                 const targets = world.getPlayers({ excludeNames: [player.name] });
-                targets.forEach((players) => players.sendMessage(flagMsg.parse()));
+                targets.forEach((players) => {
+                    if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
+                    players.sendMessage(flagMsg.parse())
+                });
                 break;
             }
             case "admin": {
                 const allPlayers = world.getAllPlayers();
                 const targets = allPlayers.filter((players) => isAdmin(players));
-                targets.forEach((players) => players.sendMessage(flagMsg.parse()));
+                targets.forEach((players) => {
+                    if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
+                    players.sendMessage(flagMsg.parse())
+                });;
                 break;
             }
             case "none": {
@@ -182,6 +191,10 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
             }
             default: {
                 world.sendMessage(flagMsg.parse());
+                const targets = world.getAllPlayers();
+                targets.forEach((players) => {
+                    if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
+                })
                 break;
             }
         }

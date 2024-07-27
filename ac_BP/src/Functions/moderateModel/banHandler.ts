@@ -1,5 +1,5 @@
 import { world, Player, system } from "@minecraft/server";
-import { msToTime, isHost, isAdmin } from "../../Assets/Util";
+import { msToTime, isHost, isAdmin, c } from "../../Assets/Util";
 import { Action } from "../../Assets/Action";
 import { BanqueueData } from "../chatModel/Commands/moderations/banqueue";
 
@@ -61,9 +61,13 @@ function checksBan(player: Player): void {
         const { days: d, hours: h, minutes: m, seconds: s } = timeLeft;
         timeTherShold = `${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
     }
-
+    const extraMessages = c().banModify.extraMessages;
+    const extraString = extraMessages.length > 0 ? extraMessages.map((string) => {
+        const [key, value] = string.split(":");
+        return `§7${key}: §c${value}`;
+    }).join("\n") : "";
     try {
-        player.runCommand(`kick "${player.name}" §r\n§c§lYour have been banned!\n§r§7Time Left:§c ${timeTherShold}\n§7Reason: §c${reason}§r\n§7By: §c${by}`);
+        player.runCommand(`kick "${player.name}" §r\n§c§lYour have been banned!\n§r§7Time Left:§c ${timeTherShold}\n§7Reason: §c${reason}§r\n§7By: §c${by}${extraString}`);
     } catch {
         Action.tempkick(player);
     }

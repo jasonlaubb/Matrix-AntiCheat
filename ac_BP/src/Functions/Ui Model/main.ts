@@ -5,19 +5,29 @@ import { configUI } from "./configui";
 import { moderatePlayer } from "./modui";
 import { moduleUI } from "./toggleui";
 import { error } from "../chatModel/CommandHandler";
-world.afterEvents.itemUse.subscribe(({ itemStack: { typeId }, source: player }) => {
-    if (typeId == "matrix:itemui" && isAdmin(player)) {
+import { c } from "../../Assets/Util";
+world.afterEvents.itemUse.subscribe(({ itemStack, source: player }) => {
+    if (!itemStack.matches("matrix:itemui")) return;
+    if (isAdmin(player)) {
+        if (c().soundEffect) player.playSound("minecraft:block.note_block.pling", { volume: 3.0 });
         menu(player).catch((err) => error(player, err));
+    } else {
+        if (c().soundEffect) player.playSound("minecraft:block.note_block.hat", { volume: 3.0 });
+        player.sendMessage({
+            rawtext: [
+                {
+                    text: "§bMatrix §7>§c "
+                },
+                {
+                    translate: "acess.itemadmin"
+                }
+            ]
+        });
     }
 });
 export const adminUI = (player: Player) => system.run(() => menu(player));
-async function menu(player: Player) {
-    if (!isAdmin(player)) {
-        //prevent no admin open ui mistakenly
-        player.sendMessage(`§bMatrix §7> §l§cAccess denied! §7No admin permission`);
-        return;
-    }
-
+export async function menu(player: Player) {
+    if (!isAdmin(player)) return;
     new ActionFormData()
         .title(rawstr.drt("ui.title"))
         .button(rawstr.drt("ui.moderateplayer"), "textures/ui/FriendsDiversity.png")

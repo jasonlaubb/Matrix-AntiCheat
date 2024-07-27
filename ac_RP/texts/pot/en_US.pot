@@ -691,3 +691,7 @@ msgstr ""
 #: common.unknown
 msgid "unknown"
 msgstr ""
+
+#: acess.itemadmin
+msgid "You need to be an admin to use this item!"
+msgstr ""

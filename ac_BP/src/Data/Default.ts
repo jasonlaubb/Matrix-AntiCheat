@@ -7,6 +7,7 @@ export default {
     sendInitMsg: true,
     sendModuleInitMsg: false,
     createScoreboard: true,
+    soundEffect: true,
     flagMode: "admin",
     lockdowncode: "AbCdEfGh",
     passwordCold: 5000,
@@ -224,6 +225,11 @@ export default {
             adminOnly: true,
             requireTag: [],
         },
+        report: {
+            enabled: true,
+            adminOnly: false,
+            requireTag: [],
+        }
     },
     autoPunishment: {
         bypasslist: [],
@@ -237,6 +243,9 @@ export default {
             minutes: 1440,
             reason: "Unfair advantage",
         },
+    },
+    banModify: {
+        extraMessages: [],
     },
     logsettings: {
         maxStorge: 200,

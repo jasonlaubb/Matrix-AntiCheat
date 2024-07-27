@@ -569,3 +569,19 @@ Get or remove the packet logger permission.
 Args: `No args`
 
 Example: `<prefix>packetlogger`
+
+# Player commands
+
+Some simple command can let player without admin permission to do something.
+
+# Report
+
+- Description
+
+Report a player.
+
+- Usage
+
+Args: `report <player> <reason>`
+
+Example: `<prefix>report steve "Bad cheat guys"`

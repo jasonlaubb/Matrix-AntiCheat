@@ -1,7 +1,9 @@
 import { world, Player, EntityInventoryComponent, ItemEnchantableComponent, EntityDamageCause, system, PlayerBreakBlockAfterEvent } from "@minecraft/server";
 import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
-import { c, clearBlockBreakLog, findSlime, logBreak } from "./Util";
+import { c, clearBlockBreakLog, findSlime, logBreak, isAdmin } from "./Util";
 import { MatrixUsedTags, AnimationControllerTags, DisableTags } from "../Data/EnumData";
+import { menu } from "../Functions/Ui Model/main";
+import { error } from "../Functions/chatModel/CommandHandler";
 
 world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
     if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
@@ -13,6 +15,17 @@ world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
                 player.threwTridentAt = Date.now();
             }
         }
+    }
+});
+
+world.afterEvents.itemUse.subscribe(({ itemStack, source: player }) => {
+    if (!itemStack.matches("matrix:itemui")) return;
+    if (isAdmin(player)) {
+        player.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
+        menu(player).catch((err) => error(player, err));
+    } else {
+        player.playSound("note.hat", { volume: 1.0, pitch: 3.0 });
+        player.sendMessage(`§bMatrix §7> §cYou need to be an admin to use this item!`);
     }
 });
 
