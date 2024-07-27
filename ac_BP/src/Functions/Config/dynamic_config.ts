@@ -1,13 +1,12 @@
 import defaultConfig, { dynamic as dy } from "../../Data/Default";
 import userConfig from "../../Data/Config";
 const config: configi = dy.followUserConfig ? (userConfig as configi) : defaultConfig;
-import { system, world } from "@minecraft/server";
+import { world } from "@minecraft/server";
 import { configi } from "../../Modules/Modules";
 
 let common = config;
 
 export async function initialize() {
-    await system.waitTicks(1);
     const cypher = world.getDynamicProperty("config") as string;
     if (!cypher || !Array.isArray(JSON.parse(cypher))) {
         world.setDynamicProperty("config", "[]");
@@ -15,15 +14,17 @@ export async function initialize() {
         const normal = JSON.parse(cypher) as Changer[];
 
         for (const changer of normal) {
-            const newCommon = change(changer.target, changer.value, common);
+            const newCommon = await change(changer.target, changer.value, common);
             if (!newCommon) continue; // Prevent path error
             common = newCommon as configi;
         }
     }
+    return;
 }
 
 export default class Dynamic {
     static readonly config = (): typeof defaultConfig => common;
+    static configAsync = async (): Promise<typeof defaultConfig> => common;
     static readonly default = (): typeof defaultConfig => config;
     static get(key: string[]): string | boolean | number | (string | boolean | number)[] {
         let current: any = common;
@@ -65,7 +66,7 @@ export default class Dynamic {
     }
 }
 
-function change(path: string[], value: string | boolean | number | (string | boolean | number)[], object: { [key: string]: any }) {
+async function change(path: string[], value: string | boolean | number | (string | boolean | number)[], object: { [key: string]: any }) {
     try {
         const pathLength = path.length;
         const arr = new Array(26);

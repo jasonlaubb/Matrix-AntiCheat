@@ -10,41 +10,47 @@ class MatrixAnti_MCPE {
         runTime: Date.now(),
     };
     public constructor() {
-        const { system, world } = Minecraft;
-        system.beforeEvents.watchdogTerminate.subscribe((event) => {
-            event.cancel = true;
-        });
-        world.afterEvents.worldInitialize.subscribe(() => {
-            initialize();
-            MatrixAnti_MCPE.init.initialized = true;
-            world.modules = [];
-            // Launch the anticheat.
-            this.importAll()
-                .catch((e) => console.error(e))
-                .then(() => {
-                    // Log the initialization time.
-                    if (Dynamic.config().sendInitMsg) {
-                        const initTakeTime = Date.now() - MatrixAnti_MCPE.init.runTime;
-                        system.runTimeout(() => {
-                            console.log("Matrix has been completely initialized in " + initTakeTime + "ms");
-                        }, 40);
-                        world.sendMessage({
-                            rawtext: [
-                                {
-                                    text: `§bMatrix §7>§g `,
-                                },
-                                {
-                                    translate: "index.complete",
-                                    with: [initTakeTime.toString()],
-                                }
-                            ],
-                        });
-                    }
-                })
-                .finally(() => {
-                    console.warn("Matrix has been loaded on " + new Date(Date.now()).toISOString());
-                });
-        });
+        // Prevent the script from crashing
+        Minecraft.system.beforeEvents.watchdogTerminate.subscribe(this.watchDogTerminate);
+        // Initialize the matrix anticheat
+        Minecraft.world.afterEvents.worldInitialize.subscribe(this.onWorldInitialize);
+    }
+    private readonly onWorldInitialize = async () => {
+        const { world, system } = Minecraft;
+        await initialize();
+        MatrixAnti_MCPE.init.initialized = true;
+        // Launch the anticheat.
+        await this.importAll()
+            .catch((e) => console.error(e))
+            .then(() => {
+                // Log the initialization time.
+                if (Dynamic.config().sendInitMsg) {
+                    const initTakeTime = Date.now() - MatrixAnti_MCPE.init.runTime;
+                    system.runTimeout(() => {
+                        console.log("Matrix has been completely initialized in " + initTakeTime + "ms");
+                    }, 40);
+                    world.sendMessage({
+                        rawtext: [
+                            {
+                                text: `§bMatrix §7>§g `,
+                            },
+                            {
+                                translate: "index.complete",
+                                with: [initTakeTime.toString()],
+                            }
+                        ],
+                    });
+                }
+            })
+            .finally(() => {
+                console.warn("Matrix has been loaded on " + new Date(Date.now()).toISOString());
+            });
+        // Unsubscribe from the events.
+        Minecraft.world.afterEvents.worldInitialize.unsubscribe(this.onWorldInitialize);
+        return;
+    };
+    private watchDogTerminate (event: Minecraft.WatchdogTerminateBeforeEvent) {
+        event.cancel = true;
     }
     private readonly importAll = async () => {
         // Assets
@@ -130,7 +136,7 @@ class MatrixAnti_MCPE {
         await import("./Modules/Movement/ClientAuth");
         // Use the register data to initialize the modules
         const sucessAmount = await intilizeModules();
-        const config = Dynamic.config();
+        const config = await Dynamic.configAsync();
         if (config.sendModuleInitMsg)
             Minecraft.world.sendMessage({
                 rawtext: [
@@ -146,6 +152,7 @@ class MatrixAnti_MCPE {
         if (config.createScoreboard && !Minecraft.world.scoreboard.getObjective("matrix:api")) {
             Minecraft.world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
         }
+        return;
     };
     public get initialized(): boolean {
         return MatrixAnti_MCPE.init.initialized;
