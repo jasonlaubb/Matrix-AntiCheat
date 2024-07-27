@@ -476,7 +476,7 @@ export default {
         punishment: "ban",
         maxVL: 0,
         clickSpeedThershold: 6,
-        timer: 1,
+        timer: 2,
         maxTry: 3,
     },
     worldBorder: {
