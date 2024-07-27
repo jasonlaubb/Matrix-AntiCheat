@@ -1,1 +1,1 @@
-export default [3, 9, 20];
+export default [3, 9, 30];
