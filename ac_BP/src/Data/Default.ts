@@ -331,9 +331,11 @@ export default {
     },
     antiSpeed: {
         enabled: true,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4,
-        minSpeedLog: 3,
+        validFlagDuration: 32000,
+        maxFlagInDuration: 3,
+        flagDurationIncrase: 5000,
     },
     antiTimer: {
         enabled: true,

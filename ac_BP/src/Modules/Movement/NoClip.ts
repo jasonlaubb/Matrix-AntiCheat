@@ -90,9 +90,9 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         straight(data.lastLocation, player.location).some((loc) => isSolidBlock(player.dimension.getBlock(loc)))
     ) {
         const lastflag = data.lastFlag2;
-        teleportMagic(player, data.safeLocation);
+        freezeTeleport(player, data.safeLocation);
         if (lastflag && now - lastflag < 5000 && !isSpikeLagging(player)) {
-            flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined);
+            flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + movementClip]);
         }
         data.lastFlag2 = now;
     }
@@ -101,7 +101,6 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     /*     emmm     */
     const safePos = data.safeLocation;
     const lastflag = data.lastFlag;
-    player.onScreenDisplay.setActionBar("isSpikeLagging = " + isSpikeLagging(player));
     if (
         player?.lastSafePos &&
         safePos &&
@@ -117,12 +116,12 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         !(player.lastApplyDamage && now - player.lastApplyDamage < 250) &&
         !isSpikeLagging(player)
     ) {
-        teleportMagic(player, safePos);
+        freezeTeleport(player, safePos);
         if (lastflag && now - lastflag < 20000) {
-            if (Math.abs(y) < 1.75) {
-                flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
+            if (player.isOnGround || player.hasTag(AnimationControllerTags.isOnGround)) {
+                flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
             } else if (!player.hasTag(AnimationControllerTags.riding)) {
-                flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
+                flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
             }
         }
         data.lastFlag = now;
@@ -168,7 +167,7 @@ registerModule(
 );
 
 // Anti teleport bypass
-function teleportMagic(player: Player, location: Vector3) {
+export function freezeTeleport(player: Player, location: Vector3) {
     let i = 0;
     location.x = Math.floor(location.x) + 0.5;
     location.z = Math.floor(location.z) + 0.5;
