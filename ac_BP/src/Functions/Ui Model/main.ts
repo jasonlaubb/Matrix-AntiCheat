@@ -4,7 +4,7 @@ import { isAdmin, rawstr } from "../../Assets/Util";
 import { configUI } from "./configui";
 import { moderatePlayer } from "./modui";
 import { moduleUI } from "./toggleui";
-import { error } from "../chatModel/CommandHandler";
+import { error, triggerCommand } from "../chatModel/CommandHandler";
 import { c } from "../../Assets/Util";
 world.afterEvents.itemUse.subscribe(({ itemStack, source: player }) => {
     if (!itemStack.matches("matrix:itemui")) return;
@@ -43,6 +43,10 @@ export async function menu(player: Player) {
             // player: The admin which using the ui
             switch (res.selection) {
                 case 0: {
+                    triggerCommand(player, "itemui");
+                    break;
+                }
+                case 1: {
                     // target: The player which selected as a target
                     selectPlayer(player).then((target) => {
                         // Checks if player selected a valid target
@@ -52,7 +56,7 @@ export async function menu(player: Player) {
                     });
                     break;
                 }
-                case 1: {
+                case 2: {
                     // If player wants to set the amticheat
                     settingUI(player);
                     break;
