@@ -9,10 +9,10 @@ import { c } from "../../Assets/Util";
 world.afterEvents.itemUse.subscribe(({ itemStack, source: player }) => {
     if (!itemStack.matches("matrix:itemui")) return;
     if (isAdmin(player)) {
-        if (c().soundEffect) player.playSound("minecraft:block.note_block.pling", { volume: 3.0 });
+        if (c().soundEffect) player.playSound("note.pling", { volume: 3.0 });
         menu(player).catch((err) => error(player, err));
     } else {
-        if (c().soundEffect) player.playSound("minecraft:block.note_block.hat", { volume: 3.0 });
+        if (c().soundEffect) player.playSound("note.bass", { volume: 3.0 });
         player.sendMessage({
             rawtext: [
                 {
@@ -30,6 +30,7 @@ export async function menu(player: Player) {
     if (!isAdmin(player)) return;
     new ActionFormData()
         .title(rawstr.drt("ui.title"))
+        .button(rawstr.drt("ui.itemui"), "textures/items/itemui.png")
         .button(rawstr.drt("ui.moderateplayer"), "textures/ui/FriendsDiversity.png")
         .button(rawstr.drt("ui.setting"), "textures/ui/gear.png")
         .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")

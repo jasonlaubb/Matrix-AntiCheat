@@ -35,11 +35,11 @@ const fixedStart = `"Language: N/A\\n"
 "Content-Transfer-Encoding: 8bit\\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\\n"
 "X-Generator: PhraseApp (phraseapp.com)\\n"`;
+import * as fsModule from "fs";
+import * as pathModule from "path";
 let doTranslate = false;
 let getLanguages = false;
 let createPackDes = true;
-import("fs").then((fsModule) => {
-    import("path").then((pathModule) => {
         const fs = fsModule.default;
         const path = pathModule.default;
         const root = "./ac_RP/";
@@ -111,6 +111,9 @@ import("fs").then((fsModule) => {
                 const valueCatch = enusBase.match(/msgid ".*"/g).map((a) => a.slice(7).slice(0,-1));
                 const biu = [];
                 for (let i = 0; i < acceptedStr.length; i++) {
+                    if (!valueCatch[i]){
+                        console.log("Unexpected error: " + acceptedStr[i]);
+                    }
                     biu.push([acceptedStr[i], valueCatch[i]]);
                 }
                 files.forEach(async (file) => {
@@ -144,7 +147,7 @@ import("fs").then((fsModule) => {
                                 msgstr ""
                                 `;
                                 hasChanged = true;
-                                console.log("Warning: Missing property or other language: " + lore.replace(/\n|\r/g, ""));
+                                console.log(file + ": Missing property or other language: " + lore.replace(/\n|\r/g, ""));
                             }
                         }
                         
@@ -231,5 +234,3 @@ import("fs").then((fsModule) => {
             }
         }
         convertPotFilesToPo();
-    });
-});

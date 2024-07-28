@@ -7,7 +7,7 @@
 #: pack.description
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
 msgstr ""
-/tellraw @a[tag=matrix:packetLogger] {"rawtext":[{"translate":"json.packet","with":["EATING","REMOVE",{"rawtext":[{"selector":"@s"}]}]}]}
+
 #: disconnectionScreen.unexpectedPacket
 msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
 msgstr ""
@@ -58,6 +58,10 @@ msgstr ""
 
 #: ui.title
 msgid "Admin GUI"
+msgstr ""
+
+#: ui.itemui
+msgid "Get UI Item §8(itemui)"
 msgstr ""
 
 #: ui.moderateplayer
@@ -134,6 +138,10 @@ msgstr ""
 
 #: ui.echestwipe.button
 msgid "Echestwipe players §8(echestwipe)"
+msgstr ""
+
+#: ui.tempkick.button
+msgid "Temp-kick players §8(tempkick)"
 msgstr ""
 
 #: ui.config.button
@@ -726,4 +734,8 @@ msgstr ""
 
 #: warn.reached
 msgid "%1 has reached the maximum amount of warnings."
+msgstr ""
+
+#: item.matrix.itemui
+msgid "§r§l§bMatrix §eUI pannel§r"
 msgstr ""
