@@ -46,7 +46,7 @@ registerCommand({
                     break;
                 }
                 default: {
-                    world.sendMessage(new rawstr(true, "g").tra("warn.for", target, warnAmount).parse());
+                    world.sendMessage(new rawstr(true, "g").tra("warn.for", target, warnAmount.toString()).parse());
                 }
             }
         }
