@@ -60,6 +60,10 @@ msgstr ""
 msgid "Admin GUI"
 msgstr "Menu Admin"
 
+#: ui.itemui
+msgid "Get UI Item §8(itemui)"
+msgstr ""
+
 #: ui.moderateplayer
 msgid "Moderate Players"
 msgstr "Joueurs"
@@ -136,6 +140,10 @@ msgstr "Voir l'Inventaire §8(invsee)"
 msgid "Echestwipe players §8(echestwipe)"
 msgstr "Vider l'EnderChest §8(echestwipe)"
 
+#: ui.tempkick.button
+msgid "Temp-kick players §8(tempkick)"
+msgstr ""
+
 #: ui.config.button
 msgid "Edit config §8(config)"
 msgstr ""
@@ -157,7 +165,7 @@ msgid "module: §8%1"
 msgstr ""
 
 #: ui.toggle.statust
-msgid "§rstatus: §8%2"
+msgid "§rstatus: §8%s"
 msgstr ""
 
 #: cmderror.title
@@ -692,14 +700,6 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: ui.itemui
-msgid "Get UI Item §8(itemui)"
-msgstr ""
-
-#: ui.tempkick.button
-msgid "Temp-kick players §8(tempkick)"
-msgstr ""
-
 #: acess.itemadmin
 msgid "You need to be an admin to use this item!"
 msgstr ""
@@ -738,4 +738,8 @@ msgstr ""
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
+msgstr ""
+
+#: item.matrix.modstick
+msgid "§r§l§bMatrix §eModStick§r"
 msgstr ""

@@ -165,7 +165,7 @@ msgid "module: §8%1"
 msgstr ""
 
 #: ui.toggle.statust
-msgid "§rstatus: §8%2"
+msgid "§rstatus: §8%s"
 msgstr ""
 
 #: cmderror.title
@@ -738,4 +738,8 @@ msgstr ""
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
+msgstr ""
+
+#: item.matrix.modstick
+msgid "§r§l§bMatrix §eModStick§r"
 msgstr ""

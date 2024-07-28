@@ -60,6 +60,10 @@ msgstr "%1§g が不正行為 §4%2§r を試みました §7[Type %3§7] §7[§
 msgid "Admin GUI"
 msgstr "管理者 GUI"
 
+#: ui.itemui
+msgid "Get UI Item §8(itemui)"
+msgstr ""
+
 #: ui.moderateplayer
 msgid "Moderate Players"
 msgstr "プレイヤー管理"
@@ -136,6 +140,10 @@ msgstr "プレイヤーのインベントリを見る §8(invsee)"
 msgid "Echestwipe players §8(echestwipe)"
 msgstr "プレイヤーのエンダーチェストを消去する §8(echestwipe)"
 
+#: ui.tempkick.button
+msgid "Temp-kick players §8(tempkick)"
+msgstr ""
+
 #: ui.config.button
 msgid "Edit config §8(config)"
 msgstr "設定の編集 §8(config)"
@@ -157,7 +165,7 @@ msgid "module: §8%1"
 msgstr "モジュール: §8%1"
 
 #: ui.toggle.statust
-msgid "§rstatus: §8%2"
+msgid "§rstatus: §8%s"
 msgstr "§rステータス: §8%2"
 
 #: cmderror.title
@@ -692,14 +700,6 @@ msgstr "値:"
 msgid "unknown"
 msgstr "不明"
 
-#: ui.itemui
-msgid "Get UI Item §8(itemui)"
-msgstr ""
-
-#: ui.tempkick.button
-msgid "Temp-kick players §8(tempkick)"
-msgstr ""
-
 #: acess.itemadmin
 msgid "You need to be an admin to use this item!"
 msgstr ""
@@ -738,4 +738,8 @@ msgstr ""
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
+msgstr ""
+
+#: item.matrix.modstick
+msgid "§r§l§bMatrix §eModStick§r"
 msgstr ""

@@ -4,27 +4,7 @@ import { isAdmin, rawstr } from "../../Assets/Util";
 import { configUI } from "./configui";
 import { moderatePlayer } from "./modui";
 import { moduleUI } from "./toggleui";
-import { error, triggerCommand } from "../chatModel/CommandHandler";
-import { c } from "../../Assets/Util";
-world.afterEvents.itemUse.subscribe(({ itemStack, source: player }) => {
-    if (!itemStack.matches("matrix:itemui")) return;
-    if (isAdmin(player)) {
-        if (c().soundEffect) player.playSound("note.pling", { volume: 3.0 });
-        menu(player).catch((err) => error(player, err));
-    } else {
-        if (c().soundEffect) player.playSound("note.bass", { volume: 3.0 });
-        player.sendMessage({
-            rawtext: [
-                {
-                    text: "§bMatrix §7>§c "
-                },
-                {
-                    translate: "acess.itemadmin"
-                }
-            ]
-        });
-    }
-});
+import { triggerCommand } from "../chatModel/CommandHandler";
 export const adminUI = (player: Player) => system.run(() => menu(player));
 export async function menu(player: Player) {
     if (!isAdmin(player)) return;

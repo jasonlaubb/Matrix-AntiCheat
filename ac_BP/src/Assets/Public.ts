@@ -21,11 +21,20 @@ world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
 world.afterEvents.itemUse.subscribe(({ itemStack, source: player }) => {
     if (!itemStack.matches("matrix:itemui")) return;
     if (isAdmin(player)) {
-        player.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
+        if (c().soundEffect) player.playSound("note.pling", { volume: 1.0 });
         menu(player).catch((err) => error(player, err));
     } else {
-        player.playSound("note.hat", { volume: 1.0, pitch: 3.0 });
-        player.sendMessage(`§bMatrix §7> §cYou need to be an admin to use this item!`);
+        if (c().soundEffect) player.playSound("note.bass", { volume: 1.0 });
+        player.sendMessage({
+            rawtext: [
+                {
+                    text: "§bMatrix §7>§c "
+                },
+                {
+                    translate: "acess.itemadmin"
+                }
+            ]
+        });
     }
 });
 

@@ -60,6 +60,10 @@ msgstr "%1§g 已被攔截 §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
 msgid "Admin GUI"
 msgstr "管理員選單"
 
+#: ui.itemui
+msgid "Get UI Item §8(itemui)"
+msgstr ""
+
 #: ui.moderateplayer
 msgid "Moderate Players"
 msgstr "管理玩家"
@@ -136,6 +140,10 @@ msgstr "查看背包 §8(invsee)"
 msgid "Echestwipe players §8(echestwipe)"
 msgstr "清除終界箱 §8(echestwipe)"
 
+#: ui.tempkick.button
+msgid "Temp-kick players §8(tempkick)"
+msgstr ""
+
 #: ui.config.button
 msgid "Edit config §8(config)"
 msgstr "更改配置 §8(config)"
@@ -157,7 +165,7 @@ msgid "module: §8%1"
 msgstr "模組: §8%1"
 
 #: ui.toggle.statust
-msgid "§rstatus: §8%2"
+msgid "§rstatus: §8%s"
 msgstr "§r狀態: §8%2"
 
 #: cmderror.title
@@ -692,14 +700,6 @@ msgstr "值:"
 msgid "unknown"
 msgstr "未知"
 
-#: ui.itemui
-msgid "Get UI Item §8(itemui)"
-msgstr ""
-
-#: ui.tempkick.button
-msgid "Temp-kick players §8(tempkick)"
-msgstr ""
-
 #: acess.itemadmin
 msgid "You need to be an admin to use this item!"
 msgstr ""
@@ -738,4 +738,8 @@ msgstr ""
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
+msgstr ""
+
+#: item.matrix.modstick
+msgid "§r§l§bMatrix §eModStick§r"
 msgstr ""

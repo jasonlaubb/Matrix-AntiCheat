@@ -73,20 +73,25 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
     const targetCommand = commands.find(({ name }) => name == command);
     if (!targetCommand || (targetCommand.require && !targetCommand.require(player)))
         return system.run(() => {
-            if (config.soundEffect) player.playSound("note.bass", { volume: 1.0, pitch: 3.0 });
+            if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
             sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.unknown", with: [command ?? " "] });
         });
     //player.sendMessage(JSON.stringify(targetCommand.subCommand))
     if (targetCommand.subCommand.length > 0) {
         if (args.length == 0) {
-            if (config.soundEffect) player.playSound("note.bass", { volume: 1.0, pitch: 3.0 });
-            return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, "", ""] }));
+            return system.run(() => {
+                sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, "", ""] });
+                if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
+            });
+
         }
         const subCommand = targetCommand.subCommand.find(({ name }) => name == args[0]);
         if (!subCommand) {
             const last = args.length > 1 ? args.join(" ").slice(1) : "";
-            if (config.soundEffect) player.playSound("note.bass", { volume: 1.0, pitch: 3.0 });
-            return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, args[0], last] }));
+            return system.run(() => {
+                if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
+                sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, args[0], last] });
+            })
         }
         syntaxRun(subCommand, player, args.slice(1), `${command} ${args[0]} `);
     } else {
@@ -98,17 +103,24 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
 export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): number {
     const config = c();
     if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
-        if (config.soundEffect) player.playSound("note.bass", { volume: 1.0, pitch: 3.0 });
-        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] }));
+        return system.run(() => {
+            if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
+            sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] })
+        });
     } else if (targetCommand.maxArgs && args.length > targetCommand.maxArgs) {
-        if (config.soundEffect) player.playSound("note.bass", { volume: 1.0, pitch: 3.0 });
-        return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] }));
+        if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
+        return system.run(() => {
+            if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
+            sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] })
+        });
     } else if (targetCommand.argRequire) {
         for (let i = 0; i < targetCommand.argRequire.length; i++) {
             if (!targetCommand.argRequire[i] || !args[i]) continue;
             if (!targetCommand.argRequire[i](args[i], targetCommand.requireSupportPlayer ? player : undefined, targetCommand.requireSupportArgs ? args : undefined)) {
-                if (config.soundEffect) player.playSound("note.bass", { volume: 1.0, pitch: 3.0 });
-                return system.run(() => sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] }));
+                return system.run(() => {
+                    if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
+                    sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] })
+                });
             }
         }
     }

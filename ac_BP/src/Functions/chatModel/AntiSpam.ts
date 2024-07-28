@@ -37,7 +37,7 @@ export function intergradedAntiSpam(player: Player, message: string) {
         if (data.lastMessage && data.lastMessage == message && Date.now() - data.messageRate[data.messageRate.length - 1] < 15000) {
             system.run(() => {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.repeated").parse())
-                if (playerSound) player.playSound("note.bassattack", { volume: 1.0, pitch: 3.0 });
+                if (playerSound) player.playSound("note.bass", { volume: 1.0 });
             });
             return true;
         }
@@ -47,26 +47,30 @@ export function intergradedAntiSpam(player: Player, message: string) {
         if (message.length > 2 && repeatedAmount > config.spamFilter.maxRepeats) {
             system.run(() => {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.spamming").parse())
-                if (playerSound) player.playSound("note.bassattack", { volume: 1.0, pitch: 3.0 });});
+                if (playerSound) player.playSound("note.bass", { volume: 1.0 });});
             return true;
         }
 
         if (message.length > config.spamFilter.maxLength) {
             system.run(() => {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.lengthlimit").parse())
-                if (playerSound) player.playSound("note.bassattack", { volume: 1.0, pitch: 3.0 });});
+                if (playerSound) player.playSound("note.bass", { volume: 1.0 });});
             return true;
         }
 
         data.messageRate.push(Date.now());
         data.messageRate = data.messageRate.filter((x) => Date.now() - x > 5000);
 
+        system.run(() => {
+            console.log(JSON.stringify(data));
+        })
+
         const messageRate = data.messageRate.length;
         if (messageRate > config.spamFilter.maxMessagesInFiveSeconds) {
             spamData.set(player.id, data);
             system.run(() => {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.messagerate").parse())
-                if (playerSound) player.playSound("note.bassattack", { volume: 1.0, pitch: 3.0 });
+                if (playerSound) player.playSound("note.bass", { volume: 1.0 });
             });
             return true;
         }
