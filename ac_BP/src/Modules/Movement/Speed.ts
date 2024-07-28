@@ -37,9 +37,9 @@ async function AntiSpeed(config: configi, player: Player) {
     if (player.isFlying || player.isGliding || player.hasTag(AnimationControllerTags.riding)) return;
     // start complex things
     // changing value when needed to avoid false postives
-    if (solidBlock) data.speedMaxV = 1.3;
-    if (now - data.lastAttack < 1000) data.speedMaxV = 3;
-    if (now - data.lastAttack > 1000 && !solidBlock) data.speedMaxV = 0.7;
+    if (solidBlock) data.speedMaxV = config.antiSpeed.inSolidThreshold;
+    if (now - data.lastAttack < 1000) data.speedMaxV = config.antiSpeed.damageThreshold;
+    if (now - data.lastAttack > 1000 && !solidBlock) data.speedMaxV = config.antiSpeed.commonThreshold;
     // checking if values are undefined then define them
     if (data.speedLog == undefined || data.lastSpeedLog == undefined) {
         data.speedLog = 0;

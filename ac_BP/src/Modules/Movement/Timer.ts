@@ -3,6 +3,7 @@ import { flag } from "../../Assets/Util.js";
 import { isSpikeLagging, tps } from "../../Assets/Public.js";
 import { configi, registerModule } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
+import { freezeTeleport } from "./NoClip.js";
 interface timerData {
     safeZone: Vector3;
     lastFlag: number;
@@ -42,7 +43,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
         //if the dBLFN is lower than the given value flag
         if (!isSpikeLagging(player) && ((dBLFN < 5000 && data.timerLog >= 3) || (dBLFN < 2000 && dBVD > data.maxDBVD))) flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
         //lag back the player
-        player.teleport(data.safeZone);
+        freezeTeleport(player, data.safeZone);
         //setting new lastFlag
         data.lastFlag = now;
     }

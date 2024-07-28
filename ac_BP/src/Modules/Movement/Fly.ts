@@ -3,6 +3,7 @@ import { flag, isSpawning } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
+import { isSpikeLagging } from "../../Assets/Public";
 
 interface FlyData {
     previousLocations: Vector3;
@@ -83,13 +84,14 @@ function antiFly(player: Player, now: number, config: configi) {
     if (data.velocityLog == 1 && !instair && velocity <= 0.2) {
         const lastflag = data.lastFlag2;
         data.flyFlags++;
+        const notSL = !isSpikeLagging(player);
         if ((data.lastVelocity >= -0.95 && data.lastVelocity <= -0.1) || (data.lastVelocity <= 0.42 && data.lastVelocity >= -0.03)) {
-            if ((xz > 0 || player.lastXZLogged > 0) && (data.lastHighVelocity >= 7 || (data.flyFlags >= 2 && now - lastflag >= 450 && now - lastflag <= 1000))) {
+            if (notSL && (xz > 0 || player.lastXZLogged > 0) && (data.lastHighVelocity >= 7 || (data.flyFlags >= 2 && now - lastflag >= 450 && now - lastflag <= 1000))) {
                 flag(player, "Fly", "B", config.antiFly.maxVL, config.antiFly.punishment, ["velocityY" + ":" + data.lastHighVelocity.toFixed(2)]);
                 player.teleport(data.previousLocations);
                 data.flyFlags++;
             } else if (data.flyFlags >= 2) data.flyFlags = 0;
-            if (player.location.y - data.previousLocations.y >= config.antiFly.maxGroundPrviousVelocity && data.lastHighVelocity >= 0.7 && !isSpawning(player)) {
+            if (notSL && player.location.y - data.previousLocations.y >= config.antiFly.maxGroundPrviousVelocity && data.lastHighVelocity >= 0.7 && !isSpawning(player)) {
                 if (now - lastflag <= 2000) flag(player, "Fly", "E", config.antiFly.maxVL, config.antiFly.punishment, ["velocityY" + ":" + data.lastHighVelocity.toFixed(2)]);
                 player.teleport(data.previousLocations);
             }
