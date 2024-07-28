@@ -717,7 +717,7 @@ msgid "%s has been warned, this is the first warning."
 msgstr ""
 
 #: warn.second
-msgstr "%s has been warned again, this is the second warning."
+msgid "%s has been warned again, this is the second warning."
 msgstr ""
 
 #: warn.third
