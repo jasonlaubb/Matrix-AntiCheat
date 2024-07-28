@@ -186,6 +186,7 @@ system.runInterval(async () => {
         if (clientServerDifference < 0.5 && sl.time <= 4 && sl.time > 0) {
             sl.isSpikeLagging = true;
         }
+        sl.lastLocation = player.location;
         spikeLaggingData.set(player.id, sl);
     }
 });
