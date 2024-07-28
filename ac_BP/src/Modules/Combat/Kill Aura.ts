@@ -3,6 +3,7 @@ import { flag, isAdmin, getPing, isSpawning } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
 import { DisableTags } from "../../Data/EnumData.js";
+import { isSpikeLagging } from "../../Assets/Public.js";
 
 /**
  * @author ravriv & jasonlaubb & RaMiGamerDev
@@ -58,7 +59,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         const velocity = player.getVelocity().y;
 
         //if the angle is higher than the max angle, flag the player
-        if (angle > config.antiKillAura.minAngle && rotationFloat < 79 && !(player.threwTridentAt && Date.now() - player.threwTridentAt < 3000)) {
+        if (!isSpikeLagging(player) && angle > config.antiKillAura.minAngle && rotationFloat < 79 && !(player.threwTridentAt && Date.now() - player.threwTridentAt < 3000)) {
             //B - false positive: low, efficiency: mid
             flag(player, "Kill Aura", "B", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + `${angle.toFixed(2)}°`]);
             flagged = true;
@@ -161,7 +162,7 @@ function intickEvent(config: configi, player: Player) {
         data.invalidPitch = 0;
     }
     //killaura/I check for if the player rotation can be divided by 1
-    if (!isSpawning(player) && (verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
+    if (!isSpawning(player) && !isSpikeLagging(player) && (verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
         player.addTag(DisableTags.pvp);
         system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
         flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);

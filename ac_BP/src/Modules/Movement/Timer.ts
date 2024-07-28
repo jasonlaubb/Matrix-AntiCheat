@@ -10,7 +10,7 @@ interface timerData {
         location: Vector3;
         recordTime: number;
     };
-    iSL: number | false;
+    iSL: number | boolean;
     maxDBVD: number;
     xzLog: number;
     disLog: number;
@@ -20,9 +20,6 @@ interface timerData {
 }
 const timerData = new Map<string, timerData>();
 /** @description Return that player is spike lagging */
-export function isISL(player: Player): boolean {
-    return !!timerData.get(player.id)?.iSL;
-}
 /**
  * @author RamiGamerDev
  * @description Checks if the player moved without the same between velocity and moved distance.

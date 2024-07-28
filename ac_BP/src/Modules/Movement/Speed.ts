@@ -2,6 +2,7 @@ import { EntityDamageCause, EntityHurtAfterEvent, Player, world } from "@minecra
 import { flag } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
+import { isSpikeLagging } from "../../Assets/Public.js";
 
 /**
  * @author RamiGamerDev
@@ -69,8 +70,8 @@ async function AntiSpeed(config: configi, player: Player) {
     //if the player dBLNV bigger than max value + 1 lag back for escape bypasses
     if (lagBack) player.teleport(safePos);
     //check if speedLog reached the max which is 3 flag
-    if (!player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && data.speedLog >= 3 && dBLNV > data.speedMaxV && dBLNV - data.lastVelocity < 0.3) {
-        flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + dBLNV.toFixed(2)]);
+    if (!player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && data.speedLog >= 3 && dBLNV > data.speedMaxV && dBLNV - data.lastVelocity < 0.3 && !isSpikeLagging(player)) {
+        flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + dBLNV.toFixed(2)]);
         player.teleport(safePos);
         data.speedLog = 0;
     }

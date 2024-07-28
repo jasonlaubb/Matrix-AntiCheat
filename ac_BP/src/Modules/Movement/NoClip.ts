@@ -2,7 +2,7 @@ import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAf
 import { flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
-import { isISL } from "./Timer";
+import { isSpikeLagging } from "../../Assets/Public";
 import { AnimationControllerTags } from "../../Data/EnumData";
 
 const powderBlock = [
@@ -91,7 +91,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     ) {
         const lastflag = data.lastFlag2;
         teleportMagic(player, data.safeLocation);
-        if (lastflag && now - lastflag < 5000 && !isISL(player)) {
+        if (lastflag && now - lastflag < 5000 && !isSpikeLagging(player)) {
             flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, undefined);
         }
         data.lastFlag2 = now;
@@ -101,6 +101,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     /*     emmm     */
     const safePos = data.safeLocation;
     const lastflag = data.lastFlag;
+    player.onScreenDisplay.setActionBar("isSpikeLagging = " + isSpikeLagging(player));
     if (
         player?.lastSafePos &&
         safePos &&
@@ -113,10 +114,11 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         !player.isFlying &&
         !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) &&
         !(player.threwTridentAt && now - player.threwTridentAt < 2500) &&
-        !(player.lastApplyDamage && now - player.lastApplyDamage < 250)
+        !(player.lastApplyDamage && now - player.lastApplyDamage < 250) &&
+        !isSpikeLagging(player)
     ) {
         teleportMagic(player, safePos);
-        if (lastflag && now - lastflag < 5000 && !isISL(player)) {
+        if (lastflag && now - lastflag < 20000) {
             if (Math.abs(y) < 1.75) {
                 flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["velocityXZ" + ":" + movementClip.toFixed(2)]);
             } else if (!player.hasTag(AnimationControllerTags.riding)) {

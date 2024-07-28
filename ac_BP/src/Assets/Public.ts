@@ -1,4 +1,4 @@
-import { world, Player, EntityInventoryComponent, ItemEnchantableComponent, EntityDamageCause, system, PlayerBreakBlockAfterEvent } from "@minecraft/server";
+import { world, Player, EntityInventoryComponent, ItemEnchantableComponent, EntityDamageCause, system, PlayerBreakBlockAfterEvent, Vector3 } from "@minecraft/server";
 import { MinecraftItemTypes, MinecraftEnchantmentTypes, MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { c, clearBlockBreakLog, findSlime, logBreak, isAdmin } from "./Util";
 import { MatrixUsedTags, AnimationControllerTags, DisableTags } from "../Data/EnumData";
@@ -127,7 +127,12 @@ let lastTickLog: number = Date.now();
 
 const tps = new Tps();
 export { tps };
-
+interface SpikeLaggingData {
+    lastLocation: Vector3;
+    time: number;
+    isSpikeLagging: boolean;
+}
+const spikeLaggingData = new Map<string, SpikeLaggingData>();
 system.runInterval(async () => {
     const now = Date.now();
     tpsAmountData.push(now - lastTickLog);
@@ -167,8 +172,37 @@ system.runInterval(async () => {
 
         player.lastVelObject = v;
         player.lastLocObject = player.location;
+
+        const sl = spikeLaggingData.get(player.id) ?? {
+            lastLocation: player.location,
+            time: 0,
+            isSpikeLagging: false,
+        };
+        const verticalSpeed = Math.hypot(v.x, v.z);
+        const clientServerDifference = Math.abs(verticalSpeed - Math.hypot(sl.lastLocation.x - player.location.x, sl.lastLocation.z - player.location.z));
+        if (clientServerDifference > 0.5) {
+            sl.time++;
+        }
+        if (clientServerDifference < 0.5 && sl.time <= 4 && sl.time > 0) {
+            sl.isSpikeLagging = true;
+        }
+        spikeLaggingData.set(player.id, sl);
     }
 });
+
+system.runInterval(() => {
+    const players = world.getAllPlayers();
+    for (const player of players) {
+        const sl = spikeLaggingData.get(player.id);
+        sl.isSpikeLagging = false;
+        sl.time = 0;
+        spikeLaggingData.set(player.id, sl);
+    }
+}, 20);
+
+export function isSpikeLagging (player: Player) {
+    return spikeLaggingData.get(player.id)?.isSpikeLagging ?? false;
+}
 
 import allProperty from "../Data/ValidPlayerProperty";
 
