@@ -1,6 +1,6 @@
 import { Player, Vector3 } from "@minecraft/server";
 import { flag } from "../../Assets/Util.js";
-import { tps } from "../../Assets/Public.js";
+import { isSpikeLagging, tps } from "../../Assets/Public.js";
 import { configi, registerModule } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
 interface timerData {
@@ -10,7 +10,6 @@ interface timerData {
         location: Vector3;
         recordTime: number;
     };
-    iSL: number | boolean;
     maxDBVD: number;
     xzLog: number;
     disLog: number;
@@ -41,7 +40,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - data.lastFlag;
         //if the dBLFN is lower than the given value flag
-        if (!data.iSL && ((dBLFN < 5000 && data.timerLog >= 3) || (dBLFN < 2000 && dBVD > data.maxDBVD))) flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
+        if (!isSpikeLagging(player) && ((dBLFN < 5000 && data.timerLog >= 3) || (dBLFN < 2000 && dBVD > data.maxDBVD))) flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
         //lag back the player
         player.teleport(data.safeZone);
         //setting new lastFlag
@@ -54,7 +53,6 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
     data.yLog = 0;
     data.disLog = 0;
     data.yDisLog = 0;
-    data.iSL = false;
 }
 /** @description For Anti Timer */
 export async function SystemEvent(player: Player, now: number) {
@@ -68,7 +66,6 @@ export async function SystemEvent(player: Player, now: number) {
     const { x: x2, y: y2, z: z2 } = locdata.location;
     const { x, y, z } = player.getVelocity();
     const xz = Math.hypot(x, z);
-    const dBVD = Math.abs(xz - Math.hypot(x1 - x2, z1 - z2));
     //define everything if everything is undefined
     if (data.timerLog == undefined || Number.isNaN(data.timerLog)) {
         data.xzLog = 0;
@@ -77,7 +74,6 @@ export async function SystemEvent(player: Player, now: number) {
         data.maxDBVD = 0;
         data.yLog = 0;
         data.yDisLog = 0;
-        data.iSL = null;
         data.safeZone = player.location;
         data.lastFlag = Date.now();
     }
@@ -95,9 +91,6 @@ export async function SystemEvent(player: Player, now: number) {
     }
     //reset anti y timer if player used /tp or using high velocity
     if ((y == 0 && Math.abs(y1 - y2) > 0.1) || y > 0.5 || player.hasTag(AnimationControllerTags.riding)) data.yDisLog = 0;
-    //check if the player is spike lagging
-    if (dBVD > 0.5) (data.iSL as number)++;
-    if (dBVD < 0.5 && (data.iSL as number) <= 4 && (data.iSL as number) > 0) (data.iSL as boolean) = true;
     timerData.set(player.id, data);
 }
 
