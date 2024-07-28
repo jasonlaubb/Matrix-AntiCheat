@@ -37,7 +37,7 @@ class MatrixAnti_MCPE {
                             {
                                 translate: "index.complete",
                                 with: [initTakeTime.toString()],
-                            }
+                            },
                         ],
                     });
                 }
@@ -49,7 +49,7 @@ class MatrixAnti_MCPE {
         Minecraft.world.afterEvents.worldInitialize.unsubscribe(this.onWorldInitialize);
         return;
     };
-    private watchDogTerminate (event: Minecraft.WatchdogTerminateBeforeEvent) {
+    private watchDogTerminate(event: Minecraft.WatchdogTerminateBeforeEvent) {
         event.cancel = true;
     }
     private readonly importAll = async () => {

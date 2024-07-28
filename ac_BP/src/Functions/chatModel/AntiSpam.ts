@@ -13,7 +13,7 @@ const special_characters = {
     "8": "b",
     "@": "a",
     "€": "e",
-    "$": "s",
+    $: "s",
 };
 interface SpamData {
     lastMessage: string;
@@ -21,7 +21,7 @@ interface SpamData {
 }
 const spamData = new Map<string, SpamData>();
 export function intergradedAntiSpam(player: Player, message: string) {
-    const confi = c()
+    const confi = c();
     const playerSound = confi.soundEffect;
     const config = confi.intergradedAntiSpam;
     message = message.latinise().toLowerCase();
@@ -36,7 +36,7 @@ export function intergradedAntiSpam(player: Player, message: string) {
 
         if (data.lastMessage && data.lastMessage == message && Date.now() - data.messageRate[data.messageRate.length - 1] < 15000) {
             system.run(() => {
-                player.sendMessage(rawstr.new(true, "c").tra("spam.repeated").parse())
+                player.sendMessage(rawstr.new(true, "c").tra("spam.repeated").parse());
                 if (playerSound) player.playSound("note.bass", { volume: 1.0 });
             });
             return true;
@@ -46,15 +46,17 @@ export function intergradedAntiSpam(player: Player, message: string) {
 
         if (message.length > 2 && repeatedAmount > config.spamFilter.maxRepeats) {
             system.run(() => {
-                player.sendMessage(rawstr.new(true, "c").tra("spam.spamming").parse())
-                if (playerSound) player.playSound("note.bass", { volume: 1.0 });});
+                player.sendMessage(rawstr.new(true, "c").tra("spam.spamming").parse());
+                if (playerSound) player.playSound("note.bass", { volume: 1.0 });
+            });
             return true;
         }
 
         if (message.length > config.spamFilter.maxLength) {
             system.run(() => {
-                player.sendMessage(rawstr.new(true, "c").tra("spam.lengthlimit").parse())
-                if (playerSound) player.playSound("note.bass", { volume: 1.0 });});
+                player.sendMessage(rawstr.new(true, "c").tra("spam.lengthlimit").parse());
+                if (playerSound) player.playSound("note.bass", { volume: 1.0 });
+            });
             return true;
         }
 
@@ -63,13 +65,13 @@ export function intergradedAntiSpam(player: Player, message: string) {
 
         system.run(() => {
             console.log(JSON.stringify(data));
-        })
+        });
 
         const messageRate = data.messageRate.length;
         if (messageRate > config.spamFilter.maxMessagesInFiveSeconds) {
             spamData.set(player.id, data);
             system.run(() => {
-                player.sendMessage(rawstr.new(true, "c").tra("spam.messagerate").parse())
+                player.sendMessage(rawstr.new(true, "c").tra("spam.messagerate").parse());
                 if (playerSound) player.playSound("note.bass", { volume: 1.0 });
             });
             return true;
@@ -121,7 +123,7 @@ function chatFilter(player: Player, message: string) {
     Object.entries(special_characters).forEach(([key, value]) => {
         msg = msg.replaceAll(key, value);
     });
-    const matchRegex = /([a-zA-Z]+)/g
+    const matchRegex = /([a-zA-Z]+)/g;
     if (msg.match(matchRegex)?.some((x) => latinBased.some((y) => y == x))) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
@@ -134,7 +136,10 @@ function chatFilter(player: Player, message: string) {
         });
         return true;
     }
-    const plaintext = message.replace(/[\-!@#$%^&*(){}\[\]|\\;:"'?.,\s0-9a-zA-Z\u3002\uFF1F\uFF01\u3010\u3011\uFF0C\u3001\uFF1B\uFF1A\u300C\u300D\u300E\u300F\u2019\u201C\u201D\u2018\uFF08\uFF09\u3014\u3015\u2026\u2013\uFF0E\u2014\u300A\u300B\u3008\u3009]/g, "");
+    const plaintext = message.replace(
+        /[\-!@#$%^&*(){}\[\]|\\;:"'?.,\s0-9a-zA-Z\u3002\uFF1F\uFF01\u3010\u3011\uFF0C\u3001\uFF1B\uFF1A\u300C\u300D\u300E\u300F\u2019\u201C\u201D\u2018\uFF08\uFF09\u3014\u3015\u2026\u2013\uFF0E\u2014\u300A\u300B\u3008\u3009]/g,
+        ""
+    );
     if (plaintext.length > 0 && regexBased.some((x) => plaintext.includes(x))) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());

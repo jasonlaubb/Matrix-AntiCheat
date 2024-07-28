@@ -83,7 +83,6 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
                 sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, "", ""] });
                 if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
             });
-
         }
         const subCommand = targetCommand.subCommand.find(({ name }) => name == args[0]);
         if (!subCommand) {
@@ -91,7 +90,7 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
             return system.run(() => {
                 if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
                 sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [command, args[0], last] });
-            })
+            });
         }
         syntaxRun(subCommand, player, args.slice(1), `${command} ${args[0]} `);
     } else {
@@ -105,13 +104,13 @@ export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Pl
     if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
         return system.run(() => {
             if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
-            sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] })
+            sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] });
         });
     } else if (targetCommand.maxArgs && args.length > targetCommand.maxArgs) {
         if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
         return system.run(() => {
             if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
-            sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] })
+            sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] });
         });
     } else if (targetCommand.argRequire) {
         for (let i = 0; i < targetCommand.argRequire.length; i++) {
@@ -119,7 +118,7 @@ export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Pl
             if (!targetCommand.argRequire[i](args[i], targetCommand.requireSupportPlayer ? player : undefined, targetCommand.requireSupportArgs ? args : undefined)) {
                 return system.run(() => {
                     if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
-                    sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] })
+                    sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, i - 1).join(" ") + " ", args[i], args.slice(i + 1).join(" ")] });
                 });
             }
         }

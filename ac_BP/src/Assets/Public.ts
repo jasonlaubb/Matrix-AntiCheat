@@ -28,12 +28,12 @@ world.afterEvents.itemUse.subscribe(({ itemStack, source: player }) => {
         player.sendMessage({
             rawtext: [
                 {
-                    text: "§bMatrix §7>§c "
+                    text: "§bMatrix §7>§c ",
                 },
                 {
-                    translate: "acess.itemadmin"
-                }
-            ]
+                    translate: "acess.itemadmin",
+                },
+            ],
         });
     }
 });
@@ -201,7 +201,7 @@ system.runInterval(() => {
     }
 }, 20);
 
-export function isSpikeLagging (player: Player) {
+export function isSpikeLagging(player: Player) {
     return spikeLaggingData.get(player.id)?.isSpikeLagging ?? false;
 }
 

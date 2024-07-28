@@ -62,10 +62,15 @@ function checksBan(player: Player): void {
         timeTherShold = `${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
     }
     const extraMessages = c().banModify.extraMessages;
-    const extraString = extraMessages.length > 0 ? extraMessages.map((string) => {
-        const [key, value] = string.split(":");
-        return `§7${key}: §c${value}`;
-    }).join("\n") : "";
+    const extraString =
+        extraMessages.length > 0
+            ? extraMessages
+                  .map((string) => {
+                      const [key, value] = string.split(":");
+                      return `§7${key}: §c${value}`;
+                  })
+                  .join("\n")
+            : "";
     try {
         player.runCommand(`kick "${player.name}" §r\n§c§lYour have been banned!\n§r§7Time Left:§c ${timeTherShold}\n§7Reason: §c${reason}§r\n§7By: §c${by}${extraString}`);
     } catch {

@@ -165,7 +165,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
                 const targets = world.getPlayers({ tags: ["matrix:notify"] });
                 targets.forEach((players) => {
                     if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
-                    players.sendMessage(flagMsg.parse())
+                    players.sendMessage(flagMsg.parse());
                 });
                 break;
             }
@@ -173,7 +173,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
                 const targets = world.getPlayers({ excludeNames: [player.name] });
                 targets.forEach((players) => {
                     if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
-                    players.sendMessage(flagMsg.parse())
+                    players.sendMessage(flagMsg.parse());
                 });
                 break;
             }
@@ -182,8 +182,8 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
                 const targets = allPlayers.filter((players) => isAdmin(players));
                 targets.forEach((players) => {
                     if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
-                    players.sendMessage(flagMsg.parse())
-                });;
+                    players.sendMessage(flagMsg.parse());
+                });
                 break;
             }
             case "none": {
@@ -194,7 +194,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
                 const targets = world.getAllPlayers();
                 targets.forEach((players) => {
                     if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
-                })
+                });
                 break;
             }
         }
