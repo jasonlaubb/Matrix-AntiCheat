@@ -29,14 +29,13 @@ export async function moduleUI(player: Player) {
     });
 }
 async function toggleUI(player: Player, moduleData: string) {
-    let state = (c() as { [key: string]: any })[moduleData]?.enabled;
-    if (state == true) state = "§aEnabled";
-    else state = "§cDisabled";
+    let state = (c() as { [key: string]: any })[moduleData]?.enable;
+    state = state ? "§aEnabled" : "§cDisabled";
     const moduleForm = new ActionFormData();
-    moduleForm.title("toggle module");
+    moduleForm.title(rawstr.drt("ui.toggle.moduleui"));
     moduleForm.body(rawstr.new().tra("ui.toggle.modulet", moduleData).str("\n").tra("ui.toggle.statust", state).parse());
-    moduleForm.button(rawstr.drt("ui.toggle.enable"));
-    moduleForm.button(rawstr.drt("ui.toggle.disable"));
+    moduleForm.button(rawstr.drt("ui.toggle.enable"), "ui/vanilla_tick");
+    moduleForm.button(rawstr.drt("ui.toggle.disable"), "ui/redX1");
     moduleForm.show(player).then((data) => {
         if (data.canceled) return;
         // use the command for the user.

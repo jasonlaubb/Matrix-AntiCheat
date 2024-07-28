@@ -7,6 +7,7 @@ interface AbcSelection {
     a: string;
     b?: string;
     c?: string;
+    d?: string;
 }
 
 const groupAbc = ([a, b, c]: any[]): AbcSelection => ({ a, b, c });
@@ -26,6 +27,7 @@ const moderateAction: { [key: number]: (arg: AbcSelection) => string } = {
     5: ({ a }) => `invcopy "${a}"`,
     6: ({ a }) => `invsee "${a}"`,
     7: ({ a }) => `echestwipe "${a}"`,
+    8: ({ a }) => `tempkick "${a}"`,
 };
 
 // Match the ui
@@ -47,6 +49,7 @@ export async function moderatePlayer(player: Player, target: Player) {
         .button(rawstr.drt("ui.invcopy.button"))
         .button(rawstr.drt("ui.invsee.button"))
         .button(rawstr.drt("ui.echestwipe.button"))
+        .button(rawstr.drt("ui.tempkick.button"))
         .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
         .show(player);
     if (action.canceled) return;

@@ -30,10 +30,10 @@ export async function menu(player: Player) {
     if (!isAdmin(player)) return;
     new ActionFormData()
         .title(rawstr.drt("ui.title"))
-        .button(rawstr.drt("ui.itemui"), "textures/items/itemui.png")
-        .button(rawstr.drt("ui.moderateplayer"), "textures/ui/FriendsDiversity.png")
-        .button(rawstr.drt("ui.setting"), "textures/ui/gear.png")
-        .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
+        .button(rawstr.drt("ui.itemui"), "textures/items/itemui")
+        .button(rawstr.drt("ui.moderateplayer"), "textures/ui/FriendsDiversity")
+        .button(rawstr.drt("ui.setting"), "textures/ui/gear")
+        .button(rawstr.drt("ui.exit"), "textures/ui/redX1")
         .show(player)
         .then((res) => {
             if (res.canceled) {
@@ -89,9 +89,9 @@ async function selectPlayer(player: Player): Promise<Player> {
 function settingUI(player: Player) {
     new ActionFormData()
         .title(rawstr.drt("ui.setting"))
-        .button(rawstr.drt("ui.config.button"), "textures/ui/gear.png")
-        .button(rawstr.drt("ui.toggle.button"), "textures/ui/gear.png")
-        .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
+        .button(rawstr.drt("ui.config.button"), "textures/ui/gear")
+        .button(rawstr.drt("ui.toggle.button"), "textures/items/compass_item")
+        .button(rawstr.drt("ui.exit"), "textures/ui/redX1")
         .show(player)
         .then((res) => {
             if (res.canceled) return;
