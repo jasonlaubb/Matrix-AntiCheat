@@ -15,7 +15,7 @@ if exist "%~dp0ac_BP\src\node_modules\matrix-anticheat" rmdir /S /Q "%~dp0ac_BP\
 : Build the javascript
 if not exist "%~dp0ac_BP\scripts" mkdir "%~dp0ac_BP\scripts"
 Xcopy "%~dp0ac_BP\src\node_modules" "%~dp0ac_BP\scripts\node_modules" /Y /E /H /C /I
-call tsc --build ./ac_BP/tsconfig.json
+call tsc --build ./tsconfig.json
 : Build the language
 call node ./ac_RP/texts/generator.js
 : Create the right folder for generate
