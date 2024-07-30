@@ -492,7 +492,7 @@ export default {
         timer: 2,
         maxTry: 3,
     },
-    worldBoarder: {
+    worldBorder: {
         enabled: false,
         checkEvery: 2,
         radius: 250000,
