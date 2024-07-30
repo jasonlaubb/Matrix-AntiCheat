@@ -16,7 +16,7 @@ export async function configUI(player: Player, path?: string[]) {
     }
 }
 function selector(player: Player, path: string[]) {
-    const object = Dynamic.get(path);
+    const object = Dynamic.get(path)!;
     const lulka = Object.entries(object).map((entries): [string, string] => {
         if (entries[1] === undefined) {
             entries[1] = "§cundefined";
@@ -51,7 +51,7 @@ function selector(player: Player, path: string[]) {
     selectform.button(rawstr.drt("ui.exit"), "textures/ui/redX1.png");
     selectform.show(player).then((data) => {
         if (data.canceled) return;
-        const selection = lulka[data.selection];
+        const selection = lulka[data.selection!];
         if (!selection) return;
         configUI(player, [...path, selection[0]]).catch((e) => error(player, e));
     });
@@ -76,7 +76,7 @@ async function editor(player: Player, path: string[]) {
         .show(player)
         .then((data) => {
             if (data.canceled) return;
-            const type = strtypes[data.formValues[0] as number];
+            const type = strtypes[data.formValues![0] as number];
             const form = new ModalFormData().title(rawstr.drt("ui.config.editor"));
             switch (type) {
                 case "string": {
@@ -101,7 +101,7 @@ async function editor(player: Player, path: string[]) {
             }
             form.show(player).then((data) => {
                 if (data.canceled) return;
-                const value = data.formValues[0];
+                const value = data.formValues![0];
                 let ans = value;
                 if (typeof value == "number") {
                     ans = boltypes[value];

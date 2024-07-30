@@ -15,7 +15,7 @@ registerCommand({
         const target = isPlayer(args[0]);
         const reason = args[1] || "No reason provided";
         const time = args[2] || "forever";
-        ban(target, reason, player.name, time === "forever" ? time : Date.now() + timeToMs(time));
+        ban(target, reason, player.name, time === "forever" ? time : Date.now() + timeToMs(time)!);
         sendRawText(world, { text: "§bMatrix §7>§g " }, { translate: "ban.has", with: [target.name, player.name] });
     },
 });

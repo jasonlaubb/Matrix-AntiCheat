@@ -26,7 +26,7 @@ export default class Dynamic {
     static readonly config = (): typeof defaultConfig => common;
     static configAsync = async (): Promise<typeof defaultConfig> => common;
     static readonly default = (): typeof defaultConfig => config;
-    static get(key: string[]): string | boolean | number | (string | boolean | number)[] {
+    static get(key: string[]): string | boolean | number | (string | boolean | number)[] | undefined {
         let current: any = common;
 
         for (let i = 0; i < key.length; i++) {
@@ -57,7 +57,7 @@ export default class Dynamic {
         let plaintext = JSON.parse(cypher) as Changer[];
         const index = plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key));
         if (index == -1) return false;
-        plaintext[index] = undefined;
+        plaintext[index] = undefined!;
         plaintext = plaintext.filter((changer) => changer);
         world.setDynamicProperty("config", JSON.stringify(plaintext));
         // Reload the dynamic config

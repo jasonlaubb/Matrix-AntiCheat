@@ -22,7 +22,7 @@ registerCommand(
             const banqueueData: BanqueueData = {
                 name: args[0],
                 reason: reason,
-                time: time === "forever" ? time : Date.now() + timeToMs(time),
+                time: time === "forever" ? time : Date.now() + timeToMs(time)!,
                 admin: player.name,
             };
             const totalData: BanqueueData[] = JSON.parse((world.getDynamicProperty("banqueue") as string) ?? "[]");

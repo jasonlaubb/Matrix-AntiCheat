@@ -7,7 +7,7 @@ import { error } from "../Functions/chatModel/CommandHandler";
 
 world.afterEvents.itemReleaseUse.subscribe(({ itemStack, source: player }) => {
     if (itemStack?.typeId === MinecraftItemTypes.Trident && player instanceof Player) {
-        const getItemInSlot = (player.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent).container.getItem(player.selectedSlotIndex);
+        const getItemInSlot = (player.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent).container?.getItem(player.selectedSlotIndex);
         if (getItemInSlot === undefined) return;
         if (getItemInSlot.typeId == MinecraftItemTypes.Trident && player.hasTag(AnimationControllerTags.wet)) {
             const checkRipTide = (getItemInSlot.getComponent(ItemEnchantableComponent.componentId) as ItemEnchantableComponent).hasEnchantment(MinecraftEnchantmentTypes.Riptide);
@@ -112,7 +112,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 });
 
 class Tps {
-    private tps: number;
+    private tps?: number;
     constructor() {}
     public getTps() {
         return this.tps;
@@ -151,7 +151,7 @@ system.runInterval(async () => {
         if (player.hasTag(AnimationControllerTags.usingItem) && !player.lastItemUsed) {
             player.lastItemUsed = now;
         } else if (!player.hasTag(AnimationControllerTags.usingItem)) {
-            player.lastItemUsed = undefined;
+            player.lastItemUsed = 0;
         }
 
         // slime
@@ -194,7 +194,7 @@ system.runInterval(async () => {
 system.runInterval(() => {
     const players = world.getAllPlayers();
     for (const player of players) {
-        const sl = spikeLaggingData.get(player.id);
+        const sl = spikeLaggingData.get(player.id)!;
         sl.isSpikeLagging = false;
         sl.time = 0;
         spikeLaggingData.set(player.id, sl);

@@ -16,7 +16,7 @@ const special_characters = {
     $: "s",
 };
 interface SpamData {
-    lastMessage: string;
+    lastMessage?: string;
     messageRate: number[];
 }
 const spamData = new Map<string, SpamData>();
@@ -30,9 +30,8 @@ export function intergradedAntiSpam(player: Player, message: string) {
 
     if (config.spamFilter.enabled) {
         const data = spamData.get(player.id) ?? {
-            lastMessage: undefined,
             messageRate: [],
-        };
+        } as SpamData;
 
         if (data.lastMessage && data.lastMessage == message && Date.now() - data.messageRate[data.messageRate.length - 1] < 15000) {
             system.run(() => {
@@ -61,7 +60,7 @@ export function intergradedAntiSpam(player: Player, message: string) {
         }
 
         data.messageRate.push(Date.now());
-        data.messageRate = data.messageRate.filter((x) => Date.now() - x > 5000);
+        data.messageRate = data.messageRate.filter((x) => Date.now() - x > 5000) as number[];
 
         system.run(() => {
             console.log(JSON.stringify(data));

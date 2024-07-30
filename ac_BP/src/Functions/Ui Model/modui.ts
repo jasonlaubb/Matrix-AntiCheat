@@ -12,10 +12,10 @@ interface AbcSelection {
 
 const groupAbc = ([a, b, c]: any[]): AbcSelection => ({ a, b, c });
 
-async function cpu(form: ModalFormData, player: Player, to: string): Promise<AbcSelection> {
+async function cpu(form: ModalFormData, player: Player, to: string): Promise<AbcSelection | null> {
     const data = await form.show(player);
     if (data.canceled) return null;
-    return groupAbc([to, ...data.formValues]);
+    return groupAbc([to, ...data.formValues!]);
 }
 
 const moderateAction: { [key: number]: (arg: AbcSelection) => string } = {
@@ -31,8 +31,11 @@ const moderateAction: { [key: number]: (arg: AbcSelection) => string } = {
 };
 
 // Match the ui
-const moderateUI: { [key: number]: (player: Player, target: string) => Promise<AbcSelection> } = {
-    0: (p, t) => cpu(banForm, p, t),
+const moderateUI: { [key: number]: (player: Player, target: string) => Promise<AbcSelection | null> } = {
+    0: async (p, t) => {
+        const result = await cpu(banForm, p!, t ?? "null");
+        return result;
+    },
 };
 
 // For state that how to form a command
@@ -53,13 +56,13 @@ export async function moderatePlayer(player: Player, target: Player) {
         .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
         .show(player);
     if (action.canceled) return;
-    const actionData = moderateUI[action.selection];
-    let abcSelection: AbcSelection = { a: target.name };
+    const actionData = moderateUI[action.selection!];
+    let abcSelection: AbcSelection | null = { a: target.name };
     if (actionData) {
         // get the selection of player
-        abcSelection = await actionData(player, target.name);
+        abcSelection = await actionData(player, target.name)!;
         if (abcSelection === null) return;
-    } else if (action.selection >= Object.keys(moderateAction).length) return;
+    } else if (action.selection! >= Object.keys(moderateAction).length) return;
     // Run an chat command for the player
-    triggerCommand(player, moderateAction[action.selection](abcSelection));
+    triggerCommand(player, moderateAction[action.selection!](abcSelection));
 }

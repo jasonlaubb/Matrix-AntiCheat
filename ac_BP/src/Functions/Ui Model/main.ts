@@ -53,7 +53,7 @@ function openForIt(player: Player, target: Player) {
     }
 }
 
-async function selectPlayer(player: Player): Promise<Player> {
+async function selectPlayer(player: Player): Promise<Player | null> {
     const pointAllPlayer = world.getAllPlayers();
     const selectMenu = new ActionFormData().title("Select online player");
     for (const target of pointAllPlayer) {
@@ -67,7 +67,7 @@ async function selectPlayer(player: Player): Promise<Player> {
     }
     const result = await selectMenu.show(player);
     if (result.canceled) return null;
-    return pointAllPlayer[result.selection] ?? null;
+    return pointAllPlayer[result.selection!] ?? null;
 }
 
 function settingUI(player: Player) {

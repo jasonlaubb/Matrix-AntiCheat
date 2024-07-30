@@ -92,7 +92,7 @@ function checkBlockAround(location: Vector3, blockType: MinecraftBlockTypes, dim
 
     for (let x = -1; x <= 1; x++) {
         for (let z = -1; z <= 1; z++) {
-            blocks.push(dimension.getBlock({ x: floorPos.x + x, y: floorPos.y, z: floorPos.z + z } as Vector3)?.typeId);
+            blocks.push(dimension.getBlock({ x: floorPos.x + x, y: floorPos.y, z: floorPos.z + z } as Vector3)?.typeId ?? "minecraft:air");
         }
     }
 
@@ -106,7 +106,7 @@ type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L
 function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
     const config = c();
     // Skip if the player is in the bypass list
-    if (config.autoPunishment.bypasslist.includes(player.id)) return;
+    if ((config.autoPunishment.bypasslist as string[]).includes(player.id)) return;
     system.run(() => {
         Vl[player.id] ??= {};
         Vl[player.id][modules] ??= 0;
@@ -245,6 +245,7 @@ function timeToMs(timeStr: string) {
     let ms = 0;
     const timeRegax = /\d+(s|m|h|d)/g;
     const matches = timeStr.match(timeRegax);
+    if (matches === null) return undefined;
     for (const str of matches) {
         const value = Number(str.slice(0, -1));
         if (Number.isNaN(value)) continue;

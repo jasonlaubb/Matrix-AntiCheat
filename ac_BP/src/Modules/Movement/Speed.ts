@@ -18,9 +18,9 @@ interface Speeddata {
     lastOutOfRange: number;
     speedMaxV: number;
     locationData: Vector3;
-    flagNumber: number;
-    firstTrigger: number;
-    currentFlagCombo: number;
+    flagNumber?: number;
+    firstTrigger?: number;
+    currentFlagCombo?: number;
 }
 const speeddata = new Map<string, Speeddata>();
 
@@ -95,7 +95,7 @@ function entityHurt({ damageSource: { cause }, hurtEntity }: EntityHurtAfterEven
     if (cause == EntityDamageCause.entityAttack || cause == EntityDamageCause.blockExplosion) {
         const data = speeddata.get(hurtEntity.id);
         if (data) data.lastAttack = Date.now();
-        speeddata.set(hurtEntity.id, data);
+        speeddata.set(hurtEntity.id, data!);
     }
 }
 
