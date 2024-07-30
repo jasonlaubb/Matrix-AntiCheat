@@ -109,7 +109,7 @@ function playerInteractEntity(event: PlayerInteractWithEntityBeforeEvent) {
 
 // Register the module
 registerModule(
-    "worldBoarder",
+    "worldBorder",
     true,
     [lastSafePos],
     {
