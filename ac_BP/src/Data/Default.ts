@@ -339,6 +339,11 @@ export default {
         validFlagDuration: 32000,
         maxFlagInDuration: 3,
         flagDurationIncrase: 5000,
+        allowSpeedLevels: {
+            moving: 17,
+            sprinting: 10,
+            usingItem: 4,
+        }
     },
     antiTimer: {
         enabled: true,
