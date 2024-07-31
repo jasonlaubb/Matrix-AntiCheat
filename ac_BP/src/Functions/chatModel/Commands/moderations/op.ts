@@ -13,7 +13,7 @@ registerCommand({
     requireSupportPlayer: true,
     argRequire: [
         (value, player) => {
-            if (!isAdmin(player)) return true;
+            if (!isAdmin(player!)) return true;
             return !!isPlayer(value as string, true, false);
         },
     ],

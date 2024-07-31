@@ -13,7 +13,7 @@ registerCommand({
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
 
-        const inv = target.getComponent("inventory").container;
+        const inv = target.getComponent("inventory")!.container!;
 
         let message = new rawstr(true, "g").tra("invsee.of", player.name).str(":\n");
         for (let i = 0; i < inv.size; i++) {

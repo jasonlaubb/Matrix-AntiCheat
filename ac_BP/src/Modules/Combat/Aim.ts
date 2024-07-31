@@ -44,7 +44,7 @@ function antiAim(config: configi, player: Player) {
     const rotSpeedX = Math.abs(rotationX - data.lastRotationX);
     const rotSpeedY = Math.abs(rotationY - data.lastRotationY);
     const lastRotSpeedX = Math.abs(rotationX - data.previousRotationX);
-    const lastRotSpeedY = Math.abs(rotationY - data.previousRotationY);
+    const lastRotSpeedY = Math.abs(rotationY - data.previousRotationY!);
     // Integer rotation
     if ((rotationX % 5 == 0 && rotationX != 0 && Math.abs(rotationX) != 90) || (rotationY % 5 == 0 && rotationY != 0)) {
         if (!player.hasTag(AnimationControllerTags.riding)) {
@@ -121,8 +121,8 @@ function antiAim(config: configi, player: Player) {
 interface AimData {
     lastRotationX: number;
     lastRotationY: number;
-    previousRotationX: number;
-    previousRotationY: number;
+    previousRotationX?: number;
+    previousRotationY?: number;
     straightRotContinue: number;
     similarRotContinue: number;
     vibrateRotContinue: number;

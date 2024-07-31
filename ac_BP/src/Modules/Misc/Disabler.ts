@@ -15,6 +15,7 @@ function intickEvent(config: configi, player: Player) {
     if (player.isGliding) {
         const elytra = player.getComponent(EntityEquippableComponent.componentId)!?.getEquipment(EquipmentSlot.Chest)!;
         const durability = elytra?.getComponent(ItemDurabilityComponent.componentId);
+        if (!durability) return;
         if (elytra?.typeId != MinecraftItemTypes.Elytra || (elytra?.typeId == MinecraftItemTypes.Elytra && durability.maxDurability - durability.damage <= 1)) {
             player.addTag(MatrixUsedTags.disabler);
             system.runTimeout(() => player.removeTag(MatrixUsedTags.disabler), 10);

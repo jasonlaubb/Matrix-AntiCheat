@@ -13,8 +13,8 @@ registerCommand({
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
 
-        const inputInv = target.getComponent(EntityInventoryComponent.componentId).container;
-        const outputInv = player.getComponent(EntityInventoryComponent.componentId).container;
+        const inputInv = target.getComponent(EntityInventoryComponent.componentId)!.container!;
+        const outputInv = player.getComponent(EntityInventoryComponent.componentId)!.container!;
 
         for (let i = 0; i < inputInv.size; i++) {
             const item: ItemStack | undefined = inputInv.getItem(i);

@@ -10,7 +10,7 @@ registerCommand({
     minArgs: 0,
     require: (player) => verifier(player, c().commands.itemui),
     executor: async (player, _args) => {
-        const container = player.getComponent("inventory").container;
+        const container = player.getComponent("inventory")!.container!;
 
         try {
             container.addItem(new ItemStack("matrix:itemui", 1));

@@ -24,7 +24,7 @@ function antiAutoClicker(config: configi, player: Player) {
     const cps = filteredClicks.length;
     //player.runCommand(`title ${player.name} actionbar ${cps} cps`);
     // If the cps is higher than the max clicks per second, flag the player
-    if (!player.hasTag(DisableTags.pvp) && tps.getTps() > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
+    if (!player.hasTag(DisableTags.pvp) && tps.getTps()! > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
         // A - false positive: very low, efficiency: high
         flag(player, "Auto Clicker", "A", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Click Per Second" + ":" + cps.toFixed(0)]);
 
@@ -43,6 +43,7 @@ function antiAutoClicker(config: configi, player: Player) {
 function entityHitEntityAfterEvent(_config: configi, { damagingEntity }: EntityHitEntityAfterEvent) {
     if (damagingEntity instanceof Player && !isAdmin(damagingEntity) && !damagingEntity.hasTag(DisableTags.pvp)) {
         const click = clickData.get(damagingEntity.id);
+        if (!click) return;
         click.push(Date.now());
         clickData.set(damagingEntity.id, click);
     }

@@ -43,7 +43,7 @@ registerCommand(
                     if (!regexpArr.test(value)) return player.sendMessage(new rawstr(true, "c").tra("config.naa").parse());
                     Dynamic.set(
                         loc,
-                        value.match(singleArr).map((v) => {
+                        value.match(singleArr)!.map((v) => {
                             if (v.startsWith("")) {
                                 return v.slice(1, -1);
                             } else {

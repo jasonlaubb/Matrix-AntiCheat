@@ -28,7 +28,7 @@ export async function getModulesIds() {
         return world.modules.map((module) => module.id);
     } else {
         await Index.initializeAsync();
-        return world.modules.map((module) => module.id);
+        return (world.modules as Module[]).map((module) => module.id);
     }
 }
 let mapvalues: Map<string, any>[] = [];
@@ -121,10 +121,10 @@ function unlisten(id: string) {
     if (!module) throw "Unlisten :: " + id + " :: No result";
     if (!module?.enabled) throw "Unlisten :: " + id + " :: Already disabled";
 
-    for (const num of module?.runId) {
+    for (const num of module?.runId!) {
         system.clearRun(num);
     }
-    for (const wor of module?.worldEvent) {
+    for (const wor of module?.worldEvent!) {
         wor.worldSignal.unsubscribe(wor.then);
     }
     for (const clear of module?.mapclears ?? []) {

@@ -17,9 +17,9 @@ registerCommand(
         maxArgs: 1,
         executor: async (player, args) => {
             const config = c();
-            const target = isPlayer(args[0]);
-            const currentlist = config.autoPunishment.bypasslist;
-            const currentname = config.autoPunishment.bypassname;
+            const target = isPlayer(args[0])!;
+            const currentlist = config.autoPunishment.bypasslist as string[];
+            const currentname = config.autoPunishment.bypassname as string[];
             if (currentlist.includes(target.id)) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "bypasslist.already", with: [target.name] });
             currentlist.push(target.id);
             currentname.push(target.name);
@@ -36,8 +36,8 @@ registerCommand(
         maxArgs: 1,
         executor: async (player, args) => {
             const config = c();
-            const currentlist = config.autoPunishment.bypasslist;
-            const currentname = config.autoPunishment.bypassname;
+            const currentlist = config.autoPunishment.bypasslist as string[];
+            const currentname = config.autoPunishment.bypassname as string[];
             if (!currentname.includes(args[0])) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "bypasslist.notfound", with: [args[0]] });
             const index = currentname.indexOf(args[0]);
             currentlist.splice(index, 1);

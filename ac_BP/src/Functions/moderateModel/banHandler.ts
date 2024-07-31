@@ -61,7 +61,7 @@ function checksBan(player: Player): void {
         const { days: d, hours: h, minutes: m, seconds: s } = timeLeft;
         timeTherShold = `${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
     }
-    const extraMessages = c().banModify.extraMessages;
+    const extraMessages = c().banModify.extraMessages as string[];
     const extraString =
         extraMessages.length > 0
             ? extraMessages

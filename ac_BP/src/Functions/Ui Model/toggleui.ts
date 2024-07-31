@@ -22,7 +22,7 @@ export async function moduleUI(player: Player) {
     }
     moduleForm.show(player).then((data) => {
         if (data.canceled) return;
-        const moduleData = ids[data.selection];
+        const moduleData = ids[data.selection!];
         if (moduleData) {
             toggleUI(player, moduleData);
         }

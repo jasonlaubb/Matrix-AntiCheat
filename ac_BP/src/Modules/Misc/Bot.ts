@@ -16,7 +16,6 @@ function playerSpawn({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
         player.verified = true;
         return;
     }
-    player.notVerified = undefined;
     // wait 0.1 seconds
     system.run(() => {
         player.verifying = false;
@@ -63,8 +62,8 @@ function antiBot() {
                         if (!player.notVerified) return;
 
                         // stop bot from bypassing the ui
-                        if (canceled || !formValues[0] || codeNow != formValues[0]) {
-                            player.verifying = undefined;
+                        if (canceled || !formValues![0] || codeNow != formValues![0]) {
+                            player.verifying = undefined!;
                             if (cancelationReason != FormCancelationReason.UserBusy) {
                                 player.tryVerify += 1;
 
@@ -79,14 +78,14 @@ function antiBot() {
                             return;
                         }
                         player.sendMessage(new rawstr(true, "a").tra("bot.ok").parse());
-                        player.notVerified = undefined;
+                        player.notVerified = undefined!;
                         player.verified = true;
                         player.addTag(MatrixUsedTags.verified);
                     });
             };
             if (!player.verifying) menu(player);
         } catch (error) {
-            player.verifying = undefined;
+            player.verifying = undefined!;
             console.error(error);
         }
     }
@@ -112,7 +111,7 @@ export default {
         world.afterEvents.chatSend.subscribe(chatSend);
     },
     disable() {
-        world.antiBotEnabled = undefined;
+        world.antiBotEnabled = undefined!;
         system.clearRun(id);
         world.afterEvents.playerSpawn.unsubscribe(playerSpawn);
         world.afterEvents.chatSend.unsubscribe(chatSend);

@@ -14,9 +14,10 @@ const lastFlag: Map<string, number> = new Map<string, number>();
 function firstEvent(config: configi, event: ChatSendBeforeEvent) {
     const player = event.sender;
     if (isAdmin(player)) return;
+    const lf = lastFlag.get(player.id) ?? 0;
     if (player.hasTag(AnimationControllerTags.attackTime)) {
         //A - false positive: very low, efficiency: mid
-        if (Date.now() - lastFlag.get(player.id) < 3000) {
+        if (lf && Date.now() - lf < 3000) {
             event.cancel = true;
             system.run(() => flag(player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "AttackTime"]));
         }
@@ -26,7 +27,7 @@ function firstEvent(config: configi, event: ChatSendBeforeEvent) {
     //check if the player send message while using item
     else if (player.hasTag(AnimationControllerTags.usingItem)) {
         //B - false positive: mid, efficiency: mid
-        if (Date.now() - lastFlag.get(player.id) < 3000) {
+        if (Date.now() - lf < 3000) {
             event.cancel = true;
             system.run(() => flag(player, "Spammer", "B", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "UsingItem"]));
         }
@@ -47,7 +48,7 @@ function firstEvent(config: configi, event: ChatSendBeforeEvent) {
             Math.hypot(x, z) > 0.35
         ) {
             //C - false positive: low, efficiency: high
-            if (Date.now() - lastFlag.get(player.id) < 3000) {
+            if (Date.now() - lf < 3000) {
                 event.cancel = true;
                 system.run(() => flag(player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "Moving"]));
             }

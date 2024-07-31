@@ -47,24 +47,28 @@ function antiReach(hurtEntity: Player, damagingEntity: Player, config: configi) 
     //constant the distance
     const distance: number = calculateDistance(damagingEntity, hurtEntity);
 
+    let data = reachData.get(damagingEntity.id);
+
     //if the distance is higher than the max reach or the y reach is higher than the max y reach, add a vl
     if (distance > config.antiReach.maxReach || yReach > maximumYReach) {
-        if (!reachData.has(damagingEntity.id)) {
-            reachData.set(damagingEntity.id, 0);
+        if (!data) {
+            data = 0;
             system.runTimeout(() => {
                 reachData.delete(damagingEntity.id);
             }, 80);
         }
-        reachData.set(damagingEntity.id, reachData.get(damagingEntity.id) + 1);
+        data++;
     }
 
     //if the vl is higher than 2, flag the player
-    if (reachData.get(damagingEntity.id) >= 2) {
+    if (data! >= 2) {
         //A - false positive: very low, efficiency: high
         flag(damagingEntity, "Reach", "A", config.antiReach.maxVL, config.antiReach.punishment, ["distance" + ":" + distance.toFixed(2), "yReach" + ":" + yReach.toFixed(2)]);
         damagingEntity.applyDamage(6);
         reachData.delete(damagingEntity.id);
     }
+
+    if (data) reachData.set(damagingEntity.id, data);
 }
 
 // Register the module

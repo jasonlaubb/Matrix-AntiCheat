@@ -14,7 +14,7 @@ class EnderChestContainer {
     }
 }
 
-export function getEnderChest(player: Player): EnderChestContainer {
+export function getEnderChest(player: Player): EnderChestContainer | null {
     const itemIncluded = [];
     const container: { [key: number]: string } = {};
     for (const item of ALL_ITEM) {
