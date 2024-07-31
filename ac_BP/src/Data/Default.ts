@@ -340,8 +340,8 @@ export default {
         maxFlagInDuration: 3,
         flagDurationIncrase: 5000,
         allowSpeedLevels: {
-            moving: 17,
-            sprinting: 10,
+            moving: 15,
+            sprinting: 8,
             usingItem: 4,
         }
     },
