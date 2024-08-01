@@ -432,9 +432,9 @@ Change the password of the anticheat.
 
 - Usage
 
-Args: `password <current password> <new password>`
+Args: `passwords <current password> <new password>`
 
-Example: `<prefix>password password JasonlaubbIsSoCute`
+Example: `<prefix>passwords password JasonlaubbIsSoCute`
 
 # Reset
 
