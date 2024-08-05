@@ -116,7 +116,9 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         !(player.lastApplyDamage && now - player.lastApplyDamage < 250) &&
         !isSpikeLagging(player)
     ) {
+        const isClientLagging = delayPlacementCheck(player);
         freezeTeleport(player, safePos);
+        if (!isClientLagging) {
         if (lastflag && now - lastflag < 20000) {
             if (player.isOnGround || player.hasTag(AnimationControllerTags.isOnGround)) {
                 flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
@@ -125,6 +127,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
             }
         }
         data.lastFlag = now;
+        }
     }
     player.beforeClip = player.backClip;
     player.backClip = player.lastClip;
@@ -143,14 +146,38 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
 }
 
 const playerBreakBlock = ({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) => isSolid && (player.lastBreakSolid = Date.now());
-
+function onServerBlockDestroy ({ player, block: { location, isSolid }) {
+    if (!isSolid) return;
+    player.lastBreakSolid = Date.now();
+}
+let blockPlacementLog: PlaceLog[] = [];
+function onServerBlockPlace ({ player, block: { location, isSolid }) {
+    if (!isSolid) return;
+    const now = Date.now();
+    blockPlacementLog = blockPlacementLog.filter(({ time }) => now - time < 12000)
+    blockPlacementLog.push({
+        time: now,
+        location: location,
+    } as PlaceLog)
+}
+function delayPlacementCheck ({ location }: Player) {
+    if (blockPlacementLog.length == 0) return false;
+    const { x: x1, z: z1 } = location;
+    return blockPlacementLog.some(({ location: { x, z }) => {
+        const distance = Math.hypot(x1 - x, z1 - z);
+        return distance < 5;
+    })
+}
+interface PlaceLog {
+    time: number;
+    location: Vector3;
+}
 const entityHurt = ({ hurtEntity: player }: EntityHurtAfterEvent) => ((player as Player).lastApplyDamage = Date.now());
 
 registerModule(
     "antiNoClip",
     false,
     [noclipdata],
-    {
         tickInterval: 1,
         playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
         intick: async (config, player) => AntiNoClip(player, config, Date.now()),
@@ -162,7 +189,7 @@ registerModule(
     },
     {
         worldSignal: world.afterEvents.playerBreakBlock,
-        then: async (_config, event) => playerBreakBlock(event as PlayerBreakBlockAfterEvent),
+        then: async (_config, event) => onServerBlockDestroy(event as PlayerBreakBlockAfterEvent),
     }
 );
 
