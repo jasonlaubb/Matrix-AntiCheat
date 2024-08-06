@@ -45,7 +45,7 @@ function antiFly(player: Player, now: number, config: configi) {
             lastVelLog: 0,
             lastHighVelocity: 0,
             previousHighVelocity: 0,
-            previousVelocity: undefined,
+            previousVelocity: undefined!,
             lastFlag: now,
             lastFlag2: now,
             flyFlags: 0,
@@ -66,7 +66,7 @@ function antiFly(player: Player, now: number, config: configi) {
     const skip1 = !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.hasTag(MatrixUsedTags.knockBack);
     const skip2 = !player.isFlying && !player.isGliding;
     const skip3 = !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2);
-    if (jumpBoost?.amplifier > 2 || levitation?.amplifier > 2) {
+    if ((jumpBoost && jumpBoost.amplifier > 2) || levitation && levitation.amplifier > 2) {
         flyData.set(player.id, data);
         return;
     }
@@ -77,7 +77,7 @@ function antiFly(player: Player, now: number, config: configi) {
         player.teleport(data.previousLocations);
         if (lastflag && now - lastflag <= 5000 && now - lastflag >= 500) flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, ["velocityY" + ":" + data.lastHighVelocity.toFixed(2)]);
         data.velocityLog = 0;
-        delete data.previousVelocity;
+        data.previousVelocity = undefined!;
         data.lastFlag = now;
     }
     data.lastVelLog = data.velocityLog;
