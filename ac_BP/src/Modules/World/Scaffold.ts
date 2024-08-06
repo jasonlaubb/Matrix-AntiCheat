@@ -77,6 +77,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         detected = true;
         flag(player, "Scaffold", "B", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Angle" + ":" + `${angle.toFixed(2)}°`]);
     }
+    try {
     const floorPos = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) };
     if (player.isJumping && !player.isOnGround && !isUnderPlayer(floorPos, block.location)) {
         floorPos.y -= 1;
@@ -168,6 +169,13 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             data.blockPlace = [];
             flag(player, "Scaffold", "D", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
         }
+    }
+    } catch (error) {
+        
+    }
+    if (!block?.isValid()) {
+        detected = true;
+        flag(player, "Scaffold", "I", config.antiScaffold.maxVL, config.antiScaffold.punishment, undefined);
     }
     data.lastX = x;
     data.lastZ = z;
