@@ -9,7 +9,7 @@ registerCommand({
     parent: false,
     maxArgs: 3,
     minArgs: 1,
-    argRequire: [(value) => !!isPlayer(value as string, true, true), undefined, (value) => isTimeStr(value as string) || value == "forever"],
+    argRequire: [(value) => !!isPlayer(value as string, true, false), undefined, (value) => isTimeStr(value as string) || value == "forever"],
     require: (player) => verifier(player, c().commands.ban),
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
