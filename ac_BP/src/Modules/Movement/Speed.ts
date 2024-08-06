@@ -107,7 +107,7 @@ async function AntiSpeed(config: configi, player: Player) {
         const highMotionFlag = truePositives > 0.16 && truePositives <= 0.2 && falsePositives < 0.6 && trueNegatives > 0.78
         const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7
         const flagCondition = normalMotionFlag || highMotionFlag || flyMotionFlag
-        if (flagCondition && now - data.lastAttack > 3000 && now - player.lastExplosionTime > 3000) {
+        if (flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
             flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
             data.blockMovementLoop = [];
             freezeTeleport(player, safePos);
