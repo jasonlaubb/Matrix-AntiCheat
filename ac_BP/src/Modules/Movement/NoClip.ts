@@ -1,4 +1,4 @@
-import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAfterEvent, GameMode, system } from "@minecraft/server";
+import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent, GameMode, system } from "@minecraft/server";
 import { flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
@@ -79,6 +79,9 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     const { x, y, z }: Vector3 = player.getVelocity();
     const movementClip = Math.hypot(x, z);
     const bodyBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.typeId as MinecraftBlockTypes;
+    const skipLocations = straight(data.lastLocation, player.location)
+    const skipMaterials = skipLocations.map((loc) => player.dimension.getBlock(loc))
+    const phaseIndex: number = skipMaterials.findIndex((block) => block?.isValid() && isSolidBlock(block!))
     if (
         data.lastLocation &&
         movementClip > 1.2 &&
@@ -87,12 +90,13 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         Math.abs(y) < 1.7 &&
         !passableBlocks.includes(bodyBlock) &&
         !powderBlock.includes(bodyBlock) &&
-        straight(data.lastLocation, player.location).some((loc) => isSolidBlock(player.dimension.getBlock(loc)))
+        phaseIndex != -1
     ) {
         const lastflag = data.lastFlag2;
         freezeTeleport(player, data.safeLocation);
         if (lastflag && now - lastflag < 5000 && !isSpikeLagging(player)) {
-            flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + movementClip]);
+            const skipMaterial = skipMaterials[phaseIndex]!.typeId!;
+            flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["SkipMaterial:" + skipMaterial]);
         }
         data.lastFlag2 = now;
     }
@@ -108,7 +112,6 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         player?.backClip &&
         player?.beforeClip &&
         ((movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25) || (player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.beforeClip < 0.25)) &&
-        /*(y == 0 || (Math.abs(y) < 1.75 && player.isJumping)) &&*/
         !player.isGliding &&
         !player.isFlying &&
         !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) &&
@@ -120,7 +123,9 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         freezeTeleport(player, safePos);
         if (!isClientLagging) {
         if (lastflag && now - lastflag < 20000) {
-            if (player.isOnGround || player.hasTag(AnimationControllerTags.isOnGround)) {
+            const trueOnGround = Math.abs(y) < 1.75 && player.isJumping;
+            const staticOnGround = y == 0 && player.isOnGround;
+            if (trueOnGround || staticOnGround) {
                 flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
             } else if (!player.hasTag(AnimationControllerTags.riding)) {
                 flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
@@ -190,6 +195,10 @@ registerModule(
     {
         worldSignal: world.afterEvents.playerBreakBlock,
         then: async (_config, event) => onServerBlockDestroy(event as PlayerBreakBlockAfterEvent),
+    },
+    {
+        worldSignal: world.afterEvents.playerPlaceBlock,
+        then: async (_config, event) => onServerBlockPlace(event as PlayerPlaceBlockAfterEvent),
     }
 );
 
