@@ -32,6 +32,7 @@ export {
     logBreak,
     recoverBlockBreak,
     clearBlockBreakLog,
+    toFixed,
 };
 
 class rawstr {
@@ -397,4 +398,10 @@ const getPing = (player: Player) => player.pingTick ?? 0;
 
 function isSpawning(player: Player) {
     return player.isSpawning ?? true;
+}
+
+function toFixed(number: number, digit: number, toString = false) {
+    if (Number.isNaN(number)) throw new Error ("Util :: toFixed :: Not A number");
+    const numberToFixed = Number(number.toFixed(digit));
+    return toString ? String(numberToFixed) : numberToFixed;
 }
