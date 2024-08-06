@@ -54,7 +54,7 @@ async function ElytraFly(player: Player, now: number, config: configi) {
             });
         }
     } else {
-        fallDistances.set(player.id, undefined);
+        fallDistances.delete(player.id);
         player.lastGliding = now;
     }
 }
@@ -76,7 +76,7 @@ registerModule(
     },
     {
         worldSignal: world.afterEvents.itemUse,
-        then: async (_config, event) => itemUseAfter(event),
+        then: async (_config, event) => itemUseAfter(event) as any,
     },
     {
         worldSignal: world.afterEvents.playerSpawn,

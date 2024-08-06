@@ -141,22 +141,22 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     const { x: x2, y: y2, z: z2 } = player.location;
     const floorHead = { x: Math.floor(x1), y: Math.floor(y1), z: Math.floor(z1) };
     const floorBody = { x: Math.floor(x2), y: Math.floor(y2), z: Math.floor(z2) };
-    const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)) || !player.dimension.getBlock(floorBody).isAir;
+    try {
+    const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)!) || !player.dimension.getBlock(floorBody!)?.isAir;
     if (!inSolid) {
         data.safeLocation = player.location;
         player.lastSafePos = safePos;
     }
+    } catch { }
 
     noclipdata.set(player.id, data);
 }
-
-const playerBreakBlock = ({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) => isSolid && (player.lastBreakSolid = Date.now());
-function onServerBlockDestroy ({ player, block: { location, isSolid }) {
+function onServerBlockDestroy ({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) {
     if (!isSolid) return;
     player.lastBreakSolid = Date.now();
 }
 let blockPlacementLog: PlaceLog[] = [];
-function onServerBlockPlace ({ player: { id }, block: { location, isSolid }) {
+function onServerBlockPlace ({ player: { id }, block: { location, isSolid } }: PlayerPlaceBlockAfterEvent) {
     if (!isSolid) return;
     const now = Date.now();
     blockPlacementLog = blockPlacementLog.filter(({ time }) => now - time < 12000)
@@ -185,6 +185,7 @@ registerModule(
     "antiNoClip",
     false,
     [noclipdata],
+    {
         tickInterval: 1,
         playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
         intick: async (config, player) => AntiNoClip(player, config, Date.now()),
