@@ -1,9 +1,10 @@
 import { EntityDamageCause, EntityHurtAfterEvent, Player, Vector3, world } from "@minecraft/server";
-import { bypassMovementCheck, flag } from "../../Assets/Util.js";
+import { bypassMovementCheck, c, flag } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
 import { isSpikeLagging } from "../../Assets/Public.js";
 import { freezeTeleport } from "./NoClip.js";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
  * @author RamiGamerDev
@@ -64,8 +65,10 @@ async function AntiSpeed(config: configi, player: Player) {
     if (velDiffOutOfRange && now - data.lastReset >= 100) {
         data.lastOutOfRange = now;
     }
+    const speedEffect = player.getEffect(MinecraftEffectTypes.Speed)?.amplifier;
+    const illegalEffect = speedEffect && hasIllegalSpeedEffect(player, speedEffect);
     // check if speedLog reached the max which is 3 flag
-    if (!bypassMovementCheck(player) && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && velocityDifferent - data.lastVelocity < 0.3 && !isSpikeLagging(player)) {
+    if (!bypassMovementCheck(player) && !illegalEffect && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && velocityDifferent - data.lastVelocity < 0.3 && !isSpikeLagging(player)) {
         data.firstTrigger ??= now;
         data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
         data.flagNumber ??= 0;
@@ -107,7 +110,7 @@ async function AntiSpeed(config: configi, player: Player) {
         const highMotionFlag = truePositives > 0.16 && truePositives <= 0.2 && falsePositives < 0.6 && trueNegatives > 0.78 // Test from Prax client (speed)
         const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7 // Test from Prax client (flying)
         const flagCondition = normalMotionFlag || highMotionFlag || flyMotionFlag
-        if (flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
+        if (!bypassMovementCheck(player) && !illegalEffect && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
             flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
             data.blockMovementLoop = [];
             freezeTeleport(player, safePos);
@@ -124,6 +127,14 @@ function entityHurt({ damageSource: { cause }, hurtEntity }: EntityHurtAfterEven
         if (data) data.lastAttack = Date.now();
         speeddata.set(hurtEntity.id, data!);
     }
+}
+
+function hasIllegalSpeedEffect (player: Player, effectLevel: number) {
+    const allowLevels = c().antiSpeed.allowSpeedLevels;
+    if (player.hasTag(AnimationControllerTags.usingItem) && effectLevel > allowLevels.usingItem) return true;
+    if (player.isSprinting && effectLevel > allowLevels.sprinting) return true;
+    if (effectLevel > allowLevels.moving) return true;
+    return false;
 }
 
 registerModule(
