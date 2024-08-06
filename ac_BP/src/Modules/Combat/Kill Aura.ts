@@ -1,8 +1,8 @@
 import { world, system, Player, Vector3, Entity, EntityHitEntityAfterEvent, EntityHurtAfterEvent, EntityDamageCause } from "@minecraft/server";
-import { flag, isAdmin, getPing, isSpawning } from "../../Assets/Util.js";
+import { flag, isAdmin, getPing, isSpawning, toFixed } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
-import { DisableTags } from "../../Data/EnumData.js";
+import { AnimationControllerTags, DisableTags } from "../../Data/EnumData.js";
 import { isSpikeLagging } from "../../Assets/Public.js";
 
 /**
@@ -90,6 +90,28 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
             flag(player, "Kill Aura", "E", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
             flagged = true;
         }
+        // Check for tool box no swinging type killaura
+        if (player.hasTag(AnimationControllerTags.alive) && !player.hasTag(AnimationControllerTags.attackTime) && !isSpikeLagging(player) && !player.isInWater) {
+            const startDetectingTime = Date.now();
+            new Promise<boolean>(resolve => {
+                let tick = 0;
+                const id = system.runInterval(() => {
+                    tick++;
+                    if (tick > 10) {
+                        system.clearRun(id);
+                        resolve(true);
+                    }
+                    if (player.hasTag(AnimationControllerTags.attackTime)) {
+                        system.clearRun(id);
+                        resolve(false);
+                    }
+                }, 1)
+            }).then(noSwinging => {
+                if (noSwinging) {
+                    flag(player, "Kill Aura", "J", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["DetectingMs:" + (Date.now() - startDetectingTime)]);
+                }
+            });
+        }
     }
 
     if (flagged) {
@@ -105,7 +127,6 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
     verticalR: number;
     lastVel: Vector3;
 }*/
-
 const lastRotateData = new Map();
 function intickEvent(config: configi, player: Player) {
     const data = lastRotateData.get(player.id);
@@ -140,32 +161,33 @@ function intickEvent(config: configi, player: Player) {
         if (instantRot) data.kAFlags = "G";
     } else if ((rotatedMove == 0 && move > 0) || (rotatedMove > 0 && move == 0) || rotatedMove > 40) data.kAFlags = 0;
     //   player.onScreenDisplay.setActionBar(`${Math.abs(yPitch - data.lastPitch)}`)
+    let isDetected = false;
     //killaura/F check for head rotation
     if (data.kAFlags >= 40) {
-        player.addTag(DisableTags.pvp);
-        system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
-        flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + horizontalAngle.toFixed(5)]);
+        isDetected = true;
+        flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + toFixed(horizontalAngle, 5, true)]);
         data.kAFlags = 0;
     }
     //killaura/G check for instant rotation to the target
     if (rotatedMove == 0 && data.kAFlags == "G" && verticalRotation != 0) {
-        player.addTag(DisableTags.pvp);
-        system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
-        flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + rotatedMove.toFixed(5)]);
+        isDetected = true;
+        flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["RotatedMove:" + toFixed(rotatedMove, 5, true)]);
         data.kAFlags = 0;
     }
     //killaura/H check for smooth y Pitch movement
     if (data.invalidPitch >= 20) {
-        player.addTag(DisableTags.pvp);
-        system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
-        flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);
+        isDetected = true;
+        flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["PitchDifferent:" + toFixed(yPitch - data.lastPitch, 5, true)]);
         data.invalidPitch = 0;
     }
     //killaura/I check for if the player rotation can be divided by 1
-    if (!isSpawning(player) && !isSpikeLagging(player) && (verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
+    if (!isSpawning(player) && !isSpikeLagging(player) && Date.now() - player.lastTouchEntity < 300 && (verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
+        isDetected = true;
+        flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["PitchDifferent:" + toFixed(yPitch - data.lastPitch, 5, true)]);
+    }
+    if (isDetected) {
         player.addTag(DisableTags.pvp);
         system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
-        flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + (yPitch - data.lastPitch).toFixed(5)]);
     }
 }
 
