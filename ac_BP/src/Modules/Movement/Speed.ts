@@ -65,7 +65,7 @@ async function AntiSpeed(config: configi, player: Player) {
         data.lastOutOfRange = now;
     }
     // check if speedLog reached the max which is 3 flag
-    if (bypassMovementCheck(player) && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && velocityDifferent - data.lastVelocity < 0.3 && !isSpikeLagging(player)) {
+    if (!bypassMovementCheck(player) && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && velocityDifferent - data.lastVelocity < 0.3 && !isSpikeLagging(player)) {
         data.firstTrigger ??= now;
         data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
         data.flagNumber ??= 0;
