@@ -7,7 +7,7 @@ import { freezeTeleport } from "./NoClip.js";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
- * @author RamiGamerDev
+ * @author RamiGamerDev (type A) & jasonlaubb (type B)
  * @description A strong anti speed for Minecraft Bedrock Edition, this check can detect the player with client movement.
  */
 interface Speeddata {
@@ -67,8 +67,9 @@ async function AntiSpeed(config: configi, player: Player) {
     }
     const speedEffect = player.getEffect(MinecraftEffectTypes.Speed)?.amplifier;
     const illegalEffect = speedEffect && hasIllegalSpeedEffect(player, speedEffect);
-    // check if speedLog reached the max which is 3 flag
-    if (!bypassMovementCheck(player) && !illegalEffect && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && velocityDifferent - data.lastVelocity < 0.3 && !isSpikeLagging(player)) {
+    const notSpikeLagging = !isSpikeLagging(player)
+    // Speed/A - Checks if the player has high velocity different.
+    if (!bypassMovementCheck(player) && !illegalEffect && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && velocityDifferent - data.lastVelocity < 0.3 && notSpikeLagging) {
         data.firstTrigger ??= now;
         data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
         data.flagNumber ??= 0;
@@ -109,8 +110,9 @@ async function AntiSpeed(config: configi, player: Player) {
         const normalMotionFlag = truePositives > 0.03 && truePositives <= 0.1 && falsePositives < 0.19 && trueNegatives > 0.8 && trueNegatives < 0.96 // Common motion
         const highMotionFlag = truePositives > 0.16 && truePositives <= 0.2 && falsePositives < 0.6 && trueNegatives > 0.78 // Test from Prax client (speed)
         const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7 // Test from Prax client (flying)
+        // Speed/B - Check if player has illegal motion frequency
         const flagCondition = normalMotionFlag || highMotionFlag || flyMotionFlag
-        if (!bypassMovementCheck(player) && !illegalEffect && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
+        if (!bypassMovementCheck(player) && !illegalEffect && notSpikeLagging && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
             flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
             data.blockMovementLoop = [];
             freezeTeleport(player, safePos);
