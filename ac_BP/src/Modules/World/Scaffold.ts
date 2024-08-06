@@ -55,7 +55,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             diagSpeed: 500,
             lastDis: 0,
             avgExt: 0,
-            maxExt: undefined,
+            maxExt: undefined!,
         };
         scaffoldData.set(player.id, data);
         return;
@@ -77,6 +77,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         detected = true;
         flag(player, "Scaffold", "B", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Angle" + ":" + `${angle.toFixed(2)}°`]);
     }
+    const now = Date.now();
     try {
     const floorPos = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) };
     if (player.isJumping && !player.isOnGround && !isUnderPlayer(floorPos, block.location)) {
@@ -105,7 +106,6 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     const diagZ = Math.abs(z - data.lastZ);
     const diagX = Math.abs(x - data.lastX);
     const diagScaffold = (data.lastDiagX == 1 && diagX == 0 && data.lastDiagZ == 0 && diagZ == 1) || (data.lastDiagX == 0 && diagX == 1 && data.lastDiagZ == 1 && diagZ == 0);
-    const now = Date.now();
     const yLoc = y - player.location.y;
     //the check:)
     if (yLoc > -2.1 && yLoc <= -1 && now - data.lastPlace < data.diagSpeed && diagScaffold && (extender - data.lastDis > 0 || extender < 1)) {
@@ -156,7 +156,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     //all of this checks are new so idk how much is false postive rate but efficiency is good
     const underBlockUnder = block.dimension.getBlock({ x: x, y: y - 1, z: z });
     data.blockLog ??= [];
-    const blockId = JSON.stringify(underBlockUnder.location);
+    const blockId = JSON.stringify(underBlockUnder?.location);
     data.blockLog.push({ time: now, id: blockId });
     data.blockLog = data.blockLog.filter(({ time }) => now - time < 750);
     if (isUnder && !(!underBlockUnder?.isAir && data.blockLog.some(({ id }) => id == blockId))) {
