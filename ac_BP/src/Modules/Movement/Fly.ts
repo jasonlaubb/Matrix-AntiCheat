@@ -1,5 +1,5 @@
 import { GameMode, Vector3, Dimension, Player } from "@minecraft/server";
-import { flag, isSpawning } from "../../Assets/Util";
+import { bypassMovementCheck, flag, isSpawning } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
@@ -66,7 +66,7 @@ function antiFly(player: Player, now: number, config: configi) {
     const skip1 = !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.hasTag(MatrixUsedTags.knockBack);
     const skip2 = !player.isFlying && !player.isGliding;
     const skip3 = !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2);
-    if ((jumpBoost && jumpBoost.amplifier > 2) || levitation && levitation.amplifier > 2) {
+    if (bypassMovementCheck(player) || (jumpBoost && jumpBoost.amplifier > 2) || levitation && levitation.amplifier > 2) {
         flyData.set(player.id, data);
         return;
     }

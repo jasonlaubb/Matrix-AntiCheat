@@ -105,6 +105,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         player.removeTag(DisableTags.item);
         player.removeTag(DisableTags.pvp);
         player.removeTag(MatrixUsedTags.knockBack);
+        player.removeTag(MatrixUsedTags.movementbypass);
     }
     system.runTimeout(() => {
         player.isSpawning = false;

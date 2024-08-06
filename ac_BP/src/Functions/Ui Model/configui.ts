@@ -114,4 +114,5 @@ async function editor(player: Player, path: string[]) {
 
 const description: { [key: string]: string } = {
     "": "This is the config of Matrix AntiCheat.",
+    "enableMovementCheckBypassTag": "Set the true will let player with tag matrix:movementCheckBypassTag for bypass some of the movement check.",
 };

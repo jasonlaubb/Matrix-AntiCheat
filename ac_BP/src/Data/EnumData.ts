@@ -44,6 +44,7 @@ export enum MatrixUsedTags {
     verified = "matrix:verified",
     slime = "matrix:slime",
     packetlogger = "matrix:packetLogger",
+    movementbypass = "matrix:movementCheckBypassTag",
 }
 
 export enum MatrixEvents {

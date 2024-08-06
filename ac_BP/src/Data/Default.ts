@@ -13,6 +13,8 @@ export default {
     passwordCold: 5000,
     otherPrefix: [],
     spawnFinishDelay: 1200,
+    // Set the true will let player with tag matrix:movementCheckBypassTag for bypass some of the movement check.
+    enableMovementCheckBypassTag: false,
     commands: {
         passwordSetting: {
             password: "password",
@@ -343,7 +345,11 @@ export default {
             moving: 15,
             sprinting: 8,
             usingItem: 4,
-        }
+        },
+        truePositivePercent: 0.4,
+        trueNegativePercent: 0.3,
+        falsePositivePercent: 0.2,
+        absThreshould: 1,
     },
     antiTimer: {
         enabled: true,
@@ -481,13 +487,6 @@ export default {
         timeout: 60,
         punishment: "ban",
         maxVL: 2,
-    },
-    antiCommandBlockExplolit: {
-        enabled: false,
-        punishment: "ban",
-        maxVL: 0,
-        cancelPlacement: ["minecraft:bee_nest", "minecraft:beehive", "minecraft:moving_block", "minecraft:movingBlock", "minecraft:movingblock"],
-        cancelUsage: ["minecraft:axolotl_bucket", "minecraft:cod_bucket", "minecraft:powder_snow_bucket", "minecraft:pufferfish_bucket", "minecraft:salmon_bucket", "minecraft:tadpole_bucket", "minecraft:tropical_fish_bucket"],
     },
     antiBot: {
         enabled: false,

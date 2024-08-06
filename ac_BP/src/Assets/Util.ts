@@ -4,6 +4,7 @@ import { saveLog } from "../Functions/moderateModel/log";
 import { Translate } from "./Language";
 import Dynamic from "../Functions/Config/dynamic_config";
 import { Action } from "./Action";
+import { MatrixUsedTags } from "../Data/EnumData";
 
 /**
  * @author jasonlaubb
@@ -33,6 +34,7 @@ export {
     recoverBlockBreak,
     clearBlockBreakLog,
     toFixed,
+    bypassMovementCheck,
 };
 
 class rawstr {
@@ -404,4 +406,9 @@ function toFixed(number: number, digit: number, toString = false) {
     if (Number.isNaN(number)) throw new Error ("Util :: toFixed :: Not A number");
     const numberToFixed = Number(number.toFixed(digit));
     return toString ? String(numberToFixed) : numberToFixed;
+}
+
+function bypassMovementCheck(player: Player) {
+    const config = c();
+    return config.enableMovementCheckBypassTag && player.hasTag(MatrixUsedTags.movementbypass);
 }

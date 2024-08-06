@@ -1,6 +1,6 @@
 import { Player, Effect, Vector3, GameMode } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { flag } from "../../Assets/Util";
+import { bypassMovementCheck, flag } from "../../Assets/Util";
 import { configi, registerModule } from "../Modules";
 
 function getSpeedIncrease(speedEffect: Effect | undefined) {
@@ -59,7 +59,7 @@ async function AntiNoSlow(player: Player, config: configi, now: number) {
             lastPosition.set(player.id, playerLocation);
         } else {
             // flag the player
-            if (!(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !player.isFlying && !player.isGliding) {
+            if (!bypassMovementCheck(player) && !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) && !player.isFlying && !player.isGliding) {
                 const lastFlag = lastflag.get(player.id);
                 if (lastFlag && now - lastFlag < 3500) {
                     //A - false positive: very low, efficiency: high

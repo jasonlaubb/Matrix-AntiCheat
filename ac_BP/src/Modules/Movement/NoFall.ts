@@ -1,5 +1,5 @@
 import { world, GameMode, Player, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
-import { flag, getPing } from "../../Assets/Util";
+import { bypassMovementCheck, flag, getPing } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { AnimationControllerTags } from "../../Data/EnumData";
@@ -49,7 +49,7 @@ async function AntiNoFall(player: Player, config: configi, now: number) {
     } else playerVL.set(player.id, 0);
 
     //velocityY is 0, flag the player
-    if (y == 0 && playerVL.get(player.id)! >= config.antiNoFall.float && getPing(player) < 5) {
+    if (!bypassMovementCheck(player) && y == 0 && playerVL.get(player.id)! >= config.antiNoFall.float && getPing(player) < 5) {
         if (xz == 0 || xz == 0 || (player.spawnTime && now - player.spawnTime < 12000)) return;
         player.teleport(prevLoc);
         const lastflag = lastFlag.get(player.id);

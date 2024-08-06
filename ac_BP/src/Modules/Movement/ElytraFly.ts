@@ -1,5 +1,5 @@
 import { world, Player, system, GameMode, ItemUseAfterEvent, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
-import { flag, getPing } from "../../Assets/Util";
+import { bypassMovementCheck, flag, getPing } from "../../Assets/Util";
 import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
@@ -21,7 +21,7 @@ async function ElytraFly(player: Player, now: number, config: configi) {
 
     const { y: velocity } = player.getVelocity();
 
-    if (player.isGliding) {
+    if (player.isGliding && !bypassMovementCheck(player)) {
         if (data.length > config.antiElytraFly.fallDiscycle) {
             data.shift();
             if (getPing(player) < 4 && !player.hasTag(MatrixUsedTags.stopRiding) && data.every((f) => player.fallDistance == f) && player.fallDistance !== 1 && player.fallDistance <= config.antiElytraFly.maxFallDis && velocity < -0.01) {

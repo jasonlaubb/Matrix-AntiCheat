@@ -1,5 +1,5 @@
 import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent, GameMode, system } from "@minecraft/server";
-import { flag } from "../../Assets/Util";
+import { bypassMovementCheck, flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { isSpikeLagging } from "../../Assets/Public";
@@ -83,6 +83,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     const skipMaterials = skipLocations.map((loc) => player.dimension.getBlock(loc))
     const phaseIndex: number = skipMaterials.findIndex((block) => block?.isValid() && isSolidBlock(block!))
     if (
+        !bypassMovementCheck(player) &&
         data.lastLocation &&
         movementClip > 1.2 &&
         !player.isGliding &&
@@ -106,6 +107,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     const safePos = data.safeLocation;
     const lastflag = data.lastFlag;
     if (
+        !bypassMovementCheck(player) &&
         player?.lastSafePos &&
         safePos &&
         player?.lastClip &&
