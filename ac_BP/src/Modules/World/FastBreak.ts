@@ -18,7 +18,7 @@ function firstEvent(config: configi, event: PlayerBreakBlockBeforeEvent) {
     if (isAdmin(player) || block.isAir || player.hasTag(DisableTags.break) || isTargetGamemode(player, 1)) return;
     const typeId = itemStack?.typeId ?? "minecraft:air";
 
-    const hasEfficiency = itemStack ? itemStack.getComponent(ItemEnchantableComponent.componentId).hasEnchantment(MinecraftEnchantmentTypes.Efficiency) : false;
+    const hasEfficiency = itemStack ? itemStack?.getComponent(ItemEnchantableComponent.componentId)?.hasEnchantment(MinecraftEnchantmentTypes.Efficiency) : false;
 
     if (!typeId.startsWith("minecraft:") || hasEfficiency || player.getEffect(MinecraftEffectTypes.Haste) || fastBrokenBlocks.includes(typeId as MinecraftBlockTypes)) return;
 

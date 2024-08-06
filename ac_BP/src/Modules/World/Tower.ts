@@ -19,16 +19,13 @@ const vL = new Map<string, number>();
 
 async function AntiTower(player: Player, block: Block, config: configi) {
     const data = towerData.get(player.id);
-    //get the two value from Map
-    const towerBlock = data?.towerBlock;
-    const lastTime = data?.lastBlockPlace;
-
     //set the value to Map
     towerData.set(player.id, { towerBlock: block.location, lastBlockPlace: Date.now() });
 
     //skip check for first block place
-    if (data === undefined) return;
-
+    if (!data) return;
+    const towerBlock = data?.towerBlock;
+    const lastTime = data?.lastBlockPlace;
     //prevent false positive and disable check when player has tag
     if (isAdmin(player) || player.hasTag(DisableTags.place) || player.isOnGround || !player.isJumping || player.isFlying || player.isInWater || player.getEffect(MinecraftEffectTypes.JumpBoost)) return;
 
@@ -60,7 +57,7 @@ async function AntiTower(player: Player, block: Block, config: configi) {
     //if delay is less than the min delay and all state is true, flag the player
     if (delay < config.antiTower.minDelay && locationState) {
         if (vl > 2) {
-            vL.set(player.id, undefined);
+            vL.delete(player.id);
             //set the block to the air
             block.setType(MinecraftBlockTypes.Air);
 
@@ -75,7 +72,7 @@ async function AntiTower(player: Player, block: Block, config: configi) {
 
         flag(player, "Tower", "A", config.antiTower.maxVL, config.antiTower.punishment, ["Delay" + ":" + delay.toFixed(2), "PosDeff" + ":" + playerPosDeff.toFixed(2), "CentreDis" + ":" + playerCentreDis.toFixed(2)]);
     } else {
-        vL.set(player.id, undefined);
+        vL.delete(player.id);
     }
 }
 

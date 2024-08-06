@@ -25,7 +25,7 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, con
     let hasEfficiency: number;
     // Thank you mojang, you add more case for throw
     try {
-        hasEfficiency = itemStack.getComponent(ItemEnchantableComponent.componentId).getEnchantment(MinecraftEnchantmentTypes.Efficiency).level;
+        hasEfficiency = itemStack.getComponent(ItemEnchantableComponent.componentId)!.getEnchantment(MinecraftEnchantmentTypes.Efficiency)!.level;
     } catch {
         hasEfficiency = 0;
     }
@@ -36,7 +36,7 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, con
 
     blockBreakData.set(player.id, blockBreakCount);
 
-    //if block break is in 1 tick is higher than the limit, flag them
+    // if block break is in 1 tick is higher than the limit, flag them
     if (blockBreakCount.length > config.antiNuker.maxBreakPerTick && !(config.antiNuker.solidOnly && !block.isSolid)) {
         system.run(() => {
             player.addTag(DisableTags.break);
@@ -56,5 +56,5 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, con
 
 registerModule("antiNuker", false, [blockBreakData], {
     worldSignal: world.beforeEvents.playerBreakBlock,
-    then: async (config, { player, block, itemStack }: PlayerBreakBlockBeforeEvent) => AntiNuker(player, block, itemStack, config),
+    then: async (config, { player, block, itemStack }: PlayerBreakBlockBeforeEvent) => AntiNuker(player, block, itemStack!, config),
 });
