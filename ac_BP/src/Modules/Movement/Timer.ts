@@ -32,9 +32,9 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
     const dBVD = Math.abs(data.xzLog - data.disLog);
     const dBVD2 = data.yDisLog - data.yLog;
     //setting max value of dBVD
-    data.maxDBVD = 20 / tps.getTps();
+    data.maxDBVD = 20 / tps.getTps()!;
     //check if dBVD lower than 1 and higher than 0.5 add one to timerLog and when timerLog reach 3 flag (check for low timer)
-    if ((dBVD < data.maxDBVD && dBVD > 20 / (tps.getTps() * 2)) || (dBVD2 < data.maxDBVD && dBVD2 > 20 / (tps.getTps() * 2))) data.timerLog++;
+    if ((dBVD < data.maxDBVD && dBVD > 20 / (tps.getTps()! * 2)) || (dBVD2 < data.maxDBVD && dBVD2 > 20 / (tps.getTps()! * 2))) data.timerLog++;
     else data.timerLog = 0;
     //flag time if dBVD is greater than 1 blocks or timerLog reach 3 (low timer will flag in 3 secs probably but maybe i will downgrade the max from 1 to 1 after make sure no falses)
     if (((dBVD > data.maxDBVD || dBVD2 > data.maxDBVD) && now - data.lastFlag >= 1025) || data.timerLog >= config.antiTimer.minTimerLog) {

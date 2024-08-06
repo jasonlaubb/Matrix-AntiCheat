@@ -9,7 +9,7 @@ import { registerModule, configi } from "../Modules.js";
 
 function doubleEvent(config: configi, { damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player) || !player.lastSelectSlot || isAdmin(player)) return;
-    const itemStack = player.getComponent(EntityInventoryComponent.componentId).container.getItem(player.selectedSlotIndex)?.typeId ?? "air";
+    const itemStack = player.getComponent(EntityInventoryComponent.componentId)?.container?.getItem(player.selectedSlotIndex)?.typeId ?? "air";
     if (config.antiAutoTool.toolType.some((eit) => itemStack.endsWith(eit)) == false) return;
 
     if (player.lastSelectSlot != player.selectedSlotIndex) {

@@ -45,11 +45,11 @@ async function AntiNoFall(player: Player, config: configi, now: number) {
 
     if (y == 0) {
         vl ?? playerVL.set(player.id, 0);
-        vl ?? playerVL.set(player.id, vl + 1);
+        vl ?? playerVL.set(player.id, vl! + 1);
     } else playerVL.set(player.id, 0);
 
     //velocityY is 0, flag the player
-    if (y == 0 && playerVL.get(player.id) >= config.antiNoFall.float && getPing(player) < 5) {
+    if (y == 0 && playerVL.get(player.id)! >= config.antiNoFall.float && getPing(player) < 5) {
         if (xz == 0 || xz == 0 || (player.spawnTime && now - player.spawnTime < 12000)) return;
         player.teleport(prevLoc);
         const lastflag = lastFlag.get(player.id);
@@ -76,6 +76,6 @@ registerModule(
     },
     {
         worldSignal: world.afterEvents.playerSpawn,
-        then: async (_config, event: PlayerSpawnAfterEvent) => playerSpawn(event),
+        then: async (_config, event: PlayerSpawnAfterEvent) => playerSpawn(event) as any,
     }
 );

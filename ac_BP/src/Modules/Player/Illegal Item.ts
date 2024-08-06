@@ -26,7 +26,7 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
 
         const itemNameLength = item?.nameTag?.length;
         // Check if the item has vanilla item name length
-        if (itemNameLength > 64 || itemNameLength < 1) {
+        if (itemNameLength && (itemNameLength > 64 || itemNameLength < 1)) {
             flag(player, "Illegal Item", "B", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Length:" + itemNameLength]);
             return true;
         }
@@ -115,11 +115,11 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
 
 function inventoryCheck(config: configi, player: Player) {
     const container = player.getComponent("inventory")?.container;
-    for (let i = 0; i < container.size; i++) {
-        const item = container.getItem(i);
+    for (let i = 0; i < container!.size; i++) {
+        const item = container!.getItem(i);
         if (!item) continue;
         const illegal = checkIllegalItem(player, item, config);
-        if (illegal) container.setItem(i);
+        if (illegal) container!.setItem(i);
     }
 }
 // Export inventory check for more checks
