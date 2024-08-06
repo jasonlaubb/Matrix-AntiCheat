@@ -346,9 +346,6 @@ export default {
             sprinting: 8,
             usingItem: 4,
         },
-        truePositivePercent: 0.4,
-        trueNegativePercent: 0.3,
-        falsePositivePercent: 0.2,
         absThreshould: 1,
     },
     antiTimer: {
