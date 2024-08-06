@@ -156,26 +156,28 @@ function onServerBlockDestroy ({ player, block: { location, isSolid }) {
     player.lastBreakSolid = Date.now();
 }
 let blockPlacementLog: PlaceLog[] = [];
-function onServerBlockPlace ({ player, block: { location, isSolid }) {
+function onServerBlockPlace ({ player: { id }, block: { location, isSolid }) {
     if (!isSolid) return;
     const now = Date.now();
     blockPlacementLog = blockPlacementLog.filter(({ time }) => now - time < 12000)
     blockPlacementLog.push({
         time: now,
         location: location,
+        placeId: id,
     } as PlaceLog)
 }
-function delayPlacementCheck ({ location }: Player) {
+function delayPlacementCheck ({ location, id }: Player) {
     if (blockPlacementLog.length == 0) return false;
     const { x: x1, z: z1 } = location;
-    return blockPlacementLog.some(({ location: { x, z }) => {
+    return blockPlacementLog.some(({ location: { x, z }, placeId }) => {
         const distance = Math.hypot(x1 - x, z1 - z);
-        return distance < 5;
+        return id != placeId && distance < 5;
     })
 }
 interface PlaceLog {
     time: number;
     location: Vector3;
+    placeId: string;
 }
 const entityHurt = ({ hurtEntity: player }: EntityHurtAfterEvent) => ((player as Player).lastApplyDamage = Date.now());
 
