@@ -29,9 +29,11 @@ export function intergradedAntiSpam(player: Player, message: string) {
     if (config.linkEmailFilter.enabled && linkEmailFilter(player, message)) return true;
 
     if (config.spamFilter.enabled) {
-        const data = spamData.get(player.id) ?? {
-            messageRate: [],
-        } as SpamData;
+        const data =
+            spamData.get(player.id) ??
+            ({
+                messageRate: [],
+            } as SpamData);
 
         let returnTrue = false;
 

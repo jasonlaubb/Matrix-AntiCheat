@@ -39,7 +39,7 @@ export async function intilizeModules() {
     world.modules
         .filter((module) => module?.enabled)
         .forEach((module) => {
-            unlisten(module.id);
+            unlisten(module.id).catch(sendErr);
         });
     system.runJob(looper(config));
     return world.modules?.length;
@@ -71,60 +71,59 @@ export type configi = typeof Default;
 function setup(config: configi, element: Module) {
     let runIds = [];
     if ((config as any)[element.id]?.enabled) {
-        element.intilizeEvent?.forEach(async (iE) => {
-            if (Number.isInteger(iE.runAfterSubsribe) && iE.runAfterSubsribe > 0) await new Promise<void>((resolve) => system.runTimeout(() => resolve(), iE.runAfterSubsribe));
-            iE.onIntilize(config).catch((error) => {
-                rejected("Module rejected :: " + element.id + " :: " + String(error));
+        if (element?.intilizeEvent)
+            element.intilizeEvent?.forEach(async (iE) => {
+                if (Number.isInteger(iE.runAfterSubsribe) && iE.runAfterSubsribe > 0) await new Promise<void>((resolve) => system.runTimeout(() => resolve(), iE.runAfterSubsribe));
+                iE.onIntilize(config).catch((error) => {
+                    rejected("Module rejected :: " + element.id + " :: " + String(error));
+                });
             });
-        });
         // Method for state module is enabled
-        if (element.tickEvent)
-            for (const tE of element.tickEvent) {
-                runIds.push(
-                    system.runInterval(() => {
-                        const currentConfig = c();
-                        if (tE?.intick) {
-                            let allPlayers = tE?.playerOption ? world.getPlayers(tE.playerOption) : world.getAllPlayers();
-                            if (!element.checkAdmin) allPlayers = allPlayers.filter((player) => !isAdmin(player));
-                            for (const player of allPlayers) {
-                                tE.intick(currentConfig, player).catch((error) => {
-                                    sendErr(error);
-                                });
-                            }
-                        }
-                        if (tE?.onTick) {
-                            tE.onTick(currentConfig).catch((error) => {
+        for (const tE of element?.tickEvent ?? []) {
+            runIds.push(
+                system.runInterval(() => {
+                    const currentConfig = c();
+                    if (tE?.intick) {
+                        let allPlayers = tE?.playerOption ? world.getPlayers(tE.playerOption) : world.getAllPlayers();
+                        if (!element.checkAdmin) allPlayers = allPlayers.filter((player) => !isAdmin(player));
+                        for (const player of allPlayers) {
+                            tE.intick(currentConfig, player).catch((error) => {
                                 sendErr(error);
                             });
                         }
-                    }, tE.tickInterval)
-                );
-            }
-        if (element.worldEvent)
-            for (const wE of element.worldEvent) {
-                wE.worldSignal.subscribe((event: any) => {
-                    const currentConfig = c();
-                    wE.then(currentConfig, event).catch((error) => {
-                        sendErr(error);
-                    });
+                    }
+                    if (tE?.onTick) {
+                        tE.onTick(currentConfig).catch((error) => {
+                            sendErr(error);
+                        });
+                    }
+                }, tE.tickInterval)
+            );
+        }
+        for (const wE of element?.worldEvent ?? []) {
+            wE.worldSignal.subscribe((event: any) => {
+                const currentConfig = c();
+                wE.then(currentConfig, event).catch((error) => {
+                    sendErr(error);
                 });
-            }
+            });
+        }
     }
     element.runId = runIds;
     element.enabled = true;
     world.modules[world.modules.findIndex((a) => a.id == element.id)] = element;
 }
 
-function unlisten(id: string) {
+async function unlisten(id: string) {
     const index = world.modules.findIndex((a) => a.id == id);
     const module = world.modules[index];
     if (!module) throw "Unlisten :: " + id + " :: No result";
     if (!module?.enabled) throw "Unlisten :: " + id + " :: Already disabled";
 
-    for (const num of module?.runId!) {
+    for (const num of module?.runId ?? []) {
         system.clearRun(num);
     }
-    for (const wor of module?.worldEvent!) {
+    for (const wor of module?.worldEvent ?? []) {
         wor.worldSignal.unsubscribe(wor.then);
     }
     for (const clear of module?.mapclears ?? []) {

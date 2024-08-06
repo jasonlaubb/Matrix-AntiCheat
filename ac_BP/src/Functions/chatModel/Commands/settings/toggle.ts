@@ -17,6 +17,7 @@ registerCommand({
         const prefix = config.commands.prefix;
         const moduleids = await getModulesIds();
         if (moduleids.includes(args[0])) {
+            const now = Date.now();
             // const state = Dynamic.get([args[0], "enabled"]);
             if ((args[1] == "enable") == (config as any)[args[0]].enabled && args[1] != "default") return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.already", with: [args[1]] });
             if ((config as { [key: string]: any })[args[0]].experimental && args[2] != "force" && args[1] == "enable") return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggles.warning", with: [prefix, args[0]] });
@@ -33,7 +34,7 @@ registerCommand({
                 await system.waitTicks(20);
                 intilizeModules();
             }
-            sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "toggles.toggleChange", with: [args[0], args[1]] });
+            sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "toggles.toggleChange", with: [args[0], args[1]] }, { text: ` (${Date.now() - now}ms)` });
         } else sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "toggle.unknown", with: [args[0]] });
     },
 });

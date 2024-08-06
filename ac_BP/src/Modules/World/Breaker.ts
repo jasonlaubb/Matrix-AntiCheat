@@ -46,7 +46,7 @@ async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) 
     } else {*/
     let allBlock: Block[] = [];
     offset.forEach(({ x, y, z }) => {
-        const selected = player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z })
+        const selected = player.dimension.getBlock({ x: block.location.x + x, y: block.location.y + y, z: block.location.z + z });
         if (selected?.isValid()) allBlock.push(selected);
     });
     const aroundSolid = allBlock.every((block) => block?.isSolid);

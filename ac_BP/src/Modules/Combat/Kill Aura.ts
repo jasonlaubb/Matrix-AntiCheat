@@ -93,7 +93,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         // Check for tool box no swinging type killaura
         if (player.hasTag(AnimationControllerTags.alive) && !player.hasTag(AnimationControllerTags.attackTime) && !isSpikeLagging(player) && !player.isInWater) {
             const startDetectingTime = Date.now();
-            new Promise<boolean>(resolve => {
+            new Promise<boolean>((resolve) => {
                 let tick = 0;
                 const id = system.runInterval(() => {
                     tick++;
@@ -105,8 +105,8 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
                         system.clearRun(id);
                         resolve(false);
                     }
-                }, 1)
-            }).then(noSwinging => {
+                }, 1);
+            }).then((noSwinging) => {
                 if (noSwinging) {
                     flag(player, "Kill Aura", "J", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["DetectingMs:" + (Date.now() - startDetectingTime)]);
                 }
@@ -181,7 +181,14 @@ function intickEvent(config: configi, player: Player) {
         data.invalidPitch = 0;
     }
     //killaura/I check for if the player rotation can be divided by 1
-    if (!isSpawning(player) && !isSpikeLagging(player) && Date.now() - player.lastTouchEntity < 300 && (verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) && Math.abs(verticalRotation) !== 90 && ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)) {
+    if (
+        !isSpawning(player) &&
+        !isSpikeLagging(player) &&
+        Date.now() - player.lastTouchEntity < 300 &&
+        (verticalRotation % 1 === 0 || horizontalRotation % 1 === 0) &&
+        Math.abs(verticalRotation) !== 90 &&
+        ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)
+    ) {
         isDetected = true;
         flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["PitchDifferent:" + toFixed(yPitch - data.lastPitch, 5, true)]);
     }

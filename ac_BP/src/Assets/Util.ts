@@ -403,7 +403,7 @@ function isSpawning(player: Player) {
 }
 
 function toFixed(number: number, digit: number, toString = false) {
-    if (Number.isNaN(number)) throw new Error ("Util :: toFixed :: Not A number");
+    if (Number.isNaN(number)) throw new Error("Util :: toFixed :: Not A number");
     const numberToFixed = Number(number.toFixed(digit));
     return toString ? String(numberToFixed) : numberToFixed;
 }

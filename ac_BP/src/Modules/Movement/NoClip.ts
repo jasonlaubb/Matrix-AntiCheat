@@ -79,9 +79,9 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     const { x, y, z }: Vector3 = player.getVelocity();
     const movementClip = Math.hypot(x, z);
     const bodyBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.typeId as MinecraftBlockTypes;
-    const skipLocations = straight(data.lastLocation, player.location)
-    const skipMaterials = skipLocations.map((loc) => player.dimension.getBlock(loc))
-    const phaseIndex: number = skipMaterials.findIndex((block) => block?.isValid() && isSolidBlock(block!))
+    const skipLocations = straight(data.lastLocation, player.location);
+    const skipMaterials = skipLocations.map((loc) => player.dimension.getBlock(loc));
+    const phaseIndex: number = skipMaterials.findIndex((block) => block?.isValid() && isSolidBlock(block!));
     if (
         !bypassMovementCheck(player) &&
         data.lastLocation &&
@@ -124,16 +124,16 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         const isClientLagging = delayPlacementCheck(player);
         freezeTeleport(player, safePos);
         if (!isClientLagging) {
-        if (lastflag && now - lastflag < 20000) {
-            const trueOnGround = Math.abs(y) < 1.75 && player.isJumping;
-            const staticOnGround = y == 0 && player.isOnGround;
-            if (trueOnGround || staticOnGround) {
-                flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
-            } else if (!player.hasTag(AnimationControllerTags.riding)) {
-                flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
+            if (lastflag && now - lastflag < 20000) {
+                const trueOnGround = Math.abs(y) < 1.75 && player.isJumping;
+                const staticOnGround = y == 0 && player.isOnGround;
+                if (trueOnGround || staticOnGround) {
+                    flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
+                } else if (!player.hasTag(AnimationControllerTags.riding)) {
+                    flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
+                }
             }
-        }
-        data.lastFlag = now;
+            data.lastFlag = now;
         }
     }
     player.beforeClip = player.backClip;
@@ -144,37 +144,37 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     const floorHead = { x: Math.floor(x1), y: Math.floor(y1), z: Math.floor(z1) };
     const floorBody = { x: Math.floor(x2), y: Math.floor(y2), z: Math.floor(z2) };
     try {
-    const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)!) || !player.dimension.getBlock(floorBody!)?.isAir;
-    if (!inSolid) {
-        data.safeLocation = player.location;
-        player.lastSafePos = safePos;
-    }
-    } catch { }
+        const inSolid = isSolidBlock(player.dimension.getBlock(floorHead)!) || !player.dimension.getBlock(floorBody!)?.isAir;
+        if (!inSolid) {
+            data.safeLocation = player.location;
+            player.lastSafePos = safePos;
+        }
+    } catch {}
 
     noclipdata.set(player.id, data);
 }
-function onServerBlockDestroy ({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) {
+function onServerBlockDestroy({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) {
     if (!isSolid) return;
     player.lastBreakSolid = Date.now();
 }
 let blockPlacementLog: PlaceLog[] = [];
-function onServerBlockPlace ({ player: { id }, block: { location, isSolid } }: PlayerPlaceBlockAfterEvent) {
+function onServerBlockPlace({ player: { id }, block: { location, isSolid } }: PlayerPlaceBlockAfterEvent) {
     if (!isSolid) return;
     const now = Date.now();
-    blockPlacementLog = blockPlacementLog.filter(({ time }) => now - time < 12000)
+    blockPlacementLog = blockPlacementLog.filter(({ time }) => now - time < 12000);
     blockPlacementLog.push({
         time: now,
         location: location,
         placeId: id,
-    } as PlaceLog)
+    } as PlaceLog);
 }
-function delayPlacementCheck ({ location, id }: Player) {
+function delayPlacementCheck({ location, id }: Player) {
     if (blockPlacementLog.length == 0) return false;
     const { x: x1, z: z1 } = location;
     return blockPlacementLog.some(({ location: { x, z }, placeId }) => {
         const distance = Math.hypot(x1 - x, z1 - z);
         return id != placeId && distance < 5;
-    })
+    });
 }
 interface PlaceLog {
     time: number;

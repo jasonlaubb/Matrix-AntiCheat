@@ -111,7 +111,6 @@ export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Pl
             sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.join(" "), "", ""] });
         });
     } else if (targetCommand.maxArgs && args.length > targetCommand.maxArgs) {
-        if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
         return system.run(() => {
             if (config.soundEffect) player.playSound("note.bass", { volume: 1.0 });
             sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "commands.generic.syntax", with: [before + args.slice(0, targetCommand.maxArgs).join(" ") + " ", args.slice(targetCommand.maxArgs).join(" "), ""] });
@@ -137,7 +136,14 @@ export function sendRawText(player: Minecraft.Player | Minecraft.World, ...messa
 }
 
 export function error(target: Minecraft.Player | Minecraft.World, { name, message, stack }: Error): void {
-    const rawmessage = new rawstr(true, "g").tra("cmderror.title").str("\n").tra("cmderror.name", name).str("\n").tra("cmderror.message", message).str("\n").tra("cmderror.stack", stack ?? "Unknown");
+    const rawmessage = new rawstr(true, "g")
+        .tra("cmderror.title")
+        .str("\n")
+        .tra("cmderror.name", name)
+        .str("\n")
+        .tra("cmderror.message", message)
+        .str("\n")
+        .tra("cmderror.stack", stack ?? "Unknown");
 
     target.sendMessage(rawmessage.parse());
 }
