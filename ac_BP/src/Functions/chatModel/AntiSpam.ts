@@ -33,12 +33,14 @@ export function intergradedAntiSpam(player: Player, message: string) {
             messageRate: [],
         } as SpamData;
 
+        let returnTrue = false;
+
         if (data.lastMessage && data.lastMessage == message && Date.now() - data.messageRate[data.messageRate.length - 1] < 15000) {
             system.run(() => {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.repeated").parse());
                 if (playerSound) player.playSound("note.bass", { volume: 1.0 });
             });
-            return true;
+            returnTrue = true;
         }
 
         const repeatedAmount = Math.max(...cauisitspam(message));
@@ -48,7 +50,7 @@ export function intergradedAntiSpam(player: Player, message: string) {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.spamming").parse());
                 if (playerSound) player.playSound("note.bass", { volume: 1.0 });
             });
-            return true;
+            returnTrue = true;
         }
 
         if (message.length > config.spamFilter.maxLength) {
@@ -56,7 +58,7 @@ export function intergradedAntiSpam(player: Player, message: string) {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.lengthlimit").parse());
                 if (playerSound) player.playSound("note.bass", { volume: 1.0 });
             });
-            return true;
+            returnTrue = true;
         }
 
         data.messageRate.push(Date.now());
@@ -73,11 +75,13 @@ export function intergradedAntiSpam(player: Player, message: string) {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.messagerate").parse());
                 if (playerSound) player.playSound("note.bass", { volume: 1.0 });
             });
-            return true;
+            returnTrue = true;
         }
 
         data.lastMessage = message;
         spamData.set(player.id, data);
+
+        if (returnTrue) return true;
     }
 
     return false;
