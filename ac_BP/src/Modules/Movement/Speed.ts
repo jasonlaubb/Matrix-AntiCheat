@@ -65,7 +65,7 @@ async function AntiSpeed(config: configi, player: Player) {
         data.lastOutOfRange = now;
     }
     // check if speedLog reached the max which is 3 flag
-    if (!bypassMovementCheck(player) && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && velocityDifferent - data.lastVelocity < 0.3 && !isSpikeLagging(player)) {
+    if (bypassMovementCheck(player) && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && velocityDifferent - data.lastVelocity < 0.3 && !isSpikeLagging(player)) {
         data.firstTrigger ??= now;
         data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
         data.flagNumber ??= 0;
@@ -89,20 +89,28 @@ async function AntiSpeed(config: configi, player: Player) {
     if (velocityDifferent > data.speedMaxV) data.lastVelocity = velocityDifferent;
     // saving last normal velocity before beeing flagged
     if (velocityDifferent < data.speedMaxV) data.lastLastLoggedV = player.lastXZLogged;
-    data.blockMovementLoop.push(xz);
     const { x: x1, z: z1 } = player.location;
     const { x: x2, z: z2 } = data.lastLocation;
     const moveDistance = Math.hypot(x1 - x2, z1 - z2);
     const state = moveDistance == 0 ? -1 :moveDistance > config.antiSpeed.absThreshould ? 1 : 0;
     data.blockMovementLoop.push(state);
-    // Motion with statistics?
-    if (data.blockMovementLoop.length > 40) {
+    // Statistic if the player is doing horizontal client-side only movement.
+    let loopLength = data.blockMovementLoop.length;
+    if (loopLength > 60) {
+        loopLength--;
         data.blockMovementLoop.shift();
-        const truePositives = data.blockMovementLoop.filter((x) => x == 1).length;
-        const falsePositives = data.blockMovementLoop.filter((x) => x == -1).length;
-        const trueNegatives = data.blockMovementLoop.filter((x) => x == 0).length;
-        player.onScreenDisplay.setActionBar(`++${truePositives} | -+${falsePositives} | +-${trueNegatives}`);
-        // No awa
+        const truePositives = data.blockMovementLoop.filter((x) => x == 1).length / loopLength;
+        const falsePositives = data.blockMovementLoop.filter((x) => x == -1).length / loopLength;
+        const trueNegatives = data.blockMovementLoop.filter((x) => x == 0).length / loopLength;
+        // player.onScreenDisplay.setActionBar(`++${truePositives.toFixed(5)} | -+${falsePositives.toFixed(5)} | +-${trueNegatives.toFixed(5)}`);
+        const normalMotionFlag = truePositives > 0.03 && truePositives <= 0.1 && falsePositives < 0.19 && trueNegatives > 0.8 && trueNegatives < 0.96
+        const highMotionFlag = truePositives > 0.16 && truePositives <= 0.2 && falsePositives < 0.6 && trueNegatives > 0.78
+        const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7
+        if (normalMotionFlag || highMotionFlag || flyMotionFlag) {
+            flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
+            data.blockMovementLoop = [];
+            freezeTeleport(player, safePos);
+        }
     }
     // finally saving last xz velocity
     player.lastXZLogged = xz;
