@@ -452,7 +452,7 @@
                                 }
                             ]
                         },
-                        "event": "containerOpen"
+                        "event": "container_opened"
                     },
                     {
                         "filters": {
@@ -465,7 +465,7 @@
                                 }
                             ]
                         },
-                        "event": "containerClose"
+                        "event": "container_closed"
                     }
                 ]
             }
@@ -491,6 +491,18 @@
                 },
                 "queue_command": {
                     "command": "tag @s add matrix:impeccable",
+                    "target": "self"
+                }
+            },
+            "matrix:container_opened": {
+                "queue_command": {
+                    "command": "tag @s add matrix:container_opened",
+                    "target": "self"
+                }
+            },
+            "matrix:container_closed": {
+                "queue_command": {
+                    "command": "tag @s remove matrix:container_opened",
                     "target": "self"
                 }
             },
