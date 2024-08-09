@@ -19,6 +19,9 @@ class MatrixAnti_MCPE {
         const { world, system } = Minecraft;
         await initialize();
         MatrixAnti_MCPE.init.initialized = true;
+        if (Dynamic.config().configDataBase.enabled) {
+            await dataBaseInitialize();
+        }
         // Launch the anticheat.
         await this.importAll()
             .catch((e) => console.error(e))
@@ -177,4 +180,5 @@ export default Index;
 import * as Minecraft from "@minecraft/server";
 import { initialize } from "./Functions/Config/dynamic_config";
 import { intilizeModules } from "./Modules/Modules";
-import Dynamic from "./Functions/Config/dynamic_config";
+import Dynamic from "./Functions/Config/dynamic_config";import { dataBaseInitialize } from "./Functions/Config/config_database";
+

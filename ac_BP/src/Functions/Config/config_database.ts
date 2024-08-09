@@ -1,11 +1,12 @@
 import { system, world } from "@minecraft/server";
 import { c } from "../../Assets/Util";
 import Index from "../../index";
-import { getChangers } from "./dynamic_config";
+import Dynamic, { getChangers, initialize } from "./dynamic_config";
 import { Base64 } from "../../node_modules/@i-xi-dev/base64/esm/src/base64"
+import { toString } from "../../node_modules/uint8arrays/dist/src/index"
 
 let trueDBId: string;
-export function dataBaseInitialize () {
+export async function dataBaseInitialize () {
     const config = c().configDataBase;
     const mark = config.mark;
     const allDB = world.scoreboard.getObjectives().filter((objective) => objective?.displayName === mark);
@@ -30,6 +31,13 @@ export function dataBaseInitialize () {
     }
     // Generate fake people
     system.runJob(confuseGenerator(config.confuse, mark));
+    const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
+    const currentChanger = Base64.decode(currentDataBase.getParticipants()[0].displayName);
+    if (config.autorecover && getChangers() != toString(currentChanger)) {
+        world.setDynamicProperty("config", toString(currentChanger));
+        // Reload the dynamic config
+        await initialize();
+    }
 }
 
 function randomString (length: number) {
@@ -57,7 +65,9 @@ function* confuseGenerator (confuse: number, mark: string) {
 function toUinit8Array (text: string) {
     return Uint8Array.from(Array.from(text).map(letter => letter.charCodeAt(0)));
 }
-
-system.runInterval(() => {
-
-}, 20)
+const config = Dynamic.config()
+if (config.configDataBase.enabled) {
+    system.runInterval(() => {
+        // unfinished.
+    }, config.configDataBase.autocheck);
+}
