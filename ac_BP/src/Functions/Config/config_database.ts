@@ -1,7 +1,7 @@
 import { system, world } from "@minecraft/server";
 import { c } from "../../Assets/Util";
 import Index from "../../index";
-import Dynamic, { getChangers, initialize } from "./dynamic_config";
+import { getChangers, initialize } from "./dynamic_config";
 import { Base64 } from "../../node_modules/@i-xi-dev/base64/esm/src/base64"
 import { toString } from "../../node_modules/uint8arrays/dist/src/index"
 
@@ -37,6 +37,7 @@ export async function dataBaseInitialize () {
         world.setDynamicProperty("config", toString(currentChanger));
         // Reload the dynamic config
         await initialize();
+        world.sendMessage(`§bMatrix §7>§g Although the data of config is lost, the data has been recovered.`);
     }
 }
 
@@ -64,10 +65,4 @@ function* confuseGenerator (confuse: number, mark: string) {
 
 function toUinit8Array (text: string) {
     return Uint8Array.from(Array.from(text).map(letter => letter.charCodeAt(0)));
-}
-const config = Dynamic.config()
-if (config.configDataBase.enabled) {
-    system.runInterval(() => {
-        // unfinished.
-    }, config.configDataBase.autocheck);
 }

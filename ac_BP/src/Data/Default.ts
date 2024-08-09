@@ -7,7 +7,6 @@ export default {
     configDataBase: {
         enabled: true, // Not suggested to disable this, alaways.
         autorecover: true, // Important
-        autocheck: 0, // 0 = disable, state every ? tick to check.
         confuse: 100,
         mark: "MATRIX_CONFIG_DATABASE",
         hashlength: 16,

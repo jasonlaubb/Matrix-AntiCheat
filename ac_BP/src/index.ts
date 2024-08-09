@@ -180,5 +180,5 @@ export default Index;
 import * as Minecraft from "@minecraft/server";
 import { initialize } from "./Functions/Config/dynamic_config";
 import { intilizeModules } from "./Modules/Modules";
-import Dynamic from "./Functions/Config/dynamic_config";import { dataBaseInitialize } from "./Functions/Config/config_database";
-
+import Dynamic from "./Functions/Config/dynamic_config";
+import { dataBaseInitialize } from "./Functions/Config/config_database";
