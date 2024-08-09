@@ -114,5 +114,9 @@ async function editor(player: Player, path: string[]) {
 
 const description: { [key: string]: string } = {
     "": "This is the config of Matrix AntiCheat.",
+    configDataBase: "WARNING - The changes here might not work on dynamic config.",
     enableMovementCheckBypassTag: "Set the true will let player with tag matrix:movementCheckBypassTag for bypass some of the movement check.",
+    autoPunishment: "Setting for the how anticheat punishment the player automatically.",
+    "autoPunishment.observationMode": "Set to true to disable the final auto punishment of all modules.",
+    "autoPunishment.silentMode": "Set to true to disable all the flag messages.",
 };

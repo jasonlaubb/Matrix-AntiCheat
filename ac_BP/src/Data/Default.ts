@@ -5,12 +5,14 @@
  */
 export default {
     configDataBase: {
-        enabled: true, // Not suggested to disable this, alaways.
-        autorecover: true, // Important
+        enabled: true,
+        autorecover: true,
         confuse: 100,
         mark: "MATRIX_CONFIG_DATABASE",
         hashlength: 16,
         base64Encode: true,
+        sendDataBaseMessage: true,
+        autoCommit: true,
     },
     sendInitMsg: true,
     sendModuleInitMsg: false,

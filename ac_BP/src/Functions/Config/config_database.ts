@@ -41,6 +41,15 @@ export async function dataBaseInitialize () {
     }
 }
 
+export function commitChanges () {
+    system.run(() => {
+        const changers = getChangers();
+        const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
+        currentDataBase.removeParticipant(currentDataBase.getParticipants()[0]);
+        currentDataBase.setScore(changers, 1);
+    })
+}
+
 function randomString (length: number) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

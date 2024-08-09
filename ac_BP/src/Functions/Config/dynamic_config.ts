@@ -3,6 +3,7 @@ import userConfig from "../../Data/Config";
 const config: configi = dy.followUserConfig ? (userConfig as configi) : defaultConfig;
 import { world } from "@minecraft/server";
 import { configi } from "../../Modules/Modules";
+import { commitChanges } from "./config_database";
 
 let common = config;
 
@@ -53,6 +54,7 @@ export default class Dynamic {
         world.setDynamicProperty("config", JSON.stringify(plaintext));
         // Reload the dynamic config
         initialize();
+        if (config.configDataBase.autoCommit) commitChanges();
     }
 
     static delete(key: string[]) {
@@ -65,6 +67,7 @@ export default class Dynamic {
         world.setDynamicProperty("config", JSON.stringify(plaintext));
         // Reload the dynamic config
         initialize();
+        if (config.configDataBase.autoCommit) commitChanges();
         return true;
     }
 }
