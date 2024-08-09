@@ -1,7 +1,10 @@
 {
-    "include": ["ac_BP/src/**/*.ts", "ac_BP/gobal.d.ts"],
+    "include": ["ac_BP/src/**/*.ts", "gobal.d.ts"],
     "exclude": ["node_modules"],
-    "libChecking": false,
+    "watchOptions": {
+        "excludeDirectories": ["node_modules"]
+    },
+    "libChecking": true,
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
@@ -13,6 +16,7 @@
         "checkJs": false,
         "outDir": "./ac_BP/scripts",
         "typeRoots": ["./node_modules/@minecraft"],
+        "types": ["server", "server-ui"],
         "strictNullChecks": true,
         "strictFunctionTypes": true,
         "strictPropertyInitialization": true,

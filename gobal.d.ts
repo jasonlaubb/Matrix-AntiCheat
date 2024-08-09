@@ -1,9 +1,9 @@
-import * as Server from "../node_modules/@minecraft/server/index";
-import * as Ui from "../node_modules/@minecraft/server-ui/index";
-import * as VanillaData from "./src/node_modules/@minecraft/vanilla-data/lib/index";
-import { Module } from "./src/Modules/Modules";
-import { AnimationControllerTags, DisableTags, MatrixEvents, MatrixUsedTags } from "./src/Data/EnumData";
-import { Translate } from "./src/Assets/Language";
+import * as Server from "./node_modules/@minecraft/server/index";
+import * as Ui from "./node_modules/@minecraft/server-ui/index";
+import * as VanillaData from "./ac_BP/src/node_modules/@minecraft/vanilla-data/lib/index";
+import { Module } from "./ac_BP/src/Modules/Modules";
+import { AnimationControllerTags, DisableTags, MatrixEvents, MatrixUsedTags } from "./ac_BP/src/Data/EnumData";
+import { Translate } from "./ac_BP/src/Assets/Language";
 declare module "@minecraft/server" {
     interface Player {
         threwTridentAt: number;
@@ -69,4 +69,32 @@ declare global {
         latinize: () => string;
         isLatin: () => boolean;
     }
+    // For the unstable thingyinterface WritableStream<T> {
+        interface WritableStream<T> {
+            write(chunk: T): void;
+            close(): void;
+            abort(reason?: any): void;
+          }
+          
+          interface ReadableStream<T> {
+            read(): T | null;
+            cancel(reason?: any): void;
+          }
+          
+          interface Transformer<T, U> {
+            start(controller: TransformStreamDefaultController<T, U>): void;
+            transform(chunk: T, controller: TransformStreamDefaultController<T, U>): void;
+            flush(controller: TransformStreamDefaultController<T, U>): void;
+          }
+          
+          interface TransformStream<T, U> {
+            writable: WritableStream<T>;
+            readable: ReadableStream<U>;
+          }
+          
+          interface TransformStreamDefaultController<T, U> {
+            enqueue(chunk: T): void;
+            terminate(): void;
+            error(reason?: any): void;
+          }
 }

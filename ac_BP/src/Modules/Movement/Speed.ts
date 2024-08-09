@@ -44,7 +44,7 @@ async function AntiSpeed(config: configi, player: Player) {
             currentFlagCombo: 0,
             blockMovementLoop: [],
             lastLocation: player.location,
-            lastRiding: 0;
+            lastRiding: 0,
         } as Speeddata);
     // define cool things
     const { x, z } = player.getVelocity();
