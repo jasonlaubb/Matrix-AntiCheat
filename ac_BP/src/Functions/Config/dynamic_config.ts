@@ -22,6 +22,9 @@ export async function initialize() {
     return;
 }
 
+export function getChangers () {
+    return world.getDynamicProperty("config") as string;
+}
 export default class Dynamic {
     static readonly config = (): typeof defaultConfig => common;
     static configAsync = async (): Promise<typeof defaultConfig> => common;

@@ -6,6 +6,7 @@
         "": {
             "name": "matrix-anticheat-src",
             "dependencies": {
+                "@i-xi-dev/base64": "^4.1.15",
                 "@minecraft/vanilla-data": "^1.21.0",
                 "crypto-es": "^2.1.0",
                 "matrix-anticheat": "file:../.."
@@ -29,6 +30,7 @@
         "../..": {
             "name": "matrix-anticheat",
             "dependencies": {
+                "@i-xi-dev/base64": "^4.1.15",
                 "@minecraft/server": "^1.12.0-beta.1.21.0-stable",
                 "@minecraft/server-ui": "^1.2.0-beta.1.20.40-stable",
                 "fs": "^0.0.1-security",
@@ -39,6 +41,11 @@
             "devDependencies": {
                 "prettier": "3.2.5"
             }
+        },
+        "node_modules/@i-xi-dev/base64": {
+            "version": "4.1.15",
+            "resolved": "https://registry.npmjs.org/@i-xi-dev/base64/-/base64-4.1.15.tgz",
+            "integrity": "sha512-TKpTzTmgpz4TCFE31CfZA8ea5i9vCNt4Z2NYnei+71VXlS9GGB/yrsYQIX1Uf774TJfEYiTDFZpU/wFP2hR01A=="
         },
         "node_modules/@minecraft/vanilla-data": {
             "version": "1.21.0",

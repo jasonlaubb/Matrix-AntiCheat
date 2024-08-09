@@ -4,6 +4,13 @@
  * @warning NEVER CHANGE THIS FILE IF YOU DON'T KNOW WHAT YOU ARE DOING
  */
 export default {
+    configDataBase: {
+        autorecover: true,
+        confuse: 100,
+        mark: "MATRIX_CONFIG_DATABASE",
+        hashlength: 16,
+        base64Encode: true,
+    },
     sendInitMsg: true,
     sendModuleInitMsg: false,
     createScoreboard: true,
