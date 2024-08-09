@@ -15,7 +15,7 @@ export async function dataBaseInitialize () {
     if (allDB.length > 0) {
         const trueDB = allDB.find((objective) => objective.getScore(objective.getParticipants()[0]!.displayName)! == 1);
         if (!trueDB) {
-            world.sendMessage(`§bMatrix §7>§c DataBase has been lost due to unknown reason.`);
+            world.sendMessage(`§bMatrix §7>§g The data of the backup has been deleted unexpectedly.`);
         } else {
             property = trueDB.getParticipants()[0].displayName;
             trueDBId = trueDB.id;
@@ -37,7 +37,7 @@ export async function dataBaseInitialize () {
         world.setDynamicProperty("config", toString(currentChanger, 'utf8'));
         // Reload the dynamic config
         await initialize();
-        world.sendMessage(`§bMatrix §7>§g Although the data of config is lost, the data has been recovered.`);
+        world.sendMessage(`§bMatrix §7>§g The data of config has been recovered.`);
     }
 }
 
