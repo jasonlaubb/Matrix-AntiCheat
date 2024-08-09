@@ -3,7 +3,7 @@ import { c } from "../../Assets/Util";
 import Index from "../../index";
 import { getChangers, initialize } from "./dynamic_config";
 import { Base64 } from "../../node_modules/@i-xi-dev/base64/esm/src/base64"
-import { toString } from "../../node_modules/uint8arrays/dist/src/index"
+import { toString, fromString } from "../../node_modules/uint8arrays/dist/src/index"
 
 let trueDBId: string;
 export async function dataBaseInitialize () {
@@ -26,7 +26,7 @@ export async function dataBaseInitialize () {
             world.scoreboard.removeObjective(id);
         })
         const newObj = world.scoreboard.addObjective(name, mark);
-        const stringGiven = Base64.encode(toUinit8Array(getChangers()));
+        const stringGiven = Base64.encode(fromString(getChangers(), 'utf8'));
         newObj.setScore(stringGiven, 1);
     }
     // Generate fake people
@@ -34,7 +34,7 @@ export async function dataBaseInitialize () {
     const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
     const currentChanger = Base64.decode(currentDataBase.getParticipants()[0].displayName);
     if (config.autorecover && getChangers() != toString(currentChanger)) {
-        world.setDynamicProperty("config", toString(currentChanger));
+        world.setDynamicProperty("config", toString(currentChanger, 'utf8'));
         // Reload the dynamic config
         await initialize();
         world.sendMessage(`§bMatrix §7>§g Although the data of config is lost, the data has been recovered.`);
@@ -61,8 +61,4 @@ function* confuseGenerator (confuse: number, mark: string) {
             yield;
         }
     }
-}
-
-function toUinit8Array (text: string) {
-    return Uint8Array.from(Array.from(text).map(letter => letter.charCodeAt(0)));
 }
