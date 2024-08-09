@@ -736,6 +736,18 @@ msgstr ""
 msgid "%1 has reached the maximum amount of warnings."
 msgstr ""
 
+#: db.gen
+msgid "Generated %s confuse scoreboard(s)."
+msgstr ""
+
+#: db.suc
+msgid "Sucessfully recover the data of config"
+msgstr ""
+
+#: db.delun
+msgid "The data of the backup has been deleted unexpectedly."
+msgstr ""
+
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
 msgstr ""

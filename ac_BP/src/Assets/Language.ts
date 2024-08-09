@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate =
+export type Translate = 
     | "pack.description"
     | "disconnectionScreen.unexpectedPacket"
     | "json.packet"
@@ -186,5 +186,8 @@ export type Translate =
     | "warn.for"
     | "warn.final"
     | "warn.reached"
+    | "db.gen"
+    | "db.suc"
+    | "db.delun"
     | "item.matrix.itemui"
-    | "item.matrix.modstick";
+    | "item.matrix.modstick"
