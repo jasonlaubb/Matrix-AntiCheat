@@ -23,6 +23,7 @@ interface Speeddata {
     currentFlagCombo?: number;
     blockMovementLoop: number[];
     lastLocation: Vector3;
+    lastRiding: number;
 }
 const speeddata = new Map<string, Speeddata>();
 
@@ -43,14 +44,20 @@ async function AntiSpeed(config: configi, player: Player) {
             currentFlagCombo: 0,
             blockMovementLoop: [],
             lastLocation: player.location,
+            lastRiding: 0;
         } as Speeddata);
     // define cool things
     const { x, z } = player.getVelocity();
     const xz = Math.hypot(x, z);
     const solidBlock = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.isSolid;
     const safePos = data.speedData;
+    if (player.hasTag(AnimationControllerTags.riding)) {
+        data.lastRiding = now;
+        speeddata.set(player.id, data);
+        return;
+    }
     // skip the code for some reasons
-    if (player.isFlying || player.isGliding || player.hasTag(AnimationControllerTags.riding)) return;
+    if (player.isFlying || player.isGliding) return;
     // start complex things
     // changing value when needed to avoid false postives
     if (solidBlock) data.speedMaxV = config.antiSpeed.inSolidThreshold;
@@ -123,7 +130,7 @@ async function AntiSpeed(config: configi, player: Player) {
         const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7; // Test from Prax client (flying)
         // Speed/B - Check if player has illegal motion frequency
         const flagCondition = normalMotionFlag || highMotionFlag || flyMotionFlag;
-        if (!bypassMovementCheck(player) && !illegalEffect && notSpikeLagging && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
+        if (!bypassMovementCheck(player) && !illegalEffect && notSpikeLagging && now - data.lastRiding > 3500 && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
             flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
             data.blockMovementLoop = [];
             freezeTeleport(player, safePos);
