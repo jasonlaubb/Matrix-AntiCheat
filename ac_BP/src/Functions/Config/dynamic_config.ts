@@ -8,6 +8,7 @@ import { commitChanges } from "./config_database";
 let common = config;
 
 export async function initialize() {
+    Dynamic;
     const cypher = world.getDynamicProperty("config") as string;
     if (!cypher || !Array.isArray(JSON.parse(cypher))) {
         world.setDynamicProperty("config", "[]");

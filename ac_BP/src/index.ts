@@ -59,6 +59,8 @@ class MatrixAnti_MCPE {
         // Assets
         await import("./Assets/LatinNormalize");
         await import("./Assets/Language");
+        await import("./Functions/Config/dynamic_config")
+        await import("./Assets/Util");
         await import("./Assets/Public");
         // Script unctions
         await import("./Functions/chatModel/ChatHandler");

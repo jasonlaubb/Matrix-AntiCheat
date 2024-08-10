@@ -1,0 +1,56 @@
+{
+    "format_version": "1.20.40",
+    "minecraft:item": {
+        "description": {
+            "identifier": "matrix:fakepannel",
+            "menu_category": {
+                "is_hidden_in_commands": false,
+                "category": "equipment",
+                "group": "itemGroup.name.miscFood" 
+            }
+        },
+        "components": {
+            "minecraft:display_name": {
+                "value": "item.matrix.itemui"
+            },
+            "minecraft:icon": "matrix:itemui",
+            "minecraft:max_stack_size": 64,
+            "minecraft:can_destroy_in_creative": false,
+            "minecraft:glint": true,
+            "minecraft:should_despawn": true,
+            "minecraft:allow_off_hand": true,
+            "minecraft:use_animation": "eat",
+            "minecraft:use_modifiers": {
+                "movement_modifier": 0.01,
+                "use_duration": 5
+            },
+            "minecraft:damage": {
+                "value": 24
+            },
+            "minecraft:durability": {
+                "damage_chance": {
+                    "min": 10,
+                    "max": 30
+                },
+                "max_durability": 240
+            },
+            "minecraft:fuel": {
+                "duration": 600
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": [
+                            "quartz"
+                        ],
+                        "repair_amount": 200
+                    }
+                ]
+            },
+            "minecraft:cooldown": {
+                "category": "attack",
+                "duration": 10
+            }
+        }
+    }
+}

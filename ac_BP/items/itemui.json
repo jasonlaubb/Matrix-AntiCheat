@@ -16,11 +16,7 @@
             "minecraft:max_stack_size": 1,
             "minecraft:can_destroy_in_creative": false,
             "minecraft:glint": true,
-            "minecraft:should_despawn": true,
-            "minecraft:food": {
-                "can_always_eat": true,
-                "nutrition": 0
-            }
+            "minecraft:should_despawn": true
         }
     }
 }

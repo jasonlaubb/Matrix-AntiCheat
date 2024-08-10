@@ -284,7 +284,10 @@ function isTimeStr(timeStr: string) {
 }
 
 // Don't delete this, very important
-const c = Dynamic.config;
+function c () {
+    Dynamic;
+    return Dynamic.config();
+}
 
 function inAir(dimension: Dimension, location: Vector3) {
     location = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z) };

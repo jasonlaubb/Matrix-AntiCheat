@@ -6,11 +6,9 @@
         "": {
             "name": "matrix-anticheat-src",
             "dependencies": {
-                "@i-xi-dev/base64": "^4.1.15",
                 "@minecraft/vanilla-data": "^1.21.0",
                 "crypto-es": "^2.1.0",
-                "matrix-anticheat": "file:../..",
-                "uint8arrays": "^5.1.0"
+                "matrix-anticheat": "file:../.."
             }
         },
         "..": {
@@ -42,11 +40,6 @@
                 "prettier": "3.2.5"
             }
         },
-        "node_modules/@i-xi-dev/base64": {
-            "version": "4.1.15",
-            "resolved": "https://registry.npmjs.org/@i-xi-dev/base64/-/base64-4.1.15.tgz",
-            "integrity": "sha512-TKpTzTmgpz4TCFE31CfZA8ea5i9vCNt4Z2NYnei+71VXlS9GGB/yrsYQIX1Uf774TJfEYiTDFZpU/wFP2hR01A=="
-        },
         "node_modules/@minecraft/vanilla-data": {
             "version": "1.21.0",
             "resolved": "https://registry.npmjs.org/@minecraft/vanilla-data/-/vanilla-data-1.21.0.tgz",
@@ -60,19 +53,6 @@
         "node_modules/matrix-anticheat": {
             "resolved": "../..",
             "link": true
-        },
-        "node_modules/multiformats": {
-            "version": "13.2.2",
-            "resolved": "https://registry.npmjs.org/multiformats/-/multiformats-13.2.2.tgz",
-            "integrity": "sha512-RWI+nyf0q64vyOxL8LbKtjJMki0sogRL/8axvklNtiTM0iFCVtHwME9w6+0P1/v4dQvsIg8A45oT3ka1t/M/+A=="
-        },
-        "node_modules/uint8arrays": {
-            "version": "5.1.0",
-            "resolved": "https://registry.npmjs.org/uint8arrays/-/uint8arrays-5.1.0.tgz",
-            "integrity": "sha512-vA6nFepEmlSKkMBnLBaUMVvAC4G3CTmO58C12y4sq6WPDOR7mOFYOi7GlrQ4djeSbP6JG9Pv9tJDM97PedRSww==",
-            "dependencies": {
-                "multiformats": "^13.0.0"
-            }
         }
     }
 }

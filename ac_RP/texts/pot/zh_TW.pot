@@ -32,6 +32,10 @@ msgstr "反外掛啟動檢測"
 msgid "§gBeta API usage: %s"
 msgstr "§g成功啟用實驗性API: %s"
 
+#: function.check.playerjson
+msgid "§gPlayer.json usage: %s"
+msgstr ""
+
 #: function.check.helpa
 msgid "§7- If the 'Beta API usage' is stated 'FALSE', that's mean the anticheat cannot run the script of the behavior pack."
 msgstr "§7- 如果'成功啟用實驗性API'回傳'FALSE', 這意味著反外掛無法使用行為模式包中的script"
@@ -43,6 +47,10 @@ msgstr "§7- 如果需要修復, 請檢查你已經在世界設定中啟用'實�
 #: function.check.helpc
 msgid "§7- If it's still not working, please check if your Minecraft version matches the anticheat supported one."
 msgstr "§7- 如果這樣仍然不起作用, 請檢查你的minecraft版本匹配反外掛支持的版本"
+
+#: function.check.helpd
+msgid "§7- If the 'Player.json usage' is stated 'FALSE', please make sure you have placed Matrix AntiCheat on the top of your behavior packs."
+msgstr ""
 
 #: function.version.title
 msgid "§gYou are now on version §eV%s"

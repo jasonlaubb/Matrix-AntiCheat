@@ -2,8 +2,6 @@ import { system, world } from "@minecraft/server";
 import { c, rawstr } from "../../Assets/Util";
 import Index from "../../index";
 import { getChangers, initialize } from "./dynamic_config";
-import { Base64 } from "../../node_modules/@i-xi-dev/base64/esm/src/base64"
-import { toString, fromString } from "../../node_modules/uint8arrays/dist/src/index"
 
 let trueDBId: string;
 export async function dataBaseInitialize () {
@@ -13,30 +11,35 @@ export async function dataBaseInitialize () {
     if (!Index.initialized) return;
     if (allDB.length > 0) {
         const trueDB = allDB.find((objective) => objective.getScore(objective.getParticipants()[0]!.displayName)! == 1);
+        allDB.filter((objective) => objective !== trueDB).forEach(({ id }) => {
+            world.scoreboard.removeObjective(id);
+        })
+        console.log("configDB :: Cleared " + allDB.length + " database(s).");
         if (!trueDB) {
             if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "c").tra("db.delun").parse());
+            console.log("configDB :: Failed to find the database from the world.")
         } else {
             trueDBId = trueDB.id;
         }
     } else {
         const name = "matrix:" + randomString(config.hashlength);
-        allDB.forEach(({ id }) => {
-            world.scoreboard.removeObjective(id);
-        })
         const newObj = world.scoreboard.addObjective(name, mark);
-        const stringGiven = Base64.encode(fromString(getChangers(), 'utf8'));
+        const stringGiven = getChangers()
         newObj.setScore(stringGiven, 1);
+        trueDBId = newObj.id;
     }
     // Generate fake people
     system.runJob(confuseGenerator(config.confuse, mark));
-    if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "a").tra("db.gen").parse());
+    if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "g").tra("db.gen", config.confuse.toString()).parse());
+    console.log("configDB :: Sucessfully generated the confuse scoreboard (x" + config.confuse + ").");
     const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
-    const currentChanger = Base64.decode(currentDataBase.getParticipants()[0].displayName);
-    if (config.autorecover && getChangers() != toString(currentChanger)) {
-        world.setDynamicProperty("config", toString(currentChanger, 'utf8'));
+    const currentChanger = currentDataBase.getParticipants()[0].displayName;
+    if (config.autorecover && getChangers() != currentChanger) {
+        world.setDynamicProperty("config", currentChanger);
         // Reload the dynamic config
         await initialize();
         if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "a").tra("db.suc").parse());
+        console.log("configDB :: Sucessfully recover the config from database.");
     }
 }
 

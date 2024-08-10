@@ -32,6 +32,10 @@ msgstr "アンチチート設定のチェック:"
 msgid "§gBeta API usage: %s"
 msgstr "§gBeta API の使用: %s"
 
+#: function.check.playerjson
+msgid "§gPlayer.json usage: %s"
+msgstr ""
+
 #: function.check.helpa
 msgid "§7- If the 'Beta API usage' is stated 'FALSE', that's mean the anticheat cannot run the script of the behavior pack."
 msgstr "§7- 「Beta API の使用」が「FALSE」と表示されている場合、アンチチートはビヘイビアーパックのスクリプトを実行できないことを意味します。"
@@ -43,6 +47,10 @@ msgstr "§7- 修正するには、ワールド設定で「Beta API」が有効�
 #: function.check.helpc
 msgid "§7- If it's still not working, please check if your Minecraft version matches the anticheat supported one."
 msgstr "§7- それでも動作しない場合は、Minecraft のバージョンが、このアンチチートがサポートするバージョンと一致しているかどうかを確認してください。"
+
+#: function.check.helpd
+msgid "§7- If the 'Player.json usage' is stated 'FALSE', please make sure you have placed Matrix AntiCheat on the top of your behavior packs."
+msgstr ""
 
 #: function.version.title
 msgid "§gYou are now on version §eV%s"
