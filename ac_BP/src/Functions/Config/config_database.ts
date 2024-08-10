@@ -1,4 +1,4 @@
-import { system, world } from "@minecraft/server";
+import { DisplaySlotId, system, world } from "@minecraft/server";
 import { c, rawstr } from "../../Assets/Util";
 import Index from "../../index";
 import { getChangers, initialize } from "./dynamic_config";
@@ -14,6 +14,9 @@ export async function dataBaseInitialize () {
         allDB.filter((objective) => objective !== trueDB).forEach(({ id }) => {
             world.scoreboard.removeObjective(id);
         })
+        world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, {
+            objective: trueDB!,
+        });
         console.log("configDB :: Cleared " + allDB.length + " database(s).");
         if (!trueDB) {
             if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "c").tra("db.delun").parse());
@@ -34,18 +37,22 @@ export async function dataBaseInitialize () {
     console.log("configDB :: Sucessfully generated the confuse scoreboard (x" + config.confuse + ").");
     const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
     const currentChanger = currentDataBase.getParticipants()[0].displayName;
-    if (config.autorecover && getChangers() != currentChanger) {
+    if (config.autorecover) {
         world.setDynamicProperty("config", currentChanger);
         // Reload the dynamic config
         await initialize();
-        if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "a").tra("db.suc").parse());
+        if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "7").str("(Auto Recover) §g").tra("db.suc").parse());
         console.log("configDB :: Sucessfully recover the config from database.");
+        world.sendMessage(currentChanger);
     }
 }
 
-export function commitChanges () {
-    system.run(() => {
+export function commitChanges (forced: boolean = false) {
+    if (!forced && !c().configDataBase.autoCommit) return;
+    system.run(async () => {
+        await system.waitTicks(10);
         const changers = getChangers();
+        world.sendMessage(getChangers());
         const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
         currentDataBase.removeParticipant(currentDataBase.getParticipants()[0]);
         currentDataBase.setScore(changers, 1);

@@ -47,10 +47,13 @@ export default class Dynamic {
         // a
         // world.sendMessage(`${cypher}\n${dynamic.key}`);
         const plaintext = JSON.parse(cypher) as Changer[];
-        plaintext.splice(
-            plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key)),
-            1
-        );
+        const foundIndex = plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key));
+        if (foundIndex > -1) {
+            plaintext.splice(
+                plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key)),
+                1
+            );
+        };
         plaintext.push({ target: key, value: value });
         world.setDynamicProperty("config", JSON.stringify(plaintext));
         // Reload the dynamic config
