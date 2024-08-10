@@ -1,4 +1,4 @@
-import { DisplaySlotId, system, world } from "@minecraft/server";
+import { /*DisplaySlotId, */system, world } from "@minecraft/server";
 import { c, rawstr } from "../../Assets/Util";
 import Index from "../../index";
 import { getChangers, initialize } from "./dynamic_config";
@@ -14,9 +14,9 @@ export async function dataBaseInitialize () {
         allDB.filter((objective) => objective !== trueDB).forEach(({ id }) => {
             world.scoreboard.removeObjective(id);
         })
-        world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, {
+        /*world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, {
             objective: trueDB!,
-        });
+        });*/
         console.log("configDB :: Cleared " + allDB.length + " database(s).");
         if (!trueDB) {
             if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "c").tra("db.delun").parse());
