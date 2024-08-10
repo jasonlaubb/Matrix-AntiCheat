@@ -1,6 +1,7 @@
-import { world, Player, PlayerSpawnAfterEvent } from "@minecraft/server";
+import { world, Player, PlayerSpawnAfterEvent, system } from "@minecraft/server";
 import { flag } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules";
+import { Action } from "../../Assets/Action";
 
 /**
  * @author jasonlaubb
@@ -14,6 +15,11 @@ async function AntiNameSpoof(config: configi, player: Player, playerName: string
     const absName = matches ? playerName.replace(matches[0], "") : playerName;
     if (absName?.length < 3 || absName?.length > 16) {
         flag(player, "NameSpoof", "A", 0, config.antiNameSpoof.punishment, ["Type" + ":" + "illegalLength", "Length" + ":" + playerName.length]);
+        system.runTimeout(() => {
+            try {
+                Action.tempkick(player);
+            } catch {}
+        }, 5);
         return;
     }
 
@@ -38,7 +44,22 @@ async function AntiNameSpoof(config: configi, player: Player, playerName: string
         //if the player name is illegal, flag the player
         if (illegalName === true) {
             flag(player, "NameSpoof", "B", 0, config.antiNameSpoof.punishment, ["Type" + ":" + "illegalRegax"]);
+            system.runTimeout(() => {
+                try {
+                    Action.tempkick(player);
+                } catch {}
+            }, 5);
+            return;
         }
+    }
+
+    if (playerName.includes("§") || playerName.includes(`'`) || playerName.includes(`"`)) {
+        flag(player, "NameSpoof", "C", 0, config.antiNameSpoof.punishment, ["Type" + ":" + "include special character"]);
+        system.runTimeout(() => {
+            try {
+                Action.tempkick(player);
+            } catch {}
+        }, 5);
     }
 }
 
@@ -49,4 +70,10 @@ registerModule("antiNameSpoof", false, [], {
         const player = event.player;
         AntiNameSpoof(config, player, player.name);
     },
+},{
+    onIntilize: async (config) => {
+        const players = world.getAllPlayers();
+        players.forEach((player) => AntiNameSpoof(config, player, player.name));
+    },
+    runAfterSubsribe: 20,
 });
