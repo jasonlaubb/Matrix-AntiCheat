@@ -14,6 +14,7 @@ registerCommand({
         world.setDynamicProperty("config");
         initialize();
         if (c().configDataBase.autoCommit) {
+            // Commit the reset changes
             commitChanges();
         }
         player.sendMessage(new rawstr().str("§bMatrix §7>§g ").tra("reset.sucess").parse());
