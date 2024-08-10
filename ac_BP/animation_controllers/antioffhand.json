@@ -1,0 +1,29 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+        "controller.animation.offhand": {
+            "initial_state": "default",
+            "states": {
+                "default": {
+                    "transitions": [
+                        {
+                            "switched": "query.is_item_name_any('slot.weapon.offhand', 0, 'minecraft:totem_of_undying') || query.is_item_name_any('slot.weapon.offhand', 0, 'minecraft:shield')"
+                        }
+                    ]
+                },
+                "switched": {
+                    "transitions": [
+                        {
+                            "default": "query.is_item_name_any('slot.weapon.offhand', 0, '')"
+                        }
+                    ],
+                    "on_entry": [
+                        "/event entity @s[tag=moving] matrix:offhand_flag1",
+                        "/event entity @s[tag=attackTime] matrix:offhand_flag2",
+                        "/event entity @s[tag=matrix:container_opened] matrix:offhand_flag3"
+                    ]
+                }
+            }
+        }
+    }
+}

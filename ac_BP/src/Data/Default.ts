@@ -495,6 +495,12 @@ export default {
         punishment: "ban",
         maxVL: 2,
     },
+    antiOffhand: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 0,
+        doUnEquip: true,
+    },
     antiBot: {
         enabled: false,
         punishment: "ban",

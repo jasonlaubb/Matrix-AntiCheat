@@ -506,6 +506,9 @@
                     "target": "self"
                 }
             },
+            "matrix:offhand_flag1": {},
+            "matrix:offhand_flag2": {},
+            "matrix:offhand_flag3": {},
             "minecraft:gain_bad_omen": {
                 "add": {
                     "component_groups": ["minecraft:add_bad_omen"]

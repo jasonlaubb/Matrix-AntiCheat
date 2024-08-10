@@ -1,5 +1,5 @@
 import { c, isAdmin } from "../Assets/Util";
-import { EntityEventOptions, EntityQueryOptions, Player, system, world } from "@minecraft/server";
+import { EntityDataDrivenTriggerEventOptions, EntityEventOptions, EntityQueryOptions, Player, system, world } from "@minecraft/server";
 import Default from "../Data/Default";
 import { sendErr } from "../Functions/chatModel/CommandHandler";
 import Index from "../index";
@@ -164,7 +164,7 @@ interface TickEvent {
 }
 interface WorldEvent {
     worldSignal: any;
-    playerOption?: EntityEventOptions;
+    playerOption?: EntityEventOptions | EntityDataDrivenTriggerEventOptions;
     then: (config: configi, event: any) => Promise<void | number>;
 }
 interface IntilizeEvent {

@@ -1,25 +1,48 @@
-import { EquipmentSlot, Player } from "@minecraft/server";
-import { MinecraftItemTypes } from "@minecraft/vanilla-data";
-import { registerModule } from "../Modules";
+import { DataDrivenEntityTriggerAfterEvent, EquipmentSlot, Player, world } from "@minecraft/server";
+import { configi, registerModule } from "../Modules";
+import { isAdmin, isSpawning, Type, flag } from "../../Assets/Util";
 
-const antiOffHandData = new Map<string, string[]>();
-function antiOffhand(player: Player) {
-    const lastArmorShot: string[] = antiOffHandData.get(player.id) ?? new Array(20).fill("minecraft:air");
-    const armorShot = player.getComponent("equippable")?.getEquipment(EquipmentSlot.Offhand) ?? { typeId: "minecraft:air" };
-    lastArmorShot.shift();
-    lastArmorShot.push(armorShot.typeId);
-    if (armorShot.typeId != MinecraftItemTypes.Shield && armorShot.typeId != MinecraftItemTypes.TotemOfUndying) {
-        antiOffHandData.set(player.id, lastArmorShot);
-        return;
+const toFlagInfo = {
+    "matrix:offhand_flag1": {
+        set: "Moving",
+        type: "A",
+    },
+    "matrix:offhand_flag2": {
+        set: "Attacking",
+        type: "B",
+    },
+    "matrix:offhand_flag3": {
+        set: "ContainerOpened",
+        type: "C",
+    },
+} as { [key: string]: OffHandToFlagInfo }
+async function antiOffHand (config: configi,{ entity: player, eventId }: DataDrivenEntityTriggerAfterEvent) {
+    if (isAdmin(player as Player) || isSpawning(player as Player)) return;
+    const { set, type } = toFlagInfo[eventId];
+    const equipComp = player.getComponent("equippable")!;
+    const armorSlot = equipComp.getEquipment(EquipmentSlot.Offhand);
+    if (!armorSlot || armorSlot.typeId != "minecraft:totem_of_undying" && armorSlot.typeId != "minecraft:shield") return;
+    flag(player as Player, "Offhand", type, config.antiOffhand.maxVL, config.antiOffhand.punishment, ["Type" + ":" + set]);
+    if (config.antiOffhand.doUnEquip) { 
+        // Unequip the item
+        equipComp.setEquipment(EquipmentSlot.Offhand);
+        player.getComponent("inventory")!.container!.addItem(armorSlot);
     }
-    onPlayerEquip;
 }
 
-function onPlayerEquip(_player: Player) {}
-
-registerModule("antiOffHand", false, [], {
-    tickInterval: 1,
-    intick: async (_config, player) => {
-        antiOffhand(player);
+registerModule("antiOffhand", false, [], {
+    worldSignal: world.afterEvents.dataDrivenEntityTrigger,
+    playerOption: {
+        entityTypes: ["minecraft:player"],
+        eventTypes: [
+            "matrix:offhand_flag1",
+            "matrix:offhand_flag2",
+            "matrix:offhand_flag3",
+        ],
     },
-});
+    then: antiOffHand
+})
+interface OffHandToFlagInfo {
+    set: string,
+    type: Type,
+}

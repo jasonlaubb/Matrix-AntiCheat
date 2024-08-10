@@ -1,8 +1,8 @@
-import { world, system, PlayerPlaceBlockAfterEvent, Vector3 } from "@minecraft/server";
+import { world, system, PlayerPlaceBlockAfterEvent, Vector3, Player, Block } from "@minecraft/server";
 import { flag, isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
-import { DisableTags } from "../../Data/EnumData";
+import { AnimationControllerTags, DisableTags } from "../../Data/EnumData";
 
 /**
  * @author jasonlaubb & RaMiGamerDev
@@ -126,7 +126,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             if (!diagScaffold || now - data.lastPlace > 500) data.scaffoldFlags = 0;
             if (now - data.lastPlace > 8000) data.scaffoldFlags2 = 0;
             //scaffold/F: check for unnatural rotating head with placing  blocks
-            if (now - data.lastPlace < 200 && now - data.lastPlace >= 100 && Math.abs(data.lastXRot - rotation.x) > 10 && !diagScaffold) {
+            if (now - data.lastPlace < 200 && now - data.lastPlace >= 100 && Math.abs(data.lastXRot - rotation.x) > 10 && !diagScaffold && player.hasTag(AnimationControllerTags.moving)) {
                 data.scaffoldFlagsF++;
                 if (data.scaffoldFlagsF >= 3) {
                     flag(player, "Scaffold", "F", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
@@ -178,14 +178,25 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         detected = true;
         flag(player, "Scaffold", "I", config.antiScaffold.maxVL, config.antiScaffold.punishment, undefined);
     }
+    if (!player.hasTag(AnimationControllerTags.attackTime) && !detected) {
+        system.run(() => {
+            if (!player.hasTag(AnimationControllerTags.attackTime)) {
+                flag(player, "Scaffold", "J", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
+                detectedAction(config, player, block);
+            }
+        })
+    }
     data.lastX = x;
     data.lastZ = z;
     data.lastPlace = now;
     if (detected) {
-        block.setType(MinecraftBlockTypes.Air);
-        player.addTag(DisableTags.place);
-        system.runTimeout(() => player.removeTag(DisableTags.place), config.antiScaffold.timeout);
+        detectedAction(config, player, block);
     }
+}
+function detectedAction (config: configi, player: Player, block: Block) {
+    block.setType(MinecraftBlockTypes.Air);
+    player.addTag(DisableTags.place);
+    system.runTimeout(() => player.removeTag(DisableTags.place), config.antiScaffold.timeout);
 }
 function calculateAngle(pos1: Vector3, pos2: Vector3, rotation = -90) {
     let angle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / Math.PI - rotation - 90;
