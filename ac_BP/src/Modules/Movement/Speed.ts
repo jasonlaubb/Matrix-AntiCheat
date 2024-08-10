@@ -24,6 +24,7 @@ interface Speeddata {
     blockMovementLoop: number[];
     lastLocation: Vector3;
     lastRiding: number;
+    lastFlag: number;
 }
 const speeddata = new Map<string, Speeddata>();
 
@@ -45,6 +46,7 @@ async function AntiSpeed(config: configi, player: Player) {
             blockMovementLoop: [],
             lastLocation: player.location,
             lastRiding: 0,
+            lastFlag: 0,
         } as Speeddata);
     // define cool things
     const { x, z } = player.getVelocity();
@@ -94,12 +96,14 @@ async function AntiSpeed(config: configi, player: Player) {
         data.flagNumber++;
         data.lastReset = now;
         // Teleport the player to last position
-        freezeTeleport(player, safePos);
         // Minimum time given to flag
         if (now - data.firstTrigger < data.currentFlagCombo) {
             if (data.flagNumber > config.antiSpeed.maxFlagInDuration) {
+                freezeTeleport(player, safePos);
                 data.currentFlagCombo += config.antiSpeed.flagDurationIncrase;
                 flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);
+            } else {
+                player.teleport(safePos);
             }
         } else {
             delete data.currentFlagCombo;
@@ -130,10 +134,17 @@ async function AntiSpeed(config: configi, player: Player) {
         const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7; // Test from Prax client (flying)
         // Speed/B - Check if player has illegal motion frequency
         const flagCondition = normalMotionFlag || highMotionFlag || flyMotionFlag;
-        if (!bypassMovementCheck(player) && !illegalEffect && notSpikeLagging && now - data.lastRiding > 3500 && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
-            flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
+        const isNearlyReset = data.lastReset && now - data.lastReset < 6000;
+        if (!bypassMovementCheck(player) && !isNearlyReset && !illegalEffect && notSpikeLagging && now - data.lastRiding > 3500 && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
+            const lastflag = data.lastFlag;
+            data.lastFlag = now;
+            if (now - lastflag < 10000) {
+                freezeTeleport(player, safePos);
+                flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
+            } else {
+                player.teleport(safePos);
+            }
             data.blockMovementLoop = [];
-            freezeTeleport(player, safePos);
         }
     }
     // finally saving last xz velocity
