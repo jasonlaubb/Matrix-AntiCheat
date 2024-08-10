@@ -9,6 +9,7 @@
             "scripts": {
                 "animate": [
                     "everytick",
+                    "offhand",
                     "may_fly",
                     "alive",
                     "gliding",
@@ -35,6 +36,7 @@
             },
             "animations": {
                 "everytick": "animation.everytick",
+                "offhand": "controller.animation.offhand",
                 "may_fly": "controller.animation.may_fly",
                 "alive": "controller.animation.alive",
                 "attack_time": "controller.animation.attack_time",
@@ -224,8 +226,7 @@
                                         "value": "matrix:impeccable"
                                     }
                                 ]
-                            },
-                            
+                            },                            
                             {
                                 "all_of": [
                                     {
