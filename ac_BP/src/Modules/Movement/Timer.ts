@@ -1,5 +1,5 @@
 import { Player, Vector3 } from "@minecraft/server";
-import { bypassMovementCheck, flag } from "../../Assets/Util.js";
+import { bypassMovementCheck, c, flag } from "../../Assets/Util.js";
 import { isSpikeLagging, tps } from "../../Assets/Public.js";
 import { configi, registerModule } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
@@ -11,12 +11,14 @@ interface timerData {
         location: Vector3;
         recordTime: number;
     };
+    lastTickPos: Vector3;
     maxDBVD: number;
     xzLog: number;
     disLog: number;
     timerLog: number;
     yLog: number;
     yDisLog: number;
+    lastHighTeleport: number;
 }
 const timerData = new Map<string, timerData>();
 /** @description Return that player is spike lagging */
@@ -37,7 +39,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
     if ((dBVD < data.maxDBVD && dBVD > 20 / (tps.getTps()! * 2)) || (dBVD2 < data.maxDBVD && dBVD2 > 20 / (tps.getTps()! * 2))) data.timerLog++;
     else data.timerLog = 0;
     //flag time if dBVD is greater than 1 blocks or timerLog reach 3 (low timer will flag in 3 secs probably but maybe i will downgrade the max from 1 to 1 after make sure no falses)
-    if ((!bypassMovementCheck(player) && (dBVD > data.maxDBVD || dBVD2 > data.maxDBVD) && now - data.lastFlag >= 1025) || data.timerLog >= config.antiTimer.minTimerLog) {
+    if (!bypassMovementCheck(player) && now - data.lastHighTeleport >= config.antiTimer.tickMovementCooldown && (((dBVD > data.maxDBVD || dBVD2 > data.maxDBVD) && now - data.lastFlag >= 1025) || data.timerLog >= config.antiTimer.minTimerLog)) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - data.lastFlag;
         //if the dBLFN is lower than the given value flag
@@ -63,6 +65,11 @@ export async function SystemEvent(player: Player, now: number) {
     const locdata = data.locationData ?? { location: player.location, recordTime: now };
     //skip the code for for some reasons
     data.locationData = { location: player.location, recordTime: now };
+    data.lastHighTeleport ??= 0;
+    data.lastTickPos ??= player.location;
+    const distance = Math.hypot(player.location.x - data.lastTickPos.x, player.location.z - data.lastTickPos.z);
+    data.lastTickPos = player.location;
+    if (distance > c().antiTimer.maxTickMovment) data.lastHighTeleport = now;
     //just defineing everything we need
     const { x: x1, y: y1, z: z1 } = player.location;
     const { x: x2, y: y2, z: z2 } = locdata.location;

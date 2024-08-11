@@ -368,6 +368,8 @@ export default {
         punishment: "tempkick",
         maxVL: 5,
         minTimerLog: 3,
+        maxTickMovment: 64,
+        tickMovementCooldown: 8000,
     },
     antiNuker: {
         enabled: true,
