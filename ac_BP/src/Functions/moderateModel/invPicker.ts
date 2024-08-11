@@ -1,6 +1,5 @@
 import { world, EquipmentSlot, Player, ItemStack, Entity } from "@minecraft/server";
 
-
 function fetchInventory (entity: Entity): ItemStack[] {
   const container = entity.getComponent('inventory')!.container!;
   let inventory = Array.from({ length: container.size }, (_, i) => container.getItem(i) || { typeId: 'air' } as unknown as ItemStack);
@@ -162,6 +161,12 @@ function syncEntities () {
     });
 }
 
+/**
+ * @author r4isen1920
+ * @link https://github.com/r4isen1920/InvSee/
+ * @license MIT
+ * @rewrite by jasonlaubb
+ */
 function invOfPlayer (player: Player, sourcePlayer: Player): void {
     // Stop player riding.
     stopRiding(player);
