@@ -1,5 +1,5 @@
 import { registerCommand, isPlayer, verifier } from "../../CommandHandler";
-import { c } from "../../../../Assets/Util";
+import { c, rawstr } from "../../../../Assets/Util";
 import { projectPlayerInventory } from "../../../moderateModel/invPicker";
 
 registerCommand({
@@ -12,6 +12,7 @@ registerCommand({
     require: (player) => verifier(player, c().commands.invof),
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
+        player.sendMessage(new rawstr(true, "g").tra("invof.open").parse());
         // Open the inventory for the player
         projectPlayerInventory(target, player);
     },
