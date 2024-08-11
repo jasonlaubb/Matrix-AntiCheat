@@ -323,12 +323,12 @@ export default {
         enabled: true,
         maxReach: 4.21,
         maxYReach: 4.8,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 3,
     },
     antiFly: {
         enabled: true,
-        punishment: "ban",
+        punishment: "tempkick",
         highVelocity: 0.7,
         maxGroundPrviousVelocity: 0.5,
         maxHighVelocity: 22,
@@ -386,7 +386,7 @@ export default {
         factor: 1,
         minRotation: 20,
         maxBPS: 5,
-        punishment: "kick",
+        punishment: "ban",
         maxVL: 4,
     },
     antiNoSlow: {

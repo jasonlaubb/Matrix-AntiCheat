@@ -106,7 +106,7 @@ function setup(config: configi, element: Module) {
                 wE.then(currentConfig, event).catch((error) => {
                     sendErr(error);
                 });
-            });
+            }, wE.playerOption);
         }
     }
     element.runId = runIds;
