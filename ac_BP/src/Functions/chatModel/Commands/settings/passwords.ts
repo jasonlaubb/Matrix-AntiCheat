@@ -20,8 +20,8 @@ registerCommand({
         const correctPassword = config.commands.passwordSetting.usingHash ? SHA256(config.commands.passwordSetting.hash).toString() : config.commands.passwordSetting.password;
         if (oldPassword != correctPassword) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "passwords.wrong", with: [] });
         sendRawText(world, { text: "§bMatrix §7>§g " }, { translate: "passwords.changed", with: [] });
-        
-        if ((!args[2] || args[2] == "true") || (config.commands.passwordSetting.usingHash && args[2] == "false")) {
+
+        if (!args[2] || args[2] == "true" || (config.commands.passwordSetting.usingHash && args[2] == "false")) {
             Dynamic.set(["commands", "passwordSetting", "hash"], SHA256(newPassword).toString());
             Dynamic.set(["commands", "passwordSetting", "usingHash"], true);
             Dynamic.delete(["commands", "passwordSetting", "password"]);

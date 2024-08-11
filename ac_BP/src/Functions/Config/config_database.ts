@@ -1,33 +1,35 @@
-import { /*DisplaySlotId, */system, world } from "@minecraft/server";
+import { /*DisplaySlotId, */ system, world } from "@minecraft/server";
 import { c, rawstr } from "../../Assets/Util";
 import Index from "../../index";
 import { getChangers, initialize } from "./dynamic_config";
 
 let trueDBId: string;
-export async function dataBaseInitialize () {
+export async function dataBaseInitialize() {
     const config = c().configDataBase;
     const mark = config.mark;
     const allDB = world.scoreboard.getObjectives().filter((objective) => objective?.displayName === mark);
     if (!Index.initialized) return;
     if (allDB.length > 0) {
         const trueDB = allDB.find((objective) => objective.getScore(objective.getParticipants()[0]!.displayName)! == 1);
-        allDB.filter((objective) => objective !== trueDB).forEach(({ id }) => {
-            world.scoreboard.removeObjective(id);
-        })
+        allDB
+            .filter((objective) => objective !== trueDB)
+            .forEach(({ id }) => {
+                world.scoreboard.removeObjective(id);
+            });
         /*world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, {
             objective: trueDB!,
         });*/
         console.log("configDB :: Cleared " + allDB.length + " database(s).");
         if (!trueDB) {
             if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "c").tra("db.delun").parse());
-            console.log("configDB :: Failed to find the database from the world.")
+            console.log("configDB :: Failed to find the database from the world.");
         } else {
             trueDBId = trueDB.id;
         }
     } else {
         const name = "matrix:" + randomString(config.hashlength);
         const newObj = world.scoreboard.addObjective(name, mark);
-        const stringGiven = getChangers()
+        const stringGiven = getChangers();
         newObj.setScore(stringGiven, 1);
         trueDBId = newObj.id;
     }
@@ -47,7 +49,7 @@ export async function dataBaseInitialize () {
     }
 }
 
-export function commitChanges (forced: boolean = false) {
+export function commitChanges(forced: boolean = false) {
     if (!forced && !c().configDataBase.autoCommit) return;
     system.run(async () => {
         await system.waitTicks(10);
@@ -56,10 +58,10 @@ export function commitChanges (forced: boolean = false) {
         const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
         currentDataBase.removeParticipant(currentDataBase.getParticipants()[0]);
         currentDataBase.setScore(changers, 1);
-    })
+    });
 }
 
-export async function recoverChanges () {
+export async function recoverChanges() {
     const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
     const currentChanger = currentDataBase.getParticipants()[0].displayName;
     world.setDynamicProperty("config", currentChanger);
@@ -68,9 +70,9 @@ export async function recoverChanges () {
     console.log("configDB :: Sucessfully recover the config from database.");
 }
 
-function randomString (length: number) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function randomString(length: number) {
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -79,7 +81,7 @@ function randomString (length: number) {
 }
 
 // Generate something that is confuse!
-function* confuseGenerator (confuse: number, mark: string) {
+function* confuseGenerator(confuse: number, mark: string) {
     // Random generate some fake things
     if (confuse > 0) {
         for (let i = 0; i < confuse; i++) {
@@ -87,7 +89,7 @@ function* confuseGenerator (confuse: number, mark: string) {
                 const newObj = world.scoreboard.addObjective("matrix:" + randomString(32), mark);
                 newObj.setScore(randomString(32), 0);
                 yield;
-            } catch { 
+            } catch {
                 i--;
             }
         }

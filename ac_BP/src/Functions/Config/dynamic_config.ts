@@ -24,7 +24,7 @@ export async function initialize() {
     return;
 }
 
-export function getChangers () {
+export function getChangers() {
     return world.getDynamicProperty("config") as string;
 }
 export default class Dynamic {
@@ -53,7 +53,7 @@ export default class Dynamic {
                 plaintext.findIndex((changer) => JSON.stringify(changer.target) == JSON.stringify(key)),
                 1
             );
-        };
+        }
         plaintext.push({ target: key, value: value });
         world.setDynamicProperty("config", JSON.stringify(plaintext));
         // Reload the dynamic config

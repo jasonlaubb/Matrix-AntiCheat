@@ -185,14 +185,14 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
                 await system.waitTicks(1);
                 if (player.hasTag(AnimationControllerTags.attackTime)) {
                     hasAttackTime = true;
-                    break
+                    break;
                 }
             }
             if (!hasAttackTime) {
                 flag(player, "Scaffold", "J", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
                 detectedAction(config, player, block);
             }
-        })
+        });
     }
     data.lastX = x;
     data.lastZ = z;
@@ -201,7 +201,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         detectedAction(config, player, block);
     }
 }
-function detectedAction (config: configi, player: Player, block: Block) {
+function detectedAction(config: configi, player: Player, block: Block) {
     block.setType(MinecraftBlockTypes.Air);
     player.addTag(DisableTags.place);
     system.runTimeout(() => player.removeTag(DisableTags.place), config.antiScaffold.timeout);

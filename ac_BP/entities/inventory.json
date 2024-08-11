@@ -2,16 +2,18 @@
   "format_version": "1.18.30",
   "minecraft:entity": {
     "description": {
-      "identifier": "matrix:inventory",
-      "is_experimental": false,
-      "is_summonable": true,
-      "is_spawnable": false
+      "identifier": "r4isen1920_invsee:inventory",
+
+      "is_summonable": true
     },
 
     "component_groups": {
-        "matrix:instant_despawn": {
-            "minecraft:instant_despawn": {}
+
+      "r4isen1920_invsee:instant_despawn": {
+        "minecraft:instant_despawn": {
         }
+      }
+
     },
 
     "components": {
@@ -106,7 +108,7 @@
                 }
               ]
             },
-            "event": "matrix:instant_despawn"
+            "event": "r4isen1920_invsee:instant_despawn"
           }
         ]
       }
@@ -114,9 +116,9 @@
 
     "events": {
 
-      "matrix:instant_despawn": {
+      "r4isen1920_invsee:instant_despawn": {
         "add": {
-          "component_groups": [ "matrix:instant_despawn" ]
+          "component_groups": [ "r4isen1920_invsee:instant_despawn" ]
         }
       }
 

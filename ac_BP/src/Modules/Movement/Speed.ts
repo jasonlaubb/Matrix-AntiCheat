@@ -135,7 +135,16 @@ async function AntiSpeed(config: configi, player: Player) {
         // Speed/B - Check if player has illegal motion frequency
         const flagCondition = normalMotionFlag || highMotionFlag || flyMotionFlag;
         const isNearlyReset = data.lastReset && now - data.lastReset < 6000;
-        if (!bypassMovementCheck(player) && !isNearlyReset && !illegalEffect && notSpikeLagging && now - data.lastRiding > 3500 && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
+        if (
+            !bypassMovementCheck(player) &&
+            !isNearlyReset &&
+            !illegalEffect &&
+            notSpikeLagging &&
+            now - data.lastRiding > 3500 &&
+            flagCondition &&
+            (!data?.lastAttack || now - data.lastAttack > 3000) &&
+            (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)
+        ) {
             const lastflag = data.lastFlag;
             data.lastFlag = now;
             if (now - lastflag < 10000) {

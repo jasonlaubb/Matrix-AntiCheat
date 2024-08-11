@@ -21,6 +21,15 @@
           "size": [ "100%c", "100%cm" ],
 
           "controls": [
+            /*
+              // We will just ignore this for now because I hate languages (in a good way) //
+                {
+                  "addendum_label@r4isen1920_invsee_inventory.label": {
+                    "text": "gui.invsee.containerTitle",
+                    "ignored": "(not $use_custom_screen)"
+                  }
+                },
+            */
             {
               "base_label@r4isen1920_invsee_inventory.label": {
                 "text": "$new_custom_name"
@@ -68,6 +77,8 @@
         "value": [
           {
             /* Both pocket and desktop will use this */
+
+            //** _r4ui:inventory:aaaaa:
             "requires": "(not ($container_name - '_r4ui:inventory:' = $container_name))",
 
             "$screen_content": "chest.large_chest_panel",

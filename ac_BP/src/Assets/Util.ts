@@ -284,7 +284,7 @@ function isTimeStr(timeStr: string) {
 }
 
 // Don't delete this, very important
-function c () {
+function c() {
     Dynamic;
     return Dynamic.config();
 }

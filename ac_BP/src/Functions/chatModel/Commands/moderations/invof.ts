@@ -1,6 +1,6 @@
 import { registerCommand, isPlayer, verifier } from "../../CommandHandler";
 import { c } from "../../../../Assets/Util";
-import { invOfPlayer } from "../../../moderateModel/invPicker";
+import { projectPlayerInventory } from "../../../moderateModel/invPicker";
 
 registerCommand({
     name: "invof",
@@ -13,6 +13,6 @@ registerCommand({
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
         // Open the inventory for the player
-        invOfPlayer(target, player);
+        projectPlayerInventory(target, player);
     },
 });

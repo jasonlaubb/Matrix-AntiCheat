@@ -32,7 +32,7 @@ registerCommand(
             const now = Date.now();
             recoverChanges().then(() => {
                 player.sendMessage(new rawstr(true, "g").tra("configdb.recover", (Date.now() - now).toString()).parse());
-            })
+            });
         },
     },
     {
