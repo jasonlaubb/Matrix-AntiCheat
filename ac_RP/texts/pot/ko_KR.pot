@@ -756,6 +756,22 @@ msgstr ""
 msgid "The data of the backup has been deleted unexpectedly."
 msgstr ""
 
+#: configdb.autocommit
+msgid "Please disable auto-commit to use this command."
+msgstr ""
+
+#: configdb.autorecover
+msgid "Auto recover is enabled, please disable it to use this command."
+msgstr ""
+
+#: configdb.commit
+msgid "Sucessfully commit the changes to config database"
+msgstr ""
+
+#: configdb.recover
+msgid "Sucessfully recover the data of config from config database"
+msgstr ""
+
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
 msgstr ""

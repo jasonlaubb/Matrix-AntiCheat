@@ -2,6 +2,12 @@
 
 This pages describes how to use the commands of Matrix AntiCheat.
 
+- `<prefix>` defaultly is `-`.
+- `<arg>` means that the argument is required.
+- `[arg]` means that the argument is optional.
+- `[arg] ... [arg]` means that the argument can be repeated infinitely.
+- `...` means that it's a no argument subcommand.`
+
 # Helps commands
 
 Command about helps. Let you know how to use the anticheat.
@@ -155,6 +161,18 @@ See the inventory of a player.
 Args: `invsee <player>`
 
 Example: `<prefix>invsee steve`
+
+# Invof
+
+- Description
+
+Get the inventory of a player.
+
+- Usage
+
+Args: `invof <player>`
+
+Example: `<prefix>invof steve`
 
 # Mute
 
@@ -359,6 +377,24 @@ Example4: `<prefix>config set array otherPrefix "?","!"`
 !> This command can throw
 
 !> This command may contain some bugs
+
+# Configdb
+
+- Description
+
+Set the config database.
+
+- Usage
+
+Args1: `configdb commit`
+
+Args2: `configdb recover`
+
+Args3: `configdb clear`
+
+Args4: `configdb delete`
+
+Example: `<prefix>configdb ...`
 
 # Defaultrank
 
