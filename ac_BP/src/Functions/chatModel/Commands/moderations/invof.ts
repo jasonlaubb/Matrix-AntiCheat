@@ -3,7 +3,7 @@ import { c } from "../../../../Assets/Util";
 import { invOfPlayer } from "../../../moderateModel/invPicker";
 
 registerCommand({
-    name: "invsee",
+    name: "invof",
     description: "View the item inside a player's inventory",
     parent: false,
     maxArgs: 1,

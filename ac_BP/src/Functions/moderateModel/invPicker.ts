@@ -188,7 +188,7 @@ function invOfPlayer (player: Player, sourcePlayer: Player): void {
       else continue;
     }
   
-    // sourcePlayer.runCommand(`ride @s start_riding @e[type=matrix:inventory,c=1] teleport_ride`);
+    sourcePlayer.runCommand(`ride @s start_riding @e[type=matrix:inventory,c=1] teleport_ride`);
     entityProjector.getComponent('rideable')!.addRider(sourcePlayer);
     entityProjector.addTag('invsee');
     entityProjector.setDynamicProperty('invsee:target', player.id);

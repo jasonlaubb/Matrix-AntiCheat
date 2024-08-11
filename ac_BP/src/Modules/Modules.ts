@@ -110,13 +110,20 @@ function setup(config: configi, element: Module) {
                 });
             } else {
                 try {
-                wE.worldSignal.subscribe((event: any) => {
+                    wE.worldSignal.subscribe((event: any) => {
                     const currentConfig = c();
                     wE.then(currentConfig, event).catch((error) => {
                         sendErr(error);
                     });
-                }, wE.playerOption);
-            } catch {world.sendMessage(element.id)}
+                    }, wE.playerOption);
+                } catch {
+                    wE.worldSignal.subscribe((event: any) => {
+                        const currentConfig = c();
+                        wE.then(currentConfig, event).catch((error) => {
+                            sendErr(error);
+                        });
+                    });
+                }
             }
         }
     }
