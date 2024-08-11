@@ -128,7 +128,9 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
                 const trueOnGround = Math.abs(y) < 1.75 && player.isJumping;
                 const staticOnGround = y == 0 && player.isOnGround;
                 if (trueOnGround || staticOnGround) {
-                    flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
+                    if (!player.lastBreakSolid || now - player.lastBreakSolid > 5000) {
+                        flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
+                    }
                 } else if (!player.hasTag(AnimationControllerTags.riding)) {
                     flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
                 }
