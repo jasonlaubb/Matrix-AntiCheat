@@ -772,6 +772,10 @@ msgstr ""
 msgid "Sucessfully recover the data of config from config database"
 msgstr ""
 
+#: invof.open
+msgid "Close the chat and open the inventory to manage the inventory of the selected player."
+msgstr ""
+
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
 msgstr ""
