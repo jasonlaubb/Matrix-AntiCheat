@@ -96,5 +96,5 @@ async function AntiNoSlow(player: Player, config: configi, now: number) {
 registerModule("antiNoSlow", false, [lastPosition, lastflag, lastflag2], {
     intick: async (config, player) => AntiNoSlow(player, config, Date.now()),
     tickInterval: 1,
-    playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
+    tickOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
 });

@@ -71,7 +71,7 @@ registerModule(
     [fallDistances],
     {
         tickInterval: 1,
-        playerOption: { excludeGameModes: [GameMode.spectator] },
+        tickOption: { excludeGameModes: [GameMode.spectator] },
         intick: async (config, player) => ElytraFly(player, Date.now(), config),
     },
     {

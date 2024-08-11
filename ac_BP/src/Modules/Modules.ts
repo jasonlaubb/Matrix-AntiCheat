@@ -84,7 +84,7 @@ function setup(config: configi, element: Module) {
                 system.runInterval(() => {
                     const currentConfig = c();
                     if (tE?.intick) {
-                        let allPlayers = tE?.playerOption ? world.getPlayers(tE.playerOption) : world.getAllPlayers();
+                        let allPlayers = tE?.tickOption ? world.getPlayers(tE.tickOption) : world.getAllPlayers();
                         if (!element.checkAdmin) allPlayers = allPlayers.filter((player) => !isAdmin(player));
                         for (const player of allPlayers) {
                             tE.intick(currentConfig, player).catch((error) => {
@@ -101,12 +101,23 @@ function setup(config: configi, element: Module) {
             );
         }
         for (const wE of element?.worldEvent ?? []) {
-            wE.worldSignal.subscribe((event: any) => {
-                const currentConfig = c();
-                wE.then(currentConfig, event).catch((error) => {
-                    sendErr(error);
+            if (wE?.playerOption) {
+                wE.worldSignal.subscribe((event: any) => {
+                    const currentConfig = c();
+                    wE.then(currentConfig, event).catch((error) => {
+                        sendErr(error);
+                    });
                 });
-            }, wE.playerOption);
+            } else {
+                try {
+                wE.worldSignal.subscribe((event: any) => {
+                    const currentConfig = c();
+                    wE.then(currentConfig, event).catch((error) => {
+                        sendErr(error);
+                    });
+                }, wE.playerOption);
+            } catch {world.sendMessage(element.id)}
+            }
         }
     }
     element.runId = runIds;
@@ -160,7 +171,7 @@ interface TickEvent {
     tickInterval: number;
     intick?: (config: configi, player: Player) => Promise<void | number>;
     onTick?: (_config: configi) => Promise<void | number>;
-    playerOption?: EntityQueryOptions;
+    tickOption?: EntityQueryOptions;
 }
 interface WorldEvent {
     worldSignal: any;

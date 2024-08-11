@@ -31,7 +31,7 @@ registerCommand(
             if (config.configDataBase.autorecover) return player.sendMessage(new rawstr(true, "c").tra("configdb.autorecover").parse());
             const now = Date.now();
             recoverChanges().then(() => {
-                player.sendMessage(new rawstr(true, "g").tra("configdb.recover", Date.now() - now).parse());
+                player.sendMessage(new rawstr(true, "g").tra("configdb.recover", (Date.now() - now).toString()).parse());
             })
         },
     },

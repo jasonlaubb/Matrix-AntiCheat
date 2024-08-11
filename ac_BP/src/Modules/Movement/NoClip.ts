@@ -191,7 +191,7 @@ registerModule(
     [noclipdata],
     {
         tickInterval: 1,
-        playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
+        tickOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
         intick: async (config, player) => AntiNoClip(player, config, Date.now()),
     },
     {

@@ -69,7 +69,7 @@ registerModule(
     [lastLocation, lastFlag, playerVL],
     {
         tickInterval: 1,
-        playerOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
+        tickOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
         intick: async (config, player) => {
             AntiNoFall(player, config, Date.now());
         },
