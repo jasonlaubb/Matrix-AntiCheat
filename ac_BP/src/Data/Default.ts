@@ -162,6 +162,11 @@ export default {
             adminOnly: true,
             requireTag: [],
         },
+        invof: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
         echestwipe: {
             enabled: true,
             adminOnly: true,

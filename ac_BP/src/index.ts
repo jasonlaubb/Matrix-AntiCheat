@@ -69,6 +69,7 @@ class MatrixAnti_MCPE {
         await import("./Functions/moderateModel/dimensionLock");
         await import("./Functions/moderateModel/lockDown");
         await import("./Functions/moderateModel/log");
+        Minecraft.system.runInterval(syncEntities, 1);
         // Register commands
         await import("./Functions/chatModel/Commands/helps/about");
         await import("./Functions/chatModel/Commands/helps/help");
@@ -88,6 +89,7 @@ class MatrixAnti_MCPE {
         await import("./Functions/chatModel/Commands/moderations/unfreeze");
         await import("./Functions/chatModel/Commands/moderations/invsee");
         await import("./Functions/chatModel/Commands/moderations/invcopy");
+        await import("./Functions/chatModel/Commands/moderations/invof");
         await import("./Functions/chatModel/Commands/moderations/vanish");
         await import("./Functions/chatModel/Commands/moderations/unvanish");
         await import("./Functions/chatModel/Commands/moderations/warn");
@@ -184,3 +186,4 @@ import { initialize } from "./Functions/Config/dynamic_config";
 import { intilizeModules } from "./Modules/Modules";
 import Dynamic from "./Functions/Config/dynamic_config";
 import { dataBaseInitialize } from "./Functions/Config/config_database";
+import { syncEntities } from "./Functions/moderateModel/invPicker";
