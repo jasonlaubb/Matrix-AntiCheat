@@ -129,7 +129,7 @@ async function AntiSpeed(config: configi, player: Player) {
         const falsePositives = data.blockMovementLoop.filter((x) => x == -1).length / loopLength;
         const trueNegatives = data.blockMovementLoop.filter((x) => x == 0).length / loopLength;
         // player.onScreenDisplay.setActionBar(`++${truePositives.toFixed(5)} | -+${falsePositives.toFixed(5)} | +-${trueNegatives.toFixed(5)}`);
-        const normalMotionFlag = truePositives > 0.034 && truePositives <= 0.1 && falsePositives < 0.19 && trueNegatives > 0.8 && trueNegatives < 0.96; // Common motion
+        const normalMotionFlag = truePositives > 0.05 && truePositives <= 0.1 && falsePositives < 0.19 && trueNegatives > 0.8 && trueNegatives < 0.96; // Common motion
         const highMotionFlag = truePositives > 0.16 && truePositives <= 0.2 && falsePositives < 0.6 && trueNegatives > 0.78; // Test from Prax client (speed)
         const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7; // Test from Prax client (flying)
         // Speed/B - Check if player has illegal motion frequency

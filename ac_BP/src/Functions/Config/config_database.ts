@@ -43,7 +43,7 @@ export async function dataBaseInitialize () {
         await initialize();
         if (config.sendDataBaseMessage) world.sendMessage(new rawstr(true, "7").str("(Auto Recover) §g").tra("db.suc").parse());
         console.log("configDB :: Sucessfully recover the config from database.");
-        world.sendMessage(currentChanger);
+        //world.sendMessage(currentChanger);
     }
 }
 
@@ -57,6 +57,15 @@ export function commitChanges (forced: boolean = false) {
         currentDataBase.removeParticipant(currentDataBase.getParticipants()[0]);
         currentDataBase.setScore(changers, 1);
     })
+}
+
+export async function recoverChanges () {
+    const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
+    const currentChanger = currentDataBase.getParticipants()[0].displayName;
+    world.setDynamicProperty("config", currentChanger);
+    // Reload the dynamic config
+    await initialize();
+    console.log("configDB :: Sucessfully recover the config from database.");
 }
 
 function randomString (length: number) {
