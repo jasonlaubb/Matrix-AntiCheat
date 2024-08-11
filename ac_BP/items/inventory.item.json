@@ -1,0 +1,47 @@
+{
+  "format_version": "1.20.50",
+  "minecraft:item": {
+    "description": {
+      "identifier": "matrix:inventory",
+      "menu_category": {
+        "category": "items",
+        "is_hidden_in_commands": false
+      }
+    },
+
+    "components": {
+      "minecraft:icon": {
+        "texture": "stick"
+      },
+      "minecraft:display_name": {
+        "value": "Inventory Item"
+      },
+
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:hand_equipped": {
+        "value": true
+      },
+      "minecraft:hover_text_color": {
+        "value": "gold"
+      },
+
+      "minecraft:max_stack_size": 64,
+
+      "minecraft:food": {
+        "can_always_eat": true,
+        "nutrition": 0,
+        "saturation_modifier": 0.0
+      },
+      "minecraft:use_modifiers": {
+        "movement_modifier": 1,
+        "use_duration": 1
+      },
+      "minecraft:use_animation": {
+        "value": "bow"
+      }
+
+    }
+  }
+}

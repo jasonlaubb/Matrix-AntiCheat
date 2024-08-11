@@ -1,0 +1,126 @@
+{
+  /* created by r4isen1920 | MIT License */
+
+
+  "namespace": "r4isen1920_invsee_inventory",
+
+  "label": {
+    "type": "label",
+    "size": [ "default", "default" ],
+    "max_size": [ "default", 16 ],
+    "color": "$title_text_color",
+    "localize": true
+  },
+
+  "chest_grid_item_with_armor_icon@common.empty_panel": {
+    "size": [ 18, 18 ],
+    "controls": [
+      {
+        "base@chest.chest_grid_item": {
+        }
+      },
+      {
+        "armor_icon": {
+          "type": "image",
+          "size": [ 16, 16 ],
+          "texture": "('textures/ui/empty_armor_slot_' + $texture)",
+          "ignored": "$ignored_cell_ref",
+          "layer": 3
+        }
+      }
+    ]
+  },
+
+  "inventory_viewer_grid": {
+    "type": "stack_panel",
+    "orientation": "vertical",
+    "use_child_anchors": true,
+    
+    "size": [ "100%cm", "100%c" ],
+
+    "controls": [
+      {
+        "inventory_grid@chest.large_chest_grid": {
+          "size": [ 162, 54 ],
+          "grid_dimensions": [ 9, 3 ]
+        }
+      },
+      { "padding_0@common.empty_panel": { "size": [ 162, 4 ] } },
+      {
+        "hotbar_grid": {
+          "type": "stack_panel",
+          "orientation": "horizontal",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+
+          "size": [ 162, 18 ],
+          "collection_name": "container_items",
+
+          "controls": [
+            { "item_0@chest.chest_grid_item": { "collection_index": 27 } },
+            { "item_1@chest.chest_grid_item": { "collection_index": 28 } },
+            { "item_2@chest.chest_grid_item": { "collection_index": 29 } },
+            { "item_3@chest.chest_grid_item": { "collection_index": 30 } },
+            { "item_4@chest.chest_grid_item": { "collection_index": 31 } },
+            { "item_5@chest.chest_grid_item": { "collection_index": 32 } },
+            { "item_6@chest.chest_grid_item": { "collection_index": 33 } },
+            { "item_7@chest.chest_grid_item": { "collection_index": 34 } },
+            { "item_8@chest.chest_grid_item": { "collection_index": 35 } }
+          ]
+        }
+      },
+      { "padding_1@common.empty_panel": { "size": [ 1, 10 ] } },
+      {
+        "equipment_grid": {
+          "type": "stack_panel",
+          "orientation": "horizontal",
+
+          "size": [ 108, 18 ],
+          "collection_name": "container_items",
+
+          //** _r4ui:inventory:aaaaa:
+
+          "controls": [
+            {
+              "item_0@r4isen1920_invsee_inventory.chest_grid_item_with_armor_icon": {
+                "collection_index": 45,
+                "$ignored_cell_ref": "(('%.1s' * ($container_name - ('%.16s' * $container_name))) = 'a')",
+                "$texture": "helmet"
+              }
+            },
+            {
+              "item_1@r4isen1920_invsee_inventory.chest_grid_item_with_armor_icon": { 
+                "collection_index": 46, 
+                "$ignored_cell_ref": "(('%.1s' * ($container_name - ('%.17s' * $container_name))) = 'a')", 
+                "$texture": "chestplate"
+              }
+            },
+            {
+              "item_2@r4isen1920_invsee_inventory.chest_grid_item_with_armor_icon": { 
+                "collection_index": 47, 
+                "$ignored_cell_ref": "(('%.1s' * ($container_name - ('%.18s' * $container_name))) = 'a')", 
+                "$texture": "leggings"
+              }
+            },
+            {
+              "item_3@r4isen1920_invsee_inventory.chest_grid_item_with_armor_icon": { 
+                "collection_index": 48, 
+                "$ignored_cell_ref": "(('%.1s' * ($container_name - ('%.19s' * $container_name))) = 'a')", 
+                "$texture": "boots"
+              }
+            },
+            { "padding@common.empty_panel": { "size": [ 18, 1 ] } },
+            {
+              "item_4@r4isen1920_invsee_inventory.chest_grid_item_with_armor_icon": { 
+                "collection_index": 49, 
+                "$ignored_cell_ref": "(('%.1s' * ($container_name - ('%.20s' * $container_name))) = 'a')", 
+                "$texture": "shield"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+
+}

@@ -1,0 +1,13 @@
+{
+  /* created by r4isen1920 | MIT License */
+
+
+  "namespace": "pocket_containers",
+
+  /* Allow custom name overrides */
+  "header_area/container_header": {
+    "$new_custom_name|default": "$container_title",
+    "$header_label": "$new_custom_name"
+  }
+
+}

@@ -52,7 +52,7 @@ export function commitChanges (forced: boolean = false) {
     system.run(async () => {
         await system.waitTicks(10);
         const changers = getChangers();
-        world.sendMessage(getChangers());
+        // world.sendMessage(getChangers());
         const currentDataBase = world.scoreboard.getObjective(trueDBId)!;
         currentDataBase.removeParticipant(currentDataBase.getParticipants()[0]);
         currentDataBase.setScore(changers, 1);
