@@ -39,4 +39,8 @@
         <li>koukun</li>
         <li>qt twenti</li>
     </ul>
+    <h2>Discord support</h2>
+    <a>Please join our official discord!</a>
+    - [Click Here to Join](https://discord.gg/CqZGXeRKPJ)
+    <a>Join our official discord group, you can have quick support from our staff. And also you can get the 1st notification when our anticheat update!</a>
 </div>
