@@ -638,7 +638,7 @@ msgstr "値は数値でなければなりませんが、数値以外の値が入
 
 #: config.nab
 msgid "You have stated that the value is a boolean, but your value is not in a range of true, false and undefined"
-msgstr ""
+msgstr "値がboolean値であるとの事ですが、値が true、false、および unknown に一致しません"
 
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
@@ -650,19 +650,19 @@ msgstr "'%1' が '%2' に設定されました"
 
 #: packetlogger.add
 msgid "You have been given the packet logger permission"
-msgstr ""
+msgstr "パケットロガー権限が付与されました"
 
 #: packetlogger.remove
 msgid "You have removed the packet logger permission"
-msgstr ""
+msgstr "パケットロガー権限を削除しました"
 
 #: setprefix.set
 msgid "You have set the prefix to %s"
-msgstr ""
+msgstr "プレフィックスを %s に設定しました"
 
 #: setprefix.reset
 msgid "You have reset the prefix to %s"
-msgstr ""
+msgstr "プレフィックスを %s にリセットしました"
 
 #: target.selfselect
 msgid "You can't select yourself as the target."
@@ -710,39 +710,39 @@ msgstr "不明"
 
 #: acess.itemadmin
 msgid "You need to be an admin to use this item!"
-msgstr ""
+msgstr "このアイテムを使用するには管理者である必要があります。"
 
 #: report.cooldown
 msgid "Report command is on cooldown, %s seconds remaining"
-msgstr ""
+msgstr "レポート コマンドはクールダウン中であり、残り %s 秒です"
 
 #: warn.reset
 msgid "%s's warn has been reset."
-msgstr ""
+msgstr "%s の警告はリセットされました"
 
 #: warn.first
 msgid "%s has been warned, this is the first warning."
-msgstr ""
+msgstr "%s は警告されました。(一回目の警告)"
 
 #: warn.second
 msgid "%s has been warned again, this is the second warning."
-msgstr ""
+msgstr "%s は再び警告されました。(二回目の警告)"
 
 #: warn.third
 msgid "%s has been given the third warning."
-msgstr ""
+msgstr "%s には 3 回目の警告が与えられました(警告されすぎ)"
 
 #: warn.for
 msgid "%1 has been warned for %2 time(s)."
-msgstr ""
+msgstr "%1 は %2 回警告を受けています"
 
 #: warn.final
 msgid "%1 has been given the final warning."
-msgstr ""
+msgstr "%1 に最終警告が発行されました"
 
 #: warn.reached
 msgid "%1 has reached the maximum amount of warnings."
-msgstr ""
+msgstr "%1 は警告の最大数に達しました(何事？）"
 
 #: db.gen
 msgid "Generated %s confuse scoreboard(s)."
@@ -758,28 +758,36 @@ msgstr ""
 
 #: configdb.autocommit
 msgid "Please disable auto-commit to use this command."
-msgstr ""
+msgstr "このコマンドを使用するには自動コミットを無効にしてください。"
 
 #: configdb.autorecover
 msgid "Auto recover is enabled, please disable it to use this command."
-msgstr ""
+msgstr "自動回復機能が有効になっています。このコマンドを使用するには無効にしてください。"
 
 #: configdb.commit
 msgid "Sucessfully commit the changes to config database"
-msgstr ""
+msgstr "変更が構成データベースに正常にコミットされました"
 
 #: configdb.recover
 msgid "Sucessfully recover the data of config from config database"
-msgstr ""
+msgstr "構成データベースから構成データを正常に回復しました"
 
 #: invof.open
 msgid "Close the chat and open the inventory to manage the inventory of the selected player."
-msgstr ""
+msgstr "チャットを閉じてインベントリを開いて、選択したプレーヤーのインベントリを見れます"
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
-msgstr ""
+msgstr "§r§l§bMatrix §eUI§r"
 
 #: item.matrix.modstick
 msgid "§r§l§bMatrix §eModStick§r"
 msgstr ""
+
+#: action.hint.exit.r4isen1920_invsee:inventory
+msgid "Tap the §lInventory button§r to open their Inventory"
+msgstr "§lインベントリボタン§r をタップしてインベントリを開きます"
+
+#: action.hint.exit.console.r4isen1920_invsee:inventory
+msgid "Press §l:_input_key.inventory:§r to open their Inventory"
+msgstr "§l:_input_key.inventory:§r を押してインベントリを開きます"
