@@ -4,4 +4,4 @@
 
 [Get started](README.md)
 [Discord](https://discord.gg/CqZGXeRKPJ)
-[Download](https://github.com/jasonlaubb/Matrix-AntiCheat/releases/latest)
+[Download (CF)](https://www.curseforge.com/minecraft-bedrock/addons/matrix-anti/files)
