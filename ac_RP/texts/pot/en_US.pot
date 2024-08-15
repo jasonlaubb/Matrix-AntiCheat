@@ -783,3 +783,11 @@ msgstr ""
 #: item.matrix.modstick
 msgid "§r§l§bMatrix §eModStick§r"
 msgstr ""
+
+#: action.hint.exit.r4isen1920_invsee:inventory
+msgid "Tap the §lInventory button§r to open their Inventory"
+msgstr ""
+
+#: action.hint.exit.console.r4isen1920_invsee:inventory
+msgid "Press §l:_input_key.inventory:§r to open their Inventory"
+msgstr "" 
