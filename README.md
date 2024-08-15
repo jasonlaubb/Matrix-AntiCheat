@@ -9,16 +9,16 @@
         <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Matrix-AntiCheat?style=for-the-badge" alt="Commits Per Week">
         <img src="https://img.shields.io/github/last-commit/jasonlaubb/Matrix-AntiCheat?style=for-the-badge" alt="Last Commit">
     </p>
-    <h2>Description</h2>
+    <h1>Description</h1>
     <p>
         Matrix AntiCheat is the best Minecraft Bedrock anti-cheat with the strongest detection. It's a realm anticheat mainly.
         This can be used in BDS server, realm or local world. Supports the latest Minecraft version.
     </p>
-    <h2>Click the below button to learn more</h2>
+    <h1>Click the below button to learn more</h1>
     <a href="https://jasonlaubb.github.io/Matrix-AntiCheat/" target="_blank">
         <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/images/learn_more.png">
     </a>
-    <h2>Developers</h2>
+    <h1>Developers</h1>
     <h3>Lead Developer</h3>
     <ul>
         <li>jasonlaubb</li>
@@ -39,7 +39,7 @@
         <li>koukun</li>
         <li>qt twenti</li>
     </ul>
-    <h2>Discord support</h2>
+    <h1>Discord support</h1>
     <p>Please join our official discord!</p>
     <a href="https://discord.gg/CqZGXeRKPJ"><p>Click Here to join</p></a>
     <p>Join our official discord group, you can have quick support from our staff. And also you can get the 1st notification when our anticheat update!</p>
