@@ -8,7 +8,7 @@
         <a href="https://discord.gg/CqZGXeRKPJ" target="_blank">
             <img src="https://camo.githubusercontent.com/f1c54f3a23de4c7b3e55059592bbf12e19eeb16e78978c364792d3d7207cfaac/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f446973636f72642d43715a475865524b504a2d2532333139373644323f7374796c653d666f722d7468652d6261646765">
         </a>
-    <p>
+    </p>
     <p align="center">
         <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="GitHub Downloads">
         <img src="https://img.shields.io/github/issues/jasonlaubb/Matrix-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open">
