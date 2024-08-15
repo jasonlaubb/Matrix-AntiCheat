@@ -10,7 +10,7 @@
         </a>
     <p>
     <p align="center">
-        <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="Downloads">
+        <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="GitHub Downloads">
         <img src="https://img.shields.io/github/issues/jasonlaubb/Matrix-AntiCheat?label=ISSUES%20OPEN&style=for-the-badge" alt="Issues Open">
         <img src="https://img.shields.io/github/commit-activity/m/jasonlaubb/Matrix-AntiCheat?style=for-the-badge" alt="Commits Per Week">
         <img src="https://img.shields.io/github/last-commit/jasonlaubb/Matrix-AntiCheat?style=for-the-badge" alt="Last Commit">
