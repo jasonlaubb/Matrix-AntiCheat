@@ -500,7 +500,45 @@
                 "remove": {
                     "component_groups": ["minecraft:raid_trigger"]
                 }
-            }
+            },
+            "matrix:tempkick": {
+                "add": {
+                    "component_groups": ["matrix:tempkick"]
+                }
+            },
+            "matrix:unvanish": {
+                "add": {
+                    "component_groups": ["matrix:unvanish"]
+                },
+                "queue_command": {
+                    "command": "tag @s remove matrix:impeccable",
+                    "target": "self"
+                }
+            },
+            "matrix:vanish": {
+                "add": {
+                    "component_groups": ["matrix:vanish"]
+                },
+                "queue_command": {
+                    "command": "tag @s add matrix:impeccable",
+                    "target": "self"
+                }
+            },
+            "matrix:container_opened": {
+                "queue_command": {
+                    "command": "tag @s add matrix:container_opened",
+                    "target": "self"
+                }
+            },
+            "matrix:container_closed": {
+                "queue_command": {
+                    "command": "tag @s remove matrix:container_opened",
+                    "target": "self"
+                }
+            },
+            "matrix:offhand_flag1": {},
+            "matrix:offhand_flag2": {},
+            "matrix:offhand_flag3": {}
         }
     }
 }
