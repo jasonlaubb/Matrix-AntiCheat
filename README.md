@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/images/title.png">
     <p>The Supreme Anti-Cheat Solution for Minecraft Bedrock</p>
-    <img src="https://img.shields.io/badge/Language-TypeScript-%23EF4041?style=for-the-badge">
+    <img src="https://camo.githubusercontent.com/9f1df0465f69d73b390cb9c9003d58c15e18c96e0d5795f662c8c4ba14141a6e/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c616e67756167652d547970655363726970742d2532334546343034313f7374796c653d666f722d7468652d6261646765">
     <a href="https://discord.gg/CqZGXeRKPJ"><img src="https://img.shields.io/badge/Discord-CqZGXeRKPJ-%231976D2?style=for-the-badge"></a>
     <p align="center">
         <img src="https://img.shields.io/github/downloads/jasonlaubb/Matrix-AntiCheat/total?style=for-the-badge" alt="Downloads">
