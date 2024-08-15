@@ -13,6 +13,7 @@ interface AbcSelection {
 const groupAbc = ([a, b, c]: any[]): AbcSelection => ({ a, b, c });
 
 async function cpu(form: ModalFormData, player: Player, to: string): Promise<AbcSelection | null> {
+    //@ts-expect-error
     const data = await form.show(player);
     if (data.canceled) return null;
     return groupAbc([to, ...data.formValues!]);
@@ -54,6 +55,7 @@ export async function moderatePlayer(player: Player, target: Player) {
         .button(rawstr.drt("ui.echestwipe.button"))
         .button(rawstr.drt("ui.tempkick.button"))
         .button(rawstr.drt("ui.exit"), "textures/ui/redX1.png")
+        //@ts-expect-error
         .show(player);
     if (action.canceled) return;
     const actionData = moderateUI[action.selection!];

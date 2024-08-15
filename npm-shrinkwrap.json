@@ -6,8 +6,8 @@
         "": {
             "name": "matrix-anticheat",
             "dependencies": {
-                "@minecraft/server": "^1.12.0-beta.1.21.0-stable",
-                "@minecraft/server-ui": "^1.2.0-beta.1.20.40-stable",
+                "@minecraft/server": "^1.14.0-beta.1.21.20-stable",
+                "@minecraft/server-ui": "^1.3.0-beta.1.21.20-stable",
                 "fs": "^0.0.1-security",
                 "gettext-parser": "^8.0.0",
                 "path": "^0.12.7",
@@ -23,19 +23,28 @@
             "integrity": "sha512-stbUtINCXbcLNRlGNVX68xRC6ZYq3k3CYmfptwrCcPBEUjVOpVkSj3H4Y0qiSYB+1rVWv7DgiP7Uf9++50Ne5g=="
         },
         "node_modules/@minecraft/server": {
-            "version": "1.12.0-beta.1.21.0-stable",
-            "resolved": "https://registry.npmjs.org/@minecraft/server/-/server-1.12.0-beta.1.21.0-stable.tgz",
-            "integrity": "sha512-Dkn+H+q/tKZOmjoKDSF9gVXtcc2hn92EvwgkFG0JMxwYYI77gjn8UqYR4I3eZdlM0TJsY0MlyF8IIvRDywJkGA==",
+            "version": "1.14.0-beta.1.21.20-stable",
+            "resolved": "https://registry.npmjs.org/@minecraft/server/-/server-1.14.0-beta.1.21.20-stable.tgz",
+            "integrity": "sha512-FczVv4P7Qq9UZf+RTaProO43elCeCJ1/4C8z1uLQhQGx2Q+onTpp+2z10K+VrdMSooEMRIBndFhM0hw0e/SDXw==",
             "dependencies": {
                 "@minecraft/common": "^1.1.0"
             }
         },
         "node_modules/@minecraft/server-ui": {
-            "version": "1.2.0-beta.1.20.40-stable",
-            "resolved": "https://registry.npmjs.org/@minecraft/server-ui/-/server-ui-1.2.0-beta.1.20.40-stable.tgz",
-            "integrity": "sha512-89YFi8SrwSi7Bbn2PNO6p1cjfS1PKs1cNFkvIeypDpjvH+uLfrv0bVXJCmLrtTy7G3xIF4MYyGhkOz7rv+j7Ng==",
+            "version": "1.3.0-beta.1.21.20-stable",
+            "resolved": "https://registry.npmjs.org/@minecraft/server-ui/-/server-ui-1.3.0-beta.1.21.20-stable.tgz",
+            "integrity": "sha512-brESKHzcEXVhqeoHnnxXn8v/RGZ0Vxrr+IRsfV8qEDLu0J8KAYt513ZxowbU8QOQ4u962iwexWiwgR4usP8RDQ==",
             "dependencies": {
-                "@minecraft/common": "^1.0.0"
+                "@minecraft/common": "^1.0.0",
+                "@minecraft/server": "^1.8.0"
+            }
+        },
+        "node_modules/@minecraft/server-ui/node_modules/@minecraft/server": {
+            "version": "1.13.0",
+            "resolved": "https://registry.npmjs.org/@minecraft/server/-/server-1.13.0.tgz",
+            "integrity": "sha512-LYmYRLjZZ5b+AO2GArQorBBo6Ad18ZmdoK2jx7mmo7Jo/gFXLiSq2xEJuLb5WBXTaBg4rBiersQiAbTj3QjNHQ==",
+            "dependencies": {
+                "@minecraft/common": "^1.1.0"
             }
         },
         "node_modules/abort-controller": {

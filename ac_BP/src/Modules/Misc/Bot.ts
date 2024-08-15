@@ -57,6 +57,7 @@ function antiBot() {
                             .parse(),
                         "0000000"
                     )
+                    //@ts-expect-error
                     .show(player)
                     .then(({ formValues, canceled, cancelationReason }) => {
                         if (!player.notVerified) return;

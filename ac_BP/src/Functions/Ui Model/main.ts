@@ -14,6 +14,7 @@ export async function menu(player: Player) {
         .button(rawstr.drt("ui.moderateplayer"), "textures/ui/FriendsDiversity")
         .button(rawstr.drt("ui.setting"), "textures/ui/gear")
         .button(rawstr.drt("ui.exit"), "textures/ui/redX1")
+        //@ts-expect-error
         .show(player)
         .then((res) => {
             if (res.canceled) {
@@ -65,6 +66,7 @@ async function selectPlayer(player: Player): Promise<Player | null> {
         }
         selectMenu.button(target.name + des);
     }
+    //@ts-expect-error
     const result = await selectMenu.show(player);
     if (result.canceled) return null;
     return pointAllPlayer[result.selection!] ?? null;
@@ -76,6 +78,7 @@ function settingUI(player: Player) {
         .button(rawstr.drt("ui.config.button"), "textures/ui/gear")
         .button(rawstr.drt("ui.toggle.button"), "textures/items/compass_item")
         .button(rawstr.drt("ui.exit"), "textures/ui/redX1")
+        //@ts-expect-error
         .show(player)
         .then((res) => {
             if (res.canceled) return;

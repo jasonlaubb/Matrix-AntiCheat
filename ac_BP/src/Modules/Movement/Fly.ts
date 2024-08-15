@@ -70,7 +70,7 @@ function antiFly(player: Player, now: number, config: configi) {
         flyData.set(player.id, data);
         return;
     }
-    const flyMovement = (data.velocityLog > 1 && velocity <= 0) || (velocity < config.antiFly.highVelocity && player.fallDistance < -1.5);
+    const flyMovement = data.velocityLog > 1 && velocity <= 0
     const clientFly = data.velocityLog > 0 && player?.lastVelLog == data.velocityLog;
     if (!player.isOnGround && clientFly && flyMovement && skip1 && skip2 && skip3 && velocity != 1 && !instair) {
         const lastflag = data.lastFlag;

@@ -16,7 +16,6 @@
         "checkJs": false,
         "outDir": "./ac_BP/scripts",
         "typeRoots": ["./node_modules/@minecraft"],
-        "types": ["server", "server-ui"],
         "strictNullChecks": true,
         "strictFunctionTypes": true,
         "strictPropertyInitialization": true,

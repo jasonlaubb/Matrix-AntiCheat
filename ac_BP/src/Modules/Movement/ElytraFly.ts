@@ -1,3 +1,7 @@
+//@ts-nocheck
+/*
+ * This check is no longer work as Minecraft removed 'falldistance' from the API
+ */
 import { world, Player, system, GameMode, ItemUseAfterEvent, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
 import { bypassMovementCheck, flag, getPing } from "../../Assets/Util";
 import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -65,6 +69,7 @@ const playerSpawn = ({ player }: PlayerSpawnAfterEvent) => {
 
 const itemUseAfter = ({ source: player, itemStack: { typeId } }: ItemUseAfterEvent) => player.isGliding && typeId === MinecraftItemTypes.FireworkRocket && (player.lastGlidingFire = Date.now());
 
+/*
 registerModule(
     "antiElytraFly",
     false,
@@ -83,3 +88,4 @@ registerModule(
         then: async (_config, event) => playerSpawn(event),
     }
 );
+*/

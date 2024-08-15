@@ -20,6 +20,7 @@ export async function moduleUI(player: Player) {
             .str("§r§8]§r");
         moduleForm.button(buttontext.parse());
     }
+    //@ts-expect-error
     moduleForm.show(player).then((data) => {
         if (data.canceled) return;
         const moduleData = ids[data.selection!];
@@ -37,6 +38,7 @@ async function toggleUI(player: Player, moduleData: string) {
     moduleForm.body(rawstr.new().tra("ui.toggle.modulet", moduleData).str("\n").tra("ui.toggle.statust", state).parse());
     moduleForm.button(rawstr.drt("ui.toggle.enable"), "textures/ui/vanilla_tick");
     moduleForm.button(rawstr.drt("ui.toggle.disable"), "textures/ui/redX1");
+    //@ts-expect-error
     moduleForm.show(player).then((data) => {
         if (data.canceled) return;
         // use the command for the user.

@@ -51,6 +51,7 @@ async function sendLog(player: Player, currentPage: number = 0) {
     if (previousButtonActive) ui.button("Previous Page", "textures/ui/arrow_left.png");
     if (nextButtonActive) ui.button("Next Page", "textures/ui/arrow_right.png");
     ui.button(rawstr.drt("ui.exit"), "textures/ui/redX1.png");
+    //@ts-expect-error
     const result = await ui.show(player);
     if (result.canceled && result.cancelationReason == FormCancelationReason.UserBusy) {
         // Retry every 40 ticks
