@@ -1,127 +1,118 @@
 {
-  "format_version": "1.18.30",
-  "minecraft:entity": {
-    "description": {
-      "identifier": "r4isen1920_invsee:inventory",
+    "format_version": "1.18.30",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "r4isen1920_invsee:inventory",
 
-      "is_summonable": true
-    },
+            "is_summonable": true
+        },
 
-    "component_groups": {
-
-      "r4isen1920_invsee:instant_despawn": {
-        "minecraft:instant_despawn": {
-        }
-      }
-
-    },
-
-    "components": {
-      "minecraft:type_family": {
-        "family": [ "inventory", "invsee", "inanimate" ]
-      },
-
-      "minecraft:rideable": {
-        "seat_count": 1,
-        "family_types": [ "player" ],
-        "interact_text": "§z",
-        "seats": {
-          "position": [ 0.0, 0.05, 0.0 ]
-        }
-      },
-      "minecraft:inventory": {
-        "container_type": "container",
-        "inventory_size": 54,
-        "private": true,
-        "can_be_siphoned_from": false,
-        "restrict_to_owner": false
-      },
-
-      "minecraft:health": {
-        "min": 1,
-        "max": 1,
-        "value": 1
-      },
-      "minecraft:collision_box": {
-        "width": 0.0,
-        "height": 0.0
-      },
-      "minecraft:damage_sensor": {
-        "triggers": {
-          "cause": "all",
-          "deals_damage": false
-        }
-      },
-      "minecraft:movement": {
-        "value": 0.1
-      },
-      "minecraft:movement.basic": {
-      },
-      "minecraft:jump.static": {
-      },
-      "minecraft:input_ground_controlled": {
-      },
-      "minecraft:behavior.controlled_by_player": {
-        "priority": 0
-      },
-      "minecraft:physics": {
-        "has_collision": false,
-        "has_gravity": false
-      },
-      "minecraft:pushable": {
-        "is_pushable": false,
-        "is_pushable_by_piston": false
-      },
-      "minecraft:nameable": {
-        "always_show": false,
-        "allow_name_tag_renaming": false
-      },
-      "minecraft:interact": {
-        "interactions": {
-          "on_interact": {
-            "filters": {
-              "all_of": [
-                {
-                  "test": "is_family",
-                  "subject": "other",
-                  "value": "player"
-                }
-              ]
+        "component_groups": {
+            "r4isen1920_invsee:instant_despawn": {
+                "minecraft:instant_despawn": {}
             }
-          }
-        }
-      },
-      "minecraft:is_hidden_when_invisible": {
-      },
-      "minecraft:environment_sensor": {
-        "triggers": [
-          {
-            "filters": {
-              "all_of": [
-                { 
-                  "test": "rider_count",
-                  "value": 0
-                },
-                {
-                  "test": "has_tag",
-                  "value": "invsee"
-                }
-              ]
+        },
+
+        "components": {
+            "minecraft:type_family": {
+                "family": ["inventory", "invsee", "inanimate"]
             },
-            "event": "r4isen1920_invsee:instant_despawn"
-          }
-        ]
-      }
-    },
 
-    "events": {
+            "minecraft:rideable": {
+                "seat_count": 1,
+                "family_types": ["player"],
+                "interact_text": "§z",
+                "seats": {
+                    "position": [0.0, 0.05, 0.0]
+                }
+            },
+            "minecraft:inventory": {
+                "container_type": "container",
+                "inventory_size": 54,
+                "private": true,
+                "can_be_siphoned_from": false,
+                "restrict_to_owner": false
+            },
 
-      "r4isen1920_invsee:instant_despawn": {
-        "add": {
-          "component_groups": [ "r4isen1920_invsee:instant_despawn" ]
+            "minecraft:health": {
+                "min": 1,
+                "max": 1,
+                "value": 1
+            },
+            "minecraft:collision_box": {
+                "width": 0.0,
+                "height": 0.0
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "cause": "all",
+                    "deals_damage": false
+                }
+            },
+            "minecraft:movement": {
+                "value": 0.1
+            },
+            "minecraft:movement.basic": {},
+            "minecraft:jump.static": {},
+            "minecraft:input_ground_controlled": {},
+            "minecraft:behavior.controlled_by_player": {
+                "priority": 0
+            },
+            "minecraft:physics": {
+                "has_collision": false,
+                "has_gravity": false
+            },
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": false
+            },
+            "minecraft:nameable": {
+                "always_show": false,
+                "allow_name_tag_renaming": false
+            },
+            "minecraft:interact": {
+                "interactions": {
+                    "on_interact": {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "is_family",
+                                    "subject": "other",
+                                    "value": "player"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "minecraft:is_hidden_when_invisible": {},
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "rider_count",
+                                    "value": 0
+                                },
+                                {
+                                    "test": "has_tag",
+                                    "value": "invsee"
+                                }
+                            ]
+                        },
+                        "event": "r4isen1920_invsee:instant_despawn"
+                    }
+                ]
+            }
+        },
+
+        "events": {
+            "r4isen1920_invsee:instant_despawn": {
+                "add": {
+                    "component_groups": ["r4isen1920_invsee:instant_despawn"]
+                }
+            }
         }
-      }
-
     }
-  }
 }

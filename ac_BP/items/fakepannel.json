@@ -6,7 +6,7 @@
             "menu_category": {
                 "is_hidden_in_commands": false,
                 "category": "equipment",
-                "group": "itemGroup.name.miscFood" 
+                "group": "itemGroup.name.miscFood"
             }
         },
         "components": {
@@ -40,9 +40,7 @@
             "minecraft:repairable": {
                 "repair_items": [
                     {
-                        "items": [
-                            "quartz"
-                        ],
+                        "items": ["quartz"],
                         "repair_amount": 200
                     }
                 ]

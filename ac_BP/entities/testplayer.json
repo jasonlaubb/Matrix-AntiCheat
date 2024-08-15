@@ -1,5 +1,5 @@
 {
-    "format_version": "1.20.10",
+    "format_version": "1.18.20",
     "minecraft:entity": {
         "description": {
             "identifier": "minecraft:player",
@@ -62,6 +62,7 @@
                 "west": "controller.animation.facing_west"
             }
         },
+
         "component_groups": {
             "minecraft:add_bad_omen": {
                 "minecraft:spell_effects": {
@@ -137,6 +138,7 @@
                 }
             }
         },
+
         "components": {
             "minecraft:experience_reward": {
                 "on_death": "Math.Min(query.player_level * 7, 100)"
@@ -159,12 +161,7 @@
             "minecraft:hurt_on_condition": {
                 "damage_conditions": [
                     {
-                        "filters": {
-                            "test": "in_lava",
-                            "subject": "self",
-                            "operator": "==",
-                            "value": true
-                        },
+                        "filters": { "test": "in_lava", "subject": "self", "operator": "==", "value": true },
                         "cause": "lava",
                         "damage_per_tick": 4
                     }
@@ -172,6 +169,17 @@
             },
             "minecraft:attack": {
                 "damage": 1
+            },
+            "minecraft:exhaustion_values": {
+                "heal": 6,
+                "jump": 0.05,
+                "sprint_jump": 0.2,
+                "mine": 0.005,
+                "attack": 0.1,
+                "damage": 0.1,
+                "walk": 0.0,
+                "sprint": 0.01,
+                "swim": 0.01
             },
             "minecraft:player.saturation": {
                 "value": 5,
@@ -199,15 +207,81 @@
                 "always_show": true,
                 "allow_name_tag_renaming": false
             },
-            "minecraft:physics": {
-                "push_towards_closest_space": true
-            },
+            "minecraft:physics": {},
             "minecraft:pushable": {
                 "is_pushable": false,
                 "is_pushable_by_piston": true
             },
             "minecraft:insomnia": {
                 "days_until_insomnia": 3
+            },
+            "minecraft:rideable": {
+                "seat_count": 2,
+                "family_types": ["parrot_tame"],
+                "pull_in_entities": true,
+                "seats": [
+                    {
+                        "position": [0.4, -0.2, -0.1],
+                        "min_rider_count": 0,
+                        "max_rider_count": 0,
+                        "lock_rider_rotation": 0
+                    },
+                    {
+                        "position": [-0.4, -0.2, -0.1],
+                        "min_rider_count": 1,
+                        "max_rider_count": 2,
+                        "lock_rider_rotation": 0
+                    }
+                ]
+            },
+            "minecraft:conditional_bandwidth_optimization": {},
+            "minecraft:block_climber": {},
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "has_mob_effect",
+                                    "subject": "self",
+                                    "value": "bad_omen"
+                                },
+                                {
+                                    "test": "is_in_village",
+                                    "subject": "self",
+                                    "value": true
+                                }
+                            ]
+                        },
+                        "event": "minecraft:trigger_raid"
+                    },
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "has_container_open",
+                                    "operator": "==",
+                                    "subject": "self",
+                                    "value": true
+                                }
+                            ]
+                        },
+                        "event": "container_opened"
+                    },
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "has_container_open",
+                                    "operator": "==",
+                                    "subject": "self",
+                                    "value": false
+                                }
+                            ]
+                        },
+                        "event": "container_closed"
+                    }
+                ]
             },
             "minecraft:damage_sensor": {
                 "triggers": {
@@ -400,115 +474,10 @@
                     "deals_damage": false,
                     "cause": "all"
                 }
-            },
-            "minecraft:rideable": {
-                "seat_count": 2,
-                "family_types": ["parrot_tame"],
-                "pull_in_entities": true,
-                "seats": [
-                    {
-                        "position": [0.4, -0.2, -0.1],
-                        "min_rider_count": 0,
-                        "max_rider_count": 0,
-                        "lock_rider_rotation": 0
-                    },
-                    {
-                        "position": [-0.4, -0.2, -0.1],
-                        "min_rider_count": 1,
-                        "max_rider_count": 2,
-                        "lock_rider_rotation": 0
-                    }
-                ]
-            },
-            "minecraft:block_climber": {},
-            "minecraft:conditional_bandwidth_optimization": {},
-            "minecraft:environment_sensor": {
-                "triggers": [
-                    {
-                        "filters": {
-                            "all_of": [
-                                {
-                                    "test": "has_mob_effect",
-                                    "subject": "self",
-                                    "value": "bad_omen"
-                                },
-                                {
-                                    "test": "is_in_village",
-                                    "subject": "self",
-                                    "value": true
-                                }
-                            ]
-                        },
-                        "event": "minecraft:trigger_raid"
-                    },
-                    {
-                        "filters": {
-                            "all_of": [
-                                {
-                                    "test": "has_container_open",
-                                    "operator": "==",
-                                    "subject": "self",
-                                    "value": true
-                                }
-                            ]
-                        },
-                        "event": "container_opened"
-                    },
-                    {
-                        "filters": {
-                            "all_of": [
-                                {
-                                    "test": "has_container_open",
-                                    "operator": "==",
-                                    "subject": "self",
-                                    "value": false
-                                }
-                            ]
-                        },
-                        "event": "container_closed"
-                    }
-                ]
             }
         },
+
         "events": {
-            "matrix:tempkick": {
-                "add": {
-                    "component_groups": ["matrix:tempkick"]
-                }
-            },
-            "matrix:unvanish": {
-                "add": {
-                    "component_groups": ["matrix:unvanish"]
-                },
-                "queue_command": {
-                    "command": "tag @s remove matrix:impeccable",
-                    "target": "self"
-                }
-            },
-            "matrix:vanish": {
-                "add": {
-                    "component_groups": ["matrix:vanish"]
-                },
-                "queue_command": {
-                    "command": "tag @s add matrix:impeccable",
-                    "target": "self"
-                }
-            },
-            "matrix:container_opened": {
-                "queue_command": {
-                    "command": "tag @s add matrix:container_opened",
-                    "target": "self"
-                }
-            },
-            "matrix:container_closed": {
-                "queue_command": {
-                    "command": "tag @s remove matrix:container_opened",
-                    "target": "self"
-                }
-            },
-            "matrix:offhand_flag1": {},
-            "matrix:offhand_flag2": {},
-            "matrix:offhand_flag3": {},
             "minecraft:gain_bad_omen": {
                 "add": {
                     "component_groups": ["minecraft:add_bad_omen"]
