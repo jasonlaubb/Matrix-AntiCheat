@@ -114,7 +114,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 
 class Tps {
     private tps?: number;
-    constructor() {}
+    constructor () {}
     public getTps() {
         return this.tps;
     }
@@ -127,17 +127,22 @@ let tpsAmountData: number[] = [];
 let lastTickLog: number = Date.now();
 
 const tps = new Tps();
-export { tps };
+export { tps, getMsPerTick };
 interface SpikeLaggingData {
     lastLocation: Vector3;
     time: number;
     isSpikeLagging: boolean;
 }
+let mspertick = 50;
+function getMsPerTick () {
+    return mspertick;
+}
 const spikeLaggingData = new Map<string, SpikeLaggingData>();
 system.runInterval(async () => {
     const now = Date.now();
     tpsAmountData.push(now - lastTickLog);
-    lastTickLog = Date.now();
+    mspertick = now - lastTickLog;
+    lastTickLog = now;
     if (tpsAmountData.length > 20) tpsAmountData.shift();
     let tpsNow: number = 0;
     tpsAmountData.forEach((period) => (tpsNow += period));

@@ -2,7 +2,7 @@ import { EntityDamageCause, EntityHurtAfterEvent, Player, Vector3, world } from 
 import { bypassMovementCheck, c, flag } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
-import { isSpikeLagging } from "../../Assets/Public.js";
+import { getMsPerTick, isSpikeLagging } from "../../Assets/Public.js";
 import { freezeTeleport } from "./NoClip.js";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
@@ -79,6 +79,7 @@ async function AntiSpeed(config: configi, player: Player) {
     const speedEffect = player.getEffect(MinecraftEffectTypes.Speed)?.amplifier;
     const illegalEffect = speedEffect && hasIllegalSpeedEffect(player, speedEffect);
     const notSpikeLagging = !isSpikeLagging(player);
+    const lagOnlyCondition = getMsPerTick() < 44.5;
     // Speed/A - Checks if the player has high velocity different.
     if (
         !bypassMovementCheck(player) &&
@@ -90,6 +91,10 @@ async function AntiSpeed(config: configi, player: Player) {
         velocityDifferent - data.lastVelocity < 0.3 &&
         notSpikeLagging
     ) {
+        if (lagOnlyCondition) {
+            data.lastReset = now;
+            player.teleport(safePos);
+        } else {
         data.firstTrigger ??= now;
         data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
         data.flagNumber ??= 0;
@@ -109,6 +114,7 @@ async function AntiSpeed(config: configi, player: Player) {
             delete data.currentFlagCombo;
             delete data.firstTrigger;
             delete data.flagNumber;
+        }
         }
     }
     // saving last high velocity

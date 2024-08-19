@@ -114,6 +114,18 @@ Args: `deop <player>`
 
 Example: `<prefix>deop steve`
 
+# Directacion
+
+- Description
+
+Make a directacion on a player without typing player name.
+
+- Usage
+
+Args: `No args`
+
+Example: `<prefix>directacion`
+
 # Echestwipe
 
 - Description
@@ -428,6 +440,18 @@ Example4: `<prefix>flagmode bypass`
 
 Example5: `<prefix>flagmode tag`
 
+# Gm
+
+- Description
+
+Change the gamemode of yourself
+
+- Usage
+
+Args: `gm <number>`
+
+Example: `<prefix>gm 1`
+
 # Lockdown
 
 - Description
@@ -487,6 +511,18 @@ Reset the dynamic config of the anticheat.
 Args: `No args`
 
 Example: `<prefix>reset`
+
+# Runcommand
+
+- Description
+
+Run a command.
+
+- Usage
+
+Args: `runcommand <command>`
+
+Example: `<prefix>runcommand "tag @s add clown"`
 
 # Setutil
 
