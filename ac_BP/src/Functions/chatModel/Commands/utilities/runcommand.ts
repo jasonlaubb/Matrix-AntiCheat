@@ -16,10 +16,11 @@ registerCommand({
             player.sendMessage(new rawstr(true, "c").tra("runcommand.banned").parse());
             return;
         }
-        player.runCommandAsync(command)
-        .catch(() => player.sendMessage(new rawstr(true, "c").tra("runcommand.failed").parse()))
-        .then(() => {
+        try {
+            player.runCommand(command);
             player.sendMessage(new rawstr(true, "g").tra("runcommand.success").parse());
-        })
+        } catch {
+            player.sendMessage(new rawstr(true, "c").tra("runcommand.failed").parse());
+        }
     }
 })

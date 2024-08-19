@@ -22,6 +22,10 @@ registerCommand({
         matchPlayers.forEach(({ name }) => {
             form.button(clearName(name));
         })
+        if (matchPlayers.length == 0) {
+            player.sendMessage(new rawstr(true, "c").str("No player which is not admin online.").parse());
+            return;
+        }
         const runId = system.runInterval(() => {
             //@ts-expect-error
             form.show(player).then((res) => {
