@@ -1,5 +1,5 @@
-import { EntityDamageCause, EntityHurtAfterEvent, Player, Vector3, world } from "@minecraft/server";
-import { bypassMovementCheck, c, flag } from "../../Assets/Util.js";
+import { EntityDamageCause, EntityHurtAfterEvent, Player, Vector3, world, EntityHitEntityAfterEvent } from "@minecraft/server";
+import { bypassMovementCheck, c, flag, isAdmin } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
 import { getMsPerTick, isSpikeLagging } from "../../Assets/Public.js";
@@ -25,6 +25,7 @@ interface Speeddata {
     lastLocation: Vector3;
     lastRiding: number;
     lastFlag: number;
+    lastFight: number;
 }
 const speeddata = new Map<string, Speeddata>();
 
@@ -47,6 +48,7 @@ async function AntiSpeed(config: configi, player: Player) {
             lastLocation: player.location,
             lastRiding: 0,
             lastFlag: 0,
+            lastFight: 0,
         } as Speeddata);
     // define cool things
     const { x, z } = player.getVelocity();
@@ -89,7 +91,8 @@ async function AntiSpeed(config: configi, player: Player) {
         velocityDifferent > data.speedMaxV &&
         now - data.lastReset >= 100 &&
         velocityDifferent - data.lastVelocity < 0.3 &&
-        notSpikeLagging
+        notSpikeLagging &&
+        now - data.lastFight > 800
     ) {
         if (lagOnlyCondition) {
             data.lastReset = now;
@@ -183,6 +186,12 @@ function hasIllegalSpeedEffect(player: Player, effectLevel: number) {
     return false;
 }
 
+function entityHitEntity ({ damagingEntity }: EntityHitEntityAfterEvent) {
+    if (isAdmin(damagingEntity as Player)) return;
+    const data = speeddata.get(damagingEntity.id)!;
+    data.lastFight = Date.now();
+    speeddata.set(damagingEntity.id, data);
+}
 registerModule(
     "antiSpeed",
     false,
@@ -195,5 +204,10 @@ registerModule(
         worldSignal: world.afterEvents.entityHurt,
         playerOption: { entityTypes: ["player"] },
         then: async (_config, event) => entityHurt(event),
+    },
+    {
+        worldSignal: world.afterEvents.entityHitEntity,
+        playerOption: { entityTypes: ["player"] },
+        then: async (_config, event) => entityHitEntity(event),
     }
 );
