@@ -50,6 +50,7 @@
         <li>NoSwing</li>
         <li>Reach</li>
         <li>Fast Throw</li>
+        <li>Nuker</li>
         <li>Autototem & Autoshield</li>
         <li>BlockReach</li>
         <li>AutoTool (experimental)</li>
