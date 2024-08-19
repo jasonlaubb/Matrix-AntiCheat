@@ -1,7 +1,7 @@
 import { registerCommand, verifier } from "../../CommandHandler";
 import { c, rawstr } from "../../../../Assets/Util";
 
-const bannedCommandList = ["op", "deop", "execute", "kick", "event"]
+const bannedCommandList = ["op", "deop", "execute", "kick", "event"];
 registerCommand({
     name: "runcommand",
     description: "Run a command without operator permissions.",
@@ -12,7 +12,7 @@ registerCommand({
     require: (player) => verifier(player, c().commands.runcommand),
     executor: async (player, args) => {
         const command = args[0].startsWith("/") ? args[0].slice(1) : args[0];
-        if (bannedCommandList.some(banned => command.startsWith(banned))) {
+        if (bannedCommandList.some((banned) => command.startsWith(banned))) {
             player.sendMessage(new rawstr(true, "c").tra("runcommand.banned").parse());
             return;
         }
@@ -22,5 +22,5 @@ registerCommand({
         } catch {
             player.sendMessage(new rawstr(true, "c").tra("runcommand.failed").parse());
         }
-    }
-})
+    },
+});

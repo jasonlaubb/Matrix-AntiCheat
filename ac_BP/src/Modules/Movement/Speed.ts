@@ -98,26 +98,26 @@ async function AntiSpeed(config: configi, player: Player) {
             data.lastReset = now;
             player.teleport(safePos);
         } else {
-        data.firstTrigger ??= now;
-        data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
-        data.flagNumber ??= 0;
-        data.flagNumber++;
-        data.lastReset = now;
-        // Teleport the player to last position
-        // Minimum time given to flag
-        if (now - data.firstTrigger < data.currentFlagCombo) {
-            if (data.flagNumber > config.antiSpeed.maxFlagInDuration) {
-                freezeTeleport(player, safePos);
-                data.currentFlagCombo += config.antiSpeed.flagDurationIncrase;
-                flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);
+            data.firstTrigger ??= now;
+            data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
+            data.flagNumber ??= 0;
+            data.flagNumber++;
+            data.lastReset = now;
+            // Teleport the player to last position
+            // Minimum time given to flag
+            if (now - data.firstTrigger < data.currentFlagCombo) {
+                if (data.flagNumber > config.antiSpeed.maxFlagInDuration) {
+                    freezeTeleport(player, safePos);
+                    data.currentFlagCombo += config.antiSpeed.flagDurationIncrase;
+                    flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);
+                } else {
+                    player.teleport(safePos);
+                }
             } else {
-                player.teleport(safePos);
+                delete data.currentFlagCombo;
+                delete data.firstTrigger;
+                delete data.flagNumber;
             }
-        } else {
-            delete data.currentFlagCombo;
-            delete data.firstTrigger;
-            delete data.flagNumber;
-        }
         }
     }
     // saving last high velocity
@@ -185,7 +185,7 @@ function hasIllegalSpeedEffect(player: Player, effectLevel: number) {
     return false;
 }
 
-function entityHitEntity ({ damagingEntity }: EntityHitEntityAfterEvent) {
+function entityHitEntity({ damagingEntity }: EntityHitEntityAfterEvent) {
     if (isAdmin(damagingEntity as Player)) return;
     const data = speeddata.get(damagingEntity.id)!;
     data.lastFight = Date.now();

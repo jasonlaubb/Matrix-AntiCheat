@@ -114,7 +114,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 
 class Tps {
     private tps?: number;
-    constructor () {}
+    constructor() {}
     public getTps() {
         return this.tps;
     }
@@ -134,7 +134,7 @@ interface SpikeLaggingData {
     isSpikeLagging: boolean;
 }
 let mspertick = 50;
-function getMsPerTick () {
+function getMsPerTick() {
     return mspertick;
 }
 const spikeLaggingData = new Map<string, SpikeLaggingData>();

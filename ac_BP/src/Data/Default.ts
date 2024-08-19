@@ -269,7 +269,7 @@ export default {
             enabled: true,
             adminOnly: true,
             requireTag: [],
-        }
+        },
     },
     autoPunishment: {
         bypasslist: [],

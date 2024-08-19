@@ -42,7 +42,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - data.lastFlag;
         //if the dBLFN is lower than the given value flag
-        if (getMsPerTick() > 42 &&!isSpikeLagging(player) && ((dBLFN < 5000 && data.timerLog >= 3) || (dBLFN < 2000 && dBVD > data.maxDBVD)))
+        if (getMsPerTick() > 42 && !isSpikeLagging(player) && ((dBLFN < 5000 && data.timerLog >= 3) || (dBLFN < 2000 && dBVD > data.maxDBVD)))
             flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
         //lag back the player
         freezeTeleport(player, data.safeZone);
