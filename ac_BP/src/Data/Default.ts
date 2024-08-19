@@ -255,6 +255,21 @@ export default {
             maxWarns: 3,
             maxWarnAction: "ban",
         },
+        directaction: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        runcommand: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        },
+        gm: {
+            enabled: true,
+            adminOnly: true,
+            requireTag: [],
+        }
     },
     autoPunishment: {
         bypasslist: [],

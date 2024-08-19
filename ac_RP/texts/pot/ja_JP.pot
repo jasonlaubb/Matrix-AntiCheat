@@ -776,6 +776,26 @@ msgstr "構成データベースから構成データを正常に回復しまし
 msgid "Close the chat and open the inventory to manage the inventory of the selected player."
 msgstr "チャットを閉じてインベントリを開いて、選択したプレーヤーのインベントリを見れます"
 
+#: directaction.success
+msgid "%1 has scuessfully finished the direct action to %2"
+msgstr ""
+
+#: runcommand.banned
+msgid "You cannot run a banned command."
+msgstr ""
+
+#: runcommand.failed
+msgid "Failed to run the command."
+msgstr ""
+
+#: runcommand.success
+msgid "Sucessfully run the command."
+msgstr ""
+
+#: gm.success
+msgid "Sucessfully changed the gamemode to %s"
+msgstr ""
+
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
 msgstr "§r§l§bMatrix §eUI§r"

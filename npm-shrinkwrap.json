@@ -7,7 +7,7 @@
             "name": "matrix-anticheat",
             "dependencies": {
                 "@minecraft/server": "^1.14.0-beta.1.21.20-stable",
-                "@minecraft/server-ui": "^1.3.0-beta.1.21.20-stable",
+                "@minecraft/server-ui": "^1.2.0",
                 "fs": "^0.0.1-security",
                 "gettext-parser": "^8.0.0",
                 "path": "^0.12.7",
@@ -31,12 +31,12 @@
             }
         },
         "node_modules/@minecraft/server-ui": {
-            "version": "1.3.0-rc.1.21.30-preview.22",
-            "resolved": "https://registry.npmjs.org/@minecraft/server-ui/-/server-ui-1.3.0-rc.1.21.30-preview.22.tgz",
-            "integrity": "sha512-hbGfToRYI596yfrIY+WcIYUMMMgaLMNclP4iNIzIytKXBA6AYkJbPBE3TXuwHZhgSV+8gKFUmAZDGIdknQXsJQ==",
+            "version": "1.2.0",
+            "resolved": "https://registry.npmjs.org/@minecraft/server-ui/-/server-ui-1.2.0.tgz",
+            "integrity": "sha512-5TNs9mp7jW1nbcybobL0Kmnc4ioOuadp9ys7hHna1lS0rYT0ssC7Ba6bZc+xb7QhIaVsxtt8ChZwOP+paT44ww==",
             "dependencies": {
                 "@minecraft/common": "^1.0.0",
-                "@minecraft/server": "^1.3.0"
+                "@minecraft/server": "^1.2.0"
             }
         },
         "node_modules/@minecraft/server-ui/node_modules/@minecraft/server": {
