@@ -19,6 +19,7 @@ registerCommand({
         const config = c();
         const sourcePassword = config.commands.passwordSetting.usingHash ? SHA256(oldPassword).toString() : oldPassword;
         const correctPassword = config.commands.passwordSetting.usingHash ? SHA256(config.commands.passwordSetting.hash).toString() : config.commands.passwordSetting.password;
+        player.sendMessage(sourcePassword + "\n" + correctPassword + "\n" + SHA256("i").toString());
         if (sourcePassword != correctPassword) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "passwords.wrong", with: [] });
         sendRawText(world, { text: "§bMatrix §7>§g " }, { translate: "passwords.changed", with: [] });
 
