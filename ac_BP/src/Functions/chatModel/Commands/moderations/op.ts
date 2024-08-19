@@ -35,9 +35,10 @@ registerCommand({
             player.lastOpTry = now;
 
             const password: string = args[0];
-            const correctPassword: string = config.commands.passwordSetting.usingHash ? config.commands.passwordSetting.password : String(SHA256(config.commands.passwordSetting.password));
+            const sourcePassword = config.commands.passwordSetting.usingHash ? SHA256(password).toString() : password;
+            const correctPassword: string = config.commands.passwordSetting.usingHash ? config.commands.passwordSetting.password : SHA256(config.commands.passwordSetting.password).toString();
 
-            if (String(SHA256(password)) == correctPassword) {
+            if (sourcePassword == correctPassword) {
                 player.setDynamicProperty("isAdmin", true);
                 sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "op.now" });
             } else {
