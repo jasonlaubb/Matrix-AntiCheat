@@ -36,7 +36,7 @@ registerCommand({
 
             const password: string = args[0];
             const sourcePassword = config.commands.passwordSetting.usingHash ? password : SHA256(password).toString();
-            const correctPassword: string = config.commands.passwordSetting.usingHash ? config.commands.passwordSetting.password : SHA256(config.commands.passwordSetting.hash).toString();
+            const correctPassword: string = config.commands.passwordSetting.usingHash ? config.commands.passwordSetting.password : config.commands.passwordSetting.hash;
             player.sendMessage(sourcePassword + "\n" + correctPassword);
             if (sourcePassword == correctPassword) {
                 player.setDynamicProperty("isAdmin", true);
