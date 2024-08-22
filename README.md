@@ -24,7 +24,7 @@
     <a href="https://jasonlaubb.github.io/Matrix-AntiCheat/" target="_blank">
         <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/images/learn_more.png">
     </a>
-    <h1>Hack prevention<h1>
+    <h1>Hack prevention</h1>
     <ul>
         <li>Motion Fly</li>
         <li>Phase</li>
