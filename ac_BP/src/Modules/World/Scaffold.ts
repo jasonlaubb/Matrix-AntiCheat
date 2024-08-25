@@ -181,7 +181,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     if (!player.hasTag(AnimationControllerTags.attackTime) && !detected) {
         system.run(async () => {
             let hasAttackTime = false;
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 28; i++) {
                 await system.waitTicks(1);
                 if (player.hasTag(AnimationControllerTags.attackTime)) {
                     hasAttackTime = true;

@@ -97,7 +97,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
                 let tick = 0;
                 const id = system.runInterval(() => {
                     tick++;
-                    if (tick > 10) {
+                    if (tick > 28) {
                         system.clearRun(id);
                         resolve(true);
                     }
