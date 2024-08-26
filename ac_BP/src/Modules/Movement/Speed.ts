@@ -65,11 +65,15 @@ async function AntiSpeed(config: configi, player: Player) {
     // start complex things
     // changing value when needed to avoid false postives
     if (solidBlock) data.speedMaxV = config.antiSpeed.inSolidThreshold;
-    if (now - data.lastAttack < 1000) data.speedMaxV = config.antiSpeed.damageThreshold;
-    if (now - data.lastAttack > 1000 && !solidBlock) data.speedMaxV = config.antiSpeed.commonThreshold;
+    if (now - data.lastFight < 1000) data.speedMaxV = config.antiSpeed.damageThreshold;
+    if (now - data.lastFight > 1000 && !solidBlock) data.speedMaxV = config.antiSpeed.commonThreshold;
     // checking if the player didnt got flagged then save location
     if (xz - player.lastXZLogged < data.speedMaxV && now - data.lastOutOfRange > 900 && player.lastXZLogged - xz < data.speedMaxV) {
         data.speedData = player.location;
+    }
+    if ((xz - player.lastXZLogged < speedMaxV[player.id] && Math.abs(xz - lastLastLoggedV.get(player.id)) > 0.4) || Date.now() - data.lastReset <= 350){
+        if (!(Date.now() - data.lastReset <= 350)) data.lastReset = 0
+        delete  data.flagNumber
     }
     // check if the player flagged for if the difference between now and last velocity more than the maxvalue in one tick
     // velocityDifferent = difference between last and now velocity
@@ -90,12 +94,9 @@ async function AntiSpeed(config: configi, player: Player) {
         !player.getComponent("riding")?.entityRidingOn &&
         velocityDifferent > data.speedMaxV &&
         now - data.lastReset >= 100 &&
-        velocityDifferent - data.lastVelocity < 0.3 &&
-        notSpikeLagging &&
-        now - data.lastFight > 800
+        notSpikeLagging
     ) {
         if (lagOnlyCondition) {
-            data.lastReset = now;
             player.teleport(safePos);
         } else {
             data.firstTrigger ??= now;
@@ -106,7 +107,7 @@ async function AntiSpeed(config: configi, player: Player) {
             // Teleport the player to last position
             // Minimum time given to flag
             if (now - data.firstTrigger < data.currentFlagCombo) {
-                if (data.flagNumber > config.antiSpeed.maxFlagInDuration) {
+                if ( velocityDifferent - data.lastVelocity < 0.3 && data.flagNumber > config.antiSpeed.maxFlagInDuration) {
                     freezeTeleport(player, safePos);
                     data.currentFlagCombo += config.antiSpeed.flagDurationIncrase;
                     flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);
@@ -142,10 +143,8 @@ async function AntiSpeed(config: configi, player: Player) {
         const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7; // Test from Prax client (flying)
         // Speed/B - Check if player has illegal motion frequency
         const flagCondition = highMotionFlag || flyMotionFlag;
-        const isNearlyReset = data.lastReset && now - data.lastReset < 6000;
         if (
             !bypassMovementCheck(player) &&
-            !isNearlyReset &&
             !illegalEffect &&
             notSpikeLagging &&
             now - data.lastRiding > 3500 &&
