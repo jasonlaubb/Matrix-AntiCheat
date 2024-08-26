@@ -181,16 +181,21 @@ system.runInterval(async () => {
 
         const sl = spikeLaggingData.get(player.id) ?? {
             lastLocation: player.location,
-            time: 0,
+            recievedPackets: 0,
+            second: Date.now(),
             isSpikeLagging: false,
         };
         const verticalSpeed = Math.hypot(v.x, v.z);
         const clientServerDifference = Math.abs(verticalSpeed - Math.hypot(sl.lastLocation.x - player.location.x, sl.lastLocation.z - player.location.z));
-        if (clientServerDifference > 0.5) {
-            sl.time++;
+        if (clientServerDifference < 0.3) {
+            sl.recievedPackets++
         }
-        if (clientServerDifference < 0.5 && sl.time <= 4 && sl.time > 0) {
-            sl.isSpikeLagging = true;
+        const ping = ((1000/sl.rP-50)*10).toFixed(0)
+        if (second - Date.now() >= 1000) {
+            if (ping >= 500)
+               sl.isSpikeLagging = true;
+            sl.second = Date.now();
+            sl.recievedPackets = 0
         }
         sl.lastLocation = player.location;
         spikeLaggingData.set(player.id, sl);
