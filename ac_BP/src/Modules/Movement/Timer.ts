@@ -46,7 +46,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
         if (dBLFN <= 10000) data.flagCounter =+ 1
         else data.flagCounter = 0
         //if the dBLFN is lower than the given value flag
-        if (getMsPerTick() > 42 && !isSpikeLagging(player) && ((data.flagCounter > 2 && timerLog[player.id] >= 3 ) || (data.flagCounter> 5 && dBVD > maxDBVD[player.id])))
+        if (getMsPerTick() > 42 && ((data.flagCounter > 2 && timerLog[player.id] >= 3 ) || (data.flagCounter> 5 && dBVD > maxDBVD[player.id])))
             flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
         //lag back the player
         if (dBVD >= 3 || data.flagCounter >= 3)
