@@ -3,10 +3,21 @@ import { flag } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules";
 import { AnimationControllerTags } from "../../Data/EnumData";
 /**
- * @author jasonlaubb
+ * @author jasonlaubb && RaMiGamerDev
  * @description Detect the suspicious aiming
  */
 
+function disableAllActions(player: Player){
+    if (player.hastTag("matrix:pvp-disabled")) return
+   player.addTag(`matrix:pvp-disabled`)
+   player.addTag(`matrix:place-disabled`)
+   player.addTag(`matrix:break-disabled`)
+ system.runTimeout(() => {
+    player.removeTag(`matrix:pvp-disabled`)
+    player.removeTag(`matrix:place-disabled`)
+    player.removeTag(`matrix:break-disabled`)
+ }, 160)
+}
 const aimData: Map<string, AimData> = new Map();
 
 function antiAim(config: configi, player: Player) {
@@ -14,29 +25,25 @@ function antiAim(config: configi, player: Player) {
     const { x: rotationX, y: rotationY } = player.getRotation();
     if (!data) {
         aimData.set(player.id, {
-            previousRotSpeedY: 0,
-            previousRotSpeedX: 0,
+            aimBFlags: 0,
+            aimAFlags: 0,
             lastRotationX: rotationX,
             lastRotationY: rotationY,
             previousRotationX: undefined,
             previousRotationY: undefined,
-            straightRotContinue: 0,
-            similarRotContinue: 0,
             vibrateRotContinue: 0,
             lastRotDifferent: 0,
         });
         return;
     } else if (!data?.previousRotationX || player.getComponent("riding")?.entityRidingOn || player.isSleeping || player.isSwimming || player.isGliding) {
         aimData.set(player.id, {
-            previousRotSpeedY: data.previousRotSpeedY,
-            previousRotSpeedX: data.previousRotSpeedX,
+            aimBFlags: 0,
+            aimAFlags: 0,
             lastRotationX: rotationX,
             lastRotationY: rotationY,
-            previousRotationX: data.lastRotationX,
-            previousRotationY: data.lastRotationY,
-            straightRotContinue: data.straightRotContinue,
-            similarRotContinue: data.similarRotContinue,
-            vibrateRotContinue: data.vibrateRotContinue,
+            previousRotationX: undefined,
+            previousRotationY: undefined,
+            similarRotContinue: 0,
             lastRotDifferent: 0,
         });
         return;
@@ -45,90 +52,59 @@ function antiAim(config: configi, player: Player) {
     const rotSpeedY = Math.abs(rotationY - data.lastRotationY);
     const lastRotSpeedX = Math.abs(rotationX - data.previousRotationX);
     const lastRotSpeedY = Math.abs(rotationY - data.previousRotationY!);
+    let flagged
     // Integer rotation
-    if ((rotationX % 5 == 0 && rotationX != 0 && Math.abs(rotationX) != 90) || (rotationY % 5 == 0 && rotationY != 0)) {
-        if (!player.hasTag(AnimationControllerTags.riding)) {
-            flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, ["RotationX" + ":" + rotationX, "RotationY" + ":" + rotationY]);
+    if (rotationX == rotationX.toFixed(2) && (rotationX != 0 || rotationX == 0 && rotSpeedY > 1) || rotationY == rotationY.toFixed(2) && (rotationY != 0 || rotationY == 0 && rotSpeedX > 0 )) {
+        data.aimAFlags++
+        if (data.aimAFlags > 1 || !(rotationX == 0 && rotSpeedY > 1 || rotationY == 0 && rotSpeedX > 1)) {
+           flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotationX") + ":" + rotationX, lang(">RotationY") + ":" + rotationY]);
+           flagged = true
+           data.aimAFlags = 0
         }
-    }
-    // Interger rot speed
-    if ((rotSpeedX % 1 == 0 && rotSpeedX != 0) || (rotSpeedY % 1 == 0 && rotSpeedY != 0)) {
-        flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
-    }
+    } else data.aimAFlags = 0
+    // smooth rotation
+    if ((rotSpeedX > 0.0001 && rotSpeedX < 1 && (rotSpeedY > 0.7 || rotSpeedY < 0.1) || rotSpeedY > 0.0001 && rotSpeedY < 1 && (rotSpeedX > 0.7 || rotSpeedX < 0.1)) && !(rotSpeedX > 7 || rotSpeedY > 14)) {
+        data.aimBFlags++
+        if (data.aimBFlags >= 20) {
+           flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
+           data.aimBFlags = 0
+           flagged = true
+        }
+    } else data.aimBFlags = 0
     // Straight rotation movement
-    if (
-        (rotSpeedY > 0 && Math.abs(lastRotSpeedY - rotSpeedY) > 0.1 && ((rotSpeedX < 0.05 && rotSpeedX > 0.001) || rotSpeedX == 0)) ||
-        (rotSpeedX > 0 && Math.abs(lastRotSpeedX - rotSpeedX) > 0.1 && ((rotSpeedY < 0.05 && rotSpeedY > 0.001) || rotSpeedY == 0) && !player.isSwimming)
-    ) {
-        data.straightRotContinue++;
-        if (data.straightRotContinue > 20) {
-            flag(player, "Aim", "C", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
-            data.straightRotContinue = 0;
-        }
-    } else data.straightRotContinue = 0;
-    // Similar rotation movement
-    if (rotSpeedX > 0 && rotSpeedY > 0 && rotSpeedY > 35 && Math.abs(lastRotSpeedX - rotSpeedX) < 0.01 && Math.abs(rotationX) < 79) {
-        data.similarRotContinue++;
-        if (data.similarRotContinue > 5) {
-            flag(player, "Aim", "D", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
-            data.similarRotContinue = 0;
-        }
-    } else data.similarRotContinue = 0;
-    // Vibrate rotation movement
-    if ((lastRotSpeedY - rotSpeedY > 0 && data.lastRotDifferent < 0) || (lastRotSpeedY - rotSpeedY < 0 && data.lastRotDifferent > 0)) {
+    if (lastRotSpeedY - rotSpeedY > 0 && data.lastRotDifferent < 0 || lastRotSpeedY - rotSpeedY < 0 && data.lastRotDifferent > 0) {
         data.vibrateRotContinue++;
         if (data.vibrateRotContinue >= 15) {
-            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, ["RotSpeedX" + ":" + rotSpeedX, "RotSpeedY" + ":" + rotSpeedY]);
+            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
             data.vibrateRotContinue = 0;
+            flagged = true
         }
-    } else data.vibrateRotContinue = 0;
+    }
+    else
+        data.vibrateRotContinue = 0;
     data.lastRotDifferent = rotationX - data.lastRotationX;
-    // Killaura reset point check
-    if ((rotationX == 0 || rotationX % 90 == 0) && Math.abs(rotationY) % 90 == 0) {
-        flag(player, "Aim", "F", config.antiAim.maxVL, config.antiAim.punishment, undefined);
-    }
-    const unnaturalRots =
-        (rotationX.toString() == rotationX.toFixed(2) && (rotationX != 0 || (rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0))) ||
-        (rotationY.toString() == rotationY.toFixed(2) && rotationY != 0) ||
-        (rotSpeedX.toString() == rotSpeedX.toFixed(1) && rotSpeedX > 10) ||
-        (rotSpeedY.toString() == rotSpeedY.toFixed(1) && rotSpeedY > 20);
-    if (unnaturalRots) {
-        flag(player, "Aim", "G", config.antiAim.maxVL, config.antiAim.punishment, undefined);
-    }
-
-    const instantRot =
-        (data.previousRotSpeedX <= 0.03 && lastRotSpeedX >= 15 && lastRotSpeedX <= 140 && rotSpeedX <= 0.03 && (rotationX != 0 || (rotSpeedY > 0 && data.lastRotationX == 0 && rotationX == 0))) ||
-        (data.previousRotSpeedY <= 0.03 && lastRotSpeedY >= 30 && lastRotSpeedY <= 260 && rotSpeedY <= 0.03 && (rotationY != 0 || (rotSpeedX > 0 && data.lastRotationY == 0 && rotationY == 0)));
-    if (instantRot) {
-        flag(player, "Aim", "H", config.antiAim.maxVL, config.antiAim.punishment, undefined);
-    }
-    data.previousRotSpeedX = lastRotSpeedX;
-    data.previousRotSpeedY = lastRotSpeedY;
+    if (flagged) disableAllActions(player)
     aimData.set(player.id, {
-        previousRotSpeedY: data.previousRotSpeedY,
-        previousRotSpeedX: data.previousRotSpeedX,
+        aimBFlags: 0,
+        aimAFlags: 0,
         lastRotationX: rotationX,
         lastRotationY: rotationY,
         previousRotationX: data.lastRotationX,
         previousRotationY: data.lastRotationY,
-        straightRotContinue: data.straightRotContinue,
-        similarRotContinue: data.similarRotContinue,
         vibrateRotContinue: data.vibrateRotContinue,
         lastRotDifferent: Math.abs(rotationX - data.lastRotationX),
     });
 }
 
 interface AimData {
+    aimBFlags: number,
+    aimAFlags: number,
     lastRotationX: number;
     lastRotationY: number;
     previousRotationX?: number;
     previousRotationY?: number;
-    straightRotContinue: number;
-    similarRotContinue: number;
     vibrateRotContinue: number;
     lastRotDifferent: number;
-    previousRotSpeedY: number;
-    previousRotSpeedX: number;
 }
 
 // Register the module.
