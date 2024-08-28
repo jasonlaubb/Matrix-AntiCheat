@@ -181,32 +181,18 @@ system.runInterval(async () => {
 
         const sl = spikeLaggingData.get(player.id) ?? {
             lastLocation: player.location,
-            time: 0,
             isSpikeLagging: false,
         };
-        const verticalSpeed = Math.hypot(v.x, v.z);
-        const clientServerDifference = Math.abs(verticalSpeed - Math.hypot(sl.lastLocation.x - player.location.x, sl.lastLocation.z - player.location.z));
-        if (clientServerDifference > 0.5) {
-            sl.time++;
-        }
-        if (clientServerDifference < 0.5 && sl.time <= 4 && sl.time > 0) {
-            sl.isSpikeLagging = true;
-        }
+        const velocity = Math.hypot(v.x, v.z);
+        const distance = Math.hypot(sl.lastLocation.x - player.location.x, sl.lastLocation.z - player.location.z)
+        const ping = Math.abs(1000-(velocity*1000/distance)).toFixed(0)
+            if (ping >= 500)
+               sl.isSpikeLagging = true;
+        else  sl.isSpikeLagging = false
         sl.lastLocation = player.location;
         spikeLaggingData.set(player.id, sl);
     }
 });
-
-system.runInterval(() => {
-    const players = world.getAllPlayers();
-    for (const player of players) {
-        const sl = spikeLaggingData.get(player.id)!;
-        sl.isSpikeLagging = false;
-        sl.time = 0;
-        spikeLaggingData.set(player.id, sl);
-    }
-}, 20);
-
 export function isSpikeLagging(player: Player) {
     return spikeLaggingData.get(player.id)?.isSpikeLagging ?? false;
 }

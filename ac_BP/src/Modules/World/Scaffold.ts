@@ -92,10 +92,23 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         //diag scaffold check
         //false postive: very low | efficiency: high
         //calculate the extender
-        const extender = Math.hypot(x - player.location.x, z - player.location.z) - 0.5;
-        if (rotation.x > 60) data.avgExt = 1;
-        else data.avgExt = (60 - rotation.x) / 10 + 1;
-        if (rotation.x <= 20) data.avgExt = 8;
+    let actualXLoc
+    let actualZLoc
+    const xLoc = Math.abs(x - player.location.x)-0.2
+    const zLoc = Math.abs(z - player.location.z)-0.2
+    const xLoc2 = Math.abs(x + (xLoc*2)  - player.location.x)
+    const zLoc2 = Math.abs(z + (zLoc*2) - player.location.z)
+    if(xLoc2 > xLoc) actualXLoc = xLoc + 1
+    else actualXLoc = xLoc
+    if(zLoc2 > zLoc) actualZLoc = zLoc + 1
+    else actualZLoc = zLoc
+    let extender = Math.hypot(actualXLoc, actualZLoc)
+    if (rotation.x > 60)
+        data.maxExt = 1;
+    else
+        data.maxExt = (60 - rotation.x) / 10 + 1;
+    if (rotation.x <= 20)
+        data.maxExt = 8;
         const { x: velocityX, z: velocityZ } = player.getVelocity();
         const xz = Math.hypot(velocityX, velocityZ);
         //choosing maximum diag speed
@@ -144,15 +157,17 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
                 }
             } else data.scaffoldFlagsG = 0;
             //scaffold/H: check for invalid low extender with low rotation
-            if (data.avgExt - extender >= 1.5 && (!player.isOnGround || extender > 1) && data.avgExt != 8) {
-                data.scaffoldFlagsH++;
-                if (data.scaffoldFlagsH >= 3) {
-                    flag(player, "Scaffold", "H", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block" + ":" + block.typeId]);
-                    data.scaffoldFlagsH = 0;
-                    detected = true;
-                }
-            } else data.scaffoldFlagsH = 0;
+           if (rotation.x < 50 && extender < 1 && extender > 0 && !player.isOnGround) {
+            data.scaffoldFlagsH++;
+            if (data.scaffoldFlagsH >= 3) {
+                flag(player, "Scaffold", "H", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+                data.scaffoldFlagsH = 0;
+                detected = true;
+            }
         }
+        else
+            data.scaffoldFlagsH = 0;
+    }
         //all of this checks are new so idk how much is false postive rate but efficiency is good
         const underBlockUnder = block.dimension.getBlock({ x: x, y: y - 1, z: z });
         data.blockLog ??= [];
