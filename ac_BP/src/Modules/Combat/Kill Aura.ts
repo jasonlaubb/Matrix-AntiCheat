@@ -218,6 +218,7 @@ function intickEvent(config: configi, player: Player) {
     if (rotations.x.length > 20) {
         rotations.y.shift();
         rotations.x.shift();
+        player.onScreenDisplay.setActionBar(`${rotations.y.map(a => a.toFixed(2)).join(" | ")}`);
     }
     data.rotations = rotations;
     if (isDetected) {
