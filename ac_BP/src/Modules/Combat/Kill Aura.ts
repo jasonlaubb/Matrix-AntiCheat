@@ -122,13 +122,9 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
             if (rotations.x.length >= 10) {
                 const hMove = Math.abs(MathUtil.calculateDifferentSum(rotations.y));
                 const vMove = Math.abs(MathUtil.calculateDifferentSum(rotations.x));
-                const situration = [
-                    hMove > 2.1 && hMove < 11.5 && vMove > 5.3,
-                    hMove > 2.1 && hMove < 3.5 && vMove > 1.2 && vMove < 3,
-                    hMove > 5.2 && hMove < 8 && vMove < 2.8 && vMove > 2.25
-                ]
-                if (situration.some(s => s) && MathUtil.trackIncreasing(rotations.x)) {
-                    flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
+                const situration = returnSituration(hMove, vMove, player);
+                if (situration >= 0 && MathUtil.trackIncreasing(rotations.x)) {
+                    flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Case:" + situration.toString()]);
                 }
                 player.sendMessage("H: " + hMove.toFixed(2) + " | V: " + vMove.toFixed(2) + " | T: " + MathUtil.trackIncreasing(rotations.x));
             }
@@ -307,3 +303,23 @@ registerModule(
         },
     }
 );
+
+function returnSituration (hMove: number, vMove: number, player: Player) {
+    const cases = [
+        Math.abs(hMove - vMove) < 1 && hMove < 6 && vMove < 6 && player.isSprinting && player.hasTag(AnimationControllerTags.moving),
+        hMove < 1 && vMove < 1 && hMove > 0.01 && vMove > 0.01, // Low v move
+        hMove > 32 && hMove < 50 && vMove < 2 && vMove > 0.2, // High h move
+        hMove < 6.4 && hMove > 4 && vMove > 0.6 && vMove < 0.8,
+        hMove > 2.1 && hMove < 11.5 && vMove > 5.3,
+        hMove > 2.1 && hMove < 3.5 && vMove > 1.2 && vMove < 3,
+        hMove > 5.2 && hMove < 8 && vMove < 2.8 && vMove > 2.25,
+        hMove > 7.1 && hMove < 10 && hMove < 0.79 && vMove > 0.6 && vMove < 0.7,
+        hMove < 2.2 && hMove > 1.5 && (vMove > 0.36 && vMove < 0.43 || vMove > 0.65 && vMove < 0.77),
+        hMove < 0.1 && hMove > 0.03 && vMove > 2.2 && vMove < 2.5,
+        hMove > 16 && hMove < 25 && vMove > 3 && vMove < 6,
+        hMove > 6 && hMove < 9 && vMove < 0.3 && vMove > 0.15,
+        hMove > 6 && hMove < 12 && vMove > 1 && vMove < 2, // Low v move II
+        hMove > 0.2 && hMove < 0.8 && vMove > 0.7 && vMove < 1.5,
+    ]
+    return cases.findIndex(x => x);
+}

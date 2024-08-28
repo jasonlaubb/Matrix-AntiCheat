@@ -35,7 +35,7 @@ interface ScaffoldData {
 }
 const scaffoldData = new Map<string, ScaffoldData>();
 function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPlaceBlockAfterEvent) {
-    if (isAdmin(player) || player.hasTag(DisableTags.place)) return;
+    if (isAdmin(player) || player.hasTag(DisableTags.place) || player.isFlying) return;
     let data = scaffoldData.get(player.id);
     const { x, y, z } = block.location;
     const now = Date.now();
