@@ -4,6 +4,7 @@ import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags, DisableTags } from "../../Data/EnumData.js";
 import { isSpikeLagging } from "../../Assets/Public.js";
+import MathUtil from "../../Assets/MathUtil.js";
 
 /**
  * @author ravriv & jasonlaubb & RaMiGamerDev
@@ -225,9 +226,7 @@ function calculateAngle(attacker: Vector3, target: Vector3, attackerV: Vector3, 
         z: target.z - targetV.z * 0.5,
     } as Vector3;
 
-    let angle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / Math.PI - rotation - 90;
-    angle = angle <= -180 ? (angle += 360) : angle;
-    return Math.abs(angle);
+    return MathUtil.caulateAngle(pos1, pos2, rotation);
 }
 
 // Register the module

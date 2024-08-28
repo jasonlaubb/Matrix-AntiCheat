@@ -71,9 +71,9 @@ async function AntiSpeed(config: configi, player: Player) {
     if (xz - player.lastXZLogged < data.speedMaxV && now - data.lastOutOfRange > 900 && player.lastXZLogged - xz < data.speedMaxV) {
         data.speedData = player.location;
     }
-    if ((xz - player.lastXZLogged < speedMaxV[player.id] && Math.abs(xz - lastLastLoggedV.get(player.id)) > 0.4) || Date.now() - data.lastReset <= 350){
-        if (!(Date.now() - data.lastReset <= 350)) data.lastReset = 0
-        delete  data.flagNumber
+    if ((xz - player.lastXZLogged < data.speedMaxV && Math.abs(xz - data.lastLastLoggedV) > 0.4) || Date.now() - data.lastReset <= 350) {
+        if (!(Date.now() - data.lastReset <= 350)) data.lastReset = 0;
+        delete data.flagNumber;
     }
     // check if the player flagged for if the difference between now and last velocity more than the maxvalue in one tick
     // velocityDifferent = difference between last and now velocity
@@ -87,15 +87,7 @@ async function AntiSpeed(config: configi, player: Player) {
     const notSpikeLagging = !isSpikeLagging(player);
     const lagOnlyCondition = getMsPerTick() < 44.5;
     // Speed/A - Checks if the player has high velocity different.
-    if (
-        !bypassMovementCheck(player) &&
-        !illegalEffect &&
-        !player.hasTag(AnimationControllerTags.riding) &&
-        !player.getComponent("riding")?.entityRidingOn &&
-        velocityDifferent > data.speedMaxV &&
-        now - data.lastReset >= 100 &&
-        notSpikeLagging
-    ) {
+    if (!bypassMovementCheck(player) && !illegalEffect && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && notSpikeLagging) {
         if (lagOnlyCondition) {
             player.teleport(safePos);
         } else {
@@ -107,7 +99,7 @@ async function AntiSpeed(config: configi, player: Player) {
             // Teleport the player to last position
             // Minimum time given to flag
             if (now - data.firstTrigger < data.currentFlagCombo) {
-                if ( velocityDifferent - data.lastVelocity < 0.3 && data.flagNumber > config.antiSpeed.maxFlagInDuration) {
+                if (velocityDifferent - data.lastVelocity < 0.3 && data.flagNumber > config.antiSpeed.maxFlagInDuration) {
                     freezeTeleport(player, safePos);
                     data.currentFlagCombo += config.antiSpeed.flagDurationIncrase;
                     flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);

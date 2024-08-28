@@ -130,7 +130,6 @@ const tps = new Tps();
 export { tps, getMsPerTick };
 interface SpikeLaggingData {
     lastLocation: Vector3;
-    time: number;
     isSpikeLagging: boolean;
 }
 let mspertick = 50;
@@ -146,7 +145,7 @@ system.runInterval(async () => {
     if (tpsAmountData.length > 20) tpsAmountData.shift();
     let tpsNow: number = 0;
     tpsAmountData.forEach((period) => (tpsNow += period));
-    tps.updateTps((20 / 1000) * tpsNow);
+    tps.updateTps(0.02 * tpsNow);
     const players = world.getAllPlayers();
     for (const player of players) {
         // knockback
@@ -184,11 +183,10 @@ system.runInterval(async () => {
             isSpikeLagging: false,
         };
         const velocity = Math.hypot(v.x, v.z);
-        const distance = Math.hypot(sl.lastLocation.x - player.location.x, sl.lastLocation.z - player.location.z)
-        const ping = Math.abs(1000-(velocity*1000/distance)).toFixed(0)
-            if (ping >= 500)
-               sl.isSpikeLagging = true;
-        else  sl.isSpikeLagging = false
+        const distance = Math.hypot(sl.lastLocation.x - player.location.x, sl.lastLocation.z - player.location.z);
+        const ping = MathUtil.calculatePing(distance, velocity);
+        if (ping >= 500) sl.isSpikeLagging = true;
+        else sl.isSpikeLagging = false;
         sl.lastLocation = player.location;
         spikeLaggingData.set(player.id, sl);
     }
@@ -198,6 +196,7 @@ export function isSpikeLagging(player: Player) {
 }
 
 import allProperty from "../Data/ValidPlayerProperty";
+import MathUtil from "./MathUtil";
 
 world.beforeEvents.playerLeave.subscribe(({ player }) => {
     // delete all property saved

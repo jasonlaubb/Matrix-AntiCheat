@@ -1,6 +1,6 @@
 import { Player, Vector3 } from "@minecraft/server";
 import { bypassMovementCheck, c, flag } from "../../Assets/Util.js";
-import { getMsPerTick, isSpikeLagging, tps } from "../../Assets/Public.js";
+import { getMsPerTick, tps } from "../../Assets/Public.js";
 import { configi, registerModule } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
 import { freezeTeleport } from "./NoClip.js";
@@ -19,6 +19,7 @@ interface timerData {
     yLog: number;
     yDisLog: number;
     flagCounter: number;
+    lastHighTeleport: number;
 }
 const timerData = new Map<string, timerData>();
 /** @description Return that player is spike lagging */
@@ -39,18 +40,17 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
     //check if dBVD lower than 1 and higher than 0.5 add one to timerLog and when timerLog reach 3 flag (check for low timer)
     if ((dBVD < data.maxDBVD && dBVD > 20 / (tps.getTps()! * 2)) || (dBVD2 < data.maxDBVD && dBVD2 > 20 / (tps.getTps()! * 2))) data.timerLog++;
     else data.timerLog = 0;
-    if (!bypassMovementCheck(player) && (((dBVD > data.maxDBVD || dBVD2 > data.maxDBVD) && now - data.lastFlag >= 1025) || data.timerLog >= config.antiTimer.minTimerLog)) {
+    if (!bypassMovementCheck(player) && now - data.lastHighTeleport >= 5000 && (((dBVD > data.maxDBVD || dBVD2 > data.maxDBVD) && now - data.lastFlag >= 1025) || data.timerLog >= config.antiTimer.minTimerLog)) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - data.lastFlag;
         //counting how many times did the player got detected in 10 seconds
-        if (dBLFN <= 10000) data.flagCounter =+ 1
-        else data.flagCounter = 0
+        if (dBLFN <= 10000) data.flagCounter = +1;
+        else data.flagCounter = 0;
         //if the dBLFN is lower than the given value flag
-        if (getMsPerTick() > 42 && ((data.flagCounter > 2 && timerLog[player.id] >= 3 ) || (data.flagCounter> 5 && dBVD > maxDBVD[player.id])))
+        if (getMsPerTick() > 42 && ((data.flagCounter > 2 && data.timerLog >= 3) || (data.flagCounter > 5 && dBVD > data.maxDBVD)))
             flag(player, "Timer", "A", config.antiTimer.maxVL, config.antiTimer.punishment, ["blockPerSecond" + ":" + (data.disLog * 2).toFixed(2)]);
         //lag back the player
-        if (dBVD >= 3 || data.flagCounter >= 3)
-        freezeTeleport(player, data.safeZone);
+        if (dBVD >= 3 || data.flagCounter >= 3) freezeTeleport(player, data.safeZone);
         //setting new lastFlag
         data.lastFlag = now;
     }

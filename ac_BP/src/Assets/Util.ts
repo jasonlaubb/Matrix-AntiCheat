@@ -5,6 +5,7 @@ import { Translate } from "./Language";
 import Dynamic from "../Functions/Config/dynamic_config";
 import { Action } from "./Action";
 import { MatrixUsedTags } from "../Data/EnumData";
+import MathUtil from "./MathUtil";
 
 /**
  * @author jasonlaubb
@@ -205,10 +206,10 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
 }
 
 function msToTime(ms: number) {
-    const seconds = Math.trunc((ms / 1000) % 60);
-    const minutes = Math.trunc((ms / 60000) % 60);
-    const hours = Math.trunc((ms / 3600000) % 24);
-    const days = Math.trunc(ms / 86400000);
+    const seconds = Math.trunc((ms / MathUtil.ms.second) % 60);
+    const minutes = Math.trunc((ms / MathUtil.ms.minute) % 60);
+    const hours = Math.trunc((ms / MathUtil.ms.hour) % 24);
+    const days = Math.trunc(ms / MathUtil.ms.day);
 
     return { days, hours, minutes, seconds };
 }
@@ -216,7 +217,7 @@ function msToTime(ms: number) {
 function isTargetGamemode(player: Player, gamemode: number) {
     const gamemodes: GameMode[] = [GameMode.survival, GameMode.creative, GameMode.adventure, GameMode.spectator];
 
-    return [...world.getPlayers({ name: player.name, gameMode: gamemodes[gamemode] })].length != 0;
+    return player.getGameMode() == gamemodes[gamemode];
 }
 
 function getGamemode(playerName: string) {
@@ -255,19 +256,19 @@ function timeToMs(timeStr: string) {
         const unit = str[str.length - 1];
         switch (unit) {
             case "s": {
-                ms += value * 1000;
+                ms += value * MathUtil.ms.second;
                 break;
             }
             case "m": {
-                ms += value * 60000;
+                ms += value * MathUtil.ms.minute;
                 break;
             }
             case "h": {
-                ms += value * 3600000;
+                ms += value * MathUtil.ms.hour;
                 break;
             }
             case "d": {
-                ms += value * 86400000;
+                ms += value * MathUtil.ms.day;
                 break;
             }
             default:
