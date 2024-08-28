@@ -99,7 +99,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
                 let tick = 0;
                 const id = system.runInterval(() => {
                     tick++;
-                    if (tick > 28) {
+                    if (tick > 12) {
                         system.clearRun(id);
                         resolve(true);
                     }
@@ -113,6 +113,20 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
                     flag(player, "Kill Aura", "J", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["DetectingMs:" + (Date.now() - startDetectingTime)]);
                 }
             });
+        }
+    } else {
+        // KillAura/H
+        const tickdata = lastRotateData.get(player.id);
+        if (tickdata) {
+            const rotations = tickdata.rotations;
+            if (rotations.x.length >= 10) {
+                const hMove = Math.abs(MathUtil.calculateDifferentSum(rotations.y));
+                const vMove = Math.abs(MathUtil.calculateDifferentSum(rotations.x));
+                if (hMove > 2.1 && hMove < 11.5 && vMove > 5.3 && MathUtil.trackIncreasing(rotations.x)) {
+                    flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
+                }
+                player.sendMessage("H: " + hMove.toFixed(2) + " | V: " + vMove.toFixed(2) + " | T: " + MathUtil.trackIncreasing(rotations.x));
+            }
         }
     }
 
@@ -154,9 +168,21 @@ function intickEvent(config: configi, player: Player) {
     const raycast = player.getEntitiesFromViewDirection()[0];
     const { x: verticalRotation, y: horizontalRotation } = player.getRotation();
     const playerVelocity = player.getVelocity();
+    const rotations = data.rotations;
+    rotations.x.push(verticalRotation);
+    rotations.y.push(horizontalRotation);
+    if (rotations.x.length > 10) {
+        rotations.y.shift();
+        rotations.x.shift();
+        const averageRotateY = MathUtil.calculateDifferentSum(rotations.y)
+        const averageRotate = MathUtil.calculateDifferentSum(rotations.x);
+        player.onScreenDisplay.setActionBar(`Average Move X: ${averageRotate.toFixed(2)}\nAverage Move Y: ${averageRotateY.toFixed(2)}\nTrack increasing: ${MathUtil.trackIncreasing(rotations.y)}`);
+
+    }
+    data.rotations = rotations;
     try {
         const yPitch = Math.abs(data.verticalR - verticalRotation);
-        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: yPitch, invalidPitch: undefined!, kAFlags: undefined!, rotations: { x: []as number[], y: []as number[] } });
+        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: yPitch, invalidPitch: undefined!, kAFlags: undefined!, rotations: data.rotations });
     } catch {
         lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: undefined!, invalidPitch: undefined!, kAFlags: undefined!, rotations: { x: []as number[], y: []as number[] } });
     }
@@ -212,15 +238,6 @@ function intickEvent(config: configi, player: Player) {
         isDetected = true;
         flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["PitchDifferent:" + toFixed(yPitch - data.lastPitch, 5, true)]);
     }
-    const rotations = data.rotations;
-    rotations.x.push(verticalRotation);
-    rotations.y.push(horizontalRotation);
-    if (rotations.x.length > 20) {
-        rotations.y.shift();
-        rotations.x.shift();
-        player.onScreenDisplay.setActionBar(`${rotations.y.map(a => a.toFixed(2)).join(" | ")}`);
-    }
-    data.rotations = rotations;
     if (isDetected) {
         player.addTag(DisableTags.pvp);
         system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
@@ -261,7 +278,7 @@ function calculateAngle(attacker: Vector3, target: Vector3, attackerV: Vector3, 
 registerModule(
     "antiKillAura",
     false,
-    [killauradata],
+    [killauradata, lastRotateData],
     {
         intick: async (config, player) => intickEvent(config, player),
         tickInterval: 1,
@@ -279,7 +296,7 @@ registerModule(
         worldSignal: world.afterEvents.entityHitEntity,
         playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
         then: async (config, event: EntityHitEntityAfterEvent) => {
-            if (event.hitEntity instanceof Player && !isAdmin(event.hitEntity)) {
+            if (!isAdmin(event.damagingEntity as Player)) {
                 doubleEvent(config, event.damagingEntity as Player, event.hitEntity, false);
             }
         },

@@ -28,4 +28,28 @@ export default class {
     public static calculatePing(velocity: number, distance: number): number {
         return Math.trunc(Math.abs(1000 - (velocity * 1000) / distance));
     }
+    public static calculateDifferentSum(numberArray: number[]): number {
+        return numberArray.slice(1).reduce((sum, current, index) => sum + (current - numberArray[index]), 0) / (numberArray.length - 1);
+    }
+    public static trackIncreasing (numberArray: number[]): boolean {
+        let increasing = false;
+        let combo = 0;
+        let maxCombo = 0;
+        for (let i = 0; i < numberArray.length - 1; i++) {
+            if (numberArray[i] < numberArray[i + 1]) {
+                combo = 0;
+            } else {
+                combo++;
+            }
+            if (combo > 3) {
+                if (combo > maxCombo) {
+                    maxCombo = combo;
+                }
+            }
+        }
+        if (maxCombo > 3 && maxCombo < 6) {
+            increasing = true;
+        }
+        return increasing;
+    }
 }
