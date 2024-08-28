@@ -71,39 +71,38 @@ async function AntiSpeed(config: configi, player: Player) {
     if (xz - player.lastXZLogged < data.speedMaxV && now - data.lastOutOfRange > 900 && player.lastXZLogged - xz < data.speedMaxV) {
         data.speedData = player.location;
     }
-    if ((xz - player.lastXZLogged < data.speedMaxV && Math.abs(xz - data.lastLastLoggedV) > 0.4) || Date.now() - data.lastReset <= 350) {
-        if (!(Date.now() - data.lastReset <= 350)) data.lastReset = 0;
+    if ((xz - player.lastXZLogged < data.speedMaxV && Math.abs(xz - data.lastLastLoggedV) > 0.6) || Date.now() - data.lastReset <= 350) {
+        if (!(Date.now() - data.lastReset <= 350)) data.lastReset = Date.now();
         delete data.flagNumber;
     }
     // check if the player flagged for if the difference between now and last velocity more than the maxvalue in one tick
     // velocityDifferent = difference between last and now velocity
     const velocityDifferent = xz - player.lastXZLogged;
     const velDiffOutOfRange = velocityDifferent > data.speedMaxV;
-    if (velDiffOutOfRange && now - data.lastReset >= 100) {
+    if (velDiffOutOfRange && now - data.lastReset >= 350) {
+        data.flagNumber ??= 0;
+        data.flagNumber++;
         data.lastOutOfRange = now;
+        data.firstTrigger ??= now;
+        data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
     }
     const speedEffect = player.getEffect(MinecraftEffectTypes.Speed)?.amplifier;
     const illegalEffect = speedEffect && hasIllegalSpeedEffect(player, speedEffect);
     const notSpikeLagging = !isSpikeLagging(player);
     const lagOnlyCondition = getMsPerTick() < 44.5;
     // Speed/A - Checks if the player has high velocity different.
-    if (!bypassMovementCheck(player) && !illegalEffect && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && velocityDifferent > data.speedMaxV && now - data.lastReset >= 100 && notSpikeLagging) {
+    if (!bypassMovementCheck(player) && !illegalEffect && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && player.lastXZLogged - xz > data.speedMaxV && now - data.lastReset >= 350 && notSpikeLagging) {
         if (lagOnlyCondition) {
             player.teleport(safePos);
         } else {
-            data.firstTrigger ??= now;
-            data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
-            data.flagNumber ??= 0;
-            data.flagNumber++;
-            data.lastReset = now;
             // Teleport the player to last position
             // Minimum time given to flag
             if (now - data.firstTrigger < data.currentFlagCombo) {
-                if (velocityDifferent - data.lastVelocity < 0.3 && data.flagNumber > config.antiSpeed.maxFlagInDuration) {
+                if (player.lastXZLogged - xz - data.lastVelocity < 0.3 && data.flagNumber > config.antiSpeed.maxFlagInDuration) {
                     freezeTeleport(player, safePos);
                     data.currentFlagCombo += config.antiSpeed.flagDurationIncrase;
                     flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);
-                } else {
+                } else if (((player.lastXZLogged - xz > data.speedMaxV + 1 || (solidBlock && player.lastXZLogged - xz > data.speedMaxV + 0.2)) && data.flagNumber >= 1) || player.lastXZLogged - x >= 25) {
                     player.teleport(safePos);
                 }
             } else {
@@ -116,7 +115,7 @@ async function AntiSpeed(config: configi, player: Player) {
     // saving last high velocity
     if (velocityDifferent > data.speedMaxV) data.lastVelocity = velocityDifferent;
     // saving last normal velocity before beeing flagged
-    if (velocityDifferent < data.speedMaxV) data.lastLastLoggedV = player.lastXZLogged;
+    if (velocityDifferent > data.speedMaxV) data.lastLastLoggedV = player.lastXZLogged;
     const { x: x1, z: z1 } = player.location;
     const { x: x2, z: z2 } = data.lastLocation;
     const moveDistance = Math.hypot(x1 - x2, z1 - z2);
