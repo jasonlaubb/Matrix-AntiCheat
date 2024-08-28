@@ -122,9 +122,12 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
             if (rotations.x.length >= 10) {
                 const hMove = Math.abs(MathUtil.calculateDifferentSum(rotations.y));
                 const vMove = Math.abs(MathUtil.calculateDifferentSum(rotations.x));
-                const bigEntity = hMove > 2.1 && hMove < 11.5 && vMove > 5.3;
-                const smallEntity = hMove > 2.1 && hMove < 3.5 && vMove > 1.2 && vMove < 3; 
-                if ((bigEntity || smallEntity) && MathUtil.trackIncreasing(rotations.x)) {
+                const situration = [
+                    hMove > 2.1 && hMove < 11.5 && vMove > 5.3,
+                    hMove > 2.1 && hMove < 3.5 && vMove > 1.2 && vMove < 3,
+                    hMove > 5.2 && hMove < 8 && vMove < 2.8 && vMove > 2.25
+                ]
+                if (situration.some(s => s) && MathUtil.trackIncreasing(rotations.x)) {
                     flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
                 }
                 player.sendMessage("H: " + hMove.toFixed(2) + " | V: " + vMove.toFixed(2) + " | T: " + MathUtil.trackIncreasing(rotations.x));
