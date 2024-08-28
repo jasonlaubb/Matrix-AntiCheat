@@ -212,7 +212,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
       if (now - data.lastPlace < 75) {
         data.scaffoldFlagsK++;
         if (data.scaffoldFlagsK >= 5) {
-            flag(player, "Scaffold", "K", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+            flag(player, "Scaffold", "K", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`Block:${block.typeId}`]);
             data.scaffoldFlagsK = 0;
             detected = true;
         }
@@ -223,7 +223,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     if (now - data.lastPlace < 175) {
         data.scaffoldFlagsL++;
         if (data.scaffoldFlagsL >= 10) {
-            flag(player, "Scaffold", "L", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`${lang(">Block")}:${block.typeId}`]);
+            flag(player, "Scaffold", "L", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`Block:${block.typeId}`]);
             data.scaffoldFlagsL = 0;
             detected = true;
         }
