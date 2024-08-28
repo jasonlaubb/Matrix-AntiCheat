@@ -333,6 +333,11 @@ export default {
         maxEntityHit: 2,
         punishment: "tempkick",
         maxVL: 4,
+        // For Anti KillAura Type K
+        trackLength: 10,
+        maxIncreasingCombos: 7,
+        minIncreasingCombos: 3,
+        silentData: false,
     },
     antiReach: {
         enabled: true,

@@ -17,6 +17,7 @@ interface KillAuraData {
     lastFlag: number;
     invalidPitch: number;
     kAFlags: number;
+    lastFlagK: number;
 }
 
 const killauradata = new Map<string, KillAuraData>();
@@ -26,6 +27,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
     const data = killauradata.get(player.id) ?? {
         hitLength: [],
         lastFlag: 0,
+        lastFlagK: 0,
         invalidPitch: 0,
         kAFlags: 0,
     };
@@ -119,14 +121,19 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         const tickdata = lastRotateData.get(player.id);
         if (tickdata) {
             const rotations = tickdata.rotations;
-            if (rotations.x.length >= 10) {
+            if (rotations.x.length >= config.antiKillAura.trackLength) {
                 const hMove = Math.abs(MathUtil.calculateDifferentSum(rotations.y));
                 const vMove = Math.abs(MathUtil.calculateDifferentSum(rotations.x));
                 const situration = returnSituration(hMove, vMove, player);
-                if (situration >= 0 && MathUtil.trackIncreasing(rotations.x)) {
-                    flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Case:" + situration.toString()]);
+                const isComming = MathUtil.trackIncreasing(rotations.x, config.antiKillAura.minIncreasingCombos, config.antiKillAura.maxIncreasingCombos);
+                // Efficiency: mid, false positive: low
+                if (situration >= 0 && isComming) {
+                    const now = Date.now();
+                    if (!config.antiKillAura.silentData) flagged = true;
+                    flag(player, "Kill Aura", "K", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Case:" + situration.toString()]);
+                    data.lastFlagK = now;
                 }
-                player.sendMessage("H: " + hMove.toFixed(2) + " | V: " + vMove.toFixed(2) + " | T: " + MathUtil.trackIncreasing(rotations.x));
+                if (isComming) player.sendMessage("H: " + hMove.toFixed(2) + " | V: " + vMove.toFixed(2) + " | T: " + MathUtil.comparing(hMove, vMove));
             }
         }
     }
@@ -137,6 +144,8 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
             player.removeTag(DisableTags.pvp);
         }, config.antiKillAura.timeout);
     }
+
+    killauradata.set(player.id, data);
 }
 
 interface LastRotateData {
@@ -172,13 +181,9 @@ function intickEvent(config: configi, player: Player) {
     const rotations = data.rotations;
     rotations.x.push(verticalRotation);
     rotations.y.push(horizontalRotation);
-    if (rotations.x.length > 10) {
+    if (rotations.x.length > config.antiKillAura.trackLength) {
         rotations.y.shift();
         rotations.x.shift();
-        const averageRotateY = MathUtil.calculateDifferentSum(rotations.y)
-        const averageRotate = MathUtil.calculateDifferentSum(rotations.x);
-        player.onScreenDisplay.setActionBar(`Average Move X: ${averageRotate.toFixed(2)}\nAverage Move Y: ${averageRotateY.toFixed(2)}\nTrack increasing: ${MathUtil.trackIncreasing(rotations.y)}`);
-
     }
     data.rotations = rotations;
     try {
@@ -305,21 +310,17 @@ registerModule(
 );
 
 function returnSituration (hMove: number, vMove: number, player: Player) {
+    const mutiple = MathUtil.comparing(hMove, vMove)
     const cases = [
-        Math.abs(hMove - vMove) < 1 && hMove < 6 && vMove < 6 && player.isSprinting && player.hasTag(AnimationControllerTags.moving),
-        hMove < 1 && vMove < 1 && hMove > 0.01 && vMove > 0.01, // Low v move
-        hMove > 32 && hMove < 50 && vMove < 2 && vMove > 0.2, // High h move
-        hMove < 6.4 && hMove > 4 && vMove > 0.6 && vMove < 0.8,
+        Math.abs(hMove - vMove) < 1 && hMove > 0.1 && hMove < 6 && vMove > 0.1 && vMove < 6 && mutiple > 0.3 && mutiple <= 0.7 && player.isSprinting && player.hasTag(AnimationControllerTags.moving),
+        hMove < 1 && vMove < 1 && hMove > 0.12 && vMove > 0.12 && mutiple > 0.3 && mutiple <= 0.7, // Low v move
+        hMove < 6.4 && hMove > 4 && vMove > 0.6 && vMove < 0.8 && mutiple > 0.18,
         hMove > 2.1 && hMove < 11.5 && vMove > 5.3,
-        hMove > 2.1 && hMove < 3.5 && vMove > 1.2 && vMove < 3,
-        hMove > 5.2 && hMove < 8 && vMove < 2.8 && vMove > 2.25,
-        hMove > 7.1 && hMove < 10 && hMove < 0.79 && vMove > 0.6 && vMove < 0.7,
-        hMove < 2.2 && hMove > 1.5 && (vMove > 0.36 && vMove < 0.43 || vMove > 0.65 && vMove < 0.77),
-        hMove < 0.1 && hMove > 0.03 && vMove > 2.2 && vMove < 2.5,
-        hMove > 16 && hMove < 25 && vMove > 3 && vMove < 6,
-        hMove > 6 && hMove < 9 && vMove < 0.3 && vMove > 0.15,
+        hMove > 2.1 && hMove < 3.5 && vMove > 1.2 && vMove < 3 && mutiple <= 0.5,
+        hMove > 16 && hMove < 25 && vMove > 3 && vMove < 6 && mutiple > 0.2,
         hMove > 6 && hMove < 12 && vMove > 1 && vMove < 2, // Low v move II
-        hMove > 0.2 && hMove < 0.8 && vMove > 0.7 && vMove < 1.5,
+        hMove > 17 && hMove < 60 && vMove < 1 && vMove > 0.01, // Averge
+        hMove > 10 && vMove < 5 && mutiple > 0.3 && mutiple <= 0.5,
     ]
     return cases.findIndex(x => x);
 }

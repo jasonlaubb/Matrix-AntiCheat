@@ -31,7 +31,7 @@ export default class {
     public static calculateDifferentSum(numberArray: number[]): number {
         return numberArray.slice(1).reduce((sum, current, index) => sum + (current - numberArray[index]), 0) / (numberArray.length - 1);
     }
-    public static trackIncreasing (numberArray: number[]): boolean {
+    public static trackIncreasing (numberArray: number[], min: number, max: number): boolean {
         let increasing = false;
         let combo = 0;
         let maxCombo = 0;
@@ -41,15 +41,18 @@ export default class {
             } else {
                 combo++;
             }
-            if (combo > 3) {
+            if (combo >= min) {
                 if (combo > maxCombo) {
                     maxCombo = combo;
                 }
             }
         }
-        if (maxCombo > 3 && maxCombo < 6) {
+        if (maxCombo >= min && maxCombo <= max) {
             increasing = true;
         }
         return increasing;
+    }
+    public static comparing (a: number, b: number) {
+        return Math.min(a / b, b / a);
     }
 }
