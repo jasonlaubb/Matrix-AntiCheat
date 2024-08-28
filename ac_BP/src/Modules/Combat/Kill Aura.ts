@@ -4,6 +4,7 @@ import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags, DisableTags } from "../../Data/EnumData.js";
 import { isSpikeLagging } from "../../Assets/Public.js";
+import { Type } from "../../Assets/Util.js";
 import MathUtil from "../../Assets/MathUtil.js";
 
 /**
@@ -123,23 +124,41 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
     }
 }
 
-/*interface LastRotateData {
+interface LastRotateData {
     horizonR: number;
     verticalR: number;
     lastVel: Vector3;
-}*/
-const lastRotateData = new Map();
+    lastPitch: number;
+    kAFlags: Type | number;
+    invalidPitch: number;
+    rotations: {
+        x: number[],
+        y: number[],
+    };
+}
+const lastRotateData = new Map<string, LastRotateData>();
 function intickEvent(config: configi, player: Player) {
-    const data = lastRotateData.get(player.id);
+    const data = lastRotateData.get(player.id) ?? {
+        horizonR: 0,
+        verticalR: 0,
+        lastVel: 0,
+        lastPitch: 0,
+        kAFlags: undefined!,
+        invalidPitch: 0,
+        rotations: {
+            x: []as number[],
+            y: []as number[],
+        },
+    };
     const pos1 = player.getHeadLocation();
     const raycast = player.getEntitiesFromViewDirection()[0];
     const { x: verticalRotation, y: horizontalRotation } = player.getRotation();
     const playerVelocity = player.getVelocity();
     try {
         const yPitch = Math.abs(data.verticalR - verticalRotation);
-        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: yPitch });
+        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: yPitch, invalidPitch: undefined!, kAFlags: undefined!, rotations: { x: []as number[], y: []as number[] } });
     } catch {
-        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity });
+        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: undefined!, invalidPitch: undefined!, kAFlags: undefined!, rotations: { x: []as number[], y: []as number[] } });
     }
     if (!raycast) return;
     const nearestPlayer = raycast?.entity;
@@ -155,16 +174,16 @@ function intickEvent(config: configi, player: Player) {
     const rotatedMove = Math.abs(data.horizonR - horizontalRotation);
     const yPitch = Math.abs(data.verticalR - verticalRotation);
     const instantRot = rotatedMove > 60;
-    if (Math.abs(yPitch - data.lastPitch) > 1 && Math.abs(yPitch - data.lastPitch) < 3 && ((verticalRotation < 0 && moveY + floatY > 0) || (verticalRotation > 0 && moveY + floatY < 0)) && move > 0.1) data.invalidPitch++;
+    if (Math.abs(yPitch - data.lastPitch!) > 1 && Math.abs(yPitch - data.lastPitch!) < 3 && ((verticalRotation < 0 && moveY + floatY > 0) || (verticalRotation > 0 && moveY + floatY < 0)) && move > 0.1) data.invalidPitch++;
     else data.invalidPitch = 0;
     if ((rotatedMove > 0 && rotatedMove < 60 && move > 0) || instantRot) {
-        data.kAFlags++;
+        (data.kAFlags as number)++;
         if (instantRot) data.kAFlags = "G";
     } else if ((rotatedMove == 0 && move > 0) || (rotatedMove > 0 && move == 0) || rotatedMove > 40) data.kAFlags = 0;
     //   player.onScreenDisplay.setActionBar(`${Math.abs(yPitch - data.lastPitch)}`)
     let isDetected = false;
     //killaura/F check for head rotation
-    if (data.kAFlags >= 40) {
+    if ((data.kAFlags as number) >= 40) {
         isDetected = true;
         flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + toFixed(horizontalAngle, 5, true)]);
         data.kAFlags = 0;
@@ -193,6 +212,14 @@ function intickEvent(config: configi, player: Player) {
         isDetected = true;
         flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["PitchDifferent:" + toFixed(yPitch - data.lastPitch, 5, true)]);
     }
+    const rotations = data.rotations;
+    rotations.x.push(verticalRotation);
+    rotations.y.push(horizontalRotation);
+    if (rotations.x.length > 20) {
+        rotations.y.shift();
+        rotations.x.shift();
+    }
+    data.rotations = rotations;
     if (isDetected) {
         player.addTag(DisableTags.pvp);
         system.runTimeout(() => player.removeTag(DisableTags.pvp), config.antiKillAura.timeout);
