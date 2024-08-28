@@ -19,12 +19,15 @@ function calculateDistance(b1: Entity, b2: Entity) {
     const velocityB1 = Math.abs(x1) + Math.abs(z1);
     const velocityB2 = Math.abs(x2) + Math.abs(z2);
 
-    //calculate the defference between the two players's location and the velocity
+    //calculate the defference between the two players's location and the velocity*
     const dx: number = b1.location.x - b2.location.x - velocityB1;
     const dz: number = b1.location.z - b2.location.z - velocityB2;
 
     //calculate the distance and return it
-    return Math.floor(Math.hypot(dx, dz)) - (velocityB1 + velocityB2);
+
+    let distance: number = Math.hypot(dx, dz) - (velocityB1 + velocityB2);
+    if (velocityB2 >= 0.7)  distance -= velocityB1 + velocityB2
+    return distance
 }
 
 function antiReach(hurtEntity: Player, damagingEntity: Player, config: configi) {
@@ -46,7 +49,7 @@ function antiReach(hurtEntity: Player, damagingEntity: Player, config: configi) 
 
     //constant the distance
     const distance: number = calculateDistance(damagingEntity, hurtEntity);
-
+    
     let data = reachData.get(damagingEntity.id);
 
     //if the distance is higher than the max reach or the y reach is higher than the max y reach, add a vl
