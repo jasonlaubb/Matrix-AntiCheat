@@ -81,7 +81,8 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
             data.lastFlag = Date.now();
         }
     }
-
+    // Only check for killaura for PVP, no PVE :p
+    if (state)
     if (onFirstHit == true) {
         /* Just an idea
         const entityInDirection = player.getEntitiesFromViewDirection

@@ -63,7 +63,7 @@ function playerHitDammy(player: Player, config: configi, dammyY: number) {
     }
     data.amount++;
     if (data.amount >= config.antiAura.minHitRequired) {
-        flag(player, "Aura", "A", config.antiAura.maxVL, config.antiAura.punishment, ["distanceY:" + (dammyY - player.location.y).toFixed(2)]);
+        flag(player, "Mob Aura", "A", config.antiAura.maxVL, config.antiAura.punishment, ["distanceY:" + (dammyY - player.location.y).toFixed(2)]);
     }
     auraData.set(player.id, data);
     // Prevent the crash (max 3 dammy entity)
