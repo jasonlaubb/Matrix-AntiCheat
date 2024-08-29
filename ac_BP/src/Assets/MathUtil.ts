@@ -28,7 +28,7 @@ export default class {
     public static calculateDifferentSum(numberArray: number[]): number {
         return numberArray.slice(1).reduce((sum, current, index) => sum + (current - numberArray[index]), 0) / (numberArray.length - 1);
     }
-    public static trackIncreasing (numberArray: number[], min: number, max: number): boolean {
+    public static trackIncreasing(numberArray: number[], min: number, max: number): boolean {
         let increasing = false;
         let combo = 0;
         let maxCombo = 0;
@@ -49,10 +49,10 @@ export default class {
         }
         return increasing;
     }
-    public static comparing (a: number, b: number) {
+    public static comparing(a: number, b: number) {
         return Math.min(a / b, b / a);
     }
-    public static randomOffset (min: number, max: number): VectorXZ {
+    public static randomOffset(min: number, max: number): VectorXZ {
         return { x: Math.random() * (max - min) + min, z: Math.random() * (max - min) + min };
     }
 }

@@ -91,7 +91,15 @@ async function AntiSpeed(config: configi, player: Player) {
     const notSpikeLagging = !isSpikeLagging(player);
     const lagOnlyCondition = getMsPerTick() < 44.5;
     // Speed/A - Checks if the player has high velocity different.
-    if (!bypassMovementCheck(player) && !illegalEffect && !player.hasTag(AnimationControllerTags.riding) && !player.getComponent("riding")?.entityRidingOn && player.lastXZLogged - xz > data.speedMaxV && now - data.lastReset >= 350 && notSpikeLagging) {
+    if (
+        !bypassMovementCheck(player) &&
+        !illegalEffect &&
+        !player.hasTag(AnimationControllerTags.riding) &&
+        !player.getComponent("riding")?.entityRidingOn &&
+        player.lastXZLogged - xz > data.speedMaxV &&
+        now - data.lastReset >= 350 &&
+        notSpikeLagging
+    ) {
         if (lagOnlyCondition) {
             player.teleport(safePos);
         } else {

@@ -156,8 +156,8 @@ interface LastRotateData {
     kAFlags: Type | number;
     invalidPitch: number;
     rotations: {
-        x: number[],
-        y: number[],
+        x: number[];
+        y: number[];
     };
 }
 const lastRotateData = new Map<string, LastRotateData>();
@@ -170,8 +170,8 @@ function intickEvent(config: configi, player: Player) {
         kAFlags: undefined!,
         invalidPitch: 0,
         rotations: {
-            x: []as number[],
-            y: []as number[],
+            x: [] as number[],
+            y: [] as number[],
         },
     };
     const pos1 = player.getHeadLocation();
@@ -190,7 +190,7 @@ function intickEvent(config: configi, player: Player) {
         const yPitch = Math.abs(data.verticalR - verticalRotation);
         lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: yPitch, invalidPitch: undefined!, kAFlags: undefined!, rotations: data.rotations });
     } catch {
-        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: undefined!, invalidPitch: undefined!, kAFlags: undefined!, rotations: { x: []as number[], y: []as number[] } });
+        lastRotateData.set(player.id, { horizonR: horizontalRotation, verticalR: verticalRotation, lastVel: playerVelocity, lastPitch: undefined!, invalidPitch: undefined!, kAFlags: undefined!, rotations: { x: [] as number[], y: [] as number[] } });
     }
     if (!raycast) return;
     const nearestPlayer = raycast?.entity;
@@ -309,8 +309,8 @@ registerModule(
     }
 );
 
-function returnSituration (hMove: number, vMove: number, player: Player) {
-    const mutiple = MathUtil.comparing(hMove, vMove)
+function returnSituration(hMove: number, vMove: number, player: Player) {
+    const mutiple = MathUtil.comparing(hMove, vMove);
     const cases = [
         Math.abs(hMove - vMove) < 1 && hMove > 0.1 && hMove < 6 && vMove > 0.1 && vMove < 6 && mutiple > 0.3 && mutiple <= 0.7 && player.isSprinting && player.hasTag(AnimationControllerTags.moving),
         hMove < 1 && vMove < 1 && hMove > 0.12 && vMove > 0.12 && mutiple > 0.3 && mutiple <= 0.7, // Low v move
@@ -321,6 +321,6 @@ function returnSituration (hMove: number, vMove: number, player: Player) {
         hMove > 6 && hMove < 12 && vMove > 1 && vMove < 2, // Low v move II
         hMove > 17 && hMove < 60 && vMove < 1 && vMove > 0.01, // Averge
         hMove > 10 && vMove < 5 && mutiple > 0.3 && mutiple <= 0.5,
-    ]
-    return cases.findIndex(x => x);
+    ];
+    return cases.findIndex((x) => x);
 }

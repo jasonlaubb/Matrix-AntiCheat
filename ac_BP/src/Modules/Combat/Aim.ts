@@ -7,16 +7,16 @@ import { DisableTags } from "../../Data/EnumData";
  * @description Detect the suspicious aiming
  */
 
-function disableAllActions(player: Player){
-    if (player.hasTag(DisableTags.pvp)) return
-   player.addTag(DisableTags.pvp)
-   player.addTag(DisableTags.place)
-   player.addTag(DisableTags.break)
- system.runTimeout(() => {
-    player.removeTag(DisableTags.pvp)
-    player.removeTag(DisableTags.place)
-    player.removeTag(DisableTags.break)
- }, 160)
+function disableAllActions(player: Player) {
+    if (player.hasTag(DisableTags.pvp)) return;
+    player.addTag(DisableTags.pvp);
+    player.addTag(DisableTags.place);
+    player.addTag(DisableTags.break);
+    system.runTimeout(() => {
+        player.removeTag(DisableTags.pvp);
+        player.removeTag(DisableTags.place);
+        player.removeTag(DisableTags.break);
+    }, 160);
 }
 const aimData: Map<string, AimData> = new Map();
 
@@ -52,38 +52,36 @@ function antiAim(config: configi, player: Player) {
     const rotSpeedY = Math.abs(rotationY - data.lastRotationY);
     //const lastRotSpeedX = Math.abs(rotationX - data.previousRotationX);
     const lastRotSpeedY = Math.abs(rotationY - data.previousRotationY!);
-    let flagged
+    let flagged;
     // Integer rotation
-    if (rotationX == toFixed(rotationX, 2) && (rotationX != 0 || rotationX == 0 && rotSpeedY > 1) || rotationY == toFixed(rotationY, 2) && (rotationY != 0 || rotationY == 0 && rotSpeedX > 0 )) {
-        data.aimAFlags++
-        if (data.aimAFlags > 1 || !(rotationX == 0 && rotSpeedY > 1 || rotationY == 0 && rotSpeedX > 1)) {
-           flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [(">RotationX") + ":" + rotationX, (">RotationY") + ":" + rotationY]);
-           flagged = true
-           data.aimAFlags = 0
+    if ((rotationX == toFixed(rotationX, 2) && (rotationX != 0 || (rotationX == 0 && rotSpeedY > 1))) || (rotationY == toFixed(rotationY, 2) && (rotationY != 0 || (rotationY == 0 && rotSpeedX > 0)))) {
+        data.aimAFlags++;
+        if (data.aimAFlags > 1 || !((rotationX == 0 && rotSpeedY > 1) || (rotationY == 0 && rotSpeedX > 1))) {
+            flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [">RotationX" + ":" + rotationX, ">RotationY" + ":" + rotationY]);
+            flagged = true;
+            data.aimAFlags = 0;
         }
-    } else data.aimAFlags = 0
+    } else data.aimAFlags = 0;
     // smooth rotation
-    if ((rotSpeedX > 0.0001 && rotSpeedX < 1 && (rotSpeedY > 0.7 || rotSpeedY < 0.1) || rotSpeedY > 0.0001 && rotSpeedY < 1 && (rotSpeedX > 0.7 || rotSpeedX < 0.1)) && !(rotSpeedX > 7 || rotSpeedY > 14)) {
-        data.aimBFlags++
+    if (((rotSpeedX > 0.0001 && rotSpeedX < 1 && (rotSpeedY > 0.7 || rotSpeedY < 0.1)) || (rotSpeedY > 0.0001 && rotSpeedY < 1 && (rotSpeedX > 0.7 || rotSpeedX < 0.1))) && !(rotSpeedX > 7 || rotSpeedY > 14)) {
+        data.aimBFlags++;
         if (data.aimBFlags >= 20) {
-           flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [(">RotSpeedX") + ":" + rotSpeedX, (">RotSpeedY") + ":" + rotSpeedY]);
-           data.aimBFlags = 0
-           flagged = true
+            flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [">RotSpeedX" + ":" + rotSpeedX, ">RotSpeedY" + ":" + rotSpeedY]);
+            data.aimBFlags = 0;
+            flagged = true;
         }
-    } else data.aimBFlags = 0
+    } else data.aimBFlags = 0;
     // Straight rotation movement
-    if (lastRotSpeedY - rotSpeedY > 0 && data.lastRotDifferent < 0 || lastRotSpeedY - rotSpeedY < 0 && data.lastRotDifferent > 0) {
+    if ((lastRotSpeedY - rotSpeedY > 0 && data.lastRotDifferent < 0) || (lastRotSpeedY - rotSpeedY < 0 && data.lastRotDifferent > 0)) {
         data.vibrateRotContinue++;
         if (data.vibrateRotContinue >= 15) {
-            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, [(">RotSpeedX") + ":" + rotSpeedX, (">RotSpeedY") + ":" + rotSpeedY]);
+            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, [">RotSpeedX" + ":" + rotSpeedX, ">RotSpeedY" + ":" + rotSpeedY]);
             data.vibrateRotContinue = 0;
-            flagged = true
+            flagged = true;
         }
-    }
-    else
-        data.vibrateRotContinue = 0;
+    } else data.vibrateRotContinue = 0;
     data.lastRotDifferent = rotationX - data.lastRotationX;
-    if (flagged) disableAllActions(player)
+    if (flagged) disableAllActions(player);
     aimData.set(player.id, {
         aimBFlags: 0,
         aimAFlags: 0,
@@ -97,8 +95,8 @@ function antiAim(config: configi, player: Player) {
 }
 
 interface AimData {
-    aimBFlags: number,
-    aimAFlags: number,
+    aimBFlags: number;
+    aimAFlags: number;
     lastRotationX: number;
     lastRotationY: number;
     previousRotationX?: number;

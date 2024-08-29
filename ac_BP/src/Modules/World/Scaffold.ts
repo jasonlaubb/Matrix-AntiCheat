@@ -208,17 +208,15 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             }
         });
     }
-     //scaffold/K: check for placing 5 or more blocks in one tick
-      if (now - data.lastPlace < 75) {
+    //scaffold/K: check for placing 5 or more blocks in one tick
+    if (now - data.lastPlace < 75) {
         data.scaffoldFlagsK++;
         if (data.scaffoldFlagsK >= 5) {
             flag(player, "Scaffold", "K", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`Block:${block.typeId}`]);
             data.scaffoldFlagsK = 0;
             detected = true;
         }
-    }
-    else
-        data.scaffoldFlagsK = 0;
+    } else data.scaffoldFlagsK = 0;
     //scaffold/L: check for fast placing
     if (now - data.lastPlace < 175) {
         data.scaffoldFlagsL++;
@@ -227,9 +225,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             data.scaffoldFlagsL = 0;
             detected = true;
         }
-    }
-     else
-        data.scaffoldFlagsL = 0;
+    } else data.scaffoldFlagsL = 0;
     data.lastX = x;
     data.lastZ = z;
     data.lastPlace = now;
