@@ -129,8 +129,10 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
                 // Efficiency: mid, false positive: low
                 if (situration >= 0 && isComming) {
                     const now = Date.now();
-                    if (!config.antiKillAura.silentData) flagged = true;
-                    flag(player, "Kill Aura", "K", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Case:" + situration.toString()]);
+                    if (now - data.lastFlagK < 3000) {
+                        if (!config.antiKillAura.silentData) flagged = true;
+                        flag(player, "Kill Aura", "K", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Case:" + situration.toString()]);
+                    }
                     data.lastFlagK = now;
                 }
                 // if (isComming) player.sendMessage("H: " + hMove.toFixed(2) + " | V: " + vMove.toFixed(2) + " | T: " + MathUtil.comparing(hMove, vMove));
