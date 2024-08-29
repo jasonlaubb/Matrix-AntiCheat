@@ -59,7 +59,7 @@ function antiAutoClickerB (config: configi, player: Player) {
     if (data.hitTimeList.length > 2) {
         data.hitTimeList.shift();
         const currentIntervalLevel = data.hitTimeList.reduce((a, b) => a + b, 0) / data.hitTimeList.length;
-        player.sendMessage(currentIntervalLevel.toFixed(2));
+        // player.sendMessage(currentIntervalLevel.toFixed(2));
         if (currentIntervalLevel < config.antiAutoClicker.minInterval) {
             player.applyDamage(6);
             if (now - data.lastflag < 9000) {
