@@ -3,28 +3,35 @@ import { configi, registerModule } from "../Modules";
 import MathUtil from "../../Assets/MathUtil";
 import { flag } from "../../Assets/Util";
 
+/**
+ * @author jasonlaubb
+ * @description Strongest Anti-Aura for Minecrft Bedrock, bypass any-type of anti bot hacks
+ * Detect if the player hit the dammy (with same entity id)
+ */
 async function auraCheck(config: configi, { damagingEntity, hitEntity: dammy }: EntityHitEntityAfterEvent) {
     const player = damagingEntity as Player;
-    let w;
-    try {
-        w = dammy.getDynamicProperty(player.id);
-    } catch {
-        w = false;
-    }
-    if (dammy.typeId == "minecraft:player" && w) {
+    if (isDammy(dammy, player.id)) {
         playerHitDammy(player, config);
     } else {
         playerStartCombat(player, config);
     }
 }
 
+function isDammy (dammy: Entity, playerId: string) {
+    let w;
+    try {
+        w = dammy.getDynamicProperty(playerId);
+    } catch {
+        w = false;
+    }
+    return w;
+}
+
 function playerStartCombat(player: Player, config: configi) {
     // Spawn the dammy
-    try {
-        if (!player.dimension.getEntities({ type: "minecraft:player" }).some((w) => w.getDynamicProperty(player.id))) {
-            spawnDammy(player.id, player.dimension, player.location, config);
-        }
-    } catch {}
+    if (!isDammy(player, player.id)) {
+        spawnDammy(player.id, player.dimension, player.location, config);
+    }
 }
 
 function spawnDammy(id: string, dimension: Dimension, loc: Vector3, config: configi): Entity {
@@ -60,15 +67,9 @@ function playerHitDammy(player: Player, config: configi) {
     }
     auraData.set(player.id, data);
     // Prevent the crash (max 3 dammy entity)
-    if (player.dimension.getEntities({ type: "minecraft:player" }).filter((w) => {
-        try {
-            const r = w.getDynamicProperty(player.id);
-            return r;
-        } catch {
-            return false;
-        }
-    }).length <= 2)
+    if (player.dimension.getEntities().filter(e => isDammy(e, player.id)).length < 3) {
         spawnDammy(player.id, player.dimension, player.location, config);
+    }
 }
 
 registerModule("antiAura", false, [auraData], {
