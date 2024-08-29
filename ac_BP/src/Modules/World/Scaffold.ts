@@ -229,6 +229,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     data.lastX = x;
     data.lastZ = z;
     data.lastPlace = now;
+    data.lastXRot = rotation.x;
     if (detected) {
         detectedAction(config, player, block);
     }
