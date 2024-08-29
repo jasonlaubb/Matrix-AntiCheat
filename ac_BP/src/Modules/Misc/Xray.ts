@@ -1,5 +1,5 @@
 import { PlayerBreakBlockAfterEvent, world } from "@minecraft/server";
-import { flag, isAdmin, isTargetGamemode, rawstr } from "../../Assets/Util";
+import { isAdmin, isTargetGamemode, rawstr } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 import { DisableTags } from "../../Data/EnumData";
 
@@ -15,7 +15,6 @@ function firstEvent(
 ) {
     if (isAdmin(player) || isTargetGamemode(player, 1) || id == "minecraft:air" || player.hasTag(DisableTags.break)) return;
     if (config.antiXray.notifyAt.some((type) => id.endsWith(type))) {
-        flag(player, "Xray", "A", 0, "none", ["Block" + ":" + id, "Break" + ":" + Object.values(location).join(" ")]);
         const admins = world.getPlayers();
         const rawmessage = new rawstr(true, "c").tra("xray.broken", player.name, id, Object.values(location).join(" ")).parse();
         admins
