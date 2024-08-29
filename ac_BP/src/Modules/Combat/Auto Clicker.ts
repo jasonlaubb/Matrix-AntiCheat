@@ -68,6 +68,7 @@ function antiAutoClickerB (config: configi, player: Player) {
             }, config.antiAutoClicker.timeout);
         }
     }
+    data.lastHitTime = now;
     clickDataB.set(player.id, data);
 }
 
@@ -89,12 +90,11 @@ registerModule(
         tickInterval: 20,
     },
     {
-        intick: async (config, player) => antiAutoClickerB(config, player),
-        tickInterval: 1,
-    },
-    {
         worldSignal: world.afterEvents.entityHitEntity,
         playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
-        then: async (config, event) => entityHitEntityAfterEvent(config, event),
+        then: async (config, event) => {
+            entityHitEntityAfterEvent(config, event)
+            antiAutoClickerB(config, event.damagingEntity as Player);
+        },
     }
 );
