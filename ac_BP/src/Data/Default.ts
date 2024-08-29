@@ -342,7 +342,7 @@ export default {
     antiAura: {
         enabled: true,
         minHitRequired: 3,
-        spawnHeightOffset: 1.2,
+        spawnHeightOffset: 1.6,
         spawnRadius: 2.5,
         comboTime: 15000,
         maxVL: 3,
