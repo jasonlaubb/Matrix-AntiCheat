@@ -339,6 +339,15 @@ export default {
         minIncreasingCombos: 3,
         silentData: false,
     },
+    antiAura: {
+        enabled: true,
+        minHitRequired: 3,
+        inCombatTimer: 3000,
+        spawnHeightOffset: 0.5,
+        spawnRadius: 4,
+        maxVL: 3,
+        punishment: "ban",
+    },
     antiReach: {
         enabled: true,
         maxReach: 4.21,
