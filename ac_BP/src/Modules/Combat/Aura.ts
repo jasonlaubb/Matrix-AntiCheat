@@ -5,8 +5,8 @@ import { flag } from "../../Assets/Util";
 
 async function auraCheck(config: configi, { damagingEntity, hitEntity: dammy }: EntityHitEntityAfterEvent) {
     const player = damagingEntity as Player;
-    if (dammy.typeId == "matrix:aura") {
-        playerHitDammy(player, dammy, config);
+    if (dammy.typeId == "minecraft:player" && dammy.getDynamicProperty(player.id)) {
+        playerHitDammy(player, config);
     } else {
         playerStartCombat(player, config);
     }
@@ -15,7 +15,7 @@ async function auraCheck(config: configi, { damagingEntity, hitEntity: dammy }: 
 function playerStartCombat(player: Player, config: configi) {
     // Spawn the dammy
     try {
-        if (!player.dimension.getEntities({ type: "matrix:aura" }).some((w) => w.getDynamicProperty(player.id))) {
+        if (!player.dimension.getEntities({ type: "minecraft:player" }).some((w) => w.getDynamicProperty(player.id))) {
             spawnDammy(player.id, player.dimension, player.location, config);
         }
     } catch {}
@@ -26,7 +26,7 @@ function spawnDammy(id: string, dimension: Dimension, loc: Vector3, config: conf
     const offset = MathUtil.randomOffset(config.antiAura.spawnRadius, -config.antiAura.spawnRadius);
     loc.x += offset.x;
     loc.z += offset.z;
-    const dammy = dimension.spawnEntity("matrix:aura", loc);
+    const dammy = dimension.spawnEntity("minecraft:player", loc);
     dammy.setDynamicProperty(id, true);
     return dammy;
 }
@@ -36,8 +36,7 @@ interface AuraData {
     amount: number;
 }
 const auraData = new Map<string, AuraData>();
-function playerHitDammy(player: Player, dammy: Entity, config: configi) {
-    if (!dammy.getDynamicProperty(player.id)) return;
+function playerHitDammy(player: Player, config: configi) {
     const now = Date.now();
     const data = auraData.get(player.id) ?? {
         firstHit: now,
@@ -54,7 +53,7 @@ function playerHitDammy(player: Player, dammy: Entity, config: configi) {
     }
     auraData.set(player.id, data);
     // Prevent the crash (max 3 dammy entity)
-    if (player.dimension.getEntities({ type: "matrix:aura" }).filter((w) => w.getDynamicProperty(player.id)).length <= 2)
+    if (player.dimension.getEntities({ type: "minecraft:player" }).filter((w) => w.getDynamicProperty(player.id)).length <= 2)
         spawnDammy(player.id, player.dimension, player.location, config);
 }
 

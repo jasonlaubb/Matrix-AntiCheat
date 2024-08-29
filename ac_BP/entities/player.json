@@ -4,7 +4,7 @@
         "description": {
             "identifier": "minecraft:player",
             "is_spawnable": false,
-            "is_summonable": false,
+            "is_summonable": true, // For adding a new dummy
             "is_experimental": false,
             "scripts": {
                 "animate": [
@@ -135,6 +135,63 @@
                     "power": 0,
                     "causes_fire": false,
                     "breaks_blocks": false
+                }
+            },
+            "matrix:dummy": {
+                "minecraft:damage_sensor": {
+                    "triggers": {
+                        "on_damage": {
+                            "event": "matrix:gethit"
+                        }
+                    }
+                },
+                // Kill the entities after 3 seconds
+                "minecraft:timer": {
+                    "time": 3,
+                    "looping": false,
+                    "time_down_event": {
+                        "event": "matrix:despawn",
+                        "target": "self"
+                    }
+                },
+                "minecraft:spell_effects": {
+                    // Add the slow falling effect (prevent the entity drop the void)
+                    "add_effects": [
+                        {
+                            "duration": 5,
+                            "effect": "slow_falling",
+                            "visible": false,
+                            "amplifier": 0
+                        },
+                        {
+                            "duration": 5,
+                            "effect": "fire_resistance",
+                            "visible": false,
+                            "amplifier": 0
+                        },
+                        {
+                            "duration": 5,
+                            "effect": "invisibility",
+                            "visible": false,
+                            "amplifier": 0
+                        }
+                    ]
+                }
+            },
+            "matrix:despawn": {
+                "minecraft:instant_despawn": {
+                    "remove_child_entities": true
+                }
+            },
+            "matrix:gethit": {
+                // Despawn the entity after a tick after the entity already get hit
+                "minecraft:timer": {
+                    "time": 0.05,
+                    "looping": false,
+                    "time_down_event": {
+                        "event": "matrix:despawn",
+                        "target": "self"
+                    }
                 }
             }
         },
@@ -538,7 +595,28 @@
             },
             "matrix:offhand_flag1": {},
             "matrix:offhand_flag2": {},
-            "matrix:offhand_flag3": {}
+            "matrix:offhand_flag3": {},
+            "matrix:despawn": {
+                "add": {
+                    "component_groups": [
+                        "matrix:despawn"
+                    ]
+                }
+            },
+            "matrix:gethit": {
+                "add": {
+                    "component_groups": [
+                        "matrix:gethit"
+                    ]
+                }
+            },
+            "matrix:dummy": {
+                "add": {
+                    "component_groups": [
+                        "matrix:dummy"
+                    ]
+                }
+            }
         }
     }
 }
