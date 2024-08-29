@@ -40,6 +40,37 @@ function antiAutoClicker(config: configi, player: Player) {
     clickData.set(id, filteredClicks);
 }
 
+interface ClickDataB {
+    lastHitTime: number;
+    hitTimeList: number[];
+}
+const clickDataB: Map<string, ClickDataB> = new Map();
+function antiAutoClickerB (config: configi, player: Player) {
+    const now = Date.now();
+    const data = clickDataB.get(player.id) ?? { lastHitTime: 0, hitTimeList: [] };
+    if (data.lastHitTime == 0) {
+        data.lastHitTime = now;
+        clickDataB.set(player.id, data);
+        return;
+    }
+    const hitInterval = now - data.lastHitTime;
+    data.hitTimeList.push(hitInterval);
+    if (data.hitTimeList.length > 5) {
+        data.hitTimeList.shift();
+        const currentIntervalLevel = data.hitTimeList.reduce((a, b) => a + b, 0) / data.hitTimeList.length;
+        if (currentIntervalLevel < config.antiAutoClicker.minInterval) {
+            flag(player, "Auto Clicker", "B", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Interval:" + currentIntervalLevel.toFixed(2)]);
+            player.applyDamage(6);
+            clickDataB.delete(player.id);
+            player.addTag(DisableTags.pvp);
+            system.runTimeout(() => {
+                player.removeTag(DisableTags.pvp);
+            }, config.antiAutoClicker.timeout);
+        }
+    }
+    clickDataB.set(player.id, data);
+}
+
 function entityHitEntityAfterEvent(_config: configi, { damagingEntity }: EntityHitEntityAfterEvent) {
     if (damagingEntity instanceof Player && !isAdmin(damagingEntity) && !damagingEntity.hasTag(DisableTags.pvp)) {
         const click = clickData.get(damagingEntity.id);
@@ -52,10 +83,14 @@ function entityHitEntityAfterEvent(_config: configi, { damagingEntity }: EntityH
 registerModule(
     "antiAutoClicker",
     false,
-    [clickData],
+    [clickData, clickDataB],
     {
         intick: async (config, player) => antiAutoClicker(config, player),
         tickInterval: 20,
+    },
+    {
+        intick: async (config, player) => antiAutoClickerB(config, player),
+        tickInterval: 1,
     },
     {
         worldSignal: world.afterEvents.entityHitEntity,

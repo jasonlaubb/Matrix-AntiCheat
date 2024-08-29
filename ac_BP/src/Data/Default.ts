@@ -323,6 +323,7 @@ export default {
         enabled: true,
         maxClicksPerSecond: 24,
         timeout: 200,
+        minInterval: 30,
         punishment: "kick",
         maxVL: 4,
     },
