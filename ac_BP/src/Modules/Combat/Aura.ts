@@ -5,7 +5,13 @@ import { flag } from "../../Assets/Util";
 
 async function auraCheck(config: configi, { damagingEntity, hitEntity: dammy }: EntityHitEntityAfterEvent) {
     const player = damagingEntity as Player;
-    if (dammy.typeId == "minecraft:player" && dammy.getDynamicProperty(player.id)) {
+    let w;
+    try {
+        w = dammy.getDynamicProperty(player.id);
+    } catch {
+        w = false;
+    }
+    if (dammy.typeId == "minecraft:player" && w) {
         playerHitDammy(player, config);
     } else {
         playerStartCombat(player, config);
