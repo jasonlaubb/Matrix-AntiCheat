@@ -57,7 +57,7 @@ function antiAim(config: configi, player: Player) {
     if (rotationX == rotationX.toFixed(2) && (rotationX != 0 || rotationX == 0 && rotSpeedY > 1) || rotationY == rotationY.toFixed(2) && (rotationY != 0 || rotationY == 0 && rotSpeedX > 0 )) {
         data.aimAFlags++
         if (data.aimAFlags > 1 || !(rotationX == 0 && rotSpeedY > 1 || rotationY == 0 && rotSpeedX > 1)) {
-           flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotationX") + ":" + rotationX, lang(">RotationY") + ":" + rotationY]);
+           flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [(">RotationX") + ":" + rotationX, (">RotationY") + ":" + rotationY]);
            flagged = true
            data.aimAFlags = 0
         }
@@ -66,7 +66,7 @@ function antiAim(config: configi, player: Player) {
     if ((rotSpeedX > 0.0001 && rotSpeedX < 1 && (rotSpeedY > 0.7 || rotSpeedY < 0.1) || rotSpeedY > 0.0001 && rotSpeedY < 1 && (rotSpeedX > 0.7 || rotSpeedX < 0.1)) && !(rotSpeedX > 7 || rotSpeedY > 14)) {
         data.aimBFlags++
         if (data.aimBFlags >= 20) {
-           flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
+           flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [(">RotSpeedX") + ":" + rotSpeedX, (">RotSpeedY") + ":" + rotSpeedY]);
            data.aimBFlags = 0
            flagged = true
         }
@@ -75,7 +75,7 @@ function antiAim(config: configi, player: Player) {
     if (lastRotSpeedY - rotSpeedY > 0 && data.lastRotDifferent < 0 || lastRotSpeedY - rotSpeedY < 0 && data.lastRotDifferent > 0) {
         data.vibrateRotContinue++;
         if (data.vibrateRotContinue >= 15) {
-            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, [lang(">RotSpeedX") + ":" + rotSpeedX, lang(">RotSpeedY") + ":" + rotSpeedY]);
+            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, [(">RotSpeedX") + ":" + rotSpeedX, (">RotSpeedY") + ":" + rotSpeedY]);
             data.vibrateRotContinue = 0;
             flagged = true
         }
