@@ -27,6 +27,7 @@ function spawnDammy(id: string, dimension: Dimension, loc: Vector3, config: conf
     loc.x += offset.x;
     loc.z += offset.z;
     const dammy = dimension.spawnEntity("minecraft:player", loc);
+    dammy.triggerEvent("matrix:dummy")
     dammy.setDynamicProperty(id, true);
     return dammy;
 }
