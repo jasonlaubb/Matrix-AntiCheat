@@ -25,9 +25,6 @@ export default class {
     public static distanceXYZ(pos1: Vector3, pos2: Vector3): number {
         return Math.hypot(pos1.x - pos2.x, pos1.y - pos2.y, pos1.z - pos2.z);
     }
-    public static calculatePing(velocity: number, distance: number): number {
-        return Math.trunc(Math.abs(1000 - (velocity * 1000) / distance));
-    }
     public static calculateDifferentSum(numberArray: number[]): number {
         return numberArray.slice(1).reduce((sum, current, index) => sum + (current - numberArray[index]), 0) / (numberArray.length - 1);
     }

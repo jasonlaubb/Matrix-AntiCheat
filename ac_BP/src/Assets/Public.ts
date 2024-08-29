@@ -131,6 +131,7 @@ export { tps, getMsPerTick };
 interface SpikeLaggingData {
     lastLocation: Vector3;
     isSpikeLagging: boolean;
+    ping: number | string;
 }
 let mspertick = 50;
 function getMsPerTick() {
@@ -195,7 +196,8 @@ system.runInterval(() => {
     const players = world.getAllPlayers();
     for (const player of players) {
         const sl = spikeLaggingData.get(player.id);
-        if ((sl.ping/20).toFixed(0) >= 850) sl.isSpikeLagging = true;
+        if (!sl) return;
+        if (Math.trunc(sl.ping as number / 20) >= 850) sl.isSpikeLagging = true;
         else sl.isSpikeLagging = false;
         spikeLaggingData.set(player.id, sl);
     }
@@ -205,7 +207,6 @@ export function isSpikeLagging(player: Player) {
 }
 
 import allProperty from "../Data/ValidPlayerProperty";
-import MathUtil from "./MathUtil";
 
 world.beforeEvents.playerLeave.subscribe(({ player }) => {
     // delete all property saved

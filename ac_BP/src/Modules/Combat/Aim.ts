@@ -1,21 +1,21 @@
-import { Player } from "@minecraft/server";
-import { flag } from "../../Assets/Util";
+import { Player, system } from "@minecraft/server";
+import { flag, toFixed } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules";
-import { AnimationControllerTags } from "../../Data/EnumData";
+import { DisableTags } from "../../Data/EnumData";
 /**
  * @author jasonlaubb && RaMiGamerDev
  * @description Detect the suspicious aiming
  */
 
 function disableAllActions(player: Player){
-    if (player.hastTag("matrix:pvp-disabled")) return
-   player.addTag(`matrix:pvp-disabled`)
-   player.addTag(`matrix:place-disabled`)
-   player.addTag(`matrix:break-disabled`)
+    if (player.hasTag(DisableTags.pvp)) return
+   player.addTag(DisableTags.pvp)
+   player.addTag(DisableTags.place)
+   player.addTag(DisableTags.break)
  system.runTimeout(() => {
-    player.removeTag(`matrix:pvp-disabled`)
-    player.removeTag(`matrix:place-disabled`)
-    player.removeTag(`matrix:break-disabled`)
+    player.removeTag(DisableTags.pvp)
+    player.removeTag(DisableTags.place)
+    player.removeTag(DisableTags.break)
  }, 160)
 }
 const aimData: Map<string, AimData> = new Map();
@@ -43,18 +43,18 @@ function antiAim(config: configi, player: Player) {
             lastRotationY: rotationY,
             previousRotationX: undefined,
             previousRotationY: undefined,
-            similarRotContinue: 0,
             lastRotDifferent: 0,
+            vibrateRotContinue: 0,
         });
         return;
     }
     const rotSpeedX = Math.abs(rotationX - data.lastRotationX);
     const rotSpeedY = Math.abs(rotationY - data.lastRotationY);
-    const lastRotSpeedX = Math.abs(rotationX - data.previousRotationX);
+    //const lastRotSpeedX = Math.abs(rotationX - data.previousRotationX);
     const lastRotSpeedY = Math.abs(rotationY - data.previousRotationY!);
     let flagged
     // Integer rotation
-    if (rotationX == rotationX.toFixed(2) && (rotationX != 0 || rotationX == 0 && rotSpeedY > 1) || rotationY == rotationY.toFixed(2) && (rotationY != 0 || rotationY == 0 && rotSpeedX > 0 )) {
+    if (rotationX == toFixed(rotationX, 2) && (rotationX != 0 || rotationX == 0 && rotSpeedY > 1) || rotationY == toFixed(rotationY, 2) && (rotationY != 0 || rotationY == 0 && rotSpeedX > 0 )) {
         data.aimAFlags++
         if (data.aimAFlags > 1 || !(rotationX == 0 && rotSpeedY > 1 || rotationY == 0 && rotSpeedX > 1)) {
            flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [(">RotationX") + ":" + rotationX, (">RotationY") + ":" + rotationY]);

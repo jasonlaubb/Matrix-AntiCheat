@@ -97,12 +97,12 @@ async function AntiSpeed(config: configi, player: Player) {
         } else {
             // Teleport the player to last position
             // Minimum time given to flag
-            if (now - data.firstTrigger < data.currentFlagCombo) {
-                if (player.lastXZLogged - xz - data.lastVelocity < 0.3 && data.flagNumber > config.antiSpeed.maxFlagInDuration) {
+            if (now - data.firstTrigger! < data.currentFlagCombo!) {
+                if (player.lastXZLogged - xz - data.lastVelocity < 0.3 && data.flagNumber! > config.antiSpeed.maxFlagInDuration) {
                     freezeTeleport(player, safePos);
-                    data.currentFlagCombo += config.antiSpeed.flagDurationIncrase;
+                    data.currentFlagCombo! += config.antiSpeed.flagDurationIncrase;
                     flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);
-                } else if (((player.lastXZLogged - xz > data.speedMaxV + 1 || (solidBlock && player.lastXZLogged - xz > data.speedMaxV + 0.2)) && data.flagNumber >= 1) || player.lastXZLogged - x >= 25) {
+                } else if (((player.lastXZLogged - xz > data.speedMaxV + 1 || (solidBlock && player.lastXZLogged - xz > data.speedMaxV + 0.2)) && data.flagNumber! >= 1) || player.lastXZLogged - x >= 25) {
                     player.teleport(safePos);
                 }
             } else {
