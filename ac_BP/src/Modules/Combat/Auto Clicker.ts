@@ -43,11 +43,12 @@ function antiAutoClicker(config: configi, player: Player) {
 interface ClickDataB {
     lastHitTime: number;
     hitTimeList: number[];
+    lastflag: number;
 }
 const clickDataB: Map<string, ClickDataB> = new Map();
 function antiAutoClickerB (config: configi, player: Player) {
     const now = Date.now();
-    const data = clickDataB.get(player.id) ?? { lastHitTime: 0, hitTimeList: [] };
+    const data = clickDataB.get(player.id) ?? { lastHitTime: 0, hitTimeList: [], lastflag: 0 };
     if (data.lastHitTime == 0) {
         data.lastHitTime = now;
         clickDataB.set(player.id, data);
@@ -55,17 +56,20 @@ function antiAutoClickerB (config: configi, player: Player) {
     }
     const hitInterval = now - data.lastHitTime;
     data.hitTimeList.push(hitInterval);
-    if (data.hitTimeList.length > 5) {
+    if (data.hitTimeList.length > 2) {
         data.hitTimeList.shift();
         const currentIntervalLevel = data.hitTimeList.reduce((a, b) => a + b, 0) / data.hitTimeList.length;
+        player.sendMessage(currentIntervalLevel.toFixed(2));
         if (currentIntervalLevel < config.antiAutoClicker.minInterval) {
-            flag(player, "Auto Clicker", "B", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Interval:" + currentIntervalLevel.toFixed(2)]);
             player.applyDamage(6);
-            clickDataB.delete(player.id);
-            player.addTag(DisableTags.pvp);
-            system.runTimeout(() => {
-                player.removeTag(DisableTags.pvp);
-            }, config.antiAutoClicker.timeout);
+            if (now - data.lastflag < 9000) {
+                flag(player, "Auto Clicker", "B", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Interval:" + currentIntervalLevel.toFixed(2)]);
+                player.addTag(DisableTags.pvp);
+                system.runTimeout(() => {
+                    player.removeTag(DisableTags.pvp);
+                }, config.antiAutoClicker.timeout);
+            }
+            data.lastflag = now;
         }
     }
     data.lastHitTime = now;

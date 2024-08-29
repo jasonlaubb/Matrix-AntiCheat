@@ -323,9 +323,9 @@ export default {
         enabled: true,
         maxClicksPerSecond: 24,
         timeout: 200,
-        minInterval: 30,
-        punishment: "kick",
-        maxVL: 4,
+        minInterval: 35,
+        punishment: "tempkick",
+        maxVL: 2,
     },
     antiKillAura: {
         enabled: true,
