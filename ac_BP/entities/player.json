@@ -159,7 +159,7 @@
                     "add_effects": [
                         {
                             "duration": 5,
-                            "effect": "slow_falling",
+                            "effect": "levitation",
                             "visible": false,
                             "amplifier": 0
                         },
