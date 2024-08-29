@@ -1,4 +1,4 @@
-import { Dimension, Entity, EntityHitEntityAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
+import { Dimension, Entity, EntityHitEntityAfterEvent, Player, Vector3, world } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
 import MathUtil from "../../Assets/MathUtil";
 import { flag } from "../../Assets/Util";
@@ -14,9 +14,11 @@ async function auraCheck(config: configi, { damagingEntity, hitEntity: dammy }: 
 
 function playerStartCombat(player: Player, config: configi) {
     // Spawn the dammy
-    if (!player.dimension.getEntities({ type: "matrix:aura" }).some((w) => w.getDynamicProperty(player.id))) {
-        spawnDammy(player.id, player.dimension, player.location, config);
-    }
+    try {
+        if (!player.dimension.getEntities({ type: "matrix:aura" }).some((w) => w.getDynamicProperty(player.id))) {
+            spawnDammy(player.id, player.dimension, player.location, config);
+        }
+    } catch {}
 }
 
 function spawnDammy(id: string, dimension: Dimension, loc: Vector3, config: configi): Entity {
@@ -41,6 +43,7 @@ function playerHitDammy(player: Player, dammy: Entity, config: configi) {
         firstHit: now,
         amount: 0,
     };
+    //player.sendMessage("Hit Amount: " + data.amount);
     if (now - data.firstHit > config.antiAura.comboTime) {
         data.firstHit = now;
         data.amount = 0;
@@ -49,9 +52,10 @@ function playerHitDammy(player: Player, dammy: Entity, config: configi) {
     if (data.amount >= config.antiAura.minHitRequired) {
         flag(player, "Aura", "A", config.antiAura.maxVL, config.antiAura.punishment, undefined);
     }
-    system.runTimeout(() => {
+    auraData.set(player.id, data);
+    // Prevent the crash (max 3 dammy entity)
+    if (player.dimension.getEntities({ type: "matrix:aura" }).filter((w) => w.getDynamicProperty(player.id)).length <= 2)
         spawnDammy(player.id, player.dimension, player.location, config);
-    }, 2);
 }
 
 registerModule("antiAura", false, [auraData], {

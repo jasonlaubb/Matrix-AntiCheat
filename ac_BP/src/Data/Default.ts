@@ -343,7 +343,7 @@ export default {
         enabled: true,
         minHitRequired: 3,
         spawnHeightOffset: 1.7,
-        spawnRadius: 4,
+        spawnRadius: 3,
         comboTime: 15000,
         maxVL: 3,
         punishment: "ban",
