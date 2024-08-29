@@ -55,4 +55,7 @@ export default class {
     public static comparing (a: number, b: number) {
         return Math.min(a / b, b / a);
     }
+    public static randomOffset (min: number, max: number): VectorXZ {
+        return { x: Math.random() * (max - min) + min, z: Math.random() * (max - min) + min };
+    }
 }
