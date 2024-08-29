@@ -54,7 +54,14 @@ function playerHitDammy(player: Player, config: configi) {
     }
     auraData.set(player.id, data);
     // Prevent the crash (max 3 dammy entity)
-    if (player.dimension.getEntities({ type: "minecraft:player" }).filter((w) => w.getDynamicProperty(player.id)).length <= 2)
+    if (player.dimension.getEntities({ type: "minecraft:player" }).filter((w) => {
+        try {
+            const r = w.getDynamicProperty(player.id);
+            return r;
+        } catch {
+            return false;
+        }
+    }).length <= 2)
         spawnDammy(player.id, player.dimension, player.location, config);
 }
 
