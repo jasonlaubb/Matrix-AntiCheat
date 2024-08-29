@@ -288,7 +288,14 @@ registerModule(
     false,
     [killauradata, lastRotateData],
     {
-        intick: async (config, player) => intickEvent(config, player),
+        intick: async (config, player) => {
+            intickEvent(config, player)
+            const data = killauradata.get(player.id);
+            if (data?.hitLength) {
+                data.hitLength = [];
+                killauradata.set(player.id, data)
+            }
+        },
         tickInterval: 1,
     },
     {

@@ -342,10 +342,10 @@ export default {
     antiAura: {
         enabled: true,
         minHitRequired: 3,
-        spawnHeightOffset: 1.6,
+        spawnHeightOffset: 1.8,
         spawnRadius: 2.5,
         comboTime: 15000,
-        maxVL: 3,
+        maxVL: 5,
         punishment: "ban",
     },
     antiReach: {
