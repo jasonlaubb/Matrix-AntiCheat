@@ -11,7 +11,7 @@ import { flag } from "../../Assets/Util";
 async function auraCheck(config: configi, { damagingEntity, hitEntity: dammy }: EntityHitEntityAfterEvent) {
     const player = damagingEntity as Player;
     if (isDammy(dammy, player.id)) {
-        playerHitDammy(player, config);
+        playerHitDammy(player, config, dammy.location.y);
     } else {
         playerStartCombat(player, config);
     }
@@ -29,7 +29,7 @@ function isDammy (dammy: Entity, playerId: string) {
 
 function playerStartCombat(player: Player, config: configi) {
     // Spawn the dammy
-    if (!isDammy(player, player.id)) {
+    if (player.dimension.getEntities().filter(e => isDammy(e, player.id)).length == 0) {
         spawnDammy(player.id, player.dimension, player.location, config);
     }
 }
@@ -50,7 +50,7 @@ interface AuraData {
     amount: number;
 }
 const auraData = new Map<string, AuraData>();
-function playerHitDammy(player: Player, config: configi) {
+function playerHitDammy(player: Player, config: configi, dammyY: number) {
     const now = Date.now();
     const data = auraData.get(player.id) ?? {
         firstHit: now,
@@ -63,7 +63,7 @@ function playerHitDammy(player: Player, config: configi) {
     }
     data.amount++;
     if (data.amount >= config.antiAura.minHitRequired) {
-        flag(player, "Aura", "A", config.antiAura.maxVL, config.antiAura.punishment, undefined);
+        flag(player, "Aura", "A", config.antiAura.maxVL, config.antiAura.punishment, ["distanceY:" + (dammyY - player.location.y)]);
     }
     auraData.set(player.id, data);
     // Prevent the crash (max 3 dammy entity)
