@@ -98,6 +98,7 @@ async function AntiSpeed(config: configi, player: Player) {
         !player.getComponent("riding")?.entityRidingOn &&
         player.lastXZLogged - xz > data.speedMaxV &&
         now - data.lastReset >= 350 &&
+        now - data.lastRiding >= 1000 &&
         notSpikeLagging
     ) {
         if (lagOnlyCondition) {
