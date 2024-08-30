@@ -8,6 +8,6 @@
   * [Synax error](/Commands/synaxError)
   * [Command Usage](/Commands/commandUsage)
 * Protection
-  * [Hack detection](/Safe/checks.md)
+  * [Hack detection](/Safe/checks)
 * UI
   * [Matrix UI](/MatrixUI/matrixui)
