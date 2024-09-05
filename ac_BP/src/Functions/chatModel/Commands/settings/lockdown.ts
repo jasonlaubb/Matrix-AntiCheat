@@ -3,8 +3,8 @@ import { world } from "@minecraft/server";
 import { c, isAdmin, isHost, rawstr } from "../../../../Assets/Util";
 import { Action } from "../../../../Assets/Action";
 registerCommand({
-    name: "reset",
-    description: "Resets all settings",
+    name: "lockdown",
+    description: "Lockdown the server!",
     parent: false,
     maxArgs: 1,
     minArgs: 1,
