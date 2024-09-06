@@ -28,6 +28,7 @@ export {
     findSlime,
     getSpeedIncrease1,
     isAdmin,
+    getPLevel,
     isHost,
     findWater,
     getSpeedIncrease2,
@@ -240,6 +241,12 @@ function getGamemode(playerName: string) {
 
 function isAdmin(player: Player) {
     return !!player.getDynamicProperty("isAdmin");
+}
+
+function getPLevel (player: Player): number {
+    const data = player.getDynamicProperty("isAdmin");
+    if (data === true) return 3;
+    return player.getDynamicProperty("isAdmin") as number ?? -1;
 }
 
 // Host id is always -206158430207 for Local World
