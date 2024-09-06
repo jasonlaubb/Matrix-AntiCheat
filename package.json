@@ -9,6 +9,7 @@
         "@minecraft/server-ui": "^1.2.0",
         "fs": "^0.0.1-security",
         "gettext-parser": "^8.0.0",
+        "javascript-obfuscator": "^4.1.1",
         "path": "^0.12.7",
         "typescript": "^5.3.3"
     },
