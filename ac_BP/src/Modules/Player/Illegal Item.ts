@@ -49,6 +49,7 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
     if (config.antiIllegalItem.checkEnchantment) {
         const enchantments = item.getComponent("enchantable")?.getEnchantments();
         if (enchantments && enchantments.length > 0) {
+            /*
             const itemclone = item.clone()?.getComponent("enchantable");
             if (itemclone) {
                 itemclone.removeAllEnchantments();
@@ -59,7 +60,7 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
                     flag(player, "Illegal Item", "I", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Type:" + e]);
                     return true;
                 }
-            }
+            }*/
             const badEnchantlist: string[] = [];
             for (const {
                 level,
