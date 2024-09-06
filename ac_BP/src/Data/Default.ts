@@ -375,6 +375,8 @@ export default {
         punishment: "ban",
         clipMove: 1.6,
         maxVL: 4,
+        minMoveDistance: 196, // 12 cunks distance
+        tickMovementCooldown: 7000,
     },
     antiSpeed: {
         enabled: true,
@@ -398,7 +400,7 @@ export default {
         punishment: "tempkick",
         maxVL: 5,
         minTimerLog: 3,
-        maxTickMovment: 64,
+        maxTickMovment: 196, // 12 cunks distance
         tickMovementCooldown: 8000,
     },
     antiNuker: {

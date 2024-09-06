@@ -4,6 +4,7 @@ import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/
 import { configi, registerModule } from "../Modules";
 import { isSpikeLagging } from "../../Assets/Public";
 import { AnimationControllerTags } from "../../Data/EnumData";
+import MathUtil from "../../Assets/MathUtil";
 
 const powderBlock = [
     MinecraftBlockTypes.RedConcretePowder,
@@ -29,6 +30,7 @@ interface NoClipData {
     lastLocation: Vector3;
     lastFlag: number;
     lastFlag2: number;
+    lastHighTeleport: number;
 }
 const noclipdata = new Map<string, NoClipData>();
 const passableBlocks = [MinecraftBlockTypes.Sand, MinecraftBlockTypes.Gravel, MinecraftBlockTypes.SoulSand] as string[];
@@ -75,6 +77,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         safeLocation: player.location,
         lastFlag: 0,
         lastFlag2: 0,
+        lastHighTeleport: 0,
     };
     const { x, y, z }: Vector3 = player.getVelocity();
     const movementClip = Math.hypot(x, z);
@@ -101,11 +104,14 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         }
         data.lastFlag2 = now;
     }
-    data.lastLocation = player.location;
-
     /*     emmm     */
     const safePos = data.safeLocation;
     const lastflag = data.lastFlag;
+    const moveDis = MathUtil.distanceXZ(player.location, data.lastLocation);
+    data.lastLocation = player.location;
+    if (moveDis > config.antiNoClip.minMoveDistance) {
+        data.lastHighTeleport = now;
+    }
     if (
         !bypassMovementCheck(player) &&
         player?.lastSafePos &&
@@ -123,7 +129,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     ) {
         const isClientLagging = delayPlacementCheck(player);
         freezeTeleport(player, safePos);
-        if (!isClientLagging) {
+        if (!isClientLagging && now - data.lastHighTeleport > config.antiNoClip.tickMovementCooldown) {
             if (lastflag && now - lastflag < 20000) {
                 const trueOnGround = Math.abs(y) < 1.75 && player.isJumping;
                 const staticOnGround = y == 0 && player.isOnGround;
