@@ -1,5 +1,5 @@
 import { GameMode, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
-import { c, isAdmin } from "../../Assets/Util";
+import { c, isAdmin, rawstr } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { Action } from "../../Assets/Action";
@@ -35,7 +35,7 @@ async function firstEvent(_config: configi, { player, initialSpawn }: PlayerSpaw
     if (isBadClient) {
         player.kill();
         Action.tempkick(player);
-        world.sendMessage("§bMatrix §7>§c Your client is not allowed to use this server");
+        world.sendMessage(new rawstr(true, "g").tra("clientauth.kicked", player.name).parse());
     }
 }
 
