@@ -1,4 +1,4 @@
-import { isAdmin, rawstr } from "../../../../Assets/Util";
+import { getPLevel, rawstr } from "../../../../Assets/Util";
 import { registerCommand } from "../../CommandHandler";
 import Dynamic from "../../../Config/dynamic_config";
 
@@ -7,7 +7,7 @@ registerCommand(
         name: "config",
         description: "Dynamc config related commands",
         parent: true,
-        require: (player) => isAdmin(player),
+        require: (player) => getPLevel(player) >= 3,
     },
     {
         name: "set",

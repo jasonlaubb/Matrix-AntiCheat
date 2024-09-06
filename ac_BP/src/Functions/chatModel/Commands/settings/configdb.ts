@@ -1,4 +1,4 @@
-import { c, isAdmin, rawstr } from "../../../../Assets/Util";
+import { c, getPLevel, rawstr } from "../../../../Assets/Util";
 import { registerCommand } from "../../CommandHandler";
 import { recoverChanges, commitChanges } from "../../../Config/config_database";
 
@@ -7,7 +7,7 @@ registerCommand(
         name: "configdb",
         description: "Manage config database function",
         parent: true,
-        require: (player) => isAdmin(player),
+        require: (player) => getPLevel(player) == 4,
     },
     {
         name: "commit",
