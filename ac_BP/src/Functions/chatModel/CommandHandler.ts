@@ -16,6 +16,8 @@ export function verifier(player: Minecraft.Player, setting: CommandConfig) {
 interface CommandConfig {
     enabled: boolean;
     adminOnly: boolean;
+    minPermissionLevel: number;
+    requireOp: boolean,
     requireTag: string[];
 }
 const commands: CommandProperties[] = [];

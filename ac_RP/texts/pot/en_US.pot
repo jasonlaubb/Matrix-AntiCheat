@@ -184,6 +184,10 @@ msgstr ""
 msgid "Command ran with error."
 msgstr ""
 
+#: cmderror.plevel
+msgid "No acess to continue, minimum permission level: %1"
+msgstr ""
+
 #: cmderror.name
 msgid "§gName: §9%s"
 msgstr ""
@@ -260,10 +264,6 @@ msgstr ""
 msgid "%1 has been muted by %2"
 msgstr ""
 
-#: op.hasbeen
-msgid "%1 has been opped by %2"
-msgstr ""
-
 #: unfreeze.has
 msgid "%1 has been unfrozen by %2"
 msgstr ""
@@ -322,10 +322,6 @@ msgstr ""
 
 #: util.formkick
 msgid "%s is automatically kicked from the game"
-msgstr ""
-
-#: deop.notadmin
-msgid "%s is not admin"
 msgstr ""
 
 #: unban.notban
@@ -412,16 +408,64 @@ msgstr ""
 msgid "No reason provided"
 msgstr ""
 
-#: passwords.changed
-msgid "Password has been changed"
-msgstr ""
-
-#: passwords.wrong
-msgid "Sorry, but you entered a wrong password"
-msgstr ""
-
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
+msgstr ""
+
+#: op.incorrect
+msgid "You have entered the incorrect password, please try again later."
+msgstr ""
+
+#: op.opgain
+msgid "You have gained matrix admin permission through operator permission."
+msgstr ""
+
+#: op.pwgain
+msgid "You have gained matrix admin permission through security password."
+msgstr ""
+
+#: op.pwtips
+msgid "We have detected that you haven't set-up your password. To increase the security of your realm or server, you can set your password through 'setpassword <new password> <confirm password>' command."
+msgstr ""
+
+#: deop.sucess
+msgid "You have removed matrix admin permission from yourself."
+msgstr ""
+
+#: setadmin.has
+msgid "%2 has changed %1's admin permission to %3"
+msgstr ""
+
+#: setadmin.notenough
+msgid "Not enough permission. You should have at least %1 permission to give a permission level of %2"
+msgstr ""
+
+#: setadmin.outofrange
+msgid "The permission level that you can set should be between 0 and 3"
+msgstr ""
+
+#: setadmin.toolow
+msgid "The permission level which is valid should be at least 0. If you are trying to remove someone from admin permission, use 'deladmin <player>' instead."
+msgstr ""
+
+#: setadmin.toohigh
+msgid "The target has a permission level higher than you, you cannot determine the target's permission level."
+msgstr ""
+
+#: deladmin.has
+msgid "%2 has removed %1's admin permission"
+msgstr ""
+
+#: deladmin.notenough
+msgid "Not enough permission. You cannot remove someone from admin permission if you have lower permission level than the target."
+msgstr ""
+
+#: deladmin.none
+msgid "The target has no admin permission"
+msgstr ""
+
+#: deladmin.lockdown
+msgid "You cannot remove someone from matrix admin permission when the server is in lockdown mode"
 msgstr ""
 
 #: showallrank.has
@@ -442,10 +486,6 @@ msgstr ""
 
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
-msgstr ""
-
-#: deop.lockdown
-msgid "The server is in lockdown mode"
 msgstr ""
 
 #: lockdown.has
@@ -484,20 +524,12 @@ msgstr ""
 msgid "Wrong code"
 msgstr ""
 
-#: op.wrong
-msgid "Wrong password"
-msgstr ""
-
 #: chathandler.muted
 msgid "You are muted!"
 msgstr ""
 
 #: dimensionlock.stop
 msgid "You are not allowed to go to other dimensions!"
-msgstr ""
-
-#: op.now
-msgid "You are now admin"
 msgstr ""
 
 #: adminchat.has

@@ -6,6 +6,7 @@ import Dynamic from "../Functions/Config/dynamic_config";
 import { Action } from "./Action";
 import { MatrixUsedTags } from "../Data/EnumData";
 import MathUtil from "./MathUtil";
+import { SHA256 } from "crypto-es/lib/sha256";
 
 /**
  * @author jasonlaubb
@@ -29,6 +30,7 @@ export {
     getSpeedIncrease1,
     isAdmin,
     getPLevel,
+    setPLevel,
     isHost,
     findWater,
     getSpeedIncrease2,
@@ -38,6 +40,7 @@ export {
     toFixed,
     bypassMovementCheck,
     onceTrue,
+    isPasswordCorrect,
 };
 
 class rawstr {
@@ -239,14 +242,16 @@ function getGamemode(playerName: string) {
     return 0;
 }
 
-function isAdmin(player: Player) {
-    return !!player.getDynamicProperty("isAdmin");
+function isAdmin (player: Player) {
+    return !!player.getDynamicProperty("permission_level");
 }
 
 function getPLevel (player: Player): number {
-    const data = player.getDynamicProperty("isAdmin");
-    if (data === true) return 3;
-    return player.getDynamicProperty("isAdmin") as number ?? -1;
+    return player.getDynamicProperty("permission_level") as number ?? -1;
+}
+
+function setPLevel (player: Player, level: number) {
+    player.setDynamicProperty("permission_level", level);
 }
 
 // Host id is always -206158430207 for Local World
@@ -448,4 +453,12 @@ function onceTrue (object: any, func: (obj: any) => boolean, ticks: number, inte
         }
         }, interval);
     })
+}
+
+function isPasswordCorrect (password: string) {
+    const config = c();
+    const sourcePassword = config.commands.passwordSetting.usingHash ? SHA256(password).toString() : password;
+    const correctPassword: string = config.commands.passwordSetting.usingHash ? config.commands.passwordSetting.hash : config.commands.passwordSetting.password;
+    // Check if the password is correct
+    return sourcePassword === correctPassword;
 }

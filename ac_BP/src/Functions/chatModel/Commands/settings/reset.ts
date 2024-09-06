@@ -1,7 +1,7 @@
 import { registerCommand } from "../../CommandHandler";
 import { initialize } from "../../../Config/dynamic_config";
 import { world } from "@minecraft/server";
-import { c, isAdmin, rawstr } from "../../../../Assets/Util";
+import { getPLevel, rawstr } from "../../../../Assets/Util";
 import { commitChanges } from "../../../Config/config_database";
 registerCommand({
     name: "reset",
@@ -9,14 +9,11 @@ registerCommand({
     parent: false,
     maxArgs: 0,
     minArgs: 0,
-    require: (player) => isAdmin(player),
+    require: (player) => getPLevel(player) == 4,
     executor: async (player, _args) => {
         world.setDynamicProperty("config");
         initialize();
-        if (c().configDataBase.autoCommit) {
-            // Commit the reset changes
-            commitChanges();
-        }
+        commitChanges();
         player.sendMessage(new rawstr().str("§bMatrix §7>§g ").tra("reset.sucess").parse());
     },
 });
