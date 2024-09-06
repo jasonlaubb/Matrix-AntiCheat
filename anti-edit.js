@@ -25,20 +25,18 @@ async function obfuscateFile(filePath) {
   const fileContent = await fs.promises.readFile(filePath, 'utf8');
   const obfuscatedCode = obfuscator.obfuscate(fileContent, {
     compact: true,
-    controlFlowFlattening: true,
-    deadCodeInjection: true,
-    debugProtection: false,
-    disableConsoleOutput: false,
-    identifierNamesGenerator: 'mangled',
-    log: false,
-    numbersToExpressions: true,
     simplify: true,
-    splitStrings: true,
     stringArray: true,
-    stringArrayEncoding: ['base64'],
     stringArrayThreshold: 0.75,
-    transformObjectKeys: true,
-    unicodeEscapeSequence: false
+    target: 'node',
+    renameGlobals: true,
+    renameProperties: true,
+    deadCodeInjection: true,
+    deadCodeInjectionThreshold: 0.7,
+    renamePropertiesMode: 'safe',
+    stringArrayIndexesType: ['hexadecimal-number'],
+    stringArrayWrappersCount: 5,
+    selfDefending: true,
   });
 
   await fs.promises.writeFile(filePath, obfuscatedCode.getObfuscatedCode());
