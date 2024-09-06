@@ -456,6 +456,18 @@ msgstr ""
 msgid "The target has a permission level higher than you, you cannot determine the target's permission level."
 msgstr ""
 
+#: setpassword.different
+msgid "The new password and confirm password are different. Please try again."
+msgstr ""
+
+#: setpassword.changed
+msgid "The password has been changed, please don't forget your new password."
+msgstr ""
+
+#: clearpassword.ok
+msgid "The password has been cleared"
+msgstr ""
+
 #: deladmin.has
 msgid "%2 has removed %1's admin permission"
 msgstr ""

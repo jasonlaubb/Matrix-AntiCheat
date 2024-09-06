@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import obfuscator from 'javascript-obfuscator';
+import progressBar from 'progress';
 
 const directoryPath = './generated-package/Matrix-anti_BP/scripts';
 
@@ -9,10 +10,12 @@ async function traverseDirectory(directoryPath) {
 
   for (const file of files) {
     const filePath = path.join(directoryPath, file.name);
-
     if (file.isDirectory()) {
+      if (file.path.includes('node_modules') || file.path.includes('Data')) continue;
       await traverseDirectory(filePath);
-    } else if (file.isFile() && file.name.endsWith('.js') && file.name !== 'Default.js' && file.name !== 'Config.js') {
+    } else if (file.isFile() && file.name.endsWith('.js')) {
+      bar.tick({ file: file.name });
+      bar.render();
       await obfuscateFile(filePath);
     }
   }
@@ -40,5 +43,34 @@ async function obfuscateFile(filePath) {
 
   await fs.promises.writeFile(filePath, obfuscatedCode.getObfuscatedCode());
 }
+let bar;
+async function onStart () {
+  const count = await countLoopIterations(directoryPath);
+  bar = new progressBar('Anti-Edit: [:bar] :percent :file', {
+    complete: '=',
+    incomplete: '.',
+    width: 30,
+    total: count
+  });  
+  await traverseDirectory(directoryPath);
+  console.log('\nAnti-Edit: Obfuscation process finished.');
+}
+onStart();
 
-traverseDirectory(directoryPath);
+async function countLoopIterations(directoryPath) {
+  const files = await fs.promises.readdir(directoryPath, { withFileTypes: true });
+  let count = 0;
+
+  for (const file of files) {
+    const filePath = path.join(directoryPath, file.name);
+
+    if (file.isDirectory()) {
+      if (file.path.includes('node_modules') || file.path.includes('Data')) continue;
+      count += await countLoopIterations(filePath);
+    } else if (file.isFile() && file.name.endsWith('.js')) {
+      count++;
+    }
+  }
+
+  return count; // +1 for the current directory
+}

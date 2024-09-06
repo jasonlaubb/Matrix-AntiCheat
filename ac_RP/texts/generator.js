@@ -37,6 +37,7 @@ const fixedStart = `"Language: N/A\\n"
 "X-Generator: PhraseApp (phraseapp.com)\\n"`;
 import * as fsModule from "fs";
 import * as pathModule from "path";
+import progress from 'progress';
 let doTranslate = false;
 let getLanguages = false;
 let createPackDes = true;
@@ -45,7 +46,7 @@ let createPackDes = true;
         const root = "./ac_RP/";
 
         async function convertPotFilesToPo() {
-            console.log("Process: Preparing to convert pot files to po files");
+            console.log("Translation: Preparing for the compile of .pot files");
             const { po } = await import("gettext-parser");
             if (doTranslate) {
                 const poContent = fs.readFileSync(`${root}texts/pot/en_US.pot`, "utf8");
@@ -61,9 +62,7 @@ let createPackDes = true;
             
             if (getLanguages) {
                 let allFiles = fs.readdirSync(``);
-                console.log(allFiles);
                 allFiles = allFiles.filter((a) => validLanguage.includes(a.replace(".js", "")));
-                console.log(allFiles);
                 allFiles.forEach((K) => {
                     import(root + "../srcipts/Data/Languages/" + K).then((a) => {
                         const lines = fs.readFileSync(root + "pot/" + K.replace(".js",".pot"), "utf-8").split("\n")
@@ -86,6 +85,12 @@ let createPackDes = true;
                 })
                 return;
             };
+            const potBar = new progress("Translation: [:bar] :percent :act", {
+                total: validLanguage.length * 2,
+                width: 30,
+                complete: "=",
+                incomplete: " ",
+            });
             fs.readdir(`${root}texts/pot`, async (err, files) => {
                 if (err) {
                     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -100,12 +105,10 @@ let createPackDes = true;
                     notAdded.forEach((file) => {
                         fs.writeFileSync(`${root}texts/pot/` + file + ".pot", copyFiles);
                     });
-                    console.log("Missing .pot files");
                     await new Promise((resolve) => setTimeout(resolve, 500));
                     convertPotFilesToPo();
                     return;
                 }
-                console.log("Process: Start reading pot files");
                 const enusBase = fs.readFileSync(root + "texts/pot/en_US.pot", "utf8").replace(/\r/g, "").split("\n").map((a) => a.trim()).join("\n");
                 const acceptedStr = enusBase.match(/#\: .*/g).map((a) => a.slice(3));
                 const valueCatch = enusBase.match(/msgid ".*"/g).map((a) => a.slice(7).slice(0,-1));
@@ -118,6 +121,8 @@ let createPackDes = true;
                 }
                 files.forEach(async (file) => {
                     if (file.endsWith(".pot")) {
+                        potBar.tick({ act: "Compiling pot files" });
+                        potBar.render();
                         const potFilePath = path.join(root + "texts/pot/" + file);
                         let potContent = fs.readFileSync(potFilePath, "utf8");
                         const crpotContent = potContent.replace(/\r/g, "").split("\n").map((a) => a.trim()).join("\n");
@@ -147,14 +152,12 @@ let createPackDes = true;
                                 msgstr ""
                                 `;
                                 hasChanged = true;
-                                console.log(file + ": Missing property or other language: " + lore.replace(/\n|\r/g, ""));
                             }
                         }
                         
                         if (hasChanged || properties.length > biu.length) {
                             potUpdateFile = potUpdateFile.split("\n").map((a) => a.trim()).join("\n");
                             fs.writeFileSync(potFilePath, potUpdateFile);
-                            console.log("Process: Missing updated " + file);
                             potContent = potUpdateFile;
                             if (!doTranslate) {
                                 doTranslate = true;
@@ -178,13 +181,10 @@ let createPackDes = true;
                                 i += 2;
                             }
                         }
-                        //console.log(potUpdateFile);
                         fs.writeFileSync(root + "texts/po/" + file.replace(".pot", ".po"), updatedContent);
-                        console.log("Process: Converted " + file);
                     }
                 });
             })
-            console.log("Process: Preparing to convert po files to lang files");
             await new Promise((pro) => setTimeout(() => pro(), 50));
             fs.readdir(root + "texts/po", (err, files) => {
                 if (err) {
@@ -198,6 +198,8 @@ let createPackDes = true;
 
                 files.forEach((file) => {
                     if (file.endsWith(".po")) {
+                        potBar.tick({ act: "Compiling lang files" });
+                        potBar.render();
                         const reader = fs.readFileSync(root + `texts/po/${file}`, "utf-8");
                         const pos = po.parse(reader);
                         const lines = reader.split("\n");

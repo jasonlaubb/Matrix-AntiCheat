@@ -76,13 +76,6 @@ export default {
             requireOp: false,
             minPermissionLevel: 3,
         },
-        passwords: {
-            enabled: true,
-            adminOnly: true,
-            requireTag: [],
-            requireOp: false,
-            minPermissionLevel: 3,
-        },
         flagmode: {
             enabled: true,
             adminOnly: true,
@@ -359,6 +352,20 @@ export default {
             requireOp: false,
             requireTag: [],
         },
+        setpassword: {
+            enabled: true,
+            adminOnly: true,
+            minPermissionLevel: 4,
+            requireOp: false,
+            requireTag: [],
+        },
+        clearpassword: {
+            enabled: true,
+            adminOnly: true,
+            minPermissionLevel: 4,
+            requireOp: false,
+            requireTag: [],
+        }
     },
     ui: {
         

@@ -1,5 +1,5 @@
 {
-    "include": ["ac_BP/src/**/*.ts", "gobal.d.ts"],
+    "include": ["ac_BP/src", "gobal.d.ts"],
     "exclude": ["node_modules"],
     "watchOptions": {
         "excludeDirectories": ["node_modules"]
@@ -14,7 +14,7 @@
         "strict": true,
         "allowJs": true,
         "checkJs": false,
-        "outDir": "./ac_BP/scripts",
+        "outDir": "ac_BP/scripts",
         "typeRoots": ["./node_modules/@minecraft"],
         "strictNullChecks": true,
         "strictFunctionTypes": true,
@@ -29,6 +29,7 @@
         "noUnusedParameters": true,
         "sourceMap": false,
         "removeComments": false,
-        "allowSyntheticDefaultImports": false
+        "allowSyntheticDefaultImports": false,
+        "noEmitOnError": false, // Still emit on error
     }
 }

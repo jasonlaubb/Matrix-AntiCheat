@@ -9,7 +9,7 @@ registerCommand({
     parent: false,
     maxArgs: 3,
     minArgs: 2,
-    require: (player) => verifier(player, c().commands.passwords),
+    require: (player) => verifier(player, c().commands.setpassword),
     argRequire: [undefined, undefined, (value) => ["true", "false"].includes(value as string) && c().commands.passwordSetting.usingHash != value],
     requireSupportArgs: true,
     executor: async (player, args) => {

@@ -11,6 +11,8 @@
         "gettext-parser": "^8.0.0",
         "javascript-obfuscator": "^4.1.1",
         "path": "^0.12.7",
+        "progress": "^2.0.3",
+        "progress-bar": "^0.1.1",
         "typescript": "^5.3.3"
     },
     "devDependencies": {
