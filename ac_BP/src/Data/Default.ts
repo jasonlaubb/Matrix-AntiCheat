@@ -546,6 +546,13 @@ export default {
         timer: 2,
         maxTry: 3,
     },
+    antiNoSwing: {
+        enabled: true,
+        punishment: "tempkick",
+        maxVL: 7,
+        timeout: 3000,
+        faultToleranceTicks: 10,
+    },
     worldBorder: {
         enabled: false,
         checkEvery: 2,

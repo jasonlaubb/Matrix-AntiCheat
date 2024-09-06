@@ -95,28 +95,6 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
             flag(player, "Kill Aura", "E", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
             flagged = true;
         }
-        // Check for tool box no swinging type killaura
-        if (player.hasTag(AnimationControllerTags.alive) && !player.hasTag(AnimationControllerTags.attackTime) && !isSpikeLagging(player) && !player.isInWater) {
-            const startDetectingTime = Date.now();
-            new Promise<boolean>((resolve) => {
-                let tick = 0;
-                const id = system.runInterval(() => {
-                    tick++;
-                    if (tick > 12) {
-                        system.clearRun(id);
-                        resolve(true);
-                    }
-                    if (player.hasTag(AnimationControllerTags.attackTime)) {
-                        system.clearRun(id);
-                        resolve(false);
-                    }
-                }, 1);
-            }).then((noSwinging) => {
-                if (noSwinging) {
-                    flag(player, "Kill Aura", "J", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["DetectingMs:" + (Date.now() - startDetectingTime)]);
-                }
-            });
-        }
     } else {
         // KillAura/H
         const tickdata = lastRotateData.get(player.id);

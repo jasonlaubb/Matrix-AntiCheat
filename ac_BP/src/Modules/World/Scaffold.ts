@@ -192,22 +192,6 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         detected = true;
         flag(player, "Scaffold", "I", config.antiScaffold.maxVL, config.antiScaffold.punishment, undefined);
     }
-    if (!player.hasTag(AnimationControllerTags.attackTime) && !detected) {
-        system.run(async () => {
-            let hasAttackTime = false;
-            for (let i = 0; i < 28; i++) {
-                await system.waitTicks(1);
-                if (player.hasTag(AnimationControllerTags.attackTime)) {
-                    hasAttackTime = true;
-                    break;
-                }
-            }
-            if (!hasAttackTime) {
-                flag(player, "Scaffold", "J", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block:" + block.typeId]);
-                detectedAction(config, player, block);
-            }
-        });
-    }
     //scaffold/K: check for placing 5 or more blocks in one tick
     if (now - data.lastPlace < 75) {
         data.scaffoldFlagsK++;

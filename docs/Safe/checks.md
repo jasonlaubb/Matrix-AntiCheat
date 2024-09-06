@@ -1,6 +1,6 @@
 # Detctions
 
-Updated to V4.0.7 Matrix AntiCheat version
+Updated to V4.0.8 Matrix AntiCheat version
 
 !> Not including most of the 'Misc' modules.
 
@@ -51,8 +51,6 @@ Toggle id: `antiKillAura`
 (H) => Checks for smooth horizontal pitch of player.
 
 (I) => Checks if player rotation can be divided by 1.
-
-(J) => Checks if player hit player without swing hand.
 
 (K) => Checks if player contains illegal rotate speed pattern.
 
@@ -246,10 +244,14 @@ Toggle id: `antiScaffold`
 
 (I) => Checks if player placed block which is invalid.
 
-(J) => Checks if player placed block without hand swinging.
-
 # Tower
 
 Toggle id: `antiTower`
 
 (A) => Checks if player is using tower hacks.
+
+# NoSwing
+
+Toggle id: `antiNoSwing`
+
+(A) => Checks if player is using no swing hacks.

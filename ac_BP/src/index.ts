@@ -131,7 +131,6 @@ class MatrixAnti_MCPE {
         await import("./Modules/Movement/NoClip");
         await import("./Modules/Movement/Speed");
         await import("./Modules/Movement/NoSlow");
-        await import("./Modules/Movement/ElytraFly");
         await import("./Modules/World/Nuker");
         await import("./Modules/World/Scaffold");
         await import("./Modules/World/Tower");
@@ -146,6 +145,7 @@ class MatrixAnti_MCPE {
         await import("./Modules/Misc/Xray");
         await import("./Modules/Movement/World Border");
         await import("./Modules/Misc/Disabler");
+        await import("./Modules/Misc/NoSwing");
         await import("./Modules/Movement/ClientAuth");
         // Use the register data to initialize the modules
         const sucessAmount = await intilizeModules();
