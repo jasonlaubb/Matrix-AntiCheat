@@ -553,6 +553,12 @@ export default {
         timeout: 3000,
         faultToleranceTicks: 10,
     },
+    antiBadpacket: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 4,
+        faultToleranceTicks: 10,
+    },
     worldBorder: {
         enabled: false,
         checkEvery: 2,

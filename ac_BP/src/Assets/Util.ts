@@ -36,6 +36,7 @@ export {
     clearBlockBreakLog,
     toFixed,
     bypassMovementCheck,
+    onceTrue,
 };
 
 class rawstr {
@@ -415,4 +416,28 @@ function toFixed(number: number, digit: number, toString = false) {
 function bypassMovementCheck(player: Player) {
     const config = c();
     return config.enableMovementCheckBypassTag && player.hasTag(MatrixUsedTags.movementbypass);
+}
+
+/**
+ * @description Wait for a function to return true.
+ * Set interval to -1 to let it keep checking
+ */
+function onceTrue (object: any, func: (obj: any) => boolean, ticks: number, interval = 1): Promise<boolean> {
+    if (ticks <= 0 && ticks != -1 || !Number.isInteger(ticks)) {
+        throw new Error("Util :: onceTrue :: Ticks passed invalid");
+    }
+    const isFinite = ticks == -1;
+    let i = 0;
+    return new Promise<boolean>((resolve) => {
+        const intervalId = system.runInterval(() => {
+        i++;
+        if (func(object)) {
+            system.clearRun(intervalId);
+            resolve(true);
+        } else if (!isFinite && i >= ticks) {
+            system.clearRun(intervalId);
+            resolve(false);
+        }
+        }, interval);
+    })
 }

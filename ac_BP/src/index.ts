@@ -173,15 +173,7 @@ class MatrixAnti_MCPE {
     public get initializeDate(): number {
         return MatrixAnti_MCPE.init.runTime;
     }
-    public readonly initializeAsync = () =>
-        new Promise<void>((resolve) => {
-            const runId = Minecraft.system.runInterval(() => {
-                if (MatrixAnti_MCPE.init.initialized) {
-                    resolve();
-                    Minecraft.system.clearRun(runId);
-                }
-            }, 1);
-        });
+    public readonly initializeAsync = () => onceTrue(undefined, () => MatrixAnti_MCPE.init.initialized, -1);
 }
 const Index = new MatrixAnti_MCPE();
 export default Index;
@@ -189,4 +181,5 @@ import * as Minecraft from "@minecraft/server";
 import { initialize } from "./Functions/Config/dynamic_config";
 import { intilizeModules } from "./Modules/Modules";
 import Dynamic from "./Functions/Config/dynamic_config";
-import { dataBaseInitialize } from "./Functions/Config/config_database";
+import { dataBaseInitialize } from "./Functions/Config/config_database";import { onceTrue } from "./Assets/Util";
+
