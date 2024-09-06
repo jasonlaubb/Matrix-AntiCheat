@@ -1,12 +1,11 @@
-import { c } from "../../../../Assets/Util";
-import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
+import { c, rawstr } from "../../../../Assets/Util";
+import { registerCommand, verifier } from "../../CommandHandler";
 import { SHA256 } from "../../../../node_modules/crypto-es/lib/sha256";
-import { world } from "@minecraft/server";
 import Dynamic from "../../../Config/dynamic_config";
 
 registerCommand({
-    name: "passwords",
-    description: "Change the password of the op command",
+    name: "setpasswords",
+    description: "Change the password to a new one safely",
     parent: false,
     maxArgs: 3,
     minArgs: 2,
@@ -14,13 +13,14 @@ registerCommand({
     argRequire: [undefined, undefined, (value) => ["true", "false"].includes(value as string) && c().commands.passwordSetting.usingHash != value],
     requireSupportArgs: true,
     executor: async (player, args) => {
-        const oldPassword: string = args[0];
-        const newPassword: string = args[1];
+        const newPassword: string = args[0];
+        const confirmPassword: string = args[1];
         const config = c();
-        const sourcePassword = config.commands.passwordSetting.usingHash ? SHA256(oldPassword).toString() : oldPassword;
-        const correctPassword = config.commands.passwordSetting.usingHash ? config.commands.passwordSetting.hash : config.commands.passwordSetting.password;
-        if (sourcePassword != correctPassword) return sendRawText(player, { text: "§bMatrix §7>§c " }, { translate: "passwords.wrong", with: [] });
-        sendRawText(world, { text: "§bMatrix §7>§g " }, { translate: "passwords.changed", with: [] });
+        if (newPassword != confirmPassword) {
+            player.sendMessage(new rawstr(true, "c").tra("setpassword.different").parse());
+            return;
+        }
+        player.sendMessage(new rawstr(true, "c").tra("setpassword.changed").parse());
 
         if (!args[2] || args[2] == "true" || (config.commands.passwordSetting.usingHash && args[2] == "false")) {
             Dynamic.set(["commands", "passwordSetting", "hash"], SHA256(newPassword).toString());

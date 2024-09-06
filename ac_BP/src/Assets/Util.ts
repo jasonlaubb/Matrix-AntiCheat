@@ -31,6 +31,7 @@ export {
     isAdmin,
     getPLevel,
     setPLevel,
+    removeAdmin,
     isHost,
     findWater,
     getSpeedIncrease2,
@@ -252,6 +253,10 @@ function getPLevel (player: Player): number {
 
 function setPLevel (player: Player, level: number) {
     player.setDynamicProperty("permission_level", level);
+}
+
+function removeAdmin (player: Player) {
+    player.setDynamicProperty("permission_level");
 }
 
 // Host id is always -206158430207 for Local World

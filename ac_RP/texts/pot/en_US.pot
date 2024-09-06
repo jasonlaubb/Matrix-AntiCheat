@@ -248,10 +248,6 @@ msgstr ""
 msgid "Players in the bypasslist: %s"
 msgstr ""
 
-#: deop.hasbeen
-msgid "%1 has been deopped by %2"
-msgstr ""
-
 #: tempkick.has
 msgid "%1 has been disconnected by %2"
 msgstr ""
@@ -412,6 +408,10 @@ msgstr ""
 msgid "Please wait %s more seconds before you try again"
 msgstr ""
 
+#: op.reached
+msgid "You have reached the maximum permission level that op command can give."
+msgstr ""
+
 #: op.incorrect
 msgid "You have entered the incorrect password, please try again later."
 msgstr ""
@@ -426,6 +426,10 @@ msgstr ""
 
 #: op.pwtips
 msgid "We have detected that you haven't set-up your password. To increase the security of your realm or server, you can set your password through 'setpassword <new password> <confirm password>' command."
+msgstr ""
+
+#: op.notop
+msgid "Operator permission is required when password is disabled."
 msgstr ""
 
 #: deop.sucess
@@ -450,6 +454,14 @@ msgstr ""
 
 #: setadmin.toohigh
 msgid "The target has a permission level higher than you, you cannot determine the target's permission level."
+msgstr ""
+
+#: setpassword.different
+msgid "The new password and confirm password are different. Please try again."
+msgstr ""
+
+#: setpassword.changed
+msgid "The password has been changed, please don't forget your new password."
 msgstr ""
 
 #: deladmin.has

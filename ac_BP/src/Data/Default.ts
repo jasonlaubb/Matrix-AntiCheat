@@ -67,7 +67,7 @@ export default {
             adminOnly: false,
             requireTag: [],
             requireOp: true,
-            minPermissionLevel: 3,
+            minPermissionLevel: 0,
         },
         deop: {
             enabled: true,

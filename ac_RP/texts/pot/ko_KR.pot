@@ -61,7 +61,11 @@ msgid "§gSupport Server: §e%s"
 msgstr ""
 
 #: flag.style
-msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
+msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4/%5§7]§r"
+msgstr ""
+
+#: flag.style2
+msgid "%1§7 has failed §c%2 (%3) (%6) x%4/%5"
 msgstr ""
 
 #: ui.title
@@ -180,6 +184,10 @@ msgstr ""
 msgid "Command ran with error."
 msgstr ""
 
+#: cmderror.plevel
+msgid "No acess to continue, minimum permission level: %1"
+msgstr ""
+
 #: cmderror.name
 msgid "§gName: §9%s"
 msgstr ""
@@ -240,10 +248,6 @@ msgstr ""
 msgid "Players in the bypasslist: %s"
 msgstr ""
 
-#: deop.hasbeen
-msgid "%1 has been deopped by %2"
-msgstr "%1님이 %2님을 통하여 DE-OP 처리되었습니다."
-
 #: tempkick.has
 msgid "%1 has been disconnected by %2"
 msgstr ""
@@ -255,10 +259,6 @@ msgstr "%1님이 %2님의 처리로 프리즈 처리되었습니다."
 #: mute.has
 msgid "%1 has been muted by %2"
 msgstr "%1님이 %2님의 처리로 뮤트되었습니다."
-
-#: op.hasbeen
-msgid "%1 has been opped by %2"
-msgstr "%1가 %2를 통하여 OP처리 되었습니다. 부적절한 상황으로 의심될 시 즉시 DE-OP처리하세요."
 
 #: unfreeze.has
 msgid "%1 has been unfrozen by %2"
@@ -319,10 +319,6 @@ msgstr "%s님이 게임에서 자동 벤되었습니다."
 #: util.formkick
 msgid "%s is automatically kicked from the game"
 msgstr "%s님이 게임에서 자동 추방되었습니다."
-
-#: deop.notadmin
-msgid "%s is not admin"
-msgstr "%s는 어드민이 아닙니다."
 
 #: unban.notban
 msgid "%s is not banned"
@@ -408,17 +404,73 @@ msgstr ""
 msgid "No reason provided"
 msgstr "제공된 사유 없음"
 
-#: passwords.changed
-msgid "Password has been changed"
-msgstr "비밀번호가 번경되었습니다."
-
-#: passwords.wrong
-msgid "Sorry, but you entered a wrong password"
-msgstr ""
-
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
 msgstr "비밀번호를 입력하기 위해 %s초 기다려주세요."
+
+#: op.reached
+msgid "You have reached the maximum permission level that op command can give."
+msgstr ""
+
+#: op.incorrect
+msgid "You have entered the incorrect password, please try again later."
+msgstr ""
+
+#: op.opgain
+msgid "You have gained matrix admin permission through operator permission."
+msgstr ""
+
+#: op.pwgain
+msgid "You have gained matrix admin permission through security password."
+msgstr ""
+
+#: op.pwtips
+msgid "We have detected that you haven't set-up your password. To increase the security of your realm or server, you can set your password through 'setpassword <new password> <confirm password>' command."
+msgstr ""
+
+#: op.notop
+msgid "Operator permission is required when password is disabled."
+msgstr ""
+
+#: deop.sucess
+msgid "You have removed matrix admin permission from yourself."
+msgstr ""
+
+#: setadmin.has
+msgid "%2 has changed %1's admin permission to %3"
+msgstr ""
+
+#: setadmin.notenough
+msgid "Not enough permission. You should have at least %1 permission to give a permission level of %2"
+msgstr ""
+
+#: setadmin.outofrange
+msgid "The permission level that you can set should be between 0 and 3"
+msgstr ""
+
+#: setadmin.toolow
+msgid "The permission level which is valid should be at least 0. If you are trying to remove someone from admin permission, use 'deladmin <player>' instead."
+msgstr ""
+
+#: setadmin.toohigh
+msgid "The target has a permission level higher than you, you cannot determine the target's permission level."
+msgstr ""
+
+#: deladmin.has
+msgid "%2 has removed %1's admin permission"
+msgstr ""
+
+#: deladmin.notenough
+msgid "Not enough permission. You cannot remove someone from admin permission if you have lower permission level than the target."
+msgstr ""
+
+#: deladmin.none
+msgid "The target has no admin permission"
+msgstr ""
+
+#: deladmin.lockdown
+msgid "You cannot remove someone from matrix admin permission when the server is in lockdown mode"
+msgstr ""
 
 #: showallrank.has
 msgid "Show all rank has been set to %s"
@@ -439,10 +491,6 @@ msgstr "성공적으로 코드가 번경되었습니다. - %s"
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
 msgstr "서버는 %s님에 의해 현재 락다운 모드입니다."
-
-#: deop.lockdown
-msgid "The server is in lockdown mode"
-msgstr "현재 서버는 LockDown 모드입니다.[Whitelist]"
 
 #: lockdown.has
 msgid "The server is now in lockdown mode"
@@ -480,10 +528,6 @@ msgstr "버전"
 msgid "Wrong code"
 msgstr "잘못된 코드"
 
-#: op.wrong
-msgid "Wrong password"
-msgstr "잘못된 비밀번호"
-
 #: chathandler.muted
 msgid "You are muted!"
 msgstr "당신은 뮤트되었습니다! 채팅을 칠 수 없습니다."
@@ -491,10 +535,6 @@ msgstr "당신은 뮤트되었습니다! 채팅을 칠 수 없습니다."
 #: dimensionlock.stop
 msgid "You are not allowed to go to other dimensions!"
 msgstr "다른 차원으로 이동할 권한이 없습니다."
-
-#: op.now
-msgid "You are now admin"
-msgstr "당신은 이제 어드민입니다."
 
 #: adminchat.has
 msgid "You are now in admin channel"
