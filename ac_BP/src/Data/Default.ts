@@ -345,6 +345,20 @@ export default {
             requireOp: true,
             requireTag: [],
         },
+        setadmin: {
+            enabled: true,
+            adminOnly: true,
+            minPermissionLevel: 1,
+            requireOp: false,
+            requireTag: [],
+        },
+        deladmin: {
+            enabled: true,
+            adminOnly: true,
+            minPermissionLevel: 1,
+            requireOp: false,
+            requireTag: [],
+        },
     },
     ui: {
         
