@@ -109,6 +109,7 @@ let Vl: any = {};
 export type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z";
 
 function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
+    if (player === undefined) return;
     const config = c();
     // Skip if the player is in the bypass list
     if ((config.autoPunishment.bypasslist as string[]).includes(player.id)) return;

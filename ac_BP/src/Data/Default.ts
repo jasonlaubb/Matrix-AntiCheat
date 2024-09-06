@@ -332,7 +332,7 @@ export default {
         minAngle: 160,
         timeout: 200,
         maxEntityHit: 2,
-        punishment: "tempkick",
+        punishment: "ban",
         maxVL: 4,
         // For Anti KillAura Type K
         trackLength: 10,
@@ -416,7 +416,7 @@ export default {
         factor: 1,
         minRotation: 20,
         maxBPS: 5,
-        punishment: "ban",
+        punishment: "kick",
         maxVL: 4,
     },
     antiNoSlow: {
