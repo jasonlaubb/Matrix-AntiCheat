@@ -25,10 +25,12 @@ registerCommand({
         if (!args[2] || args[2] == "true" || (config.commands.passwordSetting.usingHash && args[2] == "false")) {
             Dynamic.set(["commands", "passwordSetting", "hash"], SHA256(newPassword).toString());
             Dynamic.set(["commands", "passwordSetting", "usingHash"], true);
+            Dynamic.set(["commands", "passwordSetting", "enabled"], true);
             Dynamic.delete(["commands", "passwordSetting", "password"]);
         } else {
             Dynamic.set(["commands", "passwordSetting", "password"], newPassword);
             Dynamic.set(["commands", "passwordSetting", "usingHash"], false);
+            Dynamic.set(["commands", "passwordSetting", "enabled"], true);
             Dynamic.delete(["commands", "passwordSetting", "hash"]);
         }
     },
