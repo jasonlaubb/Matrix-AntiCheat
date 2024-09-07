@@ -1,13 +1,13 @@
 import { EquipmentSlot, Player, system } from "@minecraft/server";
 import { registerModule } from "../Modules";
-import { c, flag, isAdmin } from "../../Assets/Util";
+import { c, flag, isAdmin, isSpawning } from "../../Assets/Util";
 import { AnimationControllerTags, MatrixUsedTags } from "../../Data/EnumData";
 
 registerModule("antiOffhand", false, [])
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
     const config = c();
-    if (event.id != "matrix:offhand" || !config.antiOffhand.enabled || !event.sourceEntity || !(event.sourceEntity instanceof Player) || isAdmin(event.sourceEntity)) return;
+    if (event.id != "matrix:offhand" || !config.antiOffhand.enabled || !event.sourceEntity || !(event.sourceEntity instanceof Player) || isSpawning(event.sourceEntity) || isAdmin(event.sourceEntity)) return;
     const player = event.sourceEntity as Player;
     let detected = false;
     if (player.hasTag(AnimationControllerTags.moving) && !player.isInWater && !player.isGliding && !player.hasTag(AnimationControllerTags.riding)) {
