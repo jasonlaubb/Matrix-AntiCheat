@@ -1,7 +1,7 @@
 import { GameMode, Player } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
-import { MinecraftEffectTypes } from "@minecraft/vanilla-data";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { flag, onceTrue } from "../../Assets/Util";
 
 async function antiBadPacket (config: configi, player: Player) {
