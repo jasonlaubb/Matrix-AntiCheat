@@ -1,44 +1,34 @@
-import { DataDrivenEntityTriggerAfterEvent, EquipmentSlot, Player, world } from "@minecraft/server";
-import { configi, registerModule } from "../Modules";
-import { isAdmin, isSpawning, Type, flag } from "../../Assets/Util";
+import { EquipmentSlot, Player, system } from "@minecraft/server";
+import { registerModule } from "../Modules";
+import { c, flag, isAdmin } from "../../Assets/Util";
+import { AnimationControllerTags, MatrixUsedTags } from "../../Data/EnumData";
 
-const toFlagInfo = {
-    "matrix:offhand_flag1": {
-        set: "Moving",
-        type: "A",
-    },
-    "matrix:offhand_flag2": {
-        set: "Attacking",
-        type: "B",
-    },
-    "matrix:offhand_flag3": {
-        set: "ContainerOpened",
-        type: "C",
-    },
-} as { [key: string]: OffHandToFlagInfo };
-async function antiOffHand(config: configi, { entity: player, eventId }: DataDrivenEntityTriggerAfterEvent) {
-    if (isAdmin(player as Player) || isSpawning(player as Player)) return;
-    const { set, type } = toFlagInfo[eventId];
-    const equipComp = player.getComponent("equippable")!;
-    const armorSlot = equipComp.getEquipment(EquipmentSlot.Offhand);
-    if (!armorSlot || (armorSlot.typeId != "minecraft:totem_of_undying" && armorSlot.typeId != "minecraft:shield")) return;
-    flag(player as Player, "Offhand", type, config.antiOffhand.maxVL, config.antiOffhand.punishment, ["Type" + ":" + set]);
-    if (config.antiOffhand.doUnEquip) {
-        // Unequip the item
-        equipComp.setEquipment(EquipmentSlot.Offhand);
-        player.getComponent("inventory")!.container!.addItem(armorSlot);
+registerModule("antiOffhand", false, [])
+
+system.afterEvents.scriptEventReceive.subscribe((event) => {
+    const config = c();
+    if (event.id != "matrix:offhand" || !config.antiOffhand.enabled || !event.sourceEntity || !(event.sourceEntity instanceof Player) || isAdmin(event.sourceEntity)) return;
+    const player = event.sourceEntity as Player;
+    let detected = false;
+    if (player.hasTag(AnimationControllerTags.moving) && !player.isInWater && !player.isGliding && !player.hasTag(AnimationControllerTags.riding)) {
+        detected = true;
+        flag(player, "OffHand", "A", config.antiOffhand.maxVL, config.antiOffhand.punishment, undefined);
+    } else if (player.hasTag(AnimationControllerTags.attackTime)) {
+        detected = true;
+        flag(player, "OffHand", "B", config.antiOffhand.maxVL, config.antiOffhand.punishment, undefined);
+    } else if (player.hasTag(MatrixUsedTags.container)) {
+        detected = true;
+        flag(player, "OffHand", "C", config.antiOffhand.maxVL, config.antiOffhand.punishment, undefined);
     }
-}
+    if (detected && config.antiOffhand.doUnEquip) {
+        inactiveTotem(player);
+    }
+})
 
-registerModule("antiOffhand", false, [], {
-    worldSignal: world.afterEvents.dataDrivenEntityTrigger,
-    playerOption: {
-        entityTypes: ["minecraft:player"],
-        eventTypes: ["matrix:offhand_flag1", "matrix:offhand_flag2", "matrix:offhand_flag3"],
-    },
-    then: antiOffHand,
-});
-interface OffHandToFlagInfo {
-    set: string;
-    type: Type;
+function inactiveTotem (player: Player) {
+    const e = player.getComponent('minecraft:equippable')
+    const q = e?.getEquipment(EquipmentSlot.Offhand);
+    if (!q) return;
+    e?.setEquipment(EquipmentSlot.Offhand);
+    player.getComponent('minecraft:inventory')!.container!.addItem(q);
 }
