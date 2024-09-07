@@ -38,16 +38,9 @@ async function obfuscateFile(filePath) {
     compact: true,
     simplify: true,
     stringArray: true,
-    stringArrayThreshold: 0.75,
-    target: 'node',
-    renameGlobals: true,
-    renameProperties: true,
-    deadCodeInjection: true,
-    deadCodeInjectionThreshold: 0.7,
-    renamePropertiesMode: 'safe',
-    stringArrayIndexesType: ['hexadecimal-number'],
-    stringArrayWrappersCount: 5,
-    selfDefending: true,
+    stringArrayEncoding: ['base64'],
+    controlFlowFlattening: true,
+    identifierNamesGenerator: 'hexadecimal',
   });
 
   await fs.promises.writeFile(filePath, obfuscatedCode.getObfuscatedCode());

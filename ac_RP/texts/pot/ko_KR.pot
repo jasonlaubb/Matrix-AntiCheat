@@ -268,9 +268,9 @@ msgstr "%1님이 %2님을 통하여 언프리즈 되었습니다."
 msgid "%1 has been unmuted by %2"
 msgstr "%1님이 %2님의 처리로 언뮤트되었습니다."
 
-#: toggles.togglechange
+#: toggle.togglechange
 msgid "%1 module has been %2d"
-msgstr "%1 모듈이 %2d 로 설정되었습니다."
+msgstr ""
 
 #: toggles.title
 msgid "Matrix AntiCheat toggleable modules"
@@ -528,17 +528,17 @@ msgstr "서버는 현재 락다운 모드입니다."
 msgid "There is no player in unban queue"
 msgstr "언벤 목록에 아무도 없습니다."
 
-#: toggles.already
+#: toggle.already
 msgid "This module is %sd already"
-msgstr "이 모듈은 이미 %sd입니다!"
+msgstr ""
 
 #: unbanlist.list
 msgid "Unban list"
 msgstr "언벤 목록"
 
-#: toggles.unknownmodule
+#: toggle.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr "없는 모듈입니다. - %stoggles"
+msgstr ""
 
 #: about.version
 msgid "Version"
@@ -588,7 +588,7 @@ msgstr "월드 보더를 넘어선 곳에서 엔티티 및 블록과 상호작�
 msgid "You have been verified successfully"
 msgstr "성공적으로 인증 되었습니다!"
 
-#: toggles.warning
+#: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
 msgstr ""
 

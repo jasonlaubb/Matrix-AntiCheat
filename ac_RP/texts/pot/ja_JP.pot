@@ -268,9 +268,9 @@ msgstr "%1 は %2 によってフリーズが解除されました"
 msgid "%1 has been unmuted by %2"
 msgstr "%1 は %2 によってミュートが解除されました"
 
-#: toggles.togglechange
+#: toggle.togglechange
 msgid "%1 module has been %2d"
-msgstr "%1 モジュールが %2 されました"
+msgstr ""
 
 #: toggles.title
 msgid "Matrix AntiCheat toggleable modules"
@@ -528,17 +528,17 @@ msgstr "サーバーはロックダウンモードになりました"
 msgid "There is no player in unban queue"
 msgstr "アンバンキューにプレイヤーはいません"
 
-#: toggles.already
+#: toggle.already
 msgid "This module is %sd already"
-msgstr "このモジュールは既に %sd です"
+msgstr ""
 
 #: unbanlist.list
 msgid "Unban list"
 msgstr "アンバンリスト"
 
-#: toggles.unknownmodule
+#: toggle.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr "不明なモジュールです。'%stoggles' を試してみてください"
+msgstr ""
 
 #: about.version
 msgid "Version"
@@ -588,9 +588,9 @@ msgstr "ワールドボーダーの外にあるブロックやエンティティ
 msgid "You have been verified successfully"
 msgstr "検証が完了しました"
 
-#: toggles.warning
+#: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
-msgstr "実験的なモジュールを開こうとしています。バグや誤検知の原因となる可能性があります！有効にするには '%1toggle %2 enable force' を使用してください"
+msgstr ""
 
 #: adminchat.adminchat
 msgid "adminchat"

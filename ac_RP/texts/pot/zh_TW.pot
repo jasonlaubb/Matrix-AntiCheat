@@ -268,9 +268,9 @@ msgstr "%1 已被 %2 解凍"
 msgid "%1 has been unmuted by %2"
 msgstr "%1 已被 %2 取消靜音"
 
-#: toggles.togglechange
+#: toggle.togglechange
 msgid "%1 module has been %2d"
-msgstr "%1 模組已 %2d"
+msgstr ""
 
 #: toggles.title
 msgid "Matrix AntiCheat toggleable modules"
@@ -528,17 +528,17 @@ msgstr "伺服器現在處於鎖定模式"
 msgid "There is no player in unban queue"
 msgstr "解封隊列中沒有玩家"
 
-#: toggles.already
+#: toggle.already
 msgid "This module is %sd already"
-msgstr "這個模組已被 %sd, 無法執行該操作"
+msgstr ""
 
 #: unbanlist.list
 msgid "Unban list"
 msgstr "解禁隊列"
 
-#: toggles.unknownmodule
+#: toggle.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr "未知模組，嘗試 %stoggles"
+msgstr ""
 
 #: about.version
 msgid "Version"
@@ -588,9 +588,9 @@ msgstr "你無法與邊界之外的方塊或實體進行交互"
 msgid "You have been verified successfully"
 msgstr "你已成功驗證"
 
-#: toggles.warning
+#: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
-msgstr "你正在嘗試開啟一個實驗性模組, 這個或許會造成錯誤或者誤判, 請使用'%1toggle %2 enable force'指令來開啟"
+msgstr ""
 
 #: adminchat.adminchat
 msgid "adminchat"

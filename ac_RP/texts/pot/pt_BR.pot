@@ -268,7 +268,7 @@ msgstr ""
 msgid "%1 has been unmuted by %2"
 msgstr ""
 
-#: toggles.togglechange
+#: toggle.togglechange
 msgid "%1 module has been %2d"
 msgstr ""
 
@@ -528,7 +528,7 @@ msgstr ""
 msgid "There is no player in unban queue"
 msgstr ""
 
-#: toggles.already
+#: toggle.already
 msgid "This module is %sd already"
 msgstr ""
 
@@ -536,7 +536,7 @@ msgstr ""
 msgid "Unban list"
 msgstr ""
 
-#: toggles.unknownmodule
+#: toggle.unknownmodule
 msgid "Unknown module, try %stoggles"
 msgstr ""
 
@@ -588,7 +588,7 @@ msgstr ""
 msgid "You have been verified successfully"
 msgstr ""
 
-#: toggles.warning
+#: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
 msgstr ""
 

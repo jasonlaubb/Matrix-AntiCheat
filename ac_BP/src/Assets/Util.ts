@@ -6,7 +6,7 @@ import Dynamic from "../Functions/Config/dynamic_config";
 import { Action } from "./Action";
 import { MatrixUsedTags } from "../Data/EnumData";
 import MathUtil from "./MathUtil";
-import { SHA256 } from "crypto-es/lib/sha256";
+import { SHA256 } from "../node_modules/crypto-es/lib/sha256";
 
 /**
  * @author jasonlaubb
@@ -244,7 +244,7 @@ function getGamemode(playerName: string) {
 }
 
 function isAdmin (player: Player) {
-    return !!player.getDynamicProperty("permission_level");
+    return getPLevel(player) >= 0;
 }
 
 function getPLevel (player: Player): number {

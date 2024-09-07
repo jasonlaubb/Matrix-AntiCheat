@@ -268,9 +268,9 @@ msgstr "%1 已被 %2 解冻"
 msgid "%1 has been unmuted by %2"
 msgstr "%1 已被 %2 取消静音"
 
-#: toggles.togglechange
+#: toggle.togglechange
 msgid "%1 module has been %2d"
-msgstr "%1 模组已 %2d"
+msgstr ""
 
 #: toggles.title
 msgid "Matrix AntiCheat toggleable modules"
@@ -528,17 +528,17 @@ msgstr "伺服器现在处于锁定模式"
 msgid "There is no player in unban queue"
 msgstr "解封队列中没有玩家"
 
-#: toggles.already
+#: toggle.already
 msgid "This module is %sd already"
-msgstr "这个模组已被 %sd, 无法执行该操作"
+msgstr ""
 
 #: unbanlist.list
 msgid "Unban list"
 msgstr "解禁队列"
 
-#: toggles.unknownmodule
+#: toggle.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr "未知模组，尝试 %stoggles"
+msgstr ""
 
 #: about.version
 msgid "Version"
@@ -588,7 +588,7 @@ msgstr "You cannot interact with a block or entity which is outside the world bo
 msgid "You have been verified successfully"
 msgstr "You have been verified successfully"
 
-#: toggles.warning
+#: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
 msgstr ""
 
