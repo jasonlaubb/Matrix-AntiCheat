@@ -126,7 +126,7 @@ function flag(player: Player, modules: string, type: Type, maxVL: number, punish
             Vl[player.id][modules]++;
         } catch {}
 
-        const flagMsg = new rawstr(true).tra("flag.style", player.name, modules, type, Vl[player.id][modules], ((config as any).maxVL ?? 999).toString());
+        const flagMsg = new rawstr(true).tra("flag.style", player.name, modules, type, Vl[player.id][modules], maxVL.toString());
         if (config.logsettings.logCheatFlag) saveLog("Flag", player.name, `${modules} ${type} (x${Vl[player.id][modules]})`);
         if (infos !== undefined) flagMsg.str("\n" + formatInformation(infos));
 
