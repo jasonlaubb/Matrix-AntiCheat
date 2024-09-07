@@ -49,6 +49,6 @@ Xcopy "%~dp0ac_RP\ui" "%~dp0generated-package\Matrix-anti_RP\ui" /Y /E /H /C /I
 copy "%~dp0ac_RP\texts\*.lang" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
 copy "%~dp0ac_RP\texts\languages.json" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
 :: Call the anti edit module
-call node ./anti-edit.js
+call node ./anti-edit.mjs
 echo Process ended.
 pause
