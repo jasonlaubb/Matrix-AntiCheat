@@ -272,6 +272,22 @@ msgstr ""
 msgid "%1 module has been %2d"
 msgstr "%1 Modulo è stato %2d"
 
+#: toggles.title
+msgid "Matrix AntiCheat toggleable modules"
+msgstr ""
+
+#: toggles.text
+msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
+msgstr ""
+
+#: toggles.feide
+msgid "§a» §g%s: §aEnabled"
+msgstr ""
+
+#: toggles.feidd
+msgid "§a» §g%s: §cDisabled"
+msgstr ""
+
 #: rank.hasadd
 msgid "%1's rank has been added %2"
 msgstr "%1's rank è stato aggiunto con successo %2"
@@ -515,14 +531,6 @@ msgstr "Non c'è nessun giocatore nella coda di sban"
 #: toggles.already
 msgid "This module is %sd already"
 msgstr "Questo modulo è %sd già"
-
-#: toggles.toggle
-msgid "Toggle %s module"
-msgstr "Toggle"
-
-#: toggles.togglelist
-msgid "Toggle list:"
-msgstr "Toggle list:"
 
 #: unbanlist.list
 msgid "Unban list"

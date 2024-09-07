@@ -272,6 +272,22 @@ msgstr "%1님이 %2님의 처리로 언뮤트되었습니다."
 msgid "%1 module has been %2d"
 msgstr "%1 모듈이 %2d 로 설정되었습니다."
 
+#: toggles.title
+msgid "Matrix AntiCheat toggleable modules"
+msgstr ""
+
+#: toggles.text
+msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
+msgstr ""
+
+#: toggles.feide
+msgid "§a» §g%s: §aEnabled"
+msgstr ""
+
+#: toggles.feidd
+msgid "§a» §g%s: §cDisabled"
+msgstr ""
+
 #: rank.hasadd
 msgid "%1's rank has been added %2"
 msgstr "%1에게 칭호 %2가 추가되었습니다."
@@ -515,14 +531,6 @@ msgstr "언벤 목록에 아무도 없습니다."
 #: toggles.already
 msgid "This module is %sd already"
 msgstr "이 모듈은 이미 %sd입니다!"
-
-#: toggles.toggle
-msgid "Toggle %s module"
-msgstr "토클"
-
-#: toggles.togglelist
-msgid "Toggle list:"
-msgstr "토글 목록:"
 
 #: unbanlist.list
 msgid "Unban list"

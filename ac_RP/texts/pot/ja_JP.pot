@@ -272,6 +272,22 @@ msgstr "%1 は %2 によってミュートが解除されました"
 msgid "%1 module has been %2d"
 msgstr "%1 モジュールが %2 されました"
 
+#: toggles.title
+msgid "Matrix AntiCheat toggleable modules"
+msgstr ""
+
+#: toggles.text
+msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
+msgstr ""
+
+#: toggles.feide
+msgid "§a» §g%s: §aEnabled"
+msgstr ""
+
+#: toggles.feidd
+msgid "§a» §g%s: §cDisabled"
+msgstr ""
+
 #: rank.hasadd
 msgid "%1's rank has been added %2"
 msgstr "%1 のランクに %2 が追加されました"
@@ -515,14 +531,6 @@ msgstr "アンバンキューにプレイヤーはいません"
 #: toggles.already
 msgid "This module is %sd already"
 msgstr "このモジュールは既に %sd です"
-
-#: toggles.toggle
-msgid "Toggle %s module"
-msgstr "%s モジュールを切り替える"
-
-#: toggles.togglelist
-msgid "Toggle list:"
-msgstr "切り替え可能なモジュールリスト:"
 
 #: unbanlist.list
 msgid "Unban list"

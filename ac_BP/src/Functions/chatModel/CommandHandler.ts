@@ -150,7 +150,8 @@ export function error(target: Minecraft.Player | Minecraft.World, { name, messag
     target.sendMessage(rawmessage.parse());
 }
 export function sendErr(err: Error) {
-    console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
+    if (c().expectedErrorShown)
+        console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
 }
 
 export function isPlayer(player: string, exclude: boolean = false, isadmin: boolean | string = "no la", runner?: Minecraft.Player): Minecraft.Player {

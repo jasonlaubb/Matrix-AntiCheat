@@ -272,6 +272,22 @@ msgstr ""
 msgid "%1 module has been %2d"
 msgstr ""
 
+#: toggles.title
+msgid "Matrix AntiCheat toggleable modules"
+msgstr ""
+
+#: toggles.text
+msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
+msgstr ""
+
+#: toggles.feide
+msgid "§a» §g%s: §aEnabled"
+msgstr ""
+
+#: toggles.feidd
+msgid "§a» §g%s: §cDisabled"
+msgstr ""
+
 #: rank.hasadd
 msgid "%1's rank has been added %2"
 msgstr ""
@@ -514,14 +530,6 @@ msgstr ""
 
 #: toggles.already
 msgid "This module is %sd already"
-msgstr ""
-
-#: toggles.toggle
-msgid "Toggle %s module"
-msgstr ""
-
-#: toggles.togglelist
-msgid "Toggle list:"
 msgstr ""
 
 #: unbanlist.list

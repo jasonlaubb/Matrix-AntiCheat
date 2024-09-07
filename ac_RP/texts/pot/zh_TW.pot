@@ -272,6 +272,22 @@ msgstr "%1 已被 %2 取消靜音"
 msgid "%1 module has been %2d"
 msgstr "%1 模組已 %2d"
 
+#: toggles.title
+msgid "Matrix AntiCheat toggleable modules"
+msgstr ""
+
+#: toggles.text
+msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
+msgstr ""
+
+#: toggles.feide
+msgid "§a» §g%s: §aEnabled"
+msgstr ""
+
+#: toggles.feidd
+msgid "§a» §g%s: §cDisabled"
+msgstr ""
+
 #: rank.hasadd
 msgid "%1's rank has been added %2"
 msgstr "%1 的聊天稱號已新增 %2"
@@ -515,14 +531,6 @@ msgstr "解封隊列中沒有玩家"
 #: toggles.already
 msgid "This module is %sd already"
 msgstr "這個模組已被 %sd, 無法執行該操作"
-
-#: toggles.toggle
-msgid "Toggle %s module"
-msgstr "切換"
-
-#: toggles.togglelist
-msgid "Toggle list:"
-msgstr "切換清單："
 
 #: unbanlist.list
 msgid "Unban list"

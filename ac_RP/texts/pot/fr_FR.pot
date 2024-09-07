@@ -272,6 +272,22 @@ msgstr "Le Joueur %1 a été Dé-Muter par %2"
 msgid "%1 module has been %2d"
 msgstr "Le Module %1 a été %2d"
 
+#: toggles.title
+msgid "Matrix AntiCheat toggleable modules"
+msgstr ""
+
+#: toggles.text
+msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
+msgstr ""
+
+#: toggles.feide
+msgid "§a» §g%s: §aEnabled"
+msgstr ""
+
+#: toggles.feidd
+msgid "§a» §g%s: §cDisabled"
+msgstr ""
+
 #: rank.hasadd
 msgid "%1's rank has been added %2"
 msgstr "Le Grade %1 a été Ajouter à %2"
@@ -515,14 +531,6 @@ msgstr "Il n'y a aucun joueur dans la file d'attente de Dé-Bannissement"
 #: toggles.already
 msgid "This module is %sd already"
 msgstr "Ce Module est déjà %sd"
-
-#: toggles.toggle
-msgid "Toggle %s module"
-msgstr ""
-
-#: toggles.togglelist
-msgid "Toggle list:"
-msgstr "Liste des Modules:"
 
 #: unbanlist.list
 msgid "Unban list"

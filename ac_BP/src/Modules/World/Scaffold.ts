@@ -72,6 +72,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     let detected;
     //get the factor from the config
     const factor = config.antiScaffold.factor;
+    const notFlying = !player.isFlying;
     //check if rotation is a number that can be divided by the factor
     if ((rotation.x % factor === 0 || rotation.y % factor === 0) && Math.abs(rotation.x) !== 90) {
         detected = true;
@@ -122,7 +123,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         const diagScaffold = (data.lastDiagX == 1 && diagX == 0 && data.lastDiagZ == 0 && diagZ == 1) || (data.lastDiagX == 0 && diagX == 1 && data.lastDiagZ == 1 && diagZ == 0);
         const yLoc = y - player.location.y;
         //the check:)
-        if (yLoc > -2.1 && yLoc <= -1 && now - data.lastPlace < data.diagSpeed && diagScaffold && (extender - data.lastDis > 0 || extender < 1)) {
+        if (notFlying && yLoc > -2.1 && yLoc <= -1 && now - data.lastPlace < data.diagSpeed && diagScaffold && (extender - data.lastDis > 0 || extender < 1)) {
             data.scaffoldFlags++;
             if (data.scaffoldFlags >= 3) {
                 data.scaffoldFlags = 0;
@@ -135,7 +136,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         }
         const blockBelow = player.dimension.getBlock({ x: Math.floor(player.location.x), y: Math.floor(player.location.y), z: Math.floor(player.location.z) })?.isSolid;
         const isScaffolding = !blockBelow && (extender - data.lastDis >= -0.1 || extender < 1) && yLoc > -2.1 && yLoc <= -1;
-        if (isScaffolding) {
+        if (notFlying && isScaffolding) {
             //if the player not diagonal scaffolding or duration higher than 500 ticks reset the log
             if (!diagScaffold || now - data.lastPlace > 500) data.scaffoldFlags = 0;
             if (now - data.lastPlace > 8000) data.scaffoldFlags2 = 0;
@@ -185,8 +186,9 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             }
         }
     } catch (error) {
-        if ((error as Error)!.name! != "LocationOutOfWorldBoundariesError") return;
-        throw error;
+        if ((error as Error)!.name! != "LocationOutOfWorldBoundariesError") {;
+            if (config.expectedErrorShown) throw error;
+        }
     }
     if (!block?.isValid()) {
         detected = true;

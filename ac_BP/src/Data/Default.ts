@@ -23,6 +23,7 @@ export default {
     passwordCold: 5000,
     otherPrefix: [],
     spawnFinishDelay: 1200,
+    expectedErrorShown: false,
     // Set the true will let player with tag matrix:movementCheckBypassTag for bypass some of the movement check.
     enableMovementCheckBypassTag: false,
     commands: {
