@@ -39,7 +39,6 @@ async function obfuscateFile(filePath) {
     simplify: true,
     stringArray: true,
     stringArrayEncoding: ['base64'],
-    controlFlowFlattening: true,
     identifierNamesGenerator: 'hexadecimal',
   });
 
