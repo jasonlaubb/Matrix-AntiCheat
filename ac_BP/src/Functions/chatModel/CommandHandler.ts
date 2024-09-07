@@ -1,13 +1,19 @@
 import * as Minecraft from "@minecraft/server";
-import { c, isAdmin, rawstr } from "../../Assets/Util";
+import { c, getPLevel, isAdmin, rawstr } from "../../Assets/Util";
 import { system } from "@minecraft/server";
 
 export function verifier(player: Minecraft.Player, setting: CommandConfig) {
     if (setting.enabled !== true) {
         return false;
-    } else if (setting.adminOnly === true && !isAdmin(player)) {
-        return false;
+    } else if (setting.adminOnly === true) {
+        if (!isAdmin(player)) {
+            return false;
+        } else if (setting.minPermissionLevel > getPLevel(player)) {
+            return false;
+        }
     } else if (setting.requireTag.length > 0 && !player.getTags().some((tag) => setting.requireTag.includes(tag))) {
+        return false;
+    } else if (setting.requireOp === true && !player.isOp()) {
         return false;
     }
     return true;
@@ -105,7 +111,7 @@ export function triggerCommand(player: Minecraft.Player, message: string): numbe
     return 0;
 }
 
-export function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): number {
+function syntaxRun(targetCommand: CommandProperties, player: Minecraft.Player, args: string[], before: string = ""): number {
     const config = c();
     if (targetCommand.minArgs && args.length < targetCommand.minArgs) {
         return system.run(() => {
@@ -175,6 +181,10 @@ export function isPlayer(player: string, exclude: boolean = false, isadmin: bool
 }
 export function getAllCommandNames() {
     return commands.map(({ name }) => name);
+}
+
+export function getAllCommands() {
+    return commands;
 }
 
 interface CommandHandleData {
