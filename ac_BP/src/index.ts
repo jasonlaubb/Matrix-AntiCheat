@@ -148,6 +148,7 @@ class MatrixAnti_MCPE {
         await import("./Modules/Misc/NoSwing");
         await import("./Modules/Misc/Badpacket");
         await import("./Modules/Movement/ClientAuth");
+        await import("./Modules/Movement/Air Jump");
         // Use the register data to initialize the modules
         const sucessAmount = await intilizeModules();
         const config = await Dynamic.configAsync();

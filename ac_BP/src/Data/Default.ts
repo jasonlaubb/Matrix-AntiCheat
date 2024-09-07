@@ -464,6 +464,13 @@ export default {
         maxHighVelocity: 22,
         maxVL: 4,
     },
+    antiAirJump: {
+        enabled: true,
+        punishment: "tempkick",
+        ratioThreshold: 0.5,
+        minDataRequired: 5,
+        maxVL: 4,
+    },
     antiNoFall: {
         enabled: true,
         punishment: "ban",
