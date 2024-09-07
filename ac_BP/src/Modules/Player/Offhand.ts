@@ -19,6 +19,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
     } else if (player.hasTag(MatrixUsedTags.container)) {
         detected = true;
         flag(player, "OffHand", "C", config.antiOffhand.maxVL, config.antiOffhand.punishment, undefined);
+    } else if (player.hasTag(AnimationControllerTags.usingItem)) {
+        detected = true;
+        flag(player, "OffHand", "D", config.antiOffhand.maxVL, config.antiOffhand.punishment, undefined);
     }
     if (detected && config.antiOffhand.doUnEquip) {
         inactiveTotem(player);
