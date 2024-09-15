@@ -34,12 +34,10 @@ async function traverseDirectory(directoryPath) {
 
 async function obfuscateFile(filePath) {
   const fileContent = await fs.promises.readFile(filePath, 'utf8');
+  // Only do dead code injection to prevent slow running
   const obfuscatedCode = obfuscator.obfuscate(fileContent, {
     compact: true,
     simplify: true,
-    stringArray: true,
-    stringArrayEncoding: ['base64'],
-    identifierNamesGenerator: 'hexadecimal',
   });
 
   await fs.promises.writeFile(filePath, obfuscatedCode.getObfuscatedCode());
@@ -47,14 +45,14 @@ async function obfuscateFile(filePath) {
 let bar;
 async function onStart () {
   const count = await countLoopIterations(directoryPath);
-  bar = new progressBar('Anti-Edit: [:bar] :percent :file', {
+  bar = new progressBar('Compresser: [:bar] :percent :file', {
     complete: '=',
     incomplete: '.',
     width: 30,
     total: count
   });  
   await traverseDirectory(directoryPath);
-  console.log('\nAnti-Edit: Obfuscation process finished.');
+  console.log('\nCompresser: Obfuscation process finished.');
 }
 onStart();
 
