@@ -9,6 +9,12 @@ const fixedStart = `/**
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
 `;
+/**
+ * @author jasonlaubb
+ * @contributors https://github.com/jasonlaubb/Matrix-AntiCheat?tab=readme-ov-file#developers
+ * @license AGPLv3
+ * @link https://github.com/jasonlaubb/Matrix-AntiCheat
+ */
 const directoryPath = './generated-package/Matrix-anti_BP/scripts';
 const whiteList = [
   'Default.js',
@@ -41,11 +47,11 @@ async function traverseDirectory(directoryPath) {
 async function obfuscateFile(filePath) {
   const fileContent = await fs.promises.readFile(filePath, 'utf8');
   // Only do dead code injection to prevent slow running
-  const obfuscatedCode = fixedStart + obfuscator.obfuscate(fileContent, {
+  const obfuscatedCode = obfuscator.obfuscate(fileContent, {
     compact: true,
     simplify: true,
   });
-  await fs.promises.writeFile(filePath, obfuscatedCode.getObfuscatedCode());
+  await fs.promises.writeFile(filePath, fixedStart + obfuscatedCode.getObfuscatedCode());
 }
 let bar;
 async function onStart () {
