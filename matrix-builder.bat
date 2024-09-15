@@ -48,12 +48,7 @@ Xcopy "%~dp0ac_RP\textures" "%~dp0generated-package\Matrix-anti_RP\textures" /Y 
 Xcopy "%~dp0ac_RP\ui" "%~dp0generated-package\Matrix-anti_RP\ui" /Y /E /H /C /I
 copy "%~dp0ac_RP\texts\*.lang" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
 copy "%~dp0ac_RP\texts\languages.json" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
-<<<<<<< HEAD
 :: Compress the code
 call node ./compresser.mjs
-=======
-:: Call the anti edit module (required when release)
-call node ./anti-edit.mjs
->>>>>>> 4158d1aecdf2aca9b9e286ca486daa7c15807281
 echo Process ended.
 pause
