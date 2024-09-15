@@ -21,9 +21,8 @@ interface SpamData {
 }
 const spamData = new Map<string, SpamData>();
 export function intergradedAntiSpam(player: Player, message: string) {
-    const config = c();
-    const playerSound = confi.soundEffect;
-    const config = confi.intergradedAntiSpam;
+    const playerSound = c().soundEffect;
+    const config = c().intergradedAntiSpam;
     message = message.latinise().toLowerCase();
     if (config.chatFilter.enabled && chatFilter(player, message)) return true;
     if (config.linkEmailFilter.enabled && linkEmailFilter(player, message)) return true;
