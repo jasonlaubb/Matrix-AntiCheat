@@ -18,6 +18,7 @@ const special_characters = {
 interface SpamData {
     lastMessage?: string;
     messageRate: number[];
+    lastMessageTime: number;
 }
 const spamData = new Map<string, SpamData>();
 export function intergradedAntiSpam(player: Player, message: string) {
@@ -28,15 +29,17 @@ export function intergradedAntiSpam(player: Player, message: string) {
     if (config.linkEmailFilter.enabled && linkEmailFilter(player, message)) return true;
 
     if (config.spamFilter.enabled) {
+        const now = Date.now();
         const data =
             spamData.get(player.id) ??
             ({
                 messageRate: [],
+                lastMessageTime: 0,
             } as SpamData);
 
         let returnTrue = false;
 
-        if (data.lastMessage && data.lastMessage == message && Date.now() - data.messageRate[data.messageRate.length - 1] < 15000) {
+        if (data.lastMessage && data.lastMessage == message && now - data.lastMessageTime < 20000) {
             system.run(() => {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.repeated").parse());
                 if (playerSound) player.playSound("note.bass", { volume: 1.0 });
@@ -63,7 +66,7 @@ export function intergradedAntiSpam(player: Player, message: string) {
         }
 
         data.messageRate.push(Date.now());
-        data.messageRate = data.messageRate.filter((x) => Date.now() - x > 5000) as number[];
+        data.messageRate = data.messageRate.filter((x) => Date.now() - x < 5000) as number[];
 
         system.run(() => {
             console.log(JSON.stringify(data));
@@ -80,8 +83,8 @@ export function intergradedAntiSpam(player: Player, message: string) {
         }
 
         data.lastMessage = message;
+        data.lastMessageTime = now;
         spamData.set(player.id, data);
-
         if (returnTrue) return true;
     }
 
