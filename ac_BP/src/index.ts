@@ -1,9 +1,3 @@
-/**
- * @author jasonlaubb
- * @contributors https://github.com/jasonlaubb/Matrix-AntiCheat?tab=readme-ov-file#developers
- * @license AGPLv3
- * @link https://github.com/jasonlaubb/Matrix-AntiCheat
- */
 class MatrixAnti_MCPE {
     private static init = {
         initialized: false,

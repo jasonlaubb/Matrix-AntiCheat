@@ -24,7 +24,7 @@ registerCommand({
                 return;
             }
             if (isPasswordCorrect(args[0])) {
-                player.sendMessage(new rawstr(true, "c").tra("op.pwgain").parse());
+                player.sendMessage(new rawstr(true, "g").tra("op.pwgain").parse());
             } else {
                 player.sendMessage(new rawstr(true, "c").tra("op.incorrect").parse());
                 player.lastOpTry = Date.now();
@@ -32,9 +32,9 @@ registerCommand({
             }
         } else {
             if (player.isOp()) {
-                player.sendMessage(new rawstr(true, "c").tra("op.opgain").parse());
+                player.sendMessage(new rawstr(true, "g").tra("op.opgain").parse());
                 if (config.commands.passwordSetting.password == "type_your_password_here") {
-                    player.sendMessage(new rawstr(true, "c").tra("op.pwtips").parse());
+                    player.sendMessage(new rawstr(true, "a").tra("op.pwtips").parse());
                 }
             } else {
                 player.sendMessage(new rawstr(true, "c").tra("op.notop").parse());
