@@ -18,7 +18,7 @@ if not exist "%~dp0ac_BP\scripts" mkdir "%~dp0ac_BP\scripts"
 Xcopy "%~dp0ac_BP\src\node_modules" "%~dp0ac_BP\scripts\node_modules" /Y /E /H /C /I
 call tsc --build
 : Build the language
-call node ./ac_RP/texts/generator.js
+call node ./land-handler.mjs
 : Create the right folder for generate
 if not exist "%~dp0generated-package" mkdir "%~dp0generated-package"
 if not exist "%~dp0generated-package\Matrix-anti_BP" mkdir "%~dp0generated-package\Matrix-anti_BP"
@@ -48,7 +48,12 @@ Xcopy "%~dp0ac_RP\textures" "%~dp0generated-package\Matrix-anti_RP\textures" /Y 
 Xcopy "%~dp0ac_RP\ui" "%~dp0generated-package\Matrix-anti_RP\ui" /Y /E /H /C /I
 copy "%~dp0ac_RP\texts\*.lang" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
 copy "%~dp0ac_RP\texts\languages.json" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
+<<<<<<< HEAD
 :: Compress the code
 call node ./compresser.mjs
+=======
+:: Call the anti edit module (required when release)
+call node ./anti-edit.mjs
+>>>>>>> 4158d1aecdf2aca9b9e286ca486daa7c15807281
 echo Process ended.
 pause

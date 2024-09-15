@@ -5,8 +5,8 @@
       "moduleResolution": "Node",
       "checkJs": false,
       "experimentalDecorators": true,
-      "baseUrl": "../node_modules"
+      "baseUrl": "./node_modules"
     },
-    "include": ["texts/**/*.js"],
+    "include": ["*.mjs"],
     "exclude": ["node_modules"]
 }
