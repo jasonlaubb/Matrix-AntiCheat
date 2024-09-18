@@ -88,6 +88,22 @@ msgstr "設定"
 msgid "Exit"
 msgstr "Exit"
 
+#: ui.nogaoadmin
+msgid "Oops, moderate a player with ui is not supported, please use command instead."
+msgstr ""
+
+#: ui.selectonline
+msgid "Select a online player from the list below"
+msgstr ""
+
+#: ui.you
+msgid "You"
+msgstr ""
+
+#: ui.admin
+msgid "Admin"
+msgstr ""
+
 #: ui.banplayer
 msgid "Ban Player"
 msgstr "封禁玩家"
@@ -668,17 +684,17 @@ msgstr "聊天限制器的 %1 已經設定為 %2 了"
 msgid "%1 of antiSpam has been toggled to %2"
 msgstr "聊天限制器的 %1 已被設定到 %2"
 
-#: help.matrix
-msgid "Help menu of Matrix AntiCheat"
-msgstr "Matrix 反外掛的協助選單"
+#: help.header
+msgid "The help pages for command of Matrix AntiCheat, if you want to learn more about how to use our anticheat, please visit website page §e%s"
+msgstr ""
 
-#: help.valid
-msgid "Valid commands: %s"
-msgstr "有效的命令: %s"
+#: help.page
+msgid "§7--- Showing help page §e%1 §7of §e%2 §7(%3help <page>) ---"
+msgstr ""
 
-#: help.docs
-msgid "Visit %s to view the docs about the commands"
-msgstr "拜訪 %s 查看一些關於指令的描述"
+#: help.pageerr
+msgid "Page %s does not exist"
+msgstr ""
 
 #: ui.closechat
 msgid "Close the chat to open the following ui."

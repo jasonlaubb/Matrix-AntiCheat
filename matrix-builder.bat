@@ -18,7 +18,7 @@ if not exist "%~dp0ac_BP\scripts" mkdir "%~dp0ac_BP\scripts"
 Xcopy "%~dp0ac_BP\src\node_modules" "%~dp0ac_BP\scripts\node_modules" /Y /E /H /C /I
 call tsc --build
 : Build the language
-call node ./land-handler.mjs
+call node ./lang-handler.mjs
 : Create the right folder for generate
 if not exist "%~dp0generated-package" mkdir "%~dp0generated-package"
 if not exist "%~dp0generated-package\Matrix-anti_BP" mkdir "%~dp0generated-package\Matrix-anti_BP"

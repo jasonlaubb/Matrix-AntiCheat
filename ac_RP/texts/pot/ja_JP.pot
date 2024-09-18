@@ -88,6 +88,22 @@ msgstr "設定"
 msgid "Exit"
 msgstr "終了"
 
+#: ui.nogaoadmin
+msgid "Oops, moderate a player with ui is not supported, please use command instead."
+msgstr ""
+
+#: ui.selectonline
+msgid "Select a online player from the list below"
+msgstr ""
+
+#: ui.you
+msgid "You"
+msgstr ""
+
+#: ui.admin
+msgid "Admin"
+msgstr ""
+
 #: ui.banplayer
 msgid "Ban Player"
 msgstr "プレイヤーをBAN"
@@ -668,17 +684,17 @@ msgstr "スパム対策の %1 は既に %2 に設定されています"
 msgid "%1 of antiSpam has been toggled to %2"
 msgstr "スパム対策の %1 が %2 に設定されました"
 
-#: help.matrix
-msgid "Help menu of Matrix AntiCheat"
-msgstr "Matrix AntiCheat ヘルプメニュー"
+#: help.header
+msgid "The help pages for command of Matrix AntiCheat, if you want to learn more about how to use our anticheat, please visit website page §e%s"
+msgstr ""
 
-#: help.valid
-msgid "Valid commands: %s"
-msgstr "有効なコマンド: %s"
+#: help.page
+msgid "§7--- Showing help page §e%1 §7of §e%2 §7(%3help <page>) ---"
+msgstr ""
 
-#: help.docs
-msgid "Visit %s to view the docs about the commands"
-msgstr "コマンドの詳細については、 %s をご覧ください"
+#: help.pageerr
+msgid "Page %s does not exist"
+msgstr ""
 
 #: ui.closechat
 msgid "Close the chat to open the following ui."

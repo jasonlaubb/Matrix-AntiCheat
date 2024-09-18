@@ -48,7 +48,7 @@ export async function menu(player: Player) {
 
 function openForIt(player: Player, target: Player) {
     if (isAdmin(target)) {
-        player.sendMessage(`§bMatrix §7> §c§lAccess denied! §r§7Moderate players with admin permission`);
+        player.sendMessage(new rawstr(true, "c").tra("ui.nogaoadmin").parse());
     } else {
         moderatePlayer(player, target);
     }
@@ -56,15 +56,15 @@ function openForIt(player: Player, target: Player) {
 
 async function selectPlayer(player: Player): Promise<Player | null> {
     const pointAllPlayer = world.getAllPlayers();
-    const selectMenu = new ActionFormData().title("Select online player");
+    const selectMenu = new ActionFormData().title(rawstr.drt("ui.selectonline"));
+    const buttonName = new rawstr().str(player.name);
     for (const target of pointAllPlayer) {
-        let des = "";
         if (player.name == target.name) {
-            des = "\n§c§lYou";
+            buttonName.str("\n§c§l").tra("ui.you");
         } else if (isAdmin(target)) {
-            des = "\n§c§lAdmin";
+            buttonName.str("\n§c§l").tra("ui.admin");
         }
-        selectMenu.button(target.name + des);
+        selectMenu.button(buttonName.parse());
     }
     //@ts-expect-error
     const result = await selectMenu.show(player);
