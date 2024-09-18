@@ -23,7 +23,7 @@ interface CommandConfig {
     enabled: boolean;
     adminOnly: boolean;
     minPermissionLevel: number;
-    requireOp: boolean,
+    requireOp: boolean;
     requireTag: string[];
 }
 const commands: CommandProperties[] = [];
@@ -156,8 +156,7 @@ export function error(target: Minecraft.Player | Minecraft.World, { name, messag
     target.sendMessage(rawmessage.parse());
 }
 export function sendErr(err: Error) {
-    if (c().debug)
-        console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
+    if (c().debug) console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
 }
 
 export function isPlayer(player: string, exclude: boolean = false, isadmin: boolean | string = "no la", runner?: Minecraft.Player): Minecraft.Player {

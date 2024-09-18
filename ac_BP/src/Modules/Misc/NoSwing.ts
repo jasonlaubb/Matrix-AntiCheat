@@ -8,7 +8,7 @@ import { configi, registerModule } from "../Modules";
 import { flag, isAdmin, onceTrue } from "../../Assets/Util";
 import { sendErr } from "../../Functions/chatModel/CommandHandler";
 const isCheckingStatus = new Map<string, boolean>();
-async function onAction (config: configi, player: Player) {
+async function onAction(config: configi, player: Player) {
     if (isAdmin(player) || isCheckingStatus.get(player.id) || player.hasTag(DisableTags.pvp)) return;
     isCheckingStatus.set(player.id, true);
     const isSwing = await onceTrue(player, isSwinging, config.antiNoSwing.faultToleranceTicks).finally(() => isCheckingStatus.delete(player.id));
@@ -28,7 +28,7 @@ async function onAction (config: configi, player: Player) {
     }
 }
 
-function isSwinging (player: Player) {
+function isSwinging(player: Player) {
     return player.hasTag(AnimationControllerTags.alive) && player.hasTag(AnimationControllerTags.attackTime);
 }
 
@@ -45,4 +45,4 @@ registerModule(
         worldSignal: world.afterEvents.playerPlaceBlock,
         then: async (config, event: PlayerPlaceBlockAfterEvent) => onAction(config, event.player).catch(sendErr),
     }
-)
+);

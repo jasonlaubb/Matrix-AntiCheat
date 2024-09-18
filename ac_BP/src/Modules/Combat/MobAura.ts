@@ -17,7 +17,7 @@ async function auraCheck(config: configi, { damagingEntity, hitEntity: dammy }: 
     }
 }
 
-function isDammy (dammy: Entity, playerId: string) {
+function isDammy(dammy: Entity, playerId: string) {
     let w;
     try {
         w = dammy.getDynamicProperty(playerId);
@@ -29,7 +29,7 @@ function isDammy (dammy: Entity, playerId: string) {
 
 function playerStartCombat(player: Player, config: configi) {
     // Spawn the dammy
-    if (player.dimension.getEntities().filter(e => isDammy(e, player.id)).length == 0) {
+    if (player.dimension.getEntities().filter((e) => isDammy(e, player.id)).length == 0) {
         spawnDammy(player.id, player.dimension, player.location, config);
     }
 }
@@ -40,7 +40,7 @@ function spawnDammy(id: string, dimension: Dimension, loc: Vector3, config: conf
     loc.x += offset.x;
     loc.z += offset.z;
     const dammy = dimension.spawnEntity("minecraft:player", loc);
-    dammy.triggerEvent("matrix:dummy")
+    dammy.triggerEvent("matrix:dummy");
     dammy.setDynamicProperty(id, true);
     return dammy;
 }
@@ -67,7 +67,7 @@ function playerHitDammy(player: Player, config: configi, dammyY: number) {
     }
     auraData.set(player.id, data);
     // Prevent the crash (max 3 dammy entity)
-    if (player.dimension.getEntities().filter(e => isDammy(e, player.id)).length < 3) {
+    if (player.dimension.getEntities().filter((e) => isDammy(e, player.id)).length < 3) {
         spawnDammy(player.id, player.dimension, player.location, config);
     }
 }

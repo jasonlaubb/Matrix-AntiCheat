@@ -14,22 +14,24 @@ interface MotionData {
     lastFreezeLocation: Vector3;
 }
 const motionData = new Map<string, MotionData>();
-async function checkMotion (config: configi, player: Player) {
-    const data = motionData.get(player.id) ?? {
-        agoWrap: 0,
-        previousWrap: 0,
-        beforeWrap: 0,
-        lastWrap: 0,
-        lastHugeWrap: 0,
-        lastTickLocation: player.location,
-        lastFreezeLocation: player.location,
-    } as MotionData;
+async function checkMotion(config: configi, player: Player) {
+    const data =
+        motionData.get(player.id) ??
+        ({
+            agoWrap: 0,
+            previousWrap: 0,
+            beforeWrap: 0,
+            lastWrap: 0,
+            lastHugeWrap: 0,
+            lastTickLocation: player.location,
+            lastFreezeLocation: player.location,
+        } as MotionData);
     const now = Date.now();
     const { x: velocityX, y: velocityY, z: velocityZ } = player.getVelocity();
     const wrapDistance = Math.hypot(velocityX, velocityZ);
     const actualWrapDistance = MathUtil.distanceXZ(player.location, data.lastTickLocation);
     if (actualWrapDistance > config.antiMotion.maxWrapDistance) {
-        data.lastHugeWrap = Date.now()
+        data.lastHugeWrap = Date.now();
     }
     if (velocityX == 0 && velocityY == 0 && velocityZ == 0) {
         data.lastFreezeLocation = player.location;
@@ -42,21 +44,13 @@ async function checkMotion (config: configi, player: Player) {
         !(player.threwTridentAt && now - player.threwTridentAt < 2500) &&
         !(player.lastApplyDamage && now - player.lastApplyDamage < 250) &&
         !(player.lastBreakSolid && now - player.lastBreakSolid < 1000) &&
-        !isSpikeLagging(player)
-        motionData.set(player.id, data);
+        !isSpikeLagging(player);
+    motionData.set(player.id, data);
     if (commonPrevention && !bypassMovementCheck(player)) {
-        if (
-            wrapDistance < config.antiMotion.predictionThereshold &&
-            data.lastWrap > config.antiMotion.wrapDistanceThereshold && config.antiMotion.predictionThereshold
-        ) {
+        if (wrapDistance < config.antiMotion.predictionThereshold && data.lastWrap > config.antiMotion.wrapDistanceThereshold && config.antiMotion.predictionThereshold) {
             player.teleport(data.lastFreezeLocation);
             flag(player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, ["WrapDistance:" + data.lastWrap.toFixed(2)]);
-        } else if (
-            data.agoWrap < config.antiMotion.predictionThereshold &&
-            data.beforeWrap > config.antiMotion.wrapDistanceThereshold &&
-            data.lastWrap == data.beforeWrap &&
-            wrapDistance < config.antiMotion.predictionThereshold
-        ) {
+        } else if (data.agoWrap < config.antiMotion.predictionThereshold && data.beforeWrap > config.antiMotion.wrapDistanceThereshold && data.lastWrap == data.beforeWrap && wrapDistance < config.antiMotion.predictionThereshold) {
             player.teleport(data.lastFreezeLocation);
             flag(player, "Motion", "B", config.antiMotion.maxVL, config.antiMotion.punishment, ["WrapDistance:" + data.beforeWrap.toFixed(2)]);
         }
@@ -68,11 +62,14 @@ async function checkMotion (config: configi, player: Player) {
     data.lastTickLocation = player.location;
     motionData.set(player.id, data);
 }
-function entityHurt ({ hurtEntity }: EntityHurtAfterEvent) {
+function entityHurt({ hurtEntity }: EntityHurtAfterEvent) {
     const player = hurtEntity as Player;
     player.lastApplyDamage = Date.now();
 }
-registerModule("antiMotion", false, [motionData],
+registerModule(
+    "antiMotion",
+    false,
+    [motionData],
     {
         tickInterval: 1,
         tickOption: {
@@ -84,5 +81,5 @@ registerModule("antiMotion", false, [motionData],
         worldSignal: world.afterEvents.entityHurt,
         playerOption: { entityTypes: ["minecraft:player"] },
         then: async (_config, event) => entityHurt(event as EntityHurtAfterEvent),
-    },
-)
+    }
+);

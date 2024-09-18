@@ -243,19 +243,19 @@ function getGamemode(playerName: string) {
     return 0;
 }
 
-function isAdmin (player: Player) {
+function isAdmin(player: Player) {
     return getPLevel(player) >= 0;
 }
 
-function getPLevel (player: Player): number {
-    return player.getDynamicProperty("permission_level") as number ?? -1;
+function getPLevel(player: Player): number {
+    return (player.getDynamicProperty("permission_level") as number) ?? -1;
 }
 
-function setPLevel (player: Player, level: number) {
+function setPLevel(player: Player, level: number) {
     player.setDynamicProperty("permission_level", level);
 }
 
-function removeAdmin (player: Player) {
+function removeAdmin(player: Player) {
     player.setDynamicProperty("permission_level");
 }
 
@@ -440,27 +440,27 @@ function bypassMovementCheck(player: Player) {
  * @description Wait for a function to return true.
  * Set interval to -1 to let it keep checking
  */
-function onceTrue (object: any, func: (obj: any) => boolean, ticks: number, interval = 1): Promise<boolean> {
-    if (ticks <= 0 && ticks != -1 || !Number.isInteger(ticks)) {
+function onceTrue(object: any, func: (obj: any) => boolean, ticks: number, interval = 1): Promise<boolean> {
+    if ((ticks <= 0 && ticks != -1) || !Number.isInteger(ticks)) {
         throw new Error("Util :: onceTrue :: Ticks passed invalid");
     }
     const isFinite = ticks == -1;
     let i = 0;
     return new Promise<boolean>((resolve) => {
         const intervalId = system.runInterval(() => {
-        i++;
-        if (func(object)) {
-            system.clearRun(intervalId);
-            resolve(true);
-        } else if (!isFinite && i >= ticks) {
-            system.clearRun(intervalId);
-            resolve(false);
-        }
+            i++;
+            if (func(object)) {
+                system.clearRun(intervalId);
+                resolve(true);
+            } else if (!isFinite && i >= ticks) {
+                system.clearRun(intervalId);
+                resolve(false);
+            }
         }, interval);
-    })
+    });
 }
 
-function isPasswordCorrect (password: string) {
+function isPasswordCorrect(password: string) {
     const config = c();
     const sourcePassword = config.commands.passwordSetting.usingHash ? SHA256(password).toString() : password;
     const correctPassword: string = config.commands.passwordSetting.usingHash ? config.commands.passwordSetting.hash : config.commands.passwordSetting.password;

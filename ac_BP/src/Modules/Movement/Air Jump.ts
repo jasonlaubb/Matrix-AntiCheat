@@ -8,12 +8,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
     const config = c();
     if (event.id != "matrix:offhand" || !config.antiAirJump.enabled || !event.sourceEntity || !(event.sourceEntity instanceof Player) || isAdmin(event.sourceEntity)) return;
     const player = event.sourceEntity as Player;
-    const data = airJumpData.get(player.id) ?? [] as number[];
+    const data = airJumpData.get(player.id) ?? ([] as number[]);
     const v = player.getVelocity().y;
     if (data.length > config.antiAirJump.minDataRequired) {
         data.shift();
         const ratio = v / MathUtil.calculateDifferentSum(data);
         player.sendMessage(ratio.toString());
     }
-})
+});
 registerModule("antiAirJump", false, [airJumpData]);

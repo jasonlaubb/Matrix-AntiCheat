@@ -44,7 +44,7 @@ interface ClickDataB {
     lastflag: number;
 }
 const clickDataB: Map<string, ClickDataB> = new Map();
-function antiAutoClickerB (config: configi, player: Player) {
+function antiAutoClickerB(config: configi, player: Player) {
     const now = Date.now();
     const data = clickDataB.get(player.id) ?? { lastHitTime: 0, hitTimeList: [], lastflag: 0 };
     if (data.lastHitTime == 0) {
@@ -94,7 +94,7 @@ registerModule(
         worldSignal: world.afterEvents.entityHitEntity,
         playerOption: { entityTypes: [MinecraftEntityTypes.Player] },
         then: async (config, event) => {
-            entityHitEntityAfterEvent(config, event)
+            entityHitEntityAfterEvent(config, event);
             antiAutoClickerB(config, event.damagingEntity as Player);
         },
     }

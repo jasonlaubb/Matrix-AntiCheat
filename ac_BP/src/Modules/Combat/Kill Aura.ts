@@ -83,41 +83,41 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
     }
     // Only check for killaura for PVP, no PVE :p
     if (state)
-    if (onFirstHit == true) {
-        /* Just an idea
+        if (onFirstHit == true) {
+            /* Just an idea
         const entityInDirection = player.getEntitiesFromViewDirection
         if (!entityInDirection.some(({ id } => id == hitEntity.id)) {
             flag (player, 'Kill Aura', 'D', config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined)
             flagged = true
         }*/
-        // bad packet -w-
-        if (player.isSleeping) {
-            flag(player, "Kill Aura", "E", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
-            flagged = true;
-        }
-    } else {
-        // KillAura/H
-        const tickdata = lastRotateData.get(player.id);
-        if (tickdata) {
-            const rotations = tickdata.rotations;
-            if (rotations.x.length >= config.antiKillAura.trackLength) {
-                const hMove = Math.abs(MathUtil.calculateDifferentSum(rotations.y));
-                const vMove = Math.abs(MathUtil.calculateDifferentSum(rotations.x));
-                const situration = returnSituration(hMove, vMove, player);
-                const isComming = MathUtil.trackIncreasing(rotations.x, config.antiKillAura.minIncreasingCombos, config.antiKillAura.maxIncreasingCombos);
-                // Efficiency: mid, false positive: low
-                if (situration >= 0 && isComming) {
-                    const now = Date.now();
-                    if (now - data.lastFlagK < 3000) {
-                        if (!config.antiKillAura.silentData) flagged = true;
-                        flag(player, "Kill Aura", "K", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Case:" + situration.toString()]);
+            // bad packet -w-
+            if (player.isSleeping) {
+                flag(player, "Kill Aura", "E", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
+                flagged = true;
+            }
+        } else {
+            // KillAura/H
+            const tickdata = lastRotateData.get(player.id);
+            if (tickdata) {
+                const rotations = tickdata.rotations;
+                if (rotations.x.length >= config.antiKillAura.trackLength) {
+                    const hMove = Math.abs(MathUtil.calculateDifferentSum(rotations.y));
+                    const vMove = Math.abs(MathUtil.calculateDifferentSum(rotations.x));
+                    const situration = returnSituration(hMove, vMove, player);
+                    const isComming = MathUtil.trackIncreasing(rotations.x, config.antiKillAura.minIncreasingCombos, config.antiKillAura.maxIncreasingCombos);
+                    // Efficiency: mid, false positive: low
+                    if (situration >= 0 && isComming) {
+                        const now = Date.now();
+                        if (now - data.lastFlagK < 3000) {
+                            if (!config.antiKillAura.silentData) flagged = true;
+                            flag(player, "Kill Aura", "K", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Case:" + situration.toString()]);
+                        }
+                        data.lastFlagK = now;
                     }
-                    data.lastFlagK = now;
+                    // if (isComming) player.sendMessage("H: " + hMove.toFixed(2) + " | V: " + vMove.toFixed(2) + " | T: " + MathUtil.comparing(hMove, vMove));
                 }
-                // if (isComming) player.sendMessage("H: " + hMove.toFixed(2) + " | V: " + vMove.toFixed(2) + " | T: " + MathUtil.comparing(hMove, vMove));
             }
         }
-    }
 
     if (flagged) {
         player.addTag(DisableTags.pvp);
@@ -268,11 +268,11 @@ registerModule(
     [killauradata, lastRotateData],
     {
         intick: async (config, player) => {
-            intickEvent(config, player)
+            intickEvent(config, player);
             const data = killauradata.get(player.id);
             if (data?.hitLength) {
                 data.hitLength = [];
-                killauradata.set(player.id, data)
+                killauradata.set(player.id, data);
             }
         },
         tickInterval: 1,

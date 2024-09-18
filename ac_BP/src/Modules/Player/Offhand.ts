@@ -3,7 +3,7 @@ import { registerModule } from "../Modules";
 import { c, flag, isAdmin, isSpawning } from "../../Assets/Util";
 import { AnimationControllerTags, MatrixUsedTags } from "../../Data/EnumData";
 
-registerModule("antiOffhand", false, [])
+registerModule("antiOffhand", false, []);
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
     const config = c();
@@ -26,12 +26,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
     if (detected && config.antiOffhand.doUnEquip) {
         inactiveTotem(player);
     }
-})
+});
 
-function inactiveTotem (player: Player) {
-    const e = player.getComponent('minecraft:equippable')
+function inactiveTotem(player: Player) {
+    const e = player.getComponent("minecraft:equippable");
     const q = e?.getEquipment(EquipmentSlot.Offhand);
     if (!q) return;
     e?.setEquipment(EquipmentSlot.Offhand);
-    player.getComponent('minecraft:inventory')!.container!.addItem(q);
+    player.getComponent("minecraft:inventory")!.container!.addItem(q);
 }

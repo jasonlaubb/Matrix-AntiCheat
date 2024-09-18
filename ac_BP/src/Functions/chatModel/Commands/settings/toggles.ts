@@ -12,10 +12,7 @@ registerCommand({
         const toggleList = await getModulesIds();
         const config = c() as { [key: string]: any };
         const allStatus = toggleList.map((id) => config[id].enabled);
-        const message = new rawstr(true, "g")
-            .tra("toggles.title")
-            .str("\n")
-            .tra("toggles.text");
+        const message = new rawstr(true, "g").tra("toggles.title").str("\n").tra("toggles.text");
         allStatus.forEach((status, index) => {
             message.str("\n");
             const moduleGiven = toggleList[index];

@@ -13,6 +13,5 @@ registerCommand({
     executor: async (player, _args) => {
         Dynamic.set(["commands", "passwordSetting", "enabled"], false);
         sendRawText(player, { text: "§bMatrix §7>§g " }, { translate: "clearpassword.ok", with: [] });
-
     },
 });

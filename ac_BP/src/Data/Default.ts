@@ -366,11 +366,9 @@ export default {
             minPermissionLevel: 4,
             requireOp: false,
             requireTag: [],
-        }
+        },
     },
-    ui: {
-        
-    },
+    ui: {},
     autoPunishment: {
         bypasslist: [],
         bypassname: [],

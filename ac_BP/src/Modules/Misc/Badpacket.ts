@@ -4,7 +4,7 @@ import { MatrixUsedTags } from "../../Data/EnumData";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { flag, onceTrue } from "../../Assets/Util";
 
-async function antiBadPacket (config: configi, player: Player) {
+async function antiBadPacket(config: configi, player: Player) {
     const sprint = player.isSprinting;
     const loc = player.location;
     if (sprint) {
@@ -16,22 +16,17 @@ async function antiBadPacket (config: configi, player: Player) {
     }
 }
 
-function isValidSprint (player: Player) {
+function isValidSprint(player: Player) {
     if (!player.isSprinting) return true;
     if (!player.hasTag(MatrixUsedTags.container) && !player.getEffect(MinecraftEffectTypes.Blindness) && !player.isSneaking) {
         return true;
     }
     return false;
 }
-registerModule(
-    "antiBadpacket",
-    false,
-    [],
-    {
-        tickInterval: 10,
-        intick: antiBadPacket,
-        tickOption: {
-            excludeGameModes: [GameMode.spectator, GameMode.creative]
-        }
-    }
-)
+registerModule("antiBadpacket", false, [], {
+    tickInterval: 10,
+    intick: antiBadPacket,
+    tickOption: {
+        excludeGameModes: [GameMode.spectator, GameMode.creative],
+    },
+});
