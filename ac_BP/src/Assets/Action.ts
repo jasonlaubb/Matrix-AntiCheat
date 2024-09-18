@@ -12,7 +12,7 @@ export class Action {
     }
     public static kick(player: Player, reason?: string, by?: string) {
         if (isHost(player) || isAdmin(player)) return;
-        const textreason = "§c§lYou have been kicked\n§r§7Reason: §c" + reason ?? "--\n§7By: §c" + by ?? "--";
+        const textreason = "§c§lYou have been kicked\n§r§7Reason: §c" + (reason ?? "--\n§7By: §c") + (by ?? "--");
         world
             .getDimension(player.dimension.id)
             .runCommandAsync(`kick "${player.name}" ${textreason}`)
