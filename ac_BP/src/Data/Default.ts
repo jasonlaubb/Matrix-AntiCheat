@@ -422,9 +422,9 @@ export default {
     antiAutoClicker: {
         enabled: true,
         maxClicksPerSecond: 24,
-        timeout: 200,
+        timeout: 2000,
         minInterval: 35,
-        punishment: "tempkick",
+        punishment: "none",
         maxVL: 2,
     },
     antiKillAura: {

@@ -27,8 +27,6 @@ function antiAutoClicker(config: configi, player: Player) {
     if (!player.hasTag(DisableTags.pvp) && tps.getTps()! > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
         // A - false positive: very low, efficiency: high
         flag(player, "Auto Clicker", "A", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Click Per Second" + ":" + cps.toFixed(0)]);
-
-        player.applyDamage(6);
         player.addTag(DisableTags.pvp);
         clickData.delete(id);
         system.runTimeout(() => {
@@ -61,7 +59,6 @@ function antiAutoClickerB (config: configi, player: Player) {
         const currentIntervalLevel = data.hitTimeList.reduce((a, b) => a + b, 0) / data.hitTimeList.length;
         // player.sendMessage(currentIntervalLevel.toFixed(2));
         if (currentIntervalLevel < config.antiAutoClicker.minInterval) {
-            player.applyDamage(6);
             if (now - data.lastflag < 9000) {
                 flag(player, "Auto Clicker", "B", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Interval:" + currentIntervalLevel.toFixed(2)]);
                 player.addTag(DisableTags.pvp);
