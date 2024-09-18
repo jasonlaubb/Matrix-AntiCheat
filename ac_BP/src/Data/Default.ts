@@ -7,7 +7,7 @@ export default {
     configDataBase: {
         enabled: true,
         autorecover: true,
-        confuse: 100,
+        confuse: 5,
         mark: "MATRIX_CONFIG_DATABASE",
         hashlength: 16,
         base64Encode: true,
