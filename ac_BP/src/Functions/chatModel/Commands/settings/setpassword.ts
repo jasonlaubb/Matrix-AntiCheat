@@ -20,7 +20,7 @@ registerCommand({
             player.sendMessage(new rawstr(true, "c").tra("setpassword.different").parse());
             return;
         }
-        player.sendMessage(new rawstr(true, "c").tra("setpassword.changed").parse());
+        player.sendMessage(new rawstr(true, "g").tra("setpassword.changed").parse());
 
         if (!args[2] || args[2] == "true" || (config.commands.passwordSetting.usingHash && args[2] == "false")) {
             Dynamic.set(["commands", "passwordSetting", "hash"], SHA256(newPassword).toString());
