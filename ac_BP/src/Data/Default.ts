@@ -486,13 +486,12 @@ export default {
         wrapDistanceThereshold: 1.6,
         predictionThereshold: 0.25,
     },
-    antiNoClip: {
+    antiPhase: {
         enabled: true,
         punishment: "ban",
-        clipMove: 1.6,
+        minSpeed: 1.2,
         maxVL: 4,
-        minMoveDistance: 196, // 12 cunks distance
-        tickMovementCooldown: 7000,
+        breakSolidBypass: 1750,
     },
     antiSpeed: {
         enabled: true,

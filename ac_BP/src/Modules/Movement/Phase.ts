@@ -87,9 +87,9 @@ async function AntiPhase(player: Player, config: configi, now: number) {
         !bypassMovementCheck(player) &&
         !isClientLagging &&
         data.lastLocation &&
-        movementClip > 1.2 &&
+        movementClip > config.antiPhase.minSpeed &&
         !player.isGliding &&
-        !(player.lastBreakSolid && now - player.lastBreakSolid < 1750) &&
+        !(player.lastBreakSolid && now - player.lastBreakSolid < config.antiPhase.breakSolidBypass) &&
         Math.abs(y) < 1.7 &&
         !passableBlocks.includes(bodyBlock) &&
         !powderBlock.includes(bodyBlock) &&
@@ -99,7 +99,7 @@ async function AntiPhase(player: Player, config: configi, now: number) {
         freezeTeleport(player, data.safeLocation);
         if (lastflag && now - lastflag < 5000 && !isSpikeLagging(player)) {
             const skipMaterial = skipMaterials[phaseIndex]!.typeId!;
-            flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["SkipMaterial:" + skipMaterial]);
+            flag(player, "NoClip", "A", config.antiPhase.maxVL, config.antiPhase.punishment, ["SkipMaterial:" + skipMaterial]);
         }
         data.lastFlag = now;
     }

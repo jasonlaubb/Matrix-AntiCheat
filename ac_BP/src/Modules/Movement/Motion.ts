@@ -41,20 +41,21 @@ async function checkMotion (config: configi, player: Player) {
         !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) &&
         !(player.threwTridentAt && now - player.threwTridentAt < 2500) &&
         !(player.lastApplyDamage && now - player.lastApplyDamage < 250) &&
+        !(player.lastBreakSolid && now - player.lastBreakSolid < 1000) &&
         !isSpikeLagging(player)
         motionData.set(player.id, data);
     if (commonPrevention && !bypassMovementCheck(player)) {
         if (
             wrapDistance < config.antiMotion.predictionThereshold &&
-            data.lastWrap > config.antiNoClip.clipMove && config.antiMotion.predictionThereshold
+            data.lastWrap > config.antiMotion.wrapDistanceThereshold && config.antiMotion.predictionThereshold
         ) {
             player.teleport(data.lastFreezeLocation);
             flag(player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, ["WrapDistance:" + data.lastWrap.toFixed(2)]);
         } else if (
-            data.agoWrap < config.antiMotion.wrapDistanceThereshold &&
+            data.agoWrap < config.antiMotion.predictionThereshold &&
             data.beforeWrap > config.antiMotion.wrapDistanceThereshold &&
             data.lastWrap == data.beforeWrap &&
-            wrapDistance < config.antiMotion.wrapDistanceThereshold
+            wrapDistance < config.antiMotion.predictionThereshold
         ) {
             player.teleport(data.lastFreezeLocation);
             flag(player, "Motion", "B", config.antiMotion.maxVL, config.antiMotion.punishment, ["WrapDistance:" + data.beforeWrap.toFixed(2)]);

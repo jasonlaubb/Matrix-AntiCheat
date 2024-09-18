@@ -3,7 +3,6 @@ import { bypassMovementCheck, c, flag, isAdmin } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
 import { getMsPerTick, isSpikeLagging } from "../../Assets/Public.js";
-import { freezeTeleport } from "./NoClip.js";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 /**
@@ -108,7 +107,7 @@ async function AntiSpeed(config: configi, player: Player) {
             // Minimum time given to flag
             if (now - data.firstTrigger! < data.currentFlagCombo!) {
                 if (player.lastXZLogged - xz - data.lastVelocity < 0.3 && data.flagNumber! > config.antiSpeed.maxFlagInDuration) {
-                    freezeTeleport(player, safePos);
+                    player.teleport(safePos);
                     data.currentFlagCombo! += config.antiSpeed.flagDurationIncrase;
                     flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);
                 } else if (((player.lastXZLogged - xz > data.speedMaxV + 1 || (solidBlock && player.lastXZLogged - xz > data.speedMaxV + 0.2)) && data.flagNumber! >= 1) || player.lastXZLogged - x >= 25) {
@@ -155,7 +154,7 @@ async function AntiSpeed(config: configi, player: Player) {
             const lastflag = data.lastFlag;
             data.lastFlag = now;
             if (now - lastflag < 10000) {
-                freezeTeleport(player, safePos);
+                player.teleport(safePos);
                 flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
             } else {
                 player.teleport(safePos);

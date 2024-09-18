@@ -78,6 +78,9 @@ world.afterEvents.playerBreakBlock.subscribe(({ player: { id }, player, brokenBl
     } else {
         if (brokenBlockPermutation.type.id !== MinecraftBlockTypes.Air) logBreak(Object.assign({}, brokenBlockPermutation), location, id);
     }
+    if (block.isSolid) {
+        player.lastBreakSolid = Date.now();
+    }
 });
 
 world.afterEvents.playerLeave.subscribe(({ playerId }) => {
