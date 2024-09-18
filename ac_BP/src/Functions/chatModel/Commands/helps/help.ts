@@ -24,7 +24,7 @@ registerCommand({
         const helpMsg = new rawstr(true, "g")
             .tra("help.header", "https://jasonlaubb.github.io/Matrix-AntiCheat")
             .str("\n")
-            .tra("help.page", String(requirePage + 1), String(totalPage));
+            .tra("help.page", String(requirePage + 1), String(totalPage), c().commands.prefix);
         const cmds = commands.slice(requirePage * 8, requirePage * 8 + 8).filter((cmd) => cmd);
         const prefix = c().commands.prefix;
         for (const cmd of cmds) {
