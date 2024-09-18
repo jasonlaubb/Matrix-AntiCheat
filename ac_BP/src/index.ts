@@ -91,6 +91,7 @@ class MatrixAnti_MCPE {
         await import("./Functions/chatModel/Commands/settings/toggles");
         await import("./Functions/chatModel/Commands/settings/toggle");
         await import("./Functions/chatModel/Commands/settings/setpassword");
+        await import("./Functions/chatModel/Commands/settings/clearpassword");
         await import("./Functions/chatModel/Commands/settings/flagmode");
         await import("./Functions/chatModel/Commands/settings/defaultrank");
         await import("./Functions/chatModel/Commands/settings/showallrank");

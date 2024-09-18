@@ -4,7 +4,7 @@ import { SHA256 } from "../../../../node_modules/crypto-es/lib/sha256";
 import Dynamic from "../../../Config/dynamic_config";
 
 registerCommand({
-    name: "setpasswords",
+    name: "setpassword",
     description: "Change the password to a new one safely",
     parent: false,
     maxArgs: 3,
