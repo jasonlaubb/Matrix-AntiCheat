@@ -1,10 +1,8 @@
-import { world, Block, Vector3, Player, EntityHurtAfterEvent, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent, GameMode, system } from "@minecraft/server";
+import { world, Block, Vector3, Player, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent, GameMode, system } from "@minecraft/server";
 import { bypassMovementCheck, flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { isSpikeLagging } from "../../Assets/Public";
-import { AnimationControllerTags } from "../../Data/EnumData";
-import MathUtil from "../../Assets/MathUtil";
 
 const powderBlock = [
     MinecraftBlockTypes.RedConcretePowder,
@@ -25,14 +23,13 @@ const powderBlock = [
     MinecraftBlockTypes.WhiteConcretePowder,
 ] as string[];
 
-interface NoClipData {
+interface PhaseData {
     safeLocation: Vector3;
     lastLocation: Vector3;
-    lastFlag: number;
-    lastFlag2: number;
     lastHighTeleport: number;
+    lastFlag: number;
 }
-const noclipdata = new Map<string, NoClipData>();
+const phasedata = new Map<string, PhaseData>();
 const passableBlocks = [MinecraftBlockTypes.Sand, MinecraftBlockTypes.Gravel, MinecraftBlockTypes.SoulSand] as string[];
 
 const isSolidBlock = (block: Block) => {
@@ -71,8 +68,8 @@ function straight(start: Vector3, end: Vector3): Vector3[] {
  * @description Check if player phase more than 1 block
  */
 
-async function AntiNoClip(player: Player, config: configi, now: number) {
-    const data = noclipdata.get(player.id) ?? {
+async function AntiPhase(player: Player, config: configi, now: number) {
+    const data = phasedata.get(player.id) ?? {
         lastLocation: player.location,
         safeLocation: player.location,
         lastFlag: 0,
@@ -85,8 +82,10 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
     const skipLocations = straight(data.lastLocation, player.location);
     const skipMaterials = skipLocations.map((loc) => player.dimension.getBlock(loc));
     const phaseIndex: number = skipMaterials.findIndex((block) => block?.isValid() && isSolidBlock(block!));
+    const isClientLagging = delayPlacementCheck(player);
     if (
         !bypassMovementCheck(player) &&
+        !isClientLagging &&
         data.lastLocation &&
         movementClip > 1.2 &&
         !player.isGliding &&
@@ -96,57 +95,15 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         !powderBlock.includes(bodyBlock) &&
         phaseIndex != -1
     ) {
-        const lastflag = data.lastFlag2;
+        const lastflag = data.lastFlag;
         freezeTeleport(player, data.safeLocation);
         if (lastflag && now - lastflag < 5000 && !isSpikeLagging(player)) {
             const skipMaterial = skipMaterials[phaseIndex]!.typeId!;
             flag(player, "NoClip", "A", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["SkipMaterial:" + skipMaterial]);
         }
-        data.lastFlag2 = now;
+        data.lastFlag = now;
     }
-    /*     emmm     */
     const safePos = data.safeLocation;
-    const lastflag = data.lastFlag;
-    const moveDis = MathUtil.distanceXZ(player.location, data.lastLocation);
-    data.lastLocation = player.location;
-    if (moveDis > config.antiNoClip.minMoveDistance) {
-        data.lastHighTeleport = now;
-    }
-    if (
-        !bypassMovementCheck(player) &&
-        player?.lastSafePos &&
-        safePos &&
-        player?.lastClip &&
-        player?.backClip &&
-        player?.beforeClip &&
-        ((movementClip < 0.25 && player?.lastClip > config.antiNoClip.clipMove && player?.backClip < 0.25) || (player.lastClip == player.backClip && player.backClip > config.antiNoClip.clipMove && movementClip < 0.25 && player.beforeClip < 0.25)) &&
-        !player.isGliding &&
-        !player.isFlying &&
-        !(player.lastExplosionTime && now - player.lastExplosionTime < 1000) &&
-        !(player.threwTridentAt && now - player.threwTridentAt < 2500) &&
-        !(player.lastApplyDamage && now - player.lastApplyDamage < 250) &&
-        !isSpikeLagging(player)
-    ) {
-        const isClientLagging = delayPlacementCheck(player);
-        freezeTeleport(player, safePos);
-        if (!isClientLagging && now - data.lastHighTeleport > config.antiNoClip.tickMovementCooldown) {
-            if (lastflag && now - lastflag < 20000) {
-                const trueOnGround = Math.abs(y) < 1.75 && player.isJumping;
-                const staticOnGround = y == 0 && player.isOnGround;
-                if (trueOnGround || staticOnGround) {
-                    if (!player.lastBreakSolid || now - player.lastBreakSolid > 5000) {
-                        flag(player, "NoClip", "B", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
-                    }
-                } else if (!player.hasTag(AnimationControllerTags.riding)) {
-                    flag(player, "NoClip", "C", config.antiNoClip.maxVL, config.antiNoClip.punishment, ["MovementClip:" + Math.max(player.lastClip, player.backClip, movementClip).toFixed(2)]);
-                }
-            }
-            data.lastFlag = now;
-        }
-    }
-    player.beforeClip = player.backClip;
-    player.backClip = player.lastClip;
-    player.lastClip = movementClip;
     const { x: x1, y: y1, z: z1 } = player.getHeadLocation();
     const { x: x2, y: y2, z: z2 } = player.location;
     const floorHead = { x: Math.floor(x1), y: Math.floor(y1), z: Math.floor(z1) };
@@ -159,7 +116,7 @@ async function AntiNoClip(player: Player, config: configi, now: number) {
         }
     } catch {}
 
-    noclipdata.set(player.id, data);
+    phasedata.set(player.id, data);
 }
 function onServerBlockDestroy({ player, block: { isSolid } }: PlayerBreakBlockAfterEvent) {
     if (!isSolid) return;
@@ -189,21 +146,14 @@ interface PlaceLog {
     location: Vector3;
     placeId: string;
 }
-const entityHurt = ({ hurtEntity: player }: EntityHurtAfterEvent) => ((player as Player).lastApplyDamage = Date.now());
-
 registerModule(
-    "antiNoClip",
+    "antiPhase",
     false,
-    [noclipdata],
+    [phasedata],
     {
         tickInterval: 1,
         tickOption: { excludeGameModes: [GameMode.spectator, GameMode.creative] },
-        intick: async (config, player) => AntiNoClip(player, config, Date.now()),
-    },
-    {
-        worldSignal: world.afterEvents.entityHurt,
-        playerOption: { entityTypes: ["player"] },
-        then: async (_config, event) => entityHurt(event as EntityHurtAfterEvent),
+        intick: async (config, player) => AntiPhase(player, config, Date.now()),
     },
     {
         worldSignal: world.afterEvents.playerBreakBlock,

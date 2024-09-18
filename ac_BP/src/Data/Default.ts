@@ -464,8 +464,9 @@ export default {
         maxHighVelocity: 22,
         maxVL: 4,
     },
+    /** @warn Unfinished */
     antiAirJump: {
-        enabled: true,
+        enabled: false,
         punishment: "tempkick",
         ratioThreshold: 0.5,
         minDataRequired: 5,
@@ -476,6 +477,14 @@ export default {
         punishment: "ban",
         float: 15,
         maxVL: 3,
+    },
+    antiMotion: {
+        enabled: true,
+        punishment: "ban",
+        maxVL: 4,
+        maxWrapDistance: 196,
+        wrapDistanceThereshold: 1.6,
+        predictionThereshold: 0.25,
     },
     antiNoClip: {
         enabled: true,
