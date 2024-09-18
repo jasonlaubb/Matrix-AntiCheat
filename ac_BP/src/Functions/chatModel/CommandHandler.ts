@@ -156,7 +156,7 @@ export function error(target: Minecraft.Player | Minecraft.World, { name, messag
     target.sendMessage(rawmessage.parse());
 }
 export function sendErr(err: Error) {
-    if (c().expectedErrorShown)
+    if (c().debug)
         console.warn(`${err.name}: ${err.message}\n    at ${err?.stack ?? "unknown"}`);
 }
 

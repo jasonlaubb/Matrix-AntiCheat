@@ -35,8 +35,8 @@ function playerStartCombat(player: Player, config: configi) {
 }
 
 function spawnDammy(id: string, dimension: Dimension, loc: Vector3, config: configi): Entity {
-    loc.y += config.antiAura.spawnHeightOffset;
-    const offset = MathUtil.randomOffset(config.antiAura.spawnRadius, -config.antiAura.spawnRadius);
+    loc.y += config.antiMobAura.spawnHeightOffset;
+    const offset = MathUtil.randomOffset(config.antiMobAura.spawnRadius, -config.antiMobAura.spawnRadius);
     loc.x += offset.x;
     loc.z += offset.z;
     const dammy = dimension.spawnEntity("minecraft:player", loc);
@@ -57,13 +57,13 @@ function playerHitDammy(player: Player, config: configi, dammyY: number) {
         amount: 0,
     };
     //player.sendMessage("Hit Amount: " + data.amount);
-    if (now - data.firstHit > config.antiAura.comboTime) {
+    if (now - data.firstHit > config.antiMobAura.comboTime) {
         data.firstHit = now;
         data.amount = 0;
     }
     data.amount++;
-    if (data.amount >= config.antiAura.minHitRequired) {
-        flag(player, "Mob Aura", "A", config.antiAura.maxVL, config.antiAura.punishment, ["distanceY:" + (dammyY - player.location.y).toFixed(2)]);
+    if (data.amount >= config.antiMobAura.minHitRequired) {
+        flag(player, "Mob Aura", "A", config.antiMobAura.maxVL, config.antiMobAura.punishment, ["distanceY:" + (dammyY - player.location.y).toFixed(2)]);
     }
     auraData.set(player.id, data);
     // Prevent the crash (max 3 dammy entity)
@@ -72,7 +72,7 @@ function playerHitDammy(player: Player, config: configi, dammyY: number) {
     }
 }
 
-registerModule("antiAura", false, [auraData], {
+registerModule("antiMobAura", false, [auraData], {
     worldSignal: world.afterEvents.entityHitEntity,
     playerOption: {
         entityTypes: ["minecraft:player"],

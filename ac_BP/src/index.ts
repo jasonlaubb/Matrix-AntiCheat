@@ -114,7 +114,7 @@ class MatrixAnti_MCPE {
         // Register the modules
         Minecraft.world.modules = [];
         await import("./Modules/Combat/Auto Clicker");
-        await import("./Modules/Combat/Aura");
+        await import("./Modules/Combat/MobAura");
         await import("./Modules/Combat/Kill Aura");
         await import("./Modules/Combat/Reach");
         await import("./Modules/Combat/Aim");

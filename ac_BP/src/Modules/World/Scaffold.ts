@@ -187,7 +187,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         }
     } catch (error) {
         if ((error as Error)!.name! != "LocationOutOfWorldBoundariesError") {;
-            if (config.expectedErrorShown) throw error;
+            if (config.debug) throw error;
         }
     }
     if (!block?.isValid()) {

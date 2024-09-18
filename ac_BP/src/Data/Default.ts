@@ -23,7 +23,7 @@ export default {
     passwordCold: 5000,
     otherPrefix: [],
     spawnFinishDelay: 1200,
-    expectedErrorShown: false,
+    debug: false,
     // Set the true will let player with tag matrix:movementCheckBypassTag for bypass some of the movement check.
     enableMovementCheckBypassTag: false,
     commands: {
@@ -440,11 +440,11 @@ export default {
         minIncreasingCombos: 3,
         silentData: false,
     },
-    antiAura: {
+    antiMobAura: {
         enabled: true,
         minHitRequired: 3,
-        spawnHeightOffset: 1.8,
-        spawnRadius: 2.5,
+        spawnHeightOffset: 2.2,
+        spawnRadius: 2,
         comboTime: 15000,
         maxVL: 5,
         punishment: "ban",
@@ -633,24 +633,15 @@ export default {
         checkEnchantment: true,
         checkEducationalItem: true,
     },
-    antiElytraFly: {
-        enabled: true,
-        maxVL: 4,
-        fallDiscycle: 4,
-        maxFallDis: 1.05,
-        maxRatio: 10,
-        punishment: "tempkick",
-        experimental: true,
-    },
     antiFastUse: {
-        enabled: true,
+        enabled: false,
         minUseTime: 20,
         timeout: 60,
         punishment: "ban",
         maxVL: 2,
     },
     antiOffhand: {
-        enabled: true,
+        enabled: false,
         punishment: "ban",
         maxVL: 0,
         doUnEquip: true,
@@ -689,6 +680,7 @@ export default {
         enabled: false,
         trackTicks: 8,
         teleportHeight: 1,
+        experimental: true,
     },
     banrun: {
         command: "",
