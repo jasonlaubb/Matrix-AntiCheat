@@ -18,8 +18,9 @@ registerCommand({
             player.sendMessage(new rawstr(true, "c").tra("setadmin.outofrange").parse());
         } else if (targetNumber < 0) {
             player.sendMessage(new rawstr(true, "c").tra("setadmin.toolow").parse());
+        } else {
+            setPLevel(target, targetNumber);
+            player.sendMessage(new rawstr(true, "g").tra("setadmin.has", target.name, player.name, targetNumber.toString()).parse());
         }
-        setPLevel(target, targetNumber);
-        player.sendMessage(new rawstr(true, "c").tra("setadmin.has", target.name, player.name, targetNumber.toString()).parse());
     },
 });
