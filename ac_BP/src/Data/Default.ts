@@ -504,8 +504,8 @@ export default {
     },
     antiTimer: {
         enabled: true,
-        punishment: "tempkick",
-        maxVL: 5,
+        punishment: "ban",
+        maxVL: 2,
         minTimerLog: 3,
         maxTickMovment: 196, // 12 cunks distance
         tickMovementCooldown: 8000,
