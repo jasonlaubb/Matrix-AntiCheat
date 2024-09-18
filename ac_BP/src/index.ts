@@ -122,7 +122,8 @@ class MatrixAnti_MCPE {
         await import("./Modules/Movement/Fly");
         await import("./Modules/Movement/NoFall");
         await import("./Modules/Movement/Timer");
-        await import("./Modules/Movement/NoClip");
+        await import("./Modules/Movement/Phase");
+        await import("./Modules/Movement/Motion");
         await import("./Modules/Movement/Speed");
         await import("./Modules/Movement/NoSlow");
         await import("./Modules/World/Nuker");
