@@ -24,7 +24,7 @@ async function AntiNameSpoof(config: configi, player: Player, playerName: string
     }
 
     //get the non-ASCII characters in player name
-    const nonASCII = playerName?.match(/[^\x00-\x7F]/g);
+    const nonASCII = playerName?.match(/[^\x00-\x7F]/gu);
 
     //if the player name contains non-ASCII characters, check if the non-ASCII characters are illegal
     if (nonASCII && nonASCII.length > 0) {
@@ -35,7 +35,7 @@ async function AntiNameSpoof(config: configi, player: Player, playerName: string
             const regax = nonASCII[i];
 
             //if the word isn't a valid character for player name
-            if (!/[\u4E00-\u9FFF\uAC00-\uD7AF\u3040-\u30FF]|[^\d_]|[().&*]/.test(regax)) {
+            if (!(/[\u4E00-\u9FFF\uAC00-\uD7AF\u3040-\u30FF]|[^\d_]|[().&*]/).test(regax) && !(/[一-龠]|[ぁ-ゔ]|[ァ-ヴー]|[々〆〤ヶ]/u).test(regax)) {
                 illegalName = true;
                 break;
             }
