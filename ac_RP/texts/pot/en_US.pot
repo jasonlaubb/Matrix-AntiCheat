@@ -25,12 +25,12 @@ msgid "Matrix has been completely initialized in %s ms"
 msgstr ""
 
 #: function.gainop
-magid "§bMatrix §7> §gYou have verified your operator permission, use chsr command '<prefix>op' directly to get the matrix admin permission"
+msgid "§bMatrix §7> §gYou have verified your operator permission, use chsr command '<prefix>op' directly to get the matrix admin permission"
 msgstr ""
 
 #: function.alreadyop
-magid "§bMatrix §7> §cYou have already verified your operator permission."
-mgstr ""
+msgid "§bMatrix §7> §cYou have already verified your operator permission."
+msgstr ""
 
 #: function.check.title
 msgid "Anti-Cheat setup checking:"
@@ -469,7 +469,7 @@ msgid "We have detected that you haven't set-up your password. To increase the s
 msgstr ""
 
 #: op.notop
-msgid "Operator permission is required when password is disabled."
+msgid "Operator permission is required when password is disabled. Use command '/function verify/operator' to verfiy your operator permission."
 msgstr ""
 
 #: deop.sucess
