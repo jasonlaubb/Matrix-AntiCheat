@@ -192,15 +192,8 @@ async function convertPotFilesToPo() {
     });
     if (createPackDes) {
         for (const K of validLanguage) {
-            let thiss;
-            const poContent = fs.readFileSync(`${root}texts/pot/${K}.pot`, "utf8").split("\n");
-            const index = poContent.indexOf("#: pack.description");
-            if (poContent[index + 2] == `msgstr ""`) {
-                thiss = `pack.description=§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)`
-            } else {
-                thiss = `pack.description=${poContent[index + 2].slice(8, -1)}`;
-            }
-            fs.writeFileSync(`${root}../ac_BP/texts/${K}.lang`, thiss);
+            const poContent = fs.readFileSync(`${root}texts/${K}.lang`, "utf8").replaceAll("\r", "").split("\n");
+            fs.writeFileSync(`${root}../ac_BP/texts/${K}.lang`, poContent[0]);
         }
     }
 }
