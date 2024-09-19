@@ -47,6 +47,7 @@ export enum MatrixUsedTags {
     movementbypass = "matrix:movementCheckBypassTag",
     container = "matrix:container_opened",
     impeccable = "matrix:impeccable",
+    op = "operator",
 }
 
 export enum MatrixEvents {
