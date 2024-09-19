@@ -24,6 +24,14 @@ msgstr ""
 msgid "Matrix has been completely initialized in %s ms"
 msgstr ""
 
+#: function.gainop
+magid "§bMatrix §7> §gYou have verified your operator permission, use chsr command '<prefix>op' directly to get the matrix admin permission"
+msgstr ""
+
+#: function.alreadyop
+magid "§bMatrix §7> §cYou have already verified your operator permission."
+mgstr ""
+
 #: function.check.title
 msgid "Anti-Cheat setup checking:"
 msgstr ""
