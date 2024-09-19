@@ -1,6 +1,6 @@
 import { c, getPLevel, isPasswordCorrect, rawstr, setPLevel } from "../../../../Assets/Util";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
-
+import { MatrixUsedTags } from "../../../../Data/EnumData";
 registerCommand({
     name: "op",
     description: "Gain the highest admin permission level by yourself",
@@ -31,7 +31,7 @@ registerCommand({
                 return;
             }
         } else {
-            if (player.isOp()) {
+            if (player.hasTag(MatrixUsedTags.op)) {
                 player.sendMessage(new rawstr(true, "g").tra("op.opgain").parse());
                 if (config.commands.passwordSetting.password == "type_your_password_here") {
                     player.sendMessage(new rawstr(true, "a").tra("op.pwtips").parse());
