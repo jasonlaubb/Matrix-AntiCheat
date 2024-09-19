@@ -1,6 +1,7 @@
 import * as Minecraft from "@minecraft/server";
 import { c, getPLevel, isAdmin, rawstr } from "../../Assets/Util";
 import { system } from "@minecraft/server";
+import { MatrixUsedTags } from "../../Data/EnumData";
 
 export function verifier(player: Minecraft.Player, setting: CommandConfig) {
     if (setting.enabled !== true) {
@@ -13,7 +14,7 @@ export function verifier(player: Minecraft.Player, setting: CommandConfig) {
         }
     } else if (setting.requireTag.length > 0 && !player.getTags().some((tag) => setting.requireTag.includes(tag))) {
         return false;
-    } else if (setting.requireOp === true && !player.isOp()) {
+    } else if (setting.requireOp === true && !player.hasTag(MatrixUsedTags.op)) {
         return false;
     }
     return true;
