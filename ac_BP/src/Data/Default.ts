@@ -63,11 +63,12 @@ export default {
             requireOp: false,
             minPermissionLevel: 2,
         },
+        // Important command.
         op: {
             enabled: true,
             adminOnly: false,
             requireTag: [],
-            requireOp: true,
+            requireOp: false,
             minPermissionLevel: 0,
         },
         deop: {
