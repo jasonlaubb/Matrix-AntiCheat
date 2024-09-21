@@ -127,13 +127,12 @@ async function systemEvent(config: configi, player: Player) {
     if (!data || data.velocityDiffList.length < 10) return;
     const average = data.velocityDiffList.reduce((a, b) => a + b, 0) / data.velocityDiffList.length;
     const velocityY = player.getVelocity().y;
-    if (average > 0 && average == data.lastAverge || average > 1.2) {
+    if (average > 0 && average == data.lastAverge && average != 0.1 && Math.abs(velocityY) < 1) {
         player.teleport(data.previousLocations);
-        flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, ["Average" + ":" + average.toFixed(3)]);
+        flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, ["Average" + ":" + average.toFixed(3), "VelocityY" + ":" + velocityY.toFixed(2)]);
     }
     data.lastAverge = average;
     flyData.set(player.id, data);
-    player.sendMessage(`Average Velocity: ${average}`);
 }
 
 registerModule("antiFly", false, [flyData], {
