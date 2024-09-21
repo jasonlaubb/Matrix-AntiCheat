@@ -93,13 +93,14 @@ async function AntiPhase(player: Player, config: configi, now: number) {
         Math.abs(y) < 1.7 &&
         !passableBlocks.includes(bodyBlock) &&
         !powderBlock.includes(bodyBlock) &&
-        phaseIndex != -1
+        phaseIndex != -1 &&
+        !isNearWall(player)
     ) {
         const lastflag = data.lastFlag;
         freezeTeleport(player, data.safeLocation);
         if (lastflag && now - lastflag < 5000 && !isSpikeLagging(player)) {
             const skipMaterial = skipMaterials[phaseIndex]!.typeId!;
-            flag(player, "NoClip", "A", config.antiPhase.maxVL, config.antiPhase.punishment, ["SkipMaterial:" + skipMaterial]);
+            flag(player, "Phase", "A", config.antiPhase.maxVL, config.antiPhase.punishment, ["SkipMaterial:" + skipMaterial]);
         }
         data.lastFlag = now;
     }
@@ -132,6 +133,11 @@ function onServerBlockPlace({ player: { id }, block: { location, isSolid } }: Pl
         location: location,
         placeId: id,
     } as PlaceLog);
+}
+function isNearWall ({ location: { x, z }}: Player) {
+    const floatX = x - Math.trunc(x);
+    const floatZ = z - Math.trunc(z);
+    return floatX == 0.7 || floatX == 0.3 || floatZ == 0.7 || floatZ == 0.3;
 }
 function delayPlacementCheck({ location, id }: Player) {
     if (blockPlacementLog.length == 0) return false;

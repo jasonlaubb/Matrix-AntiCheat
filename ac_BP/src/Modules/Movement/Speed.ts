@@ -1,5 +1,5 @@
-import { EntityDamageCause, EntityHurtAfterEvent, Player, Vector3, world, EntityHitEntityAfterEvent } from "@minecraft/server";
-import { bypassMovementCheck, c, flag, isAdmin } from "../../Assets/Util.js";
+import { EntityDamageCause, EntityHurtAfterEvent, Player, Vector3, world } from "@minecraft/server";
+import { bypassMovementCheck, c, flag } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
 import { getMsPerTick, isSpikeLagging } from "../../Assets/Public.js";
@@ -25,6 +25,8 @@ interface Speeddata {
     lastRiding: number;
     lastFlag: number;
     lastFight: number;
+    velocityDiffList: number[];
+    lastFreezeLocation: Vector3;
 }
 const speeddata = new Map<string, Speeddata>();
 
@@ -48,6 +50,8 @@ async function AntiSpeed(config: configi, player: Player) {
             lastRiding: 0,
             lastFlag: 0,
             lastFight: 0,
+            velocityDiffList: [],
+            lastFreezeLocation: player.location,
         } as Speeddata);
     // define cool things
     const { x, z } = player.getVelocity();
@@ -69,6 +73,10 @@ async function AntiSpeed(config: configi, player: Player) {
     // checking if the player didnt got flagged then save location
     if (xz - player.lastXZLogged < data.speedMaxV && now - data.lastOutOfRange > 900 && player.lastXZLogged - xz < data.speedMaxV) {
         data.speedData = player.location;
+    }
+    // check if player is not moving
+    if (xz == 0) {
+        data.lastFreezeLocation = player.location;
     }
     if ((xz - player.lastXZLogged < data.speedMaxV && Math.abs(xz - data.lastLastLoggedV) > 0.6) || Date.now() - data.lastReset <= 350) {
         if (!(Date.now() - data.lastReset <= 350)) data.lastReset = Date.now();
@@ -129,7 +137,11 @@ async function AntiSpeed(config: configi, player: Player) {
     const moveDistance = Math.hypot(x1 - x2, z1 - z2);
     const state = moveDistance == 0 ? -1 : moveDistance > config.antiSpeed.absThreshould ? 1 : 0;
     data.blockMovementLoop.push(state);
+    data.velocityDiffList.push(velocityDifferent);
     // Statistic if the player is doing horizontal client-side only movement.
+    if (data.velocityDiffList.length > 20) {
+        data.velocityDiffList.shift();
+    }
     let loopLength = data.blockMovementLoop.length;
     if (loopLength > 180) {
         loopLength--;
@@ -155,7 +167,7 @@ async function AntiSpeed(config: configi, player: Player) {
             data.lastFlag = now;
             if (now - lastflag < 10000) {
                 player.teleport(safePos);
-                flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
+                flag(player, "Speed", "C", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
             } else {
                 player.teleport(safePos);
             }
@@ -167,11 +179,21 @@ async function AntiSpeed(config: configi, player: Player) {
     data.lastLocation = player.location;
     speeddata.set(player.id, data);
 }
-function entityHurt({ damageSource: { cause }, hurtEntity }: EntityHurtAfterEvent) {
+function systemEvent (config: configi, player: Player) {
+    const data = speeddata.get(player.id);
+    if (!data || data.velocityDiffList.length < 20) return;
+    const avergeVelDef = data.velocityDiffList.reduce((a, b) => a + b) / data.velocityDiffList.length;
+    if (avergeVelDef > 0.7) {
+        player.teleport(data.lastFreezeLocation);
+        flag(player, "Speed", "B", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["AverageVelDiff" + ":" + avergeVelDef.toFixed(3)]);
+    }
+}
+function entityHurt({ damageSource: { cause, damagingEntity }, hurtEntity }: EntityHurtAfterEvent) {
     if (cause == EntityDamageCause.entityAttack || cause == EntityDamageCause.blockExplosion) {
-        const data = speeddata.get(hurtEntity.id);
+        if (!damagingEntity || !(damagingEntity instanceof Player)) return;
+        const data = speeddata.get(damagingEntity.id);
         if (data) data.lastAttack = Date.now();
-        speeddata.set(hurtEntity.id, data!);
+        speeddata.set(damagingEntity.id, data!);
     }
 }
 
@@ -181,13 +203,6 @@ function hasIllegalSpeedEffect(player: Player, effectLevel: number) {
     if (player.isSprinting && effectLevel > allowLevels.sprinting) return true;
     if (effectLevel > allowLevels.moving) return true;
     return false;
-}
-
-function entityHitEntity({ damagingEntity }: EntityHitEntityAfterEvent) {
-    if (isAdmin(damagingEntity as Player)) return;
-    const data = speeddata.get(damagingEntity.id)!;
-    data.lastFight = Date.now();
-    speeddata.set(damagingEntity.id, data);
 }
 registerModule(
     "antiSpeed",
@@ -202,9 +217,4 @@ registerModule(
         playerOption: { entityTypes: ["player"] },
         then: async (_config, event) => entityHurt(event),
     },
-    {
-        worldSignal: world.afterEvents.entityHitEntity,
-        playerOption: { entityTypes: ["player"] },
-        then: async (_config, event) => entityHitEntity(event),
-    }
 );
