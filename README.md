@@ -74,6 +74,6 @@
     </ul>
     <h1>Discord support</h1>
     <p>Please join our official discord!</p>
-    <a href="https://discord.gg/CqZGXeRKPJ"><p>Click Here to join</p></a>
+    <a href="https://discord.gg/CqZGXeRKPJ" target="_blank"><img src="https://dabuttonfactory.com/button.png?t=Join+Support+Server&f=Calibri-Bold&ts=30&tc=fff&hp=24&vp=8&c=11&bgt=unicolored&bgc=005dff"></a>
     <p>Join our official discord group, you can have quick support from our staff. And also you can get the 1st notification when our anticheat update!</p>
 </div>
