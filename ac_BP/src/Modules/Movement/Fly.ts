@@ -18,6 +18,7 @@ interface FlyData {
     previousHighVelocity: number;
     velocityDiffList: number[];
     lastAverge?: number;
+    onGroundLoc: Vector3;
 }
 interface IncludeStairDataInput {
     location: Vector3;
@@ -53,6 +54,7 @@ function antiFly(player: Player, now: number, config: configi) {
             flyFlags: 0,
             lastVelocity: 0,
             velocityDiffList: [],
+            onGroundLoc: player.location,
         };
         flyData.set(player.id, data);
         return;
@@ -62,6 +64,9 @@ function antiFly(player: Player, now: number, config: configi) {
     if (velocity <= config.antiFly.highVelocity && velocity >= 0) {
         data.previousLocations = player.location;
         data.velocityLog = 0;
+    }
+    if (velocity == 0 && xz == 0 && player.isOnGround) {
+        data.onGroundLoc = player.location;
     }
     const jumpBoost = player.getEffect(MinecraftEffectTypes.JumpBoost);
     const levitation = player.getEffect(MinecraftEffectTypes.Levitation);
@@ -128,7 +133,7 @@ async function systemEvent(config: configi, player: Player) {
     const average = data.velocityDiffList.reduce((a, b) => a + b, 0) / data.velocityDiffList.length;
     const velocityY = player.getVelocity().y;
     if (average > 0 && average == data.lastAverge && average != 0.1 && Math.abs(velocityY) < 1) {
-        player.teleport(data.previousLocations);
+        player.teleport(data.onGroundLoc);
         flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, ["Average" + ":" + average.toFixed(3), "VelocityY" + ":" + velocityY.toFixed(2)]);
     }
     data.lastAverge = average;
