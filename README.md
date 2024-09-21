@@ -20,9 +20,9 @@
         Matrix AntiCheat is the best Minecraft Bedrock anti-cheat with the strongest detection. It's a realm anticheat mainly.
         This can be used in BDS server, realm or local world. Supports the latest Minecraft version.
     </p>
-    <h1>Click the below button to learn more</h1>
+    <h1>Click the below button to learn more about matrix anti-cheat</h1>
     <a href="https://jasonlaubb.github.io/Matrix-AntiCheat/" target="_blank">
-        <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/images/learn_more.png">
+        <img src="https://dabuttonfactory.com/button.png?t=Go+to+our+docs+website&f=Komika-Bold-Italic&ts=30&tc=fff&tshs=2&tshc=f00&hp=25&vp=8&c=11&bgt=gradient&bgc=0ff&ebgc=00f&be=1">
     </a>
     <h1>Hack prevention</h1>
     <ul>
