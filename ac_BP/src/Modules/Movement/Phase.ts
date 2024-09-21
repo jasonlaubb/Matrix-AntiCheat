@@ -1,4 +1,4 @@
-import { world, Block, Vector3, Player, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent, GameMode, system } from "@minecraft/server";
+import { world, Block, Vector3, Player, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent, GameMode } from "@minecraft/server";
 import { bypassMovementCheck, flag } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
@@ -97,7 +97,7 @@ async function AntiPhase(player: Player, config: configi, now: number) {
         !isNearWall(player)
     ) {
         const lastflag = data.lastFlag;
-        freezeTeleport(player, data.safeLocation);
+        player.teleport(data.safeLocation);
         if (lastflag && now - lastflag < 5000 && !isSpikeLagging(player)) {
             const skipMaterial = skipMaterials[phaseIndex]!.typeId!;
             flag(player, "Phase", "A", config.antiPhase.maxVL, config.antiPhase.punishment, ["SkipMaterial:" + skipMaterial]);
@@ -170,19 +170,3 @@ registerModule(
         then: async (_config, event) => onServerBlockPlace(event as PlayerPlaceBlockAfterEvent),
     }
 );
-
-// Anti teleport bypass
-export function freezeTeleport(player: Player, location: Vector3) {
-    let i = 0;
-    location.x = Math.floor(location.x) + 0.5;
-    location.z = Math.floor(location.z) + 0.5;
-    const id = system.runInterval(() => {
-        player.teleport(location, {
-            rotation: player.getRotation(),
-        });
-        if (i > 7) {
-            system.clearRun(id);
-        }
-        i++;
-    }, 1);
-}
