@@ -16,6 +16,8 @@ interface FlyData {
     lastVelocity: number;
     previousVelocity: number;
     previousHighVelocity: number;
+    velocityDiffList: number[];
+    lastAverge?: number;
 }
 interface IncludeStairDataInput {
     location: Vector3;
@@ -50,6 +52,7 @@ function antiFly(player: Player, now: number, config: configi) {
             lastFlag2: now,
             flyFlags: 0,
             lastVelocity: 0,
+            velocityDiffList: [],
         };
         flyData.set(player.id, data);
         return;
@@ -64,14 +67,15 @@ function antiFly(player: Player, now: number, config: configi) {
     const levitation = player.getEffect(MinecraftEffectTypes.Levitation);
     const instair = includeStair(player);
     const skip1 = !(player.lastExplosionTime && now - player.lastExplosionTime < 5500) && !(player.threwTridentAt && now - player.threwTridentAt < 5000) && !player.hasTag(MatrixUsedTags.knockBack);
-    const skip2 = !player.isFlying && !player.isGliding;
-    const skip3 = !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2);
+    //const skip2 = !player.isFlying && !player.isGliding;
+    //const skip3 = !(jumpBoost && jumpBoost?.amplifier > 2) && !(levitation && levitation?.amplifier > 2);
     if (bypassMovementCheck(player) || (jumpBoost && jumpBoost.amplifier > 2) || (levitation && levitation.amplifier > 2)) {
         flyData.set(player.id, data);
         return;
     }
-    const flyMovement = data.velocityLog > 1 && velocity <= 0;
-    const clientFly = data.velocityLog > 0 && player?.lastVelLog == data.velocityLog;
+    //const flyMovement = data.velocityLog > 1 && velocity <= 0;
+    //const clientFly = data.velocityLog > 0 && player?.lastVelLog == data.velocityLog;
+    /*
     if (!player.isOnGround && clientFly && flyMovement && skip1 && skip2 && skip3 && velocity != 1 && !instair) {
         const lastflag = data.lastFlag;
         player.teleport(data.previousLocations);
@@ -79,7 +83,7 @@ function antiFly(player: Player, now: number, config: configi) {
         data.velocityLog = 0;
         data.previousVelocity = undefined!;
         data.lastFlag = now;
-    }
+    }*/
     data.lastVelLog = data.velocityLog;
     if (data.velocityLog == 1 && !instair && velocity <= 0.2) {
         const lastflag = data.lastFlag2;
@@ -113,7 +117,23 @@ function antiFly(player: Player, now: number, config: configi) {
         data.velocityLog = 0;
         data.lastVelocity = velocity;
     }
+    data.velocityDiffList.push(velocity - data.lastVelocity);
+    if (data.velocityDiffList.length > 10) data.velocityDiffList.shift();
     flyData.set(player.id, data);
+}
+
+async function systemEvent(config: configi, player: Player) {
+    const data = flyData.get(player.id);
+    if (!data || data.velocityDiffList.length < 10) return;
+    const average = data.velocityDiffList.reduce((a, b) => a + b, 0) / data.velocityDiffList.length;
+    const velocityY = player.getVelocity().y;
+    if (average > 0 && average == data.lastAverge || average > 1.2) {
+        player.teleport(data.previousLocations);
+        flag(player, "Fly", "A", config.antiFly.maxVL, config.antiFly.punishment, ["Average" + ":" + average.toFixed(3)]);
+    }
+    data.lastAverge = average;
+    flyData.set(player.id, data);
+    player.sendMessage(`Average Velocity: ${average}`);
 }
 
 registerModule("antiFly", false, [flyData], {
@@ -122,4 +142,9 @@ registerModule("antiFly", false, [flyData], {
     intick: async (config, player) => {
         antiFly(player, Date.now(), config);
     },
+},
+{
+    tickInterval: 5,
+    intick: systemEvent,
+    tickOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
 });
