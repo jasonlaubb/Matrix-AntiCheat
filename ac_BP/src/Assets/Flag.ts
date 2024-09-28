@@ -47,6 +47,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         });
         if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
         applyPunishment(player, modules.bestPunishment);
+        flagData.delete(player.id);
         return;
     }
     data.flagVL[modules.id] ??= 0;
@@ -65,6 +66,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             });
             if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
             applyPunishment(player, suggestedPunishment);
+            flagData.delete(player.id);
         }
     }
     flagData.set(player.id, data);
@@ -75,6 +77,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         });
         if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
         applyPunishment(player, modules.bestPunishment);
+        flagData.delete(player.id);
     }
 }
 
@@ -143,7 +146,7 @@ function getFlagMessage(object: string, type: string, component: string[], slove
     const totalAmount = component.length;
     const amountListing = getPercentageComponent(component, totalAmount);
     const uniqueTurner = [...new Set(component)];
-    const string = [];
+    const string: string[] = [];
     uniqueTurner.forEach((item) => {
         string.push(`${item} (${amountListing[item].toFixed(2)}%)`);
     });
@@ -154,7 +157,7 @@ function getFlagMessage(object: string, type: string, component: string[], slove
     .str("\n")
     .tra("object.type", type)
     .str("\n")
-    .tra("object.components", uniqueTurner.join(","))
+    .tra("object.components", string.join(", "))
     .str("\n")
     .tra("object.autosolve", slove)
     .parse();
