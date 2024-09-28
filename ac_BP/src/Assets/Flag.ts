@@ -148,7 +148,7 @@ function getFlagMessage(object: string, type: string, component: string[], slove
     const uniqueTurner = [...new Set(component)];
     const string: string[] = [];
     uniqueTurner.forEach((item) => {
-        string.push(`${item} (${amountListing[item].toFixed(2)}\%)`);
+        string.push(`${item} (${amountListing[item].toFixed(2)}％)`);
     });
     return new rawstr()
     .tra("object.detected")
