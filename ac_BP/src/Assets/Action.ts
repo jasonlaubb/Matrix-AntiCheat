@@ -17,7 +17,7 @@ export class Action {
         world.afterEvents.playerSpawn.subscribe(({ player: { id }, initialSpawn }) => {
             if (!initialSpawn) return;
             if (playerId == id) player.triggerEvent(MatrixEvents.tempkick);
-        })
+        });
     }
     public static tempban(player: Player) {
         if (isHost(player) || isAdmin(player)) return;
@@ -30,7 +30,7 @@ export class Action {
             } else {
                 player.triggerEvent(MatrixEvents.tempkick);
             }
-        })
+        });
         player.triggerEvent(MatrixEvents.tempkick);
     }
     public static kick(player: Player, reason?: string, by?: string) {

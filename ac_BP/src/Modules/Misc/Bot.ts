@@ -27,7 +27,7 @@ async function playerSpawn(_config: configi, { initialSpawn: spawn, player }: Pl
     });
 }
 
-function antiBot () {
+function antiBot() {
     const players = world.getPlayers({ excludeTags: ["matrix:verified"] });
     const now = Date.now();
     const config = c();
@@ -100,13 +100,20 @@ async function chatSend(_config: configi, { sender: player }: ChatSendAfterEvent
     }
 }
 
-registerModule("antiBot", false, [], {
-    worldSignal: world.afterEvents.playerSpawn,
-    then: playerSpawn,
-},{
-    worldSignal: world.afterEvents.chatSend,
-    then: chatSend,
-},{
-    tickInterval: 20,
-    onTick: async (_config: configi) => antiBot()
-})
+registerModule(
+    "antiBot",
+    false,
+    [],
+    {
+        worldSignal: world.afterEvents.playerSpawn,
+        then: playerSpawn,
+    },
+    {
+        worldSignal: world.afterEvents.chatSend,
+        then: chatSend,
+    },
+    {
+        tickInterval: 20,
+        onTick: async (_config: configi) => antiBot(),
+    }
+);

@@ -19,7 +19,7 @@ interface FlagData {
     flagVL: { [key: string]: number };
     lastValidTime: number;
 }
-const flagData = new Map<string, FlagData>()
+const flagData = new Map<string, FlagData>();
 /**
  * @author jasonlaubb
  * @description Unique flag handler
@@ -27,12 +27,14 @@ const flagData = new Map<string, FlagData>()
 export default function (player: Player, modules: Modules, type: Type = "A") {
     if (!(player instanceof Player) || isAdmin(player)) return;
     const config = c();
-    const data = flagData.get(player.id) ?? {
-        sus: 0,
-        flagComponent: [],
-        flagVL: {},
-        lastValidTime: Date.now(),
-    } as FlagData;
+    const data =
+        flagData.get(player.id) ??
+        ({
+            sus: 0,
+            flagComponent: [],
+            flagVL: {},
+            lastValidTime: Date.now(),
+        } as FlagData);
     if (Date.now() - data.lastValidTime > (modules.flagValidationTime == 0 ? config.autoPunishment.defaultFlagValidationTime : modules.flagValidationTime)) {
         flagData.delete(player.id); // Delete old data
         return;
@@ -41,8 +43,8 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
     if (modules.instantPunishment) {
         const flagMessage = getFlagMessage(player.name, "Flag Handler [Instant]", [modules.id], punishmentMaps[modules.bestPunishment]);
         flagModeSelector(config.flagMode, player.name).forEach((target) => {
-            target.sendMessage(flagMessage)
-        })
+            target.sendMessage(flagMessage);
+        });
         if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
         applyPunishment(player, modules.bestPunishment);
         return;
@@ -51,7 +53,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
     data.flagVL[modules.id]++;
     data.flagComponent.push(modules.id);
     if (modules.acceptTotal) {
-        data.sus += (1 / modules.referencedFlags);
+        data.sus += 1 / modules.referencedFlags;
         if (data.sus >= config.autoPunishment.maxSusValue) {
             const moduleOrder = Object.entries(getPercentageComponent(data.flagComponent, modules.maxFlags));
             moduleOrder.sort((a, b) => b[1] - a[1]);
@@ -59,8 +61,8 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             const suggestedPunishment = ((config as any)[maxPercentageModule]?.modules as Modules)?.bestPunishment ?? "tempkick";
             const flagMessage = getFlagMessage(player.name, "Flag Handler [Total]", [modules.id], punishmentMaps[suggestedPunishment]);
             flagModeSelector(config.flagMode, player.name).forEach((target) => {
-                target.sendMessage(flagMessage)
-            })
+                target.sendMessage(flagMessage);
+            });
             if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
             applyPunishment(player, suggestedPunishment);
         }
@@ -69,34 +71,34 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
     if (data.flagVL[modules.id] > modules.maxFlags) {
         const flagMessage = getFlagMessage(player.name, "Flag Handler [Limit]", [modules.id], punishmentMaps[modules.bestPunishment]);
         flagModeSelector(config.flagMode, player.name).forEach((target) => {
-            target.sendMessage(flagMessage)
-        })
+            target.sendMessage(flagMessage);
+        });
         if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
         applyPunishment(player, modules.bestPunishment);
     }
 }
 
-function flagModeSelector (flagMode: string, playerName: string): Player[] {
+function flagModeSelector(flagMode: string, playerName: string): Player[] {
     switch (flagMode) {
         case "none": {
             return [];
-        };
+        }
         case "admin": {
             return world.getAllPlayers().filter((player) => isAdmin(player));
-        };
+        }
         case "all": {
             return world.getAllPlayers();
-        };
+        }
         case "tag": {
             return world.getPlayers({
-                tags: [MatrixUsedTags.notify]
+                tags: [MatrixUsedTags.notify],
             });
-        };
+        }
         case "bypass": {
             return world.getPlayers({
-                excludeNames: [playerName]
+                excludeNames: [playerName],
             });
-        };
+        }
         default: {
             sendErr(new Error("Flag :: Unknown flag mode :: " + flagMode));
             return [];
@@ -104,13 +106,13 @@ function flagModeSelector (flagMode: string, playerName: string): Player[] {
     }
 }
 const punishmentMaps: { [key: string]: string } = {
-    "tempkick": "Kick [Temp]",
-    "kick": "Kick [Classic]",
-    "despawn": "Kick [Despawn]",
-    "tempban": "Ban [Temp]",
-    "ban": "Ban [Classic]",
-}
-function applyPunishment (player: Player, punishment: string) {
+    tempkick: "Kick [Temp]",
+    kick: "Kick [Classic]",
+    despawn: "Kick [Despawn]",
+    tempban: "Ban [Temp]",
+    ban: "Ban [Classic]",
+};
+function applyPunishment(player: Player, punishment: string) {
     const config = c();
     switch (punishment) {
         case "tempkick": {
@@ -135,22 +137,22 @@ function applyPunishment (player: Player, punishment: string) {
         }
     }
 }
-function getFlagMessage (object: string, type: string, component: string[], slove: string): RawText {
+function getFlagMessage(object: string, type: string, component: string[], slove: string): RawText {
     const totalAmount = component.length;
     const amountListing = getPercentageComponent(component, totalAmount);
     const uniqueTurner = [...new Set(component)];
     const string = [];
     uniqueTurner.forEach((item) => {
         string.push(`${item} (${amountListing[item].toFixed(2)}%)`);
-    })
+    });
     return new rawstr().tra("object.detected", object, type, uniqueTurner.join(","), slove).parse();
 }
 
-function getPercentageComponent (component: string[], total: number): { [key: string]: number } {
+function getPercentageComponent(component: string[], total: number): { [key: string]: number } {
     const amountListing: { [key: string]: number } = {};
     component.forEach((item) => {
         amountListing[item] ??= 0;
         amountListing[item] += (1 / total) * 100;
-    })
+    });
     return amountListing;
 }

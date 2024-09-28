@@ -135,7 +135,7 @@ function onServerBlockPlace({ player: { id }, block: { location, isSolid } }: Pl
         placeId: id,
     } as PlaceLog);
 }
-function isNearWall ({ location: { x, z }}: Player) {
+function isNearWall({ location: { x, z } }: Player) {
     const floatX = x - Math.trunc(x);
     const floatZ = z - Math.trunc(z);
     return floatX == 0.7 || floatX == 0.3 || floatZ == 0.7 || floatZ == 0.3;

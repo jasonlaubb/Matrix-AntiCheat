@@ -97,21 +97,21 @@ function antiFly(player: Player, now: number, config: configi) {
         const notSL = !isSpikeLagging(player);
         if ((data.lastVelocity >= -0.95 && data.lastVelocity <= -0.1) || (data.lastVelocity <= 0.42 && data.lastVelocity >= -0.03)) {
             if (notSL && (xz > 0 || player.lastXZLogged > 0) && (data.lastHighVelocity >= 7 || (data.flyFlags >= 2 && now - lastflag >= 450 && now - lastflag <= 1000))) {
-                flag(player, config.antiFly.modules, "B")
+                flag(player, config.antiFly.modules, "B");
                 player.teleport(data.previousLocations);
                 data.flyFlags++;
             } else if (data.flyFlags >= 2) data.flyFlags = 0;
             if (notSL && player.location.y - data.previousLocations.y >= config.antiFly.maxGroundPrviousVelocity && data.lastHighVelocity >= 0.7 && !isSpawning(player)) {
-                if (now - lastflag <= 2000) flag(player, config.antiFly.modules, "E")
+                if (now - lastflag <= 2000) flag(player, config.antiFly.modules, "E");
                 player.teleport(data.previousLocations);
             }
         }
         if (data.lastHighVelocity >= config.antiFly.maxGroundPrviousVelocity && (player.isOnGround || player.isClimbing)) {
-            if (now - lastflag <= 5000) flag(player, config.antiFly.modules, "C")
+            if (now - lastflag <= 5000) flag(player, config.antiFly.modules, "C");
             player.teleport(data.previousLocations);
         }
         if (data.lastHighVelocity > config.antiFly.maxHighVelocity) {
-            flag(player, config.antiFly.modules, "D")
+            flag(player, config.antiFly.modules, "D");
             player.teleport(data.previousLocations);
         }
         data.lastFlag2 = now;
@@ -135,21 +135,26 @@ async function systemEvent(config: configi, player: Player) {
     const velocityY = player.getVelocity().y;
     if (average > 0 && average == data.lastAverge && average != 0.1 && Math.abs(velocityY) < 1) {
         player.teleport(data.onGroundLoc);
-        flag(player, config.antiFly.modules, "A")
+        flag(player, config.antiFly.modules, "A");
     }
     data.lastAverge = average;
     flyData.set(player.id, data);
 }
 
-registerModule("antiFly", false, [flyData], {
-    tickInterval: 1,
-    tickOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
-    intick: async (config, player) => {
-        antiFly(player, Date.now(), config);
+registerModule(
+    "antiFly",
+    false,
+    [flyData],
+    {
+        tickInterval: 1,
+        tickOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
+        intick: async (config, player) => {
+            antiFly(player, Date.now(), config);
+        },
     },
-},
-{
-    tickInterval: 5,
-    intick: systemEvent,
-    tickOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
-});
+    {
+        tickInterval: 5,
+        intick: systemEvent,
+        tickOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
+    }
+);

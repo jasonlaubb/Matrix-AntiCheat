@@ -198,5 +198,5 @@ registerModule(
         worldSignal: world.afterEvents.entityHurt,
         playerOption: { entityTypes: ["player"] },
         then: async (_config, event) => entityHurt(event),
-    },
+    }
 );
