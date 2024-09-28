@@ -1,6 +1,6 @@
 import { world, Block, Vector3, Player, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent, GameMode } from "@minecraft/server";
 import { bypassMovementCheck } from "../../Assets/Util";
-import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { isSpikeLagging } from "../../Assets/Public";
 import flag from "../../Assets/flag";
@@ -95,7 +95,8 @@ async function AntiPhase(player: Player, config: configi, now: number) {
         !passableBlocks.includes(bodyBlock) &&
         !powderBlock.includes(bodyBlock) &&
         phaseIndex != -1 &&
-        !isNearWall(player)
+        !isNearWall(player) &&
+        (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2
     ) {
         const lastflag = data.lastFlag;
         player.teleport(data.safeLocation);

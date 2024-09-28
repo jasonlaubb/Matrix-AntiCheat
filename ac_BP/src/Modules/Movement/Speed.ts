@@ -104,6 +104,7 @@ async function AntiSpeed(config: configi, player: Player) {
         player.lastXZLogged - xz > data.speedMaxV &&
         now - data.lastReset >= 350 &&
         now - data.lastRiding >= 1000 &&
+        (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2 &&
         notSpikeLagging
     ) {
         if (lagOnlyCondition) {

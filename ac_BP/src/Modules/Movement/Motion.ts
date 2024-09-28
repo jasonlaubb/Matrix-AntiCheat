@@ -5,6 +5,7 @@ import MathUtil from "../../Assets/MathUtil";
 import { isSpikeLagging } from "../../Assets/Public";
 import { AnimationControllerTags } from "../../Data/EnumData";
 import flag from "../../Assets/flag";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 interface MotionData {
     agoWrap: number;
     previousWrap: number;
@@ -47,7 +48,7 @@ async function checkMotion(config: configi, player: Player) {
         !(player.lastBreakSolid && now - player.lastBreakSolid < 1000) &&
         !isSpikeLagging(player);
     motionData.set(player.id, data);
-    if (commonPrevention && !bypassMovementCheck(player)) {
+    if (commonPrevention && (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2 && !bypassMovementCheck(player)) {
         if (wrapDistance < config.antiMotion.predictionThereshold && data.lastWrap > config.antiMotion.wrapDistanceThereshold && config.antiMotion.predictionThereshold) {
             player.teleport(data.lastFreezeLocation);
         }
