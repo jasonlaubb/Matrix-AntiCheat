@@ -153,3 +153,4 @@ function getPercentageComponent (component: string[], total: number): { [key: st
         amountListing[item] += (1 / total) * 100;
     })
     return amountListing;
+}
