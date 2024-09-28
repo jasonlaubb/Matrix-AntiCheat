@@ -48,6 +48,7 @@ export enum MatrixUsedTags {
     container = "matrix:container_opened",
     impeccable = "matrix:impeccable",
     op = "operator",
+    notify = "matrix:notify",
 }
 
 export enum MatrixEvents {

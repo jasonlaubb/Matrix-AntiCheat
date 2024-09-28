@@ -371,6 +371,8 @@ export default {
     },
     ui: {},
     autoPunishment: {
+        maxSusValue: 2.5,
+        defaultFlagValidationTime: 2100000,
         bypasslist: [],
         bypassname: [],
         observationMode: false,
@@ -382,6 +384,7 @@ export default {
             minutes: 1440,
             reason: "Unfair advantage",
         },
+        tempBanLength: 60000,
     },
     banModify: {
         extraMessages: [],
@@ -443,6 +446,7 @@ export default {
         minIncreasingCombos: 3,
         silentData: false,
         modules: {
+            id: "Kill Aura",
             referencedFlags: 2,
             maxFlags: 5,
             instantPunishment: false,
@@ -458,6 +462,7 @@ export default {
         spawnRadius: 2,
         comboTime: 15000,
         modules: {
+            id: "Mob Aura",
             referencedFlags: 4,
             maxFlags: 10,
             instantPunishment: false,
@@ -471,6 +476,7 @@ export default {
         maxReach: 4.21,
         maxYReach: 4.8,
         modules: {
+            id: "Reach",
             referencedFlags: 4,
             maxFlags: 10,
             instantPunishment: false,
@@ -485,6 +491,7 @@ export default {
         maxGroundPrviousVelocity: 0.5,
         maxHighVelocity: 22,
         modules: {
+            id: "Fly",
             referencedFlags: 2,
             maxFlags: 5,
             instantPunishment: false,
@@ -499,6 +506,7 @@ export default {
         ratioThreshold: 0.5,
         minDataRequired: 5,
         modules: {
+            id: "Air Jump",
             referencedFlags: 4,
             maxFlags: 10,
             instantPunishment: false,
@@ -511,6 +519,7 @@ export default {
         enabled: true,
         float: 15,
         modules: {
+            id: "No Fall",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -527,6 +536,7 @@ export default {
         wrapDistanceThereshold: 1.6,
         predictionThereshold: 0.25,
         modules: {
+            id: "Motion",
             referencedFlags: 3,
             maxFlags: 10,
             instantPunishment: false,
@@ -542,6 +552,7 @@ export default {
         maxVL: 4,
         breakSolidBypass: 1750,
         modules: {
+            id: "Phase",
             referencedFlags: 3,
             maxFlags: 4,
             instantPunishment: false,
@@ -565,6 +576,7 @@ export default {
         },
         absThreshould: 1,
         modules: {
+            id: "Speed",
             referencedFlags: 2,
             maxFlags: 5,
             instantPunishment: false,
@@ -579,6 +591,7 @@ export default {
         maxTickMovment: 196, // 12 cunks distance
         tickMovementCooldown: 8000,
         modules: {
+            id: "Timer",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -593,6 +606,7 @@ export default {
         timeout: 100,
         solidOnly: true,
         modules: {
+            id: "Nuker",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -609,6 +623,7 @@ export default {
         minRotation: 20,
         maxBPS: 5,
         modules: {
+            id: "Scaffold",
             referencedFlags: 5,
             maxFlags: 12,
             instantPunishment: false,
@@ -624,6 +639,7 @@ export default {
         itemUseTime: 350,
         timeout: 60,
         modules: {
+            id: "No Slow",
             referencedFlags: 1,
             maxFlags: 5,
             instantPunishment: false,
@@ -638,6 +654,7 @@ export default {
         writeList: ["minecraft:cake", "minecraft:dragon_egg"],
         experimental: true,
         modules: {
+            id: "Breaker",
             referencedFlags: 2,
             maxFlags: 7,
             instantPunishment: false,
@@ -649,6 +666,7 @@ export default {
     antiSpammer: {
         enabled: true,
         modules: {
+            id: "Spammer",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -663,6 +681,7 @@ export default {
         maxBreakDistance: 8,
         timeout: 60,
         modules: {
+            id: "Block Reach",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -675,6 +694,7 @@ export default {
         enabled: false,
         experimental: true,
         modules: {
+            id: "Aim",
             referencedFlags: 24,
             maxFlags: 35,
             instantPunishment: false,
@@ -688,6 +708,7 @@ export default {
         minDelay: 200,
         timeout: 60,
         modules: {
+            id: "Tower",
             referencedFlags: 4,
             maxFlags: 10,
             instantPunishment: false,
@@ -703,6 +724,7 @@ export default {
         returnDefault: true,
         returnGameMode: 0,
         modules: {
+            id: "Game Mode",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -714,6 +736,7 @@ export default {
     antiNameSpoof: {
         enabled: true,
         modules: {
+            id: "Name Spoof",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -725,6 +748,7 @@ export default {
     antiAutoTool: {
         enabled: false,
         modules: {
+            id: "Auto Tool",
             referencedFlags: 10,
             maxFlags: 30,
             instantPunishment: false,
@@ -746,6 +770,7 @@ export default {
             stone: 5.1,
         },
         modules: {
+            id: "Fast Break",
             referencedFlags: 4,
             maxFlags: 10,
             instantPunishment: false,
@@ -763,6 +788,7 @@ export default {
     antiDisabler: {
         enabled: true,
         modules: {
+            id: "Disabler",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -779,6 +805,7 @@ export default {
         checkEnchantment: true,
         checkEducationalItem: true,
         modules: {
+            id: "Illegal Item",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -792,6 +819,7 @@ export default {
         minUseTime: 20,
         timeout: 60,
         modules: {
+            id: "Fast Use",
             referencedFlags: 4,
             maxFlags: 10,
             instantPunishment: true,
@@ -803,6 +831,7 @@ export default {
     antiOffhand: {
         enabled: false,
         modules: {
+            id: "Offhand",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,
@@ -821,6 +850,7 @@ export default {
     antiNoSwing: {
         enabled: true,
         modules: {
+            id: "No Swing",
             referencedFlags: 5,
             maxFlags: 7,
             instantPunishment: false,
@@ -834,6 +864,7 @@ export default {
     antiBadpacket: {
         enabled: true,
         modules: {
+            id: "Bad Packet",
             referencedFlags: 0,
             maxFlags: 0,
             instantPunishment: true,

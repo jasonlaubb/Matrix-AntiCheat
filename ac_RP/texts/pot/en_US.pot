@@ -9,7 +9,7 @@ msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API
 msgstr ""
 
 #: disconnectionScreen.unexpectedPacket
-msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
+msgid "§bMatrix §7> §cYou have been disconnected from the game expectly.§r"
 msgstr ""
 
 #: json.packet

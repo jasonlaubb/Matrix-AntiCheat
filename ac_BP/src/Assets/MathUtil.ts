@@ -55,4 +55,10 @@ export default class {
     public static randomOffset(min: number, max: number): VectorXZ {
         return { x: Math.random() * (max - min) + min, z: Math.random() * (max - min) + min };
     }
+    public static desending(list: number[]): number[] {
+        return list.sort((a, b) => b - a);
+    }
+    public static ascending(list: number[]): number[] {
+        return list.sort((a, b) => a - b);
+    }
 }
