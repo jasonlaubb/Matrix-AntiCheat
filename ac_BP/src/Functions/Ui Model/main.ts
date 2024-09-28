@@ -57,8 +57,8 @@ function openForIt(player: Player, target: Player) {
 async function selectPlayer(player: Player): Promise<Player | null> {
     const pointAllPlayer = world.getAllPlayers();
     const selectMenu = new ActionFormData().title(rawstr.drt("ui.selectonline"));
-    const buttonName = new rawstr().str(player.name);
     for (const target of pointAllPlayer) {
+        const buttonName = new rawstr().str(target.name);
         if (player.name == target.name) {
             buttonName.str("\n§c§l").tra("ui.you");
         } else if (isAdmin(target)) {
