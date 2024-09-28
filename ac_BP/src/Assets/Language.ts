@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate =
+export type Translate = 
     | "pack.description"
     | "disconnectionScreen.unexpectedPacket"
     | "json.packet"
@@ -21,6 +21,10 @@ export type Translate =
     | "function.version.dsc"
     | "flag.style"
     | "object.detected"
+    | "object.object"
+    | "object.type"
+    | "object.components"
+    | "object.autosolve"
     | "ui.title"
     | "ui.itemui"
     | "ui.moderateplayer"
@@ -225,4 +229,4 @@ export type Translate =
     | "item.matrix.itemui"
     | "item.matrix.modstick"
     | "action.hint.exit.r4isen1920_invsee:inventory"
-    | "action.hint.exit.console.r4isen1920_invsee:inventory";
+    | "action.hint.exit.console.r4isen1920_invsee:inventory"

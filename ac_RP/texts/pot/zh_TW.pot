@@ -73,8 +73,24 @@ msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4/%5§7]§r"
 msgstr "%1§g 已被攔截 §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
 
 #: object.detected
-msgid "§bMatrix §7> §7Object Detected.	Object: §e%1§r§7	Type: §e%2	§7Components: §e%3	§7Automatic slove: §e%4§r"
+msgid "§bMatrix §7> §7Object Detected."
 msgstr "§bMatrix §7> §7偵測到物體。	物體: §e%1§r§7	類型: §e%2	§7Components: §e%3	§7自動解決: §e%4§r"
+
+#: object.object
+msgid "Object: §e%1§r§7"
+msgstr ""
+
+#: object.type
+msgid "Type: §e%1§r§7"
+msgstr ""
+
+#: object.components
+msgid "Components: §e%1§r§7"
+msgstr ""
+
+#: object.autosolve
+msgid "Automatic slove: §e%1§r§7"
+msgstr ""
 
 #: ui.title
 msgid "Admin GUI"

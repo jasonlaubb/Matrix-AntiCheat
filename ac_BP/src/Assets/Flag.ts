@@ -113,6 +113,8 @@ const punishmentMaps: { [key: string]: string } = {
     ban: "Ban [Classic]",
 };
 function applyPunishment(player: Player, punishment: string) {
+    // Only for local world testing...
+    if (player.isOp()) return;
     const config = c();
     switch (punishment) {
         case "tempkick": {
@@ -145,7 +147,17 @@ function getFlagMessage(object: string, type: string, component: string[], slove
     uniqueTurner.forEach((item) => {
         string.push(`${item} (${amountListing[item].toFixed(2)}%)`);
     });
-    return new rawstr().tra("object.detected").tra("object.object", object).tra("object.type", type).tra("object.components", uniqueTurner.join(","), slove).parse();
+    return new rawstr()
+    .tra("object.detected")
+    .str("\n")
+    .tra("object.object", object)
+    .str("\n")
+    .tra("object.type", type)
+    .str("\n")
+    .tra("object.components", uniqueTurner.join(","))
+    .str("\n")
+    .tra("object.autosolve", slove)
+    .parse();
 }
 
 function getPercentageComponent(component: string[], total: number): { [key: string]: number } {
