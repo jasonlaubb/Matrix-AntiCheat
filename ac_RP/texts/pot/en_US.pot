@@ -89,7 +89,7 @@ msgid "Components: §e%1§r§7"
 msgstr ""
 
 #: object.autosolve
-msgid "Automatic slove: §e%1§r§7"
+msgid "Automatic solve: §e%1§r§7"
 msgstr ""
 
 #: ui.title
