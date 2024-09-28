@@ -10,27 +10,27 @@ msgstr "§7§¶Minecraft 基岩版最佳對抗外掛的解決方案 §c(需要�
 
 #: disconnectionScreen.unexpectedPacket
 msgid "§bMatrix §7> §cYou have been disconnected from the game expectly.§r"
-msgstr "§bMatrix §7> §c你已被強制斷開連線§r"
+msgstr "§bMatrix §7> §c預期內從伺服器斷線§r"
 
 #: json.packet
 msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from %3"
-msgstr ""
+msgstr "§bMatrix §7> §e%1 §g 封包 §7(%2) §g 從 %3 被接受"
 
 #: index.initmodules
 msgid "Intilized %1 module(s) in %2ms."
-msgstr ""
+msgstr "在 %2 毫秒內初始化了 %1 個模組"
 
 #: index.complete
 msgid "Matrix has been completely initialized in %s ms"
-msgstr ""
+msgstr "Matrix 已在 %2 毫秒內被完全初始化了"
 
 #: function.gainop
 msgid "§bMatrix §7> §gYou have verified your operator permission, use chat command '<prefix>op' directly to get the matrix admin permission"
-msgstr ""
+msgstr "§bMatrix §7> §g§g您已驗證操作員權限, 直接使用聊天指令「<prefix>op」即可取得 Matrix 管理員權限"
 
 #: function.alreadyop
 msgid "§bMatrix §7> §cYou have already verified your operator permission."
-msgstr ""
+msgstr "§bMatrix §7> §c您已經驗證了您的操作員權限。"
 
 #: function.check.title
 msgid "Anti-Cheat setup checking:"
@@ -42,7 +42,7 @@ msgstr "§g成功啟用實驗性API: %s"
 
 #: function.check.playerjson
 msgid "§gPlayer.json usage: %s"
-msgstr ""
+msgstr "§gPlayer.json 啟用: %s"
 
 #: function.check.helpa
 msgid "§7- If the 'Beta API usage' is stated 'FALSE', that's mean the anticheat cannot run the script of the behavior pack."
@@ -58,7 +58,7 @@ msgstr "§7- 如果這樣仍然不起作用, 請檢查你的minecraft版本匹�
 
 #: function.check.helpd
 msgid "§7- If the 'Player.json usage' is stated 'FALSE', please make sure you have placed Matrix AntiCheat on the top of your behavior packs."
-msgstr ""
+msgstr "§7- 如果“Player.json 啟用”設定為“FALSE”, 請確保您已將 Matrix AntiCheat 置於行為包的頂部。"
 
 #: function.version.title
 msgid "§gYou are now on version §eV%s"
@@ -74,7 +74,7 @@ msgstr "%1§g 已被攔截 §4%2§r §7[Type %3§7] §7[§dx%4§7]§r"
 
 #: object.detected
 msgid "§bMatrix §7> §7Object Detected.	Object: §e%1§r§7	Type: §e%2	§7Components: §e%3	§7Automatic slove: §e%4§r"
-msgstr ""
+msgstr "§bMatrix §7> §7偵測到物體。	物體: §e%1§r§7	類型: §e%2	§7Components: §e%3	§7自動解決: §e%4§r"
 
 #: ui.title
 msgid "Admin GUI"
@@ -82,7 +82,7 @@ msgstr "管理員選單"
 
 #: ui.itemui
 msgid "Get UI Item §8(itemui)"
-msgstr ""
+msgstr "取得 UI 物品 §8(itemui)"
 
 #: ui.moderateplayer
 msgid "Moderate Players"
@@ -94,23 +94,23 @@ msgstr "設定"
 
 #: ui.exit
 msgid "Exit"
-msgstr "Exit"
+msgstr "退出"
 
 #: ui.nogaoadmin
 msgid "Oops, moderate a player with admin permission with ui is not supported, please use command instead."
-msgstr ""
+msgstr "糟糕，不支援使用 ui 管理具有管理員權限的玩家，請改用指令。"
 
 #: ui.selectonline
 msgid "Select a online player from the list below"
-msgstr ""
+msgstr "從下面的清單中選擇一個線上玩家"
 
 #: ui.you
 msgid "You"
-msgstr ""
+msgstr "你"
 
 #: ui.admin
 msgid "Admin"
-msgstr ""
+msgstr "管理員"
 
 #: ui.banplayer
 msgid "Ban Player"
@@ -210,7 +210,7 @@ msgstr "命令運行時發生了預期外的錯誤"
 
 #: cmderror.plevel
 msgid "No acess to continue, minimum permission level: %1"
-msgstr ""
+msgstr "無法繼續訪問，最低權限等級: %1"
 
 #: cmderror.name
 msgid "§gName: §9%s"
@@ -294,23 +294,23 @@ msgstr "%1 已被 %2 取消靜音"
 
 #: toggle.togglechange
 msgid "%1 module has been %2d"
-msgstr ""
+msgstr "%1 模組已 %2d"
 
 #: toggles.title
 msgid "Matrix AntiCheat toggleable modules"
-msgstr ""
+msgstr "Matrix AntiCheat 可切換模組"
 
 #: toggles.text
 msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
-msgstr ""
+msgstr "這是 Matrix Anti-Cheat 可切換模組的列表，您可以使用「toggle <module> <enable/disable>」來切換它們"
 
 #: toggles.feide
 msgid "§a» §g%s: §aEnabled"
-msgstr ""
+msgstr "§a» §g%s: §a已啟用"
 
 #: toggles.feidd
 msgid "§a» §g%s: §cDisabled"
-msgstr ""
+msgstr "§a» §g%s: §c已禁用"
 
 #: rank.hasadd
 msgid "%1's rank has been added %2"
@@ -450,79 +450,79 @@ msgstr "請你在 %s 秒後再次嘗試"
 
 #: op.reached
 msgid "You have reached the maximum permission level that op command can give."
-msgstr ""
+msgstr "您已達到 op 指令可以授予的最大權限等級。"
 
 #: op.incorrect
 msgid "You have entered the incorrect password, please try again later."
-msgstr ""
+msgstr "您輸入的密碼不正確，請稍後再試。"
 
 #: op.opgain
 msgid "You have gained matrix admin permission through operator permission."
-msgstr ""
+msgstr "您已透過操作員權限取得 Matrix 管理員權限。"
 
 #: op.pwgain
 msgid "You have gained matrix admin permission through security password."
-msgstr ""
+msgstr "您已透過安全密碼取得 Matrix 管理員權限。"
 
 #: op.pwtips
 msgid "We have detected that you haven't set-up your password. To increase the security of your realm or server, you can set your password through 'setpassword <new password> <confirm password>' command."
-msgstr ""
+msgstr "我們偵測到您尚未設定密碼。為了提高 Realm 或伺服器的安全性, 您可以透過「setpassword <新密碼> <確認密碼>」指令設定密碼。"
 
 #: op.notop
 msgid "Operator permission is required when password is disabled. Use command '/function verify/operator' to verfiy your operator permission."
-msgstr ""
+msgstr "禁用密碼時需要操作員許可。使用命令“/function verify/operator”來驗證您的操作員權限。"
 
 #: deop.sucess
 msgid "You have removed matrix admin permission from yourself."
-msgstr ""
+msgstr "您已刪除自己的 Matrix 管理員權限。"
 
 #: setadmin.has
 msgid "%2 has changed %1's admin permission to %3"
-msgstr ""
+msgstr "%2 已將 %1 的管理員權限變更為 %3"
 
 #: setadmin.notenough
 msgid "Not enough permission. You should have at least %1 permission to give a permission level of %2"
-msgstr ""
+msgstr "沒有足夠的權限。您應至少擁有 %1 權限才能授予 %2 權限級別"
 
 #: setadmin.outofrange
 msgid "The permission level that you can set should be between 0 and 3"
-msgstr ""
+msgstr "您可以設定的權限等級應介於 0 和 3 之間"
 
 #: setadmin.toolow
 msgid "The permission level which is valid should be at least 0. If you are trying to remove someone from admin permission, use 'deladmin <player>' instead."
-msgstr ""
+msgstr "有效的權限等級應至少為 0。如果您嘗試從管理員權限中刪除某人, 請改用「deladmin <玩家>」。"
 
 #: setadmin.toohigh
 msgid "The target has a permission level higher than you, you cannot determine the target's permission level."
-msgstr ""
+msgstr "目標的權限等級比您高，您無法確定目標的權限等級。"
 
 #: setpassword.different
 msgid "The new password and confirm password are different. Please try again."
-msgstr ""
+msgstr "新密碼和確認密碼不同。請再試一次。"
 
 #: setpassword.changed
 msgid "The password has been changed, please don't forget your new password."
-msgstr ""
+msgstr "密碼已更改，請不要忘記新密碼。"
 
 #: clearpassword.ok
 msgid "The password has been cleared"
-msgstr ""
+msgstr "密碼已清除"
 
 #: deladmin.has
 msgid "%2 has removed %1's admin permission"
-msgstr ""
+msgstr "%2 已刪除 %1 的管理員權限"
 
 #: deladmin.notenough
 msgid "Not enough permission. You cannot remove someone from admin permission if you have lower permission level than the target."
-msgstr ""
+msgstr "沒有足夠的權限。如果您的權限等級低於目標，則無法從管理員權限中刪除某人。"
 
 #: deladmin.none
 msgid "The target has no admin permission"
-msgstr ""
+msgstr "目標沒有管理員權限"
 
 #: deladmin.lockdown
 msgid "You cannot remove someone from matrix admin permission when the server is in lockdown mode"
-msgstr ""
+msgstr "當伺服器處於鎖定模式時，您無法從 Matrix 管理員權限中刪除某人"
 
 #: showallrank.has
 msgid "Show all rank has been set to %s"
@@ -562,7 +562,7 @@ msgstr "解禁隊列"
 
 #: toggle.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr ""
+msgstr "該模組已是 %sd"
 
 #: about.version
 msgid "Version"
@@ -598,7 +598,7 @@ msgstr "你現在消失了"
 
 #: border.outside
 msgid "You cannot access a location which is outside the world border."
-msgstr "You cannot access a location which is outside the world border."
+msgstr "您無法存取世界邊界之外的位置。"
 
 #: border.reached
 msgid "You cannot access that location, you have reached the world border."
@@ -614,7 +614,7 @@ msgstr "你已成功驗證"
 
 #: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
-msgstr ""
+msgstr "您正在嘗試打開一個實驗模組，這可能會導致錯誤和誤報！請使用“%1toggle %2 force”來啟用它"
 
 #: adminchat.adminchat
 msgid "adminchat"
@@ -694,15 +694,15 @@ msgstr "聊天限制器的 %1 已被設定到 %2"
 
 #: help.header
 msgid "The help pages for command of Matrix AntiCheat, if you want to learn more about how to use our anticheat, please visit website page §e%s"
-msgstr ""
+msgstr "Matrix AntiCheat 指令的說明頁面, 如果您想了解更多關於如何使用我們的反作弊, 請造訪網站頁面 §e%s"
 
 #: help.page
 msgid "§7--- Showing help page §e%1 §7of §e%2 §7(%3help <page>) ---"
-msgstr ""
+msgstr "§7--- 顯示幫助頁面 §e%1 §7of §e%2 §7(%3help <page>) ---"
 
 #: help.pageerr
 msgid "Page %s does not exist"
-msgstr ""
+msgstr "頁面 %s 不存在"
 
 #: ui.closechat
 msgid "Close the chat to open the following ui."
@@ -722,7 +722,7 @@ msgstr "你已經指明該數值是一個數字, 但是你的數值不是一個�
 
 #: config.nab
 msgid "You have stated that the value is a boolean, but your value is not in a range of true, false and undefined"
-msgstr ""
+msgstr "您已聲明該值是布林值，但您的值不在 true、false 和 undefined 範圍內"
 
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
@@ -734,19 +734,19 @@ msgstr "成功設置 '%1' 到 '%2'"
 
 #: packetlogger.add
 msgid "You have been given the packet logger permission"
-msgstr ""
+msgstr "您已獲得資料包記錄器權限"
 
 #: packetlogger.remove
 msgid "You have removed the packet logger permission"
-msgstr ""
+msgstr "您已刪除資料包記錄器權限"
 
 #: setprefix.set
 msgid "You have set the prefix to %s"
-msgstr ""
+msgstr "您已將前綴設為 %s"
 
 #: setprefix.reset
 msgid "You have reset the prefix to %s"
-msgstr ""
+msgstr "您已將前綴重設為 %s"
 
 #: target.selfselect
 msgid "You can't select yourself as the target."
@@ -794,104 +794,104 @@ msgstr "未知"
 
 #: acess.itemadmin
 msgid "You need to be an admin to use this item!"
-msgstr ""
+msgstr "您需要成為管理員才能使用此項目！"
 
 #: report.cooldown
 msgid "Report command is on cooldown, %s seconds remaining"
-msgstr ""
+msgstr "報告命令正在冷卻，還剩 %s 秒"
 
 #: warn.reset
 msgid "%s's warn has been reset."
-msgstr ""
+msgstr "%s 的警告已重設。"
 
 #: warn.first
 msgid "%s has been warned, this is the first warning."
-msgstr ""
+msgstr "%s 已收到警告，這是第一次警告。"
 
 #: warn.second
 msgid "%s has been warned again, this is the second warning."
-msgstr ""
+msgstr "%s 再次受到警告，這是第二次警告。"
 
 #: warn.third
 msgid "%s has been given the third warning."
-msgstr ""
+msgstr "%s 已收到第三次警告。"
 
 #: warn.for
 msgid "%1 has been warned for %2 time(s)."
-msgstr ""
+msgstr "%1 已被警告 %2 次。"
 
 #: warn.final
 msgid "%1 has been given the final warning."
-msgstr ""
+msgstr "%1 已收到最後警告。"
 
 #: warn.reached
 msgid "%1 has reached the maximum amount of warnings."
-msgstr ""
+msgstr "%1 已達到警告的最大數量。"
 
 #: db.gen
 msgid "Generated %s confuse scoreboard(s)."
-msgstr ""
+msgstr "已產生 %s 個混淆記分板。"
 
 #: db.suc
 msgid "Sucessfully recover the data of config"
-msgstr ""
+msgstr "成功恢復config數據"
 
 #: db.delun
 msgid "The data of the backup has been deleted unexpectedly."
-msgstr ""
+msgstr "備份的資料被意外刪除。"
 
 #: configdb.autocommit
 msgid "Please disable auto-commit to use this command."
-msgstr ""
+msgstr "請停用自動提交才能使用此命令。"
 
 #: configdb.autorecover
 msgid "Auto recover is enabled, please disable it to use this command."
-msgstr ""
+msgstr "自動恢復已啟用，請停用它才能使用此命令。"
 
 #: configdb.commit
 msgid "Sucessfully commit the changes to config database"
-msgstr ""
+msgstr "成功提交對配置資料庫的更改"
 
 #: configdb.recover
 msgid "Sucessfully recover the data of config from config database"
-msgstr ""
+msgstr "成功從配置資料庫恢復配置數據"
 
 #: invof.open
 msgid "Close the chat and open the inventory to manage the inventory of the selected player."
-msgstr ""
+msgstr "關閉聊天並打開庫存來管理所選玩家的庫存。"
 
 #: directaction.success
 msgid "%1 has scuessfully finished the direct action to %2"
-msgstr ""
+msgstr "%1 已成功完成對 %2 的直接操作"
 
 #: runcommand.banned
 msgid "You cannot run a banned command."
-msgstr ""
+msgstr "您不能執行被禁止的命令。"
 
 #: runcommand.failed
 msgid "Failed to run the command."
-msgstr ""
+msgstr "無法運行命令。"
 
 #: runcommand.success
 msgid "Sucessfully run the command."
-msgstr ""
+msgstr "成功運行命令。"
 
 #: gm.success
 msgid "Sucessfully changed the gamemode to %s"
-msgstr ""
+msgstr "已成功將遊戲模式改為 %s"
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
-msgstr ""
+msgstr "§r§l§bMatrix §eUI面板§r"
 
 #: item.matrix.modstick
 msgid "§r§l§bMatrix §eModStick§r"
-msgstr ""
+msgstr "§r§l§bMatrix §eModStick§r"
 
 #: action.hint.exit.r4isen1920_invsee:inventory
 msgid "Tap the §lInventory button§r to open their Inventory"
-msgstr ""
+msgstr "點擊§l庫存按鈕§r打開他們的庫存"
 
 #: action.hint.exit.console.r4isen1920_invsee:inventory
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
-msgstr ""
+msgstr "按 §l:_input_key.inventory:§r 開啟他們的庫存"
