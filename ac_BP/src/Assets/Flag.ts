@@ -6,6 +6,7 @@ import { sendErr } from "../Functions/chatModel/CommandHandler";
 import { saveLog } from "../Functions/moderateModel/log";
 interface Modules {
     id: string;
+    configId: string;
     referencedFlags: number;
     maxFlags: number;
     instantPunishment: boolean;
@@ -16,6 +17,7 @@ interface Modules {
 interface FlagData {
     sus: number;
     flagComponent: string[];
+    configComponent: string[];
     flagVL: { [key: string]: number };
     lastValidTime: number;
 }
@@ -32,6 +34,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         ({
             sus: 0,
             flagComponent: [],
+            configComponent: [],
             flagVL: {},
             lastValidTime: Date.now(),
         } as FlagData);
@@ -53,13 +56,14 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
     data.flagVL[modules.id] ??= 0;
     data.flagVL[modules.id]++;
     data.flagComponent.push(modules.id);
+    data.configComponent.push(modules.configId);
     if (modules.acceptTotal) {
         data.sus += 1 / modules.referencedFlags;
         if (data.sus >= config.autoPunishment.maxSusValue) {
-            const moduleOrder = Object.entries(getPercentageComponent(data.flagComponent, modules.maxFlags));
-            moduleOrder.sort((a, b) => b[1] - a[1]);
-            const maxPercentageModule = moduleOrder[0][0];
-            const suggestedPunishment = ((config as any)[maxPercentageModule]?.modules as Modules)?.bestPunishment ?? "tempkick";
+            const configOrder = Object.entries(getPercentageComponent(data.configComponent, data.flagComponent.length));
+            configOrder.sort((a, b) => b[1] - a[1]);
+            const maxPercentageConfig = configOrder[0][0];
+            const suggestedPunishment = ((config as any)[maxPercentageConfig]?.modules as Modules)?.bestPunishment ?? "tempkick";
             const flagMessage = getFlagMessage(player.name, "Flag Handler [Total]", data.flagComponent, punishmentMaps[suggestedPunishment]);
             flagModeSelector(config.flagMode, player.name).forEach((target) => {
                 target.sendMessage(flagMessage);
