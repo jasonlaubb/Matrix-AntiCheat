@@ -9,7 +9,7 @@ msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API
 msgstr "§7§¶Minecraft Bedrock向け究極のアンチチートソリューション §c(Beta-APIが必要です)"
 
 #: disconnectionScreen.unexpectedPacket
-msgid "§bMatrix §7> §cYou have been temp-kicked.§r"
+msgid "§bMatrix §7> §cYou have been disconnected from the game expectly.§r"
 msgstr "§bMatrix §7> §c一時的にキックされました。§r"
 
 #: json.packet
@@ -25,7 +25,7 @@ msgid "Matrix has been completely initialized in %s ms"
 msgstr ""
 
 #: function.gainop
-msgid "§bMatrix §7> §gYou have verified your operator permission, use chsr command '<prefix>op' directly to get the matrix admin permission"
+msgid "§bMatrix §7> §gYou have verified your operator permission, use chat command '<prefix>op' directly to get the matrix admin permission"
 msgstr ""
 
 #: function.alreadyop
@@ -72,8 +72,8 @@ msgstr "§gサポートサーバー: §e%s"
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4/%5§7]§r"
 msgstr "%1§g が不正行為 §4%2§r を試みました §7[Type %3§7] §7[§dx%4§7]§r"
 
-#: flag.style2
-msgid "%1§7 has failed §c%2 (%3) (%6) x%4/%5"
+#: object.detected
+msgid "§bMatrix §7> §7Object Detected.	Object: §e%1§r§7	Type: §e%2	§7Components: §e%3	§7Automatic slove: §e%4§r"
 msgstr ""
 
 #: ui.title
@@ -97,7 +97,7 @@ msgid "Exit"
 msgstr "終了"
 
 #: ui.nogaoadmin
-msgid "Oops, moderate a player with ui is not supported, please use command instead."
+msgid "Oops, moderate a player with admin permission with ui is not supported, please use command instead."
 msgstr ""
 
 #: ui.selectonline

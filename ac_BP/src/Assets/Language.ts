@@ -20,7 +20,7 @@ export type Translate =
     | "function.version.title"
     | "function.version.dsc"
     | "flag.style"
-    | "flag.style2"
+    | "object.detected"
     | "ui.title"
     | "ui.itemui"
     | "ui.moderateplayer"
