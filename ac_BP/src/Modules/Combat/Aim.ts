@@ -1,7 +1,8 @@
 import { Player, system } from "@minecraft/server";
-import { flag, toFixed } from "../../Assets/Util";
+import { toFixed } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules";
 import { DisableTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 /**
  * @author jasonlaubb && RaMiGamerDev
  * @description Detect the suspicious aiming
@@ -57,7 +58,7 @@ function antiAim(config: configi, player: Player) {
     if ((rotationX == toFixed(rotationX, 2) && (rotationX != 0 || (rotationX == 0 && rotSpeedY > 1))) || (rotationY == toFixed(rotationY, 2) && (rotationY != 0 || (rotationY == 0 && rotSpeedX > 0)))) {
         data.aimAFlags++;
         if (data.aimAFlags > 1 || !((rotationX == 0 && rotSpeedY > 1) || (rotationY == 0 && rotSpeedX > 1))) {
-            flag(player, "Aim", "A", config.antiAim.maxVL, config.antiAim.punishment, [">RotationX" + ":" + rotationX, ">RotationY" + ":" + rotationY]);
+            flag(player, config.antiAim.modules, "A")
             flagged = true;
             data.aimAFlags = 0;
         }
@@ -66,7 +67,7 @@ function antiAim(config: configi, player: Player) {
     if (((rotSpeedX > 0.0001 && rotSpeedX < 1 && (rotSpeedY > 0.7 || rotSpeedY < 0.1)) || (rotSpeedY > 0.0001 && rotSpeedY < 1 && (rotSpeedX > 0.7 || rotSpeedX < 0.1))) && !(rotSpeedX > 7 || rotSpeedY > 14)) {
         data.aimBFlags++;
         if (data.aimBFlags >= 20) {
-            flag(player, "Aim", "B", config.antiAim.maxVL, config.antiAim.punishment, [">RotSpeedX" + ":" + rotSpeedX, ">RotSpeedY" + ":" + rotSpeedY]);
+            flag(player, config.antiAim.modules, "B")
             data.aimBFlags = 0;
             flagged = true;
         }
@@ -75,7 +76,7 @@ function antiAim(config: configi, player: Player) {
     if ((lastRotSpeedY - rotSpeedY > 0 && data.lastRotDifferent < 0) || (lastRotSpeedY - rotSpeedY < 0 && data.lastRotDifferent > 0)) {
         data.vibrateRotContinue++;
         if (data.vibrateRotContinue >= 15) {
-            flag(player, "Aim", "E", config.antiAim.maxVL, config.antiAim.punishment, [">RotSpeedX" + ":" + rotSpeedX, ">RotSpeedY" + ":" + rotSpeedY]);
+            flag(player, config.antiAim.modules, "C")
             data.vibrateRotContinue = 0;
             flagged = true;
         }

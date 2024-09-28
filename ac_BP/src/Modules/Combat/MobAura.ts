@@ -1,8 +1,7 @@
 import { Dimension, Entity, EntityHitEntityAfterEvent, Player, Vector3, world } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
 import MathUtil from "../../Assets/MathUtil";
-import { flag } from "../../Assets/Util";
-
+import flag from "../../Assets/flag";
 /**
  * @author jasonlaubb
  * @description Strongest Anti-Aura for Minecrft Bedrock, bypass any-type of anti bot hacks
@@ -11,7 +10,7 @@ import { flag } from "../../Assets/Util";
 async function auraCheck(config: configi, { damagingEntity, hitEntity: dammy }: EntityHitEntityAfterEvent) {
     const player = damagingEntity as Player;
     if (isDammy(dammy, player.id)) {
-        playerHitDammy(player, config, dammy.location.y);
+        playerHitDammy(player, config);
     } else {
         playerStartCombat(player, config);
     }
@@ -50,7 +49,7 @@ interface AuraData {
     amount: number;
 }
 const auraData = new Map<string, AuraData>();
-function playerHitDammy(player: Player, config: configi, dammyY: number) {
+function playerHitDammy(player: Player, config: configi) {
     const now = Date.now();
     const data = auraData.get(player.id) ?? {
         firstHit: now,
@@ -63,7 +62,7 @@ function playerHitDammy(player: Player, config: configi, dammyY: number) {
     }
     data.amount++;
     if (data.amount >= config.antiMobAura.minHitRequired) {
-        flag(player, "Mob Aura", "A", config.antiMobAura.maxVL, config.antiMobAura.punishment, ["distanceY:" + (dammyY - player.location.y).toFixed(2)]);
+        flag(player, config.antiMobAura.modules, "A");
     }
     auraData.set(player.id, data);
     // Prevent the crash (max 3 dammy entity)

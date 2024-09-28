@@ -11,7 +11,7 @@ interface Modules {
     instantPunishment: boolean;
     acceptTotal: boolean;
     flagValidationTime: number;
-    bestPunishment: "tempkick" | "kick" | "despawn" | "tempban" | "ban";
+    bestPunishment: string;
 }
 interface FlagData {
     sus: number;
@@ -24,7 +24,7 @@ const flagData = new Map<string, FlagData>()
  * @author jasonlaubb
  * @description Unique flag handler
  */
-export function flag(player: Player, modules: Modules, type: Type = "A") {
+export default function (player: Player, modules: Modules, type: Type = "A") {
     if (!(player instanceof Player) || isAdmin(player)) return;
     const config = c();
     const data = flagData.get(player.id) ?? {
@@ -110,7 +110,7 @@ const punishmentMaps: { [key: string]: string } = {
     "tempban": "Ban [Temp]",
     "ban": "Ban [Classic]",
 }
-function applyPunishment (player: Player, punishment: "tempkick" | "kick" | "despawn" | "tempban" | "ban") {
+function applyPunishment (player: Player, punishment: string) {
     const config = c();
     switch (punishment) {
         case "tempkick": {

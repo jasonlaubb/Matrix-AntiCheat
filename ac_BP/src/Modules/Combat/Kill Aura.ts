@@ -1,10 +1,11 @@
 import { world, system, Player, Vector3, Entity, EntityHitEntityAfterEvent, EntityHurtAfterEvent, EntityDamageCause } from "@minecraft/server";
-import { flag, isAdmin, getPing, isSpawning, toFixed } from "../../Assets/Util.js";
+import { isAdmin, getPing, isSpawning } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags, DisableTags } from "../../Data/EnumData.js";
 import { isSpikeLagging } from "../../Assets/Public.js";
 import { Type } from "../../Assets/Util.js";
+import flag from "../../Assets/flag.js";
 import MathUtil from "../../Assets/MathUtil.js";
 
 /**
@@ -48,7 +49,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
     if (getPing(player) < 4 && playerHitEntity.length > config.antiKillAura.maxEntityHit) {
         data.hitLength = [];
         //A - false positive: very low, efficiency: high
-        flag(player, "Kill Aura", "A", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["HitLength" + ":" + playerHitEntity.length]);
+        flag(player, config.antiKillAura.modules, "A");
         flagged = true;
     }
 
@@ -65,7 +66,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         //if the angle is higher than the max angle, flag the player
         if (!isSpikeLagging(player) && angle > config.antiKillAura.minAngle && rotationFloat < 79 && !(player.threwTridentAt && Date.now() - player.threwTridentAt < 3000)) {
             //B - false positive: low, efficiency: mid
-            flag(player, "Kill Aura", "B", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + `${angle.toFixed(2)}°`]);
+            flag(player, config.antiKillAura.modules, "B");
             flagged = true;
         }
 
@@ -75,7 +76,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         if (distance > limitOfXZ && velocity >= 0) {
             const lastflag = data.lastFlag;
             if (lastflag && Date.now() - lastflag < 4000) {
-                flag(player, "Kill Aura", "C", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["distance" + ":" + distance.toFixed(2), "Limit" + ":" + limitOfXZ.toFixed(2)]);
+                flag(player, config.antiKillAura.modules, "C");
                 flagged = true;
             }
             data.lastFlag = Date.now();
@@ -92,7 +93,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         }*/
             // bad packet -w-
             if (player.isSleeping) {
-                flag(player, "Kill Aura", "E", config.antiKillAura.maxVL, config.antiKillAura.punishment, undefined);
+                flag(player, config.antiKillAura.modules, "E");
                 flagged = true;
             }
         } else {
@@ -110,7 +111,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
                         const now = Date.now();
                         if (now - data.lastFlagK < 3000) {
                             if (!config.antiKillAura.silentData) flagged = true;
-                            flag(player, "Kill Aura", "K", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Case:" + situration.toString()]);
+                            flag(player, config.antiKillAura.modules, "K");
                         }
                         data.lastFlagK = now;
                     }
@@ -198,19 +199,19 @@ function intickEvent(config: configi, player: Player) {
     //killaura/F check for head rotation
     if ((data.kAFlags as number) >= 40) {
         isDetected = true;
-        flag(player, "Kill Aura", "F", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["Angle" + ":" + toFixed(horizontalAngle, 5, true)]);
+        flag(player, config.antiKillAura.modules, "F");
         data.kAFlags = 0;
     }
     //killaura/G check for instant rotation to the target
     if (rotatedMove == 0 && data.kAFlags == "G" && verticalRotation != 0) {
         isDetected = true;
-        flag(player, "Kill Aura", "G", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["RotatedMove:" + toFixed(rotatedMove, 5, true)]);
+        flag(player, config.antiKillAura.modules, "G");
         data.kAFlags = 0;
     }
     //killaura/H check for smooth y Pitch movement
     if (data.invalidPitch >= 20) {
         isDetected = true;
-        flag(player, "Kill Aura", "H", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["PitchDifferent:" + toFixed(yPitch - data.lastPitch, 5, true)]);
+        flag(player, config.antiKillAura.modules, "H");
         data.invalidPitch = 0;
     }
     //killaura/I check for if the player rotation can be divided by 1
@@ -223,7 +224,7 @@ function intickEvent(config: configi, player: Player) {
         ((rotatedMove > 0 && verticalRotation == 0) || verticalRotation != 0)
     ) {
         isDetected = true;
-        flag(player, "Kill Aura", "I", config.antiKillAura.maxVL, config.antiKillAura.punishment, ["PitchDifferent:" + toFixed(yPitch - data.lastPitch, 5, true)]);
+        flag(player, config.antiKillAura.modules, "I");
     }
     if (isDetected) {
         player.addTag(DisableTags.pvp);

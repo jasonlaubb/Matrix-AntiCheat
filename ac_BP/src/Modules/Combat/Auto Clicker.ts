@@ -1,5 +1,5 @@
 import { world, system, Player, EntityHitEntityAfterEvent } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util.js";
+import { isAdmin } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { tps } from "../../Assets/Public.js";
 import { registerModule, configi } from "../Modules.js";
@@ -25,8 +25,6 @@ function antiAutoClicker(config: configi, player: Player) {
     //player.runCommand(`title ${player.name} actionbar ${cps} cps`);
     // If the cps is higher than the max clicks per second, flag the player
     if (!player.hasTag(DisableTags.pvp) && tps.getTps()! > 12 && cps > config.antiAutoClicker.maxClicksPerSecond) {
-        // A - false positive: very low, efficiency: high
-        flag(player, "Auto Clicker", "A", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Click Per Second" + ":" + cps.toFixed(0)]);
         player.addTag(DisableTags.pvp);
         clickData.delete(id);
         system.runTimeout(() => {
@@ -60,7 +58,6 @@ function antiAutoClickerB(config: configi, player: Player) {
         // player.sendMessage(currentIntervalLevel.toFixed(2));
         if (currentIntervalLevel < config.antiAutoClicker.minInterval) {
             if (now - data.lastflag < 9000) {
-                flag(player, "Auto Clicker", "B", config.antiAutoClicker.maxVL, config.antiAutoClicker.punishment, ["Interval:" + currentIntervalLevel.toFixed(2)]);
                 player.addTag(DisableTags.pvp);
                 system.runTimeout(() => {
                     player.removeTag(DisableTags.pvp);

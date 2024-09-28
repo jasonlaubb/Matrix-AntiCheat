@@ -1,8 +1,9 @@
 import { Entity, EntityDamageCause, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, ItemDurabilityComponent, Player, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
-import { isAdmin, flag } from "../../Assets/Util";
+import { isAdmin } from "../../Assets/Util";
 import { MinecraftEntityTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags, MatrixUsedTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 
 /**
  * @author jasonlaubb
@@ -20,7 +21,7 @@ function intickEvent(config: configi, player: Player) {
             player.addTag(MatrixUsedTags.disabler);
             system.runTimeout(() => player.removeTag(MatrixUsedTags.disabler), 10);
             player.teleport(player.lastNonGlidingPoint);
-            flag(player, "Disabler", "A", config.antiDisabler.maxVL, config.antiDisabler.punishment, undefined);
+            flag(player, config.antiDisabler.modules, "A");
         }
     } else {
         player.lastNonGlidingPoint = player.location;
@@ -28,10 +29,10 @@ function intickEvent(config: configi, player: Player) {
 }
 
 function doubleEvent(config: configi, damagingEntity: Entity, hurtEntity: Entity) {
-    if (hurtEntity.id == damagingEntity.id) {
+    if (hurtEntity.id == damagingEntity.id && hurtEntity instanceof Player) {
         const location = hurtEntity.location;
         system.run(() => hurtEntity.teleport(location));
-        flag(hurtEntity as Player, "Disabler", "B", config.antiDisabler.maxVL, config.antiDisabler.punishment, undefined);
+        flag(hurtEntity, config.antiDisabler.modules, "B");
     }
 }
 

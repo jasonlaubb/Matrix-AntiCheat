@@ -1,9 +1,7 @@
 import { world, system, Player, GameMode, Vector3, Dimension, Effect, BlockPermutation, RawMessage, RawText } from "@minecraft/server";
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
-import { saveLog } from "../Functions/moderateModel/log";
 import { Translate } from "./Language";
 import Dynamic from "../Functions/Config/dynamic_config";
-import { Action } from "./Action";
 import { MatrixUsedTags } from "../Data/EnumData";
 import MathUtil from "./MathUtil";
 import { SHA256 } from "../node_modules/crypto-es/lib/sha256";
@@ -18,7 +16,6 @@ export {
     rawstr,
     getPing,
     checkBlockAround,
-    flag,
     msToTime,
     isTargetGamemode,
     getGamemode,
@@ -83,14 +80,6 @@ class rawstr {
     }
 }
 
-function formatInformation(arr: string[]) {
-    const formattedArr: string[] = arr.map((item) => {
-        const [key, value, id] = item.split(":");
-        return `§r§c» §7${key}:§9 ${value}${id == undefined ? "" : ":" + id}§r`;
-    });
-    return formattedArr.join("\n");
-}
-
 function checkBlockAround(location: Vector3, blockType: MinecraftBlockTypes, dimension: Dimension): boolean {
     const floorPos: Vector3 = {
         x: Math.floor(location.x),
@@ -109,109 +98,7 @@ function checkBlockAround(location: Vector3, blockType: MinecraftBlockTypes, dim
     return new Set(blocks).has(blockType);
 }
 
-let Vl: any = {};
-
 export type Type = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z";
-
-function flag(player: Player, modules: string, type: Type, maxVL: number, punishment: string | undefined, infos: string[] | undefined) {
-    // Stop entity flag
-    if (player?.name === undefined) return;
-    const config = c();
-    // Skip if the player is in the bypass list
-    if ((config.autoPunishment.bypasslist as string[]).includes(player.id)) return;
-    system.run(() => {
-        Vl[player.id] ??= {};
-        Vl[player.id][modules] ??= 0;
-
-        try {
-            Vl[player.id][modules]++;
-        } catch {}
-
-        const flagMsg = new rawstr(true).tra("flag.style", player.name, modules, type, Vl[player.id][modules], maxVL.toString());
-        if (config.logsettings.logCheatFlag) saveLog("Flag", player.name, `${modules} ${type} (x${Vl[player.id][modules]})`);
-        if (infos !== undefined) flagMsg.str("\n" + formatInformation(infos));
-
-        if (punishment && Vl[player.id][modules] > maxVL && !config.autoPunishment.observationMode) {
-            let punishmentDone = false;
-            const banrun = config.banrun.command;
-            if (config.commands.banrun && banrun.length > 0 && ["kick", "ban"].includes(punishment)) {
-                player.runCommandAsync(banrun as string);
-            } else {
-                switch (punishment) {
-                    case "kick": {
-                        punishmentDone = true;
-                        if (config.logsettings.logCheatPunishment) saveLog("Kick", player.name, `${modules} ${type}`);
-                        Action.kick(player, `${config.autoPunishment.kick.reason} [${modules} ${type}]`, "Matrix AntiCheat");
-                        flagMsg.str("\n§bMatrix §7>§g ").tra("util.formkick", player.name);
-                        break;
-                    }
-                    case "ban": {
-                        punishmentDone = true;
-                        if (config.logsettings.logCheatPunishment) saveLog("Ban", player.name, `${modules} ${type}`);
-                        Action.ban(
-                            player,
-                            `${config.autoPunishment.ban.reason} [${modules} ${type}]`,
-                            "Matrix AntiCheat",
-                            (config.autoPunishment.ban.minutes as number | "forever") == "forever" ? "forever" : Date.now() + config.autoPunishment.ban.minutes * 60000
-                        );
-                        flagMsg.str("\n§bMatrix §7>§g ").tra("util.formban", player.name);
-                        break;
-                    }
-                    case "tempkick": {
-                        punishmentDone = true;
-                        if (config.logsettings.logCheatPunishment) saveLog("TempKick", player.name, `${modules} ${type}`);
-                        // Tempkick the player, espectially for local world.
-                        Action.tempkick(player);
-                        break;
-                    }
-                }
-            }
-            if (punishmentDone) {
-                Vl[player.id][modules] = 0;
-            }
-        }
-        if (config.autoPunishment.silentMode) return;
-        const flagMode = world.getDynamicProperty("flagMode") ?? config.flagMode;
-        switch (flagMode) {
-            case "tag": {
-                const targets = world.getPlayers({ tags: ["matrix:notify"] });
-                targets.forEach((players) => {
-                    if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
-                    players.sendMessage(flagMsg.parse());
-                });
-                break;
-            }
-            case "bypass": {
-                const targets = world.getPlayers({ excludeNames: [player.name] });
-                targets.forEach((players) => {
-                    if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
-                    players.sendMessage(flagMsg.parse());
-                });
-                break;
-            }
-            case "admin": {
-                const allPlayers = world.getAllPlayers();
-                const targets = allPlayers.filter((players) => isAdmin(players));
-                targets.forEach((players) => {
-                    if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
-                    players.sendMessage(flagMsg.parse());
-                });
-                break;
-            }
-            case "none": {
-                break;
-            }
-            default: {
-                world.sendMessage(flagMsg.parse());
-                const targets = world.getAllPlayers();
-                targets.forEach((players) => {
-                    if (config.soundEffect) players.playSound("note.pling", { volume: 1.0, pitch: 3.0 });
-                });
-                break;
-            }
-        }
-    });
-}
 
 function msToTime(ms: number) {
     const seconds = Math.trunc((ms / MathUtil.ms.second) % 60);

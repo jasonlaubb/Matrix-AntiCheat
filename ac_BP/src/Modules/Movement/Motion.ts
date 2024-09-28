@@ -1,9 +1,10 @@
 import { EntityHurtAfterEvent, GameMode, Player, Vector3, world } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
-import { bypassMovementCheck, flag } from "../../Assets/Util";
+import { bypassMovementCheck } from "../../Assets/Util";
 import MathUtil from "../../Assets/MathUtil";
 import { isSpikeLagging } from "../../Assets/Public";
 import { AnimationControllerTags } from "../../Data/EnumData";
+import { flag } from "../../Assets/Flag";
 interface MotionData {
     agoWrap: number;
     previousWrap: number;
@@ -52,7 +53,7 @@ async function checkMotion(config: configi, player: Player) {
         }
         if (data.agoWrap < config.antiMotion.predictionThereshold && data.beforeWrap > config.antiMotion.wrapDistanceThereshold && data.lastWrap == data.beforeWrap && wrapDistance < config.antiMotion.predictionThereshold) {
             player.teleport(data.lastFreezeLocation);
-            flag(player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, ["WrapDistance:" + data.beforeWrap.toFixed(2)]);
+            flag(player, config.antiMotion.modules, "A");
         }
     }
     data.agoWrap = data.previousWrap;

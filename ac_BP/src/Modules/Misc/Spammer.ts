@@ -1,8 +1,9 @@
 import { world, system, ChatSendBeforeEvent } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
+import { isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { AnimationControllerTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 
 /**
  * @author ravriv
@@ -18,8 +19,8 @@ function firstEvent(config: configi, event: ChatSendBeforeEvent) {
     if (player.hasTag(AnimationControllerTags.attackTime)) {
         //A - false positive: very low, efficiency: mid
         if (lf && Date.now() - lf < 3000) {
+            system.run(() => flag(player, config.antiSpammer.modules, "A"));
             event.cancel = true;
-            system.run(() => flag(player, "Spammer", "A", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "AttackTime"]));
         }
         lastFlag.set(player.id, Date.now());
     }
@@ -29,7 +30,7 @@ function firstEvent(config: configi, event: ChatSendBeforeEvent) {
         //B - false positive: mid, efficiency: mid
         if (Date.now() - lf < 3000) {
             event.cancel = true;
-            system.run(() => flag(player, "Spammer", "B", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "UsingItem"]));
+            system.run(() => flag(player, config.antiSpammer.modules, "B"));
         }
         lastFlag.set(player.id, Date.now());
     } else {
@@ -50,7 +51,7 @@ function firstEvent(config: configi, event: ChatSendBeforeEvent) {
             //C - false positive: low, efficiency: high
             if (Date.now() - lf < 3000) {
                 event.cancel = true;
-                system.run(() => flag(player, "Spammer", "C", config.antiSpammer.maxVL, config.antiSpammer.punishment, ["Type" + ":" + "Moving"]));
+                system.run(() => flag(player, config.antiSpammer.modules, "C"));
             }
             lastFlag.set(player.id, Date.now());
         }

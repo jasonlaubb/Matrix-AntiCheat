@@ -1,8 +1,9 @@
 import { world, system, PlayerSpawnAfterEvent, Player, ChatSendAfterEvent } from "@minecraft/server";
 import { FormCancelationReason, ModalFormData } from "@minecraft/server-ui";
-import { flag, c, isAdmin, rawstr } from "../../Assets/Util";
+import { c, isAdmin, rawstr } from "../../Assets/Util";
 import { Action } from "../../Assets/Action";
-import { MatrixUsedTags } from "../../Data/EnumData";
+import { MatrixEvents, MatrixUsedTags } from "../../Data/EnumData";
+import { configi, registerModule } from "../Modules";
 
 /**
  * @author RaMiGanerDev
@@ -10,7 +11,7 @@ import { MatrixUsedTags } from "../../Data/EnumData";
  * It works by making a verification for the player.
  */
 
-function playerSpawn({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
+async function playerSpawn(_config: configi, { initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
     if (!spawn) return;
     if (isAdmin(player)) {
         player.verified = true;
@@ -26,7 +27,7 @@ function playerSpawn({ initialSpawn: spawn, player }: PlayerSpawnAfterEvent) {
     });
 }
 
-function antiBot() {
+function antiBot () {
     const players = world.getPlayers({ excludeTags: ["matrix:verified"] });
     const now = Date.now();
     const config = c();
@@ -75,7 +76,7 @@ function antiBot() {
                             }
                             return;
                         } else if (Date.now() - player.verifyClickSpeed <= config.antiBot.clickSpeedThershold * 50) {
-                            flag(player, "Bot", "A", config.antiBot.maxVL, config.antiBot.punishment, ["Delay" + ":" + (now - player.verifyClickSpeed)]);
+                            player.triggerEvent(MatrixEvents.tempkick);
                             return;
                         }
                         player.sendMessage(new rawstr(true, "a").tra("bot.ok").parse());
@@ -92,29 +93,20 @@ function antiBot() {
     }
 }
 
-function chatSend({ sender: player }: ChatSendAfterEvent) {
-    const config = c();
+async function chatSend(_config: configi, { sender: player }: ChatSendAfterEvent) {
     if (player.notVerified && player.verifying) {
         if (isAdmin(player)) return;
-        flag(player, "Bot", "B", config.antiBot.maxVL, config.antiBot.punishment, undefined);
+        player.triggerEvent(MatrixEvents.tempkick);
     }
 }
 
-let id: number;
-
-export default {
-    enable() {
-        world.antiBotEnabled = true;
-        const players = world.getAllPlayers();
-        players.forEach((player) => (player.verified = true));
-        id = system.runInterval(antiBot, 5);
-        world.afterEvents.playerSpawn.subscribe(playerSpawn);
-        world.afterEvents.chatSend.subscribe(chatSend);
-    },
-    disable() {
-        world.antiBotEnabled = undefined!;
-        system.clearRun(id);
-        world.afterEvents.playerSpawn.unsubscribe(playerSpawn);
-        world.afterEvents.chatSend.unsubscribe(chatSend);
-    },
-};
+registerModule("antiBot", false, [], {
+    worldSignal: world.afterEvents.playerSpawn,
+    then: playerSpawn,
+},{
+    worldSignal: world.afterEvents.chatSend,
+    then: chatSend,
+},{
+    tickInterval: 20,
+    onTick: async (_config: configi) => antiBot()
+})

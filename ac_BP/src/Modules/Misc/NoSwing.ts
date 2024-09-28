@@ -5,8 +5,9 @@
 import { EntityHitEntityAfterEvent, Player, PlayerPlaceBlockAfterEvent, system, world } from "@minecraft/server";
 import { AnimationControllerTags, DisableTags } from "../../Data/EnumData";
 import { configi, registerModule } from "../Modules";
-import { flag, isAdmin, onceTrue } from "../../Assets/Util";
+import { isAdmin, onceTrue } from "../../Assets/Util";
 import { sendErr } from "../../Functions/chatModel/CommandHandler";
+import flag from "../../Assets/flag";
 const isCheckingStatus = new Map<string, boolean>();
 async function onAction(config: configi, player: Player) {
     if (isAdmin(player) || isCheckingStatus.get(player.id) || player.hasTag(DisableTags.pvp)) return;
@@ -15,7 +16,6 @@ async function onAction(config: configi, player: Player) {
 
     // Check if player is not swinging
     if (!isSwing) {
-        flag(player, "No Swing", "A", config.antiNoSwing.maxVL, config.antiNoSwing.punishment, ["ToleranceTicks:" + config.antiNoSwing.faultToleranceTicks]);
         const playerHasPvpDisable = player.hasTag(DisableTags.pvp);
         const playerHasPlaceDisable = player.hasTag(DisableTags.place);
         if (playerHasPvpDisable && playerHasPlaceDisable) return;
@@ -25,6 +25,8 @@ async function onAction(config: configi, player: Player) {
             if (!playerHasPvpDisable) player.removeTag(DisableTags.pvp);
             if (!playerHasPlaceDisable) player.removeTag(DisableTags.place);
         }, config.antiNoSwing.timeout);
+
+        flag(player, config.antiNoSwing.modules, "A");
     }
 }
 

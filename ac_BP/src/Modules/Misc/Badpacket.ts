@@ -2,7 +2,8 @@ import { GameMode, Player } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { flag, onceTrue } from "../../Assets/Util";
+import { onceTrue } from "../../Assets/Util";
+import flag from "../../Assets/flag";
 
 async function antiBadPacket(config: configi, player: Player) {
     const sprint = player.isSprinting;
@@ -11,7 +12,7 @@ async function antiBadPacket(config: configi, player: Player) {
         const validSprint = await onceTrue(player, isValidSprint, config.antiBadpacket.faultToleranceTicks);
         if (!validSprint) {
             player.teleport(loc);
-            flag(player, "Badpacket", "A", config.antiBadpacket.maxVL, config.antiBadpacket.punishment, ["FaultToleranceTicks:" + config.antiBadpacket.faultToleranceTicks]);
+            flag(player, config.antiBadpacket.modules, "A");
         }
     }
 }
