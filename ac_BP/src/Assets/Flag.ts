@@ -20,6 +20,10 @@ interface FlagData {
     lastValidTime: number;
 }
 const flagData = new Map<string, FlagData>()
+/**
+ * @author jasonlaubb
+ * @description Unique flag handler
+ */
 export function flag(player: Player, modules: Modules, type: Type = "A") {
     if (!(player instanceof Player) || isAdmin(player)) return;
     const config = c();
@@ -149,4 +153,3 @@ function getPercentageComponent (component: string[], total: number): { [key: st
         amountListing[item] += (1 / total) * 100;
     })
     return amountListing;
-}
