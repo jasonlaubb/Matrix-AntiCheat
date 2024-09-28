@@ -1,8 +1,9 @@
 import { world, system, PlayerPlaceBlockAfterEvent, Vector3, Player, Block } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
+import { isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { AnimationControllerTags, DisableTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 
 /**
  * @author jasonlaubb & RaMiGamerDev
@@ -76,12 +77,12 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     //check if rotation is a number that can be divided by the factor
     if ((rotation.x % factor === 0 || rotation.y % factor === 0) && Math.abs(rotation.x) !== 90) {
         detected = true;
-        flag(player, "Scaffold", "A", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["RotationX:" + `${rotation.x.toFixed(2)}°`, "RotationY:" + `${rotation.y.toFixed(2)}°`]);
+        flag(player, config.antiScaffold.modules, "A");
     }
     //check if the angle is higher than the max angle
     if (angle > config.antiScaffold.maxAngle && Math.hypot(pos1.x - pos2.x, pos1.z - pos2.z) > 1.75 && Math.abs(rotation.x) < 69.5) {
         detected = true;
-        flag(player, "Scaffold", "B", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Angle:" + `${angle.toFixed(2)}°`]);
+        flag(player, config.antiScaffold.modules, "B");
     }
     try {
         const floorPos = { x: Math.floor(pos1.x), y: Math.floor(pos1.y), z: Math.floor(pos1.z) };
@@ -92,7 +93,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
         //check if the rotation is lower than the min rotation and the block is under the player
         if (rotation.x < config.antiScaffold.minRotation && isUnder) {
             detected = true;
-            flag(player, "Scaffold", "C", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["RotationX:" + `${rotation.x.toFixed(2)}°`]);
+            flag(player, config.antiScaffold.modules, "C");
         }
         //diag scaffold check
         //false postive: very low | efficiency: high
@@ -129,7 +130,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
                 data.scaffoldFlags = 0;
                 data.scaffoldFlags2++;
                 if (data.scaffoldFlags2 >= 1) {
-                    flag(player, "Scaffold", "E", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block:" + block.typeId]);
+                    flag(player, config.antiScaffold.modules, "E");
                     detected = true;
                 }
             }
@@ -144,7 +145,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             if (now - data.lastPlace < 200 && now - data.lastPlace >= 100 && Math.abs(data.lastXRot - rotation.x) > 10 && !diagScaffold && player.hasTag(AnimationControllerTags.moving)) {
                 data.scaffoldFlagsF++;
                 if (data.scaffoldFlagsF >= 3) {
-                    flag(player, "Scaffold", "F", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["RotDiff:" + Math.abs(data.lastXRot - rotation.x).toFixed(2)]);
+                    flag(player, config.antiScaffold.modules, "F");
                     data.scaffoldFlagsF = 0;
                     detected = true;
                 }
@@ -153,7 +154,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             if (yLoc > -2.1 && yLoc <= -1 && extender - data.avgExt >= 0.5 && now - data.lastPlace >= 200 && now - data.lastPlace <= 1000) {
                 data.scaffoldFlagsG++;
                 if (data.scaffoldFlagsG >= 3) {
-                    flag(player, "Scaffold", "G", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Height:" + yLoc.toFixed(2), "ExtenderDiff:" + (extender - data.avgExt).toFixed(2)]);
+                    flag(player, config.antiScaffold.modules, "G");
                     data.scaffoldFlagsG = 0;
                     detected = true;
                 }
@@ -162,7 +163,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             if (rotation.x < 50 && extender < 1 && extender > 0 && !player.isOnGround) {
                 data.scaffoldFlagsH++;
                 if (data.scaffoldFlagsH >= 3) {
-                    flag(player, "Scaffold", "H", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`RotationX:${rotation.x.toFixed(2)}`, `Extender:${extender.toFixed(2)}`]);
+                    flag(player, config.antiScaffold.modules, "H");
                     data.scaffoldFlagsH = 0;
                     detected = true;
                 }
@@ -182,7 +183,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             if (data.blockPlace.length > config.antiScaffold.maxBPS && !(player.getEffect(MinecraftEffectTypes.JumpBoost) && player.isJumping) && !player.getEffect(MinecraftEffectTypes.Speed)) {
                 detected = true;
                 data.blockPlace = [];
-                flag(player, "Scaffold", "D", config.antiScaffold.maxVL, config.antiScaffold.punishment, ["Block:" + block.typeId]);
+                flag(player, config.antiScaffold.modules, "D");
             }
         }
     } catch (error) {
@@ -192,13 +193,13 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     }
     if (!block?.isValid()) {
         detected = true;
-        flag(player, "Scaffold", "I", config.antiScaffold.maxVL, config.antiScaffold.punishment, undefined);
+        flag(player, config.antiScaffold.modules, "I");
     }
     //scaffold/K: check for placing 5 or more blocks in one tick
     if (now - data.lastPlace < 75) {
         data.scaffoldFlagsK++;
         if (data.scaffoldFlagsK >= 5) {
-            flag(player, "Scaffold", "K", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`Block:${block.typeId}`]);
+            flag(player, config.antiScaffold.modules, "K");
             data.scaffoldFlagsK = 0;
             detected = true;
         }
@@ -207,7 +208,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
     if (now - data.lastPlace < 175) {
         data.scaffoldFlagsL++;
         if (data.scaffoldFlagsL >= 10) {
-            flag(player, "Scaffold", "L", config.antiScaffold.maxVL, config.antiScaffold.punishment, [`Block:${block.typeId}`]);
+            flag(player, config.antiScaffold.modules, "L");
             data.scaffoldFlagsL = 0;
             detected = true;
         }

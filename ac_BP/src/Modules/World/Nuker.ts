@@ -1,9 +1,10 @@
 import { Block, Player, PlayerBreakBlockBeforeEvent, system, world, ItemStack, ItemEnchantableComponent, GameMode } from "@minecraft/server";
-import { flag, recoverBlockBreak } from "../../Assets/Util";
+import { recoverBlockBreak } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import { configi, registerModule } from "../Modules";
 import { DisableTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 
 const blockBreakData = new Map<string, number[]>();
 
@@ -48,7 +49,7 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, con
             recoverBlockBreak(player.id, 200, player.dimension);
             blockBreakData.delete(player.id);
             if (hasEfficiency <= 2) {
-                flag(player, "Nuker", "A", config.antiNuker.maxVL, config.antiNuker.punishment, ["Block" + ":" + block.typeId]);
+                flag(player, config.antiNuker.modules, "A");
             }
         });
     }

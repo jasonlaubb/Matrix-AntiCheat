@@ -1,9 +1,10 @@
 import { EntityHitBlockAfterEvent, ItemEnchantableComponent, Player, PlayerBreakBlockAfterEvent, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server";
 import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
-import { flag, isAdmin, isTargetGamemode } from "../../Assets/Util";
+import { isAdmin, isTargetGamemode } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
 import { DisableTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 
 /**
  * @author jasonlaubb
@@ -34,7 +35,7 @@ function firstEvent(config: configi, event: PlayerBreakBlockBeforeEvent) {
         event.cancel = true;
         system.run(() => {
             player.addTag(DisableTags.break);
-            flag(player, "Fast Break", "A", config.antiFastBreak.maxVL, config.antiFastBreak.punishment, ["BlockPerSecond" + ":" + breakBPS.toFixed(2)]);
+            flag(player, config.antiFastBreak.modules, "A");
         });
         system.runTimeout(() => {
             player.removeTag(DisableTags.break);

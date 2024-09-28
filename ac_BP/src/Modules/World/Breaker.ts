@@ -1,7 +1,8 @@
 import { Block, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
+import { isAdmin } from "../../Assets/Util";
 import { configi, registerModule } from "../Modules";
 import { DisableTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 //import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 //offset~
@@ -58,7 +59,7 @@ async function AntiBreaker(event: PlayerBreakBlockBeforeEvent, config: configi) 
             system.runTimeout(() => player.removeTag(DisableTags.break), config.antiBreaker.timeout);
             system.run(() => {
                 player.addTag(DisableTags.break);
-                flag(player, "Breaker", "B", config.antiBreaker.maxVL, config.antiBreaker.punishment, ["Type" + ":" + block.typeId]);
+                flag(player, config.antiBreaker.modules, "B");
             });
         }
         lastFlag.set(player.id, Date.now());

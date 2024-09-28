@@ -1,8 +1,9 @@
 import { world, system, Player, Block, Vector3, PlayerPlaceBlockAfterEvent } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
+import { isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { DisableTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 interface TowerData {
     towerBlock: Vector3;
     lastBlockPlace: number;
@@ -69,8 +70,7 @@ async function AntiTower(player: Player, block: Block, config: configi) {
         } else {
             vL.set(player.id, vl + 1);
         }
-
-        flag(player, "Tower", "A", config.antiTower.maxVL, config.antiTower.punishment, ["Delay" + ":" + delay.toFixed(2), "PosDeff" + ":" + playerPosDeff.toFixed(2), "CentreDis" + ":" + playerCentreDis.toFixed(2)]);
+        flag(player, config.antiTower.modules, "A");
     } else {
         vL.delete(player.id);
     }

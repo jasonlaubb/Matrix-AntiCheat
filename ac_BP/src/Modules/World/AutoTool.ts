@@ -1,7 +1,7 @@
 import { world, system, EntityHitBlockAfterEvent, Player, EntityInventoryComponent } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
+import { isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules.js";
-
+import flag from "../../Assets/flag";
 /**
  * @author jasonlaubb
  * @description A simple check to caught slient autotool hacker
@@ -14,7 +14,7 @@ function doubleEvent(config: configi, { damagingEntity: player }: EntityHitBlock
 
     if (player.lastSelectSlot != player.selectedSlotIndex) {
         player.applyDamage(4);
-        flag(player, "Auto Tool", "A", config.antiAutoTool.maxVL, config.antiAutoTool.punishment, undefined);
+        flag(player, config.antiAutoTool.modules, "A");
     }
 }
 
