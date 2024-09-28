@@ -145,7 +145,7 @@ function getFlagMessage(object: string, type: string, component: string[], slove
     uniqueTurner.forEach((item) => {
         string.push(`${item} (${amountListing[item].toFixed(2)}%)`);
     });
-    return new rawstr().tra("object.detected", object, type, uniqueTurner.join(","), slove).parse();
+    return new rawstr().tra("object.detected").tra("object.object", object).tra("object.type", type).tra("object.components", uniqueTurner.join(","), slove).parse();
 }
 
 function getPercentageComponent(component: string[], total: number): { [key: string]: number } {
