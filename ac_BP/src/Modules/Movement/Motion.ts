@@ -4,7 +4,7 @@ import { bypassMovementCheck } from "../../Assets/Util";
 import MathUtil from "../../Assets/MathUtil";
 import { isSpikeLagging } from "../../Assets/Public";
 import { AnimationControllerTags } from "../../Data/EnumData";
-import { flag } from "../../Assets/Flag";
+import flag from "../../Assets/flag";
 interface MotionData {
     agoWrap: number;
     previousWrap: number;

@@ -1,8 +1,7 @@
 import { world, Player, PlayerSpawnAfterEvent, system } from "@minecraft/server";
-import { flag } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules";
 import { Action } from "../../Assets/Action";
-
+import flag from "../../Assets/flag";
 /**
  * @author jasonlaubb
  * @description This check can detect players with illegal names
@@ -14,7 +13,7 @@ async function AntiNameSpoof(config: configi, player: Player, playerName: string
     const matches = playerName.match(/\([1-9]|[1-3][0-9]|40\)/g);
     const absName = matches ? playerName.replace(matches[0], "") : playerName;
     if (absName?.length < 3 || absName?.length > 16) {
-        flag(player, "NameSpoof", "A", 0, config.antiNameSpoof.punishment, ["Type" + ":" + "illegalLength", "Length" + ":" + playerName.length]);
+        flag(player, config.antiNameSpoof.modules, "A");
         system.runTimeout(() => {
             try {
                 Action.tempkick(player);
@@ -43,7 +42,7 @@ async function AntiNameSpoof(config: configi, player: Player, playerName: string
 
         //if the player name is illegal, flag the player
         if (illegalName === true) {
-            flag(player, "NameSpoof", "B", 0, config.antiNameSpoof.punishment, ["Type" + ":" + "illegalRegax"]);
+            flag(player, config.antiNameSpoof.modules, "B");
             system.runTimeout(() => {
                 try {
                     Action.tempkick(player);
@@ -54,7 +53,7 @@ async function AntiNameSpoof(config: configi, player: Player, playerName: string
     }
 
     if (playerName.includes("§") || playerName.includes(`'`) || playerName.includes(`"`)) {
-        flag(player, "NameSpoof", "C", 0, config.antiNameSpoof.punishment, ["Type" + ":" + "include special character"]);
+        flag(player, config.antiNameSpoof.modules, "C");
         system.runTimeout(() => {
             try {
                 Action.tempkick(player);

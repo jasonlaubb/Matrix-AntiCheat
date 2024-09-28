@@ -1,9 +1,9 @@
 import { ItemDurabilityComponent, ItemStack, Player } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
 import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { flag } from "../../Assets/Util";
 import OperatorItemList from "../../Data/OperatorItemList";
 import EducationItemList from "../../Data/EducationItemList";
+import flag from "../../Assets/flag";
 
 function checkIllegalItem(player: Player, item: ItemStack, config: configi): boolean {
     if (config.antiIllegalItem.checkIllegal) {
@@ -11,14 +11,14 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
             // Checks if the item is a vanilla item of Minecraft
             const isVanillaItem = Object.values(MinecraftItemTypes).includes(item.typeId as MinecraftItemTypes);
             if (!isVanillaItem) {
-                flag(player, "Illegal Item", "A", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId]);
+                flag(player, config.antiIllegalItem.modules, "A");
                 return true;
             }
             // Checks if the item has correct durability
             const durability = item.getComponent(ItemDurabilityComponent.componentId);
             if (durability) {
                 if (durability.maxDurability <= durability.damage || durability.damage < 0) {
-                    flag(player, "Illegal Item", "G", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Durability:" + durability.damage]);
+                    flag(player, config.antiIllegalItem.modules, "G");
                     return true;
                 }
             }
@@ -27,13 +27,13 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
         const itemNameLength = item?.nameTag?.length;
         // Checks if the item has vanilla item name length
         if (itemNameLength && (itemNameLength > 64 || itemNameLength < 1)) {
-            flag(player, "Illegal Item", "B", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Length:" + itemNameLength]);
+            flag(player, config.antiIllegalItem.modules, "B");
             return true;
         }
         const itemamount = item.amount;
         // Checks if the item stack amount is valid
         if (itemamount > item.maxAmount || itemamount < 1) {
-            flag(player, "Illegal Item", "C", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Amount:" + itemamount]);
+            flag(player, config.antiIllegalItem.modules, "C");
             return true;
         }
     }
@@ -41,7 +41,7 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
         for (const illegalitem of OperatorItemList) {
             // Search in the database whether the item is illegal
             if (item.matches(illegalitem)) {
-                flag(player, "Illegal Item", "H", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId]);
+                flag(player, config.antiIllegalItem.modules, "H");
                 return true;
             }
         }
@@ -72,14 +72,14 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
                 }
             }
             if (badEnchantlist.length > 0) {
-                flag(player, "Illegal Item", "J", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, ...badEnchantlist]);
+                flag(player, config.antiIllegalItem.modules, "J");
                 return true;
             }
             const commonEnchantList = enchantments.map(({ type: { id } }) => id);
             const uniqueEnchantList = new Set(enchantments);
             // Checks if the item contains duplicate enchantments
             if (commonEnchantList.length != uniqueEnchantList.size) {
-                flag(player, "Illegal Item", "K", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Differences:" + (commonEnchantList.length - uniqueEnchantList.size)]);
+                flag(player, config.antiIllegalItem.modules, "K");
                 return true;
             }
         }
@@ -88,7 +88,7 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
     if (config.antiIllegalItem.checkEducationalItem) {
         // Checks if the item is an educational item
         if (EducationItemList.includes(item.typeId)) {
-            flag(player, "Illegal Item", "L", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId]);
+            flag(player, config.antiIllegalItem.modules, "L");
             return true;
         }
     }
@@ -96,18 +96,18 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
         const itemlore = item.getLore();
         // Checks if the item contains lore which is not vanilla
         if (itemlore.length > 0) {
-            flag(player, "Illegal Item", "D", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Lore:" + (itemlore[0].length > 8 ? itemlore[0].slice(0, 8) + "..." : itemlore[0])]);
+            flag(player, config.antiIllegalItem.modules, "D");
             return true;
         }
         const adventurePlaceLength = [...item.getCanDestroy(), ...item.getCanPlaceOn()].length;
         // Checks if the item contains extra NBT which is not vanilla
         if (adventurePlaceLength > 0) {
-            flag(player, "Illegal Item", "E", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId, "Length:" + adventurePlaceLength]);
+            flag(player, config.antiIllegalItem.modules, "E");
             return true;
         }
         // Checks if the item keep on death
         if (item?.keepOnDeath) {
-            flag(player, "Illegal Item", "F", config.antiIllegalItem.maxVL, config.antiIllegalItem.punishment, ["Item:" + item.typeId]);
+            flag(player, config.antiIllegalItem.modules, "F");
             return true;
         }
     }

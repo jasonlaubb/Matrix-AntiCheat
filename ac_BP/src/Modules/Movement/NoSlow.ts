@@ -1,7 +1,8 @@
 import { Player, Effect, Vector3, GameMode } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { bypassMovementCheck, flag } from "../../Assets/Util";
+import { bypassMovementCheck } from "../../Assets/Util";
 import { configi, registerModule } from "../Modules";
+import flag from "../../Assets/flag";
 
 function getSpeedIncrease(speedEffect: Effect | undefined) {
     if (speedEffect === undefined) return 0;
@@ -63,7 +64,7 @@ async function AntiNoSlow(player: Player, config: configi, now: number) {
                 const lastFlag = lastflag.get(player.id);
                 if (lastFlag && now - lastFlag < 3500) {
                     //A - false positive: very low, efficiency: high
-                    flag(player, "NoSlow", "A", config.antiNoSlow.maxVL, config.antiNoSlow.punishment, ["playerSpeed" + ":" + playerSpeed.toFixed(2)]);
+                    flag(player, config.antiNoSlow.modules, "A");
                     player.teleport(playerLastPos);
                 }
                 lastflag.set(player.id, now);

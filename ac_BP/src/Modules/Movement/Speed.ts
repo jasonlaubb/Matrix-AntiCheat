@@ -1,9 +1,10 @@
 import { EntityDamageCause, EntityHurtAfterEvent, Player, Vector3, world } from "@minecraft/server";
-import { bypassMovementCheck, c, flag } from "../../Assets/Util.js";
+import { bypassMovementCheck, c } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
 import { getMsPerTick, isSpikeLagging } from "../../Assets/Public.js";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import flag from "../../Assets/flag.js";
 
 /**
  * @author RamiGamerDev (type A) & jasonlaubb (type B)
@@ -114,7 +115,7 @@ async function AntiSpeed(config: configi, player: Player) {
                 if (player.lastXZLogged - xz - data.lastVelocity < 0.3 && data.flagNumber! > config.antiSpeed.maxFlagInDuration) {
                     player.teleport(safePos);
                     data.currentFlagCombo! += config.antiSpeed.flagDurationIncrase;
-                    flag(player, "Speed", "A", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["velocityXZ" + ":" + velocityDifferent.toFixed(2)]);
+                    flag(player, config.antiSpeed.modules, "A");
                 } else if (((player.lastXZLogged - xz > data.speedMaxV + 1 || (solidBlock && player.lastXZLogged - xz > data.speedMaxV + 0.2)) && data.flagNumber! >= 1) || player.lastXZLogged - x >= 25) {
                     player.teleport(safePos);
                 }
@@ -159,7 +160,7 @@ async function AntiSpeed(config: configi, player: Player) {
             data.lastFlag = now;
             if (now - lastflag < 10000) {
                 player.teleport(safePos);
-                flag(player, "Speed", "C", config.antiSpeed.maxVL, config.antiSpeed.punishment, ["TruePositives" + ":" + truePositives.toFixed(3), "FalsePositives" + ":" + falsePositives.toFixed(3), "TrueNegatives" + ":" + trueNegatives.toFixed(3)]);
+                flag(player, config.antiSpeed.modules, "B");
             }
             data.blockMovementLoop = [];
         }

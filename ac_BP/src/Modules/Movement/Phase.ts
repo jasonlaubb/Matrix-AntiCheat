@@ -1,8 +1,9 @@
 import { world, Block, Vector3, Player, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent, GameMode } from "@minecraft/server";
-import { bypassMovementCheck, flag } from "../../Assets/Util";
+import { bypassMovementCheck } from "../../Assets/Util";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { isSpikeLagging } from "../../Assets/Public";
+import flag from "../../Assets/flag";
 
 const powderBlock = [
     MinecraftBlockTypes.RedConcretePowder,
@@ -99,8 +100,8 @@ async function AntiPhase(player: Player, config: configi, now: number) {
         const lastflag = data.lastFlag;
         player.teleport(data.safeLocation);
         if (lastflag && now - lastflag < 5000 && !isSpikeLagging(player)) {
-            const skipMaterial = skipMaterials[phaseIndex]!.typeId!;
-            flag(player, "Phase", "A", config.antiPhase.maxVL, config.antiPhase.punishment, ["SkipMaterial:" + skipMaterial]);
+            //const skipMaterial = skipMaterials[phaseIndex]!.typeId!;
+            flag(player, config.antiPhase.modules, "A");
         }
         data.lastFlag = now;
     }

@@ -1,8 +1,9 @@
 import { world, GameMode, Player, Vector3, PlayerSpawnAfterEvent } from "@minecraft/server";
-import { bypassMovementCheck, flag, getPing } from "../../Assets/Util";
+import { bypassMovementCheck, getPing } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { AnimationControllerTags } from "../../Data/EnumData";
+import flag from "../../Assets/flag";
 
 const lastLocation = new Map<string, Vector3>();
 const lastFlag = new Map<string, number>();
@@ -55,7 +56,7 @@ async function AntiNoFall(player: Player, config: configi, now: number) {
         const lastflag = lastFlag.get(player.id);
         playerVL.set(player.id, 0);
         if (lastflag && now - lastflag < 2000 && now - lastflag > 80) {
-            flag(player, "NoFall", "A", config.antiNoFall.maxVL, config.antiNoFall.punishment, ["velocityY" + ":" + +y.toFixed(2), "velocityXZ" + ":" + +xz.toFixed(2)]);
+            flag(player, config.antiNoFall.modules, "A");
         }
         lastFlag.set(player.id, now);
     }

@@ -1,6 +1,7 @@
 import { world, system, PlayerGameModeChangeBeforeEvent } from "@minecraft/server";
-import { flag, isAdmin } from "../../Assets/Util";
+import { isAdmin } from "../../Assets/Util";
 import { registerModule, configi } from "../Modules";
+import flag from "../../Assets/flag";
 
 /**
  * @author jasonlaubb
@@ -19,7 +20,7 @@ async function AntiGameMode(config: configi, event: PlayerGameModeChangeBeforeEv
             } else {
                 event.player.setGameMode();
             }
-            flag(event.player, "GameMode", "A", config.antiGameMode.maxVL, config.antiGameMode.punishment, ["GameMode" + ":" + String(event.toGameMode)]);
+            flag(event.player, config.antiGameMode.modules, "A");
         });
     }
 }
