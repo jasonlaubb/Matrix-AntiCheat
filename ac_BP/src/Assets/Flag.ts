@@ -60,7 +60,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             moduleOrder.sort((a, b) => b[1] - a[1]);
             const maxPercentageModule = moduleOrder[0][0];
             const suggestedPunishment = ((config as any)[maxPercentageModule]?.modules as Modules)?.bestPunishment ?? "tempkick";
-            const flagMessage = getFlagMessage(player.name, "Flag Handler [Total]", [modules.id], punishmentMaps[suggestedPunishment]);
+            const flagMessage = getFlagMessage(player.name, "Flag Handler [Total]", data.flagComponent, punishmentMaps[suggestedPunishment]);
             flagModeSelector(config.flagMode, player.name).forEach((target) => {
                 target.sendMessage(flagMessage);
             });
@@ -148,7 +148,7 @@ function getFlagMessage(object: string, type: string, component: string[], slove
     const uniqueTurner = [...new Set(component)];
     const string: string[] = [];
     uniqueTurner.forEach((item) => {
-        string.push(`${item} (${amountListing[item].toFixed(2)}%)`);
+        string.push(`${item} (${amountListing[item].toFixed(2)}\%)`);
     });
     return new rawstr()
     .tra("object.detected")
