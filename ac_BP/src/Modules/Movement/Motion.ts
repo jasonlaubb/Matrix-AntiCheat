@@ -49,10 +49,10 @@ async function checkMotion(config: configi, player: Player) {
     if (commonPrevention && !bypassMovementCheck(player)) {
         if (wrapDistance < config.antiMotion.predictionThereshold && data.lastWrap > config.antiMotion.wrapDistanceThereshold && config.antiMotion.predictionThereshold) {
             player.teleport(data.lastFreezeLocation);
-            flag(player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, ["WrapDistance:" + data.lastWrap.toFixed(2)]);
-        } else if (data.agoWrap < config.antiMotion.predictionThereshold && data.beforeWrap > config.antiMotion.wrapDistanceThereshold && data.lastWrap == data.beforeWrap && wrapDistance < config.antiMotion.predictionThereshold) {
+        }
+        if (data.agoWrap < config.antiMotion.predictionThereshold && data.beforeWrap > config.antiMotion.wrapDistanceThereshold && data.lastWrap == data.beforeWrap && wrapDistance < config.antiMotion.predictionThereshold) {
             player.teleport(data.lastFreezeLocation);
-            flag(player, "Motion", "B", config.antiMotion.maxVL, config.antiMotion.punishment, ["WrapDistance:" + data.beforeWrap.toFixed(2)]);
+            flag(player, "Motion", "A", config.antiMotion.maxVL, config.antiMotion.punishment, ["WrapDistance:" + data.beforeWrap.toFixed(2)]);
         }
     }
     data.agoWrap = data.previousWrap;
