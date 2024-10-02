@@ -40,6 +40,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
     //check if dBVD lower than 1 and higher than 0.5 add one to timerLog and when timerLog reach 3 flag (check for low timer)
     if ((dBVD < data.maxDBVD && dBVD > 20 / (tps.getTps()! * 2)) || (dBVD2 < data.maxDBVD && dBVD2 > 20 / (tps.getTps()! * 2))) data.timerLog++;
     else data.timerLog = 0;
+    data.lastHighTeleport ??= 0;
     if (!bypassMovementCheck(player) && now - data.lastHighTeleport >= 5000 && (((dBVD > data.maxDBVD || dBVD2 > data.maxDBVD) && now - data.lastFlag >= 1025) || data.timerLog >= config.antiTimer.minTimerLog)) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - data.lastFlag;
