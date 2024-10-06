@@ -22,7 +22,7 @@ msgstr "在 %2 毫秒內初始化了 %1 個模組"
 
 #: index.complete
 msgid "Matrix has been completely initialized in %s ms"
-msgstr "Matrix 已在 %2 毫秒內被完全初始化了"
+msgstr "Matrix 已在 %1 毫秒內被完全初始化了"
 
 #: function.gainop
 msgid "§bMatrix §7> §gYou have verified your operator permission, use chat command '<prefix>op' directly to get the matrix admin permission"
