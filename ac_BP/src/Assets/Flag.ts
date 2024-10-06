@@ -154,17 +154,7 @@ function getFlagMessage(object: string, type: string, component: string[], slove
     uniqueTurner.forEach((item) => {
         string.push(`${item} (${amountListing[item].toFixed(2)}％)`);
     });
-    return new rawstr()
-    .tra("object.detected")
-    .str("\n")
-    .tra("object.object", object)
-    .str("\n")
-    .tra("object.type", type)
-    .str("\n")
-    .tra("object.components", string.join(", "))
-    .str("\n")
-    .tra("object.autosolve", slove)
-    .parse();
+    return new rawstr().tra("object.detected").str("\n").tra("object.object", object).str("\n").tra("object.type", type).str("\n").tra("object.components", string.join(", ")).str("\n").tra("object.autosolve", slove).parse();
 }
 
 function getPercentageComponent(component: string[], total: number): { [key: string]: number } {

@@ -94,9 +94,7 @@
                             "display_on_screen_animation": true
                         }
                     ],
-                    "remove_effects": [
-                        "bad_omen"
-                    ]
+                    "remove_effects": ["bad_omen"]
                 }
             },
             "matrix:unvanish": {
@@ -566,23 +564,17 @@
             },
             "matrix:despawn": {
                 "add": {
-                    "component_groups": [
-                        "matrix:despawn"
-                    ]
+                    "component_groups": ["matrix:despawn"]
                 }
             },
             "matrix:gethit": {
                 "add": {
-                    "component_groups": [
-                        "matrix:gethit"
-                    ]
+                    "component_groups": ["matrix:gethit"]
                 }
             },
             "matrix:dummy": {
                 "add": {
-                    "component_groups": [
-                        "matrix:dummy"
-                    ]
+                    "component_groups": ["matrix:dummy"]
                 }
             }
         }
