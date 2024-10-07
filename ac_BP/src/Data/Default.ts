@@ -402,6 +402,8 @@ export default {
         enabled: true,
         defaultRank: "§pMember",
         showAllRank: true,
+        enhanceCompatibility: false,
+        ignorePrefixes: [],
     },
     intergradedAntiSpam: {
         enabled: true,
