@@ -370,6 +370,32 @@ export default {
         },
     },
     ui: {},
+    defender: {
+        enabled: false,
+        blockMessage: true,
+        tryAbilityBlockage: true,
+        antibot: {
+            enabled: true,
+            type: 0,
+            tolerance: 90,
+        },
+        antialtspam: {
+            enabled: true,
+            dobanning: false,
+        },
+        antisleepspam: {
+            enabled: true,
+            minSleepInterval: 500,
+            maxSleepAmountPerMins: 10,
+            timeout: 45000,
+        },
+        antimassspam: {
+            enabled: true,
+            joinThreshold: 3, // Max amount of join without spawning in 2 mins
+            spawnThreshold: 2, // Max amount of initial spawn in 2 mins
+            timeout: 65000,
+        }
+    },
     autoPunishment: {
         maxSusValue: 2.5,
         defaultFlagValidationTime: 2100000,
