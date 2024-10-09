@@ -10,7 +10,7 @@ msgstr "§7§¶Minecraft 基岩版最佳對抗外掛的解決方案 §c(需要�
 
 #: disconnectionScreen.unexpectedPacket
 msgid "§bMatrix §7> §cYou have been disconnected from the game expectly.§r"
-msgstr "§bMatrix §7> §c預期內從伺服器斷線§r"
+msgstr "糟糕, 出錯了。這可能會因為伺服器高延遲或網絡問題而發生"
 
 #: json.packet
 msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from %3"
