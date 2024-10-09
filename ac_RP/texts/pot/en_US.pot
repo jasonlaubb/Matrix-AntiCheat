@@ -9,7 +9,7 @@ msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API
 msgstr ""
 
 #: disconnectionScreen.unexpectedPacket
-msgid "§bMatrix §7> §cYou have been disconnected from the game expectly.§r"
+msgid "Oops, something went wrong. This would be happening due to bad internet or high server pings."
 msgstr ""
 
 #: json.packet
