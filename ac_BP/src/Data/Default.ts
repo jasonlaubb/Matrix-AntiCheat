@@ -394,7 +394,7 @@ export default {
             joinThreshold: 3, // Max amount of join without spawning in 2 mins
             spawnThreshold: 2, // Max amount of initial spawn in 2 mins
             timeout: 65000,
-        }
+        },
     },
     autoPunishment: {
         maxSusValue: 2.5,
