@@ -30,8 +30,10 @@ async function convertPotFilesToPo() {
         const output = poContent.split("\n").filter((a) => a.startsWith("#: ")).map((a) => a.slice(3)).map((v) => '    | "' + v.replace("\r", "") + '"')
         const filed = fs.readFileSync(`${root}../ac_BP/src/Assets/Language.ts`, "utf8");
         const lines = filed.split("export");
-        let there = lines[0] + "export type Translate = \n";
+        let there = lines[0] + "export type Translate =\n";
         there += output.join("\n");
+        // formatting needs that bruh
+        there += ";";
         fs.writeFileSync(`${root}../ac_BP/src/Assets/Language.ts`, there);
         return;
     };
