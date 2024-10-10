@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate = 
+export type Translate =
     | "pack.description"
     | "disconnectionScreen.unexpectedPacket"
     | "json.packet"
@@ -240,7 +240,6 @@ export type Translate =
     | "protection.unfair"
     | "protection.highrisk"
     | "protection.defender"
-    | "ui.idp.title"
     | "ui.idp.desc"
     | "ui.idp.select"
     | "ui.idp.limit"
@@ -251,4 +250,4 @@ export type Translate =
     | "ui.idp.offline.alth"
     | "ui.idp.followup"
     | "ui.idp.openlog"
-    | "ui.idp.button"
+    | "ui.idp.button";

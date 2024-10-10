@@ -952,10 +952,6 @@ msgstr ""
 msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
 msgstr ""
 
-#: ui.idp.title
-msgid "Integrated defense panel"
-msgstr ""
-
 #: ui.idp.desc
 msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
 msgstr ""

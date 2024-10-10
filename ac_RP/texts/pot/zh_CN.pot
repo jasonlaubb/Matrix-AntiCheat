@@ -952,10 +952,6 @@ msgstr "§bMatrix §7>§g 玩家的高風險行為已被阻止並成功封鎖該
 msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
 msgstr "§bMatrix §7>§g Matrix Defender 已成功阻止目前 Realm 的高風險用戶端 §7(PlayerId=%s)"
 
-#: ui.idp.title
-msgid "Integrated defense panel"
-msgstr "綜合防禦面板"
-
 #: ui.idp.desc
 msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
 msgstr "我們已協助您遠離危險 >w< 如果您有任何疑問, 請造訪我們的支援伺服器(您可以透過執行 /function version 取得連結)"
