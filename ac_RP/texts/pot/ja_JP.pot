@@ -9,7 +9,7 @@ msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API
 msgstr "§7§¶Minecraft Bedrock向け究極のアンチチートソリューション §c(Beta-APIが必要です)"
 
 #: disconnectionScreen.unexpectedPacket
-msgid "§bMatrix §7> §cYou have been disconnected from the game expectly.§r"
+msgid "Oops, something went wrong. This would be happening due to bad internet or high server pings."
 msgstr "§bMatrix §7> §c一時的にキックされました。§r"
 
 #: json.packet
@@ -89,7 +89,7 @@ msgid "Components: §e%1§r§7"
 msgstr ""
 
 #: object.autosolve
-msgid "Automatic slove: §e%1§r§7"
+msgid "Automatic solve: §e%1§r§7"
 msgstr ""
 
 #: ui.title
@@ -804,6 +804,30 @@ msgstr "§rプロパティタイプ:"
 msgid "Value:"
 msgstr "値:"
 
+#: ui.config.type.string
+msgid "string"
+msgstr ""
+
+#: ui.config.type.number
+msgid "number"
+msgstr ""
+
+#: ui.config.type.boolean
+msgid "boolean (true/false)"
+msgstr ""
+
+#: ui.config.type.array
+msgid "array (list)"
+msgstr ""
+
+#: ui.config.type.boolean.true
+msgid "true"
+msgstr ""
+
+#: ui.config.type.boolean.false
+msgid "false"
+msgstr ""
+
 #: common.unknown
 msgid "unknown"
 msgstr "不明"
@@ -911,3 +935,67 @@ msgstr "§lインベントリボタン§r をタップしてインベントリ�
 #: action.hint.exit.console.r4isen1920_invsee:inventory
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
 msgstr "§l:_input_key.inventory:§r を押してインベントリを開きます"
+
+#: protection.behavior
+msgid "§bMatrix §7>§g Behavior protection has blocked a player's access successfully. §7(Player=%s)"
+msgstr ""
+
+#: protection.unfair
+msgid "§bMatrix §7>§g Unfair advantage from a player has been detected. §7(Player=%s)"
+msgstr ""
+
+#: protection.highrisk
+msgid "§bMatrix §7>§g A high-risk action from a player has been blocked and banned the player successfully. §7(Player=%s)"
+msgstr ""
+
+#: protection.defender
+msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
+msgstr ""
+
+#: ui.idp.title
+msgid "Integrated defense panel"
+msgstr ""
+
+#: ui.idp.desc
+msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
+msgstr ""
+
+#: ui.idp.select
+msgid "Select a report you want to view"
+msgstr ""
+
+#: ui.idp.limit
+msgid "We can maximum save %s of last reports"
+msgstr ""
+
+#: ui.idp.none
+msgid "There are no reports can be displayed"
+msgstr ""
+
+#: ui.idp.preport
+msgid "%s's follow-up report"
+msgstr ""
+
+#: ui.idp.offline.none
+msgid "While you're offline, there were none hacker detected, your world is safe!"
+msgstr ""
+
+#: ui.idp.offline.is
+msgid "While you're offline, %s hacker(s) were detected by full automation, your world is still safe under our protection."
+msgstr ""
+
+#: ui.idp.offline.alth
+msgid "Although there is no hacker detected, we have blocked %s time(s) of the suspicious behavior."
+msgstr ""
+
+#: ui.idp.followup
+msgid "Follow-up report"
+msgstr ""
+
+#: ui.idp.openlog
+msgid "Open Log"
+msgstr ""
+
+#: ui.idp.button
+msgid "Integrated defense panel"
+msgstr ""

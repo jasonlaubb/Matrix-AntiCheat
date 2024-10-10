@@ -2,7 +2,7 @@
  * @description Automaically generated
  * @warning DON'T EDIT THIS FILE!
  */
-export type Translate =
+export type Translate = 
     | "pack.description"
     | "disconnectionScreen.unexpectedPacket"
     | "json.packet"
@@ -203,6 +203,12 @@ export type Translate =
     | "ui.config.desc"
     | "ui.config.type"
     | "ui.config.value"
+    | "ui.config.type.string"
+    | "ui.config.type.number"
+    | "ui.config.type.boolean"
+    | "ui.config.type.array"
+    | "ui.config.type.boolean.true"
+    | "ui.config.type.boolean.false"
     | "common.unknown"
     | "acess.itemadmin"
     | "report.cooldown"
@@ -229,4 +235,20 @@ export type Translate =
     | "item.matrix.itemui"
     | "item.matrix.modstick"
     | "action.hint.exit.r4isen1920_invsee:inventory"
-    | "action.hint.exit.console.r4isen1920_invsee:inventory";
+    | "action.hint.exit.console.r4isen1920_invsee:inventory"
+    | "protection.behavior"
+    | "protection.unfair"
+    | "protection.highrisk"
+    | "protection.defender"
+    | "ui.idp.title"
+    | "ui.idp.desc"
+    | "ui.idp.select"
+    | "ui.idp.limit"
+    | "ui.idp.none"
+    | "ui.idp.preport"
+    | "ui.idp.offline.none"
+    | "ui.idp.offline.is"
+    | "ui.idp.offline.alth"
+    | "ui.idp.followup"
+    | "ui.idp.openlog"
+    | "ui.idp.button"

@@ -57,8 +57,10 @@ function selector(player: Player, path: string[]) {
         configUI(player, [...path, selection[0]]).catch((e) => error(player, e));
     });
 }
-const strtypes = ["string", "number", "boolean", "array"];
-const boltypes = ["true", "false"];
+const strtypes = [rawstr.drt("ui.config.type.string"), rawstr.drt("ui.config.type.number"), rawstr.drt("ui.config.type.boolean"), rawstr.drt("ui.config.type.array")];
+const strTypeArrayMap = ["string", "number", "boolean", "array"];
+const boltypes = [rawstr.drt("ui.config.type.boolean.true"), rawstr.drt("ui.config.type.boolean.false")];
+const boolTypeArrayMap = ["true", "false"];
 async function editor(player: Player, path: string[]) {
     new ModalFormData()
         .title(rawstr.drt("ui.config.editor"))
@@ -78,7 +80,7 @@ async function editor(player: Player, path: string[]) {
         .show(player)
         .then((data) => {
             if (data.canceled) return;
-            const type = strtypes[data.formValues![0] as number];
+            const type = strTypeArrayMap[data.formValues![0] as number];
             const form = new ModalFormData().title(rawstr.drt("ui.config.editor"));
             switch (type) {
                 case "string": {
@@ -107,7 +109,7 @@ async function editor(player: Player, path: string[]) {
                 const value = data.formValues![0];
                 let ans = value;
                 if (typeof value == "number") {
-                    ans = boltypes[value];
+                    ans = boolTypeArrayMap[value];
                 }
                 // Run the config set command.
                 triggerCommand(player, `config set ${type} ${path.join(".")} ${ans}`);

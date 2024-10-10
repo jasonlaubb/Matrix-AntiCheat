@@ -9,7 +9,7 @@ msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API
 msgstr "§7§¶Minecraft 基岩版最佳對抗外掛的解決方案 §c(需要啟動實驗性 API)"
 
 #: disconnectionScreen.unexpectedPacket
-msgid "§bMatrix §7> §cYou have been disconnected from the game expectly.§r"
+msgid "Oops, something went wrong. This would be happening due to bad internet or high server pings."
 msgstr "糟糕, 出錯了。這可能會因為伺服器高延遲或網絡問題而發生"
 
 #: json.packet
@@ -89,7 +89,7 @@ msgid "Components: §e%1§r§7"
 msgstr "成分: §e%1§r§7"
 
 #: object.autosolve
-msgid "Automatic slove: §e%1§r§7"
+msgid "Automatic solve: §e%1§r§7"
 msgstr "自動解決: §e%1§r§7"
 
 #: ui.title
@@ -804,6 +804,30 @@ msgstr "§r屬性屬性:"
 msgid "Value:"
 msgstr "值:"
 
+#: ui.config.type.string
+msgid "string"
+msgstr "字串"
+
+#: ui.config.type.number
+msgid "number"
+msgstr "數字"
+
+#: ui.config.type.boolean
+msgid "boolean (true/false)"
+msgstr "布林 (真/假)"
+
+#: ui.config.type.array
+msgid "array (list)"
+msgstr "陣列 (列表)"
+
+#: ui.config.type.boolean.true
+msgid "true"
+msgstr "真"
+
+#: ui.config.type.boolean.false
+msgid "false"
+msgstr "假"
+
 #: common.unknown
 msgid "unknown"
 msgstr "未知"
@@ -911,3 +935,67 @@ msgstr "點擊§l庫存按鈕§r打開他們的庫存"
 #: action.hint.exit.console.r4isen1920_invsee:inventory
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
 msgstr "按 §l:_input_key.inventory:§r 開啟他們的庫存"
+
+#: protection.behavior
+msgid "§bMatrix §7>§g Behavior protection has blocked a player's access successfully. §7(Player=%s)"
+msgstr "§bMatrix §7>§g 自動行為防禦模組已經成功被封鎖了一名玩家 §7(玩家=%s)"
+
+#: protection.unfair
+msgid "§bMatrix §7>§g Unfair advantage from a player has been detected. §7(Player=%s)"
+msgstr "§bMatrix §7>§g 成功攔截一名玩家的不公平優勢 §7(玩家=%s)"
+
+#: protection.highrisk
+msgid "§bMatrix §7>§g A high-risk action from a player has been blocked and banned the player successfully. §7(Player=%s)"
+msgstr "§bMatrix §7>§g 玩家的高風險行為已被阻止並成功封鎖該玩家 §7(玩家=%s)"
+
+#: protection.defender
+msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
+msgstr "§bMatrix §7>§g Matrix Defender 已成功阻止目前 Realm 的高風險用戶端 §7(PlayerId=%s)"
+
+#: ui.idp.title
+msgid "Integrated defense panel"
+msgstr "綜合防禦面板"
+
+#: ui.idp.desc
+msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
+msgstr "我們已協助您遠離危險 >w< 如果您有任何疑問, 請造訪我們的支援伺服器(您可以透過執行 /function version 取得連結)"
+
+#: ui.idp.select
+msgid "Select a report you want to view"
+msgstr "選擇您要查看的報告"
+
+#: ui.idp.limit
+msgid "We can maximum save %s of last reports"
+msgstr "我們最多可以儲存 %s 份最新報告"
+
+#: ui.idp.none
+msgid "There are no reports can be displayed"
+msgstr "沒有可以顯示的報告"
+
+#: ui.idp.preport
+msgid "%s's follow-up report"
+msgstr "%s 的後續報告"
+
+#: ui.idp.offline.none
+msgid "While you're offline, there were none hacker detected, your world is safe!"
+msgstr "當您離線時，沒有偵測到任何駭客，您的世界是安全的!"
+
+#: ui.idp.offline.is
+msgid "While you're offline, %s hacker(s) were detected by full automation, your world is still safe under our protection."
+msgstr "當您離線時，全自動偵測到了 %s 名駭客，您的世界在我們的保護下仍然安全"
+
+#: ui.idp.offline.alth
+msgid "Although there is no hacker detected, we have blocked %s time(s) of the suspicious behavior."
+msgstr "雖然沒有偵測到駭客，但我們已阻止 %s 次可疑行為。"
+
+#: ui.idp.followup
+msgid "Follow-up report"
+msgstr "後續報告"
+
+#: ui.idp.openlog
+msgid "Open Log"
+msgstr "打開日誌"
+
+#: ui.idp.button
+msgid "Integrated defense panel"
+msgstr "綜合防禦面板"
