@@ -31,9 +31,7 @@ async function convertPotFilesToPo() {
         const filed = fs.readFileSync(`${root}../ac_BP/src/Assets/Language.ts`, "utf8");
         const lines = filed.split("export");
         let there = lines[0] + "export type Translate =\n";
-        there += output.join("\n");
-        // formatting needs that bruh
-        there += ";";
+        there += output.join("\n") + ";";
         fs.writeFileSync(`${root}../ac_BP/src/Assets/Language.ts`, there);
         return;
     };
