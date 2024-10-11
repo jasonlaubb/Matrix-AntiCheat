@@ -1,5 +1,5 @@
 import { Player, RawText, world } from "@minecraft/server";
-import { c, isAdmin, rawstr, Type } from "./Util";
+import { c, extraDisconnect, isAdmin, rawstr, Type } from "./Util";
 import { Action } from "./Action";
 import { MatrixUsedTags } from "../Data/EnumData";
 import { sendErr } from "../Functions/chatModel/CommandHandler";
@@ -52,6 +52,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         if (config.logsettings.logCheatPunishment) saveLog("AC-Instant", player.name, `${modules.id} ${type}`);
 
         applyPunishment(player, modules.bestPunishment);
+        extraDisconnect(player);
         flagData.delete(player.id);
         return;
     }
@@ -70,10 +71,10 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             const now = Date.now();
             const filtered = JSON.stringify(badRecord.filter((t) => now - t < config.autoPunishment.eachTimeValidt));
             player.setDynamicProperty("badRecord", filtered);
-            if (filtered.length > config.autoPunishment.behaviorMax && false) {
+            if (filtered.length > config.autoPunishment.behaviorMax) {
                 Action.ban(player, config.autoPunishment.ban.reason, "Matrix AntiCheat", config.autoPunishment.behaviorBanLengthMins * 60000);
+                extraDisconnect(player);
             } else {
-                player.sendMessage("Tempkicked")
                 Action.tempkick(player);
             }
         }
@@ -98,6 +99,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             sendResult(rawstr.drt("protection.unfair", player.name));
             if (config.logsettings.logCheatPunishment) saveLog("AC-Total", player.name, `${maxPercentageConfig} (MAX)`);
             applyPunishment(player, suggestedPunishment);
+            extraDisconnect(player);
             flagData.delete(player.id);
         }
     }
@@ -110,6 +112,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         sendResult(rawstr.drt("protection.unfair", player.name));
         if (config.logsettings.logCheatPunishment) saveLog("AC-Limit", player.name, `${modules.id} ${type}`);
         applyPunishment(player, modules.bestPunishment);
+        extraDisconnect(player);
         flagData.delete(player.id);
     }
 }

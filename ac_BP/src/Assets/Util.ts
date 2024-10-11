@@ -5,6 +5,7 @@ import Dynamic from "../Functions/Config/dynamic_config";
 import { MatrixUsedTags } from "../Data/EnumData";
 import MathUtil from "./MathUtil";
 import { SHA256 } from "../node_modules/crypto-es/lib/sha256";
+import { Action } from "./Action";
 
 /**
  * @author jasonlaubb
@@ -39,6 +40,7 @@ export {
     bypassMovementCheck,
     onceTrue,
     isPasswordCorrect,
+    extraDisconnect,
 };
 
 class rawstr {
@@ -78,6 +80,15 @@ class rawstr {
         this.storge.push({ translate: id, with: withargs.map((i) => String(i)) });
         return this;
     }
+}
+
+function extraDisconnect (player: Player) {
+    if (c().antiCheatTestMode) return;
+    system.run(() => {
+        try {
+            Action.tempkick(player);
+        } catch { }
+    });
 }
 
 function checkBlockAround(location: Vector3, blockType: MinecraftBlockTypes, dimension: Dimension): boolean {
