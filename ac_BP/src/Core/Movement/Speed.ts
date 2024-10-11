@@ -58,7 +58,7 @@ async function systemEvent(_config: configi, player: Player) {
     const data = speedData.get(player.id);
     if (!data) return;
     const playerVelocity = player.getVelocity();
-    if (playerVelocity.x == 0 && playerVelocity.z == 0 && (Math.abs(player.location.x - data.lastLocation.x) > 0.03 || Math.abs(player.location.z - data.lastLocation.z) > 0.03)) {
+    if (playerVelocity.x == 0 && playerVelocity.z == 0 && (Math.abs(player.location.x - data.lastLocation.x) > 0.1 || Math.abs(player.location.z - data.lastLocation.z) > 0.1)) {
         data.lastTeleport = Date.now();
         player.sendMessage("Teleport detected")
         speedData.set(player.id, data);
