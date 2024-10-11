@@ -1,6 +1,6 @@
 import { c, rawstr } from "../../../../Assets/Util";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
-import { getModulesIds } from "../../../../Modules/Modules";
+import { getModulesIds } from "../../../../Core/Modules.js";
 
 registerCommand({
     name: "toggles",

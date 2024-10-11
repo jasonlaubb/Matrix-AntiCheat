@@ -69,7 +69,7 @@ export function registerCommand(command: CommandHandleData, ...subCommand: Comma
 
 export function triggerCommand(player: Minecraft.Player, message: string): number | void {
     const config = c();
-    for (const prefix of [config.commands.prefix, ...config.otherPrefix]) {
+    for (const prefix of [config.commands.prefix, ...config.commands.otherPrefix]) {
         if (message.startsWith(prefix)) {
             message = message.slice(prefix.length).trim();
             break;

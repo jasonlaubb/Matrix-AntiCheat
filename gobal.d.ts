@@ -1,7 +1,7 @@
 import * as Server from "./node_modules/@minecraft/server/index";
 import * as Ui from "./node_modules/@minecraft/server-ui/index";
 import * as VanillaData from "./ac_BP/src/node_modules/@minecraft/vanilla-data/lib/index";
-import { Module } from "./ac_BP/src/Modules/Modules";
+import { Module } from "./ac_BP/src/Core/Modules";
 import { AnimationControllerTags, DisableTags, MatrixEvents, MatrixUsedTags } from "./ac_BP/src/Data/EnumData";
 import { Translate } from "./ac_BP/src/Assets/Language";
 declare module "@minecraft/server" {

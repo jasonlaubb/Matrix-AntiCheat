@@ -1,6 +1,6 @@
 import { c } from "../../../../Assets/Util";
 import { registerCommand, sendRawText, verifier } from "../../CommandHandler";
-import { getModulesIds, intilizeModules } from "../../../../Modules/Modules";
+import { getModulesIds, intilizeModules } from "../../../../Core/Modules";
 import Dynamic from "../../../Config/dynamic_config";
 import { system } from "@minecraft/server";
 

@@ -2,7 +2,7 @@ import defaultConfig, { dynamic as dy } from "../../Data/Default";
 import userConfig from "../../Data/Config";
 const config: configi = dy.followUserConfig ? (userConfig as configi) : defaultConfig;
 import { world } from "@minecraft/server";
-import { configi } from "../../Modules/Modules";
+import { configi } from "../../Core/Modules";
 import { commitChanges } from "./config_database";
 
 let common = config;

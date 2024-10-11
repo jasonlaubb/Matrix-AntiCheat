@@ -1,6 +1,6 @@
 import { ActionFormData } from "@minecraft/server-ui";
 import { Player } from "@minecraft/server";
-import { getModulesIds } from "../../Modules/Modules";
+import { getModulesIds } from "../../Core/Modules";
 import { c, rawstr } from "../../Assets/Util";
 import { triggerCommand } from "../chatModel/CommandHandler";
 
