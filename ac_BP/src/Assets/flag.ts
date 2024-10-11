@@ -70,9 +70,12 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             const now = Date.now();
             const filtered = JSON.stringify(badRecord.filter((t) => now - t < config.autoPunishment.eachTimeValidt));
             player.setDynamicProperty("badRecord", filtered);
-            if (filtered.length > config.autoPunishment.behaviorMax) {
+            if (filtered.length > config.autoPunishment.behaviorMax && false) {
                 Action.ban(player, config.autoPunishment.ban.reason, "Matrix AntiCheat", config.autoPunishment.behaviorBanLengthMins * 60000);
-            } else Action.tempkick(player);
+            } else {
+                player.sendMessage("Tempkicked")
+                Action.tempkick(player);
+            }
         }
         flagData.delete(player.id);
         return;
