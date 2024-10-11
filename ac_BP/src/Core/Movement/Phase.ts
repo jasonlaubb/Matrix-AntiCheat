@@ -92,6 +92,7 @@ async function AntiPhase(player: Player, config: configi, now: number) {
         !player.isGliding &&
         !(player.lastBreakSolid && now - player.lastBreakSolid < config.antiPhase.breakSolidBypass) &&
         Math.abs(y) < 1.7 &&
+        !(player.lastExplosionTime && now - player.lastExplosionTime < 2000) &&
         !passableBlocks.includes(bodyBlock) &&
         !powderBlock.includes(bodyBlock) &&
         phaseIndex != -1 &&
