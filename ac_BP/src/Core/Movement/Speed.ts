@@ -31,7 +31,8 @@ async function antiSpeed(config: configi, player: Player) {
 
     const blockPerSecond = getBlockPerSecond(player.location, data.lastLocation, now, data.lastTimeStamp);
     const { x, y, z } = player.getVelocity();
-    const strightMovement = Math.abs(y) > Math.abs(x) && Math.abs(y) > Math.abs(z);
+    const strightMovement = Math.abs(y) > Math.abs(x) + Math.abs(z);
+    player.runCommand(`title @s actionbar ` + blockPerSecond);
     if (blockPerSecond == 0) {
         data.lastStopLoc = player.location;
     } else if (
@@ -57,8 +58,9 @@ async function systemEvent(_config: configi, player: Player) {
     const data = speedData.get(player.id);
     if (!data) return;
     const playerVelocity = player.getVelocity();
-    if (playerVelocity.x == 0 && playerVelocity.z == 0 && Math.abs(data.lastLocation.x) > 0 && Math.abs(data.lastLocation.z) > 0) {
+    if (playerVelocity.x == 0 && playerVelocity.z == 0 && Math.abs(player.location.x - data.lastLocation.x) > 0 && Math.abs(player.location.z - data.lastLocation.z) > 0) {
         data.lastTeleport = Date.now();
+        player.sendMessage("Teleport detected")
         speedData.set(player.id, data);
     }
 }
