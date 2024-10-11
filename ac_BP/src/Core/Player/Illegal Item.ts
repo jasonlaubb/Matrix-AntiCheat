@@ -45,6 +45,10 @@ function checkIllegalItem(player: Player, item: ItemStack, config: configi): boo
                 return true;
             }
         }
+        if (item.typeId.match(/^minecraft\:[a-z]+_spawn_egg$/)) {
+            flag(player, config.antiIllegalItem.modules, "M");
+            return true;
+        }
     }
     if (config.antiIllegalItem.checkEnchantment) {
         const enchantments = item.getComponent("enchantable")?.getEnchantments();

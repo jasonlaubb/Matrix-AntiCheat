@@ -1,7 +1,12 @@
 import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 
 export default [
-    MinecraftBlockTypes.YellowFlower,
+    MinecraftBlockTypes.FloweringAzalea,
+    MinecraftBlockTypes.FlowerPot,
+    MinecraftBlockTypes.Azalea,
+    MinecraftBlockTypes.MangroveRoots,
+    MinecraftBlockTypes.MangroveLeaves,
+    MinecraftBlockTypes.MangrovePropagule,
     MinecraftBlockTypes.WitherRose,
     MinecraftBlockTypes.TallGrass,
     MinecraftBlockTypes.HangingRoots,

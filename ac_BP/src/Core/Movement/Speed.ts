@@ -3,6 +3,7 @@ import { configi, registerModule } from "../Modules";
 import MathUtil from "../../Assets/MathUtil";
 import { AnimationControllerTags } from "../../Data/EnumData";
 import flag from "../../Assets/flag";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 function getBlockPerSecond (currentLocation: Vector3, lastLoggedLocation: Vector3, now: number, lastTimeStamp: number) {
 	const secondTaken = (now - lastTimeStamp) / 1000;
@@ -33,7 +34,7 @@ async function antiSpeed (config: configi, player: Player) {
 	const strightMovement = Math.abs(y) > Math.abs(x) && Math.abs(y) > Math.abs(z);
 	if (blockPerSecond == 0) {
 		data.lastStopLoc = player.location;
-	} else if (blockPerSecond > config.antiSpeed.maxBlockPerSecond && !strightMovement && now - data.lastTeleport > 1000 && !(player.lastExplosionTime && now - player.lastExplosionTime < 3000) && !player.hasTag(AnimationControllerTags.riding) && !(player.threwTridentAt && now - player.threwTridentAt < 9000) && !player.isInWater && !player.isGliding) {
+	} else if (blockPerSecond > config.antiSpeed.maxBlockPerSecond && (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2 && !strightMovement && now - data.lastTeleport > 5000 && !(player.lastExplosionTime && now - player.lastExplosionTime < 3000) && !player.hasTag(AnimationControllerTags.riding) && !(player.threwTridentAt && now - player.threwTridentAt < 9000) && !player.isInWater && !player.isGliding) {
 		player.teleport(data.lastStopLoc);
 		flag(player, config.antiSpeed.modules, "A");
 	}

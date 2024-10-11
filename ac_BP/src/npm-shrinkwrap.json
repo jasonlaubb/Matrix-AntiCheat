@@ -6,7 +6,7 @@
         "": {
             "name": "matrix-anticheat-src",
             "dependencies": {
-                "@minecraft/vanilla-data": "^1.21.0",
+                "@minecraft/vanilla-data": "^1.21.31",
                 "crypto-es": "^2.1.0",
                 "matrix-anticheat": "file:../.."
             }
@@ -44,9 +44,9 @@
             }
         },
         "node_modules/@minecraft/vanilla-data": {
-            "version": "1.21.0",
-            "resolved": "https://registry.npmjs.org/@minecraft/vanilla-data/-/vanilla-data-1.21.0.tgz",
-            "integrity": "sha512-OuEsfTsb2oecM2n9BNVXdhk4qjDSatRSuH+FrScpydaibPNV7jG166cGbltu7VujWETRYpAMVzSGxZRfom0Rmg=="
+            "version": "1.21.31",
+            "resolved": "https://registry.npmjs.org/@minecraft/vanilla-data/-/vanilla-data-1.21.31.tgz",
+            "integrity": "sha512-DE8xw72crb9qS993hLQeby1XC/MURYFPTxMg89X6NleVyJ3VVRF4F9ro4XCF7y7xzFlkbiyEykwh+bKWjlxfVg=="
         },
         "node_modules/crypto-es": {
             "version": "2.1.0",
