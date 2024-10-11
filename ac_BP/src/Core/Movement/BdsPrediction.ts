@@ -29,7 +29,7 @@ interface PredictionData {
 }
 const speeddata = new Map<string, PredictionData>();
 
-async function BdsPrediction (config: configi, player: Player) {
+async function BdsPrediction(config: configi, player: Player) {
     const now = Date.now();
     const data =
         speeddata.get(player.id) ??
@@ -145,14 +145,7 @@ async function BdsPrediction (config: configi, player: Player) {
         const flyMotionFlag = truePositives > 0.13 && truePositives < 0.16 && falsePositives < 0.34 && trueNegatives > 0.7; // Test from Prax client (flying)
         // Speed/B - Check if player has illegal motion frequency
         const flagCondition = highMotionFlag || flyMotionFlag;
-        if (
-            !bypassMovementCheck(player) &&
-            notSpikeLagging &&
-            now - data.lastRiding > 3500 &&
-            flagCondition &&
-            (!data?.lastAttack || now - data.lastAttack > 3000) &&
-            (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)
-        ) {
+        if (!bypassMovementCheck(player) && notSpikeLagging && now - data.lastRiding > 3500 && flagCondition && (!data?.lastAttack || now - data.lastAttack > 3000) && (!player?.lastExplosionTime || now - player.lastExplosionTime > 3000)) {
             const lastflag = data.lastFlag;
             data.lastFlag = now;
             if (now - lastflag < 10000) {

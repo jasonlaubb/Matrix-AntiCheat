@@ -50,7 +50,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             target.sendMessage(flagMessage);
         });
         if (config.logsettings.logCheatPunishment) saveLog("AC-Instant", player.name, `${modules.id} ${type}`);
-        
+
         applyPunishment(player, modules.bestPunishment);
         flagData.delete(player.id);
         return;
@@ -65,7 +65,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         // Disconnect the player
         if (!config.antiCheatTestMode) {
             const badData = player.getDynamicProperty("badRecord");
-            const badRecord = badData ? JSON.parse(badData as string) as number[] : [];
+            const badRecord = badData ? (JSON.parse(badData as string) as number[]) : [];
             badRecord.push(Date.now());
             const now = Date.now();
             const filtered = JSON.stringify(badRecord.filter((t) => now - t < config.autoPunishment.eachTimeValidt));
@@ -171,13 +171,16 @@ function applyPunishment(player: Player, punishment: string) {
         }
     }
 }
-function sendResult (parse: RawText) {
+function sendResult(parse: RawText) {
     if (c().autoPunishment.resultGobalize) {
         world.sendMessage(parse);
     } else {
-        world.getAllPlayers().filter((player) => isAdmin(player)).forEach((player) => {
-            player.sendMessage(parse);
-        })
+        world
+            .getAllPlayers()
+            .filter((player) => isAdmin(player))
+            .forEach((player) => {
+                player.sendMessage(parse);
+            });
     }
 }
 function getFlagMessage(object: string, type: string, component: string[], slove: string): RawText {

@@ -128,7 +128,7 @@ class MatrixAnti_MCPE {
         await import("./Core/Movement/Timer");
         await import("./Core/Movement/Phase");
         await import("./Core/Movement/Motion");
-        await import("./Core/Movement/BdsPrediction")
+        await import("./Core/Movement/BdsPrediction");
         await import("./Core/Movement/Speed");
         await import("./Core/Movement/NoSlow");
         await import("./Core/World/Nuker");

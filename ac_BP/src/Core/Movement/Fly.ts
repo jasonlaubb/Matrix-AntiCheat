@@ -66,7 +66,7 @@ function antiFly(player: Player, now: number, config: configi) {
             untill: {
                 gliding: false,
                 explode: false,
-            }
+            },
         });
         return;
     }
@@ -84,8 +84,7 @@ function antiFly(player: Player, now: number, config: configi) {
     }
     if (!player.isOnGround) {
         data.highestY ??= player.location.y;
-        if (player.location.y > data.highestY)
-            data.highestY = player.location.y;
+        if (player.location.y > data.highestY) data.highestY = player.location.y;
     } else {
         delete data.highestY;
     }
@@ -155,10 +154,9 @@ function antiFly(player: Player, now: number, config: configi) {
         data.lastVelocity = velocity;
     }
     const fallingDifferent = data.highestY ? data.highestY - player.location.y : 0;
-    const badFalling = (fallingDifferent < config.antiFly.bypassFallDis && player.isFalling) && velocity < config.antiFly.maxFallTerminal;
+    const badFalling = fallingDifferent < config.antiFly.bypassFallDis && player.isFalling && velocity < config.antiFly.maxFallTerminal;
     const illegalFall = velocity < config.antiFly.illegalFallTerminal;
     if (!player.isOnGround && (badFalling || illegalFall)) {
-
     }
     data.velocityDiffList.push(velocity - data.lastVelocity);
     if (data.velocityDiffList.length > 10) data.velocityDiffList.shift();

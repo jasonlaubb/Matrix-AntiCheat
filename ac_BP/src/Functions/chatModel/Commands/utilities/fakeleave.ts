@@ -10,24 +10,24 @@ registerCommand({
     minArgs: 0,
     require: (player) => verifier(player, c().commands.openlog),
     executor: async (player, _args) => {
-        const isThereAnyOp = world.getAllPlayers().some(player => {
+        const isThereAnyOp = world.getAllPlayers().some((player) => {
             try {
                 return player.isOp();
             } catch {
                 return false;
             }
-        })
+        });
         const translationKey = isThereAnyOp ? "multiplayer.player.left" : "multiplayer.player.left.realms";
         world.sendMessage({
             rawtext: [
                 {
-                    text: "§e"
+                    text: "§e",
                 },
                 {
                     translate: translationKey,
-                    with: [player.name]
-                }
-            ]
-        })
+                    with: [player.name],
+                },
+            ],
+        });
     },
 });
