@@ -15,7 +15,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
     const { message, sender: player } = event;
     const config = c();
 
-    if (message.startsWith(config.commands.prefix) || config.otherPrefix.some((otherP) => message.startsWith(otherP))) {
+    if (message.startsWith(config.commands.prefix) || config.commands.otherPrefix.some((prefix) => message.startsWith(prefix))) {
         event.cancel = true;
         triggerCommand(player, message);
         return;
@@ -39,7 +39,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
 
     const chatRankToggle = config.chatRank.enabled;
 
-    if (chatRankToggle && !config.otherPrefix.some((otherP) => message.startsWith(otherP))) {
+    if (chatRankToggle && !config.chatRank.ignorePrefixes.some((prefix) => message.startsWith(prefix))) {
         event.cancel = true;
         chatRank(player, message);
     }

@@ -4,6 +4,7 @@
  * @warning NEVER CHANGE THIS FILE IF YOU DON'T KNOW WHAT YOU ARE DOING
  */
 export default {
+    antiCheatTestMode: false,
     configDataBase: {
         enabled: true,
         autorecover: true,
@@ -21,12 +22,12 @@ export default {
     flagMode: "admin",
     lockdowncode: "AbCdEfGh",
     passwordCold: 5000,
-    otherPrefix: [],
     spawnFinishDelay: 1200,
     debug: false,
     // Set the true will let player with tag matrix:movementCheckBypassTag for bypass some of the movement check.
     enableMovementCheckBypassTag: false,
     commands: {
+        otherPrefix: [],
         passwordSetting: {
             enabled: false,
             password: "type_your_password_here",
@@ -407,10 +408,14 @@ export default {
             reason: "Unfair advantage",
         },
         ban: {
-            minutes: 1440,
+            minutes: 1440, // a day
             reason: "Unfair advantage",
         },
         tempBanLength: 60000,
+        behaviorMax: 8,
+        eachTimeValidt: 10800000, // 3 hours
+        behaviorBanLengthMins: 4320, // 3 days
+        resultGobalize: true,
     },
     banModify: {
         extraMessages: [],
@@ -463,6 +468,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "none",
+            behaviorBased: false,
         },
     },
     antiKillAura: {
@@ -484,6 +490,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiMobAura: {
@@ -501,6 +508,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "tempban",
+            behaviorBased: false,
         },
     },
     antiReach: {
@@ -516,6 +524,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "tempban",
+            behaviorBased: false,
         },
     },
     antiFly: {
@@ -523,6 +532,9 @@ export default {
         highVelocity: 0.7,
         maxGroundPrviousVelocity: 0.5,
         maxHighVelocity: 22,
+        illegalFallTerminal: -3.92,
+        maxFallTerminal: -3.5,
+        bypassFallDis: 300,
         modules: {
             id: "Fly",
             configId: "antiFly",
@@ -532,6 +544,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: true,
         },
     },
     /** @warn Unfinished */
@@ -548,6 +561,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: true,
         },
     },
     antiNoFall: {
@@ -562,6 +576,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: true,
         },
     },
     antiMotion: {
@@ -579,12 +594,13 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: true,
         },
     },
     antiPhase: {
         enabled: true,
         punishment: "ban",
-        minSpeed: 1.2,
+        minSpeed: 2.5,
         breakSolidBypass: 1750,
         modules: {
             id: "Phase",
@@ -595,9 +611,25 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "tempban",
+            behaviorBased: true,
         },
     },
     antiSpeed: {
+        enabled: true,
+        maxBlockPerSecond: 12.5,
+        modules: {
+            id: "Speed",
+            configId: "antiSpeed",
+            referencedFlags: 4,
+            maxFlags: 10,
+            instantPunishment: false,
+            acceptTotal: true,
+            flagValidationTime: 0,
+            bestPunishment: "ban",
+            behaviorBased: true,
+        },
+    },
+    bdsPrediction: {
         enabled: true,
         commonThreshold: 0.7,
         inSolidThreshold: 1.3,
@@ -605,21 +637,17 @@ export default {
         validFlagDuration: 32000,
         maxFlagInDuration: 3,
         flagDurationIncrase: 5000,
-        allowSpeedLevels: {
-            moving: 15,
-            sprinting: 8,
-            usingItem: 4,
-        },
         absThreshould: 1,
         modules: {
-            id: "Speed",
-            configId: "antiSpeed",
+            id: "bdsPrediction",
+            configId: "bdsPrediction",
             referencedFlags: 2,
             maxFlags: 5,
             instantPunishment: false,
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: true,
         },
     },
     antiTimer: {
@@ -636,6 +664,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: true,
         },
     },
     antiNuker: {
@@ -652,6 +681,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiScaffold: {
@@ -670,6 +700,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "tempkick",
+            behaviorBased: false,
         },
     },
     antiNoSlow: {
@@ -687,6 +718,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: true,
         },
     },
     antiBreaker: {
@@ -703,6 +735,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: true,
         },
     },
     antiSpammer: {
@@ -716,6 +749,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiBlockReach: {
@@ -732,6 +766,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiAim: {
@@ -746,6 +781,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "tempkick",
+            behaviorBased: false,
         },
     },
     antiTower: {
@@ -761,6 +797,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
         experimental: true,
     },
@@ -778,6 +815,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiNameSpoof: {
@@ -791,6 +829,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiAutoTool: {
@@ -804,6 +843,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
         toolType: ["axe", "shovel", "pickaxe", "sword"],
         experimental: true,
@@ -827,6 +867,7 @@ export default {
             acceptTotal: true,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
         experimental: true,
     },
@@ -845,7 +886,8 @@ export default {
             instantPunishment: true,
             acceptTotal: false,
             flagValidationTime: 0,
-            bestPunishment: "tempkick",
+            bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiIllegalItem: {
@@ -864,6 +906,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiFastUse: {
@@ -879,6 +922,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
     },
     antiOffhand: {
@@ -892,6 +936,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
         doUnEquip: true,
     },
@@ -911,7 +956,8 @@ export default {
             instantPunishment: false,
             acceptTotal: true,
             flagValidationTime: 0,
-            bestPunishment: "ban",
+            bestPunishment: "tempkick",
+            behaviorBased: false,
         },
         timeout: 3000,
         faultToleranceTicks: 10,
@@ -927,6 +973,7 @@ export default {
             acceptTotal: false,
             flagValidationTime: 0,
             bestPunishment: "ban",
+            behaviorBased: false,
         },
         faultToleranceTicks: 10,
     },

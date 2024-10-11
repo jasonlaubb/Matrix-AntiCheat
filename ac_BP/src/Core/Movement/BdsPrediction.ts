@@ -1,5 +1,5 @@
 import { EntityDamageCause, EntityHurtAfterEvent, Player, Vector3, world } from "@minecraft/server";
-import { bypassMovementCheck, c } from "../../Assets/Util.js";
+import { bypassMovementCheck } from "../../Assets/Util.js";
 import { registerModule, configi } from "../Modules.js";
 import { AnimationControllerTags } from "../../Data/EnumData.js";
 import { getMsPerTick, isSpikeLagging } from "../../Assets/Public.js";
@@ -8,9 +8,9 @@ import flag from "../../Assets/flag.js";
 
 /**
  * @author RamiGamerDev (type A) & jasonlaubb (type B)
- * @description A strong anti speed for Minecraft Bedrock Edition, this check can detect the player with client movement.
+ * @description A strong movement check for Minecraft Bedrock Edition, this check can detect the player with client movement.
  */
-interface Speeddata {
+interface PredictionData {
     speedData: Vector3;
     lastAttack: number;
     lastVelocity: number;
@@ -27,9 +27,9 @@ interface Speeddata {
     lastFlag: number;
     lastFreezeLocation: Vector3;
 }
-const speeddata = new Map<string, Speeddata>();
+const speeddata = new Map<string, PredictionData>();
 
-async function AntiSpeed(config: configi, player: Player) {
+async function BdsPrediction (config: configi, player: Player) {
     const now = Date.now();
     const data =
         speeddata.get(player.id) ??
@@ -50,7 +50,7 @@ async function AntiSpeed(config: configi, player: Player) {
             lastFlag: 0,
             velocityDiffList: [],
             lastFreezeLocation: player.location,
-        } as Speeddata);
+        } as PredictionData);
     // define cool things
     const { x, z } = player.getVelocity();
     const xz = Math.hypot(x, z);
@@ -65,9 +65,9 @@ async function AntiSpeed(config: configi, player: Player) {
     if (player.isFlying || player.isGliding) return;
     // start complex things
     // changing value when needed to avoid false postives
-    if (solidBlock) data.speedMaxV = config.antiSpeed.inSolidThreshold;
-    if (now - data.lastAttack < 1000) data.speedMaxV = config.antiSpeed.damageThreshold;
-    if (now - data.lastAttack > 1000 && !solidBlock) data.speedMaxV = config.antiSpeed.commonThreshold;
+    if (solidBlock) data.speedMaxV = config.bdsPrediction.inSolidThreshold;
+    if (now - data.lastAttack < 1000) data.speedMaxV = config.bdsPrediction.damageThreshold;
+    if (now - data.lastAttack > 1000 && !solidBlock) data.speedMaxV = config.bdsPrediction.commonThreshold;
     // checking if the player didnt got flagged then save location
     if (xz - player.lastXZLogged < data.speedMaxV && now - data.lastOutOfRange > 900 && player.lastXZLogged - xz < data.speedMaxV) {
         data.speedData = player.location;
@@ -89,16 +89,13 @@ async function AntiSpeed(config: configi, player: Player) {
         data.flagNumber++;
         data.lastOutOfRange = now;
         data.firstTrigger ??= now;
-        data.currentFlagCombo ??= config.antiSpeed.validFlagDuration - config.antiSpeed.flagDurationIncrase;
+        data.currentFlagCombo ??= config.bdsPrediction.validFlagDuration - config.bdsPrediction.flagDurationIncrase;
     }
-    const speedEffect = player.getEffect(MinecraftEffectTypes.Speed)?.amplifier;
-    const illegalEffect = speedEffect && hasIllegalSpeedEffect(player, speedEffect);
     const notSpikeLagging = !isSpikeLagging(player);
     const lagOnlyCondition = getMsPerTick() < 44.5;
     // Speed/A - Checks if the player has high velocity different.
     if (
         !bypassMovementCheck(player) &&
-        !illegalEffect &&
         !player.hasTag(AnimationControllerTags.riding) &&
         !player.getComponent("riding")?.entityRidingOn &&
         player.lastXZLogged - xz > data.speedMaxV &&
@@ -113,10 +110,10 @@ async function AntiSpeed(config: configi, player: Player) {
             // Teleport the player to last position
             // Minimum time given to flag
             if (now - data.firstTrigger! < data.currentFlagCombo!) {
-                if (player.lastXZLogged - xz - data.lastVelocity < 0.3 && data.flagNumber! > config.antiSpeed.maxFlagInDuration) {
+                if (player.lastXZLogged - xz - data.lastVelocity < 0.3 && data.flagNumber! > config.bdsPrediction.maxFlagInDuration) {
                     player.teleport(safePos);
-                    data.currentFlagCombo! += config.antiSpeed.flagDurationIncrase;
-                    flag(player, config.antiSpeed.modules, "A");
+                    data.currentFlagCombo! += config.bdsPrediction.flagDurationIncrase;
+                    flag(player, config.bdsPrediction.modules, "A");
                 } else if (((player.lastXZLogged - xz > data.speedMaxV + 1 || (solidBlock && player.lastXZLogged - xz > data.speedMaxV + 0.2)) && data.flagNumber! >= 1) || player.lastXZLogged - x >= 25) {
                     player.teleport(safePos);
                 }
@@ -134,7 +131,7 @@ async function AntiSpeed(config: configi, player: Player) {
     const { x: x1, z: z1 } = player.location;
     const { x: x2, z: z2 } = data.lastLocation;
     const moveDistance = Math.hypot(x1 - x2, z1 - z2);
-    const state = moveDistance == 0 ? -1 : moveDistance > config.antiSpeed.absThreshould ? 1 : 0;
+    const state = moveDistance == 0 ? -1 : moveDistance > config.bdsPrediction.absThreshould ? 1 : 0;
     data.blockMovementLoop.push(state);
     let loopLength = data.blockMovementLoop.length;
     if (loopLength > 180) {
@@ -150,7 +147,6 @@ async function AntiSpeed(config: configi, player: Player) {
         const flagCondition = highMotionFlag || flyMotionFlag;
         if (
             !bypassMovementCheck(player) &&
-            !illegalEffect &&
             notSpikeLagging &&
             now - data.lastRiding > 3500 &&
             flagCondition &&
@@ -161,7 +157,7 @@ async function AntiSpeed(config: configi, player: Player) {
             data.lastFlag = now;
             if (now - lastflag < 10000) {
                 player.teleport(safePos);
-                flag(player, config.antiSpeed.modules, "B");
+                flag(player, config.bdsPrediction.modules, "B");
             }
             data.blockMovementLoop = [];
         }
@@ -180,19 +176,12 @@ function entityHurt({ damageSource: { cause, damagingEntity } }: EntityHurtAfter
     }
 }
 
-function hasIllegalSpeedEffect(player: Player, effectLevel: number) {
-    const allowLevels = c().antiSpeed.allowSpeedLevels;
-    if (player.hasTag(AnimationControllerTags.usingItem) && effectLevel > allowLevels.usingItem) return true;
-    if (player.isSprinting && effectLevel > allowLevels.sprinting) return true;
-    if (effectLevel > allowLevels.moving) return true;
-    return false;
-}
 registerModule(
-    "antiSpeed",
+    "bdsPrediction",
     false,
     [speeddata],
     {
-        intick: async (config, player) => AntiSpeed(config, player),
+        intick: async (config, player) => BdsPrediction(config, player),
         tickInterval: 1,
     },
     {

@@ -20,6 +20,12 @@ interface FlyData {
     velocityDiffList: number[];
     lastAverge?: number;
     onGroundLoc: Vector3;
+    lastTouchWater: number;
+    highestY?: number;
+    untill: {
+        gliding: boolean;
+        explode: boolean;
+    };
 }
 interface IncludeStairDataInput {
     location: Vector3;
@@ -41,9 +47,9 @@ const includeStair = ({ location: { x: px, y: py, z: pz }, dimension }: IncludeS
     }
 };
 function antiFly(player: Player, now: number, config: configi) {
-    let data = flyData.get(player.id);
+    const data = flyData.get(player.id);
     if (!data) {
-        data = {
+        flyData.set(player.id, {
             previousLocations: player.location,
             velocityLog: 0,
             lastVelLog: 0,
@@ -56,8 +62,12 @@ function antiFly(player: Player, now: number, config: configi) {
             lastVelocity: 0,
             velocityDiffList: [],
             onGroundLoc: player.location,
-        };
-        flyData.set(player.id, data);
+            lastTouchWater: 0,
+            untill: {
+                gliding: false,
+                explode: false,
+            }
+        });
         return;
     }
     const { y: velocity, x, z } = player.getVelocity();
@@ -68,6 +78,27 @@ function antiFly(player: Player, now: number, config: configi) {
     }
     if (velocity == 0 && xz == 0 && player.isOnGround) {
         data.onGroundLoc = player.location;
+    }
+    if (player.isInWater) {
+        data.lastTouchWater = now;
+    }
+    if (!player.isOnGround) {
+        data.highestY ??= player.location.y;
+        if (player.location.y > data.highestY)
+            data.highestY = player.location.y;
+    } else {
+        delete data.highestY;
+    }
+    if (data.untill.gliding) {
+        if (player.isOnGround && !player.isGliding) data.untill.gliding = false;
+    } else if (player.isGliding) {
+        data.untill.gliding = true;
+    }
+    if (data.untill.explode) {
+        player.lastExplosionTime ??= 0;
+        if (now - player.lastExplosionTime > 500 && player.isOnGround) data.untill.explode = false;
+    } else if (now - player.lastExplosionTime < 500) {
+        data.untill.gliding = true;
     }
     const jumpBoost = player.getEffect(MinecraftEffectTypes.JumpBoost);
     const levitation = player.getEffect(MinecraftEffectTypes.Levitation);
@@ -123,6 +154,12 @@ function antiFly(player: Player, now: number, config: configi) {
         data.velocityLog = 0;
         data.lastVelocity = velocity;
     }
+    const fallingDifferent = data.highestY ? data.highestY - player.location.y : 0;
+    const badFalling = (fallingDifferent < config.antiFly.bypassFallDis && player.isFalling) && velocity < config.antiFly.maxFallTerminal;
+    const illegalFall = velocity < config.antiFly.illegalFallTerminal;
+    if (!player.isOnGround && (badFalling || illegalFall)) {
+
+    }
     data.velocityDiffList.push(velocity - data.lastVelocity);
     if (data.velocityDiffList.length > 10) data.velocityDiffList.shift();
     flyData.set(player.id, data);
@@ -132,8 +169,7 @@ async function systemEvent(config: configi, player: Player) {
     const data = flyData.get(player.id);
     if (!data || data.velocityDiffList.length < 10) return;
     const average = data.velocityDiffList.reduce((a, b) => a + b, 0) / data.velocityDiffList.length;
-    const velocityY = player.getVelocity().y;
-    if (average > 0 && average == data.lastAverge && average != 0.1 && Math.abs(velocityY) < 1) {
+    if (average > 0.7 && average == data.lastAverge && average != 0.1 && !player.isFlying && !player.isOnGround && Date.now() - data.lastTouchWater > 1500 && !data.untill.explode && !data.untill.gliding) {
         player.teleport(data.onGroundLoc);
         flag(player, config.antiFly.modules, "A");
     }

@@ -49,12 +49,13 @@ async function checkMotion(config: configi, player: Player) {
         !isSpikeLagging(player);
     motionData.set(player.id, data);
     if (commonPrevention && (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2 && !bypassMovementCheck(player)) {
-        if (wrapDistance < config.antiMotion.predictionThereshold && data.lastWrap > config.antiMotion.wrapDistanceThereshold && config.antiMotion.predictionThereshold) {
+        if (wrapDistance == data.beforeWrap && wrapDistance < config.antiMotion.predictionThereshold && data.lastWrap > config.antiMotion.wrapDistanceThereshold && data.beforeWrap < config.antiMotion.predictionThereshold) {
             player.teleport(data.lastFreezeLocation);
+            flag(player, config.antiMotion.modules, "A");
         }
         if (data.agoWrap < config.antiMotion.predictionThereshold && data.beforeWrap > config.antiMotion.wrapDistanceThereshold && data.lastWrap == data.beforeWrap && wrapDistance < config.antiMotion.predictionThereshold) {
             player.teleport(data.lastFreezeLocation);
-            flag(player, config.antiMotion.modules, "A");
+            flag(player, config.antiMotion.modules, "B");
         }
     }
     data.agoWrap = data.previousWrap;

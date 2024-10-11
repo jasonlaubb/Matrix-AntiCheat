@@ -29,7 +29,8 @@ const timerData = new Map<string, timerData>();
  * @credit jason cleaned the code && orange cat helped preventing false positive
  */
 export async function AntiTimer(config: configi, player: Player, now: number) {
-    const data = timerData.get(player.id) ?? ({} as timerData);
+    const data = timerData.get(player.id);
+    if (!data) return;
     //skip the code for some reasons
     if (player.isGliding || player.hasTag(AnimationControllerTags.riding)) return;
     //dBVD == difference between velocity and moved distance
@@ -40,7 +41,6 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
     //check if dBVD lower than 1 and higher than 0.5 add one to timerLog and when timerLog reach 3 flag (check for low timer)
     if ((dBVD < data.maxDBVD && dBVD > 20 / (tps.getTps()! * 2)) || (dBVD2 < data.maxDBVD && dBVD2 > 20 / (tps.getTps()! * 2))) data.timerLog++;
     else data.timerLog = 0;
-    data.lastHighTeleport ??= 0;
     if (!bypassMovementCheck(player) && now - data.lastHighTeleport >= 5000 && (((dBVD > data.maxDBVD || dBVD2 > data.maxDBVD) && now - data.lastFlag >= 1025) || data.timerLog >= config.antiTimer.minTimerLog)) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - data.lastFlag;
@@ -72,6 +72,7 @@ export async function SystemEvent(player: Player, now: number) {
     data.lastTickPos ??= player.location;
     const distance = Math.hypot(player.location.x - data.lastTickPos.x, player.location.z - data.lastTickPos.z);
     data.lastTickPos = player.location;
+    data.lastHighTeleport ??= 0;
     if (distance > c().antiTimer.maxTickMovment) data.lastHighTeleport = now;
     //just defineing everything we need
     const { x: x1, y: y1, z: z1 } = player.location;

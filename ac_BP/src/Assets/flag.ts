@@ -13,6 +13,7 @@ interface Modules {
     acceptTotal: boolean;
     flagValidationTime: number;
     bestPunishment: string;
+    behaviorBased: boolean;
 }
 interface FlagData {
     sus: number;
@@ -42,14 +43,37 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         flagData.delete(player.id); // Delete old data
         return;
     }
-    if (config.logsettings.logCheatFlag) saveLog("Flag", player.name, `${modules.id} ${type} (x${data.flagVL[modules.id] ?? 0})`);
     if (modules.instantPunishment) {
         const flagMessage = getFlagMessage(player.name, "Flag Handler [Instant]", [modules.id], punishmentMaps[modules.bestPunishment]);
+        sendResult(rawstr.drt("protection.highrisk", player.name));
         flagModeSelector(config.flagMode, player.name).forEach((target) => {
             target.sendMessage(flagMessage);
         });
-        if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
+        if (config.logsettings.logCheatPunishment) saveLog("AC-Instant", player.name, `${modules.id} ${type}`);
+        
         applyPunishment(player, modules.bestPunishment);
+        flagData.delete(player.id);
+        return;
+    }
+    if (modules.behaviorBased) {
+        const flagMessage = getFlagMessage(player.name, "Flag Handler [Behavior]", [modules.id], punishmentMaps.tempkick);
+        flagModeSelector(config.flagMode, player.name).forEach((target) => {
+            target.sendMessage(flagMessage);
+        });
+        sendResult(rawstr.drt("protection.behavior", player.name));
+        if (config.logsettings.logCheatPunishment) saveLog("AC-Behavior", player.name, `${modules.id} ${type}`);
+        // Disconnect the player
+        if (!config.antiCheatTestMode) {
+            const badData = player.getDynamicProperty("badRecord");
+            const badRecord = badData ? JSON.parse(badData as string) as number[] : [];
+            badRecord.push(Date.now());
+            const now = Date.now();
+            const filtered = JSON.stringify(badRecord.filter((t) => now - t < config.autoPunishment.eachTimeValidt));
+            player.setDynamicProperty("badRecord", filtered);
+            if (filtered.length > config.autoPunishment.behaviorMax) {
+                Action.ban(player, config.autoPunishment.ban.reason, "Matrix AntiCheat", config.autoPunishment.behaviorBanLengthMins * 60000);
+            } else Action.tempkick(player);
+        }
         flagData.delete(player.id);
         return;
     }
@@ -68,7 +92,8 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             flagModeSelector(config.flagMode, player.name).forEach((target) => {
                 target.sendMessage(flagMessage);
             });
-            if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
+            sendResult(rawstr.drt("protection.unfair", player.name));
+            if (config.logsettings.logCheatPunishment) saveLog("AC-Total", player.name, `${maxPercentageConfig} (MAX)`);
             applyPunishment(player, suggestedPunishment);
             flagData.delete(player.id);
         }
@@ -79,12 +104,12 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         flagModeSelector(config.flagMode, player.name).forEach((target) => {
             target.sendMessage(flagMessage);
         });
-        if (config.logsettings.logCheatPunishment) saveLog("Detected", player.name, `${modules.id} ${type}`);
+        sendResult(rawstr.drt("protection.unfair", player.name));
+        if (config.logsettings.logCheatPunishment) saveLog("AC-Limit", player.name, `${modules.id} ${type}`);
         applyPunishment(player, modules.bestPunishment);
         flagData.delete(player.id);
     }
 }
-
 function flagModeSelector(flagMode: string, playerName: string): Player[] {
     switch (flagMode) {
         case "none": {
@@ -121,7 +146,7 @@ const punishmentMaps: { [key: string]: string } = {
 };
 function applyPunishment(player: Player, punishment: string) {
     // Only for local world testing...
-    if (player.isOp()) return;
+    if (c().antiCheatTestMode) return;
     const config = c();
     switch (punishment) {
         case "tempkick": {
@@ -144,6 +169,15 @@ function applyPunishment(player: Player, punishment: string) {
             Action.ban(player, config.autoPunishment.ban.reason, "Matrix AntiCheat", config.autoPunishment.ban.minutes);
             break;
         }
+    }
+}
+function sendResult (parse: RawText) {
+    if (c().autoPunishment.resultGobalize) {
+        world.sendMessage(parse);
+    } else {
+        world.getAllPlayers().filter((player) => isAdmin(player)).forEach((player) => {
+            player.sendMessage(parse);
+        })
     }
 }
 function getFlagMessage(object: string, type: string, component: string[], slove: string): RawText {
