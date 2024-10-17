@@ -3,6 +3,7 @@ import { isAdmin } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules.js";
 import flag from "../../Assets/flag.js";
+import MathUtil from "../../Assets/MathUtil";
 
 const reachData: Map<string, number> = new Map<string, number>();
 
@@ -50,22 +51,21 @@ function antiReach(hurtEntity: Player, damagingEntity: Player, config: configi) 
 
     //constant the distance
     const distance: number = calculateDistance(damagingEntity, hurtEntity);
+    const rawDistance = MathUtil.distanceXZ(damagingEntity.location, hurtEntity.location);
 
     let data = reachData.get(damagingEntity.id);
 
     //if the distance is higher than the max reach or the y reach is higher than the max y reach, add a vl
-    if (distance > config.antiReach.maxReach || yReach > maximumYReach) {
-        if (!data) {
-            data = 0;
-            system.runTimeout(() => {
+    if ((Math.min(distance, rawDistance) > config.antiReach.maxReach || yReach > maximumYReach) {
+        data ??= 0;
+        system.runTimeout(() => {
                 reachData.delete(damagingEntity.id);
-            }, 80);
-        }
-        data++;
+        }, 80);
+        if (rawDistance * 0.95 > 5.1) data++;
     }
 
     //if the vl is higher than 2, flag the player
-    if (data! >= 2) {
+    if (data! >= 3) {
         //A - false positive: very low, efficiency: high
         flag(damagingEntity, config.antiReach.modules, "A");
         damagingEntity.applyDamage(6);

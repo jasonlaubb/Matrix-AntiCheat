@@ -154,7 +154,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
             if (yLoc > -2.1 && yLoc <= -1 && extender - data.avgExt >= 0.5 && now - data.lastPlace >= 200 && now - data.lastPlace <= 1000) {
                 data.scaffoldFlagsG++;
                 if (data.scaffoldFlagsG >= 3) {
-                    flag(player, config.antiScaffold.modules, "G");
+                    // flag(player, config.antiScaffold.modules, "G");
                     data.scaffoldFlagsG = 0;
                     detected = true;
                 }
