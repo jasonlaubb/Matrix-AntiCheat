@@ -952,6 +952,18 @@ msgstr "§bMatrix §7>§g 玩家的高風險行為已被阻止並成功封鎖該
 msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
 msgstr "§bMatrix §7>§g Matrix Defender 已成功阻止目前 Realm 的高風險用戶端 §7(PlayerId=%s)"
 
+#: welcomer.new
+msgid "§bMatrix §7>§g Welcome %s first time joined!"
+msgstr "§bMatrix §7>§g 歡迎 %s 首次加入"
+
+#: welcomer.protectedline
+msgid "§bMatrix §7>§g This server is under the protection from Matrix AntiCheat. Any unfair advantage will be punished automatically."
+msgstr "這個伺服器受到 Matrix 反外掛的保護, 任何不公平的優勢會被自動懲罰"
+
+#: welcomer.wantdownload
+msgid "§bMatrix §7>§a Want to gain Matrix AntiCheat for your own server too? Please visit our discord support server, use '%sabout' to get the link."
+msgstr "§bMatrix §7>§a 想要在你自己的伺服器上也取得反外掛的保護嗎? 請透過使用'%sabout'命令取得連結並加入我們的官方discord伺服器"
+
 #: ui.idp.desc
 msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
 msgstr "我們已協助您遠離危險 >w< 如果您有任何疑問, 請造訪我們的支援伺服器(您可以透過執行 /function version 取得連結)"

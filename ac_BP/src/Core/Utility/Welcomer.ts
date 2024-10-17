@@ -14,12 +14,13 @@ async function onPlayJoin (config: configi, event: PlayerSpawnAfterEvent) {
 			new rawstr()
 				.tra("welcomer.protectedline")
 				.str("\n")
-				.tra("welcomer.wantdownload")
+				.tra("welcomer.wantdownload", config.commands.prefix)
+				.parse()
 		)
 	}, config.welcomer.delay);
 }
 
-registerModule("welcomer", true, []
+registerModule("welcomer", true, [],
 	{
 		worldSignal: world.afterEvents.playerSpawn,
 		then: onPlayJoin,

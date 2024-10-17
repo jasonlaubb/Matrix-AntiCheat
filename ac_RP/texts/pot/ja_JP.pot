@@ -952,6 +952,18 @@ msgstr ""
 msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
 msgstr ""
 
+#: welcomer.new
+msgid "§bMatrix §7>§g Welcome %s first time joined!"
+msgstr ""
+
+#: welcomer.protectedline
+msgid "§bMatrix §7>§g This server is under the protection from Matrix AntiCheat. Any unfair advantage will be punished automatically."
+msgstr ""
+
+#: welcomer.wantdownload
+msgid "§bMatrix §7>§a Want to gain Matrix AntiCheat for your own server too? Please visit our discord support server, use '%sabout' to get the link."
+msgstr ""
+
 #: ui.idp.desc
 msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
 msgstr ""

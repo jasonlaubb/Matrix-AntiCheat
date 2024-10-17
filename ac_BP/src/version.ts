@@ -1,1 +1,1 @@
-export default [5, 1, "1-beta"];
+export default [5, 1, 10];
