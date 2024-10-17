@@ -82,12 +82,12 @@ class rawstr {
     }
 }
 
-function extraDisconnect (player: Player) {
+function extraDisconnect(player: Player) {
     if (c().antiCheatTestMode) return;
     system.run(() => {
         try {
             Action.tempkick(player);
-        } catch { }
+        } catch {}
     });
 }
 

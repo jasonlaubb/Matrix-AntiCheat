@@ -178,7 +178,7 @@ async function systemEvent(config: configi, player: Player) {
     flyData.set(player.id, data);
 }
 
-async function playerChangeBlockTrigger (_config: configi, event: PlayerPlaceBlockAfterEvent | PlayerBreakBlockAfterEvent) {
+async function playerChangeBlockTrigger(_config: configi, event: PlayerPlaceBlockAfterEvent | PlayerBreakBlockAfterEvent) {
     const player = event.player;
     const data = flyData.get(player.id);
     if (!data) return;

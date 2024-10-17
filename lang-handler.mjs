@@ -55,7 +55,7 @@ async function convertPotFilesToPo() {
                     if (index == -1) continue;
                     lines[index + 2] = `msgstr "${cleanstr}"`
                 }
-                fs.writeFileSync(root + "pot/" + K.replace(".js", ".pot"), lines.join("\n"))
+                fs.writeFileSync(root + "pot/" + K.replace(".js", ".pot"), lines.join("\n") + "\n");
             })
         })
         return;
