@@ -56,7 +56,7 @@ function antiReach(hurtEntity: Player, damagingEntity: Player, config: configi) 
     let data = reachData.get(damagingEntity.id);
 
     //if the distance is higher than the max reach or the y reach is higher than the max y reach, add a vl
-    if ((Math.min(distance, rawDistance) > config.antiReach.maxReach || yReach > maximumYReach) {
+    if ((Math.min(distance, rawDistance) > config.antiReach.maxReach || yReach > maximumYReach)) {
         data ??= 0;
         system.runTimeout(() => {
                 reachData.delete(damagingEntity.id);
