@@ -1,4 +1,4 @@
-import { GameMode, Vector3, Dimension, Player } from "@minecraft/server";
+import { GameMode, Vector3, Dimension, Player, world, PlayerBreakBlockAfterEvent, PlayerPlaceBlockAfterEvent } from "@minecraft/server";
 import { bypassMovementCheck, isSpawning } from "../../Assets/Util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
@@ -21,6 +21,7 @@ interface FlyData {
     lastAverge?: number;
     onGroundLoc: Vector3;
     lastTouchWater: number;
+    lastMoveBlock: number;
     highestY?: number;
     untill: {
         gliding: boolean;
@@ -63,6 +64,7 @@ function antiFly(player: Player, now: number, config: configi) {
             velocityDiffList: [],
             onGroundLoc: player.location,
             lastTouchWater: 0,
+            lastMoveBlock: 0,
             untill: {
                 gliding: false,
                 explode: false,
@@ -167,12 +169,24 @@ async function systemEvent(config: configi, player: Player) {
     const data = flyData.get(player.id);
     if (!data || data.velocityDiffList.length < 10) return;
     const average = data.velocityDiffList.reduce((a, b) => a + b, 0) / data.velocityDiffList.length;
-    if (average > 0.7 && average == data.lastAverge && average != 0.1 && !player.isFlying && !player.isOnGround && Date.now() - data.lastTouchWater > 1500 && !data.untill.explode && !data.untill.gliding) {
+    const now = Date.now();
+    if (average > 0.7 && now - data.lastMoveBlock > 3500 && average == data.lastAverge && average != 0.1 && !player.isFlying && !player.isOnGround && now - data.lastTouchWater > 1500 && !data.untill.explode && !data.untill.gliding) {
         player.teleport(data.onGroundLoc);
         flag(player, config.antiFly.modules, "A");
     }
     data.lastAverge = average;
     flyData.set(player.id, data);
+}
+
+async function playerChangeBlockTrigger (_config: configi, event: PlayerPlaceBlockAfterEvent | PlayerBreakBlockAfterEvent) {
+    const player = event.player;
+    const data = flyData.get(player.id);
+    if (!data) return;
+    const block = event.block;
+    if (block?.isValid()) {
+        data.lastMoveBlock = Date.now();
+        flyData.set(player.id, data);
+    }
 }
 
 registerModule(
@@ -190,5 +204,13 @@ registerModule(
         tickInterval: 5,
         intick: systemEvent,
         tickOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
+    },
+    {
+        worldSignal: world.afterEvents.playerPlaceBlock,
+        then: playerChangeBlockTrigger,
+    },
+    {
+        worldSignal: world.afterEvents.playerBreakBlock,
+        then: playerChangeBlockTrigger,
     }
 );

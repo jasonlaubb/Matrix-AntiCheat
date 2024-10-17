@@ -52,7 +52,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         if (config.logsettings.logCheatPunishment) saveLog("AC-Instant", player.name, `${modules.id} ${type}`);
 
         applyPunishment(player, modules.bestPunishment);
-        extraDisconnect(player);
+        if (modules.bestPunishment != "none") extraDisconnect(player);
         flagData.delete(player.id);
         return;
     }
@@ -73,7 +73,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             player.setDynamicProperty("badRecord", filtered);
             if (filtered.length > config.autoPunishment.behaviorMax) {
                 Action.ban(player, config.autoPunishment.ban.reason, "Matrix AntiCheat", config.autoPunishment.behaviorBanLengthMins * 60000);
-                extraDisconnect(player);
+                if (modules.bestPunishment != "none") extraDisconnect(player);
             } else {
                 Action.tempkick(player);
             }
@@ -99,7 +99,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             sendResult(rawstr.drt("protection.unfair", player.name));
             if (config.logsettings.logCheatPunishment) saveLog("AC-Total", player.name, `${maxPercentageConfig} (MAX)`);
             applyPunishment(player, suggestedPunishment);
-            extraDisconnect(player);
+            if (suggestedPunishment != "none") extraDisconnect(player);
             flagData.delete(player.id);
         }
     }
@@ -112,7 +112,7 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         sendResult(rawstr.drt("protection.unfair", player.name));
         if (config.logsettings.logCheatPunishment) saveLog("AC-Limit", player.name, `${modules.id} ${type}`);
         applyPunishment(player, modules.bestPunishment);
-        extraDisconnect(player);
+        if (modules.bestPunishment != "none") extraDisconnect(player);
         flagData.delete(player.id);
     }
 }
