@@ -7,7 +7,8 @@
 * Commands
   * [Synax error](/Commands/synaxError)
   * [Command Usage](/Commands/commandUsage)
-* Sentinel Detection
-  * [Introduce this system](/Detection/intro)
+* Sentinel Detection System
+  * [Introduce to this system](/Detection/intro)
+  * [Dynamic toggle](/Detection/toggle)
 * UI
   * [Matrix UI](/MatrixUI/matrixui)
