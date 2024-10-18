@@ -7,7 +7,7 @@
 * Commands
   * [Synax error](/Commands/synaxError)
   * [Command Usage](/Commands/commandUsage)
-* Protection
-  * [Hack detection](/Safe/checks)
+* Sentinel Detection
+  * [Introduce this system](/Detection/intro)
 * UI
   * [Matrix UI](/MatrixUI/matrixui)
