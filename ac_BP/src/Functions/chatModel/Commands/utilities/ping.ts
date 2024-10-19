@@ -16,9 +16,10 @@ registerCommand({
                 .parse()
         );
         const ping = await whatIsThePing();
+        let pingLevel = ping < 40 ? "§aLow" : ping < 120 ? "§eAverge" : ping < 300 ? "§gMid" : ping < 800 ? "§cHigh" : "§dExtreme";
         player.sendMessage(
             new rawstr(true, "g")
-                .tra("ping.pong", ping)
+                .tra("ping.pong", ping.toString(), pingLevel)
                 .parse()
         );
     },
