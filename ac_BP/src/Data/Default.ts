@@ -369,6 +369,20 @@ export default {
             requireOp: false,
             requireTag: [],
         },
+        ping: {
+            enabled: true,
+            adminOnly: true,
+            minPermissionLevel: 1,
+            requireOp: false,
+            requireTag: [],
+        },
+        fakeleave: {
+            enabled: true,
+            adminOnly: true,
+            minPermissionLevel: 1,
+            requireOp: false,
+            requireTag: [],
+        },
     },
     ui: {},
     defender: {
