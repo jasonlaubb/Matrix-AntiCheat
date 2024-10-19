@@ -114,6 +114,7 @@ class MatrixAnti_MCPE {
         await import("./Functions/chatModel/Commands/utilities/runcommand");
         await import("./Functions/chatModel/Commands/utilities/gm");
         await import("./Functions/chatModel/Commands/utilities/fakeleave");
+        await import("./Functions/chatModel/Commands/utilities/ping");
         await import("./Functions/chatModel/Commands/pcommands/report");
         // Register the modules
         Minecraft.world.modules = [];
