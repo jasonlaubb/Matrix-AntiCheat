@@ -1,4 +1,4 @@
-import { c } from "../../../../Assets/Util";
+import { c, rawstr } from "../../../../Assets/Util";
 import { registerCommand, verifier } from "../../CommandHandler";
 import { world } from "@minecraft/server";
 
@@ -10,10 +10,20 @@ registerCommand({
     minArgs: 0,
     require: (player) => verifier(player, c().commands.ping),
     executor: async (player, _args) => {
+        player.sendMessage(
+            new rawstr(true, "g")
+                .tra("ping.ping", player.name)
+                .parse()
+        );
         const ping = await whatIsThePing();
+        player.sendMessage(
+            new rawstr(true, "g")
+                .tra("ping.pong", ping)
+                .parse()
+        );
     },
 });
-
+/** @description Function to get the server ping .u. */
 function whatIsThePing (): Promise<number> {
     const currentTime = Date.now();
     return new Promise((pong) => {
