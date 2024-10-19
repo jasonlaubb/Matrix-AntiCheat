@@ -1007,3 +1007,7 @@ msgstr ""
 #: ui.idp.button
 msgid "Integrated defense panel"
 msgstr ""
+
+#: ping.ping
+msgid "%s: Ping?"
+msgstr "Pong! Your server ping is %1ms §7(%2§7)"
