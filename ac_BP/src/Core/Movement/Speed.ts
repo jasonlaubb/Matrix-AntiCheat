@@ -44,7 +44,8 @@ async function antiSpeed(config: configi, player: Player) {
         !player.hasTag(AnimationControllerTags.riding) &&
         !(player.threwTridentAt && now - player.threwTridentAt < 9000) &&
         !player.isInWater &&
-        !player.isGliding
+        !player.isGliding &&
+        !player.isFlying
     ) {
         player.teleport(data.lastStopLoc);
         flag(player, config.antiSpeed.modules, "A");
