@@ -19,6 +19,7 @@ interface SpeedData {
     lastStopLoc: Vector3;
     lastTeleport: number;
 }
+const teleportBypassDuration = c().antiSpeed.checkInterval * 500;
 const speedData = new Map<string, SpeedData>();
 async function antiSpeed(config: configi, player: Player) {
     const now = Date.now();
