@@ -40,7 +40,7 @@ async function antiSpeed(config: configi, player: Player) {
         blockPerSecond > config.antiSpeed.maxBlockPerSecond &&
         (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2 &&
         !strightMovement &&
-        now - data.lastTeleport > 5000 &&
+        now - data.lastTeleport > teleportBypassDuration &&
         !(player.lastExplosionTime && now - player.lastExplosionTime < 3000) &&
         !player.hasTag(AnimationControllerTags.riding) &&
         !(player.threwTridentAt && now - player.threwTridentAt < 9000) &&
