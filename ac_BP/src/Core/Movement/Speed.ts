@@ -4,7 +4,7 @@ import MathUtil from "../../Assets/MathUtil";
 import { AnimationControllerTags } from "../../Data/EnumData";
 import flag from "../../Assets/flag";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-
+import { c } from "../../Assets/Util";
 function getBlockPerSecond(currentLocation: Vector3, lastLoggedLocation: Vector3, now: number, lastTimeStamp: number) {
     const secondTaken = (now - lastTimeStamp) / 1000;
     if (secondTaken == 0) return 0;
@@ -77,6 +77,6 @@ registerModule(
     {
         tickOption: { excludeGameModes: [GameMode.creative, GameMode.spectator] },
         intick: antiSpeed,
-        tickInterval: 10,
+        tickInterval: c().antiSpeed.checkInterval,
     }
 );
