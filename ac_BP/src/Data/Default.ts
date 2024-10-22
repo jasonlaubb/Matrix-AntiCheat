@@ -635,7 +635,7 @@ export default {
     },
     antiSpeed: {
         enabled: true,
-        maxBlockPerSecond: 13,
+        maxBlockPerSecond: 14,
         modules: {
             id: "Speed",
             configId: "antiSpeed",
