@@ -24,13 +24,13 @@ msgstr ""
 msgid "Matrix has been completely initialized in %s ms"
 msgstr ""
 
-#: function.gainop
+#: function.gainop 
 msgid "§bMatrix §7> §gYou have verified your operator permission, use chat command '<prefix>op' directly to get the matrix admin permission"
-msgstr ""
+msgstr "§bMatrix §7> §gOP権限を確認しました。コマンド '<prefix>op' を直接使用してMatrix管理者権限を取得してください。"
 
-#: function.alreadyop
+#: function.alreadyop 
 msgid "§bMatrix §7> §cYou have already verified your operator permission."
-msgstr ""
+msgstr "§bMatrix§7> §cあなたは既に管理者権限を取得しています。"
 
 #: function.check.title
 msgid "Anti-Cheat setup checking:"
@@ -38,11 +38,11 @@ msgstr "アンチチート設定のチェック:"
 
 #: function.check.betaapi
 msgid "§gBeta API usage: %s"
-msgstr "§gBeta API の使用: %s"
+msgstr "§gBeta API の使用法: %s"
 
 #: function.check.playerjson
 msgid "§gPlayer.json usage: %s"
-msgstr ""
+msgstr "§gPlayer.json 使用法: %s"
 
 #: function.check.helpa
 msgid "§7- If the 'Beta API usage' is stated 'FALSE', that's mean the anticheat cannot run the script of the behavior pack."
@@ -58,7 +58,7 @@ msgstr "§7- それでも動作しない場合は、Minecraft のバージョン
 
 #: function.check.helpd
 msgid "§7- If the 'Player.json usage' is stated 'FALSE', please make sure you have placed Matrix AntiCheat on the top of your behavior packs."
-msgstr ""
+msgstr "§7- 「Player.json の使用法」が「FALSE」と記載されている場合は、ビヘイビアーパックの一番上に Matrix AntiCheat を配置していることを確認してください。"
 
 #: function.version.title
 msgid "§gYou are now on version §eV%s"
@@ -74,23 +74,23 @@ msgstr "%1§g が不正行為 §4%2§r を試みました §7[Type %3§7] §7[§
 
 #: object.detected
 msgid "§bMatrix §7> §7Object Detected."
-msgstr ""
+msgstr "§bMatrix §7> §7オブジェクトを検出"
 
 #: object.object
 msgid "Object: §e%1§r§7"
-msgstr ""
+msgstr "オブジェクト: §e%1§r§7"
 
 #: object.type
 msgid "Type: §e%1§r§7"
-msgstr ""
+msgstr "タイプ: §e%1§r§7"
 
 #: object.components
 msgid "Components: §e%1§r§7"
-msgstr ""
+msgstr "コンポーネント: §e%1§r§7"
 
 #: object.autosolve
 msgid "Automatic solve: §e%1§r§7"
-msgstr ""
+msgstr "自動解決: §e%1§r§7"
 
 #: ui.title
 msgid "Admin GUI"
@@ -98,7 +98,7 @@ msgstr "管理者 GUI"
 
 #: ui.itemui
 msgid "Get UI Item §8(itemui)"
-msgstr ""
+msgstr "UI アイテムを取得する §8(itemui)"
 
 #: ui.moderateplayer
 msgid "Moderate Players"
@@ -114,11 +114,11 @@ msgstr "終了"
 
 #: ui.nogaoadmin
 msgid "Oops, moderate a player with admin permission with ui is not supported, please use command instead."
-msgstr ""
+msgstr "申し訳ありません。UI を使用して管理者権限を持つプレーヤーを管理することはサポートされていません。代わりにコマンドを使用してください。"
 
 #: ui.selectonline
 msgid "Select a online player from the list below"
-msgstr ""
+msgstr "以下のリストからオンラインプレーヤーを選択してください"
 
 #: ui.you
 msgid "You"
@@ -126,7 +126,7 @@ msgstr ""
 
 #: ui.admin
 msgid "Admin"
-msgstr ""
+msgstr "管理者"
 
 #: ui.banplayer
 msgid "Ban Player"
@@ -194,7 +194,7 @@ msgstr "プレイヤーのエンダーチェストを消去する §8(echestwipe
 
 #: ui.tempkick.button
 msgid "Temp-kick players §8(tempkick)"
-msgstr ""
+msgstr "再復帰可能なKick §8(tempkick)"
 
 #: ui.config.button
 msgid "Edit config §8(config)"
@@ -226,7 +226,7 @@ msgstr "コマンド実行中にエラーが発生しました。"
 
 #: cmderror.plevel
 msgid "No acess to continue, minimum permission level: %1"
-msgstr ""
+msgstr "続行するにはアクセス権がありません。最小権限レベル: %1"
 
 #: cmderror.name
 msgid "§gName: §9%s"
@@ -310,15 +310,15 @@ msgstr "%1 は %2 によってミュートが解除されました"
 
 #: toggle.togglechange
 msgid "%1 module has been %2d"
-msgstr ""
+msgstr "%1 モジュールは %2d になりました"
 
 #: toggles.title
 msgid "Matrix AntiCheat toggleable modules"
-msgstr ""
+msgstr "Matrix AntiCheat 切り替え可能モジュール"
 
 #: toggles.text
 msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
-msgstr ""
+msgstr "以下はMatrix Anti-Cheatの切り替え可能なモジュールのリストです。「toggle <module> <enable/disable>」で切り替えることができます。"
 
 #: toggles.feide
 msgid "§a» §g%s: §aEnabled"
@@ -466,79 +466,79 @@ msgstr "%s 秒後にもう一度試してください"
 
 #: op.reached
 msgid "You have reached the maximum permission level that op command can give."
-msgstr ""
+msgstr "op コマンドが付与できる最大権限レベルに達しました"
 
 #: op.incorrect
 msgid "You have entered the incorrect password, please try again later."
-msgstr ""
+msgstr "間違ったパスワードを入力しました。しばらくしてからもう一度お試しください。"
 
 #: op.opgain
 msgid "You have gained matrix admin permission through operator permission."
-msgstr ""
+msgstr "OP権限を通じてMatrix管理者権限を取得しました"
 
 #: op.pwgain
 msgid "You have gained matrix admin permission through security password."
-msgstr ""
+msgstr "セキュリティ パスワードを通じてMatrix管理者権限を取得しました。"
 
 #: op.pwtips
 msgid "We have detected that you haven't set-up your password. To increase the security of your realm or server, you can set your password through 'setpassword <new password> <confirm password>' command."
-msgstr ""
+msgstr "パスワードが設定されていないことが検出されました。レルムまたはサーバーのセキュリティを強化するには、「setpassword <新しいパスワード> <パスワードの確認>」コマンドを使用してパスワードを設定できます。"
 
 #: op.notop
 msgid "Operator permission is required when password is disabled. Use command '/function verify/operator' to verfiy your operator permission."
-msgstr ""
+msgstr "パスワードが無効になっている場合は、オペレータ権限が必要です。コマンド '/function verify/operator' を使用してオペレータ権限を確認してください。"
 
 #: deop.sucess
 msgid "You have removed matrix admin permission from yourself."
-msgstr ""
+msgstr "Matrix管理者権限を自分自身から削除しました。"
 
 #: setadmin.has
 msgid "%2 has changed %1's admin permission to %3"
-msgstr ""
+msgstr "%2 が %1 の管理者権限を %3 に変更しました"
 
 #: setadmin.notenough
 msgid "Not enough permission. You should have at least %1 permission to give a permission level of %2"
-msgstr ""
+msgstr "権限が足りません。権限レベル %2 を与えるには、少なくとも %1 の権限が必要です。"
 
 #: setadmin.outofrange
 msgid "The permission level that you can set should be between 0 and 3"
-msgstr ""
+msgstr "設定できる権限レベルは0～3の範囲です"
 
 #: setadmin.toolow
 msgid "The permission level which is valid should be at least 0. If you are trying to remove someone from admin permission, use 'deladmin <player>' instead."
-msgstr ""
+msgstr "有効な権限レベルは少なくとも 0 である必要があります。管理者権限から誰かを削除する場合は、代わりに 'deladmin <player>' を使用してください。"
 
 #: setadmin.toohigh
 msgid "The target has a permission level higher than you, you cannot determine the target's permission level."
-msgstr ""
+msgstr "指定されたプレイヤーの権限レベルはあなたよりも高いため、そのプレイヤー権限レベル変更することはできません。"
 
 #: setpassword.different
 msgid "The new password and confirm password are different. Please try again."
-msgstr ""
+msgstr "新しいパスワードと確認パスワードが異なります。もう一度お試しください。"
 
 #: setpassword.changed
 msgid "The password has been changed, please don't forget your new password."
-msgstr ""
+msgstr "パスワードが変更されました。新しいパスワードを忘れないようにしてください。"
 
 #: clearpassword.ok
 msgid "The password has been cleared"
-msgstr ""
+msgstr "パスワードが消去されました"
 
 #: deladmin.has
 msgid "%2 has removed %1's admin permission"
-msgstr ""
+msgstr "%2 は %1 の管理者権限を削除しました"
 
 #: deladmin.notenough
 msgid "Not enough permission. You cannot remove someone from admin permission if you have lower permission level than the target."
-msgstr ""
+msgstr "権限が不十分です。ターゲットよりも権限レベルが低い場合は、管理者権限からユーザーを削除することはできません。"
 
 #: deladmin.none
 msgid "The target has no admin permission"
-msgstr ""
+msgstr "指定されたプレイヤーには管理者権限がありません"
 
 #: deladmin.lockdown
 msgid "You cannot remove someone from matrix admin permission when the server is in lockdown mode"
-msgstr ""
+msgstr "サーバーがロックダウンモードのときは、Matrix管理者権限からユーザーを削除することはできません。"
 
 #: showallrank.has
 msgid "Show all rank has been set to %s"
@@ -570,7 +570,7 @@ msgstr "アンバンキューにプレイヤーはいません"
 
 #: toggle.already
 msgid "This module is %sd already"
-msgstr ""
+msgstr "このモジュールはすでに%sdです"
 
 #: unbanlist.list
 msgid "Unban list"
@@ -578,7 +578,7 @@ msgstr "アンバンリスト"
 
 #: toggle.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr ""
+msgstr "不明なモジュールです。%stoggles を試してください"
 
 #: about.version
 msgid "Version"
@@ -630,7 +630,7 @@ msgstr "検証が完了しました"
 
 #: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
-msgstr ""
+msgstr "実験的なモジュールを開こうとしています。バグや誤検知が発生する可能性があります。有効にするには、「%1toggle %2 enable force」を使用してください。"
 
 #: adminchat.adminchat
 msgid "adminchat"
@@ -710,15 +710,15 @@ msgstr "スパム対策の %1 が %2 に設定されました"
 
 #: help.header
 msgid "The help pages for command of Matrix AntiCheat, if you want to learn more about how to use our anticheat, please visit website page §e%s"
-msgstr ""
+msgstr "Matrix AntiCheatのコマンドのヘルプページ。アンチチートの使用方法について詳しく知りたい場合は、ウェブサイトのページ§e%sをご覧ください。"
 
 #: help.page
 msgid "§7--- Showing help page §e%1 §7of §e%2 §7(%3help <page>) ---"
-msgstr ""
+msgstr "§7--- ヘルプ ページ §e%1 §7of §e%2 §7(%3help <page>) を表示しています ---"
 
 #: help.pageerr
 msgid "Page %s does not exist"
-msgstr ""
+msgstr "ページ %s は存在しません"
 
 #: ui.closechat
 msgid "Close the chat to open the following ui."
@@ -870,15 +870,15 @@ msgstr "%1 は警告の最大数に達しました(何事？）"
 
 #: db.gen
 msgid "Generated %s confuse scoreboard(s)."
-msgstr ""
+msgstr "%s 個の混乱したスコアボードが生成されました。"
 
 #: db.suc
 msgid "Sucessfully recover the data of config"
-msgstr ""
+msgstr "構成データの回復に成功しました"
 
 #: db.delun
 msgid "The data of the backup has been deleted unexpectedly."
-msgstr ""
+msgstr "バックアップのデータが予期せず削除されました"
 
 #: configdb.autocommit
 msgid "Please disable auto-commit to use this command."
@@ -902,23 +902,23 @@ msgstr "チャットを閉じてインベントリを開いて、選択したプ
 
 #: directaction.success
 msgid "%1 has scuessfully finished the direct action to %2"
-msgstr ""
+msgstr "%1 は %2 への直接アクションを無事に完了しました"
 
 #: runcommand.banned
 msgid "You cannot run a banned command."
-msgstr ""
+msgstr "禁止されたコマンドは実行できません。"
 
 #: runcommand.failed
 msgid "Failed to run the command."
-msgstr ""
+msgstr "コマンドの実行に失敗しました。"
 
 #: runcommand.success
 msgid "Sucessfully run the command."
-msgstr ""
+msgstr "コマンドを正常に実行しました。"
 
 #: gm.success
 msgid "Sucessfully changed the gamemode to %s"
-msgstr ""
+msgstr "ゲームモードを %s に変更しました"
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
@@ -938,72 +938,72 @@ msgstr "§l:_input_key.inventory:§r を押してインベントリを開きま�
 
 #: protection.behavior
 msgid "§bMatrix §7>§g Behavior protection has blocked a player's access successfully. §7(Player=%s)"
-msgstr ""
+msgstr "§bMatrix §7>§g 動作保護によりプレイヤーのアクセスが正常にブロックされました。§7(プレイヤー=%s)"
 
 #: protection.unfair
 msgid "§bMatrix §7>§g Unfair advantage from a player has been detected. §7(Player=%s)"
-msgstr ""
+msgstr "§bMatrix §7>§g プレイヤーの不公平な優位性(Unfair advantage)が検出されました。§7(プレイヤー=%s)"
 
 #: protection.highrisk
 msgid "§bMatrix §7>§g A high-risk action from a player has been blocked and banned the player successfully. §7(Player=%s)"
-msgstr ""
+msgstr "§bMatrix §7>§g プレイヤーによる高リスクの行動がブロックされ、プレイヤーは正常に禁止されました。§7(プレイヤー=%s)"
 
 #: protection.defender
 msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
-msgstr ""
+msgstr "§bMatrix §7>§g Matrix Defender は、現在のレルムに対して高リスクのクライアントを正常にブロックしました。§7(PlayerId=%s)"
 
 #: welcomer.new
 msgid "§bMatrix §7>§g Welcome %s first time joined!"
-msgstr ""
+msgstr "§bMatrix §7>§g %s さん、ようこそ！！ゆっくりしていってね"
 
 #: welcomer.protectedline
 msgid "§bMatrix §7>§g This server is under the protection from Matrix AntiCheat. Any unfair advantage will be punished automatically."
-msgstr ""
+msgstr "§bMatrix §7>§g このサーバーはMatrix AntiCheatの保護下にあります。チーターは自動的に処罰されます。"
 
 #: welcomer.wantdownload
 msgid "§bMatrix §7>§a Want to gain Matrix AntiCheat for your own server too? Please visit our discord support server, use '%sabout' to get the link."
-msgstr ""
+msgstr "§bMatrix §7>§a 自分のサーバーでも Matrix AntiCheat を入手したいですか? Discord サポート サーバーにアクセスし、「%sabout」を使用してリンクを取得してください。"
 
 #: ui.idp.desc
 msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
-msgstr ""
+msgstr "私たちが対応します >w< ご質問がある場合は、サポート サーバーにアクセスしてください (/function version を実行するとリンクを取得できます)"
 
 #: ui.idp.select
 msgid "Select a report you want to view"
-msgstr ""
+msgstr "表示するレポートを選択してください"
 
 #: ui.idp.limit
 msgid "We can maximum save %s of last reports"
-msgstr ""
+msgstr "最新のレポートを最大 %s 個保存できます"
 
 #: ui.idp.none
 msgid "There are no reports can be displayed"
-msgstr ""
+msgstr "表示できるレポートはありません"
 
 #: ui.idp.preport
 msgid "%s's follow-up report"
-msgstr ""
+msgstr "%s のフォローアップレポート"
 
 #: ui.idp.offline.none
 msgid "While you're offline, there were none hacker detected, your world is safe!"
-msgstr ""
+msgstr "オフラインの間はハッカーは検出されず、あなたの世界は安全だよ!"
 
 #: ui.idp.offline.is
 msgid "While you're offline, %s hacker(s) were detected by full automation, your world is still safe under our protection."
-msgstr ""
+msgstr "あなたがオフラインの間、%s 人のハッカーが完全自動で検出されましたが、あなたの世界は私たちが保護しました"
 
 #: ui.idp.offline.alth
 msgid "Although there is no hacker detected, we have blocked %s time(s) of the suspicious behavior."
-msgstr ""
+msgstr "ハッカーは検出されませんでしたが、疑わしい行動を%s回ブロックしました"
 
 #: ui.idp.followup
 msgid "Follow-up report"
-msgstr ""
+msgstr "フォローアップレポート"
 
 #: ui.idp.openlog
 msgid "Open Log"
-msgstr ""
+msgstr "ログを確認"
 
 #: ui.idp.button
 msgid "Integrated defense panel"
-msgstr ""
+msgstr "統合防御パネル"
