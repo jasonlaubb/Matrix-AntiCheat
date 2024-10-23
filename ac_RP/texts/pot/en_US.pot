@@ -1026,3 +1026,11 @@ msgstr ""
 #: defender.verified
 msgid "§bMatrix §7>§g You successfully passed the verification, enjoy your gameplay."
 msgstr ""
+
+#: ping.ping
+msgid "%s (you): Ping?"
+msgstr ""
+
+#: ping.pong
+msgid "Matrix: Pong! The current ping is %1ms §7(%2§7)"
+msgstr ""

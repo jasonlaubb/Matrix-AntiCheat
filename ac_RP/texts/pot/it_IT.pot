@@ -400,10 +400,6 @@ msgstr "%s's rank sono stati cancellati con successo"
 msgid "%s's rank has been removed"
 msgstr "%s's rank è stato rimosso con successo"
 
-#: bot.title
-msgid "Anti Bot Verification"
-msgstr "Verifica Anti Bot"
-
 #: about.author
 msgid "Author"
 msgstr "Autore"
@@ -427,10 +423,6 @@ msgstr "L'enderchest di %1 è stato cancellato con successo da %2"
 #: flagmode.changed
 msgid "Flag mode has been changed to %s"
 msgstr "Flag mode è stata cambiata con successo a %s"
-
-#: bot.waitui
-msgid "For security reason, you cannot chat until you finished verify process. Please wait until the verify ui be shown"
-msgstr "Per una questione di sicurezza, non puoi usare la chat fino alla fine del processo di verifica. Perfavore aspetta fino a quando non ti esce il pannello di verifica"
 
 #: invsee.of
 msgid "Inventory of %s"
@@ -624,10 +616,6 @@ msgstr "You cannot access that location, you have reached the world border."
 msgid "You cannot interact with a block or entity which is outside the world border."
 msgstr "You cannot interact with a block or entity which is outside the world border."
 
-#: bot.ok
-msgid "You have been verified successfully"
-msgstr "Ti sei verificato con successo"
-
 #: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
 msgstr ""
@@ -635,22 +623,6 @@ msgstr ""
 #: adminchat.adminchat
 msgid "adminchat"
 msgstr "adminchat"
-
-#: bot.ui.headline
-msgid "§a[This server is protected by Matrix AntiCheat]"
-msgstr ""
-
-#: bot.ui.need
-msgid "§gYou need to verify if you're not a bot §7(%1/%2)"
-msgstr ""
-
-#: bot.ui.haveleft
-msgid "§gYou have §e%s§gseconds left"
-msgstr ""
-
-#: bot.ui.enterbelow
-msgid "Enter the code §e§l%s§r§g below"
-msgstr ""
 
 #: xray.broken
 msgid "%1 mined %2 at %3"
@@ -1006,4 +978,60 @@ msgstr ""
 
 #: ui.idp.button
 msgid "Integrated defense panel"
+msgstr ""
+
+#: defender.checking
+msgid "§bMatrix §7>§g We're readying to check about your client, please wait for few seconds, you cannot move or interact before you finished the verification."
+msgstr ""
+
+#: defender.continue
+msgid "§bMatrix §7>§g Please §e§lmove your view§r§g to start the check, you will be auto disconnected if you don't do this in 1 minute."
+msgstr ""
+
+#: defender.recontinue
+msgid "§bMatrix §7>§g You failed the verification, the ui will be regenerated in 2 seconds."
+msgstr ""
+
+#: defender.viewmove
+msgid "§bMatrix §7>§g View movement is detected, starting the ui, please wait for few seconds."
+msgstr ""
+
+#: defender.title
+msgid "Realm Defender | Anti Bot Verification"
+msgstr ""
+
+#: defender.selectui
+msgid "§a- Answer the following simple question to pass the verification, you're required to answer this question in 3 minutes."
+msgstr ""
+
+#: defender.why
+msgid "§b- Why you need to verify? It's because we need to make sure you're not a spamming bot that will crash the realm."
+msgstr ""
+
+#: defender.submit
+msgid "I finished the question!"
+msgstr ""
+
+#: defender.question
+msgid "§eQuestion: §r%1 + %2 = ?"
+msgstr ""
+
+#: defender.youranswer
+msgid "§eSelect your answer in below slider§r"
+msgstr ""
+
+#: defender.notabot
+msgid "I am a human!"
+msgstr ""
+
+#: defender.verified
+msgid "§bMatrix §7>§g You successfully passed the verification, enjoy your gameplay."
+msgstr ""
+
+#: ping.ping
+msgid "%s (you): Ping?"
+msgstr ""
+
+#: ping.pong
+msgid "Matrix: Pong! The current ping is %1ms §7(%2§7)"
 msgstr ""

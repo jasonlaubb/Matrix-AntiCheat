@@ -61,9 +61,10 @@ async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 					.str("\n")
 					.tra("defender.why")
 					.str("\n")
-					.tra("defender.question", question1, question2)
+					.tra("defender.question", question1.toString(), question2.toString())
 					.str("\n")
 					.tra("defender.youranswer")
+					.parse()
 			, 0, 10, 1, ran(11))
 			.toggle(rawstr.drt("defender.notabot"), false)
 			//@ts-expect-error

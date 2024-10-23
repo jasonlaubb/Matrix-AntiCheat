@@ -1,6 +1,6 @@
 import { c, rawstr } from "../../../../Assets/Util";
 import { registerCommand, verifier } from "../../CommandHandler";
-import { world } from "@minecraft/server";
+import { system } from "@minecraft/server";
 
 registerCommand({
     name: "ping",
@@ -27,10 +27,10 @@ registerCommand({
 /** @description Function to get the server ping .u. */
 function whatIsThePing (): Promise<number> {
     const currentTime = Date.now();
-    return new Promise((pong) => {
+    return new Promise<number>((pong) => {
         system.run(() => {
             const now = Date.now();
-            const pong = Math.abs(now - currentTime - 50);
+            const ping = Math.abs(now - currentTime - 50);
             pong(ping);
         });
     });
