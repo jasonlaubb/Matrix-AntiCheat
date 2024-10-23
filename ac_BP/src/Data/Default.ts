@@ -385,6 +385,7 @@ export default {
         },
     },
     ui: {},
+    /*
     defender: {
         enabled: false,
         blockMessage: true,
@@ -410,6 +411,10 @@ export default {
             spawnThreshold: 2, // Max amount of initial spawn in 2 mins
             timeout: 65000,
         },
+    },*/
+    realmDefender: {
+        enabled: false,
+        maxAllowanceTime: 180000,
     },
     autoPunishment: {
         maxSusValue: 2.5,
