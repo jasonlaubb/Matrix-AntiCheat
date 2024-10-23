@@ -141,15 +141,14 @@ class MatrixAnti_MCPE {
         await import("./Core/Player/FastUse");
         await import("./Core/Player/GameMode");
         await import("./Core/World/AutoTool");
-        await import("./Core/Misc/Bot");
         await import("./Core/World/FastBreak");
         await import("./Core/Misc/Xray");
         await import("./Core/Movement/World Border");
         await import("./Core/Misc/Disabler");
         await import("./Core/Misc/NoSwing");
         await import("./Core/Misc/Badpacket");
-        await import("./Core/Movement/ClientAuth");
         await import("./Core/Utility/Welcomer");
+        await import("./Core/Utility/Defender");
         //await import("./Core/Movement/Air Jump"); // Not ready yet
         // Use the register data to initialize the modules
         const sucessAmount = await intilizeModules();
