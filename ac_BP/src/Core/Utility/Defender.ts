@@ -20,7 +20,7 @@ async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 	player.sendMessage(rawstr.drt("defender.continue"));
 	const isCameraMoved = await new Promise<boolean>((resolve) => {
 		let lastRotationString = JSON.stringify(player.getRotation());
-		let i = 0;
+		const now = Date.now();
 		const interval = system.runInterval(() => {
 			try {
 				const rotationString = JSON.stringify(player.getRotation());
@@ -28,25 +28,25 @@ async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 					resolve(true);
 					system.clearRun(interval);
 				} else {
-					i++;
-					if (i > 240) {
+					if (Date.now() - now > 60000) {
 						resolve(false);
 						system.clearRun(interval);
 					}
 				}
-			} catch {
+			} catch (error) {
+				console.error(error);
 				resolve(false);
 				system.clearRun(interval);
 			}
 		}, 5);
 	});
-	if (!isCameraMoved) {
+	if (isCameraMoved === false) {
 		Action.tempkick(player);
 		if (config.autoPunishment.resultGobalize) world.sendMessage(rawstr.drt("protection.defender", player.id));
 		return;
 	}
 	const now = Date.now();
-	let checkValid = false;
+	let checkValid = true;
 	// Main check
 	while (now - Date.now() < config.realmDefender.maxAllowanceTime && checkValid) {
 		const question1 = ran(6);
@@ -83,7 +83,7 @@ async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 		await system.waitTicks(40);
 	}
 
-	if (checkValid) {
+	if (!checkValid) {
 		player.sendMessage(rawstr.drt("defender.verified"));
 		defenderNotBlockingData.push(player.id);
 		// Give back the movement permission
