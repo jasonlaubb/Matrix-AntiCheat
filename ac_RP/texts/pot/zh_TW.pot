@@ -982,56 +982,56 @@ msgstr "綜合防禦面板"
 
 #: defender.checking
 msgid "§bMatrix §7>§g We're readying to check about your client, please wait for few seconds, you cannot move or interact before you finished the verification."
-msgstr ""
+msgstr "§bMatrix §7>§g 我們正在準備檢查您的客戶端，請等待幾秒鐘，在驗證完成之前您無法移動或互動。"
 
 #: defender.continue
 msgid "§bMatrix §7>§g Please §e§lmove your view§r§g to start the check, you will be auto disconnected if you don't do this in 1 minute."
-msgstr ""
+msgstr "§bMatrix §7>§g 請§e§l移動您的視角§r§g開始檢查，如果您在1分鐘內不這樣做，您將被自動斷開連線。"
 
 #: defender.recontinue
 msgid "§bMatrix §7>§g You failed the verification, the ui will be regenerated in 2 seconds."
-msgstr ""
+msgstr "§bMatrix §7>§g 您驗證失敗，使用者介面將在 2 秒後重新產生。"
 
 #: defender.viewmove
 msgid "§bMatrix §7>§g View movement is detected, starting the ui, please wait for few seconds."
-msgstr ""
+msgstr "§bMatrix §7>§g 偵測到視角移動，正在啟動使用者介面，請等待幾秒鐘。"
 
 #: defender.title
 msgid "Realm Defender | Anti Bot Verification"
-msgstr ""
+msgstr "領域 Defender | 反機器人驗證"
 
 #: defender.selectui
 msgid "§a- Answer the following simple question to pass the verification, you're required to answer this question in 3 minutes."
-msgstr ""
+msgstr "§a- 回答以下簡單問題即可經過驗證，您需要在 3 分鐘內回答此問題。"
 
 #: defender.why
 msgid "§b- Why you need to verify? It's because we need to make sure you're not a spamming bot that will crash the realm."
-msgstr ""
+msgstr "§b- 為什麼需要驗證？這是因為我們需要確保您不是一個會導致領域崩潰的垃圾郵件機器人。"
 
 #: defender.submit
 msgid "I finished the question!"
-msgstr ""
+msgstr "我答完題了！"
 
 #: defender.question
 msgid "§eQuestion: §r%1 + %2 = ?"
-msgstr ""
+msgstr "§e問題：§r%1 + %2 = ?"
 
 #: defender.youranswer
 msgid "§eSelect your answer in below slider§r"
-msgstr ""
+msgstr "§e在下面的滑桿中選擇您的答案§r"
 
 #: defender.notabot
 msgid "I am a human!"
-msgstr ""
+msgstr "我是一個人！"
 
 #: defender.verified
 msgid "§bMatrix §7>§g You successfully passed the verification, enjoy your gameplay."
-msgstr ""
+msgstr "§bMatrix §7>§g 您已成功通過驗證，祝您遊戲愉快。"
 
 #: ping.ping
 msgid "%s (you): Ping?"
-msgstr ""
+msgstr "%s(你)：Ping?"
 
 #: ping.pong
 msgid "Matrix: Pong! The current ping is %1ms §7(%2§7)"
-msgstr ""
+msgstr "矩陣：Pong! 目前 ping 為 %1ms §7(%2§7)"
