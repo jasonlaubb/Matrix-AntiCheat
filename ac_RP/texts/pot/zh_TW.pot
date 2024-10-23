@@ -1034,4 +1034,4 @@ msgstr "%s(你)：Ping?"
 
 #: ping.pong
 msgid "Matrix: Pong! The current ping is %1ms §7(%2§7)"
-msgstr "矩陣：Pong! 目前 ping 為 %1ms §7(%2§7)"
+msgstr "Matrix: Pong! 目前 ping 為 %1ms §7(%2§7)"
