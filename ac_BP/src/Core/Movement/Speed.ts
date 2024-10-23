@@ -4,7 +4,7 @@ import MathUtil from "../../Assets/MathUtil";
 import { AnimationControllerTags } from "../../Data/EnumData";
 import flag from "../../Assets/flag";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { c } from "../../Assets/Util";
+import { bypassMovementCheck, c } from "../../Assets/Util";
 function getBlockPerSecond(currentLocation: Vector3, lastLoggedLocation: Vector3, now: number, lastTimeStamp: number) {
     const secondTaken = (now - lastTimeStamp) / 1000;
     if (secondTaken == 0) return 0;
@@ -37,6 +37,7 @@ async function antiSpeed(config: configi, player: Player) {
     if (blockPerSecond == 0) {
         data.lastStopLoc = player.location;
     } else if (
+        !bypassMovementCheck(player) &&
         blockPerSecond > config.antiSpeed.maxBlockPerSecond &&
         (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2 &&
         !strightMovement &&

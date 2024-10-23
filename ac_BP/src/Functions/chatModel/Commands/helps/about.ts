@@ -17,7 +17,7 @@ registerCommand({
             { translate: "about.version", with: [] },
             { text: `§g: §cV${version.join(".")}\n§g` },
             { translate: "about.author", with: [] },
-            { text: `§g: §cjasonlaubb\n§g` },
+            { text: `§g: §cjasonlaubb (Discord: @uwu_the_great)\n§g` },
             { translate: "about.github", with: [] },
             { text: `§g: §chttps://github.com/jasonlaubb/Matrix-AntiCheat` }
         );

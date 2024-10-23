@@ -6,8 +6,8 @@
         "": {
             "name": "matrix-anticheat",
             "dependencies": {
-                "@minecraft/server": "^1.15.0-beta.1.21.30-stable",
-                "@minecraft/server-ui": "^1.2.0",
+                "@minecraft/server": "^1.16.0-beta.1.21.41-stable",
+                "@minecraft/server-ui": "^1.3.0",
                 "fs": "^0.0.1-security",
                 "gettext-parser": "^8.0.0",
                 "javascript-obfuscator": "^4.1.1",
@@ -51,20 +51,20 @@
             "integrity": "sha512-stbUtINCXbcLNRlGNVX68xRC6ZYq3k3CYmfptwrCcPBEUjVOpVkSj3H4Y0qiSYB+1rVWv7DgiP7Uf9++50Ne5g=="
         },
         "node_modules/@minecraft/server": {
-            "version": "1.15.0-beta.1.21.30-stable",
-            "resolved": "https://registry.npmjs.org/@minecraft/server/-/server-1.15.0-beta.1.21.30-stable.tgz",
-            "integrity": "sha512-t9NhnP2W+7agojr5IWXZnC4uy9SGfcIrSFEqvNxj/NaT29/DXtH+1nJq7wLa5kGwyBlG/lDz6/CpiWn4PBv+Kg==",
+            "version": "1.16.0-beta.1.21.41-stable",
+            "resolved": "https://registry.npmjs.org/@minecraft/server/-/server-1.16.0-beta.1.21.41-stable.tgz",
+            "integrity": "sha512-lyMbPzdulO5dXKPfu8RFu2QUBxrplwmamB81D51AqJ78aK5mytuM4N9Jsh5LPxFh8q5/R/Fpy5CreAdYk10zRQ==",
             "dependencies": {
                 "@minecraft/common": "^1.1.0"
             }
         },
         "node_modules/@minecraft/server-ui": {
-            "version": "1.2.0",
-            "resolved": "https://registry.npmjs.org/@minecraft/server-ui/-/server-ui-1.2.0.tgz",
-            "integrity": "sha512-5TNs9mp7jW1nbcybobL0Kmnc4ioOuadp9ys7hHna1lS0rYT0ssC7Ba6bZc+xb7QhIaVsxtt8ChZwOP+paT44ww==",
+            "version": "1.3.0",
+            "resolved": "https://registry.npmjs.org/@minecraft/server-ui/-/server-ui-1.3.0.tgz",
+            "integrity": "sha512-Vgo7s+gxjHaNmm8lYTW+HL1JguyZggsn1UB86++eqV1KoRlLnqJH1wBJU2OIb1kQ6HXH0pnL206pxmRy7lmmjg==",
             "dependencies": {
                 "@minecraft/common": "^1.0.0",
-                "@minecraft/server": "^1.2.0"
+                "@minecraft/server": "^1.3.0"
             }
         },
         "node_modules/@minecraft/server-ui/node_modules/@minecraft/server": {
