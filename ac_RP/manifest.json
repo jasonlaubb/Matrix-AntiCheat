@@ -1,10 +1,10 @@
 {
 	"format_version": 2,
 	"header": {
-		"name": "Matrix Anti-Cheat RP V5.1.11",
+		"name": "Matrix Anti-Cheat RP V5.1.20",
 		"description": "pack.description",
 		"uuid": "8a0fbe45-e0fb-41e3-8c2e-e187420717ba",
-        "version": [5, 1, 11],
+        "version": [5, 1, 20],
 		"min_engine_version": [1, 21, 41]
 	},
 	"modules": [
@@ -12,6 +12,18 @@
 			"type": "resources",
 			"uuid": "cdd2bd47-1f3b-4bcf-a603-6e611dbdac68",
 			"version": [1, 0, 0]
+		}
+	],
+	"subpacks": [
+		{
+			"folder_name": "Matrix-fpsboost",
+			"name": "§aMatrix AntiCheat with FPS Booster",
+			"memory_tier": 0
+		},
+		{
+			"folder_name": "Matrix-vanilla",
+			"name": "§cVanilla Matrix AntiCheat with no FPS Booster",
+			"memory_tier": 0
 		}
 	]
 }

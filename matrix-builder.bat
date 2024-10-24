@@ -46,6 +46,7 @@ copy "%~dp0LICENSE.md" "%~dp0generated-package\Matrix-anti_RP" /Y
 if not exist "%~dp0generated-package\Matrix-anti_RP\texts" mkdir "%~dp0generated-package\Matrix-anti_RP\texts"
 Xcopy "%~dp0ac_RP\textures" "%~dp0generated-package\Matrix-anti_RP\textures" /Y /E /H /C /I
 Xcopy "%~dp0ac_RP\ui" "%~dp0generated-package\Matrix-anti_RP\ui" /Y /E /H /C /I
+Xcopy "%~dp0ac_RP\subpacks" "%~dp0generated-package\Matrix-anti_RP\subpacks" /Y /E /H /C /I
 copy "%~dp0ac_RP\texts\*.lang" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
 copy "%~dp0ac_RP\texts\languages.json" "%~dp0generated-package\Matrix-anti_RP\texts" /Y
 :: Compress the code
