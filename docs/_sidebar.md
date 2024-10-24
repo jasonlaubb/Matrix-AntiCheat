@@ -11,5 +11,6 @@
 * Sentinel Detection System
   * [Introduce to this system](/Detection/intro)
   * [Dynamic toggle](/Detection/toggle)
+  * [Defender](/Detection/defender)
 * UI
   * [Matrix UI](/MatrixUI/matrixui)
