@@ -1038,3 +1038,39 @@ msgstr ""
 #: ping.pong
 msgid "Matrix: Pong! The current ping is %1ms §7(%2§7)"
 msgstr ""
+
+#: afk.quit
+msgid "§bMatrix §7>§g You are now no longer AFK."
+msgstr ""
+
+#: afk.ui.title
+msgid "Anti AFK | Matrix Anticheat"
+msgstr ""
+
+#: afk.intro
+msgid "§b- The server owner of this server is banned the action of away-from-keyboard (AFK). You will get disconnected when you don't finish this verification."
+msgstr ""
+
+#: afk.why
+msgid "§b- Why you need to verify wether you are AFK? It's because we need to make sure you won't get falsely detected as AFK."
+msgstr ""
+
+#: afk.clickbelow
+msgid "§b- Click the below button to finish the verification."
+msgstr ""
+
+#: afk.ui.button
+msgid "I'm not AFK"
+msgstr ""
+
+#: afk.kick
+msgid "§bMatrix §7>§c Afk is detected from %s and automatically disconnected from the server."
+msgstr ""
+
+#: afk.warn
+msgid "§bMatrix §7>§c Afk is not allowed on this server, please try to move your steps. You will be disconected after %s second(s)."
+msgstr ""
+
+#: afk.tips
+msgid "§bMatrix §7>§g Any afk action detected will be automatically disconnected from the server!"
+msgstr ""
