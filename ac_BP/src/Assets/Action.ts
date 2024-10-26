@@ -1,10 +1,11 @@
-import { Player, world } from "@minecraft/server";
+import { Player, system, world } from "@minecraft/server";
 import { c, isAdmin, isHost } from "./Util";
-import { MatrixEvents } from "../Data/EnumData";
+import { DisableTags, MatrixEvents } from "../Data/EnumData";
 import { ban, unban, unbanList, unbanRemove } from "../Functions/moderateModel/banHandler";
 import { freeze, unfreeze } from "../Functions/moderateModel/freezeHandler";
 let tempbans: { [key: string]: number } = {};
 export class Action {
+    private static tempTimeoutData: { [key: string]: boolean } = {};
     private constructor() {}
     public static tempkick(player: Player) {
         if (isHost(player) || isAdmin(player)) return;
@@ -50,6 +51,23 @@ export class Action {
         if (!player.getDynamicProperty("mute")) return false;
         player.setDynamicProperty("mute", false);
         return true;
+    }
+    public static timeout(player: Player, duration: number) {
+        const origin = Action.tempTimeoutData[player.id];
+        if (origin) return;
+        Action.tempTimeoutData[player.id] = true;
+        const disableTag = Object.values(DisableTags)
+        disableTag.forEach((tag) => {
+            player.addTag(tag);
+        })
+        system.runTimeout(() => {
+            try {
+                disableTag.forEach((tag) => {
+                    player.removeTag(tag);
+                })
+            } catch { }
+            Action.tempTimeoutData[player.id] = false;
+        }, duration)
     }
     public static freeze = freeze;
     public static unfreeze = unfreeze;
