@@ -1,5 +1,5 @@
 import { Player, system, Vector3, world } from "@minecraft/server";
-import { configi } from "../Modules";
+import { configi, registerModule } from "../Modules";
 import { AnimationControllerTags } from "../../Data/EnumData";
 import { ActionFormData } from "@minecraft/server-ui";
 import { rawstr } from "../../Assets/Util";
@@ -77,3 +77,8 @@ async function checkAFK (config: configi, player: Player) {
 	}
 	data.lastLocation = player.location;
 }
+
+registerModule("antiAFK", false, [], {
+	tickInterval: 5,
+	intick: checkAFK,
+})
