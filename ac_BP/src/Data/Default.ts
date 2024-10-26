@@ -372,17 +372,24 @@ export default {
         ping: {
             enabled: true,
             adminOnly: true,
-            minPermissionLevel: 1,
+            minPermissionLevel: 0,
             requireOp: false,
             requireTag: [],
         },
         fakeleave: {
             enabled: true,
             adminOnly: true,
-            minPermissionLevel: 1,
+            minPermissionLevel: 0,
             requireOp: false,
             requireTag: [],
         },
+        timeout: {
+            enabled: true,
+            adminOnly: true,
+            minPermissionLevel: 1,
+            requireOp: false,
+            requireTag: [],
+        }
     },
     ui: {},
     /*

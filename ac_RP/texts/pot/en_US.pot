@@ -1074,3 +1074,7 @@ msgstr ""
 #: afk.tips
 msgid "§bMatrix §7>§g Any afk action detected will be automatically disconnected from the server!"
 msgstr ""
+
+#: timeout.has
+msgid "§bMatrix §7>§g %1 has been timed out by %2 for %3 minutes."
+msgstr ""

@@ -1,9 +1,10 @@
-import { world, system, Player, Block, Vector3, PlayerPlaceBlockAfterEvent } from "@minecraft/server";
+import { world, Player, Block, Vector3, PlayerPlaceBlockAfterEvent } from "@minecraft/server";
 import { isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { DisableTags } from "../../Data/EnumData";
 import flag from "../../Assets/flag";
+import { Action } from "../../Assets/Action";
 interface TowerData {
     towerBlock: Vector3;
     lastBlockPlace: number;
@@ -61,12 +62,8 @@ async function AntiTower(player: Player, block: Block, config: configi) {
             vL.delete(player.id);
             //set the block to the air
             block.setType(MinecraftBlockTypes.Air);
-
-            //stop player place block
-            player.addTag(DisableTags.place);
-
-            //remove the tag after timeout
-            system.runTimeout(() => player.removeTag(DisableTags.place), config.antiTower.timeout);
+            // timeout
+            Action.timeout(player, config.antiTower.timeout);
         } else {
             vL.set(player.id, vl + 1);
         }
