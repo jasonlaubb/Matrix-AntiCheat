@@ -50,7 +50,7 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
         //if the dBLFN is lower than the given value flag
         if (getMsPerTick() > 42 && ((data.flagCounter > 2 && data.timerLog >= 3) || (data.flagCounter > 5 && dBVD > data.maxDBVD))) flag(player, config.antiTimer.modules, "A");
         //lag back the player
-        if (dBVD >= 3 || data.flagCounter >= 3) player.teleport(data.safeZone);
+        if (dBVD >= 5.5 || data.flagCounter >= 3) player.teleport(data.safeZone);
         //setting new lastFlag
         data.lastFlag = now;
     }

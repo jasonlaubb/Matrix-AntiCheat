@@ -6,6 +6,7 @@
         "": {
             "name": "matrix-anticheat",
             "dependencies": {
+                "@minecraft/debug-utilities": "^1.0.0-beta.1.21.43-stable",
                 "@minecraft/server": "^1.16.0-beta.1.21.41-stable",
                 "@minecraft/server-ui": "^1.3.0",
                 "fs": "^0.0.1-security",
@@ -49,6 +50,23 @@
             "version": "1.1.0",
             "resolved": "https://registry.npmjs.org/@minecraft/common/-/common-1.1.0.tgz",
             "integrity": "sha512-stbUtINCXbcLNRlGNVX68xRC6ZYq3k3CYmfptwrCcPBEUjVOpVkSj3H4Y0qiSYB+1rVWv7DgiP7Uf9++50Ne5g=="
+        },
+        "node_modules/@minecraft/debug-utilities": {
+            "version": "1.0.0-beta.1.21.43-stable",
+            "resolved": "https://registry.npmjs.org/@minecraft/debug-utilities/-/debug-utilities-1.0.0-beta.1.21.43-stable.tgz",
+            "integrity": "sha512-NuXx/iRY5bfiFzRErsA/F1u+flSynSty08s3Q9ddSEqgc9+p8pRbXkrj7YhEd/W9t7iUZ8BUq0FOq0cTtSGzHw==",
+            "dependencies": {
+                "@minecraft/common": "^1.0.0",
+                "@minecraft/server": "^1.8.0"
+            }
+        },
+        "node_modules/@minecraft/debug-utilities/node_modules/@minecraft/server": {
+            "version": "1.15.0",
+            "resolved": "https://registry.npmjs.org/@minecraft/server/-/server-1.15.0.tgz",
+            "integrity": "sha512-KpXtxwuwr0hSBbTYOaMR6hSLG+UBWvifhkmnu2Tx32567hBp2N4DxVmoIXT0swQ8RFvv1o6PyGHXqm3Qfw1wOg==",
+            "dependencies": {
+                "@minecraft/common": "^1.1.0"
+            }
         },
         "node_modules/@minecraft/server": {
             "version": "1.16.0-beta.1.21.41-stable",

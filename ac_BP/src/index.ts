@@ -4,6 +4,7 @@ class MatrixAnti_MCPE {
         runTime: Date.now(),
     };
     public constructor() {
+        disableWatchdogTimingWarnings(true);
         // Prevent the script from crashing
         Minecraft.system.beforeEvents.watchdogTerminate.subscribe(this.watchDogTerminate);
         // Initialize the matrix anticheat
@@ -168,6 +169,8 @@ class MatrixAnti_MCPE {
         if (config.createScoreboard && !Minecraft.world.scoreboard.getObjective("matrix:api")) {
             Minecraft.world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
         }
+        await Minecraft.system.waitTicks(1);
+        disableWatchdogTimingWarnings(false);
         return;
     };
     public get initialized(): boolean {
@@ -186,3 +189,5 @@ import { intilizeModules } from "./Core/Modules";
 import Dynamic from "./Functions/Config/dynamic_config";
 import { dataBaseInitialize } from "./Functions/Config/config_database";
 import { onceTrue } from "./Assets/Util";
+import { disableWatchdogTimingWarnings } from "@minecraft/debug-utilities";
+Minecraft.world.gameRules
