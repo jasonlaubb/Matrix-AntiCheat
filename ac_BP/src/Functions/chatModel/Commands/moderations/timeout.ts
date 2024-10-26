@@ -14,6 +14,6 @@ registerCommand({
     executor: async (player, args) => {
         const target = isPlayer(args[0]);
         Action.timeout(target, Math.trunc(Math.abs(Number(args[1]) / 0.05)));
-        world.sendMessage(new rawstr(true, "g").tra("timeout.has", target.name, player.name, (Math.abs(Number(args[1]) / 60)).toFixed(2)).parse());
+        world.sendMessage(new rawstr(true, "g").tra("timeout.has", target.name, player.name, Math.abs(Number(args[1]) / 60).toFixed(2)).parse());
     },
 });

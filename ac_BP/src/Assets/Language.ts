@@ -261,4 +261,16 @@ export type Translate =
     | "defender.verified"
     | "defender.keepmove"
     | "ping.ping"
-    | "ping.pong";
+    | "ping.pong"
+    | "afk.quit"
+    | "afk.ui.title"
+    | "afk.intro"
+    | "afk.why"
+    | "afk.clickbelow"
+    | "afk.ui.button"
+    | "afk.kick"
+    | "afk.warn"
+    | "afk.tips"
+    | "timeout.has"
+    | "tps.tps"
+    | "tpa.accept";

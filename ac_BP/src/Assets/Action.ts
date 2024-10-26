@@ -56,18 +56,18 @@ export class Action {
         const origin = Action.tempTimeoutData[player.id];
         if (origin) return;
         Action.tempTimeoutData[player.id] = true;
-        const disableTag = Object.values(DisableTags)
+        const disableTag = Object.values(DisableTags);
         disableTag.forEach((tag) => {
             player.addTag(tag);
-        })
+        });
         system.runTimeout(() => {
             try {
                 disableTag.forEach((tag) => {
                     player.removeTag(tag);
-                })
-            } catch { }
+                });
+            } catch {}
             Action.tempTimeoutData[player.id] = false;
-        }, duration)
+        }, duration);
     }
     public static freeze = freeze;
     public static unfreeze = unfreeze;

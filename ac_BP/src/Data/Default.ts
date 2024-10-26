@@ -389,7 +389,14 @@ export default {
             minPermissionLevel: 1,
             requireOp: false,
             requireTag: [],
-        }
+        },
+        tps: {
+            enabled: true,
+            adminOnly: true,
+            minPermissionLevel: 0,
+            requireOp: false,
+            requireTag: [],
+        },
     },
     ui: {},
     /*

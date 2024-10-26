@@ -7,8 +7,8 @@ registerCommand({
     parent: false,
     maxArgs: 0,
     minArgs: 0,
-    require: (player) => verifier(player, c().commands.ping),
+    require: (player) => verifier(player, c().commands.tps),
     executor: async (player, _args) => {
-		player.sendMessage(new rawstr(true, "g").tra("tps.tps", tps.getTps()?.toFixed(3)).parse());
+        player.sendMessage(new rawstr(true, "g").tra("tps.tps", tps.getTps()!.toFixed(3)).parse());
     },
 });

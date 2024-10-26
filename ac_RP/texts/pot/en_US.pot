@@ -1081,3 +1081,8 @@ msgstr ""
 
 #: tps.tps
 msgid "Server current tick(s) per second is §7(§a%s/§a20§7)"
+msgstr ""
+
+#: tpa.accept
+msgid "§bMatrix §7>§g You have accepted the teleport request from %s."
+msgstr ""

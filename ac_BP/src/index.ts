@@ -89,6 +89,7 @@ class MatrixAnti_MCPE {
         await import("./Functions/chatModel/Commands/moderations/unvanish");
         await import("./Functions/chatModel/Commands/moderations/warn");
         await import("./Functions/chatModel/Commands/moderations/directaction");
+        await import("./Functions/chatModel/Commands/moderations/timeout");
         await import("./Functions/chatModel/Commands/settings/toggles");
         await import("./Functions/chatModel/Commands/settings/toggle");
         await import("./Functions/chatModel/Commands/settings/setpassword");
@@ -116,6 +117,7 @@ class MatrixAnti_MCPE {
         await import("./Functions/chatModel/Commands/utilities/gm");
         await import("./Functions/chatModel/Commands/utilities/fakeleave");
         await import("./Functions/chatModel/Commands/utilities/ping");
+        await import("./Functions/chatModel/Commands/utilities/tps");
         await import("./Functions/chatModel/Commands/pcommands/report");
         // Register the modules
         Minecraft.world.modules = [];
@@ -191,4 +193,3 @@ import Dynamic from "./Functions/Config/dynamic_config";
 import { dataBaseInitialize } from "./Functions/Config/config_database";
 import { onceTrue } from "./Assets/Util";
 import { disableWatchdogTimingWarnings } from "@minecraft/debug-utilities";
-Minecraft.world.gameRules
