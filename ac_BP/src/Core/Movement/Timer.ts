@@ -44,13 +44,13 @@ export async function AntiTimer(config: configi, player: Player, now: number) {
     if (!bypassMovementCheck(player) && now - data.lastHighTeleport >= 5000 && (((dBVD > data.maxDBVD || dBVD2 > data.maxDBVD) && now - data.lastFlag >= 1025) || data.timerLog >= config.antiTimer.minTimerLog)) {
         //dBLFN = difference between last flag time and now
         const dBLFN = now - data.lastFlag;
-        //counting how many times did the player got detected in 10 seconds
-        if (dBLFN <= 10000) data.flagCounter = +1;
+        //counting how many times did the player got detected in 4 seconds
+        if (dBLFN <= 4000) data.flagCounter = +1;
         else data.flagCounter = 0;
         //if the dBLFN is lower than the given value flag
         if (getMsPerTick() > 42 && ((data.flagCounter > 2 && data.timerLog >= 3) || (data.flagCounter > 5 && dBVD > data.maxDBVD))) flag(player, config.antiTimer.modules, "A");
         //lag back the player
-        if (dBVD >= 5.5 || data.flagCounter >= 3) player.teleport(data.safeZone);
+        if (dBVD >= 3 || data.flagCounter > 3) player.teleport(data.safeZone);
         //setting new lastFlag
         data.lastFlag = now;
     }
