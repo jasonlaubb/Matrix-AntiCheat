@@ -21,6 +21,11 @@
 			"memory_tier": 0
 		},
 		{
+			"folder_name": "Matrix-nocrit",
+			"name": "§eMatrix AntiCheat that delete critical particles only",
+			"memory_tier": 0
+		},
+		{
 			"folder_name": "Matrix-vanilla",
 			"name": "§cVanilla Matrix AntiCheat with no FPS Booster",
 			"memory_tier": 0
