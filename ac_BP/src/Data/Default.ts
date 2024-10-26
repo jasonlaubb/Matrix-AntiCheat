@@ -415,6 +415,7 @@ export default {
     realmDefender: {
         enabled: false,
         maxAllowanceTime: 180000,
+        minViewMoveDuration: 40,
     },
     autoPunishment: {
         maxSusValue: 2.5,

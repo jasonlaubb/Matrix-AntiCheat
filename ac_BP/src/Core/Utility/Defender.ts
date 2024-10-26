@@ -20,14 +20,21 @@ async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 	player.sendMessage(rawstr.drt("defender.continue"));
 	const isCameraMoved = await new Promise<boolean>((resolve) => {
 		let lastRotationString = JSON.stringify(player.getRotation());
+		let moveDuration = 0;
 		const now = Date.now();
+		let currentType = 0;
 		const interval = system.runInterval(() => {
 			try {
 				const rotationString = JSON.stringify(player.getRotation());
-				if (rotationString != lastRotationString) {
+				if (moveDuration > config.realmDefender.minViewMoveDuration) {
 					resolve(true);
 					system.clearRun(interval);
+				} else if (rotationString != lastRotationString) {
+					currentType = 1;
+					moveDuration++;
 				} else {
+					if (currentType == 1) player.sendMessage(rawstr.drt("defender.keepmove", ((config.realmDefender.minViewMoveDuration - moveDuration) * 0.05).toString()));
+					currentType = 0;
 					if (Date.now() - now > 60000) {
 						resolve(false);
 						system.clearRun(interval);
@@ -38,7 +45,7 @@ async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 				resolve(false);
 				system.clearRun(interval);
 			}
-		}, 5);
+		}, 1);
 	});
 	if (isCameraMoved === false) {
 		Action.tempkick(player);
@@ -69,7 +76,9 @@ async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 			.toggle(rawstr.drt("defender.notabot"), false)
 			//@ts-expect-error
 			.show(player);
-		await ui.then((result) => {
+		let uiNotAnswering = false;
+		ui.then((result) => {
+			uiNotAnswering = true;
 			if (result.canceled) return;
 			const playerAns = result.formValues![0] as number;
 			const notabot = result.formValues![1] as boolean;
@@ -79,8 +88,16 @@ async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 				player.sendMessage(rawstr.drt("defender.recontinue"));
 			}
 		});
-		// Prevent ui spamming
-		await system.waitTicks(40);
+		await new Promise<void>((resolve) => {
+			system.runInterval(async () => {
+				if (now - Date.now() < config.realmDefender.maxAllowanceTime) {
+					resolve();
+				} else if (uiNotAnswering) {
+					await system.waitTicks(40);
+					resolve();
+				}
+			}, 5);
+		})
 	}
 
 	if (!checkValid) {
