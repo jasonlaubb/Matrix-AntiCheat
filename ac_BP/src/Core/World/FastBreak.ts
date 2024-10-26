@@ -5,6 +5,7 @@ import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEnchantmentTypes } 
 import { registerModule, configi } from "../Modules.js";
 import { DisableTags } from "../../Data/EnumData";
 import flag from "../../Assets/flag";
+import { Action } from "../../Assets/Action";
 
 /**
  * @author jasonlaubb
@@ -34,12 +35,9 @@ function firstEvent(config: configi, event: PlayerBreakBlockBeforeEvent) {
     if (breakBPS > speedLimit && !(config.antiFastBreak.solidOnly && !block.isSolid)) {
         event.cancel = true;
         system.run(() => {
-            player.addTag(DisableTags.break);
+            Action.timeout(player, 60);
             flag(player, config.antiFastBreak.modules, "A");
         });
-        system.runTimeout(() => {
-            player.removeTag(DisableTags.break);
-        }, 60);
     } //this is disabled until fix it
     /*else if (breakBPS < 11 && player.lastTouchBlockId != JSON.stringify(block.location) && block.isSolid) {
         event.cancel = true

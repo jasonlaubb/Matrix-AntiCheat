@@ -1,9 +1,10 @@
-import { world, system, PlayerPlaceBlockAfterEvent, Vector3, Player, Block } from "@minecraft/server";
+import { world, PlayerPlaceBlockAfterEvent, Vector3, Player, Block } from "@minecraft/server";
 import { isAdmin } from "../../Assets/Util";
 import { MinecraftBlockTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { configi, registerModule } from "../Modules";
 import { AnimationControllerTags, DisableTags } from "../../Data/EnumData";
 import flag from "../../Assets/flag";
+import { Action } from "../../Assets/Action";
 
 /**
  * @author jasonlaubb & RaMiGamerDev
@@ -223,8 +224,7 @@ function playerPlaceBlockAfterEvent(config: configi, { player, block }: PlayerPl
 }
 function detectedAction(config: configi, player: Player, block: Block) {
     block.setType(MinecraftBlockTypes.Air);
-    player.addTag(DisableTags.place);
-    system.runTimeout(() => player.removeTag(DisableTags.place), config.antiScaffold.timeout);
+    Action.timeout(player, config.antiScaffold.timeout);
 }
 function calculateAngle(pos1: Vector3, pos2: Vector3, rotation = -90) {
     let angle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / Math.PI - rotation - 90;

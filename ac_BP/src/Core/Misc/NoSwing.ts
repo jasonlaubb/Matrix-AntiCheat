@@ -2,12 +2,13 @@
  * @author jasonlaubb
  * @description Checks if player placed block or fighting without hand swing.
  */
-import { EntityHitEntityAfterEvent, Player, PlayerPlaceBlockAfterEvent, system, world } from "@minecraft/server";
+import { EntityHitEntityAfterEvent, Player, PlayerPlaceBlockAfterEvent, world } from "@minecraft/server";
 import { AnimationControllerTags, DisableTags } from "../../Data/EnumData";
 import { configi, registerModule } from "../Modules";
 import { isAdmin, onceTrue } from "../../Assets/Util";
 import { sendErr } from "../../Functions/chatModel/CommandHandler";
 import flag from "../../Assets/flag";
+import { Action } from "../../Assets/Action";
 const isCheckingStatus = new Map<string, boolean>();
 async function onAction(config: configi, player: Player) {
     if (isAdmin(player) || isCheckingStatus.get(player.id) || player.hasTag(DisableTags.pvp)) return;
@@ -16,16 +17,7 @@ async function onAction(config: configi, player: Player) {
 
     // Check if player is not swinging
     if (!isSwing) {
-        const playerHasPvpDisable = player.hasTag(DisableTags.pvp);
-        const playerHasPlaceDisable = player.hasTag(DisableTags.place);
-        if (playerHasPvpDisable && playerHasPlaceDisable) return;
-        if (!playerHasPvpDisable) player.addTag(DisableTags.pvp);
-        if (!playerHasPlaceDisable) player.addTag(DisableTags.place);
-        system.runTimeout(() => {
-            if (!playerHasPvpDisable) player.removeTag(DisableTags.pvp);
-            if (!playerHasPlaceDisable) player.removeTag(DisableTags.place);
-        }, config.antiNoSwing.timeout);
-
+        Action.timeout(player, config.antiNoSwing.timeout);
         flag(player, config.antiNoSwing.modules, "A");
     }
 }

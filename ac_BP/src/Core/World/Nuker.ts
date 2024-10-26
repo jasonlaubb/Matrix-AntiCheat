@@ -5,6 +5,7 @@ import fastBrokenBlocks from "../../Data/FastBrokenBlocks";
 import { configi, registerModule } from "../Modules";
 import { DisableTags } from "../../Data/EnumData";
 import flag from "../../Assets/flag";
+import { Action } from "../../Assets/Action";
 
 const blockBreakData = new Map<string, number[]>();
 
@@ -40,12 +41,11 @@ async function AntiNuker(player: Player, block: Block, itemStack: ItemStack, con
     // if block break is in 1 tick is higher than the limit, flag them
     if (blockBreakCount.length > config.antiNuker.maxBreakPerTick && !(config.antiNuker.solidOnly && !block.isSolid)) {
         system.run(() => {
-            player.addTag(DisableTags.break);
             block.dimension.getEntities({ location: block.location, maxDistance: 2, minDistance: 0, type: "minecraft:item" }).forEach((item) => item.kill());
             block.setPermutation(Object.assign({}, block.permutation));
 
             //prevent the player from breaking blocks for 3 seconds
-            system.runTimeout(() => player.removeTag(DisableTags.break), config.antiNuker.timeout);
+            Action.timeout(player, 60);
             recoverBlockBreak(player.id, 200, player.dimension);
             blockBreakData.delete(player.id);
             if (hasEfficiency <= 2) {

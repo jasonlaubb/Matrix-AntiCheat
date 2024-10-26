@@ -169,8 +169,9 @@ class MatrixAnti_MCPE {
         if (config.createScoreboard && !Minecraft.world.scoreboard.getObjective("matrix:api")) {
             Minecraft.world.scoreboard.addObjective("matrix:api", "").setScore("matrix:beta-api-enabled", -2048);
         }
-        await Minecraft.system.waitTicks(1);
-        disableWatchdogTimingWarnings(false);
+        Minecraft.system.runTimeout(() => {
+            disableWatchdogTimingWarnings(false);
+        }, 20);
         return;
     };
     public get initialized(): boolean {
