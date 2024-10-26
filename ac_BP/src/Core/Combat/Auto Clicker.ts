@@ -4,6 +4,7 @@ import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data
 import { tps } from "../../Assets/Public.js";
 import { registerModule, configi } from "../Modules.js";
 import { DisableTags } from "../../Data/EnumData.js";
+import { Action } from "../../Assets/Action.js";
 
 const clickData: Map<string, number[]> = new Map<string, number[]>();
 
@@ -58,10 +59,7 @@ function antiAutoClickerB(config: configi, player: Player) {
         // player.sendMessage(currentIntervalLevel.toFixed(2));
         if (currentIntervalLevel < config.antiAutoClicker.minInterval) {
             if (now - data.lastflag < 9000) {
-                player.addTag(DisableTags.pvp);
-                system.runTimeout(() => {
-                    player.removeTag(DisableTags.pvp);
-                }, config.antiAutoClicker.timeout);
+                Action.timeout(player, config.antiAutoClicker.timeout);
             }
             data.lastflag = now;
         }

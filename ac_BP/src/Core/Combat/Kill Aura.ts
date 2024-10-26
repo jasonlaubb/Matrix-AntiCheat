@@ -7,6 +7,7 @@ import { isSpikeLagging } from "../../Assets/Public.js";
 import { Type } from "../../Assets/Util.js";
 import flag from "../../Assets/flag.js";
 import MathUtil from "../../Assets/MathUtil.js";
+import { Action } from "../../Assets/Action.js";
 
 /**
  * @author ravriv & jasonlaubb & RaMiGamerDev
@@ -121,10 +122,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         }
 
     if (flagged) {
-        player.addTag(DisableTags.pvp);
-        system.runTimeout(() => {
-            player.removeTag(DisableTags.pvp);
-        }, config.antiKillAura.timeout);
+        Action.timeout(player, config.antiKillAura.timeout);
     }
 
     killauradata.set(player.id, data);

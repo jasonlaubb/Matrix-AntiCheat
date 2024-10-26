@@ -4,6 +4,7 @@ import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data
 import { configi, registerModule } from "../Modules.js";
 import flag from "../../Assets/flag.js";
 import MathUtil from "../../Assets/MathUtil";
+import { Action } from "../../Assets/Action.js";
 
 const reachData: Map<string, number> = new Map<string, number>();
 
@@ -61,6 +62,7 @@ function antiReach(hurtEntity: Player, damagingEntity: Player, config: configi) 
         system.runTimeout(() => {
             reachData.delete(damagingEntity.id);
         }, 80);
+        Action.timeout(damagingEntity, 15);
         if (rawDistance * 0.95 > 5.1) data++;
     }
 
