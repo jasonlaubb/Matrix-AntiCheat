@@ -1028,6 +1028,10 @@ msgstr ""
 msgid "§bMatrix §7>§g You successfully passed the verification, enjoy your gameplay."
 msgstr ""
 
+#: defender.keepmove
+msgid "§bMatrix §7>§g Please continue your camera movement, %s second(s) more is required."
+msgstr ""
+
 #: ping.ping
 msgid "%s (you): Ping?"
 msgstr ""

@@ -29,6 +29,7 @@
         "../..": {
             "name": "matrix-anticheat",
             "dependencies": {
+                "@minecraft/debug-utilities": "^1.0.0-beta.1.21.43-stable",
                 "@minecraft/server": "^1.16.0-beta.1.21.41-stable",
                 "@minecraft/server-ui": "^1.3.0",
                 "fs": "^0.0.1-security",

@@ -966,12 +966,6 @@ export default {
         },
         doUnEquip: true,
     },
-    antiBot: {
-        enabled: false,
-        clickSpeedThershold: 6,
-        timer: 2,
-        maxTry: 3,
-    },
     antiNoSwing: {
         enabled: false,
         modules: {
@@ -1004,6 +998,13 @@ export default {
         },
         faultToleranceTicks: 10,
     },
+    antiAFK: {
+        enabled: false,
+        maxAFKTime: 900000,
+        maxUIallowance: 60000,
+        tipsTime: 300000,
+        warnTime: 720000,
+    },
     worldBorder: {
         enabled: false,
         checkEvery: 2,
@@ -1012,12 +1013,6 @@ export default {
         centerX: 0,
         centerZ: 0,
         useSpawnLoc: true,
-    },
-    clientAuth: {
-        enabled: false,
-        trackTicks: 8,
-        teleportHeight: 1,
-        experimental: true,
     },
     banrun: {
         command: "",

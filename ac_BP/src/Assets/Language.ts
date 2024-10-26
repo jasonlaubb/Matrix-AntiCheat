@@ -259,5 +259,6 @@ export type Translate =
     | "defender.youranswer"
     | "defender.notabot"
     | "defender.verified"
+    | "defender.keepmove"
     | "ping.ping"
     | "ping.pong";
