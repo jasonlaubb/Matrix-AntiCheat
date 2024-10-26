@@ -7,6 +7,22 @@ const defenderNotBlockingData: string[] = [];
 async function onPlayerSpawn (config: configi, event: PlayerSpawnAfterEvent) {
 	if (!event.initialSpawn || isAdmin(event.player)) return;
 	const player = event.player;
+	// if the player name is repeated... Anti Alt spam protection
+	if (player.name.match(/^.{3,16}\s\([0-9]{1,2}\)$/)) {
+		const rawName = player.name.replace(/^(.{3,16})\s\([0-9]{1,2}\)$/, '$1');
+		const currentServerOnline = world.getAllPlayers();
+		Action.tempkick(player);
+		if (config.autoPunishment.resultGobalize) world.sendMessage(rawstr.drt("protection.defender", player.id));
+		const susPlayer = currentServerOnline.find(({ name }) => {
+			return rawName == name;
+		})
+		if (!susPlayer) return;
+		Action.tempkick(susPlayer);
+		if (config.autoPunishment.resultGobalize) world.sendMessage(rawstr.drt("protection.defender", susPlayer.id));
+		return;
+	}
+	
+	// Defender bot checking
 	player.sendMessage(rawstr.drt("defender.checking"));
 	player.inputPermissions.movementEnabled = false;
 	player.inputPermissions.cameraEnabled = true;
