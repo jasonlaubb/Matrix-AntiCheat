@@ -1,1 +1,1 @@
-export default [5, 1, 20];
+export default [5, 1, 12];
