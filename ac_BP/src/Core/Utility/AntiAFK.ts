@@ -36,7 +36,9 @@ async function checkAFK (config: configi, player: Player) {
 				.body(
 					new rawstr()
 						.tra("afk.intro")
+						.str("\n")
 						.tra("afk.why")
+						.str("\n")
 						.tra("afk.clickbelow")
 						.parse()
 				)

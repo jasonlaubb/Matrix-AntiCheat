@@ -1078,3 +1078,6 @@ msgstr ""
 #: timeout.has
 msgid "§bMatrix §7>§g %1 has been timed out by %2 for %3 minutes."
 msgstr ""
+
+#: tps.tps
+msgid "Server current tick(s) per second is §7(§a%s/§a20§7)"
