@@ -64,7 +64,7 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         const rotationFloat: number = Math.abs(player.getRotation().x);
         const velocity = player.getVelocity().y;
         const playerDeviceInfo = player.clientSystemInfo.platformType;
-        const anglelimit = playerDeviceInfo == PlatformType.Desktop ? 50 : config.antiKillAura.minAngle;
+        const anglelimit = playerDeviceInfo == PlatformType.Desktop ? config.antiKillAura.strictAngle : config.antiKillAura.minAngle;
 
         //if the angle is higher than the max angle, flag the player
         if (!isSpikeLagging(player) && angle > anglelimit && rotationFloat < 79 && !(player.threwTridentAt && Date.now() - player.threwTridentAt < 3000)) {
