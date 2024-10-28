@@ -21,6 +21,7 @@ async function onPlayerJoin (config: configi, event: { initialSpawn, player }: P
     const maxRenderRange = player.clientSystemInfo.maxRenderDistance;
     const isValidRange = maxRenderRange >= 6 && maxRenderRange <= 96;
     if (!isValidRange) {
+        /** @remarks credit to hpwd for the idea of Anti badpacket [Type B] */
         flag(player, config.antiBadpacket.modules, "B");
     }
 }
