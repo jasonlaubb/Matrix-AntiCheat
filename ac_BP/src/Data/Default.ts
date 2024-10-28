@@ -512,7 +512,8 @@ export default {
     },
     antiKillAura: {
         enabled: true,
-        minAngle: 160,
+        minAngle: 135,
+        strictAngle: 45, // For desktop player!
         timeout: 200,
         maxEntityHit: 2,
         // For Anti KillAura Type K
