@@ -1,4 +1,4 @@
-import { GameMode, Player } from "@minecraft/server";
+import { GameMode, Player, PlayerSpawnAfterEvent, world } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -8,17 +8,20 @@ import flag from "../../Assets/flag";
 async function antiBadPacket(config: configi, player: Player) {
     const sprint = player.isSprinting;
     const loc = player.location;
-    const maxRenderRange = player.clientSystemInfo.maxRenderDistance;
-    const isValidRange = maxRenderRange >= 6 && maxRenderRange <= 96;
-    if (!isValidRange) {
-        flag(player, config.antiBadpacket.modules, "B");
-    }
     if (sprint) {
         const validSprint = await onceTrue(player, isValidSprint, config.antiBadpacket.faultToleranceTicks);
         if (!validSprint) {
             player.teleport(loc);
             flag(player, config.antiBadpacket.modules, "A");
         }
+    }
+}
+
+async function onPlayerJoin (config: configi, event: { initialSpawn, player }: PlayerSpawnAfterEvent) {
+    const maxRenderRange = player.clientSystemInfo.maxRenderDistance;
+    const isValidRange = maxRenderRange >= 6 && maxRenderRange <= 96;
+    if (!isValidRange) {
+        flag(player, config.antiBadpacket.modules, "B");
     }
 }
 
@@ -35,4 +38,7 @@ registerModule("antiBadpacket", false, [], {
     tickOption: {
         excludeGameModes: [GameMode.spectator, GameMode.creative],
     },
+},{
+    worldSignal: world.afterEvents.playerSpawn,
+    then: onPlayerJoin,
 });
