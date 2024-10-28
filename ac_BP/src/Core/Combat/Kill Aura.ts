@@ -1,4 +1,4 @@
-import { world, system, Player, Vector3, Entity, EntityHitEntityAfterEvent, EntityHurtAfterEvent, EntityDamageCause } from "@minecraft/server";
+import { world, system, PlatformType, Player, Vector3, Entity, EntityHitEntityAfterEvent, EntityHurtAfterEvent, EntityDamageCause } from "@minecraft/server";
 import { isAdmin, getPing, isSpawning } from "../../Assets/Util.js";
 import { MinecraftEntityTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { registerModule, configi } from "../Modules.js";
@@ -63,9 +63,11 @@ function doubleEvent(config: configi, player: Player, hitEntity: Entity, onFirst
         const angle: number = calculateAngle(player.location, hitEntity.location, player.getVelocity(), hitEntity.getVelocity(), player.getRotation().y);
         const rotationFloat: number = Math.abs(player.getRotation().x);
         const velocity = player.getVelocity().y;
+        const playerDeviceInfo = player.clientSystemInfo.platformType;
+        const anglelimit = playerDeviceInfo == PlatformType.Desktop ? 50 : config.antiKillAura.minAngle;
 
         //if the angle is higher than the max angle, flag the player
-        if (!isSpikeLagging(player) && angle > config.antiKillAura.minAngle && rotationFloat < 79 && !(player.threwTridentAt && Date.now() - player.threwTridentAt < 3000)) {
+        if (!isSpikeLagging(player) && angle > anglelimit && rotationFloat < 79 && !(player.threwTridentAt && Date.now() - player.threwTridentAt < 3000)) {
             //B - false positive: low, efficiency: mid
             flag(player, config.antiKillAura.modules, "B");
             flagged = true;
