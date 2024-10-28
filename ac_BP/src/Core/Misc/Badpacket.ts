@@ -8,6 +8,11 @@ import flag from "../../Assets/flag";
 async function antiBadPacket(config: configi, player: Player) {
     const sprint = player.isSprinting;
     const loc = player.location;
+    const maxRenderRange = player.clientSystemInfo.maxRenderDistance;
+    const isValidRange = maxRenderRange >= 6 && maxRenderRange <= 96;
+    if (!isValidRange) {
+        flag(player, config.antiBadpacket.modules, "B");
+    }
     if (sprint) {
         const validSprint = await onceTrue(player, isValidSprint, config.antiBadpacket.faultToleranceTicks);
         if (!validSprint) {
