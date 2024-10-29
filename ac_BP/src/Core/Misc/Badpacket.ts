@@ -26,7 +26,7 @@ async function onPlayerJoin (config: configi, event: { initialSpawn, player }: P
       @description This is a check which is used to prevent the common server crashing method.
     */
     const isInvalidRange = maxRenderRange > 6 || maxRenderRange < 96;
-    if (isInValidRange) {
+    if (isInvalidRange) {
         flag(player, config.antiBadpacket.modules, "B");
     }
 }
