@@ -18,10 +18,15 @@ async function antiBadPacket(config: configi, player: Player) {
 }
 
 async function onPlayerJoin (config: configi, event: { initialSpawn, player }: PlayerSpawnAfterEvent) {
+    if (!initialSpawn) return;
     const maxRenderRange = player.clientSystemInfo.maxRenderDistance;
-    const isValidRange = maxRenderRange >= 6 && maxRenderRange <= 96;
-    if (!isValidRange) {
-        /** @remarks credit to hpwd for the idea of Anti badpacket [Type B] */
+    /**
+      @reference This check made a reference of Scythe Anticheat V3.2.0 full change log (on GitHub).
+      @credit Credit to Scythe Anticheat
+      @description This is a check which is used to prevent the common server crashing method.
+    */
+    const isInvalidRange = maxRenderRange > 6 || maxRenderRange < 96;
+    if (isInValidRange) {
         flag(player, config.antiBadpacket.modules, "B");
     }
 }
