@@ -1029,6 +1029,9 @@ export default {
         centerZ: 0,
         useSpawnLoc: true,
     },
+    antiGrief: {
+        enabled: false,
+    },
     banrun: {
         command: "",
         enabled: false,

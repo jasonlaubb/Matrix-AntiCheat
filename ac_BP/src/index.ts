@@ -173,7 +173,7 @@ class MatrixAnti_MCPE {
         }
         Minecraft.system.runTimeout(() => {
             disableWatchdogTimingWarnings(false);
-        }, 20);
+        }, 200);
         return;
     };
     public get initialized(): boolean {
