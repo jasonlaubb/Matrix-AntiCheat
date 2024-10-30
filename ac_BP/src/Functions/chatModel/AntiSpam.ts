@@ -2,6 +2,7 @@ import { Player, system } from "@minecraft/server";
 import ChatFilterData from "../../Data/ChatFilterData";
 import { c, rawstr } from "../../Assets/Util";
 import RegexBasedFilter from "../../Data/RegexBasedFilter";
+import { Action } from "../../Assets/Action";
 const special_characters = {
     "0": "o",
     "1": "i",
@@ -19,6 +20,8 @@ interface SpamData {
     lastMessage?: string;
     messageRate: number[];
     lastMessageTime: number;
+    playerWarn: number,
+    dueToLastWarning: number,
 }
 const spamData = new Map<string, SpamData>();
 export function intergradedAntiSpam(player: Player, message: string) {
@@ -35,10 +38,12 @@ export function intergradedAntiSpam(player: Player, message: string) {
             ({
                 messageRate: [],
                 lastMessageTime: 0,
+                playerWarn: 0,
+                dueToLastWarning: 0,
             } as SpamData);
 
         let returnTrue = false;
-
+        let isWarned = false;
         if (data.lastMessage && data.lastMessage == message && now - data.lastMessageTime < 20000) {
             system.run(() => {
                 player.sendMessage(rawstr.new(true, "c").tra("spam.repeated").parse());
@@ -81,7 +86,20 @@ export function intergradedAntiSpam(player: Player, message: string) {
             });
             returnTrue = true;
         }
-
+        if (isWarned) {
+            if (now - data.dueToLastWarning > 45000) {
+                data.dueToLastWarning = Date.now();
+                data.playerWarn = 1;
+            } else {
+                data.playerWarn += 1;
+                if (data.playerWarn > 4) {
+                    system.run(() => {
+                        Action.tempkick(player);
+                    });
+                    returnTrue = true;
+                }
+            }
+        }
         data.lastMessage = message;
         data.lastMessageTime = now;
         spamData.set(player.id, data);

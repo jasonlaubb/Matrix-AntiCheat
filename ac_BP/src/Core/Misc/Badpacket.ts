@@ -1,4 +1,4 @@
-import { GameMode, Player } from "@minecraft/server";
+import { EntityCanFlyComponent, GameMode, Player } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -8,6 +8,13 @@ import flag from "../../Assets/flag";
 async function antiBadPacket(config: configi, player: Player) {
     const sprint = player.isSprinting;
     const loc = player.location;
+    if (player.isFlying) {
+        const component = player.getComponent("can_fly") as EntityCanFlyComponent;
+        if (!component?.isValid()) {
+            flag(player, config.antiBadpacket.modules, "C");
+        }
+    }
+    // Anti Invalid Sprint
     if (sprint) {
         const validSprint = await onceTrue(player, isValidSprint, config.antiBadpacket.faultToleranceTicks);
         if (!validSprint) {
