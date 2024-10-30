@@ -152,6 +152,9 @@ class MatrixAnti_MCPE {
         await import("./Core/Misc/Badpacket");
         await import("./Core/Utility/Welcomer");
         await import("./Core/Utility/Defender");
+        await import("./Core/Utility/AntiAFK");
+        await import("./Core/Utility/AntiGrief");
+        await import("./Core/Utility/JoinInfo");
         //await import("./Core/Movement/Air Jump"); // Not ready yet
         // Use the register data to initialize the modules
         const sucessAmount = await intilizeModules();
