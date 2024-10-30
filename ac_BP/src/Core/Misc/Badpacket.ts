@@ -24,7 +24,7 @@ async function antiBadPacket(config: configi, player: Player) {
     }
 }
 
-async function onPlayerJoin (config: configi, event: { initialSpawn, player }: PlayerSpawnAfterEvent) {
+async function onPlayerJoin (config: configi, { initialSpawn, player }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
     const maxRenderRange = player.clientSystemInfo.maxRenderDistance;
     /**
