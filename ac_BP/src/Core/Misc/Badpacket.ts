@@ -1,4 +1,4 @@
-import { EntityCanFlyComponent, GameMode, Player } from "@minecraft/server";
+import { EntityCanFlyComponent, GameMode, Player, PlayerSpawnAfterEvent, world } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
 import { MatrixUsedTags } from "../../Data/EnumData";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -24,6 +24,20 @@ async function antiBadPacket(config: configi, player: Player) {
     }
 }
 
+async function onPlayerJoin (config: configi, event: { initialSpawn, player }: PlayerSpawnAfterEvent) {
+    if (!initialSpawn) return;
+    const maxRenderRange = player.clientSystemInfo.maxRenderDistance;
+    /**
+      @reference This check made a reference of Scythe Anticheat V3.2.0 full change log (on GitHub).
+      @credit Credit to Scythe Anticheat
+      @description This is a check which is used to prevent the common server crashing method.
+    */
+    const isInvalidRange = maxRenderRange > 6 || maxRenderRange < 96;
+    if (isInvalidRange) {
+        flag(player, config.antiBadpacket.modules, "B");
+    }
+}
+
 function isValidSprint(player: Player) {
     if (!player.isSprinting) return true;
     if (!player.hasTag(MatrixUsedTags.container) && !player.getEffect(MinecraftEffectTypes.Blindness) && !player.isSneaking) {
@@ -37,4 +51,7 @@ registerModule("antiBadpacket", false, [], {
     tickOption: {
         excludeGameModes: [GameMode.spectator, GameMode.creative],
     },
+},{
+    worldSignal: world.afterEvents.playerSpawn,
+    then: onPlayerJoin,
 });
