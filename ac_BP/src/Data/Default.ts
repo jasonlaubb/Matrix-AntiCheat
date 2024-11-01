@@ -640,7 +640,7 @@ export default {
     antiPhase: {
         enabled: true,
         punishment: "ban",
-        minSpeed: 2.5,
+        minSpeed: 1.3,
         breakSolidBypass: 1750,
         modules: {
             id: "Phase",
