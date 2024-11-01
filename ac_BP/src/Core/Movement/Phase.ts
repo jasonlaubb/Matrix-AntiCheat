@@ -84,6 +84,7 @@ async function AntiPhase(player: Player, config: configi, now: number) {
     const skipMaterials = skipLocations.map((loc) => player.dimension.getBlock(loc));
     const phaseIndex: number = skipMaterials.findIndex((block) => block?.isValid() && isSolidBlock(block!));
     const isClientLagging = delayPlacementCheck(player);
+    const absY = Math.abs(y);
     if (
         !bypassMovementCheck(player) &&
         !isClientLagging &&
@@ -91,7 +92,8 @@ async function AntiPhase(player: Player, config: configi, now: number) {
         movementClip > config.antiPhase.minSpeed &&
         !player.isGliding &&
         !(player.lastBreakSolid && now - player.lastBreakSolid < config.antiPhase.breakSolidBypass) &&
-        Math.abs(y) < 1.7 &&
+        absY < 1.7 &&
+        movementClip > absY &&
         !(player.lastExplosionTime && now - player.lastExplosionTime < 2000) &&
         !passableBlocks.includes(bodyBlock) &&
         !powderBlock.includes(bodyBlock) &&
