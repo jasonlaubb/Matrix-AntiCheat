@@ -3,18 +3,17 @@ class MatrixAnti_MCPE {
         initialized: false,
         runTime: Date.now(),
     };
-    public constructor() {
-        const debug = await import("@minecraft/debug-utilities");
-        if (debug) {
-            debugImport = disableWatchdogTimingWarnings;
-            debugImport(true);
-        } else {
-            console.warn("Index :: server is not allowing debug utilities");
-        }
-        // Prevent the script from crashing
-        Minecraft.system.beforeEvents.watchdogTerminate.subscribe(this.watchDogTerminate);
-        // Initialize the matrix anticheat
-        Minecraft.world.afterEvents.worldInitialize.subscribe(this.onWorldInitialize);
+    public constructor () {
+        import("@minecraft/debug-utilities")
+            .then((debug) => {
+                debugImport = debug.disableWatchdogTimingWarnings;
+                debugImport(true);
+            })
+            .catch((_error) => console.warn("Index :: server is not allowing debug utilities"))
+            .finally(() => {
+                Minecraft.system.beforeEvents.watchdogTerminate.subscribe(this.watchDogTerminate);
+                Minecraft.world.afterEvents.worldInitialize.subscribe(this.onWorldInitialize);
+            });
     }
     private readonly onWorldInitialize = async () => {
         const { world, system } = Minecraft;
@@ -25,7 +24,24 @@ class MatrixAnti_MCPE {
         }
         // Launch the anticheat.
         await this.importAll()
-            .catch((e) => console.error(e))
+            .catch((e) => {
+                new Promise<void>(resolve => {
+                    const id = system.runInterval(() => {
+                        if (world.getAllPlayers().length > 0) {
+                            resolve();
+                            system.clearRun(id);
+                        }
+                    }, 100);
+                }).then(() => {
+                    world.sendMessage({ rawtext: [
+                        {
+                            translate: "index.importerror",
+                            with: []
+                        }
+                    ]});
+                })
+                sendErr(e);
+            })
             .then(() => {
                 // Log the initialization time.
                 if (Dynamic.config().sendInitMsg) {
@@ -202,4 +218,5 @@ import { intilizeModules } from "./Core/Modules";
 import Dynamic from "./Functions/Config/dynamic_config";
 import { dataBaseInitialize } from "./Functions/Config/config_database";
 import { onceTrue } from "./Assets/Util";
+import { sendErr } from "./Functions/chatModel/CommandHandler";
 //import { disableWatchdogTimingWarnings } from "@minecraft/debug-utilities";
