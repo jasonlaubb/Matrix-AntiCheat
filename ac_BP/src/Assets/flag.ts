@@ -1,4 +1,4 @@
-import { Player, RawText, world } from "@minecraft/server";
+import { Player, RawText, system, world } from "@minecraft/server";
 import { c, extraDisconnect, isAdmin, rawstr, Type } from "./Util";
 import { Action } from "./Action";
 import { MatrixUsedTags } from "../Data/EnumData";
@@ -50,7 +50,6 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             target.sendMessage(flagMessage);
         });
         if (config.logsettings.logCheatPunishment) saveLog("AC-Instant", player.name, `${modules.id} ${type}`);
-
         applyPunishment(player, modules.bestPunishment);
         if (modules.bestPunishment != "none") extraDisconnect(player);
         flagData.delete(player.id);
@@ -58,10 +57,6 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
     }
     if (modules.behaviorBased) {
         const flagMessage = getFlagMessage(player.name, "Flag Handler [Behavior]", [modules.id], punishmentMaps.tempkick);
-        flagModeSelector(config.flagMode, player.name).forEach((target) => {
-            target.sendMessage(flagMessage);
-        });
-        sendResult(rawstr.drt("protection.behavior", player.name));
         if (config.logsettings.logCheatPunishment) saveLog("AC-Behavior", player.name, `${modules.id} ${type}`);
         // Disconnect the player
         if (!config.antiCheatTestMode) {
@@ -74,9 +69,8 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
             if (filtered.length > config.autoPunishment.behaviorMax) {
                 Action.ban(player, config.autoPunishment.ban.reason, "Matrix AntiCheat", config.autoPunishment.behaviorBanLengthMins * 60000);
                 if (modules.bestPunishment != "none") extraDisconnect(player);
-            } else {
-                Action.tempkick(player);
-            }
+            } else
+                flagEnded(config.flagMode, player, player.name, flagMessage, rawstr.drt("protection.behavior", player.name), "tempkick", config.autoPunishment.resultGobalize, false);
         }
         flagData.delete(player.id);
         return;
@@ -111,8 +105,8 @@ export default function (player: Player, modules: Modules, type: Type = "A") {
         });
         sendResult(rawstr.drt("protection.unfair", player.name));
         if (config.logsettings.logCheatPunishment) saveLog("AC-Limit", player.name, `${modules.id} ${type}`);
-        applyPunishment(player, modules.bestPunishment);
-        if (modules.bestPunishment != "none") extraDisconnect(player);
+            applyPunishment(player, modules.bestPunishment);
+            if (modules.bestPunishment != "none") extraDisconnect(player);
         flagData.delete(player.id);
     }
 }
@@ -207,4 +201,39 @@ function getPercentageComponent(component: string[], total: number): { [key: str
         amountListing[item] += (1 / total) * 100;
     });
     return amountListing;
+}
+function playDetectedSound (target: Player[]) {
+    try {
+        target.forEach((player) => player.playSound("matrix.detected", { volume: 3 }));
+    } catch (error) {
+        sendErr(error as Error);
+    }
+}
+async function flagEnded (flagMode: string, player: Player, playerName: string, flagMessage: RawText, commonFlag: RawText, suggestedPunishment: string, resultGobalize: boolean, pretendLeave: boolean) {
+    flagModeSelector(flagMode, playerName).forEach((target) => {
+        target.sendMessage(flagMessage);
+    });
+    // Player the custom detected sound (just avast detected sound track)
+    if (c().autoPunishment.enableFlagSoundTrack) playDetectedSound(flagModeSelector(resultGobalize ? "all" : "admin", playerName));
+    const delay = c().autoPunishment.disconnectDelayTicks;
+    if (!pretendLeave) {
+        sendResult(commonFlag);
+    } else if (delay == 0) {
+        world.sendMessage({ rawtext: [{text: "§e"}, { translate: "multiplayer.player.left", with: [playerName] }] });
+    } else if (delay > 0) {
+        system.runTimeout(() => {
+            world.sendMessage({ rawtext: [{text: "§e"}, { translate: "multiplayer.player.left", with: [playerName] }] });
+        }, delay)
+    }
+    try {
+        if (delay > 0) {
+            player.inputPermissions.movementEnabled = false;
+            await system.waitTicks(delay)
+            player.inputPermissions.movementEnabled = true;
+        }
+        applyPunishment(player, suggestedPunishment);
+        if (suggestedPunishment != "none") extraDisconnect(player);
+    } catch (error) {
+        sendErr(error as Error);
+    }
 }

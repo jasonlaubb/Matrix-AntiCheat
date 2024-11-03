@@ -450,6 +450,9 @@ export default {
         eachTimeValidt: 10800000, // 3 hours
         behaviorBanLengthMins: 4320, // 3 days
         resultGobalize: true,
+        enableFlagSoundTrack: true,
+        pretendLeave: true,
+        disconnectDelayTicks: 60,
     },
     banModify: {
         extraMessages: [],
