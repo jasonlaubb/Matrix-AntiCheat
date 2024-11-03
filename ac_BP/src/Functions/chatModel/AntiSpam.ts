@@ -148,6 +148,12 @@ function chatFilter(player: Player, message: string) {
     Object.entries(special_characters).forEach(([key, value]) => {
         msg = msg.replaceAll(key, value);
     });
+    if (msg.match(/(f+u+c+k+)|(s+h+i+t+)/gi) {
+        system.run(() => {
+            player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
+        });
+        return true;
+    }
     const matchRegex = /([a-zA-Z]+)/g;
     if (msg.match(matchRegex)?.some((x) => latinBased.some((y) => y == x))) {
         system.run(() => {

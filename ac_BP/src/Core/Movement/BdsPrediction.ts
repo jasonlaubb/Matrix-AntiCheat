@@ -102,6 +102,7 @@ async function BdsPrediction(config: configi, player: Player) {
         now - data.lastReset >= 350 &&
         now - data.lastRiding >= 1000 &&
         (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2 &&
+        !(player.lastExplosionTime && now - player.lastExplosionTime < 1500) &&
         notSpikeLagging
     ) {
         if (lagOnlyCondition) {
