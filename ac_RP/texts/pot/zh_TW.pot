@@ -24,6 +24,10 @@ msgstr "在 %2 毫秒內初始化了 %1 個模組"
 msgid "Matrix has been completely initialized in %s ms"
 msgstr "Matrix 已在 %1 毫秒內被完全初始化了"
 
+#: index.importerror
+msgid "§bMatrix §7> §cOops, something went wrong during the intialize import of Matrix AntiCheat ;("
+msgstr ""
+
 #: function.gainop
 msgid "§bMatrix §7> §gYou have verified your operator permission, use chat command '<prefix>op' directly to get the matrix admin permission"
 msgstr "§bMatrix §7> §g§g您已驗證操作員權限, 直接使用聊天指令「<prefix>op」即可取得 Matrix 管理員權限"

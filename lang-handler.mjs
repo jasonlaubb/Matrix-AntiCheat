@@ -92,7 +92,7 @@ async function convertPotFilesToPo() {
             }
             biu.push([acceptedStr[i], valueCatch[i]]);
         }
-        files.forEach(async (file) => {
+        for (const file of files) {
             if (file.endsWith(".pot")) {
                 potBar.tick({
                     act: "Compiling pot files"
@@ -111,8 +111,16 @@ async function convertPotFilesToPo() {
                 for (let i = 0; i < biu.length; i++) {
                     const [lore, msgid] = biu[i];
                     const index = properties.includes(lore);
+                    if (!msgid) {
+                        console.warn("\nNo msgid -> Format error! At " + file);
+                        throw new Error();
+                    }
                     if (index) {
                         const actindex = properties.indexOf(lore);
+                        if (!kakaka[actindex]) {
+                            console.warn("\nNo msgstr -> Format error! At " + file);
+                            throw new Error();
+                        }
                         potUpdateFile += `
                                 #: ${lore}
                                 msgid "${msgid.replace("\r", "")}"
@@ -154,7 +162,7 @@ async function convertPotFilesToPo() {
                 }
                 fs.writeFileSync(root + "texts/po/" + file.replace(".pot", ".po"), updatedContent);
             }
-        });
+        };
     })
     await new Promise((pro) => setTimeout(() => pro(), 50));
     fs.readdir(root + "texts/po", (err, files) => {

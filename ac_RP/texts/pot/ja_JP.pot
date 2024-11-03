@@ -24,6 +24,10 @@ msgstr ""
 msgid "Matrix has been completely initialized in %s ms"
 msgstr ""
 
+#: index.importerror
+msgid "§bMatrix §7> §cOops, something went wrong during the intialize import of Matrix AntiCheat ;("
+msgstr ""
+
 #: function.gainop
 msgid "§bMatrix §7> §gYou have verified your operator permission, use chat command '<prefix>op' directly to get the matrix admin permission"
 msgstr "§bMatrix §7> §gOP権限を確認しました。コマンド '<prefix>op' を直接使用してMatrix管理者権限を取得してください。"
