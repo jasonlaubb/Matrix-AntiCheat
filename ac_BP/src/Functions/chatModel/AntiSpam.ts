@@ -144,13 +144,15 @@ const latinBased = ChatFilterData.filter((x) => !x.includes("-"));
 const latinWithWhiteSpace = ChatFilterData.filter((x) => x.includes("-"));
 const regexBased = RegexBasedFilter;
 function chatFilter(player: Player, message: string) {
+    const playerSound = c().soundEffect;
     let msg = message;
     Object.entries(special_characters).forEach(([key, value]) => {
         msg = msg.replaceAll(key, value);
     });
-    if (msg.match(/(f+u+c+k+)|(s+h+i+t+)/gi) {
+    if (msg.match(/(f+u+c+k+)|(s+h+i+t+)/gi)) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
+            if (playerSound) player.playSound("note.bass", { volume: 1.0 });
         });
         return true;
     }
@@ -158,12 +160,14 @@ function chatFilter(player: Player, message: string) {
     if (msg.match(matchRegex)?.some((x) => latinBased.some((y) => y == x))) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
+            if (playerSound) player.playSound("note.bass", { volume: 1.0 });
         });
         return true;
     }
     if (latinWithWhiteSpace.includes(msg.replace(/\s+/g, "-"))) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
+            if (playerSound) player.playSound("note.bass", { volume: 1.0 });
         });
         return true;
     }
@@ -174,6 +178,7 @@ function chatFilter(player: Player, message: string) {
     if (plaintext.length > 0 && regexBased.some((x) => plaintext.includes(x))) {
         system.run(() => {
             player.sendMessage(rawstr.new(true, "c").tra("spam.sensitiveword").parse());
+            if (playerSound) player.playSound("note.bass", { volume: 1.0 });
         });
         return true;
     }
