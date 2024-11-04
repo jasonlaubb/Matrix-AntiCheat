@@ -910,7 +910,7 @@ msgstr ""
 
 #: action.hint.exit.console.r4isen1920_invsee:inventory
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
-msgstr "" 
+msgstr ""
 
 #: protection.behavior
 msgid "§bMatrix §7>§g Behavior protection has blocked a player's access successfully. §7(Player=%s)"
@@ -1003,6 +1003,7 @@ msgstr ""
 #: defender.title
 msgid "Realm Defender | Anti Bot Verification"
 msgstr ""
+
 #: defender.selectui
 msgid "§a- Answer the following simple question to pass the verification, you're required to answer this question in 3 minutes."
 msgstr ""
@@ -1085,8 +1086,4 @@ msgstr ""
 
 #: tps.tps
 msgid "Server current tick(s) per second is §7(§a%s/§a20§7)"
-msgstr ""
-
-#: tpa.accept
-msgid "§bMatrix §7>§g You have accepted the teleport request from %s."
 msgstr ""

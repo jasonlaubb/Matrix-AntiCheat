@@ -115,12 +115,8 @@ async function convertPotFilesToPo() {
                         console.warn("\nNo msgid -> Format error! At " + file);
                         throw new Error();
                     }
-                    if (index) {
-                        const actindex = properties.indexOf(lore);
-                        if (!kakaka[actindex]) {
-                            console.warn("\nNo msgstr -> Format error! At " + file);
-                            throw new Error();
-                        }
+                    const actindex = properties.indexOf(lore);
+                    if (index && kakaka[actindex]) {
                         potUpdateFile += `
                                 #: ${lore}
                                 msgid "${msgid.replace("\r", "")}"

@@ -8,6 +8,7 @@ export type Translate =
     | "json.packet"
     | "index.initmodules"
     | "index.complete"
+    | "index.importerror"
     | "function.gainop"
     | "function.alreadyop"
     | "function.check.title"
@@ -272,5 +273,4 @@ export type Translate =
     | "afk.warn"
     | "afk.tips"
     | "timeout.has"
-    | "tps.tps"
-    | "tpa.accept";
+    | "tps.tps";

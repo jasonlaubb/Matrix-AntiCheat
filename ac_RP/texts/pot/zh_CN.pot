@@ -24,6 +24,10 @@ msgstr "在 %2 毫秒内初始化了 %1 个模组"
 msgid "Matrix has been completely initialized in %s ms"
 msgstr "Matrix 已在 %1 毫秒内被完全初始化了"
 
+#: index.importerror
+msgid "§bMatrix §7> §cOops, something went wrong during the intialize import of Matrix AntiCheat :sad:"
+msgstr ""
+
 #: function.gainop
 msgid "§bMatrix §7> §gYou have verified your operator permission, use chat command '<prefix>op' directly to get the matrix admin permission"
 msgstr "§bMatrix §7> §g§g您已验证操作员权限，直接使用聊天指令「<prefix>op」即可获得 Matrix 管理员权限"
@@ -714,376 +718,372 @@ msgstr "您已声明该值是布尔值，但您的值不在 true、false 和 und
 
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
-msgstr "你提供了一个无效的数组, 正确的示例：'abc','def',1.52
+msgstr "成功设置 '%1' 到 '%2'"
 
 #: config.set
 msgid "Sucessfully set '%1' to '%2'"
-msgstr "成功设置 '%1' 到 '%2'"
+msgstr "您已获取数据包记录器权限"
 
 #: packetlogger.add
 msgid "You have been given the packet logger permission"
-msgstr "您已获取数据包记录器权限"
+msgstr "您已删除数据包记录器权限"
 
 #: packetlogger.remove
 msgid "You have removed the packet logger permission"
-msgstr "您已删除数据包记录器权限"
+msgstr "您已将前缀设为 %s"
 
 #: setprefix.set
 msgid "You have set the prefix to %s"
-msgstr "您已将前缀设为 %s"
+msgstr "您已将前缀重设为 %s"
 
 #: setprefix.reset
 msgid "You have reset the prefix to %s"
-msgstr "您已将前缀重设为 %s"
+msgstr "你不能在目标中选择你自己"
 
 #: target.selfselect
 msgid "You can't select yourself as the target."
-msgstr "你不能在目标中选择你自己"
+msgstr "无法对你选择的目标执行动作"
 
 #: target.unable
 msgid "Unable to do the action to the target."
-msgstr "无法对你选择的目标执行动作"
+msgstr "需要啟用夏日創作者功能"
 
 #: setup.hcfeature
 msgid "Hoilday creator feature is required."
-msgstr "需要啟用夏日創作者功能"
+msgstr "%s 已被检测为机器人客户端, 已被自动断线"
 
 #: clientauth.kicked
 msgid "%s has been detected as bot client, it is automatically disconnected"
-msgstr "%s 已被检测为机器人客户端, 已被自动断线"
+msgstr "配置选择器"
 
 #: ui.config.selector
 msgid "Configuration Selector"
-msgstr "配置选择器"
+msgstr "配置修改器"
 
 #: ui.config.editor
 msgid "Configuration Editor"
-msgstr "配置修改器"
+msgstr "§g目前路径=§c%s"
 
 #: ui.config.loc
 msgid "§gCurrent location: §c%s"
-msgstr "§g目前路径=§c%s"
+msgstr "注释：§c%s"
 
 #: ui.config.desc
 msgid "§gDescription: §c%s"
-msgstr "注释：§c%s"
+msgstr "§r属性:"
 
 #: ui.config.type
 msgid "§rProperty type:"
-msgstr "§r属性:"
+msgstr "值:"
 
 #: ui.config.value
 msgid "Value:"
-msgstr "值:"
+msgstr "字串"
 
 #: ui.config.type.string
 msgid "string"
-msgstr "字串"
+msgstr "数字"
 
 #: ui.config.type.number
 msgid "number"
-msgstr "数字"
+msgstr "布尔值 (true/false)"
 
 #: ui.config.type.boolean
 msgid "boolean (true/false)"
-msgstr "布尔值 (true/false)"
+msgstr "阵列 (列表)"
 
 #: ui.config.type.array
 msgid "array (list)"
-msgstr "阵列 (列表)"
+msgstr "真"
 
 #: ui.config.type.boolean.true
 msgid "true"
-msgstr "真"
+msgstr "假"
 
 #: ui.config.type.boolean.false
 msgid "false"
-msgstr "假"
+msgstr "未知"
 
 #: common.unknown
 msgid "unknown"
-msgstr "未知"
+msgstr "您需要成为管理员才能使用此项目！"
 
 #: acess.itemadmin
 msgid "You need to be an admin to use this item!"
-msgstr "您需要成为管理员才能使用此项目！"
+msgstr "报告命令正在冷却，还剩 %s 秒"
 
 #: report.cooldown
 msgid "Report command is on cooldown, %s seconds remaining"
-msgstr "报告命令正在冷却，还剩 %s 秒"
+msgstr "%s 的警告已重设"
 
 #: warn.reset
 msgid "%s's warn has been reset."
-msgstr "%s 的警告已重设"
+msgstr "%s 已收到警告，这是第一次警告"
 
 #: warn.first
 msgid "%s has been warned, this is the first warning."
-msgstr "%s 已收到警告，这是第一次警告"
+msgstr "%s 再次受到警告，这是第二次警告"
 
 #: warn.second
 msgid "%s has been warned again, this is the second warning."
-msgstr "%s 再次受到警告，这是第二次警告"
+msgstr "%s 已收到第三次警告"
 
 #: warn.third
 msgid "%s has been given the third warning."
-msgstr "%s 已收到第三次警告"
+msgstr "%1 已被警告 %2 次"
 
 #: warn.for
 msgid "%1 has been warned for %2 time(s)."
-msgstr "%1 已被警告 %2 次"
+msgstr "%1 已收到最后警告"
 
 #: warn.final
 msgid "%1 has been given the final warning."
-msgstr "%1 已收到最后警告"
+msgstr "%1 已达到警告的最大数量"
 
 #: warn.reached
 msgid "%1 has reached the maximum amount of warnings."
-msgstr "%1 已达到警告的最大数量"
+msgstr "已产生 %s 个混淆记分板"
 
 #: db.gen
 msgid "Generated %s confuse scoreboard(s)."
-msgstr "已产生 %s 个混淆记分板"
+msgstr "成功恢复config数据"
 
 #: db.suc
 msgid "Sucessfully recover the data of config"
-msgstr "成功恢复config数据"
+msgstr "备份的数据被意外删除"
 
 #: db.delun
 msgid "The data of the backup has been deleted unexpectedly."
-msgstr "备份的数据被意外删除"
+msgstr "请停用自动提交才能使用此命令"
 
 #: configdb.autocommit
 msgid "Please disable auto-commit to use this command."
-msgstr "请停用自动提交才能使用此命令"
+msgstr "自动恢复已启用，请停用它才能使用此命令"
 
 #: configdb.autorecover
 msgid "Auto recover is enabled, please disable it to use this command."
-msgstr "自动恢复已启用，请停用它才能使用此命令"
+msgstr "成功提交对配置数据库的更改"
 
 #: configdb.commit
 msgid "Sucessfully commit the changes to config database"
-msgstr "成功提交对配置数据库的更改"
+msgstr "成功从配置数据库恢复配置数据"
 
 #: configdb.recover
 msgid "Sucessfully recover the data of config from config database"
-msgstr "成功从配置数据库恢复配置数据"
+msgstr "关闭聊天并打开库存来管理所选玩家的库存"
 
 #: invof.open
 msgid "Close the chat and open the inventory to manage the inventory of the selected player."
-msgstr "关闭聊天并打开库存来管理所选玩家的库存"
+msgstr "%1 已成功完成对 %2 的直接操作"
 
 #: directaction.success
 msgid "%1 has scuessfully finished the direct action to %2"
-msgstr "%1 已成功完成对 %2 的直接操作"
+msgstr "您不能执行被禁止的命令"
 
 #: runcommand.banned
 msgid "You cannot run a banned command."
-msgstr "您不能执行被禁止的命令"
+msgstr "无法运行命令"
 
 #: runcommand.failed
 msgid "Failed to run the command."
-msgstr "无法运行命令"
+msgstr "成功运行命令"
 
 #: runcommand.success
 msgid "Sucessfully run the command."
-msgstr "成功运行命令"
+msgstr "已成功更改游戏模式为 %s"
 
 #: gm.success
 msgid "Sucessfully changed the gamemode to %s"
-msgstr "已成功更改游戏模式为 %s"
+msgstr "§r§l§bMatrix §eUI面板§r"
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
-msgstr "§r§l§bMatrix §eUI面板§r"
+msgstr "§r§l§bMatrix §eModStick§r"
 
 #: item.matrix.modstick
 msgid "§r§l§bMatrix §eModStick§r"
-msgstr "§r§l§bMatrix §eModStick§r"
+msgstr "点击§l库存按钮§r打开他们的库存"
 
 #: action.hint.exit.r4isen1920_invsee:inventory
 msgid "Tap the §lInventory button§r to open their Inventory"
-msgstr "点击§l库存按钮§r打开他们的库存"
+msgstr "按 §l:_input_key.inventory:§r 打开他们的库存"
 
 #: action.hint.exit.console.r4isen1920_invsee:inventory
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
-msgstr "按 §l:_input_key.inventory:§r 打开他们的库存"
+msgstr "§bMatrix §7>§g 自动行为防御模块已成功封锁了一名玩家 §7(玩家=%s)"
 
 #: protection.behavior
 msgid "§bMatrix §7>§g Behavior protection has blocked a player's access successfully. §7(Player=%s)"
-msgstr "§bMatrix §7>§g 自动行为防御模块已成功封锁了一名玩家 §7(玩家=%s)"
+msgstr "§bMatrix §7>§g 成功拦截一名玩家的不公平优势 §7(玩家=%s)"
 
 #: protection.unfair
 msgid "§bMatrix §7>§g Unfair advantage from a player has been detected. §7(Player=%s)"
-msgstr "§bMatrix §7>§g 成功拦截一名玩家的不公平优势 §7(玩家=%s)"
+msgstr "§bMatrix §7>§g 玩家的高风险行为已被阻止并成功封锁该玩家 §7(玩家=%s)"
 
 #: protection.highrisk
 msgid "§bMatrix §7>§g A high-risk action from a player has been blocked and banned the player successfully. §7(Player=%s)"
-msgstr "§bMatrix §7>§g 玩家的高风险行为已被阻止并成功封锁该玩家 §7(玩家=%s)"
+msgstr "§bMatrix §7>§g IAC Defender 已成功阻止目前 Realm 的高风险用戶端 §7(PlayerId=%s)"
 
 #: protection.defender
 msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
-msgstr "§bMatrix §7>§g IAC Defender 已成功阻止目前 Realm 的高风险用戶端 §7(PlayerId=%s)"
+msgstr "§bMatrix §7>§g 欢迎 %s 首次加入服务器"
 
 #: welcomer.new
 msgid "§bMatrix §7>§g Welcome %s first time joined!"
-msgstr "§bMatrix §7>§g 欢迎 %s 首次加入服务器"
+msgstr "§bMatrix §7>§g 此服务器受到 Matrix 反作弊保护, 任何作弊行为都将遭到处罚"
 
 #: welcomer.protectedline
 msgid "§bMatrix §7>§g This server is under the protection from Matrix AntiCheat. Any unfair advantage will be punished automatically."
-msgstr "§bMatrix §7>§g 此服务器受到 Matrix 反作弊保护, 任何作弊行为都将遭到处罚"
+msgstr "§bMatrix §7>§a 想要在你的服务器和Realms上也使用 Matrix 吗? 请执行'%sabout'命令查看详情和加入我们的discord"
 
 #: welcomer.wantdownload
 msgid "§bMatrix §7>§a Want to gain Matrix AntiCheat for your own server too? Please visit our discord support server, use '%sabout' to get the link."
-msgstr "§bMatrix §7>§a 想要在你的服务器和Realms上也使用 Matrix 吗? 请执行'%sabout'命令查看详情和加入我们的discord"
+msgstr "我们已协助您远离危险 >w< 如果您有任何疑问，请访问我们的支持服务器（您可以执行 /function version 获取链接）"
 
 #: ui.idp.desc
 msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
-msgstr "我们已协助您远离危险 >w< 如果您有任何疑问，请访问我们的支持服务器（您可以执行 /function version 获取链接）"
+msgstr "选择您要查看的报告"
 
 #: ui.idp.select
 msgid "Select a report you want to view"
-msgstr "选择您要查看的报告"
+msgstr "我们最多可以存储 %s 份最新报告"
 
 #: ui.idp.limit
 msgid "We can maximum save %s of last reports"
-msgstr "我们最多可以存储 %s 份最新报告"
+msgstr "没有可以显示的报告"
 
 #: ui.idp.none
 msgid "There are no reports can be displayed"
-msgstr "没有可以显示的报告"
+msgstr "=%s 的后续报告"
 
 #: ui.idp.preport
 msgid "%s's follow-up report"
-msgstr "=%s 的后续报告"
+msgstr "当您离线时，没有检测到任何作弊者，您的服务器是安全的！"
 
 #: ui.idp.offline.none
 msgid "While you're offline, there were none hacker detected, your world is safe!"
-msgstr "当您离线时，没有检测到任何作弊者，您的服务器是安全的！"
+msgstr "当您离线时，全自动检测到了 %s 名黑客，您的服务器在我们的保护下仍然安全"
 
 #: ui.idp.offline.is
 msgid "While you're offline, %s hacker(s) were detected by full automation, your world is still safe under our protection."
-msgstr "当您离线时，全自动检测到了 %s 名黑客，您的服务器在我们的保护下仍然安全"
+msgstr "虽然没有检测到可疑的作弊者，但我们已阻止 %s 次可疑行为"
 
 #: ui.idp.offline.alth
 msgid "Although there is no hacker detected, we have blocked %s time(s) of the suspicious behavior."
-msgstr "虽然没有检测到可疑的作弊者，但我们已阻止 %s 次可疑行为"
+msgstr "后续报告"
 
 #: ui.idp.followup
 msgid "Follow-up report"
-msgstr "后续报告"
+msgstr "打开日志"
 
 #: ui.idp.openlog
 msgid "Open Log"
-msgstr "打开日志"
+msgstr "综合防御面板"
 
 #: ui.idp.button
 msgid "Integrated defense panel"
-msgstr "综合防御面板"
+msgstr "§bMatrix §7>§g 我们正在准备检查您的客户端，请等待几分钟，在验证完成之前您无法移动或互动"
 
 #: defender.checking
 msgid "§bMatrix §7>§g We're readying to check about your client, please wait for few seconds, you cannot move or interact before you finished the verification."
-msgstr "§bMatrix §7>§g 我们正在准备检查您的客户端，请等待几分钟，在验证完成之前您无法移动或互动"
+msgstr "§bMatrix §7>§g 请§e§l移动您的视角§r§g 开始检查，如果您在1分钟内不这样做，您将被自动断开连接"
 
 #: defender.continue
 msgid "§bMatrix §7>§g Please §e§lmove your view§r§g to start the check, you will be auto disconnected if you don't do this in 1 minute."
-msgstr "§bMatrix §7>§g 请§e§l移动您的视角§r§g 开始检查，如果您在1分钟内不这样做，您将被自动断开连接"
+msgstr "§bMatrix §7>§g 您验证失败，用户界面将在 2 秒后重新生成"
 
 #: defender.recontinue
 msgid "§bMatrix §7>§g You failed the verification, the ui will be regenerated in 2 seconds."
-msgstr "§bMatrix §7>§g 您验证失败，用户界面将在 2 秒后重新生成"
+msgstr "§bMatrix §7>§g 检测到视角移动，正在启动用户界面，请等待几分钟"
 
 #: defender.viewmove
 msgid "§bMatrix §7>§g View movement is detected, starting the ui, please wait for few seconds."
-msgstr "§bMatrix §7>§g 检测到视角移动，正在启动用户界面，请等待几分钟"
+msgstr "Realm Defender | 反机器人验证"
 
 #: defender.title
 msgid "Realm Defender | Anti Bot Verification"
-msgstr "Realm Defender | 反机器人验证"
+msgstr "§a- 回答以下简单问题即可通过验证，您需要在 3 分钟内回答此问题"
 
 #: defender.selectui
 msgid "§a- Answer the following simple question to pass the verification, you're required to answer this question in 3 minutes."
-msgstr "§a- 回答以下简单问题即可通过验证，您需要在 3 分钟内回答此问题"
+msgstr "§b- 为什么需要验证？这是因为我们需要确保您不是一个会导致Realm服务器崩溃的垃圾邮件机器人"
 
 #: defender.why
 msgid "§b- Why you need to verify? It's because we need to make sure you're not a spamming bot that will crash the realm."
-msgstr "§b- 为什么需要验证？这是因为我们需要确保您不是一个会导致Realm服务器崩溃的垃圾邮件机器人"
+msgstr "我答完题了！"
 
 #: defender.submit
 msgid "I finished the question!"
-msgstr "我答完题了！"
+msgstr "§e问题：§r%1 + %2 = ?"
 
 #: defender.question
 msgid "§eQuestion: §r%1 + %2 = ?"
-msgstr "§e问题：§r%1 + %2 = ?"
+msgstr "§e在下面的滑块中选择您的答案§r"
 
 #: defender.youranswer
 msgid "§eSelect your answer in below slider§r"
-msgstr "§e在下面的滑块中选择您的答案§r"
+msgstr "我是人类！"
 
 #: defender.notabot
 msgid "I am a human!"
-msgstr "我是人类！"
+msgstr "§bMatrix §7>§g 您已通过安全检测，祝您游戏愉快"
 
 #: defender.verified
 msgid "§bMatrix §7>§g You successfully passed the verification, enjoy your gameplay."
-msgstr "§bMatrix §7>§g 您已通过安全检测，祝您游戏愉快"
+msgstr ""
 
 #: defender.keepmove
-msgid "§bMatrix §7>§g 请继续移动您的视角，还需要 %s 秒。"
-msgstr ""
+msgid "§bMatrix §7>§g Please continue your camera movement, %s second(s) more is required."
+msgstr "%s(你)：Ping?"
 
 #: ping.ping
 msgid "%s (you): Ping?"
-msgstr "%s(你)：Ping?"
+msgstr "Matrix: Pong! 目前 ping 为 %1ms §7(%2§7)"
 
 #: ping.pong
 msgid "Matrix: Pong! The current ping is %1ms §7(%2§7)"
-msgstr "Matrix: Pong! 目前 ping 为 %1ms §7(%2§7)"
+msgstr "§bMatrix §7>§g 您已停止AFK状态"
 
 #: afk.quit
 msgid "§bMatrix §7>§g You are now no longer AFK."
-msgstr "§bMatrix §7>§g 您已停止AFK状态"
+msgstr "反恶意 AFK | Matrix Anticheat"
 
 #: afk.ui.title
 msgid "Anti AFK | Matrix Anticheat"
-msgstr "反恶意 AFK | Matrix Anticheat"
+msgstr "§b- 该服务器禁止了离键（AFK）操作如果您不完成此验证，您将被断开连接"
 
 #: afk.intro
 msgid "§b- The server owner of this server is banned the action of away-from-keyboard (AFK). You will get disconnected when you don't finish this verification."
-msgstr "§b- 该服务器禁止了离键（AFK）操作如果您不完成此验证，您将被断开连接"
+msgstr "§b- 为什么您需要验证您是否 AFK？这是因为我们需要确保您不会被错误地检测为 AFK"
 
 #: afk.why
 msgid "§b- Why you need to verify wether you are AFK? It's because we need to make sure you won't get falsely detected as AFK."
-msgstr "§b- 为什么您需要验证您是否 AFK？这是因为我们需要确保您不会被错误地检测为 AFK"
+msgstr "§b- 点击下面的按钮完成验证"
 
 #: afk.clickbelow
 msgid "§b- Click the below button to finish the verification."
-msgstr "§b- 点击下面的按钮完成验证"
+msgstr "我没有在 AFK"
 
 #: afk.ui.button
 msgid "I'm not AFK"
-msgstr "我没有在 AFK"
+msgstr "§bMatrix §7>§c 从 %s 检测到 AFK 并自动从服务器断开连接"
 
 #: afk.kick
 msgid "§bMatrix §7>§c Afk is detected from %s and automatically disconnected from the server."
-msgstr "§bMatrix §7>§c 从 %s 检测到 AFK 并自动从服务器断开连接"
+msgstr "§bMatrix §7>§c 该服务器不允许 AFK，请尝试移动您的步伐您将在 %s 秒后被断开连接"
 
 #: afk.warn
 msgid "§bMatrix §7>§c Afk is not allowed on this server, please try to move your steps. You will be disconected after %s second(s)."
-msgstr "§bMatrix §7>§c 该服务器不允许 AFK，请尝试移动您的步伐您将在 %s 秒后被断开连接"
+msgstr "§bMatrix §7>§g 任何检测到的 AFK 行动都将自动从服务器断开连接！"
 
 #: afk.tips
 msgid "§bMatrix §7>§g Any afk action detected will be automatically disconnected from the server!"
-msgstr "§bMatrix §7>§g 任何检测到的 AFK 行动都将自动从服务器断开连接！"
+msgstr "§bMatrix §7>§g %1 被 %2 在 %3 分钟内超时"
 
 #: timeout.has
 msgid "§bMatrix §7>§g %1 has been timed out by %2 for %3 minutes."
-msgstr "§bMatrix §7>§g %1 被 %2 在 %3 分钟内超时"
+msgstr "服务器当前每秒 tick(s) 是 §7(§a%s/§a20§7)"
 
 #: tps.tps
 msgid "Server current tick(s) per second is §7(§a%s/§a20§7)"
-msgstr "服务器当前每秒 tick(s) 是 §7(§a%s/§a20§7)"
-
-#: tpa.accept
-msgid "§bMatrix §7>§g You have accepted the teleport request from %s."
 msgstr "§bMatrix §7>§g 您已接受来自 %s 的传送请求"

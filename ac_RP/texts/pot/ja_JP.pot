@@ -25,7 +25,7 @@ msgid "Matrix has been completely initialized in %s ms"
 msgstr ""
 
 #: index.importerror
-msgid "§bMatrix §7> §cOops, something went wrong during the intialize import of Matrix AntiCheat ;("
+msgid "§bMatrix §7> §cOops, something went wrong during the intialize import of Matrix AntiCheat :sad:"
 msgstr ""
 
 #: function.gainop
@@ -1086,8 +1086,4 @@ msgstr ""
 
 #: tps.tps
 msgid "Server current tick(s) per second is §7(§a%s/§a20§7)"
-msgstr ""
-
-#: tpa.accept
-msgid "§bMatrix §7>§g You have accepted the teleport request from %s."
 msgstr ""

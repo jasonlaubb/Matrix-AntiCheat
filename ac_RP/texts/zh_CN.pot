@@ -6,1084 +6,1084 @@
 "X-Generator: PhraseApp (phraseapp.com)\n"
 #: pack.description
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock §c(Beta-API required)"
-msgstr ""
+msgstr "Minecraft 基岩版最佳对抗外挂的解决方案（需要启动实验性API）"
 
 #: disconnectionScreen.unexpectedPacket
 msgid "Oops, something went wrong. This would be happening due to bad internet or high server pings."
-msgstr ""
+msgstr "哎呀，出错了！ 这可能是由于服务器高延迟或网络问题而发生的"
 
 #: json.packet
 msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §g received from %3"
-msgstr ""
+msgstr "§bMatrix §7> §e%1 §g 封包 §7(%2) §g 从 %3 被接受"
 
 #: index.initmodules
 msgid "Intilized %1 module(s) in %2ms."
-msgstr ""
+msgstr "在 %2 毫秒内初始化了 %1 个模组"
 
 #: index.complete
 msgid "Matrix has been completely initialized in %s ms"
-msgstr ""
-
-#: index.importerror
-msgid "§bMatrix §7> §cOops, something went wrong during the intialize import of Matrix AntiCheat :sad:"
-msgstr ""
+msgstr "Matrix 已在 %1 毫秒内被完全初始化了"
 
 #: function.gainop
 msgid "§bMatrix §7> §gYou have verified your operator permission, use chat command '<prefix>op' directly to get the matrix admin permission"
-msgstr ""
+msgstr "§bMatrix §7> §g§g您已验证操作员权限，直接使用聊天指令「<prefix>op」即可获得 Matrix 管理员权限"
 
 #: function.alreadyop
 msgid "§bMatrix §7> §cYou have already verified your operator permission."
-msgstr ""
+msgstr "§bMatrix §7> §c您已经验证了您的操作员权限"
 
 #: function.check.title
 msgid "Anti-Cheat setup checking:"
-msgstr ""
+msgstr "反外挂启动检测"
 
 #: function.check.betaapi
 msgid "§gBeta API usage: %s"
-msgstr ""
+msgstr "§g成功启用实验性API=%s"
 
 #: function.check.playerjson
 msgid "§gPlayer.json usage: %s"
-msgstr ""
+msgstr "§gPlayer.json 启用=%s"
 
 #: function.check.helpa
 msgid "§7- If the 'Beta API usage' is stated 'FALSE', that's mean the anticheat cannot run the script of the behavior pack."
-msgstr ""
+msgstr "§7- 如果'成功启用实验性API'返回'FALSE'，这意味著反外挂无法使用行为模式包中的script"
 
 #: function.check.helpb
 msgid "§7- To fix that, please check if you have enabled the 'Beta-API' of your world settings"
-msgstr ""
+msgstr "§7- 如果需要修复，请检查你已经在世界设置中启用'实验性API'"
 
 #: function.check.helpc
 msgid "§7- If it's still not working, please check if your Minecraft version matches the anticheat supported one."
-msgstr ""
+msgstr "§7- 如果这样仍然不起作用，请检查你的Minecraft版本是否匹配反外挂支持的版本"
 
 #: function.check.helpd
 msgid "§7- If the 'Player.json usage' is stated 'FALSE', please make sure you have placed Matrix AntiCheat on the top of your behavior packs."
-msgstr ""
+msgstr "§7- 如果“Player.json 启用”设置为“FALSE”，请确保您已将 Matrix AntiCheat 置于行为包的顶部"
 
 #: function.version.title
 msgid "§gYou are now on version §eV%s"
-msgstr ""
+msgstr "§g你现在的版本是 §eV%s"
 
 #: function.version.dsc
 msgid "§gSupport Server: §e%s"
-msgstr ""
+msgstr "g支持服务器=§e%s"
 
 #: flag.style
 msgid "%1§g has failed §4%2§r §7[Type %3§7] §7[§dx%4/%5§7]§r"
-msgstr ""
+msgstr "%1§g 已被拦截 §4%2§r §7[类型 %3§7] §7[§dx%4§7]§r"
 
 #: object.detected
 msgid "§bMatrix §7> §7Object Detected."
-msgstr ""
+msgstr "§bMatrix §7> §7检测到物体"
 
 #: object.object
 msgid "Object: §e%1§r§7"
-msgstr ""
+msgstr "物体=§e%1§r§7"
 
 #: object.type
 msgid "Type: §e%1§r§7"
-msgstr ""
+msgstr "类型=§e%1§r§7"
 
 #: object.components
 msgid "Components: §e%1§r§7"
-msgstr ""
+msgstr "成分: §e%1§r§7"
 
 #: object.autosolve
 msgid "Automatic solve: §e%1§r§7"
-msgstr ""
+msgstr "自动解决: §e%1§r§7"
 
 #: ui.title
 msgid "Admin GUI"
-msgstr ""
+msgstr "管理员菜单"
 
 #: ui.itemui
 msgid "Get UI Item §8(itemui)"
-msgstr ""
+msgstr "取得 UI 物品 §8(itemui)"
 
 #: ui.moderateplayer
 msgid "Moderate Players"
-msgstr ""
+msgstr "管理玩家"
 
 #: ui.setting
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #: ui.exit
 msgid "Exit"
-msgstr ""
+msgstr "退出"
 
 #: ui.nogaoadmin
 msgid "Oops, moderate a player with admin permission with ui is not supported, please use command instead."
-msgstr ""
+msgstr "哎呀，不支持使用 ui 管理具有管理员权限的玩家，请改用指令"
 
 #: ui.selectonline
 msgid "Select a online player from the list below"
-msgstr ""
+msgstr "请从下列俩表中选择一个在线玩家"
 
 #: ui.you
 msgid "You"
-msgstr ""
+msgstr "你"
 
 #: ui.admin
 msgid "Admin"
-msgstr ""
+msgstr "管理员"
 
 #: ui.banplayer
 msgid "Ban Player"
-msgstr ""
+msgstr "封禁玩家"
 
 #: ui.ban.reason
 msgid "Reason:"
-msgstr ""
+msgstr "原因:"
 
 #: ui.ban.placeholder
 msgid "Type your reason here"
-msgstr ""
+msgstr "在此输入您的原因"
 
 #: ui.toggle.enabled
 msgid "§aEnabled§r"
-msgstr ""
+msgstr "§a启用§r"
 
 #: ui.toggle.disabled
 msgid "§cDisabled§r"
-msgstr ""
+msgstr "§c禁用§r"
 
 #: ui.toggle.enable
 msgid "§aEnable§r"
-msgstr ""
+msgstr "§a启用§r"
 
 #: ui.toggle.disable
 msgid "§cDisable§r"
-msgstr ""
+msgstr "§c禁用§r"
 
 #: ui.ban.length
 msgid "Ban Duration"
-msgstr ""
+msgstr "封禁持续时间"
 
 #: ui.ban.button
 msgid "Ban players §8(ban)"
-msgstr ""
+msgstr "封禁玩家 §8(ban)"
 
 #: ui.freeze.button
 msgid "Freeze players §8(freeze)"
-msgstr ""
+msgstr "冻结玩家 §8(freeze)"
 
 #: ui.unfreeze.button
 msgid "Unfreeze players §8(unfreeze)"
-msgstr ""
+msgstr "解除玩家冻结 §8(unfreeze)"
 
 #: ui.mute.button
 msgid "Mute players §8(mute)"
-msgstr ""
+msgstr "静音玩家 §8(mute)"
 
 #: ui.unmute.button
 msgid "Unmute players §8(unmute)"
-msgstr ""
+msgstr "解除静音玩家 §8(unmute)"
 
 #: ui.invcopy.button
 msgid "Invcopy players §8(invcopy)"
-msgstr ""
+msgstr "复制背包 §8(invcopy)"
 
 #: ui.invsee.button
 msgid "Invsee players §8(invsee)"
-msgstr ""
+msgstr "查看背包 §8(invsee)"
 
 #: ui.echestwipe.button
 msgid "Echestwipe players §8(echestwipe)"
-msgstr ""
+msgstr "清空末影箱 §8(echestwipe)"
 
 #: ui.tempkick.button
 msgid "Temp-kick players §8(tempkick)"
-msgstr ""
+msgstr "临时踢出玩家"
 
 #: ui.config.button
 msgid "Edit config §8(config)"
-msgstr ""
+msgstr "更改配置 §8(config)"
 
 #: ui.config.title
 msgid "Config UI"
-msgstr ""
+msgstr "设置 UI"
 
 #: ui.toggle.button
 msgid "Toggle modules §8(toggle)"
-msgstr ""
+msgstr "设置模组 §8(toggle)"
 
 #: ui.toggle.moduleui
 msgid "Module UI"
-msgstr ""
+msgstr "模组列表"
 
 #: ui.toggle.modulet
 msgid "module: §8%1"
-msgstr ""
+msgstr "模组: §8%1"
 
 #: ui.toggle.statust
 msgid "§rstatus: §8%s"
-msgstr ""
+msgstr "§r状态: §8%2"
 
 #: cmderror.title
 msgid "Command ran with error."
-msgstr ""
+msgstr "运行命令时出现了意外的错误"
 
 #: cmderror.plevel
 msgid "No acess to continue, minimum permission level: %1"
-msgstr ""
+msgstr "访问被拒绝，此命令的最低访问权限为: %1"
 
 #: cmderror.name
 msgid "§gName: §9%s"
-msgstr ""
+msgstr "名称"
 
 #: cmderror.message
 msgid "§gMessage: §9%s"
-msgstr ""
+msgstr "§g信息: §9%s"
 
 #: cmderror.stack
 msgid "§gStack: §9%s"
-msgstr ""
+msgstr "§g错误堆栈: §9%s"
 
 #: rank.already
 msgid "%1 already has %2 §r§crank"
-msgstr ""
+msgstr "%1 已经有 %2 §r§crank"
 
 #: rank.norank
 msgid "%1 doesn't have %2 §r§c rank"
-msgstr ""
+msgstr "%1 没有 %2 §r§c 聊天称号"
 
 #: ban.has
 msgid "%1 has been banned by %2"
-msgstr ""
+msgstr "%1 已被 %2 停权"
 
 #: banqueue.already
 msgid "%1 is already in the ban queue"
-msgstr ""
+msgstr "%1 已经在停权列表中"
 
 #: banqueue.notfound
 msgid "Player name in the banqueue not found"
-msgstr ""
+msgstr "停权列表中未找到玩家ID"
 
 #: banqueue.done
 msgid "Done!"
-msgstr ""
+msgstr "完成！"
 
 #: banqueue.empty
 msgid "No player in the ban queue"
-msgstr ""
+msgstr "停权列表中没有玩家 :)"
 
 #: banqueue.list
 msgid "Players in the ban queue: %s"
-msgstr ""
+msgstr "封禁列表中的玩家：%s"
 
 #: bypasslist.already
 msgid "%1 is already in the bypasslist"
-msgstr ""
+msgstr "%1 已在绕过权限列表中"
 
 #: bypasslist.notfound
 msgid "Player name in the bypasslist not found"
-msgstr ""
+msgstr "未在绕过列表中找到玩家ID"
 
 #: bypasslist.empty
 msgid "No player in the bypasslist"
-msgstr ""
+msgstr "绕过列表中没有玩家"
 
 #: bypasslist.list
 msgid "Players in the bypasslist: %s"
-msgstr ""
+msgstr "绕过列表中的玩家：%s"
 
 #: tempkick.has
 msgid "%1 has been disconnected by %2"
-msgstr ""
+msgstr "%1 已被 %2 强制断开连接"
 
 #: freeze.has
 msgid "%1 has been frozen by %2"
-msgstr ""
+msgstr "%1 已被 %2 冻结"
 
 #: mute.has
 msgid "%1 has been muted by %2"
-msgstr ""
+msgstr "%1 已被 %2 静音"
 
 #: unfreeze.has
 msgid "%1 has been unfrozen by %2"
-msgstr ""
+msgstr "%1 已被 %2 解除冻结"
 
 #: unmute.has
 msgid "%1 has been unmuted by %2"
-msgstr ""
+msgstr "%1 已被 %2 取消静音"
 
 #: toggle.togglechange
 msgid "%1 module has been %2d"
-msgstr ""
+msgstr "%1 模块已 %2d"
 
 #: toggles.title
 msgid "Matrix AntiCheat toggleable modules"
-msgstr ""
+msgstr "Matrix AntiCheat 可切换模组"
 
 #: toggles.text
 msgid "Here is the list of toggleable modules of Matrix Anti-Cheat, you can toggle them with 'toggle <module> <enable/disable>'"
-msgstr ""
+msgstr "这是 Matrix Anti-Cheat 可切换模组的列表，您可以使用「toggle <module> <enable/disable>」来切换它们"
 
 #: toggles.feide
 msgid "§a» §g%s: §aEnabled"
-msgstr ""
+msgstr "§a» §g%s: §a已启用"
 
 #: toggles.feidd
 msgid "§a» §g%s: §cDisabled"
-msgstr ""
+msgstr "§a» §g%s: §c已禁用"
 
 #: rank.hasadd
 msgid "%1's rank has been added %2"
-msgstr ""
+msgstr "%1 的聊天称号已新增 %2"
 
 #: rank.hasset
 msgid "%1's rank has been set to %2"
-msgstr ""
+msgstr "%1 的聊天称号已被设置为 %2"
 
 #: toggle.unknown
 msgid "Unknown modules: %s"
-msgstr ""
+msgstr "未知的模组: %s"
 
 #: rank.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s 没有任何聊天称号"
 
 #: rankclear.empty
 msgid "%s doesn't have any rank"
-msgstr ""
+msgstr "%s 没有任何聊天称号"
 
 #: itemui.has
 msgid "You have been given the ui item, right click the item to open the ui"
-msgstr ""
+msgstr "你已被给予 UI 选择物品，右键即可打开 UI"
 
 #: unban.add
 msgid "%s has been joined to the unban queue"
-msgstr ""
+msgstr "%s 已被封禁"
 
 #: unbanremove.yes
 msgid "%s has been removed from unban queue"
-msgstr ""
+msgstr "%s 已从封禁列表中移除"
 
 #: freeze.already
 msgid "%s is already frozen"
-msgstr ""
+msgstr "%s 已被冻结"
 
 #: mute.already
 msgid "%s is already muted"
-msgstr ""
+msgstr "%s 已被静音"
 
 #: util.formban
 msgid "%s is automatically banned from the game"
-msgstr ""
+msgstr "%s 已被自动封禁"
 
 #: util.formkick
 msgid "%s is automatically kicked from the game"
-msgstr ""
+msgstr "%s 已被自动踢出"
 
 #: unban.notban
 msgid "%s is not banned"
-msgstr ""
+msgstr "%s 未被封禁"
 
 #: unfreeze.not
 msgid "%s is not frozen"
-msgstr ""
+msgstr "%s 没有被冻结"
 
 #: unbanremove.not
 msgid "%s is not in unban queue"
-msgstr ""
+msgstr "%s 不在停权列表内"
 
 #: unmute.not
 msgid "%s is not muted"
-msgstr ""
+msgstr "%s 未静音"
 
 #: rankclear.has
 msgid "%s's rank has been cleared"
-msgstr ""
+msgstr "%s的聊天称号已被清除"
 
 #: rank.hasremove
 msgid "%s's rank has been removed"
-msgstr ""
+msgstr "%s 的聊天称号已被删除"
 
 #: about.author
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: about.github
 msgid "Github"
-msgstr ""
+msgstr "Github"
 
 #: invcopy.not
 msgid "Copied inventory from %s"
-msgstr ""
+msgstr "从 %s 复制背包"
 
 #: defaultrank.has
 msgid "Default rank has been set to %s"
-msgstr ""
+msgstr "默认聊天称号已被设置为 %s"
 
 #: echestwipe.has
 msgid "Ender chest of %1 has been wiped by %2"
-msgstr ""
+msgstr "%1 的末影箱已被 %2 清除"
 
 #: flagmode.changed
 msgid "Flag mode has been changed to %s"
-msgstr ""
+msgstr "警告模式已被更改为 %s"
 
 #: invsee.of
 msgid "Inventory of %s"
-msgstr ""
+msgstr "%s 的背包"
 
 #: invsee.item
 msgid "§eSlot: §c%1 | §eItem: §c%2"
-msgstr ""
+msgstr "§e物品栏: §c%1 | §e物品: §c%2"
 
 #: lockdowncode.get
 msgid "Lockdown code: %s"
-msgstr ""
+msgstr "锁定锁定码：%s"
 
 #: unlock.has
 msgid "Lockdown has been disabled by %s"
-msgstr ""
+msgstr "%s 已停用锁定"
 
 #: unlock.not
 msgid "Lockdown hasn't enabled yet"
-msgstr ""
+msgstr "锁定暂未启用"
 
 #: about.line
 msgid "Matrix is a minecraft bedrock anticheat that is based on @minecraft API"
-msgstr ""
+msgstr "Matrix 是一款基于 @minecraft API 的基岩版反外挂"
 
 #: util.noreason
 msgid "No reason provided"
-msgstr ""
+msgstr "未提供原因"
 
 #: op.wait
 msgid "Please wait %s more seconds before you try again"
-msgstr ""
+msgstr "请你在 %s 秒后重试"
 
 #: op.reached
 msgid "You have reached the maximum permission level that op command can give."
-msgstr ""
+msgstr "您已达到 op 指令可以授予的最大权限等级"
 
 #: op.incorrect
 msgid "You have entered the incorrect password, please try again later."
-msgstr ""
+msgstr "密码错误，请重试"
 
 #: op.opgain
 msgid "You have gained matrix admin permission through operator permission."
-msgstr ""
+msgstr "您已通过操作员权限获得 Matrix 管理员权限"
 
 #: op.pwgain
 msgid "You have gained matrix admin permission through security password."
-msgstr ""
+msgstr "您已通过密码取得 Matrix 管理员权限"
 
 #: op.pwtips
 msgid "We have detected that you haven't set-up your password. To increase the security of your realm or server, you can set your password through 'setpassword <new password> <confirm password>' command."
-msgstr ""
+msgstr "我们检测到您尚未设置密码！ 为了提高 Realm 或服务器的安全性，您可以通过「setpassword <新密码> <确认密码>」指令设置密码"
 
 #: op.notop
 msgid "Operator permission is required when password is disabled. Use command '/function verify/operator' to verfiy your operator permission."
-msgstr ""
+msgstr "禁用密码时需要操作员许可使用命令“/function verify/operator”来验证您的操作员权限"
 
 #: deop.sucess
 msgid "You have removed matrix admin permission from yourself."
-msgstr ""
+msgstr "您已删除自己的 Matrix 管理员权限"
 
 #: setadmin.has
 msgid "%2 has changed %1's admin permission to %3"
-msgstr ""
+msgstr "%2 已将 %1 的管理员权限更改为 %3"
 
 #: setadmin.notenough
 msgid "Not enough permission. You should have at least %1 permission to give a permission level of %2"
-msgstr ""
+msgstr "没有足够的权限！ 您应该至少拥有 %1 权限才能授予 %2 权限级别"
 
 #: setadmin.outofrange
 msgid "The permission level that you can set should be between 0 and 3"
-msgstr ""
+msgstr "您可以设置的权限等级应介于 0 和 3 之间"
 
 #: setadmin.toolow
 msgid "The permission level which is valid should be at least 0. If you are trying to remove someone from admin permission, use 'deladmin <player>' instead."
-msgstr ""
+msgstr "有效的权限等级应至少为 0！ 如果您尝试从管理员权限中删除某人，请改用「deladmin <玩家>」"
 
 #: setadmin.toohigh
 msgid "The target has a permission level higher than you, you cannot determine the target's permission level."
-msgstr ""
+msgstr "目标的权限等级比您高，您无法确定目标权限等级"
 
 #: setpassword.different
 msgid "The new password and confirm password are different. Please try again."
-msgstr ""
+msgstr "新密码和确认密码不同！ 请再试一次"
 
 #: setpassword.changed
 msgid "The password has been changed, please don't forget your new password."
-msgstr ""
+msgstr "密码已更改，请不要忘记新密码"
 
 #: clearpassword.ok
 msgid "The password has been cleared"
-msgstr ""
+msgstr "密码已清除"
 
 #: deladmin.has
 msgid "%2 has removed %1's admin permission"
-msgstr ""
+msgstr "%2 已删除 %1 的管理员权限"
 
 #: deladmin.notenough
 msgid "Not enough permission. You cannot remove someone from admin permission if you have lower permission level than the target."
-msgstr ""
+msgstr "没有足够的权限如果您的权限等级低于目标，则无法从管理员权限中删除某人"
 
 #: deladmin.none
 msgid "The target has no admin permission"
-msgstr ""
+msgstr "目标没有管理员权限"
 
 #: deladmin.lockdown
 msgid "You cannot remove someone from matrix admin permission when the server is in lockdown mode"
-msgstr ""
+msgstr "当服务器处于锁定模式时，您无法从 Matrix 管理员权限中删除某人"
 
 #: showallrank.has
 msgid "Show all rank has been set to %s"
-msgstr ""
+msgstr "显示所有聊天称号已设置为 %s"
 
 #: lockdowncode.set
 msgid "Sucessfully changed lockdown code to %s"
-msgstr ""
+msgstr "成功将锁定锁定码更改为 %s"
 
 #: bordersize.ok
 msgid "Sucessfully changed world border size to %s"
-msgstr ""
+msgstr "成功设置 %s 边界大小"
 
 #: lockdowncode.random
 msgid "Sucessfully random a lockdown code - %s"
-msgstr ""
+msgstr "成功随机锁定锁定码 - %s"
 
 #: lockdown.already
 msgid "The server has been turned to lockdown mode by %s"
-msgstr ""
+msgstr "服务器已被 %s 转为锁定模式"
 
 #: lockdown.has
 msgid "The server is now in lockdown mode"
-msgstr ""
+msgstr "服务器现在处于锁定模式"
 
 #: unbanlist.none
 msgid "There is no player in unban queue"
-msgstr ""
+msgstr "解封队列中没有玩家"
 
 #: toggle.already
 msgid "This module is %sd already"
-msgstr ""
+msgstr "此模组 %sd 已准备就绪"
 
 #: unbanlist.list
 msgid "Unban list"
-msgstr ""
+msgstr "解封队列"
 
 #: toggle.unknownmodule
 msgid "Unknown module, try %stoggles"
-msgstr ""
+msgstr "该模组已是 %sd"
 
 #: about.version
 msgid "Version"
-msgstr ""
+msgstr "版本"
 
 #: lockdown.wrong
 msgid "Wrong code"
-msgstr ""
+msgstr "锁定码错误"
 
 #: chathandler.muted
 msgid "You are muted!"
-msgstr ""
+msgstr "你已被禁言！"
 
 #: dimensionlock.stop
 msgid "You are not allowed to go to other dimensions!"
-msgstr ""
+msgstr "你不可以去其他维度！"
 
 #: adminchat.has
 msgid "You are now in admin channel"
-msgstr ""
+msgstr "您先已处于管理员频道"
 
 #: adminchat.out
 msgid "You are now in public channel"
-msgstr ""
+msgstr "您先已处于公共频道"
 
 #: vanish.out
 msgid "You are now no longer vanished"
-msgstr ""
+msgstr "你不再隐身了"
 
 #: vanish.has
 msgid "You are now vanished"
-msgstr ""
+msgstr "你现在隐身了"
 
 #: border.outside
 msgid "You cannot access a location which is outside the world border."
-msgstr ""
+msgstr "您无法访问世界边界之外的位置"
 
 #: border.reached
 msgid "You cannot access that location, you have reached the world border."
-msgstr ""
+msgstr "您无法访问世界边界之外的位置"
 
 #: border.interact
 msgid "You cannot interact with a block or entity which is outside the world border."
-msgstr ""
+msgstr "border.interact=你无法与边界之外的方块或实体进行交互"
 
 #: toggle.warning
 msgid "You're trying to open an experimental module, this might cause bugs and false positives! Please use '%1toggle %2 enable force' to enable it"
-msgstr ""
+msgstr "您正在尝试打开一个实验模组，这可能会导致错误和误报！请使用“%1toggle %2 force”来启用它"
 
 #: adminchat.adminchat
 msgid "adminchat"
-msgstr ""
+msgstr "管理聊天"
 
 #: xray.broken
 msgid "%1 mined %2 at %3"
-msgstr ""
+msgstr "%1 在 %3 攫取了 %2"
 
 #: spam.sensitiveword
 msgid "Your message contains a sensitive word"
-msgstr ""
+msgstr "你的消息包含了敏感词汇"
 
 #: spam.messagerate
 msgid "Please slow down your messages"
-msgstr ""
+msgstr "请降低您发送消息的速度"
 
 #: spam.repeated
 msgid "Please don't send the messages repeatly"
-msgstr ""
+msgstr "请不要重复刷屏"
 
 #: spam.spamming
 msgid "Please don't spam message"
-msgstr ""
+msgstr "不要刷屏! QWQ"
 
 #: spam.lengthlimit
 msgid "Your message is too long"
-msgstr ""
+msgstr "你的消息太长了"
 
 #: spam.includelink
 msgid "Sorry, but link is not allowed on this server"
-msgstr ""
+msgstr "抱歉，但是链接在这个服务器已被禁止"
 
 #: spam.email
 msgid "Sorry, but you cannot send an email on chat"
-msgstr ""
+msgstr "抱歉，但是电子邮件地址在这个服务器已被禁止"
 
 #: reset.sucess
 msgid "Sucessfully to rest all the property in the dynamc config"
-msgstr ""
+msgstr "成功重设动态配置 .w."
 
 #: banrun.set
 msgid "Sucessfully sets the banrun command to '%s'"
-msgstr ""
+msgstr "Banrun 指令已设置为 '%s'"
 
 #: banrun.disabled
 msgid "Sucessfully removes the banrun command."
-msgstr ""
+msgstr "成功移除Ban run指令"
 
 #: banrun.invalid
 msgid "Invalid regex with '%s'"
-msgstr ""
+msgstr "无效 '%s'"
 
 #: antispam.already
 msgid "%1 of antiSpam is already toggled to %2"
-msgstr ""
+msgstr "聊天限制器的 %1 已经设置为 %2 了"
 
 #: antispam.toggle
 msgid "%1 of antiSpam has been toggled to %2"
-msgstr ""
+msgstr "聊天限制器的 %1 已被设置为 %2"
 
 #: help.header
 msgid "The help pages for command of Matrix AntiCheat, if you want to learn more about how to use our anticheat, please visit website page §e%s"
-msgstr ""
+msgstr "Matrix AntiCheat 指令的说明页面，如果您想了解更多关于如何使用我们的反作弊，请访问网站页面 §e%s"
 
 #: help.page
 msgid "§7--- Showing help page §e%1 §7of §e%2 §7(%3help <page>) ---"
-msgstr ""
+msgstr "§7--- 显示帮助页面 §e%1 §7of §e%2 §7(%3help <page>) ---"
 
 #: help.pageerr
 msgid "Page %s does not exist"
-msgstr ""
+msgstr "页面 %s 不存在"
 
 #: ui.closechat
 msgid "Close the chat to open the following ui."
-msgstr ""
+msgstr "关闭聊天界面来开启 UI"
 
 #: config.nullpath
 msgid "Cannot find the path you provided: %s"
-msgstr ""
+msgstr "无法找到你提供的路径: %s"
 
 #: config.invalidpath
 msgid "You can't select a path with JSON object."
-msgstr ""
+msgstr "你不能选择一个含有JSON对象的路径"
 
 #: config.nan
 msgid "You have stated that the value is a number, but your value is not a number"
-msgstr ""
+msgstr "你已经指明该数值是一个数字，但是你的数值不是一个数字"
 
 #: config.nab
 msgid "You have stated that the value is a boolean, but your value is not in a range of true, false and undefined"
-msgstr ""
+msgstr "您已声明该值是布尔值，但您的值不在 true、false 和 undefined 范围内"
 
 #: config.naa
 msgid "You have provided an invalid array, correct example: 'abc','def',1.52,3"
-msgstr ""
+msgstr "你提供了一个无效的数组, 正确的示例：'abc','def',1.52
 
 #: config.set
 msgid "Sucessfully set '%1' to '%2'"
-msgstr ""
+msgstr "成功设置 '%1' 到 '%2'"
 
 #: packetlogger.add
 msgid "You have been given the packet logger permission"
-msgstr ""
+msgstr "您已获取数据包记录器权限"
 
 #: packetlogger.remove
 msgid "You have removed the packet logger permission"
-msgstr ""
+msgstr "您已删除数据包记录器权限"
 
 #: setprefix.set
 msgid "You have set the prefix to %s"
-msgstr ""
+msgstr "您已将前缀设为 %s"
 
 #: setprefix.reset
 msgid "You have reset the prefix to %s"
-msgstr ""
+msgstr "您已将前缀重设为 %s"
 
 #: target.selfselect
 msgid "You can't select yourself as the target."
-msgstr ""
+msgstr "你不能在目标中选择你自己"
 
 #: target.unable
 msgid "Unable to do the action to the target."
-msgstr ""
+msgstr "无法对你选择的目标执行动作"
 
 #: setup.hcfeature
 msgid "Hoilday creator feature is required."
-msgstr ""
+msgstr "需要啟用夏日創作者功能"
 
 #: clientauth.kicked
 msgid "%s has been detected as bot client, it is automatically disconnected"
-msgstr ""
+msgstr "%s 已被检测为机器人客户端, 已被自动断线"
 
 #: ui.config.selector
 msgid "Configuration Selector"
-msgstr ""
+msgstr "配置选择器"
 
 #: ui.config.editor
 msgid "Configuration Editor"
-msgstr ""
+msgstr "配置修改器"
 
 #: ui.config.loc
 msgid "§gCurrent location: §c%s"
-msgstr ""
+msgstr "§g目前路径=§c%s"
 
 #: ui.config.desc
 msgid "§gDescription: §c%s"
-msgstr ""
+msgstr "注释：§c%s"
 
 #: ui.config.type
 msgid "§rProperty type:"
-msgstr ""
+msgstr "§r属性:"
 
 #: ui.config.value
 msgid "Value:"
-msgstr ""
+msgstr "值:"
 
 #: ui.config.type.string
 msgid "string"
-msgstr ""
+msgstr "字串"
 
 #: ui.config.type.number
 msgid "number"
-msgstr ""
+msgstr "数字"
 
 #: ui.config.type.boolean
 msgid "boolean (true/false)"
-msgstr ""
+msgstr "布尔值 (true/false)"
 
 #: ui.config.type.array
 msgid "array (list)"
-msgstr ""
+msgstr "阵列 (列表)"
 
 #: ui.config.type.boolean.true
 msgid "true"
-msgstr ""
+msgstr "真"
 
 #: ui.config.type.boolean.false
 msgid "false"
-msgstr ""
+msgstr "假"
 
 #: common.unknown
 msgid "unknown"
-msgstr ""
+msgstr "未知"
 
 #: acess.itemadmin
 msgid "You need to be an admin to use this item!"
-msgstr ""
+msgstr "您需要成为管理员才能使用此项目！"
 
 #: report.cooldown
 msgid "Report command is on cooldown, %s seconds remaining"
-msgstr ""
+msgstr "报告命令正在冷却，还剩 %s 秒"
 
 #: warn.reset
 msgid "%s's warn has been reset."
-msgstr ""
+msgstr "%s 的警告已重设"
 
 #: warn.first
 msgid "%s has been warned, this is the first warning."
-msgstr ""
+msgstr "%s 已收到警告，这是第一次警告"
 
 #: warn.second
 msgid "%s has been warned again, this is the second warning."
-msgstr ""
+msgstr "%s 再次受到警告，这是第二次警告"
 
 #: warn.third
 msgid "%s has been given the third warning."
-msgstr ""
+msgstr "%s 已收到第三次警告"
 
 #: warn.for
 msgid "%1 has been warned for %2 time(s)."
-msgstr ""
+msgstr "%1 已被警告 %2 次"
 
 #: warn.final
 msgid "%1 has been given the final warning."
-msgstr ""
+msgstr "%1 已收到最后警告"
 
 #: warn.reached
 msgid "%1 has reached the maximum amount of warnings."
-msgstr ""
+msgstr "%1 已达到警告的最大数量"
 
 #: db.gen
 msgid "Generated %s confuse scoreboard(s)."
-msgstr ""
+msgstr "已产生 %s 个混淆记分板"
 
 #: db.suc
 msgid "Sucessfully recover the data of config"
-msgstr ""
+msgstr "成功恢复config数据"
 
 #: db.delun
 msgid "The data of the backup has been deleted unexpectedly."
-msgstr ""
+msgstr "备份的数据被意外删除"
 
 #: configdb.autocommit
 msgid "Please disable auto-commit to use this command."
-msgstr ""
+msgstr "请停用自动提交才能使用此命令"
 
 #: configdb.autorecover
 msgid "Auto recover is enabled, please disable it to use this command."
-msgstr ""
+msgstr "自动恢复已启用，请停用它才能使用此命令"
 
 #: configdb.commit
 msgid "Sucessfully commit the changes to config database"
-msgstr ""
+msgstr "成功提交对配置数据库的更改"
 
 #: configdb.recover
 msgid "Sucessfully recover the data of config from config database"
-msgstr ""
+msgstr "成功从配置数据库恢复配置数据"
 
 #: invof.open
 msgid "Close the chat and open the inventory to manage the inventory of the selected player."
-msgstr ""
+msgstr "关闭聊天并打开库存来管理所选玩家的库存"
 
 #: directaction.success
 msgid "%1 has scuessfully finished the direct action to %2"
-msgstr ""
+msgstr "%1 已成功完成对 %2 的直接操作"
 
 #: runcommand.banned
 msgid "You cannot run a banned command."
-msgstr ""
+msgstr "您不能执行被禁止的命令"
 
 #: runcommand.failed
 msgid "Failed to run the command."
-msgstr ""
+msgstr "无法运行命令"
 
 #: runcommand.success
 msgid "Sucessfully run the command."
-msgstr ""
+msgstr "成功运行命令"
 
 #: gm.success
 msgid "Sucessfully changed the gamemode to %s"
-msgstr ""
+msgstr "已成功更改游戏模式为 %s"
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §eUI pannel§r"
-msgstr ""
+msgstr "§r§l§bMatrix §eUI面板§r"
 
 #: item.matrix.modstick
 msgid "§r§l§bMatrix §eModStick§r"
-msgstr ""
+msgstr "§r§l§bMatrix §eModStick§r"
 
 #: action.hint.exit.r4isen1920_invsee:inventory
 msgid "Tap the §lInventory button§r to open their Inventory"
-msgstr ""
+msgstr "点击§l库存按钮§r打开他们的库存"
 
 #: action.hint.exit.console.r4isen1920_invsee:inventory
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
-msgstr ""
+msgstr "按 §l:_input_key.inventory:§r 打开他们的库存"
 
 #: protection.behavior
 msgid "§bMatrix §7>§g Behavior protection has blocked a player's access successfully. §7(Player=%s)"
-msgstr ""
+msgstr "§bMatrix §7>§g 自动行为防御模块已成功封锁了一名玩家 §7(玩家=%s)"
 
 #: protection.unfair
 msgid "§bMatrix §7>§g Unfair advantage from a player has been detected. §7(Player=%s)"
-msgstr ""
+msgstr "§bMatrix §7>§g 成功拦截一名玩家的不公平优势 §7(玩家=%s)"
 
 #: protection.highrisk
 msgid "§bMatrix §7>§g A high-risk action from a player has been blocked and banned the player successfully. §7(Player=%s)"
-msgstr ""
+msgstr "§bMatrix §7>§g 玩家的高风险行为已被阻止并成功封锁该玩家 §7(玩家=%s)"
 
 #: protection.defender
 msgid "§bMatrix §7>§g Matrix Defender has blocked a high-risk client against current realm successfully. §7(PlayerId=%s)"
-msgstr ""
+msgstr "§bMatrix §7>§g IAC Defender 已成功阻止目前 Realm 的高风险用戶端 §7(PlayerId=%s)"
 
 #: welcomer.new
 msgid "§bMatrix §7>§g Welcome %s first time joined!"
-msgstr ""
+msgstr "§bMatrix §7>§g 欢迎 %s 首次加入服务器"
 
 #: welcomer.protectedline
 msgid "§bMatrix §7>§g This server is under the protection from Matrix AntiCheat. Any unfair advantage will be punished automatically."
-msgstr ""
+msgstr "§bMatrix §7>§g 此服务器受到 Matrix 反作弊保护, 任何作弊行为都将遭到处罚"
 
 #: welcomer.wantdownload
 msgid "§bMatrix §7>§a Want to gain Matrix AntiCheat for your own server too? Please visit our discord support server, use '%sabout' to get the link."
-msgstr ""
+msgstr "§bMatrix §7>§a 想要在你的服务器和Realms上也使用 Matrix 吗? 请执行'%sabout'命令查看详情和加入我们的discord"
 
 #: ui.idp.desc
 msgid "We have got you covered >w< If you have any question, please visit our support server (you can get the link by running /function version)"
-msgstr ""
+msgstr "我们已协助您远离危险 >w< 如果您有任何疑问，请访问我们的支持服务器（您可以执行 /function version 获取链接）"
 
 #: ui.idp.select
 msgid "Select a report you want to view"
-msgstr ""
+msgstr "选择您要查看的报告"
 
 #: ui.idp.limit
 msgid "We can maximum save %s of last reports"
-msgstr ""
+msgstr "我们最多可以存储 %s 份最新报告"
 
 #: ui.idp.none
 msgid "There are no reports can be displayed"
-msgstr ""
+msgstr "没有可以显示的报告"
 
 #: ui.idp.preport
 msgid "%s's follow-up report"
-msgstr ""
+msgstr "=%s 的后续报告"
 
 #: ui.idp.offline.none
 msgid "While you're offline, there were none hacker detected, your world is safe!"
-msgstr ""
+msgstr "当您离线时，没有检测到任何作弊者，您的服务器是安全的！"
 
 #: ui.idp.offline.is
 msgid "While you're offline, %s hacker(s) were detected by full automation, your world is still safe under our protection."
-msgstr ""
+msgstr "当您离线时，全自动检测到了 %s 名黑客，您的服务器在我们的保护下仍然安全"
 
 #: ui.idp.offline.alth
 msgid "Although there is no hacker detected, we have blocked %s time(s) of the suspicious behavior."
-msgstr ""
+msgstr "虽然没有检测到可疑的作弊者，但我们已阻止 %s 次可疑行为"
 
 #: ui.idp.followup
 msgid "Follow-up report"
-msgstr ""
+msgstr "后续报告"
 
 #: ui.idp.openlog
 msgid "Open Log"
-msgstr ""
+msgstr "打开日志"
 
 #: ui.idp.button
 msgid "Integrated defense panel"
-msgstr ""
+msgstr "综合防御面板"
 
 #: defender.checking
 msgid "§bMatrix §7>§g We're readying to check about your client, please wait for few seconds, you cannot move or interact before you finished the verification."
-msgstr ""
+msgstr "§bMatrix §7>§g 我们正在准备检查您的客户端，请等待几分钟，在验证完成之前您无法移动或互动"
 
 #: defender.continue
 msgid "§bMatrix §7>§g Please §e§lmove your view§r§g to start the check, you will be auto disconnected if you don't do this in 1 minute."
-msgstr ""
+msgstr "§bMatrix §7>§g 请§e§l移动您的视角§r§g 开始检查，如果您在1分钟内不这样做，您将被自动断开连接"
 
 #: defender.recontinue
 msgid "§bMatrix §7>§g You failed the verification, the ui will be regenerated in 2 seconds."
-msgstr ""
+msgstr "§bMatrix §7>§g 您验证失败，用户界面将在 2 秒后重新生成"
 
 #: defender.viewmove
 msgid "§bMatrix §7>§g View movement is detected, starting the ui, please wait for few seconds."
-msgstr ""
+msgstr "§bMatrix §7>§g 检测到视角移动，正在启动用户界面，请等待几分钟"
 
 #: defender.title
 msgid "Realm Defender | Anti Bot Verification"
-msgstr ""
+msgstr "Realm Defender | 反机器人验证"
 
 #: defender.selectui
 msgid "§a- Answer the following simple question to pass the verification, you're required to answer this question in 3 minutes."
-msgstr ""
+msgstr "§a- 回答以下简单问题即可通过验证，您需要在 3 分钟内回答此问题"
 
 #: defender.why
 msgid "§b- Why you need to verify? It's because we need to make sure you're not a spamming bot that will crash the realm."
-msgstr ""
+msgstr "§b- 为什么需要验证？这是因为我们需要确保您不是一个会导致Realm服务器崩溃的垃圾邮件机器人"
 
 #: defender.submit
 msgid "I finished the question!"
-msgstr ""
+msgstr "我答完题了！"
 
 #: defender.question
 msgid "§eQuestion: §r%1 + %2 = ?"
-msgstr ""
+msgstr "§e问题：§r%1 + %2 = ?"
 
 #: defender.youranswer
 msgid "§eSelect your answer in below slider§r"
-msgstr ""
+msgstr "§e在下面的滑块中选择您的答案§r"
 
 #: defender.notabot
 msgid "I am a human!"
-msgstr ""
+msgstr "我是人类！"
 
 #: defender.verified
 msgid "§bMatrix §7>§g You successfully passed the verification, enjoy your gameplay."
-msgstr ""
+msgstr "§bMatrix §7>§g 您已通过安全检测，祝您游戏愉快"
 
 #: defender.keepmove
-msgid "§bMatrix §7>§g Please continue your camera movement, %s second(s) more is required."
+msgid "§bMatrix §7>§g 请继续移动您的视角，还需要 %s 秒。"
 msgstr ""
 
 #: ping.ping
 msgid "%s (you): Ping?"
-msgstr ""
+msgstr "%s(你)：Ping?"
 
 #: ping.pong
 msgid "Matrix: Pong! The current ping is %1ms §7(%2§7)"
-msgstr ""
+msgstr "Matrix: Pong! 目前 ping 为 %1ms §7(%2§7)"
 
 #: afk.quit
 msgid "§bMatrix §7>§g You are now no longer AFK."
-msgstr ""
+msgstr "§bMatrix §7>§g 您已停止AFK状态"
 
 #: afk.ui.title
 msgid "Anti AFK | Matrix Anticheat"
-msgstr ""
+msgstr "反恶意 AFK | Matrix Anticheat"
 
 #: afk.intro
 msgid "§b- The server owner of this server is banned the action of away-from-keyboard (AFK). You will get disconnected when you don't finish this verification."
-msgstr ""
+msgstr "§b- 该服务器禁止了离键（AFK）操作如果您不完成此验证，您将被断开连接"
 
 #: afk.why
 msgid "§b- Why you need to verify wether you are AFK? It's because we need to make sure you won't get falsely detected as AFK."
-msgstr ""
+msgstr "§b- 为什么您需要验证您是否 AFK？这是因为我们需要确保您不会被错误地检测为 AFK"
 
 #: afk.clickbelow
 msgid "§b- Click the below button to finish the verification."
-msgstr ""
+msgstr "§b- 点击下面的按钮完成验证"
 
 #: afk.ui.button
 msgid "I'm not AFK"
-msgstr ""
+msgstr "我没有在 AFK"
 
 #: afk.kick
 msgid "§bMatrix §7>§c Afk is detected from %s and automatically disconnected from the server."
-msgstr ""
+msgstr "§bMatrix §7>§c 从 %s 检测到 AFK 并自动从服务器断开连接"
 
 #: afk.warn
 msgid "§bMatrix §7>§c Afk is not allowed on this server, please try to move your steps. You will be disconected after %s second(s)."
-msgstr ""
+msgstr "§bMatrix §7>§c 该服务器不允许 AFK，请尝试移动您的步伐您将在 %s 秒后被断开连接"
 
 #: afk.tips
 msgid "§bMatrix §7>§g Any afk action detected will be automatically disconnected from the server!"
-msgstr ""
+msgstr "§bMatrix §7>§g 任何检测到的 AFK 行动都将自动从服务器断开连接！"
 
 #: timeout.has
 msgid "§bMatrix §7>§g %1 has been timed out by %2 for %3 minutes."
-msgstr ""
+msgstr "§bMatrix §7>§g %1 被 %2 在 %3 分钟内超时"
 
 #: tps.tps
 msgid "Server current tick(s) per second is §7(§a%s/§a20§7)"
-msgstr ""
+msgstr "服务器当前每秒 tick(s) 是 §7(§a%s/§a20§7)"
+
+#: tpa.accept
+msgid "§bMatrix §7>§g You have accepted the teleport request from %s."
+msgstr "§bMatrix §7>§g 您已接受来自 %s 的传送请求"
