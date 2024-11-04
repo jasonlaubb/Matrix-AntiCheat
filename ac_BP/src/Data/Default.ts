@@ -452,7 +452,7 @@ export default {
         resultGobalize: true,
         enableFlagSoundTrack: true,
         pretendLeave: true,
-        disconnectDelayTicks: 60,
+        disconnectDelayTicks: 0,
     },
     banModify: {
         extraMessages: [],

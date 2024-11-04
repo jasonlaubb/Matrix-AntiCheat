@@ -1,6 +1,6 @@
 import { BlockExplodeAfterEvent, GameRule, GameRuleChangeAfterEvent, PlayerBreakBlockBeforeEvent, world } from "@minecraft/server";
 import { configi, registerModule } from "../Modules";
-import { MinecraftBlockTypes } from "@minecraft/vanilla-data";
+import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 async function antiExplodeDestroy (_config: configi, event: BlockExplodeAfterEvent) {
 	const block = event.block;
 	const blockData = event.explodedBlockPermutation;
