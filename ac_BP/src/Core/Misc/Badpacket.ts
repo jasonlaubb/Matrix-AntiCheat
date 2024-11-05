@@ -32,7 +32,7 @@ async function onPlayerJoin (config: configi, { initialSpawn, player }: PlayerSp
       @credit Credit to Scythe Anticheat
       @description This is a check which is used to prevent the common server crashing method.
     */
-    const isInvalidRange = maxRenderRange > 6 || maxRenderRange < 96;
+    const isInvalidRange = maxRenderRange < 6 || maxRenderRange > 96;
     if (isInvalidRange) {
         flag(player, config.antiBadpacket.modules, "B");
     }
