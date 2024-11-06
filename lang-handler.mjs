@@ -28,11 +28,11 @@ async function convertPotFilesToPo() {
     if (doTranslate) {
         const poContent = fs.readFileSync(`${root}texts/pot/en_US.pot`, "utf8");
         const output = poContent.split("\n").filter((a) => a.startsWith("#: ")).map((a) => a.slice(3)).map((v) => '    | "' + v.replace("\r", "") + '"')
-        const filed = fs.readFileSync(`${root}../ac_BP/src/Assets/Language.ts`, "utf8");
+        const filed = fs.readFileSync(`${root}../ac_BP/src/assets/languagekey.ts`, "utf8");
         const lines = filed.split("export");
         let there = lines[0] + "export type Translate =\n";
         there += output.join("\n") + ";";
-        fs.writeFileSync(`${root}../ac_BP/src/Assets/Language.ts`, there);
+        fs.writeFileSync(`${root}../ac_BP/src/assets/languagekey.ts`, there);
         return;
     };
     if (getLanguages) {

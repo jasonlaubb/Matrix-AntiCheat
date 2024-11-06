@@ -23,7 +23,7 @@
             "language": "javascript",
             "uuid": "29af740f-a702-41c9-8913-48a16cf23300",
             "version": [0, 0, 1],
-            "entry": "scripts/index.js"
+            "entry": "scripts/matrix.js"
         }
     ],
     "dependencies": [
