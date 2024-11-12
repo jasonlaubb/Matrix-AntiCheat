@@ -10,6 +10,10 @@ class FastText {
 		this.currentRawText.push({ translate: key, with: withString } as RawMessage);
 		return this;
 	}
+	public addTranRaw (key: string, withString: RawMessage) {
+		this.currentRawText.push({ translate: key, with: withString });
+		return this;
+	}
 	public endline () {
 		this.currentRawText.push({ text: "\n" } as RawMessage);
 		return this;
@@ -27,7 +31,9 @@ export function fastText () {
 export function rawtextTranslate (key: string, ...withString: string[]) {
 	return rawtext({ translate: key, with: withString });
 }
-
+export function rawtextTranslateRawText (key: string, withString: RawMessage) {
+	return rawtext({ translate: key, with: withString });
+}
 export function combineRawText (multipleRawtext: RawText[]) {
 	const rawMessages = multipleRawtext.flatMap(rawtext => rawtext.rawtext)!;
 	return { rawtext: rawMessages } as RawText;

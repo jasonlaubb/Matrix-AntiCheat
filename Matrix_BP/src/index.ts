@@ -10,6 +10,7 @@ export class Module {
 	private toggleId!: string;
 	public name!: RawMessage;
 	public description!: RawMessage;
+	public category: string = "§cUnknown§r";
 	public onEnable!: () => void;
 	public onDisable!: () => void;
 	// This is the constructor .u.
@@ -24,6 +25,10 @@ export class Module {
 	}
 	public setDescription (description: RawMessage) {
 		this.description = description;
+		return this;
+	}
+	public addCategory (category: string) {
+		this.category = category;
 		return this;
 	}
 	public onModuleEnable (func: () => void) {
@@ -109,6 +114,9 @@ class IntegratedSystemEvent {
 		return this.func;
 	}
 }
+export function sendError (error: Error) {
+	console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`)
+}
 // Declare the admin permission function
 declarePermissionFunction();
 // Debug utilities
@@ -117,7 +125,7 @@ import("@minecraft/debug-utilities").catch(() => console.warn("index.js :: Faile
 		const imported = debugUtilities as typeof import("@minecraft/debug-utilities");
 		imported.disableWatchdogTimingWarnings(true);
 	} catch {
-		console.warn("index.js :: Failed to load @minecraft/debug-utilities");
+		sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities"));
 	}
 });
 // Disable Watchdog Timing Warnings
@@ -125,7 +133,7 @@ system.beforeEvents.watchdogTerminate.subscribe((event) => {
 	try {
 		event.cancel = true
 	} catch {
-		system.run(() => console.warn("index.js :: Failed to disable watchdog timing warnings"));
+		system.run(() => sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities")));
 	}
 });
 // Run when the world fires

@@ -1,2 +1,4 @@
 json.packet=§bMatrix §7> §e%1 §gpacket §7(%2) §greceived from %3
 error.happened=§bMatrix §7> §gThere is some error from the script, please report it to the developer when you have time.
+module.anti.fly.name=Anti Fly
+module.anti.fly.description=This module will prevent cheater from using fly hack and make them unable to fly.
