@@ -1,5 +1,5 @@
 import { Player, RawMessage, system, world } from "@minecraft/server";
-import { declarePermissionFunction } from "./util/permission";
+import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
 export class Module {
 	// The var of index runtime
