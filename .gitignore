@@ -2,6 +2,3 @@ scripts/
 node_modules/
 .github
 LICENSE
-*.po
-*.lang
-generated-package/

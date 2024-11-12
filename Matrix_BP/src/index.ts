@@ -12,7 +12,8 @@ export class Module {
 	public description!: RawMessage;
 	public onEnable!: () => void;
 	public onDisable!: () => void;
-	private constructor () {}
+	// This is the constructor .u.
+	public constructor () {}
 	public setToggleId (id: string) {
 		this.toggleId = id;
 		return this;

@@ -1,0 +1,12 @@
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: PhraseApp (phraseapp.com)\n"
+
+msgid "json.packet"
+msgstr "§bMatrix §7> §e%1 §gpacket §7(%2) §greceived from %3"
+
+msgid "error.happened"
+msgstr "§bMatrix §7> §gThere is some error from the script, please report it to the developer when you have time."
