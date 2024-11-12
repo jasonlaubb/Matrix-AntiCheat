@@ -45,7 +45,7 @@ languages.forEach((language) => {
     const langFile = path.join(textsDir, `${language}.lang`);
     const poContent = fs.readFileSync(poFile, 'utf8');
     let langContent = '';
-    const keyRegex = /#(.*)\nmsgid "(.*)"/g;
+    const keyRegex = /#: (.*)\nmsgid "(.*)"/g;
     const msgstrRegex = /msgstr "(.*)"/g;
     let keyMatch;
     while ((keyMatch = keyRegex.exec(poContent)) !== null) {
@@ -71,7 +71,7 @@ function generatePoFile(sourcePot) {
         msgstrMatch = msgstrRegex.exec(sourcePot);
         if (msgstrMatch !== null) {
             const msgstr = msgstrMatch[1];
-            poContent += `#${msgid}\nmsgid "${msgstr}"\nmsgstr ""\n\n`;
+            poContent += `#: ${msgid}\nmsgid "${msgstr}"\nmsgstr ""\n\n`;
         }
     }
     return poContent;
