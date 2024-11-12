@@ -1,5 +1,5 @@
 {
-    "include": ["ac_BP/src", "gobal.d.ts"],
+    "include": ["Matrix_BP/src", "global.d.ts"],
     "exclude": ["node_modules"],
     "watchOptions": {
         "excludeDirectories": ["node_modules"]

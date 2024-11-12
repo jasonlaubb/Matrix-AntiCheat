@@ -1,9 +1,0 @@
-{
-	"format_version": "1.14.0",
-	"sound_definitions": {
-		"matrix.detected": {
-			"category": "ui",
-			"sounds": ["sounds/detected"]
-		}
-	}
-}
