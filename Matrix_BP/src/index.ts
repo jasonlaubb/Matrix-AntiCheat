@@ -47,9 +47,16 @@ export class Module {
 		event.booleanData = includeAdmin;
 		Module.playerLoopRunTime = event.pushToList(Module.playerLoopRunTime);
 	}
+	static clearPlayeeTickEvent (func: IntergratedSystemEvent) {
+		Module.playerLoopRunTime = event.removeFromList(Module.playerLoopRunTime);
+	}
 	static subscribeTickEvent (func: () => void) {
 		const event = new IntegratedSystemEvent(func);
 		Module.tickLoopRunTime = event.pushToList(Module.tickLoopRunTime);
+		return event;
+	}
+	static clearTickEvent (func: IntergratedSystemEvent) {
+		Module.tickLoopRunTime = event.removeFromList(Module.tickLoopRunTime);
 	}
 	static initializeModules () {
 		world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
