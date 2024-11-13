@@ -1,5 +1,6 @@
 import { Player, RawMessage, system, world } from "@minecraft/server";
 import { declarePermissionFunction } from "./assets/permission";
+import { setupModeration } from "./assets/moderation";
 import defaultConfig from "./data/config";
 /**
  * @author jasonlaubb
@@ -69,6 +70,8 @@ class Module {
 	}
 	public static initialize () {
 		console.log("The server is running with Matrix anticheat | Made by jasonlaubb");
+		// Setup the moderation event
+		setupModeration();
 		Module.command.initBeforeEvent();
 		world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 			if (!initialSpawn) return;
