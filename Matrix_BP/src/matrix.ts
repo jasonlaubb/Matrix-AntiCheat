@@ -146,19 +146,25 @@ export class Command {
 	public setAliases (...aliases: string[]) {
 		availableId.push(...aliases);
 	}
-	public addOption (name: RawMessage, description: RawMessage, type: Command.OptionInputType, typeInfo: null | TypeInfo, optional = false) {
+	public addOption (name: RawMessage, description: RawMessage, type: Command.OptionInputType, typeInfo?: undefined | TypeInfo, optional = false) {
+		// Error prevention
 		switch (type) {
 			case "code":
 			case "purecode": {
 				if (typeInfo?.lowerLimit) break;
 				throw new Error("Command :: pure code and code required lower limit");
 			}
+			case "string":
 			case "number":
 			case "integer": {
 				if (!typeInfo || typeInfo?.upperLimit || typeInfo?.loweLimit) break;
 				throw new Error("Command :: number and integer required upper limit or lower limit if exists");
 			}
+			default: {
+				if (typeInfo) throw new Error("Command :: unused typeInfo property");
+			}
 		}
+		// unfinished
 	}
 }
 interface TypeInfo {
