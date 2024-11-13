@@ -3,13 +3,15 @@ import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
 /**
  * @author jasonlaubb
- * @description The basic system of Matrix Anticheat
+ * @description The core system of Matrix anticheat
  */
-export class Module {
+class Module {
 	// The var of index runtime
 	private static moduleList: Module[] = [];
 	private static playerLoopRunTime: IntegratedSystemEvent[] = [];
 	private static tickLoopRunTime: IntegratedSystemEvent[] = [];
+	// Command :)
+	public readonly static command = CommandExtension;
 	// Types
 	public readonly static SystemEvent = typeof IntergratedSystemEvent;
 	public readonly static Config = typeof defaultConfig;
@@ -85,7 +87,7 @@ export class Module {
 					        try {
 			                            event.moduleFunction(player);
 					        } catch (error) {
-				                    sendError(error);
+				                    Module.sendError(error);
 					        }
 				        }
 				});
@@ -112,6 +114,9 @@ export class Module {
 	public static findRegisteredModule (id: string) {
 		return Module.moduleList.find(module => module.toggleId == id);
 	}
+	public static sendError (error: Error) {
+	        console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`)
+	}
 }
 class IntegratedSystemEvent {
 	private func: Function;
@@ -135,8 +140,10 @@ class IntegratedSystemEvent {
 		return this.func;
 	}
 }
-export class Command {
+class CommandExtension {
+	public constructor () {};
 	private static registeredCommands: Command[] = [];
+	private readonly static optionMatchRegExp = /"((?:\\.|[^"\\])*)"|[^"@\s]+/g;
 	public readonly static Command = typeof Command;
 	public readonly static OptionInputType = OptionTypes;
 	public availableId: string[] = [];
@@ -169,6 +176,14 @@ export class Command {
 	public register () {
 		registeredCommands.push(this);
 	}
+	public static runCommand (command: string) {
+		
+	}
+	public static initBeforeEvent () {
+		world.beforeEvents.chatSend.subscribe(event => {
+			
+		})
+	}
 }
 interface TypeInfo {
 	upperLimit?: number;
@@ -176,9 +191,6 @@ interface TypeInfo {
 	arrayRange?: string[];
 }
 type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode";
-export function sendError (error: Error) {
-	console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`)
-}
 // Declare the admin permission function
 declarePermissionFunction();
 // Debug utilities
@@ -187,7 +199,7 @@ import("@minecraft/debug-utilities").catch(() => console.warn("index.js :: Faile
 		const imported = debugUtilities as typeof import("@minecraft/debug-utilities");
 		imported.disableWatchdogTimingWarnings(true);
 	} catch {
-		sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities"));
+		Module.sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities"));
 	}
 });
 // Disable Watchdog Timing Warnings
@@ -195,11 +207,15 @@ system.beforeEvents.watchdogTerminate.subscribe((event) => {
 	try {
 		event.cancel = true
 	} catch {
-		system.run(() => sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities")));
+		system.run(() => Module.sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities")));
 	}
 });
 // Run when the world fires
 world.afterEvents.worldInitialize.subscribe(() => {
 	// Enable Matrix AntiCheat
 	Module.initializeModules();
-})
+	// Initialize the command
+	Module.command.initBeforeEvent();
+});
+// Export the main module
+export { Module };
