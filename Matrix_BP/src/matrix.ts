@@ -37,7 +37,7 @@ class Module {
 			case "string":
 			case "number":
 			case "integer": {
-				if (!typeInfo || typeInfo?.upperLimit || typeInfo?.loweLimit) break;
+				if (!typeInfo || typeInfo?.upperLimit || typeInfo?.lowerLimit) break;
 				throw new Error("Command :: number and integer required upper limit or lower limit if exists");
 			}
 			default: {
