@@ -135,6 +135,19 @@ class IntegratedSystemEvent {
 		return this.func;
 	}
 }
+export class Command {
+	private static registeredCommands: Command[] = [];
+	public availableId: string[] = [];
+	public setName (name: string) {
+	        availableId.push(name);
+	}
+	public setAliases (...aliases: string[]) {
+		availableId.push(...aliases);
+	}
+	public addOption (name: RawMessage, description: RawMessage, type = "str", optional = false) {
+		
+	}
+}
 export function sendError (error: Error) {
 	console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`)
 }
