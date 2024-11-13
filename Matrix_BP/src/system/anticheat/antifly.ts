@@ -1,5 +1,5 @@
 import { Player } from "@minecraft/server";
-import { Module } from "../../index";
+import { Module } from "../../matrix";
 import { rawtextTranslate } from "../../util/rawtext";
 let tickEventId: any;
 new Module()
