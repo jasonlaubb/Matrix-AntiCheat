@@ -47,7 +47,7 @@ export class Module {
 		event.booleanData = includeAdmin;
 		Module.playerLoopRunTime = event.pushToList(Module.playerLoopRunTime);
 	}
-	static clearPlayeeTickEvent (func: IntergratedSystemEvent) {
+	static clearPlayerTickEvent (func: IntergratedSystemEvent) {
 		Module.playerLoopRunTime = event.removeFromList(Module.playerLoopRunTime);
 	}
 	static subscribeTickEvent (func: () => void) {
