@@ -10,6 +10,9 @@ export class Module {
 	private static moduleList: Module[] = [];
 	private static playerLoopRunTime: IntegratedSystemEvent[] = [];
 	private static tickLoopRunTime: IntegratedSystemEvent[] = [];
+	// Types
+	public readonly static SystemEvent = typeof IntergratedSystemEvent;
+	public readonly static Config = typeof defaultConfig;
 	// Properties of module
 	private toggleId!: string;
 	public name!: RawMessage;
