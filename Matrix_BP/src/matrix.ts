@@ -224,3 +224,4 @@ interface TypeInfo {
 }
 // Start the Anticheat
 Module.ignite();
+import "./system/anticheat/antifly";
