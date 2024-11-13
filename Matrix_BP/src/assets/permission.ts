@@ -1,5 +1,8 @@
 import { Player } from "@minecraft/server";
 export { declarePermissionFunction };
+/**
+ * @description This function should be run when script fire.
+ */
 function declarePermissionFunction () {
 	Player.prototype.isAdmin = function () {
 		return this.getDynamicProperty("uniqueLevel") ?? 0 >= 1;
