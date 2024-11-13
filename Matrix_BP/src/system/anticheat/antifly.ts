@@ -1,7 +1,7 @@
 import { Player } from "@minecraft/server";
 import { Module } from "../../matrix";
 import { rawtextTranslate } from "../../util/rawtext";
-let tickEventId: any;
+let tickEventId: Module.SystemEvent;
 new Module()
 	.setName(rawtextTranslate("module.anti.fly.name"))
 	.setDescription(rawtextTranslate("module.anti.fly.description"))
