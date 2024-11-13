@@ -81,7 +81,13 @@ export class Module {
 			const allPlayers = Module.allWorldPlayers;
 			for (const player of allPlayers) {
 				Module.playerLoopRunTime.forEach(event => {
-					if (!event.booleanData && player.isAdmin()) event.moduleFunction(player);
+				        if (!event.booleanData && player.isAdmin()) {
+					        try {
+			                            event.moduleFunction(player);
+					        } catch (error) {
+				                    sendError(error);
+					        }
+				        }
 				});
 			}
 			Module.tickLoopRunTime.forEach(event => {
