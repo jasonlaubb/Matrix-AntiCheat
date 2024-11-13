@@ -191,7 +191,7 @@ class CommandExtension {
 		})
 	}
 }
-// Interfacez and types for Module
+// Interfaces and types for Module
 interface TypeInfo {
 	upperLimit?: number;
 	lowerLimit?: number;
