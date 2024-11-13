@@ -6,7 +6,7 @@ import defaultConfig from "./data/config";
  * @author jasonlaubb
  * @description The core system of Matrix anticheat
  */
-class Module {
+export class Module {
 	// The var of index runtime
 	private static moduleList: Module[] = [];
 	private static playerLoopRunTime: IntegratedSystemEvent[] = [];
@@ -136,6 +136,32 @@ class Module {
 	public static clearTickEvent (func: Module.IntergratedSystemEvent) {
 		Module.tickLoopRunTime = event.removeFromList(Module.tickLoopRunTime);
 	}
+	public static ignite () {
+		// Declare the admin permission function
+declarePermissionFunction();
+// Debug utilities
+import("@minecraft/debug-utilities").catch(() => console.warn("index.js :: Failed to load @minecraft/debug-utilities")).then(async (debugUtilities) => {
+	try {
+		const imported = debugUtilities as typeof import("@minecraft/debug-utilities");
+		imported.disableWatchdogTimingWarnings(true);
+	} catch {
+		Module.sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities"));
+	}
+});
+// Disable Watchdog Timing Warnings
+system.beforeEvents.watchdogTerminate.subscribe((event) => {
+	try {
+		event.cancel = true
+	} catch {
+		system.run(() => Module.sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities")));
+	}
+});
+// Run when the world fires
+world.afterEvents.worldInitialize.subscribe(() => {
+	// Enable Matrix AntiCheat when world initialized
+	Module.initialize();
+});
+	}
 	public static initialize () {
 		console.log("The server is running with Matrix anticheat | Made by jasonlaubb");
 		// Setup the moderation event
@@ -196,29 +222,5 @@ interface TypeInfo {
 	lowerLimit?: number;
 	arrayRange?: string[];
 }
-// Declare the admin permission function
-declarePermissionFunction();
-// Debug utilities
-import("@minecraft/debug-utilities").catch(() => console.warn("index.js :: Failed to load @minecraft/debug-utilities")).then(async (debugUtilities) => {
-	try {
-		const imported = debugUtilities as typeof import("@minecraft/debug-utilities");
-		imported.disableWatchdogTimingWarnings(true);
-	} catch {
-		Module.sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities"));
-	}
-});
-// Disable Watchdog Timing Warnings
-system.beforeEvents.watchdogTerminate.subscribe((event) => {
-	try {
-		event.cancel = true
-	} catch {
-		system.run(() => Module.sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities")));
-	}
-});
-// Run when the world fires
-world.afterEvents.worldInitialize.subscribe(() => {
-	// Enable Matrix AntiCheat when world initialized
-	Module.initialize();
-});
-// Export the main module
-export { Module };
+// Start the Anticheat
+Module.ignite();
