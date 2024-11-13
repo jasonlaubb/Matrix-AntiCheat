@@ -14,9 +14,9 @@ class Module {
 	// Command
 	public readonly static command = class CommandExtension {
 	public constructor () {};
-	private static registeredCommands: Command[] = [];
+	private static registeredCommands: Module.command[] = [];
 	private readonly static optionMatchRegExp = /"((?:\\.|[^"\\])*)"|[^"@\s]+/g;
-	public readonly static Command = typeof Command;
+	public readonly static Command = typeof Module.command;
 	public readonly static OptionInputType = OptionTypes;
 	public availableId: string[] = [];
 	public setName (name: string) {
@@ -25,7 +25,7 @@ class Module {
 	public setAliases (...aliases: string[]) {
 		availableId.push(...aliases);
 	}
-	public addOption (name: RawMessage, description: RawMessage, type: Command.OptionInputType, typeInfo?: undefined | TypeInfo, optional = false) {
+	public addOption (name: RawMessage, description: RawMessage, type: Module.command.OptionInputType, typeInfo?: undefined | TypeInfo, optional = false) {
 		// Error prevention
 		switch (type) {
 			case "code":
@@ -57,8 +57,31 @@ class Module {
 		})
 	}
 	};
+	// To store and identify the data for each system event.
+        public readonly static IntergratedSystemEvent = class IntegratedSystemEvent {
+	private func: Function;
+	public booleanData?: boolean;
+	public constructor (func: Function) {
+		this.func = func;
+	}
+	public removeFromList (list: Module.IntegratedSystemEvent[]) {
+		const index = list.indexOf(this);
+		if (index == -1) return list;
+		list.splice(index, 1);
+		return list;
+	}
+	public pushToList (list: Module.IntegratedSystemEvent[]) {
+		const index = list.indexOf(this);
+		if (index != -1) return list;
+		list.push(this);
+		return list;
+	}
+	public get moduleFunction () {
+		return this.func;
+	}
+};
 	// Types
-	public readonly static SystemEvent = typeof IntergratedSystemEvent;
+	public readonly static SystemEvent = typeof Module.IntergratedSystemEvent;
 	public readonly static Config = typeof defaultConfig;
 	// Properties of module
 	private toggleId!: string;
@@ -97,19 +120,19 @@ class Module {
 		Module.moduleList.push(this);
 	}
 	public static subscribePlayerTickEvent (func: (player: Player) => void, includeAdmin: boolean = true) {
-		const event = new IntegratedSystemEvent(func);
+		const event = new Module.IntegratedSystemEvent(func);
 		event.booleanData = includeAdmin;
 		Module.playerLoopRunTime = event.pushToList(Module.playerLoopRunTime);
 	}
-	public static clearPlayerTickEvent (func: IntergratedSystemEvent) {
+	public static clearPlayerTickEvent (func: Module.IntergratedSystemEvent) {
 		Module.playerLoopRunTime = event.removeFromList(Module.playerLoopRunTime);
 	}
 	public static subscribeTickEvent (func: () => void) {
-		const event = new IntegratedSystemEvent(func);
+		const event = new Module.IntegratedSystemEvent(func);
 		Module.tickLoopRunTime = event.pushToList(Module.tickLoopRunTime);
 		return event;
 	}
-	public static clearTickEvent (func: IntergratedSystemEvent) {
+	public static clearTickEvent (func: Module.IntergratedSystemEvent) {
 		Module.tickLoopRunTime = event.removeFromList(Module.tickLoopRunTime);
 	}
 	public static initialize () {
@@ -164,29 +187,6 @@ class Module {
 	}
 	public static sendError (error: Error) {
 	        console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`)
-	}
-}
-// To store and identify the data for each system event.
-class IntegratedSystemEvent {
-	private func: Function;
-	public booleanData?: boolean;
-	public constructor (func: Function) {
-		this.func = func;
-	}
-	public removeFromList (list: IntegratedSystemEvent[]) {
-		const index = list.indexOf(this);
-		if (index == -1) return list;
-		list.splice(index, 1);
-		return list;
-	}
-	public pushToList (list: IntegratedSystemEvent[]) {
-		const index = list.indexOf(this);
-		if (index != -1) return list;
-		list.push(this);
-		return list;
-	}
-	public get moduleFunction () {
-		return this.func;
 	}
 }
 // Interfaces and types for Module
