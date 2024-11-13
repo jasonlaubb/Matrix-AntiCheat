@@ -166,6 +166,9 @@ export class Command {
 		}
 		// unfinished
 	}
+	public register () {
+		registeredCommands.push(this);
+	}
 }
 interface TypeInfo {
 	upperLimit?: number;
