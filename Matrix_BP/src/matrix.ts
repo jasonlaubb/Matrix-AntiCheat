@@ -12,7 +12,51 @@ class Module {
 	private static playerLoopRunTime: IntegratedSystemEvent[] = [];
 	private static tickLoopRunTime: IntegratedSystemEvent[] = [];
 	// Command
-	public readonly static command = CommandExtension;
+	public readonly static command = class CommandExtension {
+	public constructor () {};
+	private static registeredCommands: Command[] = [];
+	private readonly static optionMatchRegExp = /"((?:\\.|[^"\\])*)"|[^"@\s]+/g;
+	public readonly static Command = typeof Command;
+	public readonly static OptionInputType = OptionTypes;
+	public availableId: string[] = [];
+	public setName (name: string) {
+	        availableId.push(name);
+	}
+	public setAliases (...aliases: string[]) {
+		availableId.push(...aliases);
+	}
+	public addOption (name: RawMessage, description: RawMessage, type: Command.OptionInputType, typeInfo?: undefined | TypeInfo, optional = false) {
+		// Error prevention
+		switch (type) {
+			case "code":
+			case "purecode": {
+				if (typeInfo?.lowerLimit) break;
+				throw new Error("Command :: pure code and code required lower limit");
+			}
+			case "string":
+			case "number":
+			case "integer": {
+				if (!typeInfo || typeInfo?.upperLimit || typeInfo?.loweLimit) break;
+				throw new Error("Command :: number and integer required upper limit or lower limit if exists");
+			}
+			default: {
+				if (typeInfo) throw new Error("Command :: unused typeInfo property");
+			}
+		}
+		// unfinished
+	}
+	public register () {
+		registeredCommands.push(this);
+	}
+	public static runCommand (command: string) {
+		
+	}
+	public static initBeforeEvent () {
+		world.beforeEvents.chatSend.subscribe(event => {
+			
+		})
+	}
+	};
 	// Types
 	public readonly static SystemEvent = typeof IntergratedSystemEvent;
 	public readonly static Config = typeof defaultConfig;
@@ -143,52 +187,6 @@ class IntegratedSystemEvent {
 	}
 	public get moduleFunction () {
 		return this.func;
-	}
-}
-// To handle the command part
-class CommandExtension {
-	public constructor () {};
-	private static registeredCommands: Command[] = [];
-	private readonly static optionMatchRegExp = /"((?:\\.|[^"\\])*)"|[^"@\s]+/g;
-	public readonly static Command = typeof Command;
-	public readonly static OptionInputType = OptionTypes;
-	public availableId: string[] = [];
-	public setName (name: string) {
-	        availableId.push(name);
-	}
-	public setAliases (...aliases: string[]) {
-		availableId.push(...aliases);
-	}
-	public addOption (name: RawMessage, description: RawMessage, type: Command.OptionInputType, typeInfo?: undefined | TypeInfo, optional = false) {
-		// Error prevention
-		switch (type) {
-			case "code":
-			case "purecode": {
-				if (typeInfo?.lowerLimit) break;
-				throw new Error("Command :: pure code and code required lower limit");
-			}
-			case "string":
-			case "number":
-			case "integer": {
-				if (!typeInfo || typeInfo?.upperLimit || typeInfo?.loweLimit) break;
-				throw new Error("Command :: number and integer required upper limit or lower limit if exists");
-			}
-			default: {
-				if (typeInfo) throw new Error("Command :: unused typeInfo property");
-			}
-		}
-		// unfinished
-	}
-	public register () {
-		registeredCommands.push(this);
-	}
-	public static runCommand (command: string) {
-		
-	}
-	public static initBeforeEvent () {
-		world.beforeEvents.chatSend.subscribe(event => {
-			
-		})
 	}
 }
 // Interfaces and types for Module
