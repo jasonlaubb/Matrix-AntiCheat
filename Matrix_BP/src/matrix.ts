@@ -150,7 +150,13 @@ export class Command {
 		switch (type) {
 			case "code":
 			case "purecode": {
-				if 
+				if (typeInfo?.lowerLimit) break;
+				throw new Error("Command :: pure code and code required lower limit");
+			}
+			case "number":
+			case "integer": {
+				if (!typeInfo || typeInfo?.upperLimit || typeInfo?.loweLimit) break;
+				throw new Error("Command :: number and integer required upper limit or lower limit if exists");
 			}
 		}
 	}
