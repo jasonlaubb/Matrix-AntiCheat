@@ -6,11 +6,12 @@ new Module()
 	.setName(rawtextTranslate("module.anti.fly.name"))
 	.setDescription(rawtextTranslate("module.anti.fly.description"))
 	.setToggleId("antiFly")
+	.addCategory("detection")
 	.onModuleEnable(() => {
 		tickEventId = Module.subscribePlayerTickEvent(tickEvent, false);
 	})
 	.onModuleDisable(() => {
-		Module.subscribePlayerTickEvent(tickEventId, false);
+		Module.clearPlayerTickEvent(tickEventId);
 	})
 	.register();
 
