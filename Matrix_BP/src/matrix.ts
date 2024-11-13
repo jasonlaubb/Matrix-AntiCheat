@@ -1,6 +1,6 @@
 import { Player, RawMessage, system, world } from "@minecraft/server";
 import { declarePermissionFunction } from "./assets/permission";
-import { setupModeration } from "./assets/moderation";
+import { setupModeration } from "./util/moderation";
 import defaultConfig from "./data/config";
 /**
  * @author jasonlaubb
