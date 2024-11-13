@@ -1,6 +1,10 @@
 import { Player, RawMessage, system, world } from "@minecraft/server";
 import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
+/**
+ * @author jasonlaubb
+ * @description The basic system of Matrix Anticheat
+ */
 export class Module {
 	// The var of index runtime
 	private static moduleList: Module[] = [];
@@ -13,7 +17,7 @@ export class Module {
 	public category: string = "§cUnknown§r";
 	public onEnable!: () => void;
 	public onDisable!: () => void;
-	// This is the constructor .u.
+	// This is the constructor of anticheat
 	public constructor () {}
 	public setToggleId (id: string) {
 		this.toggleId = id;
@@ -42,23 +46,23 @@ export class Module {
 	public register () {
 		Module.moduleList.push(this);
 	}
-	static subscribePlayerTickEvent (func: (player: Player) => void, includeAdmin: boolean = true) {
+	public static subscribePlayerTickEvent (func: (player: Player) => void, includeAdmin: boolean = true) {
 		const event = new IntegratedSystemEvent(func);
 		event.booleanData = includeAdmin;
 		Module.playerLoopRunTime = event.pushToList(Module.playerLoopRunTime);
 	}
-	static clearPlayerTickEvent (func: IntergratedSystemEvent) {
+	public static clearPlayerTickEvent (func: IntergratedSystemEvent) {
 		Module.playerLoopRunTime = event.removeFromList(Module.playerLoopRunTime);
 	}
-	static subscribeTickEvent (func: () => void) {
+	public static subscribeTickEvent (func: () => void) {
 		const event = new IntegratedSystemEvent(func);
 		Module.tickLoopRunTime = event.pushToList(Module.tickLoopRunTime);
 		return event;
 	}
-	static clearTickEvent (func: IntergratedSystemEvent) {
+	public static clearTickEvent (func: IntergratedSystemEvent) {
 		Module.tickLoopRunTime = event.removeFromList(Module.tickLoopRunTime);
 	}
-	static initializeModules () {
+	public static initializeModules () {
 		world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 			if (!initialSpawn) return;
 			Module.currentPlayers.push(player);
