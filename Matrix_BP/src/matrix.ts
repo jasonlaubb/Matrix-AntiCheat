@@ -147,7 +147,12 @@ export class Command {
 		availableId.push(...aliases);
 	}
 	public addOption (name: RawMessage, description: RawMessage, type: Command.OptionInputType, typeInfo: null | TypeInfo, optional = false) {
-		
+		switch (type) {
+			case "code":
+			case "purecode": {
+				if 
+			}
+		}
 	}
 }
 interface TypeInfo {
