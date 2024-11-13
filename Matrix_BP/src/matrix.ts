@@ -17,7 +17,8 @@ class Module {
 	private static registeredCommands: Module.command[] = [];
 	private readonly static optionMatchRegExp = /"((?:\\.|[^"\\])*)"|[^"@\s]+/g;
 	public readonly static Command = typeof Module.command;
-	public readonly static OptionInputType = OptionTypes;
+	public readonly static OptionInputType = type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode";
+		;
 	public availableId: string[] = [];
 	public setName (name: string) {
 	        availableId.push(name);
@@ -195,7 +196,6 @@ interface TypeInfo {
 	lowerLimit?: number;
 	arrayRange?: string[];
 }
-type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode";
 // Declare the admin permission function
 declarePermissionFunction();
 // Debug utilities
