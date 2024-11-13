@@ -66,6 +66,7 @@ export class Module {
 		Module.tickLoopRunTime = event.removeFromList(Module.tickLoopRunTime);
 	}
 	public static initializeModules () {
+		console.log("The server is running with Matrix anticheat | Made by jasonlaubb");
 		world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 			if (!initialSpawn) return;
 			Module.currentPlayers.push(player);
