@@ -137,6 +137,8 @@ class IntegratedSystemEvent {
 }
 export class Command {
 	private static registeredCommands: Command[] = [];
+	public readonly static Command = typeof Command;
+	public readonly static OptionInputType = OptionTypes;
 	public availableId: string[] = [];
 	public setName (name: string) {
 	        availableId.push(name);
@@ -144,10 +146,16 @@ export class Command {
 	public setAliases (...aliases: string[]) {
 		availableId.push(...aliases);
 	}
-	public addOption (name: RawMessage, description: RawMessage, type = "str", optional = false) {
+	public addOption (name: RawMessage, description: RawMessage, type: Command.OptionInputType, typeInfo: null | TypeInfo, optional = false) {
 		
 	}
 }
+interface TypeInfo {
+	upperLimit?: number;
+	lowerLimit?: number;
+	arrayRange?: string[];
+}
+type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode";
 export function sendError (error: Error) {
 	console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`)
 }
