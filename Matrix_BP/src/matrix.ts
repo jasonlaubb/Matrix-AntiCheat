@@ -10,7 +10,7 @@ class Module {
 	private static moduleList: Module[] = [];
 	private static playerLoopRunTime: IntegratedSystemEvent[] = [];
 	private static tickLoopRunTime: IntegratedSystemEvent[] = [];
-	// Command :)
+	// Command
 	public readonly static command = CommandExtension;
 	// Types
 	public readonly static SystemEvent = typeof IntergratedSystemEvent;
@@ -67,8 +67,9 @@ class Module {
 	public static clearTickEvent (func: IntergratedSystemEvent) {
 		Module.tickLoopRunTime = event.removeFromList(Module.tickLoopRunTime);
 	}
-	public static initializeModules () {
+	public static initialize () {
 		console.log("The server is running with Matrix anticheat | Made by jasonlaubb");
+		Module.command.initBeforeEvent();
 		world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 			if (!initialSpawn) return;
 			Module.currentPlayers.push(player);
@@ -118,6 +119,7 @@ class Module {
 	        console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`)
 	}
 }
+// To store and identify the data for each system event.
 class IntegratedSystemEvent {
 	private func: Function;
 	public booleanData?: boolean;
@@ -140,6 +142,7 @@ class IntegratedSystemEvent {
 		return this.func;
 	}
 }
+// To handle the command part
 class CommandExtension {
 	public constructor () {};
 	private static registeredCommands: Command[] = [];
@@ -185,6 +188,7 @@ class CommandExtension {
 		})
 	}
 }
+// Interfacez and types for Module
 interface TypeInfo {
 	upperLimit?: number;
 	lowerLimit?: number;
@@ -212,10 +216,8 @@ system.beforeEvents.watchdogTerminate.subscribe((event) => {
 });
 // Run when the world fires
 world.afterEvents.worldInitialize.subscribe(() => {
-	// Enable Matrix AntiCheat
-	Module.initializeModules();
-	// Initialize the command
-	Module.command.initBeforeEvent();
+	// Enable Matrix AntiCheat when world initialized
+	Module.initialize();
 });
 // Export the main module
 export { Module };
