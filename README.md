@@ -21,35 +21,7 @@
     </a>
     <h1>Hack prevention</h1>
     <ul>
-        <li>Motion Fly</li>
-        <li>Phase</li>
-        <li>NoClip</li>
-        <li>Glide</li>
-        <li>JetPack</li>
-        <li>Fastladder</li>
-        <li>Jesus</li>
-        <li>B-Shop</li>
-        <li>V-Shop</li>
-        <li>Spider</li>
-        <li>High Jump</li>
-        <li>Air Jump</li>
-        <li>Timer</li>
-        <li>Blink</li>
-        <li>Desync (prax)</li>
-        <li>Click TP</li>
-        <li>NoSlowDown</li>
-        <li>Scaffold</li>
-        <li>Tower</li>
-        <li>Auto Clicker</li>
-        <li>KillAura</li>
-        <li>NoSwing</li>
-        <li>Reach</li>
-        <li>Fast Throw</li>
-        <li>Nuker</li>
-        <li>Autototem & Autoshield</li>
-        <li>BlockReach</li>
-        <li>AutoTool (experimental)</li>
-        <li>InsteaBreak (experimental)</li>
+        <li>It is rewrite, unfinished.</li>
     </ul>
     <h1>Developers</h1>
     <h3>Lead Developer</h3>
