@@ -46,6 +46,10 @@ msgstr ""
 msgid "Unknown command: %s, you can type -help to get some useful information about the commands."
 msgstr ""
 
+#: commandsynax.unknownsubcommand
+msgid "Unknown subcommand: %s, you can use -getcmdstatus <command> to know what subcommand you can use."
+msgstr ""
+
 #: commandsynax.empty
 msgid "Oops, you have to type something if you want to use some commands."
 msgstr ""
@@ -56,6 +60,10 @@ msgstr ""
 
 #: commandsynax.missing
 msgid "You missed a parameter '%s' which is required."
+msgstr ""
+
+#: commandsynax.missing.subcommand
+msgid "This is a subcommand! You have to type -getcmdstatus <command> to know what subcommand you can use."
 msgstr ""
 
 #: commandsynax.syntax.boolean

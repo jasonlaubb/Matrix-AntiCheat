@@ -214,9 +214,25 @@ class Command {
                 this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.unknown", with: [args[0]] }));
                 return;
             }
-			const isSubCommand = command?.subCommands;
-			if (isSubCommand) {
-
+            if (this.getPermissionLevel() < command.minLevel) {
+                this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.permission", with: [command.minLevel.toString()] }));
+                return;
+            }
+			if (command?.subCommands) {
+                if (args.length < 2) {
+                    this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.missing.subcommand", with: [] }));
+                } else {
+                    const targetSubCommand = command.subCommands.find((subCommand) => subCommand.availableId.includes(args[1]));
+                    if (targetSubCommand) {
+                        const argValues = Command.getArgValue(args, targetSubCommand, this);
+                        if (argValues === null) return;
+                        if (targetSubCommand?.executeFunc) {
+                            targetSubCommand.executeFunc(this, ...args.slice(2)).catch((error) => Module.sendError(error as Error));
+                        }
+                    } else {
+                        this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.unknownsubcommand", with: [args[1]] }));
+                    }
+                }
 			} else {
 				const argValues = Command.getArgValue(args, command, this);
 				if (argValues === null) return;
@@ -418,7 +434,7 @@ interface InputOption {
 	typeInfo?: TypeInfo;
 }
 type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode";
-export { Module };
+export { Module, Command };
 // Start the AntiCheat
 Module.ignite();
 import "./system/anticheat/antifly";import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";

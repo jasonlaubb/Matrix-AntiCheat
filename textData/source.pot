@@ -41,6 +41,9 @@ msgstr "Until %s"
 msgid "commandsynax.unknown"
 msgstr "Unknown command: %s, you can type -help to get some useful information about the commands."
 
+msgid "commandsynax.unknownsubcommand"
+msgstr "Unknown subcommand: %s, you can use -getcmdstatus <command> to know what subcommand you can use."
+
 msgid "commandsynax.empty"
 msgstr "Oops, you have to type something if you want to use some commands."
 
@@ -49,6 +52,9 @@ msgstr "§7>> §gUse -getcmdstatus <command> to get some useful information abou
 
 msgid "commandsynax.missing"
 msgstr "You missed a parameter '%s' which is required."
+
+msgid "commandsynax.missing.subcommand"
+msgstr "This is a subcommand! You have to type -getcmdstatus <command> to know what subcommand you can use."
 
 msgid "commandsynax.syntax.boolean"
 msgstr "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2 >>%3<< %4'. Only 'true' or 'false' are allowed'."
