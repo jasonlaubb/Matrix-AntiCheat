@@ -154,6 +154,7 @@ class Command {
     private static readonly optionMatchRegExp = /"((?:\\.|[^"\\])*)"|[^"@\s]+/g;
     public static readonly OptionInputType: OptionTypes;
     public availableId: string[] = [];
+    public minLevel = 0;
 	public requiredOption: InputOption[] = [];
 	public optionalOption: InputOption[] = [];
 	public executeFunc?: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => void;
@@ -164,7 +165,10 @@ class Command {
     public setAliases(...aliases: string[]) {
         this.availableId.push(...aliases);
     }
-    public addOption(name: string, description: RawMessage, type: OptionTypes, typeInfo?: undefined | TypeInfo, optional = false) {
+    public setMinPermissionLevel (level: number) {
+        this.minLevel = level;
+    }
+    public addOption(name: RawMessage, description: RawMessage, type: OptionTypes, typeInfo?: undefined | TypeInfo, optional = false) {
         // Error prevention
         switch (type) {
             case "code":
@@ -205,11 +209,15 @@ class Command {
 				return;
 			};
 			const command = Command.searchCommand(args[0]);
+            if (!command) {
+                this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.unknown", with: [args[0]] }));
+                return;
+            }
 			const isSubCommand = command?.subCommands;
 			if (isSubCommand) {
 
 			} else {
-				const argValues = Command.getArgValue(args, this);
+				const argValues = Command.getArgValue(args, command, this);
 				if (argValues === null) return;
 				if (command?.executeFunc) {
 					command.executeFunc(this, ...args.slice(1));
@@ -217,12 +225,116 @@ class Command {
 			}
 		}
         world.beforeEvents.chatSend.subscribe((event) => {
-
+            // Checks if player is trying to use a command.
+            const isCommand = event.message.match(/^(\-|\!|\#|\$|\.|\=|\+|\?)[a-zA-Z]+(\s{1,2}\S+)*\s*$/g);
+            if (isCommand) {
+                event.cancel = true;
+                system.run(() => event.sender.runChatCommand(event.message));
+                return;
+            }
 		});
     }
-	private static getArgValue (args: string[], player: Player): (string | number | Player | boolean | undefined)[] | null {
+	private static getArgValue (args: string[], command: Command, player: Player): (string | number | Player | boolean | undefined)[] | null {
+        if (args.length == 0) return [];
+        const values = [];
+        let currentIndex = 0;
+        for (const option of command.requiredOption) {
+            const arg = args[currentIndex];
+            currentIndex++;
+            if (!arg) {
+                player.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.missing", with: { rawtext: [option.name] } }));
+                player.sendMessage(rawtextTranslate("commandsynax.tips"));
+                return null;
+            }
+            const insideArg = args[currentIndex];
+            const beforeArgs = args.slice(0, currentIndex).join(" ");
+            const afterArgs = args.slice(currentIndex + 1).join(" ");
+            switch (option.type) {
+                case "string": {
+                    if (option?.typeInfo) {
+                        if (option.typeInfo.lowerLimit && arg.length < option.typeInfo.lowerLimit) {
+                            Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.string.low", option.name, beforeArgs, insideArg, afterArgs, option.typeInfo.lowerLimit.toString());
+                            return null;
+                        }
+                        if (option.typeInfo.upperLimit && arg.length > option.typeInfo.upperLimit) {
+                            Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.string.high", option.name, beforeArgs, insideArg, afterArgs,  option.typeInfo.upperLimit.toString());
+                            return null;
+                        }
+                    }
+                    values.push(arg);
+                    break;
+                }
+                case "boolean": {
+                    switch (arg) {
+                        case "true":
+                        case "1":
+                        case "on":
+                        case "enable": {
+                            values.push(true);
+                            break;
+                        }
+                        case "false":
+                        case "0":
+                        case "off":
+                        case "enable": {
+                            values.push(false);
+                            break;
+                        }
+                        default: {
+                            Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.boolean", option.name, beforeArgs, insideArg, afterArgs);
+                            return null;
+                        }
+                    }
+                    break;
+                }
+                case "number":
+                case "integer": {
+                    const number = parseInt(arg);
+                    const notNumber = Number.isNaN(number);
+                    if (option.type == "integer" && (notNumber || !Number.isInteger(arg))) {
+                        Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.integer.nan", option.name, beforeArgs, insideArg, afterArgs);
+                        return null;
+                    }
+                    if (notNumber) {
+                        Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.number.nan", option.name, beforeArgs, insideArg, afterArgs);
+                        return null;
+                    }
+                    if (option?.typeInfo) {
+                        if (option.typeInfo?.lowerLimit && number < option.typeInfo.lowerLimit) {
+                            Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.number.low", option.name, beforeArgs, insideArg, afterArgs, option.typeInfo.lowerLimit.toString());
+                            return null;
+                        }
+                        if (option.typeInfo?.upperLimit && number > option.typeInfo.upperLimit) {
+                            Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.number.high", option.name, beforeArgs, insideArg, afterArgs, option.typeInfo.upperLimit.toString());
+                            return null;
+                        }
+                    }
+                    values.push(number);
+                    break;
+                }
+                case "purecode":
+                case "code": {
+                    if (arg.length != option.typeInfo?.lowerLimit) {
+                        Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.code", option.name, beforeArgs, insideArg, afterArgs, option.typeInfo!.lowerLimit!.toString());
+                        return null;
+                    }
+                    if (option.type == "purecode" && !(/$[a-zA-Z0-9]+^/g).test(arg)) {
+                        Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.purecode", option.name, beforeArgs, insideArg, afterArgs);
+                        return null;
+                    }
+                    values.push(arg);
+                    break;
+                }
+            }
+        }
 		return args;
 	}
+    private static sendSyntaxErrorMessage (player: Player, key: string, optionName: RawMessage, beforeArgs: string, insideArg: string, afterArgs: string, extraInfo?: string) {
+        const stringInput = [optionName, { text: beforeArgs }, { text: insideArg }, { text: afterArgs }];
+        if (extraInfo) stringInput.push({ text: extraInfo })
+        player.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: key, with: { rawtext: stringInput } }));
+        player.sendMessage(rawtextTranslate("commandsynax.tips"));
+    }
 	private static searchCommand (command: string) {
 		command = command.toLowerCase();
 		return Command.registeredCommands.find((commandClass) => commandClass.availableId.includes(command));
@@ -257,7 +369,7 @@ interface TypeInfo {
     arrayRange?: string[];
 }
 interface InputOption {
-	name: string;
+	name: RawMessage;
 	description: RawMessage;
 	type: OptionTypes;
 	typeInfo?: TypeInfo;
@@ -266,5 +378,4 @@ type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "cho
 export { Module };
 // Start the AntiCheat
 Module.ignite();
-import "./system/anticheat/antifly";import { rawtext } from "./util/rawtext";
-
+import "./system/anticheat/antifly";import { rawtext, rawtextTranslate } from "./util/rawtext";
