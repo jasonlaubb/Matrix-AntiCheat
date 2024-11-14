@@ -2,9 +2,13 @@ import { Player, RawMessage, system, world } from "@minecraft/server";
 import { declarePermissionFunction } from "./assets/permission";
 import { setupModeration } from "./util/moderation";
 import defaultConfig from "./data/config";
+import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
 /**
  * @author jasonlaubb
- * @description The core system of Matrix anticheat
+ * @description The core system of Matrix AntiCheat.
+ * @license AGPL-3.0
+ * @link https://github.com/jasonlaubb/Matrix-AntiCheat/
+ * @warn You are not allowed to copy or modify this system unless you have declared yours as a fork from us.
  */
 class Module {
     // The var of index runtime
@@ -97,6 +101,7 @@ class Module {
         console.log("The server is running with Matrix AntiCheat | Made by jasonlaubb");
         // Setup the moderation event
         setupModeration();
+        // Initialize the command system
         Command.initialize();
         world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
             if (!initialSpawn) return;
@@ -147,7 +152,13 @@ class Module {
         console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`);
     }
 }
-// Command
+/**
+ * @author jasonlaubb
+ * @description The command handler of Matrix AntiCheat.
+ * @license AGPL-3.0
+ * @link https://github.com/jasonlaubb/Matrix-AntiCheat/
+ * @warn You are not allowed to copy or modify this system unless you have declared yours as a fork from us.
+ */
 class Command {
     public constructor() {}
     private static registeredCommands: Command[] = [];
@@ -399,8 +410,10 @@ class Command {
 		return Command.registeredCommands.find((commandClass) => commandClass.availableId.includes(command));
 	}
 }
+// The class that store the tick event that is handled by the Module class
 class IntegratedSystemEvent {
     private func: Function;
+    // For state wether include admin or not.
     public booleanData?: boolean;
     public constructor(func: Function) {
         this.func = func;
@@ -437,4 +450,4 @@ type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "cho
 export { Module, Command };
 // Start the AntiCheat
 Module.ignite();
-import "./system/anticheat/antifly";import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
+import "./system/anticheat/antifly";
