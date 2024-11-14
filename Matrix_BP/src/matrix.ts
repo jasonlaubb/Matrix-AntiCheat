@@ -158,7 +158,7 @@ class Command {
     public minLevel = 0;
 	public requiredOption: InputOption[] = [];
 	public optionalOption: InputOption[] = [];
-	public executeFunc?: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => void;
+	public executeFunc?: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => Promise<void>;
 	public subCommands?: Command[];
     public setName(name: string) {
         this.availableId.push(name);
@@ -196,7 +196,7 @@ class Command {
 	public addSubCommand (command: Command) {
 		this.subCommands?.push(command);
 	}
-	public onExecute (executeFunc: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => void) {
+	public onExecute (executeFunc: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => Promise<void>) {
 		this.executeFunc = executeFunc;
 	}
     public register() {
@@ -221,7 +221,7 @@ class Command {
 				const argValues = Command.getArgValue(args, command, this);
 				if (argValues === null) return;
 				if (command?.executeFunc) {
-					command.executeFunc(this, ...args.slice(1));
+					command.executeFunc(this, ...args.slice(1)).catch((error) => Module.sendError(error as Error));
 				}
 			}
 		}
@@ -234,6 +234,19 @@ class Command {
                 return;
             }
 		});
+    }
+    public sendErrorToPlayer (player: Player, error: Error) {
+        player.sendMessage(
+            fastText()
+                .addTran("error.happened")
+                .endline()
+                .addTran("error.name", error.name)
+                .endline()
+                .addTran("error.description", error.message)
+                .endline()
+                .addTran("error.stack", error?.stack ?? "§cUnknown§r")
+                .build()
+        );
     }
 	private static getArgValue (args: string[], command: Command, player: Player): (string | number | Player | boolean | undefined)[] | null {
         if (args.length == 0) return [];
@@ -408,4 +421,4 @@ type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "cho
 export { Module };
 // Start the AntiCheat
 Module.ignite();
-import "./system/anticheat/antifly";import { rawtext, rawtextTranslate } from "./util/rawtext";
+import "./system/anticheat/antifly";import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";

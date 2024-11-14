@@ -18,6 +18,18 @@ msgstr ""
 msgid "§bMatrix §7> §gThere is some error from the script, please report it to the developer when you have time."
 msgstr ""
 
+#: error.name
+msgid "§7- Error: §e%s"
+msgstr ""
+
+#: error.description
+msgid "§7- Discription: §e%s"
+msgstr ""
+
+#: error.stack
+msgid "§7- Stack: §e%s"
+msgstr ""
+
 #: moderation.permanent
 msgid "permanent"
 msgstr ""

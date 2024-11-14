@@ -20,6 +20,15 @@ msgstr "§bMatrix §7> §e%1 §gpacket §7(%2) §greceived from %3"
 msgid "error.happened"
 msgstr "§bMatrix §7> §gThere is some error from the script, please report it to the developer when you have time."
 
+msgid "error.name"
+msgstr "§7- Error: §e%s"
+
+msgid "error.description"
+msgstr "§7- Discription: §e%s"
+
+msgid "error.stack"
+msgstr "§7- Stack: §e%s"
+
 msgid "moderation.permanent"
 msgstr "permanent"
 
