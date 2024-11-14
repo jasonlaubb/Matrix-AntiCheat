@@ -41,6 +41,9 @@ msgstr "Until %s"
 msgid "commandsynax.unknown"
 msgstr "Unknown command: %s, you can type -help to get some useful information about the commands."
 
+msgid "commandsystem.disabled"
+msgstr "Oops, this command has been disabled."
+
 msgid "commandsynax.unknownsubcommand"
 msgstr "Unknown subcommand: %s, you can use -getcmdstatus <command> to know what subcommand you can use."
 

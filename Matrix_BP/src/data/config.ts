@@ -3,4 +3,7 @@ export default {
     modules: {
         antiFly: true,
     } as { [key: string]: boolean },
+    command: {
+        about: true,
+    } as { [key: string]: boolean },
 };

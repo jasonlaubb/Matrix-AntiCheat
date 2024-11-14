@@ -231,6 +231,10 @@ class Command {
                 this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.unknown", with: [args[0]] }));
                 return;
             }
+            if (Module.config.command[command.availableId[0]] === false) {
+                this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.disabled", with: [command.availableId[0]] }));
+                return;
+            }
             if (this.getPermissionLevel() < command.minLevel) {
                 this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.permission", with: [command.minLevel.toString()] }));
                 return;
