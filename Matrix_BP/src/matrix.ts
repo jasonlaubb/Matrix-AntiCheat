@@ -173,12 +173,15 @@ class Command {
 	public subCommands?: Command[];
     public setName(name: string) {
         this.availableId.push(name);
+        return this;
     }
     public setAliases(...aliases: string[]) {
         this.availableId.push(...aliases);
+        return this;
     }
     public setMinPermissionLevel (level: number) {
         this.minLevel = level;
+        return this;
     }
     public addOption(name: RawMessage, description: RawMessage, type: OptionTypes, typeInfo?: undefined | TypeInfo, optional = false) {
         // Error prevention
@@ -206,9 +209,11 @@ class Command {
     }
 	public addSubCommand (command: Command) {
 		this.subCommands?.push(command);
+        return this;
 	}
 	public onExecute (executeFunc: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => Promise<void>) {
 		this.executeFunc = executeFunc;
+        return this;
 	}
     public register() {
         Command.registeredCommands.push(this);
