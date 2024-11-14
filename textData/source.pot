@@ -29,6 +29,12 @@ msgstr "§cYou have been soft-banned§r"
 msgid "moderation.softban.until"
 msgstr "Until %s"
 
+msgid "commandsynax.unknown"
+msgstr "Unknown command: %s, you can type %shelp to get some useful information about the commands."
+
+msgid "commandsynax.empty"
+msgstr "Oops, you have to type something if you want to use some commands."
+
 msgid "module.anti.fly.name"
 msgstr "Anti Fly"
 

@@ -6,6 +6,7 @@ declare module "@minecraft/server" {
 		isAdmin: () => boolean;
 		getPermissionLevel: () => number;
 		setPermissionLevel: (level: number) => void;
+		runChatCommand: (command: string) => void;
 	}
 }
 interface Console {

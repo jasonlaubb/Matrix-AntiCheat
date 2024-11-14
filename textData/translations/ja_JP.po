@@ -30,6 +30,14 @@ msgstr ""
 msgid "Until %s"
 msgstr ""
 
+#: commandsynax.unknown
+msgid "Unknown command: %s, you can type %shelp to get some useful information about the commands."
+msgstr ""
+
+#: commandsynax.empty
+msgid "Oops, you have to type something if you want to use some commands."
+msgstr ""
+
 #: module.anti.fly.name
 msgid "Anti Fly"
 msgstr ""
