@@ -42,31 +42,34 @@ msgid "commandsynax.missing"
 msgstr "You missed a parameter '%s' which is required."
 
 msgid "commandsynax.syntax.boolean"
-msgstr "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2>>%3<<%4'. Only 'true' or 'false' are allowed'."
+msgstr "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2 >>%3<< %4'. Only 'true' or 'false' are allowed'."
 
 msgid "commandsynax.syntax.string.low"
-msgstr "Syntax error: The parameter '%1' required a string that contains at least %5 characters, but you have typed '%2>>%3<<%4'."
+msgstr "Syntax error: The parameter '%1' required a string that contains at least %5 characters, but you have typed '%2 >>%3<< %4'."
 
 msgid "commandsynax.syntax.string.high"
-msgstr "Syntax error: The parameter '%1' required a string that contains at most %5 characters, but you have typed '%2>>%3<<%4'."
+msgstr "Syntax error: The parameter '%1' required a string that contains at most %5 characters, but you have typed '%2 >>%3<< %4'."
 
 msgid "commandsynax.syntax.integer.nan"
-msgstr "Synax error: The parameter '%1' required a integer, but you have typed '%2>>%3<<%4'."
+msgstr "Synax error: The parameter '%1' required a integer, but you have typed '%2 >>%3<< %4'."
 
 msgid "commandsynax.syntax.number.nan"
-msgstr "Synax error: The parameter '%1' required a valid number, but you have typed '%2>>%3<<%4'."
+msgstr "Synax error: The parameter '%1' required a valid number, but you have typed '%2 >>%3<< %4'."
 
 msgid "commandsynax.syntax.number.low"
-msgstr "Synax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2>>%3<<%4' which is out of range."
+msgstr "Synax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2 >>%3<< %4' which is out of range."
 
 msgid "commandsynax.syntax.number.high"
-msgstr "Synax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2>>%3<<%4' which is out of range."
+msgstr "Synax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
 
 msgid "commandsynax.syntax.code"
-msgstr "Synax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2>>%3<<%4', which is out of range."
+msgstr "Synax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
 
 msgid "commandsynax.syntax.purecode"
-msgstr "Synax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2>>%3<<%4'"
+msgstr "Synax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2 >>%3<< %4'"
+
+msgid "commandsynax.syntax.choice"
+msgstr "Synax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
 
 msgid "module.anti.fly.name"
 msgstr "Anti Fly"
