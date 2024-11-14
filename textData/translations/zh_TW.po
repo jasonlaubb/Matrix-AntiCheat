@@ -1,18 +1,18 @@
 #: permissions.chatmute
 msgid "§bMatrix §7> §cYou have been muted from the server!"
-msgstr ""
+msgstr "§bMatrix §7> §c你在這個伺服器上已被靜音。"
 
 #: disconnectionScreen.unexpectedPacket
 msgid "Oops, something went wrong."
-msgstr ""
+msgstr "糟糕, 出錯了。"
 
 #: menu.loadingLevel
 msgid "Protected by Matrix AntiCheat"
-msgstr ""
+msgstr "受到 Matrix 反作弊保護"
 
 #: json.packet
 msgid "§bMatrix §7> §e%1 §gpacket §7(%2) §greceived from %3"
-msgstr ""
+msgstr "§bMatrix §7> §e%1 §g封包 §7(%2) §g在 %3 接收到"
 
 #: error.happened
 msgid "§bMatrix §7> §gThere is some error from the script, please report it to the developer when you have time."
