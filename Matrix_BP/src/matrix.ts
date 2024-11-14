@@ -11,6 +11,7 @@ import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
  * @warn You are not allowed to copy or modify this system unless you have declared yours as a fork from us.
  */
 class Module {
+    public static readonly version: [number, number, number] = [6, 0, 0];
     // The var of index runtime
     private static moduleList: Module[] = [];
     private static playerLoopRunTime: IntegratedSystemEvent[] = [];
@@ -455,4 +456,7 @@ type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "cho
 export { Module, Command };
 // Start the AntiCheat
 Module.ignite();
+// Import the modules
 import "./system/anticheat/antifly";
+// Import the commands
+import "./system/command/about";

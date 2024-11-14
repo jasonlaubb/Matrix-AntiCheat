@@ -114,3 +114,23 @@ msgstr ""
 msgid "This module will prevent cheater from using fly hack and make them unable to fly."
 msgstr ""
 
+#: command.about.title
+msgid "§bMatrix §7> §gAbout Matrix AntiCheat <3"
+msgstr ""
+
+#: command.about.author
+msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
+msgstr ""
+
+#: command.about.github
+msgid "Github: %s"
+msgstr ""
+
+#: command.about.version
+msgid "Current version: %s"
+msgstr ""
+
+#: command.about.joindc
+msgid "Want to download? Join our Discord Server: https://discord.gg/%s"
+msgstr ""
+
