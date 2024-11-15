@@ -33,7 +33,10 @@ function playerSpawnAfterEvent (event: PlayerSpawnAfterEvent) {
 		// 8 GB Mobile
 		case PlatformType.Mobile: {
 			if (tierNumber <= 3) {
-				limitThreshold = 24; // Actually this is my 8GB RAM android, any error just tell me.
+				limitThreshold = 22; // Actually this is my 8GB RAM android, any error just tell me.
+			} else if (tierNumber == 4) {
+				// This is the soft limit of the mobile. So no one will use above 32.
+				limitThreshold = 32;
 			}
 			break;
 		}
