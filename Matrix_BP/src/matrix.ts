@@ -148,7 +148,7 @@ class Module {
         });
     }
     public static initialize() {
-        console.log("The server is running with Matrix AntiCheat | Made by jasonlaubb");
+        console.log("The server is running with §b§lMatrix §gAntiCheat§r | Made by jasonlaubb");
         // Setup the moderation event
         setupModeration();
         // Initialize the command system

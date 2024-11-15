@@ -35,7 +35,7 @@ function playerSpawnAfterEvent (event: PlayerSpawnAfterEvent) {
 			if (tierNumber <= 3) {
 				limitThreshold = 22; // Actually this is my 8GB RAM android, any error just tell me.
 			} else if (tierNumber == 4) {
-				// This is the soft limit of the mobile. So no one will use above 32.
+				// This is the soft limit of the mobile. So no one will use above 32 [24 GB mobile only].
 				limitThreshold = 32;
 			}
 			break;
