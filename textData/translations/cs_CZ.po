@@ -118,6 +118,14 @@ msgstr ""
 msgid "This module will prevent cheater from using fly hack and make them unable to fly."
 msgstr ""
 
+#: module.firewall.name
+msgid "Firewall"
+msgstr ""
+
+#: module.firewall.description
+msgid "Prevent the player who contains bad packets from accessing the server. For example, namespoofing."
+msgstr ""
+
 #: command.about.title
 msgid "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 msgstr ""

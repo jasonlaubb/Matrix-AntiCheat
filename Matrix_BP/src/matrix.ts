@@ -3,6 +3,7 @@ import { declarePermissionFunction } from "./assets/permission";
 import { setupModeration } from "./util/moderation";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
+import { tickDataMap } from "./util/tickDataMap";
 /**
  * @author jasonlaubb
  * @description The core system of Matrix AntiCheat.
@@ -20,13 +21,31 @@ class Module {
     public static readonly Config = typeof defaultConfig;
     // Properties of module
     private toggleId!: string;
-    public name!: RawMessage;
-    public description!: RawMessage;
-    public category: string = "§cUnknown§r";
-    public onEnable!: () => void;
-    public onDisable!: () => void;
+    private name: RawMessage = { text: "§cUnknown§r" };
+    private description!: RawMessage;
+    private category: string = "§cUnknown§r";
+    private locked: boolean = false;
+    private onEnable!: () => void;
+    private onDisable!: () => void;
+    private playerSpawn?: (playerId: string, player: Player) => void;
+    private playerLeave?: (playerId: string) => void;
+    private enabled: boolean = false;
     // This is the constructor of antiCheat
     public constructor() {}
+    // For other uses
+    public getCategory () {
+        return this.category;
+    }
+    public getToggleId () {
+        return this.locked ? null : this.toggleId;
+    }
+    public getName () {
+        return this.name;
+    }
+    public getDescription () {
+        return this.description;
+    }
+    // Builder
     public setToggleId(id: string) {
         this.toggleId = id;
         return this;
@@ -47,12 +66,42 @@ class Module {
         this.onEnable = func;
         return this;
     }
+    public initPlayer (func: (playerId: string, player: Player) => void) {
+        this.playerSpawn = func;
+        return this;
+    }
+    public initClear (func: (playerId: string) => void) {
+        this.playerLeave = func;
+        return this;
+    }
     public onModuleDisable(func: () => void) {
         this.onDisable = func;
         return this;
     }
+    public lockModule () {
+        this.locked = true;
+        return this;
+    }
     public register() {
         Module.moduleList.push(this);
+    }
+    public enableModule () {
+        if (this.enabled || this.locked) return;
+        this.enabled = true;
+        if (this.playerSpawn) {
+            for (const player of Module.allWorldPlayers) {
+                this.playerSpawn(player.id, player);
+            }
+        }
+        this.onEnable();
+    }
+    public disableModule () {
+        if (!this.enabled || this.locked) return;
+        this.enabled = false;
+        this.onDisable();
+    }
+    public static getTickDataMap ({ id }: Player) {
+        return tickDataMap.get(id);
     }
     public static subscribePlayerTickEvent(func: (player: Player) => void, includeAdmin: boolean = true) {
         const event = new IntegratedSystemEvent(func);
@@ -107,12 +156,31 @@ class Module {
         world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
             if (!initialSpawn) return;
             Module.currentPlayers.push(player);
+            for (const module of Module.moduleList) {
+                if (!module.enabled || !module.playerSpawn) continue;
+                try {
+                    module.playerSpawn(player.id, player);
+                } catch (error) {
+                    Module.sendError(error as Error);
+                }
+            }
         });
         world.afterEvents.playerLeave.subscribe(({ playerId }) => {
             Module.currentPlayers = Module.currentPlayers.filter(({ id }) => id != playerId);
+            for (const module of Module.moduleList) {
+                if (!module.enabled || !module.playerLeave) continue;
+                try {
+                    module.playerLeave(playerId);
+                } catch (error) {
+                    Module.sendError(error as Error);
+                }
+            }
         });
         for (const module of Module.moduleList) {
-            if (Module.config.modules[module.toggleId] === true) module.onEnable();
+            if (module.locked || Module.config.modules[module.toggleId] === true) {
+                module.onEnable();
+                module.enabled = true;
+            }
         }
         system.runInterval(() => {
             const allPlayers = Module.allWorldPlayers;
@@ -128,7 +196,11 @@ class Module {
                 });
             }
             Module.tickLoopRunTime.forEach((event) => {
-                event.moduleFunction();
+                try {
+                    event.moduleFunction();
+                } catch (error) {
+                    Module.sendError(error as Error);
+                }
             });
         });
     }
@@ -460,7 +532,9 @@ type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "cho
 export { Module, Command };
 // Start the AntiCheat
 Module.ignite();
+// Import the system
+import "./util/tickDataMap";
 // Import the modules
-import "./system/anticheat/antifly";
+import "./system/anticheat/firewall";
 // Import the commands
 import "./system/command/about";

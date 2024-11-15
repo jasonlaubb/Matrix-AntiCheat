@@ -95,6 +95,12 @@ msgstr "Anti Fly"
 msgid "module.anti.fly.description"
 msgstr "This module will prevent cheater from using fly hack and make them unable to fly."
 
+msgid "module.firewall.name"
+msgstr "Firewall"
+
+msgid "module.firewall.description"
+msgstr "Prevent the player who contains bad packets from accessing the server. For example, namespoofing."
+
 msgid "command.about.title"
 msgstr "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 
