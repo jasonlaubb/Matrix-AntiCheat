@@ -130,6 +130,14 @@ msgstr ""
 msgid "Prevent the player who contains bad packets from accessing the server. For example, namespoofing."
 msgstr ""
 
+#: module.namespoof.name
+msgid "Anti Name Spoofer"
+msgstr ""
+
+#: module.namespoof.description
+msgid "Prevent the player from changing their name to a invalid name and join the server."
+msgstr ""
+
 #: command.about.title
 msgid "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 msgstr ""

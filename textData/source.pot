@@ -104,6 +104,12 @@ msgstr "Firewall"
 msgid "module.firewall.description"
 msgstr "Prevent the player who contains bad packets from accessing the server. For example, namespoofing."
 
+msgid "module.namespoof.name"
+msgstr "Anti Name Spoofer"
+
+msgid "module.namespoof.description"
+msgstr "Prevent the player from changing their name to a invalid name and join the server."
+
 msgid "command.about.title"
 msgstr "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 
