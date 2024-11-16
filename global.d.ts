@@ -9,6 +9,7 @@ declare module "@minecraft/server" {
 		setPermissionLevel: (level: number) => void;
 		runChatCommand: (command: string) => void;
 		flag: (detected: Module) => void;
+		safeIsOp: () => boolean;
 	}
 }
 interface Console {

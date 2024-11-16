@@ -3,6 +3,7 @@ import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
 import { tickDataMap } from "./program/system/tickDataMap";
+import { Punishment } from "./program/system/moderation";
 /**
  * @author jasonlaubb
  * @description The core system of Matrix AntiCheat.
@@ -29,6 +30,7 @@ class Module {
     private playerSpawn?: (playerId: string, player: Player) => void;
     private playerLeave?: (playerId: string) => void;
     private enabled: boolean = false;
+    private punishment?: Punishment;
     // This is the constructor of antiCheat
     public constructor() {}
     // For other uses
@@ -58,7 +60,8 @@ class Module {
         return this;
     }
     public setPunishment (punishment: Punishment) {
-
+        this.punishment = punishment;
+        return this;
     }
     public addCategory(category: string) {
         this.category = category;
@@ -101,6 +104,9 @@ class Module {
         if (!this.enabled || this.locked) return;
         this.enabled = false;
         this.onDisable();
+    }
+    public get modulePunishment () {
+        return this.punishment;
     }
     public static getTickDataMap ({ id }: Player) {
         return tickDataMap.get(id);
@@ -530,6 +536,14 @@ interface InputOption {
 	typeInfo?: TypeInfo;
 }
 type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode" | "target";
+// Safe isOP function
+Player.prototype.safeIsOp = function () {
+    try {
+        return this.isOp();
+    } catch {
+        return false;
+    }
+};
 export { Module, Command };
 // Start the AntiCheat
 Module.ignite();

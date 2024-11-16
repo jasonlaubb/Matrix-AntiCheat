@@ -7,4 +7,7 @@ export default {
     command: {
         about: true,
     } as { [key: string]: boolean },
+    flag: {
+        banDuration: 604800,
+    }
 };

@@ -11,12 +11,36 @@ new Module()
     .register();
 export type Punishment = "tempKick" | "kick" | "softBan" | "ban" | "freeze" | "mute";
 export function tempKick(player: Player) {
+    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
     player.triggerEvent("matrix:tempkick");
+}
+export function ban (player: Player, duration: number) {
+    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
+    const obj = world.scoreboard.getObjective(`matrix:banRecord`);
+    if (!obj) {
+        world.scoreboard.addObjective(`matrix:banRecord`, "Matrix AntiCheat");
+        return ban(player, duration);
+    }
+    obj.setScore("::" + player.name, 0);
+    player.setDynamicProperty("isBanned", duration == -1 ? -1 : Date.now() + duration);
+    kickForBan(player, duration);
+}
+export function unBan (playerName: string) {
+    const obj = world.scoreboard.getObjective(`matrix:unBanRequest`);
+    if (!obj) {
+        world.scoreboard.addObjective(`matrix:unBanRequest`, "Matrix AntiCheat");
+        return unBan(playerName);
+    }
+    if (obj.getScore("::" + playerName)) return false;
+    if (!world.scoreboard.getObjective(`matrix:banRecord`)?.getScore("::" + playerName)) return null;
+    obj.setScore("::" + playerName, 0);
+    return true;
 }
 /**
  * @description Prevent anti kick from stopping the kick.
  */
 export function strengthenKick(player: Player, reason: string = "§cNo reason provided") {
+    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
     player
         .runCommandAsync(`kick "${player.name}" §aKick handled by Matrix AntiCheat\n§gReason: §e${reason}`)
         .then((commandResult) => {
@@ -33,6 +57,7 @@ export function strengthenKick(player: Player, reason: string = "§cNo reason pr
  * @param duration Accept ms, 1000ms = 1 second, Input -1 to set softban to permanent
  */
 export function softBan(player: Player, duration: number) {
+    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
     if (duration == -1) {
         player.setDynamicProperty("isSoftBanned", -1);
     } else {
@@ -44,6 +69,7 @@ export function softBan(player: Player, duration: number) {
  * @param duration Accept ms, 1000ms = 1 second, Input -1 to set mute to permanent
  */
 export function mute (player: Player, duration: number) {
+    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
     player.setDynamicProperty("isMuted", duration == -1 ? -1 : Date.now() + duration);
     try {
         player.runCommand(`ability @s mute true`);
@@ -57,6 +83,7 @@ export function unMute (player: Player) {
     player.runCommand(`ability @s mute false`);
 }
 export function freeze (player: Player, duration: number) {
+    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
     player.setDynamicProperty("isFrozen", duration == -1 ? -1 : Date.now() + duration);
     player.inputPermissions.movementEnabled = false;
     player.inputPermissions.cameraEnabled = false;
@@ -91,25 +118,19 @@ function onPlayerSpawn ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     }
     const banStatus = player.getDynamicProperty("isBanned") as number;
     if (banStatus) {
-        if (banStatus != -1 && Date.now() > banStatus) {
+        const unBanRequest = world.scoreboard.getObjective("matrix:unBanRequest");
+        const isUnBanned = !!unBanRequest?.getScore("::" + player.name);
+        if (isUnBanned || player.getDynamicProperty("isSoftBanned") || (banStatus != -1 && Date.now() > banStatus)) {
             player.setDynamicProperty("isBanned");
-        } else {
-            let message = "§aBan handled by Matrix AntiCheat\n";
-            if (banStatus == -1) {
-                message += "§gRegretfully, you have been§e banned permanently§g on this server. If you think there is a mistake or you want to appeal, please contact the operator of the current server.";
-            } else {
-                message += "§gYou have been§e banned§g from the server, this ban will be valid until §e" + new Date(banStatus).toUTCString();
+            if (isUnBanned) {
+                unBanRequest!.removeParticipant("::" + player.name);
             }
-            player
-                .runCommandAsync(`kick "${player.name}" ${message}`)
-                .then((commandResult) => {
-                    if (commandResult.successCount != 1) {
-                        tempKick(player);
-                    }
-                })
-                .catch(() => {
-                    tempKick(player);
-                });
+            const banRecord = world.scoreboard.getObjective(`matrix:banRecord`);
+            if (banRecord && banRecord.getScore("::" + player.name)) {
+                banRecord.removeParticipant("::" + player.name);
+            }
+        } else {
+            kickForBan(player, banStatus);
         }
     }
     const muteStatus = player.getDynamicProperty("isMuted") as number;
@@ -132,4 +153,24 @@ function onPlayerSpawn ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
             player.inputPermissions.cameraEnabled = false;
         }
     }
+}
+
+function kickForBan (player: Player, banStatus: number) {
+    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
+    let message = "§aBan handled by Matrix AntiCheat\n";
+    if (banStatus == -1) {
+        message += "§gRegretfully, you have been§e banned permanently§g on this server. If you think there is a mistake or you want to appeal, please contact the operator of the current server.";
+    } else {
+        message += "§gYou have been§e banned§g from the server, this ban will be valid until §e" + new Date(banStatus).toUTCString();
+    }
+    player
+        .runCommandAsync(`kick "${player.name}" ${message}`)
+        .then((commandResult) => {
+            if (commandResult.successCount != 1) {
+                tempKick(player);
+            }
+        })
+        .catch(() => {
+            tempKick(player);
+        });
 }

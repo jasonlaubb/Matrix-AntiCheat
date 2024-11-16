@@ -30,6 +30,10 @@ msgstr ""
 msgid "§7- Stack: §e%s"
 msgstr ""
 
+#: util.flag.alert
+msgid "§c§lCheat Alert! §r§7A cheater (%s§r§7) has been detected! We have automatically blocked it."
+msgstr ""
+
 #: moderation.permanent
 msgid "permanent"
 msgstr ""

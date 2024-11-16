@@ -29,6 +29,9 @@ msgstr "§7- Discription: §e%s"
 msgid "error.stack"
 msgstr "§7- Stack: §e%s"
 
+msgid "util.flag.alert"
+msgstr "§c§lCheat Alert! §r§7A cheater (%s§r§7) has been detected! We have automatically blocked it."
+
 msgid "moderation.permanent"
 msgstr "permanent"
 
