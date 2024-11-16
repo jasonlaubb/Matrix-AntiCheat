@@ -2,17 +2,20 @@ import { PlatformType, PlayerSpawnAfterEvent, world } from "@minecraft/server";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { returnTierNumber } from "../../util/util";
-new Module()
+const firewall = new Module()
 	.addCategory("detection")
 	.setName(rawtextTranslate("module.firewall.name"))
 	.setDescription(rawtextTranslate("module.firewall.description"))
 	.setToggleId("firewall")
+	.setPunishment("ban")
 	.onModuleEnable(() => {
 		world.afterEvents.playerSpawn.subscribe(playerSpawnAfterEvent);
 	})
 	.onModuleDisable(() => {
-		
+		world.afterEvents.playerSpawn.unsubscribe(playerSpawnAfterEvent);
 	});
+
+firewall.register();
 /**
  * @author jasonlaubb
  * @description Checks for the render distance.
@@ -66,7 +69,6 @@ function playerSpawnAfterEvent (event: PlayerSpawnAfterEvent) {
 		}
 	}
 	if (playerRenderDistanceLimit > limitThreshold || playerRenderDistanceLimit < minThreshold) {
-		// Should be replaced by a regular flag method lol
-		player.triggerEvent("matrix:tempkick");
+		player.flag(firewall);
 	}
 }
