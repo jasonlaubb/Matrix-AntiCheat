@@ -4,6 +4,7 @@ export default {
         antiFly: true,
         firewall: true,
         antiNamespoof: true,
+        antiKillAura: true,
     } as { [key: string]: boolean },
     command: {
         about: true,

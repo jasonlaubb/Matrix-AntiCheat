@@ -555,6 +555,8 @@ import "./program/tickDataMap";
 // Import the modules
 import "./program/detection/firewall";
 import "./program/detection/phase";
+import "./program/detection/killaura";
+import "./program/detection/namespoof";
 // Import the commands
 import "./program/command/about";
 import { setupFlagFunction } from "./util/flag";

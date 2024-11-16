@@ -110,6 +110,12 @@ msgstr "Anti Name Spoofer"
 msgid "module.namespoof.description"
 msgstr "Prevent the player from changing their name to a invalid name and join the server."
 
+msgid "module.killaura.name"
+msgstr "Anti KillAura"
+
+msgid "module.killaura.description"
+msgstr "Prevent the player from hitting other players with the illegal kill packet."
+
 msgid "command.about.title"
 msgstr "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 

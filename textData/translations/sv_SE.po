@@ -138,6 +138,14 @@ msgstr ""
 msgid "Prevent the player from changing their name to a invalid name and join the server."
 msgstr ""
 
+#: module.killaura.name
+msgid "Anti KillAura"
+msgstr ""
+
+#: module.killaura.description
+msgid "Prevent the player from hitting other players with the illegal kill packet."
+msgstr ""
+
 #: command.about.title
 msgid "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 msgstr ""
