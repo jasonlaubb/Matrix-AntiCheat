@@ -8,7 +8,7 @@ You can only use it when you follow the GNU Affero General Public License 3.0 (A
 
 # Description
 
-This system is based on the core file (matrix.ts/matrix.js) of Matrix AntiCheat behavior pack. We don't recommend you to copy the full code. Although this is open source, full copy of our anticheat system and rename it to something else is morally wrong to do it. We strongly suggest you to make your own anticheat by yourself, otherwise it's meaningless.
+This system is based on the API system (matrixAPI that made by jasonlaubb) of Matrix AntiCheat behavior pack. We don't recommend you to copy the full code. Although this is open source, full copy of our anticheat system and rename it to something else is morally wrong to do it. We strongly suggest you to make your own anticheat by yourself, otherwise it's meaningless.
 
 # Support server
 

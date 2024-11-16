@@ -1,9 +1,8 @@
 import { Player, RawMessage, system, world } from "@minecraft/server";
 import { declarePermissionFunction } from "./assets/permission";
-import { setupModeration } from "./util/moderation";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
-import { tickDataMap } from "./util/tickDataMap";
+import { tickDataMap } from "./program/system/tickDataMap";
 /**
  * @author jasonlaubb
  * @description The core system of Matrix AntiCheat.
@@ -149,8 +148,6 @@ class Module {
     }
     public static initialize() {
         console.log("The server is running with §b§lMatrix §gAntiCheat§r | Made by jasonlaubb");
-        // Setup the moderation event
-        setupModeration();
         // Initialize the command system
         Command.initialize();
         world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
@@ -533,8 +530,9 @@ export { Module, Command };
 // Start the AntiCheat
 Module.ignite();
 // Import the system
-import "./util/tickDataMap";
+import "./program/system/moderation";
+import "./program/tickDataMap";
 // Import the modules
-import "./system/anticheat/firewall";
+import "./program/anticheat/firewall";
 // Import the commands
-import "./system/command/about";
+import "./program/command/about";

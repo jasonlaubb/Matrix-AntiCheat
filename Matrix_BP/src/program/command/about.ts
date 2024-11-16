@@ -1,5 +1,5 @@
 import { Player } from "@minecraft/server";
-import { Module, Command } from "../../matrix";
+import { Module, Command } from "../../matrixAPI";
 import { fastText } from "../../util/rawtext";
 
 new Command()

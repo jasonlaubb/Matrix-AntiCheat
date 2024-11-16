@@ -1,5 +1,5 @@
 import { system, Vector3 } from "@minecraft/server";
-import { Module } from "../../matrix";
+import { Module } from "../../matrixAPI";
 export const tickDataMap = new Map<string, TickDataMap>();
 new Module()
 	.lockModule()

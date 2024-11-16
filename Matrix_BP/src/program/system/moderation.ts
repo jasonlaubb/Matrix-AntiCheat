@@ -1,7 +1,7 @@
 import { Player, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
 import { rawtext, rawtextTranslate, rawtextTranslateRawText } from "../../util/rawtext";
 import { MinecraftDimensionTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { Module } from "../../matrix";
+import { Module } from "../../matrixAPI";
 new Module()
     .lockModule()
     .addCategory("system")

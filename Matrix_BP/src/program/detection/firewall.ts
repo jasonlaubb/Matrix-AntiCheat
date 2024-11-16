@@ -1,5 +1,5 @@
 import { PlatformType, PlayerSpawnAfterEvent, world } from "@minecraft/server";
-import { Module } from "../../matrix";
+import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { returnTierNumber } from "../../util/util";
 new Module()
