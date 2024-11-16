@@ -3,6 +3,7 @@ export default {
     modules: {
         antiFly: true,
         firewall: true,
+        antiNamespoof: true,
     } as { [key: string]: boolean },
     command: {
         about: true,
