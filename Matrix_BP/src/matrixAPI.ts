@@ -130,6 +130,7 @@ class Module {
     public static ignite() {
         // Declare the admin permission function
         declarePermissionFunction();
+        setupFlagFunction();
         // Debug utilities
         import("@minecraft/debug-utilities")
             .catch(() => console.warn("index.js :: Failed to load @minecraft/debug-utilities"))
@@ -554,3 +555,4 @@ import "./program/tickDataMap";
 import "./program/anticheat/firewall";
 // Import the commands
 import "./program/command/about";
+import { setupFlagFunction } from "./util/flag";
