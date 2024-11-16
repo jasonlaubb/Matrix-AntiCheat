@@ -64,6 +64,10 @@ export function softBan(player: Player, duration: number) {
         player.setDynamicProperty("isSoftBanned", Date.now() + duration);
     }
 }
+export function unSoftBan (player: Player) {
+    player.setDynamicProperty("isSoftBanned");
+    tempKick(player);
+}
 /**
  * @param player
  * @param duration Accept ms, 1000ms = 1 second, Input -1 to set mute to permanent
