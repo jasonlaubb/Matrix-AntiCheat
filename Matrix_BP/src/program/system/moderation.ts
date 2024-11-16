@@ -9,6 +9,7 @@ new Module()
         world.afterEvents.playerSpawn.subscribe(onPlayerSpawn);
     })
     .register();
+export type Punishment = "tempKick" | "kick" | "softBan" | "ban" | "freeze" | "mute";
 export function tempKick(player: Player) {
     player.triggerEvent("matrix:tempkick");
 }
@@ -37,6 +38,28 @@ export function softBan(player: Player, duration: number) {
     } else {
         player.setDynamicProperty("isSoftBanned", Date.now() + duration);
     }
+}
+/**
+ * @param player
+ * @param duration Accept ms, 1000ms = 1 second, Input -1 to set mute to permanent
+ */
+export function mute (player: Player, duration: number) {
+    player.setDynamicProperty("isMuted", duration == -1 ? -1 : Date.now() + duration);
+    try {
+        player.runCommand(`ability @s mute true`);
+        return true;
+    } catch {
+        return false;
+    }
+}
+export function unMute (player: Player) {
+    player.setDynamicProperty("isMuted");
+    player.runCommand(`ability @s mute false`);
+}
+export function freeze (player: Player, duration: number) {
+    player.setDynamicProperty("isFrozen", duration == -1 ? -1 : Date.now() + duration);
+    player.inputPermissions.movementEnabled = false;
+    player.inputPermissions.cameraEnabled = false;
 }
 function onPlayerSpawn ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
@@ -87,6 +110,26 @@ function onPlayerSpawn ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
                 .catch(() => {
                     tempKick(player);
                 });
+        }
+    }
+    const muteStatus = player.getDynamicProperty("isMuted") as number;
+    if (muteStatus) {
+        if (muteStatus != -1 && Date.now() > muteStatus) {
+            player.setDynamicProperty("isMuted");
+            player.runCommand(`ability @s mute false`);
+        } else {
+            player.runCommand(`ability @s mute true`);
+        }
+    }
+    const freezeStatus = player.getDynamicProperty("isFrozen") as number;
+    if (freezeStatus) {
+        if (freezeStatus != -1 && Date.now() > freezeStatus) {
+            player.setDynamicProperty("isFrozen");
+            player.inputPermissions.movementEnabled = true;
+            player.inputPermissions.cameraEnabled = true;
+        } else {
+            player.inputPermissions.movementEnabled = false;
+            player.inputPermissions.cameraEnabled = false;
         }
     }
 }

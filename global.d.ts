@@ -1,12 +1,14 @@
 import * as Server from "@minecraft/server";
 import * as ServerUi from "@minecraft/server-ui";
 import * as DebugUtilities from "@minecraft/debug-utilities";
+import { Module } from "./Matrix_BP/src/matrixAPI";
 declare module "@minecraft/server" {
 	interface Player {
 		isAdmin: () => boolean;
 		getPermissionLevel: () => number;
 		setPermissionLevel: (level: number) => void;
 		runChatCommand: (command: string) => void;
+		flag: (detected: Module) => void;
 	}
 }
 interface Console {

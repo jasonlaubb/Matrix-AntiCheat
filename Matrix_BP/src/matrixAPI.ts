@@ -57,6 +57,9 @@ class Module {
         this.description = description;
         return this;
     }
+    public setPunishment (punishment: Punishment) {
+
+    }
     public addCategory(category: string) {
         this.category = category;
         return this;
@@ -467,10 +470,11 @@ class Command {
                 }
                 return arg;
             }
+            case "target":
             case "player": {
                 const targetName = arg.startsWith("@") ? arg.substring(1) : arg;
                 const worldPlayers = world.getPlayers({ name: targetName });
-                if (worldPlayers.length == 0) {
+                if (worldPlayers.length == 0 || (option.type == "target" &&worldPlayers[0].isAdmin())) {
                     Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.player", option.name, beforeArgs, insideArg, afterArgs);
                     return null;
                 }
@@ -525,7 +529,7 @@ interface InputOption {
 	type: OptionTypes;
 	typeInfo?: TypeInfo;
 }
-type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode";
+type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode" | "target";
 export { Module, Command };
 // Start the AntiCheat
 Module.ignite();
