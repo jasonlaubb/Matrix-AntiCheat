@@ -114,12 +114,12 @@ msgstr ""
 msgid "Synax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
 msgstr ""
 
-#: module.anti.fly.name
-msgid "Anti Fly"
+#: module.phase.name
+msgid "Anti Phase"
 msgstr ""
 
-#: module.anti.fly.description
-msgid "This module will prevent cheater from using fly hack and make them unable to fly."
+#: module.phase.description
+msgid "Prevent the player from passing through the walls with the illegal movement packet."
 msgstr ""
 
 #: module.firewall.name

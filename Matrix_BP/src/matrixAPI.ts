@@ -4,6 +4,30 @@ import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
 import { tickDataMap } from "./program/system/tickDataMap";
 import { Punishment } from "./program/system/moderation";
+// The class that store the tick event that is handled by the Module class
+export class IntegratedSystemEvent {
+    private func: Function;
+    // For state wether include admin or not.
+    public booleanData?: boolean;
+    public constructor(func: Function) {
+        this.func = func;
+    }
+    public removeFromList(list: IntegratedSystemEvent[]) {
+        const index = list.indexOf(this);
+        if (index == -1) return list;
+        list.splice(index, 1);
+        return list;
+    }
+    public pushToList(list: IntegratedSystemEvent[]) {
+        const index = list.indexOf(this);
+        if (index != -1) return list;
+        list.push(this);
+        return list;
+    }
+    public get moduleFunction() {
+        return this.func;
+    }
+}
 /**
  * @author jasonlaubb
  * @description The core system of Matrix AntiCheat.
@@ -115,6 +139,7 @@ class Module {
         const event = new IntegratedSystemEvent(func);
         event.booleanData = includeAdmin;
         Module.playerLoopRunTime = event.pushToList(Module.playerLoopRunTime);
+        return event;
     }
     public static clearPlayerTickEvent(func: IntegratedSystemEvent) {
         Module.playerLoopRunTime = func.removeFromList(Module.playerLoopRunTime);
@@ -500,30 +525,6 @@ class Command {
 		return Command.registeredCommands.find((commandClass) => commandClass.availableId.includes(command));
 	}
 }
-// The class that store the tick event that is handled by the Module class
-class IntegratedSystemEvent {
-    private func: Function;
-    // For state wether include admin or not.
-    public booleanData?: boolean;
-    public constructor(func: Function) {
-        this.func = func;
-    }
-    public removeFromList(list: IntegratedSystemEvent[]) {
-        const index = list.indexOf(this);
-        if (index == -1) return list;
-        list.splice(index, 1);
-        return list;
-    }
-    public pushToList(list: IntegratedSystemEvent[]) {
-        const index = list.indexOf(this);
-        if (index != -1) return list;
-        list.push(this);
-        return list;
-    }
-    public get moduleFunction() {
-        return this.func;
-    }
-}
 // Interfaces and types for Module
 interface TypeInfo {
     upperLimit?: number;
@@ -552,7 +553,8 @@ Module.ignite();
 import "./program/system/moderation";
 import "./program/tickDataMap";
 // Import the modules
-import "./program/anticheat/firewall";
+import "./program/detection/firewall";
+import "./program/detection/phase";
 // Import the commands
 import "./program/command/about";
 import { setupFlagFunction } from "./util/flag";

@@ -92,11 +92,11 @@ msgstr "Synax error: The parameter '%1' required a purecode that only formed by 
 msgid "commandsynax.syntax.choice"
 msgstr "Synax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
 
-msgid "module.anti.fly.name"
-msgstr "Anti Fly"
+msgid "module.phase.name"
+msgstr "Anti Phase"
 
-msgid "module.anti.fly.description"
-msgstr "This module will prevent cheater from using fly hack and make them unable to fly."
+msgid "module.phase.description"
+msgstr "Prevent the player from passing through the walls with the illegal movement packet."
 
 msgid "module.firewall.name"
 msgstr "Firewall"
