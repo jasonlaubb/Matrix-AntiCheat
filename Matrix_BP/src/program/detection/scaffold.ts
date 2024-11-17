@@ -1,4 +1,4 @@
-import { GameMode, PlayerPlaceBlockAfterEvent, Vector3, VectorXZ } from "@minecraft/server";
+import { GameMode, PlayerPlaceBlockAfterEvent, Vector3, VectorXZ, world } from "@minecraft/server";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { calculateAngleFromView, calculateDistance } from "../../util/fastmath";
@@ -40,6 +40,12 @@ const scaffold = new Module()
 	})
 	.initClear((playerId) => {
 		scaffoldDataMap.delete(playerId);
+	})
+	.onModuleEnable(() => {
+		world.afterEvents.playerPlaceBlock.subscribe(onBlockPlace);
+	})
+	.onModuleDisable(() => {
+		world.afterEvents.playerPlaceBlock.unsubscribe(onBlockPlace);
 	});
 scaffold.register();
 function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
