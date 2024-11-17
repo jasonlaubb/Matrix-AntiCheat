@@ -154,6 +154,14 @@ msgstr ""
 msgid "Prevent the player from using the auto-brige hack to gain unfair advantage."
 msgstr ""
 
+#: module.instabreak.name
+msgid "Anti InstaBreak"
+msgstr ""
+
+#: module.instabreak.description
+msgid "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
+msgstr ""
+
 #: command.about.title
 msgid "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 msgstr ""
