@@ -46,6 +46,7 @@ const scaffold = new Module()
 	})
 	.onModuleDisable(() => {
 		world.afterEvents.playerPlaceBlock.unsubscribe(onBlockPlace);
+		scaffoldDataMap.clear();
 	});
 scaffold.register();
 function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
