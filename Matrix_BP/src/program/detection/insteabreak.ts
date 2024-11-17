@@ -21,7 +21,7 @@ const insteabreak = new Module()
 	.onModuleEnable(() => {
 		world.afterEvents.playerBreakBlock.subscribe(onBlockBreak);
 		world.afterEvents.entityHitBlock.subscribe(onPlayerHitBlock);
-		eventId = Module.subscribePlayerTickEvent(tickEvent);
+		eventId = Module.subscribePlayerTickEvent(tickEvent, false);
 	})
 	.onModuleDisable(() => {
 		world.afterEvents.playerBreakBlock.unsubscribe(onBlockBreak);
@@ -55,7 +55,7 @@ function onPlayerHitBlock ({ damagingEntity: player }: EntityHitBlockAfterEvent)
 	}
 }
 function tickEvent (player: Player) {
-	if (player.isAdmin() || (breakData[player.id].brokenBlocks.length == 0)) return;
+	if (breakData[player.id].brokenBlocks.length == 0) return;
 	if (breakData[player.id].brokenAmount > MAX_BREAK_IN_TICK || breakData[player.id].flagInsteaBreak) {
 		// Recover the blocks
 		system.runJob(recoverBlocks(breakData[player.id].brokenBlocks, player.dimension));
