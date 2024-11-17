@@ -34,7 +34,7 @@ const antiPhase = new Module()
         phaseDataMap.delete(playerId);
     })
     .onModuleEnable(() => {
-        eventId = Module.subscribePlayerTickEvent(tickEvent);
+        eventId = Module.subscribePlayerTickEvent(tickEvent, false);
     })
     .onModuleDisable(() => {
         Module.clearPlayerTickEvent(eventId);
