@@ -146,6 +146,14 @@ msgstr ""
 msgid "Prevent the player from hitting other players with the illegal kill packet."
 msgstr ""
 
+#: module.scaffold.name
+msgid "Anti Scaffold"
+msgstr ""
+
+#: module.scaffold.description
+msgid "Prevent the player from using the auto-brige hack to gain unfair advantage."
+msgstr ""
+
 #: command.about.title
 msgid "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 msgstr ""

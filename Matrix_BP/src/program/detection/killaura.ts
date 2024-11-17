@@ -1,13 +1,11 @@
-import { EntityHitEntityAfterEvent, PlatformType, Player, Vector3, world } from "@minecraft/server";
+import { EntityHitEntityAfterEvent, Player, world } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
-
+import { calculateAngleFromView, calculateDistance } from "../../util/fastmath";
+import { getAngleLimit } from "../../util/util";
 const KILLAURA_DISTANCE_THRESHOLD = 3.5;
 const KILLAURA_PVP_DISTANCE_THRESHOLD = 4.5;
 const KILLAURA_ROTATION_THRESHOLD = 79;
-const KILLAURA_MOBILE_ANGLE_LIMIT = 120;
-const KILLAURA_DESKTOP_ANGLE_LIMIT = 45;
-const KILLAURA_CONSOLE_ANGLE_LIMIT = 40;
 
 let eventId: IntegratedSystemEvent;
 const killaura = new Module()
@@ -69,26 +67,4 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
 
 function tickEvent(player: Player) {
     killauraData.set(player.id, []);
-}
-
-function calculateDistance(pos1: Vector3, pos2: Vector3): number {
-    return Math.hypot(pos1.x - pos2.x, pos1.z - pos2.z);
-}
-
-function calculateAngleFromView(pos1: Vector3, pos2: Vector3, rotationY: number): number {
-    const commonAngle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / Math.PI;
-    const rotatedAngle = commonAngle - rotationY - 90;
-    const finalAngle = rotatedAngle <= -180 ? rotatedAngle + 360 : rotatedAngle;
-    return Math.abs(finalAngle);
-}
-
-function getAngleLimit(platformType: PlatformType): number {
-    switch (platformType) {
-        case PlatformType.Mobile:
-            return KILLAURA_MOBILE_ANGLE_LIMIT;
-        case PlatformType.Desktop:
-            return KILLAURA_DESKTOP_ANGLE_LIMIT;
-        case PlatformType.Console:
-            return KILLAURA_CONSOLE_ANGLE_LIMIT;
-    }
 }

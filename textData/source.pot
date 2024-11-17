@@ -116,6 +116,12 @@ msgstr "Anti KillAura"
 msgid "module.killaura.description"
 msgstr "Prevent the player from hitting other players with the illegal kill packet."
 
+msgid "module.scaffold.name"
+msgstr "Anti Scaffold"
+
+msgid "module.scaffold.description"
+msgstr "Prevent the player from using the auto-brige hack to gain unfair advantage."
+
 msgid "command.about.title"
 msgstr "§bMatrix §7> §gAbout Matrix AntiCheat <3"
 
