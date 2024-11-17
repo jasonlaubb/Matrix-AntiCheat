@@ -37,7 +37,7 @@ function tickEvent (player: Player) {
 
 	// unfinished...
 }
-function entityHurt ({ hurtEntity: target, damageSource: { cause, damagingEntity: player }}: EntityHurtAfterEvent) {
+function entityHurt ({ damageSource: { cause, damagingEntity: player }}: EntityHurtAfterEvent) {
 	if (!player || !(player instanceof Player) || cause != EntityDamageCause.entityAttack) return;
 	const data = speedDataMap.get(player.id)!;
 	data.attackTimeStamp = Date.now();
