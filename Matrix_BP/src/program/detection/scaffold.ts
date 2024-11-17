@@ -1,8 +1,9 @@
-import { GameMode, PlayerPlaceBlockAfterEvent, Vector3, VectorXZ, world } from "@minecraft/server";
+import { Dimension, GameMode, Player, PlayerPlaceBlockAfterEvent, Vector3, VectorXZ, world } from "@minecraft/server";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { calculateAngleFromView, calculateDistance } from "../../util/fastmath";
 import { floorLocation, getAngleLimit, getBlockCenterLocation } from "../../util/util";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 
 const ABSOLUTE_DISTANCE = 1.75;
 const HIGH_DISTANCE_THRESHOLD = 3.5;
@@ -11,6 +12,9 @@ const HIGH_ROTATION_THRESHOLD = 79;
 const NO_EXTENDER_ROTATION_THRESHOLD = 20;
 const GOD_BRIDGE_AMOUNT_LIMIT = 3;
 const LOG_CLEAR_TIME = 750;
+const MAX_ROTATION_X_DIFFERENCE = 10;
+const MAX_LOW_EXTENDER_ROTATION_X = 50;
+const LOW_EXTENDER_THRESHOLD = 1;
 interface ScaffoldDataMap {
 	blockLogs: number[];
 	lastPlaceTimeStamp: number;
@@ -19,6 +23,8 @@ interface ScaffoldDataMap {
 	lastExtender: number;
 	lastRotX: number;
 	potentialDiagFlags: number;
+	potentialRotFlags: number;
+	potentialLowExtenderFlags: number;
 }
 const scaffoldDataMap = new Map<string, ScaffoldDataMap>();
 const scaffold = new Module()
@@ -36,6 +42,8 @@ const scaffold = new Module()
 			lastExtender: 0,
 			lastRotX: 0,
 			potentialDiagFlags: 0,
+			potentialRotFlags: 0,
+			potentialLowExtenderFlags: 0
 		});
 	})
 	.initClear((playerId) => {
@@ -80,12 +88,14 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 	const floorPlayerLocation = floorLocation(player.location);
 	if (player.isJumping) floorPlayerLocation.y--;
 	const lowExtenderScaffold = isLowExtenderScaffolding(floorPlayerLocation, blockCenterLocation);
+	const voidScaffold = isVoidScaffolding(block.dimension, block.location);
 	const data = scaffoldDataMap.get(player.id)!;
 	const now = Date.now();
 	data.blockLogs.push(now);
 	data.blockLogs = data.blockLogs.filter((time) => now - time < LOG_CLEAR_TIME);
+	const noBypassEffect = !hasBypassEffect(player);
 	if (lowExtenderScaffold) {
-		if (data.blockLogs.length >= GOD_BRIDGE_AMOUNT_LIMIT) {
+		if (voidScaffold && data.blockLogs.length >= GOD_BRIDGE_AMOUNT_LIMIT && noBypassEffect) {
 			player.flag(scaffold);
 		} else if (rotX < NO_EXTENDER_ROTATION_THRESHOLD) {
 			player.flag(scaffold);
@@ -95,9 +105,10 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 	const isScaffoldHeight = fairHeight > -2.1 && fairHeight <= -1;
 	const maxDiagSpeed = calculateDiagSpeedLimit(distance, player.isOnGround, fairHeight, rotX, data.lastRotX);
 	const diag = getDiagXZ(block.location, data.lastLocation);
-	const { extender, absoluteDistanceX, absoluteDistanceZ } = getDiagLocationData(block.location, player.location);
+	const extender = getExtender(block.location, player.location);
 	const diagScaffold = isDiagScaffold(data.lastDiag, diag);
-	if (!player.isFlying && isScaffoldHeight && now - data.lastPlaceTimeStamp < maxDiagSpeed && diagScaffold && (extender - data.lastExtender > 0 || extender < 1)) {
+	const placeInterval = now - data.lastPlaceTimeStamp;	
+	if (!player.isFlying && isScaffoldHeight && placeInterval < maxDiagSpeed && diagScaffold && (extender - data.lastExtender > 0 || extender < 1)) {
 		data.potentialDiagFlags++;
 		if (data.potentialDiagFlags >= 3) {
 			data.potentialDiagFlags = 0;
@@ -106,9 +117,23 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 	}
 	const scaffoldState = !player.isFlying && isScaffolding(extender, data.lastExtender) && isScaffoldHeight;
 	if (scaffoldState) {
-		if (!diagScaffold || now - data.lastPlaceTimeStamp > 500) data.potentialDiagFlags = 0;
-		// unfinished
+		if (!diagScaffold || placeInterval > 500) data.potentialDiagFlags = 0;
+		if (placeInterval < 200 && placeInterval >= 100 && Math.abs(data.lastRotX - rotX) > MAX_ROTATION_X_DIFFERENCE && !diagScaffold && player.hasTag("moving")) {
+			data.potentialRotFlags++;
+			if (data.potentialRotFlags >= 3) {
+				player.flag(scaffold);
+				data.potentialRotFlags = 0;
+			}
+		} else if (placeInterval > 200 || placeInterval < 25 || Math.abs(data.lastRotX - rotX) < 0.5) data.potentialRotFlags = 0;
+		if (rotX < MAX_LOW_EXTENDER_ROTATION_X && extender < LOW_EXTENDER_THRESHOLD && extender > 0 && !player.isOnGround) {
+			data.potentialLowExtenderFlags++;
+			if (data.potentialLowExtenderFlags >= 3) {
+				player.flag(scaffold);
+				data.potentialLowExtenderFlags = 0;
+			}
+		} else data.potentialLowExtenderFlags = 0;
 	}
+
 	// Update data value.
 	data.lastPlaceTimeStamp = now;
 	data.lastDiag = diag;
@@ -133,7 +158,7 @@ function calculateDiagSpeedLimit (distance: number, isOnGround: boolean, extende
 	return diagSpeedLimit;
 }
 
-function getDiagLocationData ({ x: blockX, z: blockZ }: Vector3, { x: playerX, z: playerZ }: Vector3) {
+function getExtender({ x: blockX, z: blockZ }: Vector3, { x: playerX, z: playerZ }: Vector3) {
 	const absoluteDistanceX = Math.abs(blockX - playerX) - 0.2;
 	const absoluteDistanceZ = Math.abs(blockZ - playerZ) - 0.2;
 	const simulatedDistanceX = Math.abs(blockX + absoluteDistanceX * 2 - playerX);
@@ -143,7 +168,7 @@ function getDiagLocationData ({ x: blockX, z: blockZ }: Vector3, { x: playerX, z
 	if (simulatedDistanceX > absoluteDistanceX) actualDistanceX++;
 	if (simulatedDistanceZ > absoluteDistanceZ) actualDistanceZ++;
 	const extender = Math.hypot(actualDistanceX, actualDistanceZ);
-	return { extender, absoluteDistanceX, absoluteDistanceZ };
+	return extender;
 }
 
 function getDiagXZ ({ x: currentX, z: currentZ }: Vector3, { x: lastX, z: lastZ }: Vector3) {
@@ -156,4 +181,18 @@ function isDiagScaffold (lastDiag: VectorXZ, diag: VectorXZ) {
 
 function isScaffolding (extender: number, lastExtender: number) {
 	return extender - lastExtender <= 0.1 || extender < 1;
+}
+
+function isVoidScaffolding (dimension: Dimension, blockLocation: Vector3) {
+	const belowLocation = { x: blockLocation.x, y: blockLocation.y - 1, z: blockLocation.z };
+	try {
+		const belowBlock = dimension.getBlock(belowLocation);
+		return belowBlock?.isValid() && belowBlock.isAir;
+	} catch {
+		return true;
+	}
+}
+
+function hasBypassEffect (player: Player) {
+	return player.getEffect(MinecraftEffectTypes.Speed) || player.getEffect(MinecraftEffectTypes.JumpBoost);
 }
