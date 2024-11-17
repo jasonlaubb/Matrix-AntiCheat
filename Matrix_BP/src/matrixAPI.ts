@@ -2,7 +2,6 @@ import { Player, RawMessage, system, world } from "@minecraft/server";
 import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
-import { tickDataMap } from "./program/system/tickDataMap";
 import { Punishment } from "./program/system/moderation";
 // The class that store the tick event that is handled by the Module class
 export class IntegratedSystemEvent {
@@ -131,9 +130,6 @@ class Module {
     }
     public get modulePunishment () {
         return this.punishment;
-    }
-    public static getTickDataMap ({ id }: Player) {
-        return tickDataMap.get(id);
     }
     public static subscribePlayerTickEvent(func: (player: Player) => void, includeAdmin: boolean = true) {
         const event = new IntegratedSystemEvent(func);
@@ -551,14 +547,14 @@ export { Module, Command };
 Module.ignite();
 // Import the system
 import "./program/system/moderation";
-import "./program/tickDataMap";
+import "./program/system/playerProperty";
 // Import the modules
 import "./program/detection/firewall";
 import "./program/detection/phase";
 import "./program/detection/killaura";
 import "./program/detection/namespoof";
 import "./program/detection/scaffold";
-import "./program/detection/instabreak";
+import "./program/detection/insteabreak";
 // Import the commands
 import "./program/command/about";
 import { setupFlagFunction } from "./util/flag";

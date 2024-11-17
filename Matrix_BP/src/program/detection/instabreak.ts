@@ -7,16 +7,16 @@ interface BreakData {
 	brokenBlocks: BrokenBlockList;
 	brokenAmount: 0;
 	startBreakingTime: number;
-	flagInstaBreak: boolean;
+	flagInsteaBreak: boolean;
 }
 const MAX_BREAK_IN_TICK = 6;
 let breakData: { [key: string]: BreakData } = {};
 let eventId: IntegratedSystemEvent;
-const instabreak = new Module()
+const insteabreak = new Module()
 	.addCategory("detection")
-	.setName(rawtextTranslate("module.instabreak.name"))
-	.setDescription(rawtextTranslate("module.instabreak.description"))
-	.setToggleId("antiInstaBreak")
+	.setName(rawtextTranslate("module.insteabreak.name"))
+	.setDescription(rawtextTranslate("module.insteabreak.description"))
+	.setToggleId("antiInsteabreak")
 	.setPunishment("ban")
 	.onModuleEnable(() => {
 		world.afterEvents.playerBreakBlock.subscribe(onBlockBreak);
@@ -35,10 +35,10 @@ const instabreak = new Module()
 	.initClear((playerId) => {
 		delete breakData[playerId];
 	});
-instabreak.register();
+insteabreak.register();
 /**
  * @author jasonlaubb
- * @description The module against instaBreak hack. These types of hack is not working on the realm and bds server.
+ * @description The module against insteabreak hack. These types of hack is not working on the realm and bds server.
  */
 function onBlockBreak ({ player, brokenBlockPermutation, itemStackBeforeBreak: tool, block }: PlayerBreakBlockAfterEvent) {
 	if (player.isAdmin() || brokenBlockPermutation.type.id == MinecraftBlockTypes.Air) return;
@@ -46,7 +46,7 @@ function onBlockBreak ({ player, brokenBlockPermutation, itemStackBeforeBreak: t
 	const usingTool = tool && isTool(tool);
 	if (!(player.getEffect(MinecraftEffectTypes.Haste) && usingTool) || (usingTool && (tool.getComponent("enchantable")?.getEnchantment(MinecraftEnchantmentTypes.Efficiency)?.level ?? 0) >= 2) && INSTA_BREAKABLE_SET.has(brokenBlockPermutation.type.id as MinecraftBlockTypes)) {
 		breakData[player.id].brokenAmount++;
-		if (Date.now() > breakData[player.id].startBreakingTime) breakData[player.id].flagInstaBreak = true;
+		if (Date.now() > breakData[player.id].startBreakingTime) breakData[player.id].flagInsteaBreak = true;
 	}
 }
 function onPlayerHitBlock ({ damagingEntity: player }: EntityHitBlockAfterEvent) {
@@ -56,10 +56,10 @@ function onPlayerHitBlock ({ damagingEntity: player }: EntityHitBlockAfterEvent)
 }
 function tickEvent (player: Player) {
 	if (player.isAdmin() || (breakData[player.id].brokenBlocks.length == 0)) return;
-	if (breakData[player.id].brokenAmount > MAX_BREAK_IN_TICK || breakData[player.id].flagInstaBreak) {
+	if (breakData[player.id].brokenAmount > MAX_BREAK_IN_TICK || breakData[player.id].flagInsteaBreak) {
 		// Recover the blocks
 		system.runJob(recoverBlocks(breakData[player.id].brokenBlocks, player.dimension));
-		player.flag(instabreak);
+		player.flag(insteabreak);
 	}
 	breakData[player.id] = DEFAULT_BREAK_DATA;
 }
@@ -165,5 +165,5 @@ const DEFAULT_BREAK_DATA = {
 	brokenBlocks: [],
 	startBreakingTime: 0,
 	brokenAmount: 0,
-	flagInstaBreak: false,
+	flagInsteaBreak: false,
 } as BreakData;

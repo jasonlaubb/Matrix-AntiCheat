@@ -154,12 +154,20 @@ msgstr ""
 msgid "Prevent the player from using the auto-brige hack to gain unfair advantage."
 msgstr ""
 
-#: module.instabreak.name
-msgid "Anti InstaBreak"
+#: module.insteabreak.name
+msgid "Anti Insteabreak"
 msgstr ""
 
-#: module.instabreak.description
+#: module.insteabreak.description
 msgid "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
+msgstr ""
+
+#: module.speed.name
+msgid "Anti Speed"
+msgstr ""
+
+#: module.speed.description
+msgid "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
 msgstr ""
 
 #: command.about.title

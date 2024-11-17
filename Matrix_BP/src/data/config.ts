@@ -1,12 +1,14 @@
 export default {
     disableConsoleOutput: false,
     modules: {
+        antiSpeed: true,
         antiFly: true,
         firewall: true,
         antiNamespoof: true,
         antiKillAura: true,
         antiScaffold: true,
-        antiInstaBreak: false,
+        antiInsteaBreak: false,
+
     } as { [key: string]: boolean },
     command: {
         about: true,

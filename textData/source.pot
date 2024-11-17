@@ -122,11 +122,17 @@ msgstr "Anti Scaffold"
 msgid "module.scaffold.description"
 msgstr "Prevent the player from using the auto-brige hack to gain unfair advantage."
 
-msgid "module.instabreak.name"
-msgstr "Anti InstaBreak"
+msgid "module.insteabreak.name"
+msgstr "Anti Insteabreak"
 
-msgid "module.instabreak.description"
+msgid "module.insteabreak.description"
 msgstr "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
+
+msgid "module.speed.name"
+msgstr "Anti Speed"
+
+msgid "module.speed.description"
+msgstr "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
 
 msgid "command.about.title"
 msgstr "§bMatrix §7> §gAbout Matrix AntiCheat <3"
