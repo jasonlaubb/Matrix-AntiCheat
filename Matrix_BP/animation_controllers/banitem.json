@@ -1,0 +1,26 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+		"controller.animation.banItem": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{
+							"bannedItem": "query.is_item_name_any('slot.weapon.mainhand', 0, 'minecraft:moving_block')"
+						}
+					],
+					"on_entry": []
+				},
+				"bannedItem": {
+					"transitions": [
+						{
+							"default": "!query.is_item_name_any('slot.weapon.mainhand', 0, 'minecraft:moving_block')"
+						}
+					],
+					"on_entry": ["/replaceitem entity @s slot.weapon.mainhand 0 air", "@s matrix:tempkick"]
+				}
+			}
+		}
+	}
+}

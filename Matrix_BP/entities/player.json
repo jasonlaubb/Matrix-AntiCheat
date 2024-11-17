@@ -29,7 +29,8 @@
                     "north",
                     "east",
                     "south",
-                    "west"
+                    "west",
+                    "banItem"
                 ]
             },
             "animations": {
@@ -55,7 +56,8 @@
                 "north": "controller.animation.facing_north",
                 "east": "controller.animation.facing_east",
                 "south": "controller.animation.facing_south",
-                "west": "controller.animation.facing_west"
+                "west": "controller.animation.facing_west",
+                "banItem": "controller.animation.banItem"
             }
         },
 
