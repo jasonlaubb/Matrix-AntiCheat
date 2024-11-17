@@ -8,12 +8,8 @@ const MAX_SPEED = 0.7;
 let eventId: IntegratedSystemEvent;
 
 interface PhaseDataMap {
-    lastLocation: Vector3;
-    last2Location: Vector3;
-    last3Location: Vector3;
-    lastSpeed: number;
-    last2Speed: number;
-    last3Speed: number;
+    lastLocationList: Vector3[];
+    lastSpeedList: number[];
 }
 
 const phaseDataMap = new Map<string, PhaseDataMap>();
@@ -26,12 +22,12 @@ const antiPhase = new Module()
     .setPunishment("ban")
     .initPlayer((playerId, player) => {
         phaseDataMap.set(playerId, {
-            lastLocation: player.location,
-            last2Location: player.location,
-            last3Location: player.location,
-            lastSpeed: 0,
-            last2Speed: 0,
-            last3Speed: 0,
+            lastLocationList: [
+                player.location,
+                player.location,
+                player.location
+            ],
+            lastSpeedList: [0, 0, 0]
         });
     })
     .initClear((playerId) => {
@@ -55,7 +51,7 @@ function tickEvent(player: Player) {
     const data = phaseDataMap.get(player.id)!;
     const { x, y, z } = player.getVelocity();
     const currentSpeed = Math.hypot(x, z);
-
+    
     const clipStartLocation = calculateClipStartLocation(data, currentSpeed);
 
     if (clipStartLocation && Math.abs(y) < MAX_SPEED) {
@@ -73,20 +69,16 @@ function tickEvent(player: Player) {
     }
 
     // Update data value.
-    data.last3Location = data.last2Location;
-    data.last2Location = data.lastLocation;
-    data.lastLocation = player.location;
-    data.last3Speed = data.last2Speed;
-    data.last2Speed = data.lastSpeed;
-    data.lastSpeed = currentSpeed;
+    data.lastLocationList = [player.location, ...data.lastLocationList.slice(0, 2)];
+    data.lastSpeedList = [currentSpeed, ...data.lastSpeedList.slice(0, 2)];
     phaseDataMap.set(player.id, data);
 }
 
 function calculateClipStartLocation(data: PhaseDataMap, currentSpeed: number): Vector3 | undefined {
-    if (data.last2Speed < MIN_SPEED && data.lastSpeed > MAX_SPEED && currentSpeed < MIN_SPEED && data.last2Speed == currentSpeed) {
-        return data.last2Location;
-    } else if (data.last3Speed < MIN_SPEED && data.last2Speed > MAX_SPEED && data.lastSpeed == data.last2Speed && currentSpeed < MIN_SPEED) {
-        return data.last3Location;
+    if (data.lastSpeedList[1] < MIN_SPEED && data.lastSpeedList[0] > MAX_SPEED && currentSpeed < MIN_SPEED && data.lastSpeedList[1] == currentSpeed) {
+        return data.lastLocationList[1];
+    } else if (data.lastSpeedList[2] < MIN_SPEED && data.lastSpeedList[1] > MAX_SPEED && data.lastSpeedList[0] == data.lastSpeedList[1] && currentSpeed < MIN_SPEED) {
+        return data.lastLocationList[2];
     }
     return undefined;
 }
