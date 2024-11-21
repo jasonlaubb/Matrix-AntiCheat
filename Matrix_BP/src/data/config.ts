@@ -8,6 +8,7 @@ export default {
         antiKillAura: true,
         antiScaffold: true,
         antiInsteaBreak: false,
+        antiReach: true,
 
     } as { [key: string]: boolean },
     command: {

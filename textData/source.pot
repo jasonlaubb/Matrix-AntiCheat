@@ -15,7 +15,7 @@ msgid "menu.loadingLevel"
 msgstr "Protected by Matrix AntiCheat"
 
 msgid "json.packet"
-msgstr "§bMatrix §7> §e%1 §gpacket §7(%2) §greceived from %3"
+msgstr "§bMatrix §7> §e%1 §g packet§7(%2)§g received from %3"
 
 msgid "error.happened"
 msgstr "§bMatrix §7> §gThere is some error from the script, please report it to the developer when you have time."
@@ -24,7 +24,7 @@ msgid "error.name"
 msgstr "§7- Error: §e%s"
 
 msgid "error.description"
-msgstr "§7- Discription: §e%s"
+msgstr "§7- Description: §e%s"
 
 msgid "error.stack"
 msgstr "§7- Stack: §e%s"
@@ -72,25 +72,25 @@ msgid "commandsynax.syntax.string.high"
 msgstr "Syntax error: The parameter '%1' required a string that contains at most %5 characters, but you have typed '%2 >>%3<< %4'."
 
 msgid "commandsynax.syntax.integer.nan"
-msgstr "Synax error: The parameter '%1' required a integer, but you have typed '%2 >>%3<< %4'."
+msgstr "Syntax error: The parameter '%1' required a integer, but you have typed '%2 >>%3<< %4'."
 
 msgid "commandsynax.syntax.number.nan"
-msgstr "Synax error: The parameter '%1' required a valid number, but you have typed '%2 >>%3<< %4'."
+msgstr "Syntax error: The parameter '%1' required a valid number, but you have typed '%2 >>%3<< %4'."
 
 msgid "commandsynax.syntax.number.low"
-msgstr "Synax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2 >>%3<< %4' which is out of range."
+msgstr "Syntax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2 >>%3<< %4' which is out of range."
 
 msgid "commandsynax.syntax.number.high"
-msgstr "Synax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
+msgstr "Syntax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
 
 msgid "commandsynax.syntax.code"
-msgstr "Synax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
+msgstr "Syntax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
 
 msgid "commandsynax.syntax.purecode"
-msgstr "Synax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2 >>%3<< %4'"
+msgstr "Syntax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2 >>%3<< %4'"
 
 msgid "commandsynax.syntax.choice"
-msgstr "Synax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
+msgstr "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
 
 msgid "module.phase.name"
 msgstr "Anti Phase"
@@ -127,6 +127,12 @@ msgstr "Anti Insteabreak"
 
 msgid "module.insteabreak.description"
 msgstr "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
+
+msgid "module.reach.name"
+msgstr "Anti Reach"
+
+msgid "module.reach.description"
+msgstr "An advanced anti reach solution that provided reach detection up to 4.5 blocks."
 
 msgid "module.speed.name"
 msgstr "Anti Speed"

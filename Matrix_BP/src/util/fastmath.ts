@@ -12,7 +12,7 @@ export function calculateAngleFromView(pos1: Vector3, pos2: Vector3, rotationY: 
 }
 
 export function fastAtan2(y: number, x: number) {
-    const absY = fastAbs(y) + 1e-10;
+    //const absY = fastAbs(y) + 1e-10;
     const angle = fastAtan(y / x);
     if (x >= 0) return angle;
     else return y >= 0 ? angle + PI : angle - PI;
@@ -37,7 +37,7 @@ export function fastAtan(x: number) {
 
 // Distance functions
 export function calculateDistance(pos1: Vector3, pos2: Vector3): number {
-    return Math.hypot(pos1.x - pos2.x, pos1.z - pos2.z);
+    return fastHypot(pos1.x - pos2.x, pos1.z - pos2.z);
 }
 
 // General Maths functions
@@ -49,7 +49,7 @@ export function fastAbs(x: number) {
     return x < 0 ? -x : x;
 }
 
-export function fastHypot(x, y) {
+export function fastHypot(x: number, y: number) {
     x = fastAbs(x);
     y = fastAbs(y);
     const max = Math.max(x, y);
@@ -57,4 +57,20 @@ export function fastHypot(x, y) {
     if (max === 0) return 0;
     const ratio = min / max;
     return max * fastSqrt(1 + ratio * ratio);
+}
+const DOUBLE_PI = PI * 2;
+const HALF_PI = PI * 0.5;
+export function fastSin (x: number) {
+  if (x < -Math.PI)
+        x += DOUBLE_PI;
+    else if (x > Math.PI)
+        x -= DOUBLE_PI;
+
+    if (x < 0)
+        return 1.27323954 * x + 0.405284735 * x * x;
+    else
+        return 1.27323954 * x - 0.405284735 * x * x;
+}
+export function fastCos (x: number) {
+    return fastSin(x + HALF_PI);
 }
