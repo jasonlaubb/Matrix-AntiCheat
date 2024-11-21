@@ -3,6 +3,7 @@ export default {
     modules: {
         antiSpeed: true,
         antiFly: true,
+        antiTimer: true,
         firewall: true,
         antiNamespoof: true,
         antiKillAura: true,

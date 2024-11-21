@@ -1,7 +1,7 @@
 import { Dimension, EntityHitEntityAfterEvent, Player, ScriptEventCommandMessageAfterEvent, system, Vector3, world } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { fastHypot } from "../../util/fastmath";
-import { MinecraftEffectTypes } from "@minecraft/vanilla-data";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { rawtextTranslate } from "../../util/rawtext";
 interface SpeedData {
 	lastAttackTimestamp: number;

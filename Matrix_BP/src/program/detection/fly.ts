@@ -1,6 +1,7 @@
 import { Dimension, Player, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 const MAX_VELOCITY_Y = 0.7;
 const MIN_REQUIRED_REPEAT_AMOUNT = 6;
 const HIGH_VELOCITY_Y = 22;
@@ -66,7 +67,7 @@ function tickEvent (player: Player) {
 	}
 	data.velocityYList.push(velocityY);
 	if (data.velocityYList.length > 40) data.velocityYList.shift();
-	if (data.velocityYList.length >= 40 && data.velocityYList.some(yV => yV < -MAX_VELOCITY_Y)) {
+	if (data.velocityYList.length >= 40 && !player.getEffect(MinecraftEffectTypes.JumpBoost) && data.velocityYList.some(yV => yV < -MAX_VELOCITY_Y)) {
 		const { highestRepeatedVelocity, highestRepeatedAmount } = repeatChecks(data.velocityYList);
 		if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y) {
 			player.teleport(data.lastOnGroundLocation);

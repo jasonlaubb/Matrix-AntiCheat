@@ -146,6 +146,12 @@ msgstr "Anti Fly"
 msgid "module.fly.description"
 msgstr "Prevent most of the fly hacks from working. There is a small probability of false positive."
 
+msgid "module.timer.name"
+msgstr "Anti Timer"
+
+msgid "module.timer.description"
+msgstr "Prevent someone speed up their game speed to get an unfair advantage."
+
 msgid "command.about.title"
 msgstr "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
 

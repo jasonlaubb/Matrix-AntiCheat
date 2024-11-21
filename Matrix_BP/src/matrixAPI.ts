@@ -554,6 +554,7 @@ import "./program/detection/speed";
 import "./program/detection/phase";
 import "./program/detection/fly";
 import "./program/detection/killaura";
+import "./program/detection/timer";
 import "./program/detection/namespoof";
 import "./program/detection/scaffold";
 import "./program/detection/insteabreak";
