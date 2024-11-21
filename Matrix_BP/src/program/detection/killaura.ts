@@ -3,6 +3,7 @@ import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { calculateAngleFromView, calculateDistance } from "../../util/fastmath";
 import { getAngleLimit } from "../../util/util";
+import { fastAbs } from "../../util/fastmath";
 const KILLAURA_DISTANCE_THRESHOLD = 3.5;
 const KILLAURA_PVP_DISTANCE_THRESHOLD = 4.5;
 const KILLAURA_ROTATION_THRESHOLD = 79;
@@ -43,7 +44,7 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
     const isPvp = target instanceof Player;
     const rotationY = player.getRotation().y;
 
-    if (isPvp && distance > KILLAURA_PVP_DISTANCE_THRESHOLD && Math.abs(rotationY) > KILLAURA_ROTATION_THRESHOLD) {
+    if (isPvp && distance > KILLAURA_PVP_DISTANCE_THRESHOLD && fastAbs(rotationY) > KILLAURA_ROTATION_THRESHOLD) {
         player.flag(killaura);
         return;
     }
