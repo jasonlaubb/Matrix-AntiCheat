@@ -323,25 +323,25 @@ class Command {
 		Player.prototype.runChatCommand = function (commandString: string) {
 			const args = commandString.trim().match(Command.optionMatchRegExp)?.slice(1);
 			if (!args) {
-				this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.empty", with: [] }));
+				this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.empty", with: [] }));
 				return;
 			};
 			const command = Command.searchCommand(args[0]);
             if (!command) {
-                this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.unknown", with: [args[0]] }));
+                this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.unknown", with: [args[0]] }));
                 return;
             }
             if (Module.config.command[command.availableId[0]] === false) {
-                this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.disabled", with: [command.availableId[0]] }));
+                this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.disabled", with: [command.availableId[0]] }));
                 return;
             }
             if (this.getPermissionLevel() < command.minLevel) {
-                this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.permission", with: [command.minLevel.toString()] }));
+                this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.permission", with: [command.minLevel.toString()] }));
                 return;
             }
 			if (command?.subCommands) {
                 if (args.length < 2) {
-                    this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.missing.subcommand", with: [] }));
+                    this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.missing.subcommand", with: [] }));
                 } else {
                     const targetSubCommand = command.subCommands.find((subCommand) => subCommand.availableId.includes(args[1]));
                     if (targetSubCommand) {
@@ -351,7 +351,7 @@ class Command {
                             targetSubCommand.executeFunc(this, ...args.slice(2)).catch((error) => Module.sendError(error as Error));
                         }
                     } else {
-                        this.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.unknownsubcommand", with: [args[1]] }));
+                        this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.unknownsubcommand", with: [args[1]] }));
                     }
                 }
 			} else {
@@ -393,7 +393,7 @@ class Command {
             const arg = args[currentIndex];
             currentIndex++;
             if (!arg) {
-                player.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: "commandsynax.missing", with: { rawtext: [option.name] } }));
+                player.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.missing", with: { rawtext: [option.name] } }));
                 player.sendMessage(rawtextTranslate("commandsynax.tips"));
                 return null;
             }
@@ -513,7 +513,7 @@ class Command {
     private static sendSyntaxErrorMessage (player: Player, key: string, optionName: RawMessage, beforeArgs: string, insideArg: string, afterArgs: string, extraInfo?: string) {
         const stringInput = [optionName, { text: beforeArgs }, { text: insideArg }, { text: afterArgs }];
         if (extraInfo) stringInput.push({ text: extraInfo })
-        player.sendMessage(rawtext({ text: "§bMatrix §7> §c" }, { translate: key, with: { rawtext: stringInput } }));
+        player.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: key, with: { rawtext: stringInput } }));
         player.sendMessage(rawtextTranslate("commandsynax.tips"));
     }
 	private static searchCommand (command: string) {

@@ -11,11 +11,11 @@ new Module()
     .register();
 export type Punishment = "tempKick" | "kick" | "softBan" | "ban" | "freeze" | "mute";
 export function tempKick(player: Player) {
-    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
+    if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     player.triggerEvent("matrix:tempkick");
 }
 export function ban (player: Player, duration: number) {
-    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
+    if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     const obj = world.scoreboard.getObjective(`matrix:banRecord`);
     if (!obj) {
         world.scoreboard.addObjective(`matrix:banRecord`, "Matrix AntiCheat");
@@ -40,7 +40,7 @@ export function unBan (playerName: string) {
  * @description Prevent anti kick from stopping the kick.
  */
 export function strengthenKick(player: Player, reason: string = "§cNo reason provided") {
-    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
+    if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     player
         .runCommandAsync(`kick "${player.name}" §aKick handled by Matrix AntiCheat\n§gReason: §e${reason}`)
         .then((commandResult) => {
@@ -57,7 +57,7 @@ export function strengthenKick(player: Player, reason: string = "§cNo reason pr
  * @param duration Accept ms, 1000ms = 1 second, Input -1 to set softban to permanent
  */
 export function softBan(player: Player, duration: number) {
-    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
+    if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     if (duration == -1) {
         player.setDynamicProperty("isSoftBanned", -1);
     } else {
@@ -73,7 +73,7 @@ export function unSoftBan (player: Player) {
  * @param duration Accept ms, 1000ms = 1 second, Input -1 to set mute to permanent
  */
 export function mute (player: Player, duration: number) {
-    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
+    if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     player.setDynamicProperty("isMuted", duration == -1 ? -1 : Date.now() + duration);
     try {
         player.runCommand(`ability @s mute true`);
@@ -87,7 +87,7 @@ export function unMute (player: Player) {
     player.runCommand(`ability @s mute false`);
 }
 export function freeze (player: Player, duration: number) {
-    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
+    if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     player.setDynamicProperty("isFrozen", duration == -1 ? -1 : Date.now() + duration);
     player.inputPermissions.movementEnabled = false;
     player.inputPermissions.cameraEnabled = false;

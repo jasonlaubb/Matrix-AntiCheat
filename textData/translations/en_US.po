@@ -1,5 +1,5 @@
 #: permissions.chatmute
-msgid "§bMatrix §7> §cYou have been muted from the server!"
+msgid "§bMatrix§a+ §7> §cYou have been muted from the server!"
 msgstr ""
 
 #: disconnectionScreen.unexpectedPacket
@@ -11,11 +11,11 @@ msgid "Protected by Matrix AntiCheat"
 msgstr ""
 
 #: json.packet
-msgid "§bMatrix §7> §e%1 §g packet§7(%2)§g received from %3"
+msgid "§bMatrix§a+ §7> §e%1 §g packet§7(%2)§g received from %3"
 msgstr ""
 
 #: error.happened
-msgid "§bMatrix §7> §gThere is some error from the script, please report it to the developer when you have time."
+msgid "§bMatrix§a+ §7> §gThere is some error from the script, please report it to the developer when you have time."
 msgstr ""
 
 #: error.name
@@ -179,7 +179,7 @@ msgid "The latest and strongest anti speed engine. Used the property of 'bds pre
 msgstr ""
 
 #: command.about.title
-msgid "§bMatrix §7> §gAbout Matrix AntiCheat <3"
+msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
 msgstr ""
 
 #: command.about.author

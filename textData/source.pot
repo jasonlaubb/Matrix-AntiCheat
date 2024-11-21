@@ -6,7 +6,7 @@
 "X-Generator: PhraseApp (phraseapp.com)\n"
 
 msgid "permissions.chatmute"
-msgstr "§bMatrix §7> §cYou have been muted from the server!"
+msgstr "§bMatrix§a+ §7> §cYou have been muted from the server!"
 
 msgid "disconnectionScreen.unexpectedPacket"
 msgstr "Oops, something went wrong."
@@ -15,10 +15,10 @@ msgid "menu.loadingLevel"
 msgstr "Protected by Matrix AntiCheat"
 
 msgid "json.packet"
-msgstr "§bMatrix §7> §e%1 §g packet§7(%2)§g received from %3"
+msgstr "§bMatrix§a+ §7> §e%1 §g packet§7(%2)§g received from %3"
 
 msgid "error.happened"
-msgstr "§bMatrix §7> §gThere is some error from the script, please report it to the developer when you have time."
+msgstr "§bMatrix§a+ §7> §gThere is some error from the script, please report it to the developer when you have time."
 
 msgid "error.name"
 msgstr "§7- Error: §e%s"
@@ -141,7 +141,7 @@ msgid "module.speed.description"
 msgstr "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
 
 msgid "command.about.title"
-msgstr "§bMatrix §7> §gAbout Matrix AntiCheat <3"
+msgstr "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
 
 msgid "command.about.author"
 msgstr "Author: jasonlaubb (Discord: @uwu_the_great)"
