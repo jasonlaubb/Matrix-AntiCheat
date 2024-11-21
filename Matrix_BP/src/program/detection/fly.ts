@@ -2,6 +2,7 @@ import { Dimension, Player, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { fastAbs } from "../../util/fastmath";
 const MAX_VELOCITY_Y = 0.7;
 const MIN_REQUIRED_REPEAT_AMOUNT = 6;
 const HIGH_VELOCITY_Y = 22;
@@ -44,6 +45,7 @@ function tickEvent (player: Player) {
 	const now = Date.now();
 	const data = flyData.get(player.id)!;
 	const { y: velocityY } = player.getVelocity();
+	const surroundAir = isSurroundedByAir(player.location, player.dimension);
 	if (player.isOnGround && velocityY === 0) {
 		data.lastOnGroundLocation = player.location;
 	} else if (
@@ -54,7 +56,7 @@ function tickEvent (player: Player) {
 		!player.isFlying &&
 		!player.isOnGround &&
 		!player.isGliding &&
-		isSurroundedByAir(player.location, player.dimension)
+		surroundAir
 	) {
 		if (velocityY > MAX_VELOCITY_Y) {
 			player.teleport(data.lastOnGroundLocation);
@@ -73,6 +75,9 @@ function tickEvent (player: Player) {
 			player.teleport(data.lastOnGroundLocation);
 			player.flag(fly);
 		}
+	}
+	if (!player.isGliding && fastAbs(velocityY) <= MAX_VELOCITY_Y && surroundAir && (player.isOnGround || player.hasTag("isOnGround"))) {
+		player.flag(fly);
 	}
 }
 function isSurroundedByAir (centerLocation: Vector3, dimension: Dimension) {

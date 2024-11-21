@@ -108,7 +108,6 @@
                     ],
                     "on_entry": [
                         "/tag @s add jumping",
-                        "/scriptevent matrix:airjump {}",
                         "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"JUMPING\"},{\"text\":\"ADD\"},{\"selector\":\"@s\"}]}}]}"
                     ]
                 }
