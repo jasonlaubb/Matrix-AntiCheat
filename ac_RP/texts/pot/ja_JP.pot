@@ -1006,15 +1006,15 @@ msgstr "Realm Defender | アンチボットの検証"
 
 #: defender.selectui
 msgid "§a- Answer the following simple question to pass the verification, you're required to answer this question in 3 minutes."
-msgstr "§a- 検証に合格するには、次の簡単な質問に答えてください。この質問には 3 分以内に答える必要があります。"
+msgstr "§a- 検証を合格するには、次の簡単な質問に答えてください。【この質問には 3 分以内に答える必要があるよ】"
 
 #: defender.why
 msgid "§b- Why you need to verify? It's because we need to make sure you're not a spamming bot that will crash the realm."
-msgstr "§b- なぜ確認する必要があるのですか?それは、あなたがレルムをクラッシュさせるスパムボットではないことを確認する必要があるためです。"
+msgstr "§b- なぜ確認する必要があるのかと言うと それは、あなたがRealmsをクラッシュさせるSpamBotじゃない事を確認する為です。"
 
 #: defender.submit
 msgid "I finished the question!"
-msgstr "質問を終わりました！"
+msgstr "これで質問は終わりです"
 
 #: defender.question
 msgid "§eQuestion: §r%1 + %2 = ?"
@@ -1026,7 +1026,7 @@ msgstr "§e下のスライダーで答えを選択してください§r"
 
 #: defender.notabot
 msgid "I am a human!"
-msgstr "私は人間です！"
+msgstr "人間です"
 
 #: defender.verified
 msgid "§bMatrix §7>§g You successfully passed the verification, enjoy your gameplay."
@@ -1038,7 +1038,7 @@ msgstr ""
 
 #: ping.ping
 msgid "%s (you): Ping?"
-msgstr "%s (あなた): Ping?"
+msgstr "%s (you): Ping?"
 
 #: ping.pong
 msgid "Matrix: Pong! The current ping is %1ms §7(%2§7)"
