@@ -89,16 +89,17 @@ function playerTickEvent (player: Player) {
 	const data = timerData.get(player.id)!;
 	const now = Date.now();
 	const isTickIgnored = data.isTickIgnored;
-	if (isTickIgnored || player.isGliding || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
+	const { x, z } = player.getVelocity();
+	const noVelocity = x === 0 && z === 0;
+	const distance = calculateDistance(player.location, data.lastLocation);
+	if (isTickIgnored || player.isGliding || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || noVelocity && parseFloat(distance.toFixed(4)) > 0 || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
 		if (isTickIgnored) return;
 		data.isTickIgnored = true;
 		timerData.set(player.id, data);
 		return;
 	}
-	const distance = calculateDistance(player.location, data.lastLocation);
 	data.totalDistance += distance;
-	const { x, z } = player.getVelocity();
-	if (x == 0 && z == 0) data.lastNoSpeedLocation = player.location;
+	if (noVelocity) data.lastNoSpeedLocation = player.location;
 	data.totalVelocity += fastHypot(x, z);
 	data.lastLocation = player.location;
 	timerData.set(player.id, data);
