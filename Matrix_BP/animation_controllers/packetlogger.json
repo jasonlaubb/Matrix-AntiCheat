@@ -182,7 +182,7 @@
                             "riding": "query.is_riding"
                         }
                     ],
-                    "on_entry": ["/tag @s remove riding", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"RIDING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
+                    "on_entry": ["/tag @s remove riding", "/scriptevent matrix:ridingEnded {}", "/tellraw @a[tag=matrix:packetLogger] {\"rawtext\":[{\"translate\":\"json.packet\",\"with\":{\"rawtext\":[{\"text\":\"RIDING\"},{\"text\":\"REMOVE\"},{\"selector\":\"@s\"}]}}]}"]
                 },
                 "riding": {
                     "transitions": [

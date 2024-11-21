@@ -550,6 +550,7 @@ import "./program/system/moderation";
 import "./program/system/playerProperty";
 // Import the modules
 import "./program/detection/firewall";
+import "./program/detection/speed";
 import "./program/detection/phase";
 import "./program/detection/killaura";
 import "./program/detection/namespoof";
