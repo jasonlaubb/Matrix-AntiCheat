@@ -2,8 +2,7 @@ import { Vector3 } from "@minecraft/server";
 
 // Define variables
 export const PI = 105414357.0 / 33554432.0 + 1.984187159361080883e-9;
-
-
+const fastSqrt = Math.sqrt;
 // Angle functions
 export function calculateAngleFromView(pos1: Vector3, pos2: Vector3, rotationY: number): number {
     const commonAngle = (fastAtan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / PI;
@@ -15,15 +14,8 @@ export function calculateAngleFromView(pos1: Vector3, pos2: Vector3, rotationY: 
 export function fastAtan2(y: number, x: number) {
     const absY = fastAbs(y) + 1e-10;
     const angle = fastAtan(y / x);
-    let result;
-
-    if (x >= 0) {
-        result = angle;
-    } else {
-        result = y >= 0 ? angle + PI : angle - PI;
-    }
-    
-    return result;
+    if (x >= 0) return angle;
+    else return y >= 0 ? angle + PI : angle - PI;
 }
 
 export function fastAtan(x: number) {
@@ -55,4 +47,14 @@ export function fastRound(x: number) {
 
 export function fastAbs(x: number) {
     return x < 0 ? -x : x;
+}
+
+export function fastHypot(x, y) {
+    x = fastAbs(x);
+    y = fastAbs(y);
+    const max = Math.max(x, y);
+    const min = Math.min(x, y);
+    if (max === 0) return 0;
+    const ratio = min / max;
+    return max * fastSqrt(1 + ratio * ratio);
 }
