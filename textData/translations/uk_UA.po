@@ -178,6 +178,14 @@ msgstr ""
 msgid "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
 msgstr ""
 
+#: module.fly.name
+msgid "Anti Fly"
+msgstr ""
+
+#: module.fly.description
+msgid "Prevent most of the fly hacks from working. There is a small probability of false positive."
+msgstr ""
+
 #: command.about.title
 msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
 msgstr ""
