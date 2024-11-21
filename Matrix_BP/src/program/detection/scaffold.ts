@@ -4,7 +4,7 @@ import { rawtextTranslate } from "../../util/rawtext";
 import { calculateAngleFromView, calculateDistance } from "../../util/fastmath";
 import { floorLocation, getAngleLimit, getBlockCenterLocation } from "../../util/util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-
+import { fastAbs } from "../../util/fastmath";
 const ABSOLUTE_DISTANCE = 1.75;
 const HIGH_DISTANCE_THRESHOLD = 3.5;
 const FLAT_ROTATION_THRESHOLD = 69.5;
@@ -66,14 +66,15 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 		return;
 	}
 	const { x: rotX, y: rotY } = player.getRotation();
-	if (Math.abs(rotX) != 90 && (rotX % 5 == 0 || Number.isInteger(rotX))) {
+	const absRotX = fastAbs(rotX);
+	if (absRotX != 90 && (rotX % 5 == 0 || Number.isInteger(rotX))) {
 		player.flag(scaffold);
 		return;
 	}
 	const headLocation = event.player.getHeadLocation();
 	const blockCenterLocation = getBlockCenterLocation(block.location);
 	const distance = calculateDistance(headLocation, blockCenterLocation);
-	if (distance > ABSOLUTE_DISTANCE && Math.abs(rotX) < FLAT_ROTATION_THRESHOLD) {
+	if (distance > ABSOLUTE_DISTANCE && absRotX < FLAT_ROTATION_THRESHOLD) {
 		const angle = calculateAngleFromView(headLocation, blockCenterLocation, rotY);
 		const angleLimit = getAngleLimit(player.clientSystemInfo.platformType);
 		if (angle > angleLimit) {
@@ -81,7 +82,7 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 			return;
 		}
 	}
-	if (distance > HIGH_DISTANCE_THRESHOLD && Math.abs(rotX) > HIGH_ROTATION_THRESHOLD) {
+	if (distance > HIGH_DISTANCE_THRESHOLD && absRotX > HIGH_ROTATION_THRESHOLD) {
 		player.flag(scaffold);
 		return;
 	}
@@ -118,7 +119,7 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 	const scaffoldState = !player.isFlying && isScaffolding(extender, data.lastExtender) && isScaffoldHeight;
 	if (scaffoldState) {
 		if (!diagScaffold || placeInterval > 500) data.potentialDiagFlags = 0;
-		if (placeInterval < 200 && placeInterval >= 100 && Math.abs(data.lastRotX - rotX) > MAX_ROTATION_X_DIFFERENCE && !diagScaffold && player.hasTag("moving")) {
+		if (placeInterval < 200 && placeInterval >= 100 && fastAbs(data.lastRotX - rotX) > MAX_ROTATION_X_DIFFERENCE && !diagScaffold && player.hasTag("moving")) {
 			data.potentialRotFlags++;
 			if (data.potentialRotFlags >= 3) {
 				player.flag(scaffold);

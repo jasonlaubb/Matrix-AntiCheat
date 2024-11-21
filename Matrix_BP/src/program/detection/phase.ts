@@ -34,7 +34,7 @@ const antiPhase = new Module()
         phaseDataMap.delete(playerId);
     })
     .onModuleEnable(() => {
-        eventId = Module.subscribePlayerTickEvent(tickEvent);
+        eventId = Module.subscribePlayerTickEvent(tickEvent, false);
     })
     .onModuleDisable(() => {
         Module.clearPlayerTickEvent(eventId);
@@ -75,7 +75,7 @@ function tickEvent(player: Player) {
 }
 
 function calculateClipStartLocation(data: PhaseDataMap, currentSpeed: number): Vector3 | undefined {
-    if (data.lastSpeedList[1] < MIN_SPEED && data.lastSpeedList[0] > MAX_SPEED && currentSpeed < MIN_SPEED && data.lastSpeedList[1] == currentSpeed) {
+    if (data.lastSpeedList[1] < MIN_SPEED && data.lastSpeedList[0] > MAX_SPEED && currentSpeed < MIN_SPEED) {
         return data.lastLocationList[1];
     } else if (data.lastSpeedList[2] < MIN_SPEED && data.lastSpeedList[1] > MAX_SPEED && data.lastSpeedList[0] == data.lastSpeedList[1] && currentSpeed < MIN_SPEED) {
         return data.lastLocationList[2];

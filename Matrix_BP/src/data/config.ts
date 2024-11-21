@@ -1,7 +1,7 @@
 export default {
     disableConsoleOutput: false,
     modules: {
-        antiSpeed: true,
+        antiIllegalMotion: true,
         antiFly: true,
         firewall: true,
         antiNamespoof: true,
