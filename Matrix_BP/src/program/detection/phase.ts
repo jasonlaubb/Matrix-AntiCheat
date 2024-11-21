@@ -54,7 +54,7 @@ function tickEvent(player: Player) {
     
     const clipStartLocation = calculateClipStartLocation(data, currentSpeed);
 
-    if (clipStartLocation && Math.abs(y) < MAX_SPEED) {
+    if (clipStartLocation && Date.now() - player.timeStamp.knockBack > 3500 && !player.isFlying && Math.abs(y) < MAX_SPEED) {
         const blockLocations = straightLocations(clipStartLocation, player.location);
         if (blockLocations.some((block) => {
             try {

@@ -9,7 +9,6 @@ export default {
         antiScaffold: true,
         antiInsteaBreak: false,
         antiReach: true,
-
     } as { [key: string]: boolean },
     command: {
         about: true,
