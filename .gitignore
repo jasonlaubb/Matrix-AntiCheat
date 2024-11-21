@@ -2,3 +2,4 @@ scripts/
 node_modules/
 .github
 LICENSE
+gen/

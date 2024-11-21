@@ -5,6 +5,9 @@
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: PhraseApp (phraseapp.com)\n"
 
+msgid "pack.description"
+msgstr "An advanced anticheat solution for your server."
+
 msgid "permissions.chatmute"
 msgstr "§bMatrix§a+ §7> §cYou have been muted from the server!"
 
