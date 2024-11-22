@@ -72,8 +72,8 @@ function checkTimer () {
 		const velocityDistance = data.totalVelocity;
 		const actualDeviation = actualDistance - velocityDistance;
 		const absDeviation = fastAbs(actualDeviation);
-		const highDeviationState = absDevation > MAX_DEVIATION;
-		if (highDeviationState || absDeviation > maxDeviation)) {
+		const highDeviationState = absDeviation > MAX_DEVIATION;
+		if (highDeviationState || absDeviation > maxDeviation) {
 			if (now - data.lastFlagTimestamp > 7000) {
 				data.flagAmount = 0;
 			}
