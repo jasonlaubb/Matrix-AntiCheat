@@ -61,9 +61,9 @@ export function fastHypot(x: number, y: number) {
 const DOUBLE_PI = PI * 2;
 const HALF_PI = PI * 0.5;
 export function fastSin (x: number) {
-  if (x < -Math.PI)
+  if (x < -PI)
         x += DOUBLE_PI;
-    else if (x > Math.PI)
+    else if (x > PI)
         x -= DOUBLE_PI;
 
     if (x < 0)
