@@ -62,7 +62,7 @@ function tickEvent (player: Player) {
 		now - player.timeStamp.riptide > 5000 &&
 		now - data.lastAttackTimestamp > 1000 &&
 		now - data.lastRidingEndTimestamp > 500 &&
-		now - data.lastFlagTimestamp &&
+		now - data.lastFlagTimestamp > 250 &&
 		!player.hasTag("riding") &&
 		(player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0 <= 2) &&
 		!isPlayerInSolid(player.location, player.getHeadLocation(), player.dimension)
