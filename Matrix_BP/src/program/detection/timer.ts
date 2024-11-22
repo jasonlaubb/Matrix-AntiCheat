@@ -39,7 +39,7 @@ const timer = new Module()
 		timerData.delete(playerId);
 	})
 	.onModuleEnable(() => {
-		runId = system.runInterval(checkTimer);
+		runId = system.runInterval(checkTimer, 20);
 		eventId = Module.subscribePlayerTickEvent(playerTickEvent);
 	})
 	.onModuleDisable(() => {
