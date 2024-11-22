@@ -84,7 +84,6 @@ function checkTimer () {
 		if (actualDeviation < -0.1) {
 			data.negativeCombo++;
 		} else data.negativeCombo = 0;
-		player.onScreenDisplay.setActionBar(actualDeviation.toFixed(2) + " of " + (maxDeviation * 0.31).toFixed(2));
 		const overSlow = data.negativeCombo >= 3;
 		if (highDeviationState || absDeviation > maxDeviation * 0.31 || overSlow) {
 			if (now - data.lastFlagTimestamp > 3000) {
