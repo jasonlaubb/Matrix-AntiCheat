@@ -3,4 +3,4 @@ node_modules/
 .github
 LICENSE
 gen/
-.lang
+*.lang
