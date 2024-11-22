@@ -1,7 +1,7 @@
 import { Player, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
-import { fastAbs} from "../../util/fastMath";
+import { fastAbs } from "../../util/fastmath";
 
 const MIN_SPEED = 0.25;
 const MAX_SPEED = 0.7;
