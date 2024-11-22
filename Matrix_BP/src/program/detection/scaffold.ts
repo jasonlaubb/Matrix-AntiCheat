@@ -82,14 +82,12 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 		const angleLimit = getAngleLimit(player.clientSystemInfo.platformType);
 		if (angle > angleLimit) {
 			player.flag(scaffold);
-			player.sendMessage("flagged " + angle.toFixed(2) + " / " + angleLimit.toFixed(2));
 			return;
 		}
 	}
 	const data = scaffoldDataMap.get(player.id)!;
 	if (distance > HIGH_DISTANCE_THRESHOLD && absRotX > HIGH_ROTATION_THRESHOLD) {
 		player.flag(scaffold);
-		player.sendMessage("flagged");
 		return;
 	}
 	const floorPlayerLocation = floorLocation(player.location);
