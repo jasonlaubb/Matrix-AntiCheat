@@ -55,7 +55,7 @@ languages.forEach((language) => {
         if (msgstrMatch !== null) {
             const msgstr = msgstrMatch[1];
             langContent += `${key}=${msgstr || msgid}\n`;
-            if (msgstr == "pack.description") {
+            if (key == "pack.description") {
                 fs.writeFileSync(`./Matrix_BP/texts/${language}.lang`, `pack.description=${msgid}`);
             }
         }
