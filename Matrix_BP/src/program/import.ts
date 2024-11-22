@@ -1,6 +1,7 @@
-// Import the system
-import "./system/moderation";
-import "./system/playerProperty";
+import { registerModeration } from "./system/moderation";
+registerModeration();
+import { registerTimeStampModule } from "./system/playerProperty";
+registerTimeStampModule();
 // Import the modules
 import "./detection/firewall";
 import "./detection/speed";

@@ -6,6 +6,7 @@ export interface PlayerTimeStamp {
 	knockBack: number;
 	riptide: number;
 }
+export function registerTimeStampModule () {
 new Module()
     .lockModule()
     .addCategory("system")
@@ -20,6 +21,7 @@ new Module()
 		};
 	})
     .register();
+}
 function onPlayerHurt ({ hurtEntity: player, damageSource: { cause }}: EntityHurtAfterEvent) {
 	if (!(player instanceof Player)) return;
 	if (cause == EntityDamageCause.entityAttack || cause == EntityDamageCause.entityExplosion || cause == EntityDamageCause.blockExplosion || cause == EntityDamageCause.projectile) {

@@ -17,9 +17,10 @@ const speed = new Module()
 	.setToggleId("antiSpeed")
 	.setPunishment("ban")
 	.onModuleEnable(() => {
+		world.sendMessage("enabled");
 		world.afterEvents.entityHitEntity.subscribe(onPlayerAttack);
 		system.afterEvents.scriptEventReceive.subscribe(onRidingEnded);
-		eventId = Module.subscribePlayerTickEvent(tickEvent);
+		eventId = Module.subscribePlayerTickEvent(tickEvent, false);
 	})
 	.onModuleDisable(() => {
 		world.afterEvents.entityHitEntity.unsubscribe(onPlayerAttack);

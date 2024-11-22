@@ -1,10 +1,11 @@
-import { Player, system, Vector3 } from "@minecraft/server";
+import { EntityHitEntityAfterEvent, Player, system, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { calculateDistance, fastHypot, fastAbs } from "../../util/fastmath";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { rawtextTranslate } from "../../util/rawtext";
+import { world } from "@minecraft/server";
 const MAX_DEVIATION = 3;
-const MAX_FLAG_AMOUNT = 7;
+const MAX_FLAG_AMOUNT = 3;
 interface TimerData {
 	lastLocation: Vector3;
 	totalDistance: number;
@@ -13,6 +14,8 @@ interface TimerData {
 	lastNoSpeedLocation: Vector3;
 	lastFlagTimestamp: number;
 	flagAmount: number;
+	lastAttack: number;
+	negativeCombo: number;
 }
 let lastTime: number;
 let runId: number;
@@ -25,6 +28,7 @@ const timer = new Module()
 	.setToggleId("antiTimer")
 	.setPunishment("ban")
 	.initPlayer((playerId, player) => {
+		world.sendMessage("Init")
 		timerData.set(playerId, {
 			lastLocation: player.location,
 			totalDistance: 0,
@@ -33,6 +37,8 @@ const timer = new Module()
 			lastNoSpeedLocation: player.location,
 			lastFlagTimestamp: 0,
 			flagAmount: 0,
+			lastAttack: 0,
+			negativeCombo: 0,
 		});
 	})
 	.initClear((playerId) => {
@@ -41,10 +47,12 @@ const timer = new Module()
 	.onModuleEnable(() => {
 		runId = system.runInterval(checkTimer, 20);
 		eventId = Module.subscribePlayerTickEvent(playerTickEvent);
+		world.afterEvents.entityHitEntity.subscribe(playerAttack);
 	})
 	.onModuleDisable(() => {
 		Module.clearPlayerTickEvent(eventId);
 		system.clearRun(runId);
+		world.afterEvents.entityHitEntity.unsubscribe(playerAttack);
 		timerData.clear();
 	});
 timer.register();
@@ -56,7 +64,7 @@ timer.register();
 function checkTimer () {
 	const now = Date.now();
 	lastTime ??= now;
-	const maxDeviation = 1.2 - ((now - lastTime) * 0.001);
+	const maxDeviation = (now - lastTime) * 0.001;
 	lastTime = now;
 	const players = Module.allNonAdminPlayers;
 	for (const player of players) {
@@ -65,6 +73,7 @@ function checkTimer () {
 			data.isTickIgnored = false;
 			data.totalDistance = 0;
 			data.totalVelocity = 0;
+			data.negativeCombo = 0;
 			timerData.set(player.id, data);
 			continue;
 		}
@@ -73,21 +82,32 @@ function checkTimer () {
 		const actualDeviation = actualDistance - velocityDistance;
 		const absDeviation = fastAbs(actualDeviation);
 		const highDeviationState = absDeviation > MAX_DEVIATION;
-		if (highDeviationState || absDeviation > maxDeviation) {
-			if (now - data.lastFlagTimestamp > 7000) {
+		if (actualDeviation < -0.1) {
+			data.negativeCombo++;
+		} else data.negativeCombo = 0;
+		player.onScreenDisplay.setActionBar(actualDeviation.toFixed(2) + " of " + (maxDeviation * 0.31).toFixed(2));
+		const overSlow = data.negativeCombo >= 3;
+		if (highDeviationState || absDeviation > maxDeviation * 0.31 || overSlow) {
+			if (now - data.lastFlagTimestamp > 3000) {
 				data.flagAmount = 0;
 			}
 			// Increase the flag amount
-			data.flagAmount += absDeviation / maxDeviation;
+			const ratio = absDeviation / maxDeviation;
+			data.flagAmount += overSlow ? 1.5 : ratio < 1 ? ratio : 1;
 			data.lastFlagTimestamp = now;
+			player.sendMessage("flag amount: " + data.flagAmount.toFixed(2) + " & increased:" + (absDeviation / maxDeviation).toFixed(2));
 			if (highDeviationState) {
 				player.teleport(data.lastNoSpeedLocation);
 			}
 			if (data.flagAmount >= MAX_FLAG_AMOUNT) {
 				player.teleport(data.lastNoSpeedLocation);
 				player.flag(timer);
+				data.flagAmount = 0;
+				player.sendMessage("timer detected: " + actualDeviation.toFixed(2) + " of " + maxDeviation.toFixed(2));
 			}
 		}
+		data.totalDistance = 0;
+		data.totalVelocity = 0;
 		timerData.set(player.id, data);
 	}
 }
@@ -100,7 +120,7 @@ function playerTickEvent (player: Player) {
 	const noVelocity = x === 0 && z === 0;
 	const distance = calculateDistance(player.location, data.lastLocation);
 	if (isTickIgnored || player.isGliding || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || noVelocity && parseFloat(distance.toFixed(4)) > 0 || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
-		if (isTickIgnored) return;
+		if (data.isTickIgnored) return;
 		data.isTickIgnored = true;
 		timerData.set(player.id, data);
 		return;
@@ -109,5 +129,12 @@ function playerTickEvent (player: Player) {
 	if (noVelocity) data.lastNoSpeedLocation = player.location;
 	data.totalVelocity += fastHypot(x, z);
 	data.lastLocation = player.location;
+	timerData.set(player.id, data);
+}
+
+function playerAttack ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
+	if (!(player instanceof Player)) return;
+	const data = timerData.get(player.id)!;
+	data.lastAttack = Date.now();
 	timerData.set(player.id, data);
 }

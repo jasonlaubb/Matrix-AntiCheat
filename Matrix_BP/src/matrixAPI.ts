@@ -197,6 +197,25 @@ class Module {
                 }
             }
         });
+        for (const module of Module.moduleList) {
+            if (module.locked || Module.config.modules[module.toggleId] === true) {
+                module.onEnable();
+                module.enabled = true;
+            }
+        }
+        if (world.getAllPlayers().length > 0) {
+            for (const player of world.getAllPlayers()) {
+                Module.currentPlayers.push(player);
+                for (const module of Module.moduleList) {
+                    if (!module.enabled || !module.playerSpawn) continue;
+                    try {
+                        module.playerSpawn(player.id, player);
+                    } catch (error) {
+                        Module.sendError(error as Error);
+                    }
+                }
+            }
+        }
         world.afterEvents.playerLeave.subscribe(({ playerId }) => {
             Module.currentPlayers = Module.currentPlayers.filter(({ id }) => id != playerId);
             for (const module of Module.moduleList) {
@@ -208,17 +227,11 @@ class Module {
                 }
             }
         });
-        for (const module of Module.moduleList) {
-            if (module.locked || Module.config.modules[module.toggleId] === true) {
-                module.onEnable();
-                module.enabled = true;
-            }
-        }
         system.runInterval(() => {
             const allPlayers = Module.allWorldPlayers;
             for (const player of allPlayers) {
                 Module.playerLoopRunTime.forEach((event) => {
-                    if (!event.booleanData && player.isAdmin()) {
+                    if (!(!event.booleanData && player.isAdmin())) {
                         try {
                             event.moduleFunction(player);
                         } catch (error) {

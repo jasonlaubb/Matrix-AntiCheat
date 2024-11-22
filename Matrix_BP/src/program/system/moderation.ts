@@ -2,6 +2,7 @@ import { Player, PlayerSpawnAfterEvent, system, world } from "@minecraft/server"
 import { rawtext, rawtextTranslate, rawtextTranslateRawText } from "../../util/rawtext";
 import { MinecraftDimensionTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { Module } from "../../matrixAPI";
+export function registerModeration () {
 new Module()
     .lockModule()
     .addCategory("system")
@@ -9,6 +10,7 @@ new Module()
         world.afterEvents.playerSpawn.subscribe(onPlayerSpawn);
     })
     .register();
+}
 export type Punishment = "tempKick" | "kick" | "softBan" | "ban" | "freeze" | "mute";
 export function tempKick(player: Player) {
     if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
