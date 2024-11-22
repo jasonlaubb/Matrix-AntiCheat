@@ -1,7 +1,7 @@
-import { Dimension, Player, Vector3 } from "@minecraft/server";
+import { Dimension, EquipmentSlot, Player, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
-import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { MinecraftEffectTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { fastAbs } from "../../util/fastmath";
 const MAX_VELOCITY_Y = 0.7;
 const MIN_REQUIRED_REPEAT_AMOUNT = 6;
@@ -79,6 +79,12 @@ function tickEvent (player: Player) {
 	if (!player.isGliding && fastAbs(velocityY) <= MAX_VELOCITY_Y && surroundAir && (player.isOnGround || player.hasTag("isOnGround"))) {
 		player.flag(fly);
 	}
+	if (player.isGliding && !player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra) && JSON.stringify(player.location) != JSON.stringify(data.lastOnGroundLocation)) {
+		player.teleport(data.lastOnGroundLocation);
+		player.flag(fly);
+	}
+	data.lastVelocityY = velocityY;
+	flyData.set(player.id, data);
 }
 function isSurroundedByAir (centerLocation: Vector3, dimension: Dimension) {
 	return [-1, 0, 1].every(x => {
