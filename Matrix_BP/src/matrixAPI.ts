@@ -172,7 +172,9 @@ class Module {
             }
         });
         // Run when the world fires
-        world.afterEvents.worldInitialize.subscribe(() => {
+        world.afterEvents.worldInitialize.subscribe(async () => {
+	    // For some module that required Module.
+	    await import("./program/import");
             // Enable Matrix AntiCheat when world initialized
             Module.initialize();
         });
@@ -545,20 +547,4 @@ Player.prototype.safeIsOp = function () {
 export { Module, Command };
 // Start the AntiCheat
 Module.ignite();
-// Import the system
-import "./program/system/moderation";
-import "./program/system/playerProperty";
-// Import the modules
-import "./program/detection/firewall";
-import "./program/detection/speed";
-import "./program/detection/phase";
-import "./program/detection/fly";
-import "./program/detection/killaura";
-import "./program/detection/timer";
-import "./program/detection/namespoof";
-import "./program/detection/scaffold";
-import "./program/detection/insteabreak";
-import "./program/detection/reach";
-// Import the commands
-import "./program/command/about";
 import { setupFlagFunction } from "./util/flag";
