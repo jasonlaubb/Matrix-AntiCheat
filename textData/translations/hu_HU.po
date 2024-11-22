@@ -1,5 +1,5 @@
 #: pack.description
-msgid "An advanced anticheat solution for your server."
+msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock. Required Beta API to work."
 msgstr ""
 
 #: permissions.chatmute
