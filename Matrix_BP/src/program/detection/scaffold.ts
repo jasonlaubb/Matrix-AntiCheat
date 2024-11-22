@@ -1,10 +1,9 @@
 import { Dimension, GameMode, Player, PlayerPlaceBlockAfterEvent, Vector3, VectorXZ, world } from "@minecraft/server";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
-import { calculateAngleFromView, calculateDistance } from "../../util/fastmath";
+import { calculateAngleFromView, calculateDistance, fastAbs, fastHypot } from "../../util/fastmath";
 import { floorLocation, getAngleLimit, getBlockCenterLocation } from "../../util/util";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { fastAbs } from "../../util/fastmath";
 const ABSOLUTE_DISTANCE = 1.75;
 const HIGH_DISTANCE_THRESHOLD = 3.5;
 const FLAT_ROTATION_THRESHOLD = 69.5;
@@ -161,7 +160,7 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 }
 
 function isLowExtenderScaffolding ({ x: x1, y: y1, z: z1 }: Vector3, { x: x2, y: y2, z: z2 }: Vector3): boolean {
-	const absDistance = Math.hypot(x2 - x1, z2 - z1);
+	const absDistance = fastHypot(x2 - x1, z2 - z1);
 	const height = y1 - y2;
 	return height == 1 && absDistance <= Math.SQRT2;
 }
@@ -176,15 +175,15 @@ function calculateDiagSpeedLimit (distance: number, isOnGround: boolean, extende
 }
 
 function getExtender({ x: blockX, z: blockZ }: Vector3, { x: playerX, z: playerZ }: Vector3) {
-	const absoluteDistanceX = Math.abs(blockX - playerX) - 0.2;
-	const absoluteDistanceZ = Math.abs(blockZ - playerZ) - 0.2;
-	const simulatedDistanceX = Math.abs(blockX + absoluteDistanceX * 2 - playerX);
-	const simulatedDistanceZ = Math.abs(blockZ + absoluteDistanceZ * 2 - playerZ);
+	const absoluteDistanceX = fastAbs(blockX - playerX) - 0.2;
+	const absoluteDistanceZ = fastAbs(blockZ - playerZ) - 0.2;
+	const simulatedDistanceX = fastAbs(blockX + absoluteDistanceX * 2 - playerX);
+	const simulatedDistanceZ = fastAbs(blockZ + absoluteDistanceZ * 2 - playerZ);
 	let actualDistanceX = absoluteDistanceX;
 	let actualDistanceZ = absoluteDistanceZ;
 	if (simulatedDistanceX > absoluteDistanceX) actualDistanceX++;
 	if (simulatedDistanceZ > absoluteDistanceZ) actualDistanceZ++;
-	const extender = Math.hypot(actualDistanceX, actualDistanceZ);
+	const extender = fastHypot(actualDistanceX, actualDistanceZ);
 	return extender;
 }
 
