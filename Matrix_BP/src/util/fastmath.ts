@@ -5,15 +5,15 @@ export const PI = 105414357.0 / 33554432.0 + 1.984187159361080883e-9;
 const fastSqrt = Math.sqrt;
 // Angle functions
 export function calculateAngleFromView(pos1: Vector3, pos2: Vector3, rotationY: number): number {
-    const commonAngle = (fastAtan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / PI;
+    const commonAngle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / PI;
     const rotatedAngle = commonAngle - rotationY - 90;
     const finalAngle = rotatedAngle <= -180 ? rotatedAngle + 360 : rotatedAngle;
     return fastAbs(finalAngle);
 }
-
+/*
 export function fastAtan2(y: number, x: number) {
     //const absY = fastAbs(y) + 1e-10;
-    const angle = fastAtan(y / x);
+    const angle = Math.atan(y / x);
     if (x >= 0) return angle;
     else return y >= 0 ? angle + PI : angle - PI;
 }
@@ -33,7 +33,7 @@ export function fastAtan(x: number) {
     const x10 = x8 * x2;
 
     return x * (a1 + a3 * x2 + a5 * x4 + a7 * x6 + a9 * x8 + a11 * x10);
-}
+}*/
 
 // Distance functions
 export function calculateDistance(pos1: Vector3, pos2: Vector3): number {
