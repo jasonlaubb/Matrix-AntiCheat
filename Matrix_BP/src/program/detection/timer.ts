@@ -4,6 +4,7 @@ import { calculateDistance, fastHypot, fastAbs } from "../../util/fastmath";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { rawtextTranslate } from "../../util/rawtext";
 const MAX_DEVIATION = 3;
+const MAX_FLAG_AMOUNT = 7;
 interface TimerData {
 	lastLocation: Vector3;
 	totalDistance: number;
@@ -70,13 +71,19 @@ function checkTimer () {
 		const actualDistance = data.totalDistance;
 		const velocityDistance = data.totalVelocity;
 		const actualDeviation = actualDistance - velocityDistance;
-		if ((fastAbs(actualDeviation) > MAX_DEVIATION || actualDeviation > maxDeviation)) {
-			if (now - data.lastFlagTimestamp > 4000) {
+		const absDeviation = fastAbs(actualDeviation);
+		const highDeviationState = absDevation > MAX_DEVIATION;
+		if (highDeviationState || absDeviation > maxDeviation)) {
+			if (now - data.lastFlagTimestamp > 7000) {
 				data.flagAmount = 0;
 			}
-			data.flagAmount++;
+			// Increase the flag amount
+			data.flagAmount += absDeviation / maxDeviation;
 			data.lastFlagTimestamp = now;
-			if (data.flagAmount >= 3) {
+			if (highDeviationState) {
+				player.teleport(data.lastNoSpeedLocation);
+			}
+			if (data.flagAmount >= MAX_FLAG_AMOUNT) {
 				player.teleport(data.lastNoSpeedLocation);
 				player.flag(timer);
 			}
