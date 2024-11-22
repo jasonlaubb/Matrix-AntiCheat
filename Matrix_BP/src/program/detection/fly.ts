@@ -9,6 +9,7 @@ const HIGH_VELOCITY_Y = 22;
 interface FlyData {
 	lastVelocityY: number;
 	lastOnGroundLocation: Vector3;
+	lastFlaggedLocation: Vector3;
 	velocityYList: number[];
 }
 const flyData = new Map<string, FlyData>();
@@ -31,6 +32,7 @@ const fly = new Module()
 			lastVelocityY: 0,
 			lastOnGroundLocation: player.location,
 			velocityYList: [],
+			lastFlaggedLocation: player.location,
 		});
 	})
 	.initClear((playerId) => {
@@ -79,8 +81,9 @@ function tickEvent (player: Player) {
 	if (!player.isGliding && fastAbs(velocityY) <= MAX_VELOCITY_Y && surroundAir && (player.isOnGround || player.hasTag("isOnGround"))) {
 		player.flag(fly);
 	}
-	if (player.isGliding && !player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra) && JSON.stringify(player.location) != JSON.stringify(data.lastOnGroundLocation)) {
+	if (player.isGliding && !player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra) && JSON.stringify(player.location) != JSON.stringify(data.lastFlaggedLocation)) {
 		player.teleport(data.lastOnGroundLocation);
+		data.lastFlaggedLocation = player.location;
 		player.flag(fly);
 	}
 	data.lastVelocityY = velocityY;

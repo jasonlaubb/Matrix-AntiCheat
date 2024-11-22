@@ -4,7 +4,7 @@ export default {
         antiSpeed: true,
         antiFly: true,
         antiTimer: true,
-        firewall: true,
+        firewall: false, // Not tested :(
         antiNamespoof: true,
         antiKillAura: true,
         antiScaffold: true,

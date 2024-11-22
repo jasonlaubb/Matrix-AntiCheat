@@ -28,7 +28,6 @@ const timer = new Module()
 	.setToggleId("antiTimer")
 	.setPunishment("ban")
 	.initPlayer((playerId, player) => {
-		world.sendMessage("Init")
 		timerData.set(playerId, {
 			lastLocation: player.location,
 			totalDistance: 0,
@@ -95,7 +94,6 @@ function checkTimer () {
 			const ratio = absDeviation / maxDeviation;
 			data.flagAmount += overSlow ? 1.5 : ratio < 1 ? ratio : 1;
 			data.lastFlagTimestamp = now;
-			player.sendMessage("flag amount: " + data.flagAmount.toFixed(2) + " & increased:" + (absDeviation / maxDeviation).toFixed(2));
 			if (highDeviationState) {
 				player.teleport(data.lastNoSpeedLocation);
 			}
@@ -103,7 +101,6 @@ function checkTimer () {
 				player.teleport(data.lastNoSpeedLocation);
 				player.flag(timer);
 				data.flagAmount = 0;
-				player.sendMessage("timer detected: " + actualDeviation.toFixed(2) + " of " + maxDeviation.toFixed(2));
 			}
 		}
 		data.totalDistance = 0;

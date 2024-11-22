@@ -35,7 +35,7 @@ const scaffold = new Module()
 	.setDescription(rawtextTranslate("module.scaffold.description"))
 	.setToggleId("antiScaffold")
 	.setPunishment("ban")
-	.initPlayer((playerId, player) => {
+	.initPlayer((playerId) => {
 		scaffoldDataMap.set(playerId, {
 			blockLogs: [],
 			lastPlaceTimeStamp: 0,
@@ -48,7 +48,6 @@ const scaffold = new Module()
 			potentialLowExtenderFlags: 0,
 			godBridgeAmount: 0,
 		});
-		player.sendMessage(player.getRotation().x.toString());
 	})
 	.initClear((playerId) => {
 		scaffoldDataMap.delete(playerId);
@@ -87,7 +86,6 @@ function onBlockPlace (event: PlayerPlaceBlockAfterEvent) {
 		}
 	}
 	const data = scaffoldDataMap.get(player.id)!;
-	player.sendMessage("Current x rotation = " + player.getRotation().x.toString() + " Distance = " + distance.toString());
 	if (distance > HIGH_DISTANCE_THRESHOLD && absRotX < HIGH_ROTATION_THRESHOLD) {
 		player.flag(scaffold);
 		return;
