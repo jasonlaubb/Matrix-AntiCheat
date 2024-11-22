@@ -1,9 +1,8 @@
 import { EntityHitEntityAfterEvent, Player, world } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
-import { calculateAngleFromView, calculateDistance } from "../../util/fastmath";
+import { calculateAngleFromView, calculateDistance, fastAbs } from "../../util/fastmath";
 import { getAngleLimit } from "../../util/util";
-import { fastAbs } from "../../util/fastmath";
 const KILLAURA_DISTANCE_THRESHOLD = 3.5;
 const KILLAURA_PVP_DISTANCE_THRESHOLD = 4.5;
 const KILLAURA_ROTATION_THRESHOLD = 79;

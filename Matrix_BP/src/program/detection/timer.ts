@@ -115,7 +115,7 @@ function playerTickEvent (player: Player) {
 	const { x, z } = player.getVelocity();
 	const noVelocity = x === 0 && z === 0;
 	const distance = calculateDistance(player.location, data.lastLocation);
-	if (isTickIgnored || player.isGliding || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || noVelocity && parseFloat(distance.toFixed(4)) > 0 || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
+	if (isTickIgnored || player.isGliding || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || (noVelocity && distance > 0.005) || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
 		if (data.isTickIgnored) return;
 		data.isTickIgnored = true;
 		timerData.set(player.id, data);
