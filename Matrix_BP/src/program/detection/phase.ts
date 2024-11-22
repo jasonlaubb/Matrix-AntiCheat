@@ -1,6 +1,7 @@
 import { Player, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
+import { fastAbs} from "../../util/fastMath";
 
 const MIN_SPEED = 0.25;
 const MAX_SPEED = 0.7;
@@ -91,8 +92,8 @@ function straightLocations(start: Vector3, end: Vector3): Vector3[] {
     const dx = endX - startX;
     const dz = endZ - startZ;
 
-    const stepsX = Math.abs(dx);
-    const stepsZ = Math.abs(dz);
+    const stepsX = fastAbs(dx);
+    const stepsZ = fastAbs(dz);
 
     const steps = Math.max(stepsX, stepsZ);
 
