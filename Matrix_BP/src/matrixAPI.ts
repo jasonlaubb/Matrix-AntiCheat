@@ -172,11 +172,13 @@ class Module {
             }
         });
         // Run when the world fires
-        world.afterEvents.worldInitialize.subscribe(async () => {
-	    // For some module that required Module.
-	    await import("./program/import");
-            // Enable Matrix AntiCheat when world initialized
-            Module.initialize();
+        world.afterEvents.worldInitialize.subscribe(() => {
+	        // For some module that required Module.
+	        import("./program/import").catch((error) => {
+                Module.sendError(error as Error);
+            }).then(() => {
+                Module.initialize();
+            });
         });
     }
     public static initialize() {
