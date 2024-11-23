@@ -16,5 +16,5 @@ export default {
     } as { [key: string]: boolean },
     flag: {
         banDuration: 604800,
-    }
+    },
 };

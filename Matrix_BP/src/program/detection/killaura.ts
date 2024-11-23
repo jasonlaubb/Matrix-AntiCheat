@@ -89,7 +89,7 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
         const intPitch = fastRound(pitch);
         const yawDifferent = fastAbs(yaw - intRot);
         const pitchDifferent = fastAbs(pitch - intPitch);
-        if (data.lastAttackRot.x != pitch && data.lastAttackRot.y != yaw && (yawDifferent < MIN_ROUND_DIFFERENCE && isNotTeleportYaw) || (pitchDifferent < MIN_ROUND_DIFFERENCE && isNotTeleportPitch)) {
+        if ((data.lastAttackRot.x != pitch && data.lastAttackRot.y != yaw && yawDifferent < MIN_ROUND_DIFFERENCE && isNotTeleportYaw) || (pitchDifferent < MIN_ROUND_DIFFERENCE && isNotTeleportPitch)) {
             const now = Date.now();
             if (now - data.lastRoundTimestamp > 7000) {
                 data.roundFlagAmount = 0;

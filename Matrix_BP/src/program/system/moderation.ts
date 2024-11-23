@@ -2,21 +2,21 @@ import { Player, PlayerSpawnAfterEvent, system, world } from "@minecraft/server"
 import { rawtext, rawtextTranslate, rawtextTranslateRawText } from "../../util/rawtext";
 import { MinecraftDimensionTypes, MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { Module } from "../../matrixAPI";
-export function registerModeration () {
-new Module()
-    .lockModule()
-    .addCategory("system")
-    .onModuleEnable(() => {
-        world.afterEvents.playerSpawn.subscribe(onPlayerSpawn);
-    })
-    .register();
+export function registerModeration() {
+    new Module()
+        .lockModule()
+        .addCategory("system")
+        .onModuleEnable(() => {
+            world.afterEvents.playerSpawn.subscribe(onPlayerSpawn);
+        })
+        .register();
 }
 export type Punishment = "tempKick" | "kick" | "softBan" | "ban" | "freeze" | "mute";
 export function tempKick(player: Player) {
     if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     player.triggerEvent("matrix:tempkick");
 }
-export function ban (player: Player, duration: number) {
+export function ban(player: Player, duration: number) {
     if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     const obj = world.scoreboard.getObjective(`matrix:banRecord`);
     if (!obj) {
@@ -27,7 +27,7 @@ export function ban (player: Player, duration: number) {
     player.setDynamicProperty("isBanned", duration == -1 ? -1 : Date.now() + duration);
     kickForBan(player, duration);
 }
-export function unBan (playerName: string) {
+export function unBan(playerName: string) {
     const obj = world.scoreboard.getObjective(`matrix:unBanRequest`);
     if (!obj) {
         world.scoreboard.addObjective(`matrix:unBanRequest`, "Matrix AntiCheat");
@@ -66,7 +66,7 @@ export function softBan(player: Player, duration: number) {
         player.setDynamicProperty("isSoftBanned", Date.now() + duration);
     }
 }
-export function unSoftBan (player: Player) {
+export function unSoftBan(player: Player) {
     player.setDynamicProperty("isSoftBanned");
     tempKick(player);
 }
@@ -74,7 +74,7 @@ export function unSoftBan (player: Player) {
  * @param player
  * @param duration Accept ms, 1000ms = 1 second, Input -1 to set mute to permanent
  */
-export function mute (player: Player, duration: number) {
+export function mute(player: Player, duration: number) {
     if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     player.setDynamicProperty("isMuted", duration == -1 ? -1 : Date.now() + duration);
     try {
@@ -84,17 +84,17 @@ export function mute (player: Player, duration: number) {
         return false;
     }
 }
-export function unMute (player: Player) {
+export function unMute(player: Player) {
     player.setDynamicProperty("isMuted");
     player.runCommand(`ability @s mute false`);
 }
-export function freeze (player: Player, duration: number) {
+export function freeze(player: Player, duration: number) {
     if (player.hasTag("matrix-debug:punishmentResistance") && player.safeIsOp()) return;
     player.setDynamicProperty("isFrozen", duration == -1 ? -1 : Date.now() + duration);
     player.inputPermissions.movementEnabled = false;
     player.inputPermissions.cameraEnabled = false;
 }
-function onPlayerSpawn ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
+function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
     const softBanStatus = player.getDynamicProperty("isSoftBanned") as number;
     if (softBanStatus) {
@@ -161,7 +161,7 @@ function onPlayerSpawn ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     }
 }
 
-function kickForBan (player: Player, banStatus: number) {
+function kickForBan(player: Player, banStatus: number) {
     if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
     let message = "§aBan handled by Matrix AntiCheat\n";
     if (banStatus == -1) {

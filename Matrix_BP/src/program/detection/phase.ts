@@ -23,12 +23,8 @@ const antiPhase = new Module()
     .setPunishment("ban")
     .initPlayer((playerId, player) => {
         phaseDataMap.set(playerId, {
-            lastLocationList: [
-                player.location,
-                player.location,
-                player.location
-            ],
-            lastSpeedList: [0, 0, 0]
+            lastLocationList: [player.location, player.location, player.location],
+            lastSpeedList: [0, 0, 0],
         });
     })
     .initClear((playerId) => {
@@ -52,18 +48,20 @@ function tickEvent(player: Player) {
     const data = phaseDataMap.get(player.id)!;
     const { x, y, z } = player.getVelocity();
     const currentSpeed = Math.hypot(x, z);
-    
+
     const clipStartLocation = calculateClipStartLocation(data, currentSpeed);
 
     if (clipStartLocation && Date.now() - player.timeStamp.knockBack > 3500 && !player.isFlying && Math.abs(y) < MAX_SPEED) {
         const blockLocations = straightLocations(clipStartLocation, player.location);
-        if (blockLocations.some((block) => {
-            try {
-                return player.dimension.getBlock(block)?.isSolid;
-            } catch {
-                return false;
-            }
-        })) {
+        if (
+            blockLocations.some((block) => {
+                try {
+                    return player.dimension.getBlock(block)?.isSolid;
+                } catch {
+                    return false;
+                }
+            })
+        ) {
             player.teleport(clipStartLocation);
             player.flag(antiPhase);
         }

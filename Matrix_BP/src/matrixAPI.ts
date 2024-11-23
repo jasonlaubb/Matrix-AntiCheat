@@ -57,16 +57,16 @@ class Module {
     // This is the constructor of antiCheat
     public constructor() {}
     // For other uses
-    public getCategory () {
+    public getCategory() {
         return this.category;
     }
-    public getToggleId () {
+    public getToggleId() {
         return this.locked ? null : this.toggleId;
     }
-    public getName () {
+    public getName() {
         return this.name;
     }
-    public getDescription () {
+    public getDescription() {
         return this.description;
     }
     // Builder
@@ -82,7 +82,7 @@ class Module {
         this.description = description;
         return this;
     }
-    public setPunishment (punishment: Punishment) {
+    public setPunishment(punishment: Punishment) {
         this.punishment = punishment;
         return this;
     }
@@ -94,11 +94,11 @@ class Module {
         this.onEnable = func;
         return this;
     }
-    public initPlayer (func: (playerId: string, player: Player) => void) {
+    public initPlayer(func: (playerId: string, player: Player) => void) {
         this.playerSpawn = func;
         return this;
     }
-    public initClear (func: (playerId: string) => void) {
+    public initClear(func: (playerId: string) => void) {
         this.playerLeave = func;
         return this;
     }
@@ -106,14 +106,14 @@ class Module {
         this.onDisable = func;
         return this;
     }
-    public lockModule () {
+    public lockModule() {
         this.locked = true;
         return this;
     }
     public register() {
         Module.moduleList.push(this);
     }
-    public enableModule () {
+    public enableModule() {
         if (this.enabled || this.locked) return;
         this.enabled = true;
         if (this.playerSpawn) {
@@ -123,12 +123,12 @@ class Module {
         }
         this.onEnable();
     }
-    public disableModule () {
+    public disableModule() {
         if (!this.enabled || this.locked) return;
         this.enabled = false;
         this.onDisable();
     }
-    public get modulePunishment () {
+    public get modulePunishment() {
         return this.punishment;
     }
     public static subscribePlayerTickEvent(func: (player: Player) => void, includeAdmin: boolean = true) {
@@ -173,12 +173,14 @@ class Module {
         });
         // Run when the world fires
         world.afterEvents.worldInitialize.subscribe(() => {
-	        // For some module that required Module.
-	        import("./program/import").catch((error) => {
-                Module.sendError(error as Error);
-            }).then(() => {
-                Module.initialize();
-            });
+            // For some module that required Module.
+            import("./program/import")
+                .catch((error) => {
+                    Module.sendError(error as Error);
+                })
+                .then(() => {
+                    Module.initialize();
+                });
         });
     }
     public static initialize() {
@@ -261,9 +263,9 @@ class Module {
         return Module.currentPlayers.filter((player) => !player.isAdmin());
     }
     // Dynamic config system
-    public static get config () {
+    public static get config() {
         return Config.modifiedConfig;
-    };
+    }
     public static get registeredModule() {
         return Module.moduleList;
     }
@@ -289,16 +291,16 @@ class Command {
     public static readonly OptionInputType: OptionTypes;
     public availableId: string[] = [];
     public minLevel = 0;
-	public requiredOption: InputOption[] = [];
-	public optionalOption: InputOption[] = [];
-	public executeFunc?: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => Promise<void>;
-	public subCommands?: Command[];
+    public requiredOption: InputOption[] = [];
+    public optionalOption: InputOption[] = [];
+    public executeFunc?: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => Promise<void>;
+    public subCommands?: Command[];
     public description: RawText = rawtext({ text: "§cUnknown§r" });
     public setName(name: string) {
         this.availableId.push(name);
         return this;
     }
-    public setDescription (description: RawText) {
+    public setDescription(description: RawText) {
         this.description = description;
         return this;
     }
@@ -306,7 +308,7 @@ class Command {
         this.availableId.push(...aliases);
         return this;
     }
-    public setMinPermissionLevel (level: number) {
+    public setMinPermissionLevel(level: number) {
         this.minLevel = level;
         return this;
     }
@@ -336,31 +338,31 @@ class Command {
             }
         }
         if (optional) {
-			this.optionalOption.push({ name, description, type, typeInfo });
-		} else {
-			this.requiredOption.push({ name, description, type, typeInfo });
-		}
+            this.optionalOption.push({ name, description, type, typeInfo });
+        } else {
+            this.requiredOption.push({ name, description, type, typeInfo });
+        }
         return this;
     }
-	public addSubCommand (command: Command) {
-		this.subCommands?.push(command);
+    public addSubCommand(command: Command) {
+        this.subCommands?.push(command);
         return this;
-	}
-	public onExecute (executeFunc: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => Promise<void>) {
-		this.executeFunc = executeFunc;
+    }
+    public onExecute(executeFunc: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => Promise<void>) {
+        this.executeFunc = executeFunc;
         return this;
-	}
+    }
     public register() {
         Command.registeredCommands.push(this);
     }
-    public static initialize () {
-		Player.prototype.runChatCommand = function (commandString: string) {
-			const args = commandString.trim().match(Command.optionMatchRegExp);
-			if (!args) {
-				this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.empty", with: [] }));
-				return;
-			};
-			const command = Command.searchCommand(args[0]);
+    public static initialize() {
+        Player.prototype.runChatCommand = function (commandString: string) {
+            const args = commandString.trim().match(Command.optionMatchRegExp);
+            if (!args) {
+                this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.empty", with: [] }));
+                return;
+            }
+            const command = Command.searchCommand(args[0]);
             if (!command) {
                 this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.unknown", with: [args[0]] }));
                 return;
@@ -373,7 +375,7 @@ class Command {
                 this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.permission", with: [command.minLevel.toString()] }));
                 return;
             }
-			if (command?.subCommands) {
+            if (command?.subCommands) {
                 if (args.length < 2) {
                     this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.missing.subcommand", with: [] }));
                 } else {
@@ -388,14 +390,14 @@ class Command {
                         this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.unknownsubcommand", with: [args[1]] }));
                     }
                 }
-			} else {
-				const argValues = Command.getArgValue(args, command, this);
-				if (argValues === null) return;
-				if (command?.executeFunc) {
-					command.executeFunc(this, ...args.slice(1)).catch((error) => Module.sendError(error as Error));
-				}
-			}
-		}
+            } else {
+                const argValues = Command.getArgValue(args, command, this);
+                if (argValues === null) return;
+                if (command?.executeFunc) {
+                    command.executeFunc(this, ...args.slice(1)).catch((error) => Module.sendError(error as Error));
+                }
+            }
+        };
         world.beforeEvents.chatSend.subscribe((event) => {
             // Checks if player is trying to use a command.
             const isCommand = event.message.match(/^(\-|\!|\#|\$|\.|\=|\+|\?)[a-zA-Z]+(\s{1,2}\S+)*\s*$/g);
@@ -404,9 +406,9 @@ class Command {
                 system.run(() => event.sender.runChatCommand(event.message));
                 return;
             }
-		});
+        });
     }
-    public sendErrorToPlayer (player: Player, error: Error) {
+    public sendErrorToPlayer(player: Player, error: Error) {
         player.sendMessage(
             fastText()
                 .addTran("error.happened")
@@ -419,7 +421,7 @@ class Command {
                 .build()
         );
     }
-	private static getArgValue (args: string[], command: Command, player: Player): (string | number | Player | boolean | undefined)[] | null {
+    private static getArgValue(args: string[], command: Command, player: Player): (string | number | Player | boolean | undefined)[] | null {
         if (args.length == 0) return [];
         const values = [];
         let currentIndex = 0;
@@ -444,7 +446,7 @@ class Command {
             if (!arg) {
                 values.push(undefined);
                 continue;
-            };
+            }
             const insideArg = args[currentIndex];
             const beforeArgs = args.slice(0, currentIndex).join(" ");
             const afterArgs = args.slice(currentIndex + 1).join(" ");
@@ -452,9 +454,9 @@ class Command {
             if (value === null) return null;
             values.push(value);
         }
-		return args;
-	}
-    private static parseOption (player: Player, option: InputOption, arg: string, beforeArgs: string, insideArg: string, afterArgs: string) {
+        return args;
+    }
+    private static parseOption(player: Player, option: InputOption, arg: string, beforeArgs: string, insideArg: string, afterArgs: string) {
         switch (option.type) {
             case "string": {
                 if (option?.typeInfo) {
@@ -463,7 +465,7 @@ class Command {
                         return null;
                     }
                     if (option.typeInfo.upperLimit && arg.length > option.typeInfo.upperLimit) {
-                        Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.string.high", option.name, beforeArgs, insideArg, afterArgs,  option.typeInfo.upperLimit.toString());
+                        Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.string.high", option.name, beforeArgs, insideArg, afterArgs, option.typeInfo.upperLimit.toString());
                         return null;
                     }
                 }
@@ -519,7 +521,7 @@ class Command {
                     Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.code", option.name, beforeArgs, insideArg, afterArgs, option.typeInfo!.lowerLimit!.toString());
                     return null;
                 }
-                if (option.type == "purecode" && !(/$[a-zA-Z0-9]+^/g).test(arg)) {
+                if (option.type == "purecode" && !/$[a-zA-Z0-9]+^/g.test(arg)) {
                     Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.purecode", option.name, beforeArgs, insideArg, afterArgs);
                     return null;
                 }
@@ -544,33 +546,35 @@ class Command {
             }
         }
     }
-    private static sendSyntaxErrorMessage (player: Player, key: string, optionName: RawText, beforeArgs: string, insideArg: string, afterArgs: string, extraInfo?: string) {
+    private static sendSyntaxErrorMessage(player: Player, key: string, optionName: RawText, beforeArgs: string, insideArg: string, afterArgs: string, extraInfo?: string) {
         const stringInput = [optionName, { text: beforeArgs }, { text: insideArg }, { text: afterArgs }];
-        if (extraInfo) stringInput.push({ text: extraInfo })
+        if (extraInfo) stringInput.push({ text: extraInfo });
         player.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: key, with: { rawtext: stringInput } }));
         player.sendMessage(rawtextTranslate("commandsynax.tips"));
     }
-	public static searchCommand (command: string) {
-		command = command.toLowerCase();
-		return Command.registeredCommands.find((commandClass) => commandClass.availableId.includes(command));
-	}
-    public static get allCommands () {
+    public static searchCommand(command: string) {
+        command = command.toLowerCase();
+        return Command.registeredCommands.find((commandClass) => commandClass.availableId.includes(command));
+    }
+    public static get allCommands() {
         return this.registeredCommands;
     }
 }
 class Config {
     private static configData?: typeof defaultConfig = undefined;
-    public static get modifiedConfig () {
+    public static get modifiedConfig() {
         if (this.configData === undefined) throw new Error("Config is not loaded");
         return this.configData;
     }
-    public static loadData () {
+    public static loadData() {
         const allProperties = world.getDynamicPropertyIds();
-        const changedProperties = allProperties.filter((property) => property.startsWith("config::")).map((property) => {
-            const key = property.replace("config::", "").split("/");
-            const value = world.getDynamicProperty(property);
-            return { id: property, key, value };
-        });
+        const changedProperties = allProperties
+            .filter((property) => property.startsWith("config::"))
+            .map((property) => {
+                const key = property.replace("config::", "").split("/");
+                const value = world.getDynamicProperty(property);
+                return { id: property, key, value };
+            });
         this.configData = defaultConfig;
         for (const { key, value, id } of changedProperties) {
             const isInvalid = getValueFromObject(defaultConfig, key) === undefined;
@@ -586,7 +590,7 @@ class Config {
      * Sets a value in the config
      * @throws This object can throw errors
      */
-    public static set (key: string[], value: number | boolean | string) {
+    public static set(key: string[], value: number | boolean | string) {
         const configProperty = getValueFromObject(defaultConfig, key);
         if (configProperty === undefined) return undefined;
         if (typeof value != typeof configProperty) return false;
@@ -603,10 +607,10 @@ interface TypeInfo {
     arrayRange?: string[];
 }
 interface InputOption {
-	name: RawText;
-	description: RawText;
-	type: OptionTypes;
-	typeInfo?: TypeInfo;
+    name: RawText;
+    description: RawText;
+    type: OptionTypes;
+    typeInfo?: TypeInfo;
 }
 type OptionTypes = "string" | "number" | "integer" | "boolean" | "player" | "choice" | "code" | "purecode" | "target";
 // Safe isOP function

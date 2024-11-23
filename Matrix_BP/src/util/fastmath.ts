@@ -40,17 +40,13 @@ export function fastHypot(x: number, y: number) {
 }
 const DOUBLE_PI = PI * 2;
 const HALF_PI = PI * 0.5;
-export function fastSin (x: number) {
-  if (x < -PI)
-        x += DOUBLE_PI;
-    else if (x > PI)
-        x -= DOUBLE_PI;
+export function fastSin(x: number) {
+    if (x < -PI) x += DOUBLE_PI;
+    else if (x > PI) x -= DOUBLE_PI;
 
-    if (x < 0)
-        return 1.27323954 * x + 0.405284735 * x * x;
-    else
-        return 1.27323954 * x - 0.405284735 * x * x;
+    if (x < 0) return 1.27323954 * x + 0.405284735 * x * x;
+    else return 1.27323954 * x - 0.405284735 * x * x;
 }
-export function fastCos (x: number) {
+export function fastCos(x: number) {
     return fastSin(x + HALF_PI);
 }

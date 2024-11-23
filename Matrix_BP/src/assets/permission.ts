@@ -5,11 +5,11 @@ export { declarePermissionFunction };
  */
 function declarePermissionFunction() {
     Player.prototype.isAdmin = function () {
-        const isAdminState = (this.getDynamicProperty("uniqueLevel") as number ?? 0) >= 1;
+        const isAdminState = ((this.getDynamicProperty("uniqueLevel") as number) ?? 0) >= 1;
         return isAdminState;
     };
     Player.prototype.getPermissionLevel = function () {
-        return this.getDynamicProperty("uniqueLevel") as number ?? 0;
+        return (this.getDynamicProperty("uniqueLevel") as number) ?? 0;
     };
     Player.prototype.setPermissionLevel = function (level: number) {
         if (!Number.isInteger(level)) {
