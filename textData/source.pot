@@ -169,3 +169,6 @@ msgstr "Current version: %s"
 
 msgid "command.about.joindc"
 msgstr "Want to download? Join our Discord Server: https://discord.gg/%s"
+
+msgid "ad.running"
+msgstr "§bMatrix§a+ 7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
