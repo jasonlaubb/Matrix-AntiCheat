@@ -68,7 +68,6 @@ function generatePoFile(sourcePot, poFile) {
     const msgstrRegex = /msgstr "(.*)"/g;
     let msgidMatch;
     let msgstrMatch;
-    console.log(poFile);
     let poContent = '';
     const data = poFile?.match(/msgstr "(.*)"/g);
     let i = 0;
