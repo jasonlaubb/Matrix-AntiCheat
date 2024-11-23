@@ -287,7 +287,7 @@ class Command {
     public constructor() {}
     private static registeredCommands: Command[] = [];
     // The regular expression for the command.
-    private static readonly optionMatchRegExp = /(".+")|(\s+)/g;
+    private static readonly optionMatchRegExp = /(".+")|(\S+)/g;
     public static readonly OptionInputType: OptionTypes;
     public availableId: string[] = [];
     public minLevel = 0;
@@ -403,7 +403,7 @@ class Command {
             const isCommand = event.message.match(/^(\-|\!|\#|\$|\.|\=|\+|\?)[a-zA-Z]+(\s{1,2}\S+)*\s*$/g);
             if (isCommand) {
                 event.cancel = true;
-                system.run(() => event.sender.runChatCommand(event.message));
+                system.run(() => event.sender.runChatCommand(event.message.slice(1)));
                 return;
             }
         });

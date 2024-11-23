@@ -9,6 +9,7 @@ interface SpeedData {
     flagAmount: number;
     lastFlagTimestamp: number;
     lastStopLocation: Vector3;
+    lastSleep: number;
 }
 let eventId: IntegratedSystemEvent;
 const speed = new Module()
@@ -35,6 +36,7 @@ const speed = new Module()
             flagAmount: 0,
             lastFlagTimestamp: 0,
             lastStopLocation: player.location,
+            lastSleep: 0,
         });
     })
     .initClear((playerId) => {
@@ -56,13 +58,19 @@ function tickEvent(player: Player) {
     if (velocityX === 0 && velocityY === 0 && velocityZ === 0) {
         data.lastStopLocation = player.location;
     }
+    if (player.isSleeping || player.isFlying) {
+        data.lastSleep = now;
+    }
     if (
+        !player.isFlying &&
         now - data.lastFlagTimestamp > MIN_FLAG_TIME_INTERVAL &&
         now - player.timeStamp.knockBack > 1500 &&
         now - player.timeStamp.riptide > 5000 &&
         now - data.lastAttackTimestamp > 1000 &&
         now - data.lastRidingEndTimestamp > 500 &&
         now - data.lastFlagTimestamp > 250 &&
+        !player.isSleeping &&
+        now - data.lastSleep > 1000 &&
         !player.hasTag("riding") &&
         (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0 <= 2) &&
         !isPlayerInSolid(player.location, player.getHeadLocation(), player.dimension)
@@ -75,9 +83,10 @@ function tickEvent(player: Player) {
             data.lastFlagTimestamp = now;
             data.flagAmount++;
             if (data.flagAmount >= 3) {
-                player.teleport(data.lastStopLocation);
                 player.flag(speed);
+                data.flagAmount = 0;
             }
+            player.teleport(data.lastStopLocation);
         }
     }
 

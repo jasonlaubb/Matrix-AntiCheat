@@ -47,6 +47,9 @@ msgstr "Until %s"
 msgid "commandsynax.unknown"
 msgstr "Unknown command: %s, you can type -help to get some useful information about the commands."
 
+msgid "commandsynax.permission"
+msgstr "No permission to use this command. The minimum permission required is 'level %s'"
+
 msgid "commandsystem.disabled"
 msgstr "Oops, this command has been disabled."
 
@@ -174,7 +177,7 @@ msgid "command.about.joindc"
 msgstr "Want to download? Join our Discord Server: https://discord.gg/%s"
 
 msgid "ad.running"
-msgstr "§bMatrix§a+ 7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
+msgstr "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
 
 msgid "command.help.description"
 msgstr "Get the useful information about the commands."

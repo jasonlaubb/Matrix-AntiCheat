@@ -75,7 +75,7 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
     }
 
     const data = killauraData.get(player.id)!;
-    if (data.entityHurtList.includes(target.id)) data.entityHurtList.push(target.id);
+    if (!data.entityHurtList.includes(target.id)) data.entityHurtList.push(target.id);
     if (data.entityHurtList.length >= 3) {
         player.flag(killaura);
     }

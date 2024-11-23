@@ -15,3 +15,4 @@ import "./detection/insteabreak";
 import "./detection/reach";
 // Import the commands
 import "./command/about";
+import "./command/help";

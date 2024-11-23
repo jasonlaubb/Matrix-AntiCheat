@@ -54,6 +54,10 @@ msgstr ""
 msgid "Unknown command: %s, you can type -help to get some useful information about the commands."
 msgstr ""
 
+#: commandsynax.permission
+msgid "No permission to use this command. The minimum permission required is 'level %s'"
+msgstr ""
+
 #: commandsystem.disabled
 msgid "Oops, this command has been disabled."
 msgstr ""
@@ -223,7 +227,7 @@ msgid "Want to download? Join our Discord Server: https://discord.gg/%s"
 msgstr ""
 
 #: ad.running
-msgid "§bMatrix§a+ 7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
+msgid "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
 msgstr ""
 
 #: command.help.description

@@ -61,7 +61,8 @@ new Command()
             // Send the help message
             player.sendMessage(message.build());
         }
-    });
+    })
+	.register();
 function usageGenerator(command: Command): RawText {
     const allRequired = command.requiredOption;
     const allOptional = command.optionalOption;

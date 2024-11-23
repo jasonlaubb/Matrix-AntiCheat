@@ -7,6 +7,7 @@ import { world } from "@minecraft/server";
 const MAX_DEVIATION = 3;
 const MAX_FLAG_AMOUNT = 3;
 interface TimerData {
+    lastReset: number;
     lastLocation: Vector3;
     totalDistance: number;
     totalVelocity: number;
@@ -16,6 +17,7 @@ interface TimerData {
     flagAmount: number;
     lastAttack: number;
     negativeCombo: number;
+    flyingNotOnGround: boolean;
 }
 let lastTime: number;
 let runId: number;
@@ -30,6 +32,7 @@ const timer = new Module()
     .initPlayer((playerId, player) => {
         timerData.set(playerId, {
             lastLocation: player.location,
+            lastReset: 0,
             totalDistance: 0,
             totalVelocity: 0,
             isTickIgnored: false,
@@ -38,6 +41,7 @@ const timer = new Module()
             flagAmount: 0,
             lastAttack: 0,
             negativeCombo: 0,
+            flyingNotOnGround: false,
         });
     })
     .initClear((playerId) => {
@@ -68,7 +72,7 @@ function checkTimer() {
     const players = Module.allNonAdminPlayers;
     for (const player of players) {
         const data = timerData.get(player.id)!;
-        if (data.isTickIgnored || data.totalDistance === 0) {
+        if (data.isTickIgnored || data.totalDistance === 0 || now - data.lastReset < 2000) {
             data.isTickIgnored = false;
             data.totalDistance = 0;
             data.totalVelocity = 0;
@@ -86,7 +90,7 @@ function checkTimer() {
         } else data.negativeCombo = 0;
         const overSlow = data.negativeCombo >= 3;
         if (highDeviationState || absDeviation > maxDeviation * 0.31 || overSlow) {
-            if (now - data.lastFlagTimestamp > 3000) {
+            if (now - data.lastFlagTimestamp > 5000) {
                 data.flagAmount = 0;
             }
             // Increase the flag amount
@@ -95,8 +99,10 @@ function checkTimer() {
             data.lastFlagTimestamp = now;
             if (highDeviationState) {
                 player.teleport(data.lastNoSpeedLocation);
+                data.lastReset = now;
             }
             if (data.flagAmount >= MAX_FLAG_AMOUNT) {
+                data.lastReset = now;
                 player.teleport(data.lastNoSpeedLocation);
                 player.flag(timer);
                 data.flagAmount = 0;
@@ -115,6 +121,15 @@ function playerTickEvent(player: Player) {
     const { x, z } = player.getVelocity();
     const noVelocity = x === 0 && z === 0;
     const distance = calculateDistance(player.location, data.lastLocation);
+    if (data.flyingNotOnGround) {
+        if (player.isOnGround && !player.isFlying) {
+            data.flyingNotOnGround = false;
+            if (isTickIgnored) timerData.set(player.id, data);
+        }
+    } else if (player.isFlying) {
+        data.flyingNotOnGround = true;
+        if (isTickIgnored) timerData.set(player.id, data);
+    }
     if (isTickIgnored || player.isGliding || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || (noVelocity && distance > 0.005) || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
         if (data.isTickIgnored) return;
         data.isTickIgnored = true;
