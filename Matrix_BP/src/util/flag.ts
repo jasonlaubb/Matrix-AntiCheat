@@ -6,7 +6,7 @@ export function setupFlagFunction () {
 	Player.prototype.flag = function (detected: Module) {
 		const punishment = detected.modulePunishment;
 		if (!punishment || this.isAdmin()) return;
-		world.sendMessage(rawtextTranslate("util.flag.alert", this.name));
+		world.sendMessage(rawtextTranslate("util.flag.alert", this.name, detected.getToggleId()!, punishment));
 		switch (punishment) {
 			case "kick":
 				strengthenKick(this);

@@ -1,4 +1,4 @@
-import { Player, RawMessage, system, world } from "@minecraft/server";
+import { Player, RawText, system, world } from "@minecraft/server";
 import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
@@ -44,8 +44,8 @@ class Module {
     public static readonly Config = typeof defaultConfig;
     // Properties of module
     private toggleId!: string;
-    private name: RawMessage = { text: "§cUnknown§r" };
-    private description!: RawMessage;
+    private name: RawText = rawtext({ text: "§cUnknown§r" });
+    private description!: RawText;
     private category: string = "§cUnknown§r";
     private locked: boolean = false;
     private onEnable!: () => void;
@@ -74,11 +74,11 @@ class Module {
         this.toggleId = id;
         return this;
     }
-    public setName(name: RawMessage) {
+    public setName(name: RawText) {
         this.name = name;
         return this;
     }
-    public setDescription(description: RawMessage) {
+    public setDescription(description: RawText) {
         this.description = description;
         return this;
     }
@@ -183,6 +183,7 @@ class Module {
     }
     public static initialize() {
         console.log("The server is running with §b§lMatrix §gAntiCheat§r | Made by jasonlaubb");
+        Config.loadData();
         // Initialize the command system
         Command.initialize();
         world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
@@ -196,6 +197,9 @@ class Module {
                     Module.sendError(error as Error);
                 }
             }
+            system.runTimeout(() => {
+                if (player?.isValid()) player.sendMessage(rawtextTranslate("ad.running"));
+            }, 200);
         });
         for (const module of Module.moduleList) {
             if (module.locked || Module.config.modules[module.toggleId] === true) {
@@ -289,8 +293,13 @@ class Command {
 	public optionalOption: InputOption[] = [];
 	public executeFunc?: (player: Player, ...args: (string | number | Player | boolean | undefined)[]) => Promise<void>;
 	public subCommands?: Command[];
+    public description: RawText = rawtext({ text: "§cUnknown§r" });
     public setName(name: string) {
         this.availableId.push(name);
+        return this;
+    }
+    public setDescription (description: RawText) {
+        this.description = description;
         return this;
     }
     public setAliases(...aliases: string[]) {
@@ -301,7 +310,7 @@ class Command {
         this.minLevel = level;
         return this;
     }
-    public addOption(name: RawMessage, description: RawMessage, type: OptionTypes, typeInfo?: undefined | TypeInfo, optional = false) {
+    public addOption(name: RawText, description: RawText, type: OptionTypes, typeInfo?: undefined | TypeInfo, optional = false) {
         // Error prevention
         switch (type) {
             case "code":
@@ -315,8 +324,15 @@ class Command {
                 if (!typeInfo || typeInfo?.upperLimit || typeInfo?.lowerLimit) break;
                 throw new Error("Command :: number and integer required upper limit or lower limit if exists");
             }
-            default: {
-                if (typeInfo) throw new Error("Command :: unused typeInfo property");
+            case "player":
+            case "target":
+            case "boolean": {
+                if (!typeInfo) break;
+                throw new Error("Command :: unexpected typeInfo property");
+            }
+            case "choice": {
+                if (typeInfo?.arrayRange) break;
+                throw new Error("Command :: choice required arrayRange");
             }
         }
         if (optional) {
@@ -324,6 +340,7 @@ class Command {
 		} else {
 			this.requiredOption.push({ name, description, type, typeInfo });
 		}
+        return this;
     }
 	public addSubCommand (command: Command) {
 		this.subCommands?.push(command);
@@ -519,7 +536,7 @@ class Command {
             case "player": {
                 const targetName = arg.startsWith("@") ? arg.substring(1) : arg;
                 const worldPlayers = world.getPlayers({ name: targetName });
-                if (worldPlayers.length == 0 || (option.type == "target" &&worldPlayers[0].isAdmin())) {
+                if (worldPlayers.length == 0 || (option.type == "target" && worldPlayers[0].isAdmin())) {
                     Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.player", option.name, beforeArgs, insideArg, afterArgs);
                     return null;
                 }
@@ -527,16 +544,19 @@ class Command {
             }
         }
     }
-    private static sendSyntaxErrorMessage (player: Player, key: string, optionName: RawMessage, beforeArgs: string, insideArg: string, afterArgs: string, extraInfo?: string) {
+    private static sendSyntaxErrorMessage (player: Player, key: string, optionName: RawText, beforeArgs: string, insideArg: string, afterArgs: string, extraInfo?: string) {
         const stringInput = [optionName, { text: beforeArgs }, { text: insideArg }, { text: afterArgs }];
         if (extraInfo) stringInput.push({ text: extraInfo })
         player.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: key, with: { rawtext: stringInput } }));
         player.sendMessage(rawtextTranslate("commandsynax.tips"));
     }
-	private static searchCommand (command: string) {
+	public static searchCommand (command: string) {
 		command = command.toLowerCase();
 		return Command.registeredCommands.find((commandClass) => commandClass.availableId.includes(command));
 	}
+    public static get allCommands () {
+        return this.registeredCommands;
+    }
 }
 class Config {
     private static configData?: typeof defaultConfig = undefined;
@@ -583,8 +603,8 @@ interface TypeInfo {
     arrayRange?: string[];
 }
 interface InputOption {
-	name: RawMessage;
-	description: RawMessage;
+	name: RawText;
+	description: RawText;
 	type: OptionTypes;
 	typeInfo?: TypeInfo;
 }

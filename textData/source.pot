@@ -33,7 +33,7 @@ msgid "error.stack"
 msgstr "§7- Stack: §e%s"
 
 msgid "util.flag.alert"
-msgstr "§c§lCheat Alert! §r§7A cheater (%s§r§7) has been detected! We have automatically blocked it."
+msgstr "§c§lCheat Alert! §r§7A cheater (%1§r§7) has been detected automatically by Matrix AntiCheat! We have automatically blocked it. §3(moduleId: %2, punishment: %3)§r"
 
 msgid "moderation.permanent"
 msgstr "permanent"
@@ -51,19 +51,19 @@ msgid "commandsystem.disabled"
 msgstr "Oops, this command has been disabled."
 
 msgid "commandsynax.unknownsubcommand"
-msgstr "Unknown subcommand: %s, you can use -getcmdstatus <command> to know what subcommand you can use."
+msgstr "Unknown subcommand: %s, you can use -help <command> to know what subcommand you can use."
 
 msgid "commandsynax.empty"
 msgstr "Oops, you have to type something if you want to use some commands."
 
 msgid "commandsynax.tips"
-msgstr "§7>> §gUse -getcmdstatus <command> to get some useful information about the commands."
+msgstr "§7>> §gUse -help <command> to get some useful information about the commands."
 
 msgid "commandsynax.missing"
 msgstr "You missed a parameter '%s' which is required."
 
 msgid "commandsynax.missing.subcommand"
-msgstr "This is a subcommand! You have to type -getcmdstatus <command> to know what subcommand you can use."
+msgstr "This is a subcommand! You have to type -help <command> to know what subcommand you can use."
 
 msgid "commandsynax.syntax.boolean"
 msgstr "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2 >>%3<< %4'. Only 'true' or 'false' are allowed'."
@@ -105,7 +105,7 @@ msgid "module.firewall.name"
 msgstr "Firewall"
 
 msgid "module.firewall.description"
-msgstr "Prevent the player who contains bad packets from accessing the server. For example, namespoofing."
+msgstr "Prevent the player who contains bad packets from accessing the server. For example, spam bot."
 
 msgid "module.namespoof.name"
 msgstr "Anti Name Spoofer"
@@ -155,6 +155,9 @@ msgstr "Anti Timer"
 msgid "module.timer.description"
 msgstr "Prevent someone speed up their game speed to get an unfair advantage."
 
+msgid "command.about.description"
+msgstr "Show some basic information about Matrix AntiCheat."
+
 msgid "command.about.title"
 msgstr "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
 
@@ -172,3 +175,66 @@ msgstr "Want to download? Join our Discord Server: https://discord.gg/%s"
 
 msgid "ad.running"
 msgstr "§bMatrix§a+ 7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
+
+msgid "command.help.description"
+msgstr "Get the useful information about the commands."
+
+msgid "command.help.command.name"
+msgstr "Command's name"
+
+msgid "command.help.command.name.description"
+msgstr "The name of the command that you need help."
+
+msgid "command.help.title"
+msgstr "The command list of Matrix AntiCheat:"
+
+msgid "command.help.target.title"
+msgstr "Showing the usage of the selected command: %s"
+
+msgid "command.help.target.notfound"
+msgstr "Not able to find the command, make sure you type a valid command so that we can show you the correct information."
+
+msgid "command.help.m.description"
+msgstr "§gDescription of the command: §e%s§g"
+
+msgid "command.help.m.usage"
+msgstr "§gUsage of the command: §e"
+
+msgid "command.help.m.usage.empty"
+msgstr "§gUsage of the command: §eJust type the command name!"
+
+msgid "command.help.option.string"
+msgstr "string (A string that formed with any characters)"
+
+msgid "command.help.option.number"
+msgstr "number (A float number or a integer)"
+
+msgid "command.help.option.boolean"
+msgstr "boolean (A boolean value, true or false)"
+
+msgid "command.help.option.code"
+msgstr "code (A code with length that is equal to a specific number)"
+
+msgid "command.help.option.purecode"
+msgstr "purecode (A purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z))"
+
+msgid "command.help.option.choice"
+msgstr "choice (A choice between a list of options)"
+
+msgid "command.help.option.player"
+msgstr "player (A player name of a player that is online)"
+
+msgid "command.help.option.target"
+msgstr "target (A player name of a player that is online but not an administrator of the server)"
+
+msgid "command.help.target.type"
+msgstr "§gType: §e%s"
+
+msgid "command.help.target.description"
+msgstr "§gDescription: §e%s"
+
+msgid "command.help.target.type"
+msgstr "§gType: §e%s"
+
+msgid "command.help.target.optional"
+msgstr " (optional)"

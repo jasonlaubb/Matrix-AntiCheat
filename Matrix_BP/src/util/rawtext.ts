@@ -14,8 +14,16 @@ class FastText {
         this.currentRawText.push({ translate: key, with: withString });
         return this;
     }
+    public addRaw (rawMessage: RawMessage) {
+        this.currentRawText.push(rawMessage);
+        return this;
+    }
     public endline() {
         this.currentRawText.push({ text: "\n" } as RawMessage);
+        return this;
+    }
+    public space () {
+        this.currentRawText.push({ text: " " } as RawMessage);
         return this;
     }
     public build() {
@@ -24,6 +32,9 @@ class FastText {
 }
 export function rawtext(...args: RawMessage[]) {
     return { rawtext: args } as RawText;
+}
+export function tTm (rawText: RawText) {
+    return rawtext(...rawText.rawtext!);
 }
 export function fastText() {
     return new FastText();

@@ -1,12 +1,12 @@
-import { Player } from "@minecraft/server";
 import { Module, Command } from "../../matrixAPI";
-import { fastText } from "../../util/rawtext";
+import { fastText, rawtextTranslate } from "../../util/rawtext";
 
 new Command()
 	.setName("about")
 	.setAliases("info", "version", "ver", "information", "uwu")
 	.setMinPermissionLevel(0)
-	.onExecute(async (player: Player) => {
+	.setDescription(rawtextTranslate("command.help.description"))
+	.onExecute(async (player) => {
 		const aboutMessage = fastText()
 			.addTran("command.about.title")
 			.endline()
