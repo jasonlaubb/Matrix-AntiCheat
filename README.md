@@ -21,7 +21,7 @@
     </a>
     <h1>Hack prevention</h1>
     <ul>
-        <li>It is rewrite, unfinished.</li>
+        <li>Very much.</li>
     </ul>
     <h1>Developers</h1>
     <h3>Lead Developer</h3>
