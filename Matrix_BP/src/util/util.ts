@@ -42,3 +42,16 @@ export function getAngleLimit(platformType: PlatformType): number {
             return KILLAURA_CONSOLE_ANGLE_LIMIT;
     }
 }
+export function getValueFromObject (object: any, keys: string[]) {
+	for (const key of keys) {
+		object = object[key];
+	}
+	return object;
+}
+export function changeValueOfObject (object: any, keys: string[], value: any) {
+	for (const key of keys.slice(0, keys.length - 1)) {
+		object = object[key];
+	}
+	object[keys[keys.length - 1]] = value;
+	return object;
+}

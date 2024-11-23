@@ -256,10 +256,10 @@ class Module {
     public static get allNonAdminPlayers() {
         return Module.currentPlayers.filter((player) => !player.isAdmin());
     }
-    public static get config() {
-        /** @warning Unfinished, the 2.0 dynamic config system should be here. */
-        return defaultConfig;
-    }
+    // Dynamic config system
+    public static get config () {
+        return Config.modifiedConfig;
+    };
     public static get registeredModule() {
         return Module.moduleList;
     }
@@ -538,6 +538,44 @@ class Command {
 		return Command.registeredCommands.find((commandClass) => commandClass.availableId.includes(command));
 	}
 }
+class Config {
+    private static configData?: typeof defaultConfig = undefined;
+    public static get modifiedConfig () {
+        if (this.configData === undefined) throw new Error("Config is not loaded");
+        return this.configData;
+    }
+    public static loadData () {
+        const allProperties = world.getDynamicPropertyIds();
+        const changedProperties = allProperties.filter((property) => property.startsWith("config::")).map((property) => {
+            const key = property.replace("config::", "").split("/");
+            const value = world.getDynamicProperty(property);
+            return { id: property, key, value };
+        });
+        this.configData = defaultConfig;
+        for (const { key, value, id } of changedProperties) {
+            const isInvalid = getValueFromObject(defaultConfig, key) === undefined;
+            if (isInvalid) {
+                world.setDynamicProperty(id);
+                continue;
+            }
+            const newValue = changeValueOfObject(this.configData, key, value);
+            this.configData = newValue;
+        }
+    }
+    /**
+     * Sets a value in the config
+     * @throws This object can throw errors
+     */
+    public static set (key: string[], value: number | boolean | string) {
+        const configProperty = getValueFromObject(defaultConfig, key);
+        if (configProperty === undefined) return undefined;
+        if (typeof value != typeof configProperty) return false;
+        if (typeof value == "object") throw new Error("Cannot set object to config");
+        const newValue = changeValueOfObject(this.configData, key, value);
+        this.configData = newValue;
+        return true;
+    }
+}
 // Interfaces and types for Module
 interface TypeInfo {
     upperLimit?: number;
@@ -563,3 +601,4 @@ export { Module, Command };
 // Start the AntiCheat
 Module.ignite();
 import { setupFlagFunction } from "./util/flag";
+import { changeValueOfObject, getValueFromObject } from "./util/util";
