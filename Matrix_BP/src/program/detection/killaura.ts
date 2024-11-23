@@ -23,6 +23,17 @@ const killaura = new Module()
         killauraData.clear();
         world.afterEvents.entityHitEntity.unsubscribe(entityHitEntity);
         Module.clearPlayerTickEvent(eventId);
+    })
+    .initPlayer((playerId, player) => {
+        killauraData.set(playerId, {
+            entityHurtList: [],
+            roundFlagAmount: 0,
+            lastAttackRot: player.getRotation(),
+            lastRoundTimestamp: 0,
+        });
+    })
+    .initClear((playerId) => {
+        killauraData.delete(playerId);
     });
 
 killaura.register();
