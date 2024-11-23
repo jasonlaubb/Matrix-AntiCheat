@@ -1,6 +1,6 @@
 #: pack.description
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock. Required Beta API to work."
-msgstr ""
+msgstr "§7§¶我的世界基岩版最佳的反外掛解決方案，需要實驗性api。"
 
 #: permissions.chatmute
 msgid "§bMatrix§a+ §7> §cYou have been muted from the server!"
