@@ -108,7 +108,7 @@ msgstr "構文エラー: パラメータ '%1' には %5 より大きい数値が
 
 #: commandsynax.syntax.number.high
 msgid "Syntax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
-msgstr "構文エラー: パラメータ '%1' には %5 より小さい数値が必要ですが、範囲外の '%2 >>%3<< %4' を入力しました
+msgstr "構文エラー: パラメータ '%1' には %5 より小さい数値が必要ですが、範囲外の '%2 >>%3<< %4' を入力しました"
 
 #: commandsynax.syntax.code
 msgid "Syntax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
