@@ -38,281 +38,293 @@ msgstr "§7- Stack: §e%s"
 msgid "§c§lCheat Alert! §r§7A cheater (%1§r§7) has been detected automatically by Matrix AntiCheat! We have automatically blocked it. §3(moduleId: %2, punishment: %3)§r"
 msgstr "§c§lCheat Alert! §r§7ハッカー: (%1§r§7) が Matrix AntiCheat によって自動的に検出された為　自動的にブロックしました。§3(moduleId: %2、punishment: %3)§r"
 
+#: function.help
+msgid "§bMatrix§a+ §7> §gAre you looking for help? Join our Discord Server: https://discord.gg/%1. Feel free to ask there. You are currently on Matrix anticheat version %2. You can use -op to gain matrix administrator permission and use -help to get help for the commands."
+msgstr "永久"
+
+#: function.help.typeA
+msgid "§7>> §gIs the chat command not working? Try to disable or place Matrix Anticheat above any-type of the chat rank addon."
+msgstr "§cあなたは Soft Ban されています§r"
+
+#: function.help.typeB
+msgid "§7>> §gIs that nothing working? Don't forget to enable Beta API and update our Matrix anticheat to the latest"
+msgstr "Until %s"
+
 #: moderation.permanent
 msgid "permanent"
-msgstr "永久"
+msgstr "不明なコマンド: %s, -help と入力すると、コマンドに関する情報が表示されます"
 
 #: moderation.softban.banned
 msgid "§cYou have been soft-banned§r"
-msgstr "§cあなたは Soft Ban されています§r"
+msgstr "このコマンドを使用する権限がありません 最低限必要な権限は「level %s」です。"
 
 #: moderation.softban.until
 msgid "Until %s"
-msgstr "Until %s"
+msgstr "申し訳ありません このコマンドは既に無効になっています"
 
 #: commandsynax.unknown
 msgid "Unknown command: %s, you can type -help to get some useful information about the commands."
-msgstr "不明なコマンド: %s, -help と入力すると、コマンドに関する情報が表示されます"
+msgstr "不明なサブコマンド: %s, 使用できるサブコマンドを確認するには、-help <command> を使用して確認できます"
 
 #: commandsynax.permission
 msgid "No permission to use this command. The minimum permission required is 'level %s'"
-msgstr "このコマンドを使用する権限がありません 最低限必要な権限は「level %s」です。"
+msgstr "おっと コマンドを使いたい場合には何かを入力する必要があるよ"
 
 #: commandsystem.disabled
 msgid "Oops, this command has been disabled."
-msgstr "申し訳ありません このコマンドは既に無効になっています"
+msgstr "§7>> §gコマンドに関する情報を見たい場合は、-help <command> を使用してください"
 
 #: commandsynax.unknownsubcommand
 msgid "Unknown subcommand: %s, you can use -help <command> to know what subcommand you can use."
-msgstr "不明なサブコマンド: %s, 使用できるサブコマンドを確認するには、-help <command> を使用して確認できます"
+msgstr "必須のパラメータ '%s' が指定されていません"
 
 #: commandsynax.empty
 msgid "Oops, you have to type something if you want to use some commands."
-msgstr "おっと コマンドを使いたい場合には何かを入力する必要があるよ"
+msgstr "これはサブコマンドです　使用できるサブコマンドを確認するには、-help <command> と入力して確認してください"
 
 #: commandsynax.tips
 msgid "§7>> §gUse -help <command> to get some useful information about the commands."
-msgstr "§7>> §gコマンドに関する情報を見たい場合は、-help <command> を使用してください"
+msgstr "構文エラー: パラメータ '%1' はboolean値ですが、'%2 >>%3<< %4' と入力しました。'true' または 'false' のみが使えます"
 
 #: commandsynax.missing
 msgid "You missed a parameter '%s' which is required."
-msgstr "必須のパラメータ '%s' が指定されていません"
+msgstr "構文エラー: パラメータ '%1' には少なくとも %5 文字を含む文字列が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.missing.subcommand
 msgid "This is a subcommand! You have to type -help <command> to know what subcommand you can use."
-msgstr "これはサブコマンドです　使用できるサブコマンドを確認するには、-help <command> と入力して確認してください"
+msgstr "構文エラー: パラメータ '%1' には最大 %5 文字の文字列が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.boolean
 msgid "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2 >>%3<< %4'. Only 'true' or 'false' are allowed'."
-msgstr "構文エラー: パラメータ '%1' はboolean値ですが、'%2 >>%3<< %4' と入力しました。'true' または 'false' のみが使えます"
+msgstr "構文エラー: パラメータ '%1' には整数が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.string.low
 msgid "Syntax error: The parameter '%1' required a string that contains at least %5 characters, but you have typed '%2 >>%3<< %4'."
-msgstr "構文エラー: パラメータ '%1' には少なくとも %5 文字を含む文字列が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には有効な数値が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.string.high
 msgid "Syntax error: The parameter '%1' required a string that contains at most %5 characters, but you have typed '%2 >>%3<< %4'."
-msgstr "構文エラー: パラメータ '%1' には最大 %5 文字の文字列が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には %5 より大きい数値が必要ですが、範囲外の '%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.integer.nan
 msgid "Syntax error: The parameter '%1' required a integer, but you have typed '%2 >>%3<< %4'."
-msgstr "構文エラー: パラメータ '%1' には整数が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には %5 より小さい数値が必要ですが、範囲外の '%2 >>%3<< %4' を入力しました"
 
 #: commandsynax.syntax.number.nan
 msgid "Syntax error: The parameter '%1' required a valid number, but you have typed '%2 >>%3<< %4'."
-msgstr "構文エラー: パラメータ '%1' には有効な数値が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には長さが %5 のコードが必要ですが、範囲外の '%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.number.low
 msgid "Syntax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2 >>%3<< %4' which is out of range."
-msgstr "構文エラー: パラメータ '%1' には %5 より大きい数値が必要ですが、範囲外の '%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には、数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成される純粋なコードが必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.number.high
 msgid "Syntax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
-msgstr "構文エラー: パラメータ '%1' には %5 より小さい数値が必要ですが、範囲外の '%2 >>%3<< %4' を入力しました"
+msgstr "構文エラー: パラメータ '%1' には %5 からの選択が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.code
 msgid "Syntax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
-msgstr "構文エラー: パラメータ '%1' には長さが %5 のコードが必要ですが、範囲外の '%2 >>%3<< %4' と入力されています"
+msgstr "Anti Phase"
 
 #: commandsynax.syntax.purecode
 msgid "Syntax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2 >>%3<< %4'"
-msgstr "構文エラー: パラメータ '%1' には、数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成される純粋なコードが必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "不正移動パケットでプレイヤーが壁を通り抜けるの防ぎます"
 
 #: commandsynax.syntax.choice
 msgid "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
-msgstr "構文エラー: パラメータ '%1' には %5 からの選択が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "Firewall"
 
 #: module.phase.name
 msgid "Anti Phase"
-msgstr "Anti Phase"
+msgstr "不正なパケットを含むプレイヤーがサーバーにアクセスできないようにします。例えば スパムボット等があるよ"
 
 #: module.phase.description
 msgid "Prevent the player from passing through the walls with the illegal movement packet."
-msgstr "不正移動パケットでプレイヤーが壁を通り抜けるの防ぎます"
+msgstr "Anti Name Spoofer"
 
 #: module.firewall.name
 msgid "Firewall"
-msgstr "Firewall"
+msgstr "プレイヤーが自分の名前を無効な名前に変更してサーバーに参加するのを防ぎます"
 
 #: module.firewall.description
 msgid "Prevent the player who contains bad packets from accessing the server. For example, spam bot."
-msgstr "不正なパケットを含むプレイヤーがサーバーにアクセスできないようにします。例えば スパムボット等があるよ"
+msgstr "Anti KillAura"
 
 #: module.namespoof.name
 msgid "Anti Name Spoofer"
-msgstr "Anti Name Spoofer"
+msgstr "プレイヤーが違法なkill packetで他のプレイヤーを攻撃するのを防ぎます"
 
 #: module.namespoof.description
 msgid "Prevent the player from changing their name to a invalid name and join the server."
-msgstr "プレイヤーが自分の名前を無効な名前に変更してサーバーに参加するのを防ぎます"
+msgstr "Anti Scaffold"
 
 #: module.killaura.name
 msgid "Anti KillAura"
-msgstr "Anti KillAura"
+msgstr "プレイヤーがscaffold Hack を使用しておかしいブロックの置き方をするのを防ぎます"
 
 #: module.killaura.description
 msgid "Prevent the player from hitting other players with the illegal kill packet."
-msgstr "プレイヤーが違法なkill packetで他のプレイヤーを攻撃するのを防ぎます"
+msgstr "Anti Insteabreak"
 
 #: module.scaffold.name
 msgid "Anti Scaffold"
-msgstr "Anti Scaffold"
+msgstr "プレイヤーが一発破壊でブロックを破壊できないようにします。このタイプのチートは、正しく構成されたレルムまたは BDS サーバーでは機能しません。"
 
 #: module.scaffold.description
 msgid "Prevent the player from using the auto-brige hack to gain unfair advantage."
-msgstr "プレイヤーがscaffold Hack を使用しておかしいブロックの置き方をするのを防ぎます"
+msgstr "Anti Reach"
 
 #: module.insteabreak.name
 msgid "Anti Insteabreak"
-msgstr "Anti Insteabreak"
+msgstr "最大 4.5 ブロックまでのリーチ検出を提供します"
 
 #: module.insteabreak.description
 msgid "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
-msgstr "プレイヤーが一発破壊でブロックを破壊できないようにします。このタイプのチートは、正しく構成されたレルムまたは BDS サーバーでは機能しません。"
+msgstr "Anti Speed"
 
 #: module.reach.name
 msgid "Anti Reach"
-msgstr "Anti Reach"
+msgstr "最新かつ!最強のアンチスピードエンジン!!! 「bds prediction」の特性を利用して、プレイヤーの不正な動きを識別します"
 
 #: module.reach.description
 msgid "An advanced anti reach solution that provided reach detection up to 4.5 blocks."
-msgstr "最大 4.5 ブロックまでのリーチ検出を提供します"
+msgstr "Anti Fly"
 
 #: module.speed.name
 msgid "Anti Speed"
-msgstr "Anti Speed"
+msgstr "ほとんどのフライハックが機能しないようにします。誤検知の可能性は少しだけあります"
 
 #: module.speed.description
 msgid "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
-msgstr "最新かつ!最強のアンチスピードエンジン!!! 「bds prediction」の特性を利用して、プレイヤーの不正な動きを識別します"
+msgstr "Anti Timer"
 
 #: module.fly.name
 msgid "Anti Fly"
-msgstr "Anti Fly"
+msgstr "誰かがチートを使用してゲーム速度を上げるのを防ぎます"
 
 #: module.fly.description
 msgid "Prevent most of the fly hacks from working. There is a small probability of false positive."
-msgstr "ほとんどのフライハックが機能しないようにします。誤検知の可能性は少しだけあります"
+msgstr "Matrix AntiCheatに関する基本情報を表示します"
 
 #: module.timer.name
 msgid "Anti Timer"
-msgstr "Anti Timer"
+msgstr "§bMatrix§a+ §7> §gMatrix AntiCheatについて<3"
 
 #: module.timer.description
 msgid "Prevent someone speed up their game speed to get an unfair advantage."
-msgstr "誰かがチートを使用してゲーム速度を上げるのを防ぎます"
+msgstr "Author: jasonlaubb (Discord: @uwu_the_great)"
 
 #: command.about.description
 msgid "Show some basic information about Matrix AntiCheat."
-msgstr "Matrix AntiCheatに関する基本情報を表示します"
+msgstr "Github: %s"
 
 #: command.about.title
 msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
-msgstr "§bMatrix§a+ §7> §gMatrix AntiCheatについて<3"
+msgstr "今のバージョン: %s"
 
 #: command.about.author
 msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
-msgstr "Author: jasonlaubb (Discord: @uwu_the_great)"
+msgstr "ダウンロードしたいですか? Discord サーバーに参加してね！！: https://discord.gg/%s"
 
 #: command.about.github
 msgid "Github: %s"
-msgstr "Github: %s"
+msgstr "§bMatrix§a+ §7> §gMatrix Anticheat はあなたのゲーム体験を保護します。Discord: https://discord.gg/%s"
 
 #: command.about.version
 msgid "Current version: %s"
-msgstr "今のバージョン: %s"
+msgstr "コマンドに関する便利な情報を取得できます。"
 
 #: command.about.joindc
 msgid "Want to download? Join our Discord Server: https://discord.gg/%s"
-msgstr "ダウンロードしたいですか? Discord サーバーに参加してね！！: https://discord.gg/%s"
+msgstr "コマンド名"
 
 #: ad.running
 msgid "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
-msgstr "§bMatrix§a+ §7> §gMatrix Anticheat はあなたのゲーム体験を保護します。Discord: https://discord.gg/%s"
+msgstr "ヘルプが必要なコマンドの名前"
 
 #: command.help.description
 msgid "Get the useful information about the commands."
-msgstr "コマンドに関する便利な情報を取得できます。"
+msgstr "Matrix AntiCheatのコマンドリスト:"
 
 #: command.help.command.name
 msgid "Command's name"
-msgstr "コマンド名"
+msgstr "選択したコマンドの使用方法を表示しています: %s"
 
 #: command.help.command.name.description
 msgid "The name of the command that you need help."
-msgstr "ヘルプが必要なコマンドの名前"
+msgstr "コマンドが見つかりません。正しい情報を表示できるように、有効なコマンドを入力してください。"
 
 #: command.help.title
 msgid "The command list of Matrix AntiCheat:"
-msgstr "Matrix AntiCheatのコマンドリスト:"
+msgstr "§gコマンドの説明: §e%s§g"
 
 #: command.help.target.title
 msgid "Showing the usage of the selected command: %s"
-msgstr "選択したコマンドの使用方法を表示しています: %s"
+msgstr "§gコマンドの使用法: §e"
 
 #: command.help.target.notfound
 msgid "Not able to find the command, make sure you type a valid command so that we can show you the correct information."
-msgstr "コマンドが見つかりません。正しい情報を表示できるように、有効なコマンドを入力してください。"
+msgstr "§gコマンドの使用方法: §eコマンド名を入力するだけでOk"
 
 #: command.help.m.description
 msgid "§gDescription of the command: §e%s§g"
-msgstr "§gコマンドの説明: §e%s§g"
+msgstr "文字列（任意の文字で構成された文字列）"
 
 #: command.help.m.usage
 msgid "§gUsage of the command: §e"
-msgstr "§gコマンドの使用法: §e"
+msgstr "数値（浮動小数点数または整数）"
 
 #: command.help.m.usage.empty
 msgid "§gUsage of the command: §eJust type the command name!"
-msgstr "§gコマンドの使用方法: §eコマンド名を入力するだけでOk"
+msgstr "ブール値（True またはFalse のブール値）"
 
 #: command.help.option.string
 msgid "string (A string that formed with any characters)"
-msgstr "文字列（任意の文字で構成された文字列）"
+msgstr "コード（特定の数値に等しい長さのコード）"
 
 #: command.help.option.number
 msgid "number (A float number or a integer)"
-msgstr "数値（浮動小数点数または整数）"
+msgstr "purecode (数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成されます)"
 
 #: command.help.option.boolean
 msgid "boolean (A boolean value, true or false)"
-msgstr "ブール値（True またはFalse のブール値）"
+msgstr "選択肢（選択肢のリストから選んでね）"
 
 #: command.help.option.code
 msgid "code (A code with length that is equal to a specific number)"
-msgstr "コード（特定の数値に等しい長さのコード）"
+msgstr "プレイヤー（オンラインのユーザー）"
 
 #: command.help.option.purecode
 msgid "purecode (A purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z))"
-msgstr "purecode (数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成されます)"
+msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
 
 #: command.help.option.choice
 msgid "choice (A choice between a list of options)"
-msgstr "選択肢（選択肢のリストから選んでね）"
+msgstr "§gType: §e%s"
 
 #: command.help.option.player
 msgid "player (A player name of a player that is online)"
-msgstr "プレイヤー（オンラインのユーザー）"
+msgstr "§g説明: §e%s"
 
 #: command.help.option.target
 msgid "target (A player name of a player that is online but not an administrator of the server)"
-msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
+msgstr "§gType: §e%s"
 
 #: command.help.target.type
 msgid "§gType: §e%s"
-msgstr "§gType: §e%s"
+msgstr "(!オプション！)"
 
 #: command.help.target.description
 msgid "§gDescription: §e%s"
-msgstr "§g説明: §e%s"
+msgstr ""
 
 #: command.help.target.type
 msgid "§gType: §e%s"
-msgstr "§gType: §e%s"
+msgstr ""
 
 #: command.help.target.optional
 msgid " (optional)"
-msgstr "(!オプション！)"
+msgstr ""
 
 #: command.op.description
 msgid "Make yourself to be an administrator of the server, just by a command."

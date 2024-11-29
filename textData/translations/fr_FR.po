@@ -38,6 +38,18 @@ msgstr ""
 msgid "§c§lCheat Alert! §r§7A cheater (%1§r§7) has been detected automatically by Matrix AntiCheat! We have automatically blocked it. §3(moduleId: %2, punishment: %3)§r"
 msgstr ""
 
+#: function.help
+msgid "§bMatrix§a+ §7> §gAre you looking for help? Join our Discord Server: https://discord.gg/%1. Feel free to ask there. You are currently on Matrix anticheat version %2. You can use -op to gain matrix administrator permission and use -help to get help for the commands."
+msgstr ""
+
+#: function.help.typeA
+msgid "§7>> §gIs the chat command not working? Try to disable or place Matrix Anticheat above any-type of the chat rank addon."
+msgstr ""
+
+#: function.help.typeB
+msgid "§7>> §gIs that nothing working? Don't forget to enable Beta API and update our Matrix anticheat to the latest"
+msgstr ""
+
 #: moderation.permanent
 msgid "permanent"
 msgstr ""
