@@ -241,3 +241,6 @@ msgstr "§gType: §e%s"
 
 msgid "command.help.target.optional"
 msgstr " (optional)"
+
+msgid "command.op.description"
+msgstr "Make yourself to be an administrator of the server, just by a command."

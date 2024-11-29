@@ -314,3 +314,7 @@ msgstr "§gType: §e%s"
 msgid " (optional)"
 msgstr "(!オプション！)"
 
+#: command.op.description
+msgid "Make yourself to be an administrator of the server, just by a command."
+msgstr ""
+
