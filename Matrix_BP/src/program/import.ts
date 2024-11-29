@@ -16,3 +16,4 @@ import "./detection/reach";
 // Import the commands
 import "./command/about";
 import "./command/help";
+import "./command/op";

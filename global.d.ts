@@ -12,6 +12,8 @@ declare module "@minecraft/server" {
 		flag: (detected: Module) => void;
 		safeIsOp: () => boolean;
 		timeStamp: PlayerTimeStamp;
+		opCommandUsageTimestamp: number;
+		opCommandIsVerifying: boolean;
 	}
 }
 interface Console {

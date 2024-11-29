@@ -244,3 +244,51 @@ msgstr " (optional)"
 
 msgid "command.op.description"
 msgstr "Make yourself to be an administrator of the server, just by a command."
+
+msgid "command.op.password"
+msgstr "admin password"
+
+msgid "command.op.password.description"
+msgstr "The password that you have been set as the password for the command. If you have not set a password, just don't type anything here."
+
+msgid "command.op.statement.mismatch"
+msgstr "You have not set a password yet, you can just keep it empty."
+
+msgid "command.op.statement.missing"
+msgstr "You should type the password as the password has been set."
+
+msgid "command.op.statement.already"
+msgstr "You have the administrator permission already. What do you want anymore by using me?"
+
+msgid "command.op.overheat.password"
+msgstr "Huh, just try later, I have almost overheated myself."
+
+msgid "command.op.overheat.normal"
+msgstr "You should finish the verification first!"
+
+msgid "command.op.success"
+msgstr "You have been set as an administrator of the server."
+
+msgid "command.op.start"
+msgstr "Seems like the server has no password yet, let's start a simple verification to verify about you're an administrator of the server or not."
+
+msgid "command.op.success.fast"
+msgstr "Success! We are able to verify you're an administrator of the server, you have been set as an administrator of the server."
+
+msgid "command.op.require"
+msgstr "Please type the following slash command (/) in the chat: '%s'."
+
+msgid "command.op.require.cancel"
+msgstr "If you want to cancel the verification, just type the slash command (/) in chat: '%s'."
+
+msgid "command.op.verify.failed"
+msgstr "Sorry, but you have typed a wrong command, please try again."
+
+msgid "command.op.verify.success"
+msgstr "Success! You have been set as an administrator of the server."
+
+msgid "command.op.verify.cancel"
+msgstr "You have canceled the verification."
+
+msgid "command.op.incorrect"
+msgstr "You have typed the incorrect password, please try again later."

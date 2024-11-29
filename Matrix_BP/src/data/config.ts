@@ -1,5 +1,9 @@
 export default {
     disableConsoleOutput: false,
+    security: {
+        containsPassword: false,
+        passwordHash: "",
+    },
     modules: {
         antiSpeed: true,
         antiFly: true,

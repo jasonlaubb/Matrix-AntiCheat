@@ -318,3 +318,67 @@ msgstr "(!オプション！)"
 msgid "Make yourself to be an administrator of the server, just by a command."
 msgstr ""
 
+#: command.op.password
+msgid "admin password"
+msgstr ""
+
+#: command.op.password.description
+msgid "The password that you have been set as the password for the command. If you have not set a password, just don't type anything here."
+msgstr ""
+
+#: command.op.statement.mismatch
+msgid "You have not set a password yet, you can just keep it empty."
+msgstr ""
+
+#: command.op.statement.missing
+msgid "You should type the password as the password has been set."
+msgstr ""
+
+#: command.op.statement.already
+msgid "You have the administrator permission already. What do you want anymore by using me?"
+msgstr ""
+
+#: command.op.overheat.password
+msgid "Huh, just try later, I have almost overheated myself."
+msgstr ""
+
+#: command.op.overheat.normal
+msgid "You should finish the verification first!"
+msgstr ""
+
+#: command.op.success
+msgid "You have been set as an administrator of the server."
+msgstr ""
+
+#: command.op.start
+msgid "Seems like the server has no password yet, let's start a simple verification to verify about you're an administrator of the server or not."
+msgstr ""
+
+#: command.op.success.fast
+msgid "Success! We are able to verify you're an administrator of the server, you have been set as an administrator of the server."
+msgstr ""
+
+#: command.op.require
+msgid "Please type the following slash command (/) in the chat: '%s'."
+msgstr ""
+
+#: command.op.require.cancel
+msgid "If you want to cancel the verification, just type the slash command (/) in chat: '%s'."
+msgstr ""
+
+#: command.op.verify.failed
+msgid "Sorry, but you have typed a wrong command, please try again."
+msgstr ""
+
+#: command.op.verify.success
+msgid "Success! You have been set as an administrator of the server."
+msgstr ""
+
+#: command.op.verify.cancel
+msgid "You have canceled the verification."
+msgstr ""
+
+#: command.op.incorrect
+msgid "You have typed the incorrect password, please try again later."
+msgstr ""
+
