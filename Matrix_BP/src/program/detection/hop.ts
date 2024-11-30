@@ -54,8 +54,8 @@ function tickEvent (player: Player) {
 	const actualDeltaX = player.location.x - pastLocations[0].x;
 	const actualDeltaZ = player.location.z - pastLocations[0].z;
 	const deviation = fastHypot(actualDeltaX - smoothDeltaX, actualDeltaZ - smoothDeltaZ);
-	if (deviation > MAX_DEVIATION && deviation < SPIKE_LIKE_LIMIT && !player.isFlying && !player.isGliding) {
-		const now = Date.now();
+	const now = Date.now();
+	if (deviation > MAX_DEVIATION && deviation < SPIKE_LIKE_LIMIT && !player.isFlying && !player.isGliding && now - player.timeStamp.knockBack > 1500 && now - player.timeStamp.riptide > 5000) {
 		if (now - data.lastFlagTimestamp > MAX_FLAG_INTERVAL) {
 			data.flagAmount = 0;
 		}
