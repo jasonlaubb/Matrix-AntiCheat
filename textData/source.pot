@@ -173,6 +173,12 @@ msgstr "Anti Timer"
 msgid "module.timer.description"
 msgstr "Prevent someone speed up their game speed to get an unfair advantage."
 
+msgid "module.itemcheck.name"
+msgstr "Item check"
+
+msgid "module.itemcheck.description"
+msgstr "Prevent the player from using the illegal item from the server."
+
 msgid "command.about.description"
 msgstr "Show some basic information about Matrix AntiCheat."
 
