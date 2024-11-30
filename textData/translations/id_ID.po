@@ -222,6 +222,22 @@ msgstr ""
 msgid "Prevent someone speed up their game speed to get an unfair advantage."
 msgstr ""
 
+#: module.itemcheck.name
+msgid "Item check"
+msgstr ""
+
+#: module.itemcheck.description
+msgid "Prevent the player from using the illegal item from the server."
+msgstr ""
+
+#: module.hop.name
+msgid "Anti Hop"
+msgstr ""
+
+#: module.hop.description
+msgid "An extra checks against the illegal movement motion, to prevent a silent bypass."
+msgstr ""
+
 #: command.about.description
 msgid "Show some basic information about Matrix AntiCheat."
 msgstr ""

@@ -222,97 +222,113 @@ msgstr "Github: %s"
 msgid "Prevent someone speed up their game speed to get an unfair advantage."
 msgstr "今のバージョン: %s"
 
+#: module.itemcheck.name
+msgid "Item check"
+msgstr "ダウンロードしたいですか? Discord サーバーに参加してね！！: https://discord.gg/%s"
+
+#: module.itemcheck.description
+msgid "Prevent the player from using the illegal item from the server."
+msgstr "§bMatrix§a+ §7> §gMatrix Anticheat はあなたのゲーム体験を保護します。Discord: https://discord.gg/%s"
+
+#: module.hop.name
+msgid "Anti Hop"
+msgstr "コマンドに関する便利な情報を取得できます。"
+
+#: module.hop.description
+msgid "An extra checks against the illegal movement motion, to prevent a silent bypass."
+msgstr "コマンド名"
+
 #: command.about.description
 msgid "Show some basic information about Matrix AntiCheat."
-msgstr "ダウンロードしたいですか? Discord サーバーに参加してね！！: https://discord.gg/%s"
+msgstr "ヘルプが必要なコマンドの名前"
 
 #: command.about.title
 msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
-msgstr "§bMatrix§a+ §7> §gMatrix Anticheat はあなたのゲーム体験を保護します。Discord: https://discord.gg/%s"
+msgstr "Matrix AntiCheatのコマンドリスト:"
 
 #: command.about.author
 msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
-msgstr "コマンドに関する便利な情報を取得できます。"
+msgstr "選択したコマンドの使用方法を表示しています: %s"
 
 #: command.about.github
 msgid "Github: %s"
-msgstr "コマンド名"
+msgstr "コマンドが見つかりません。正しい情報を表示できるように、有効なコマンドを入力してください。"
 
 #: command.about.version
 msgid "Current version: %s"
-msgstr "ヘルプが必要なコマンドの名前"
+msgstr "§gコマンドの説明: §e%s§g"
 
 #: command.about.joindc
 msgid "Want to download? Join our Discord Server: https://discord.gg/%s"
-msgstr "Matrix AntiCheatのコマンドリスト:"
+msgstr "§gコマンドの使用法: §e"
 
 #: ad.running
 msgid "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
-msgstr "選択したコマンドの使用方法を表示しています: %s"
+msgstr "§gコマンドの使用方法: §eコマンド名を入力するだけでOk"
 
 #: command.help.description
 msgid "Get the useful information about the commands."
-msgstr "コマンドが見つかりません。正しい情報を表示できるように、有効なコマンドを入力してください。"
+msgstr "文字列（任意の文字で構成された文字列）"
 
 #: command.help.command.name
 msgid "Command's name"
-msgstr "§gコマンドの説明: §e%s§g"
+msgstr "数値（浮動小数点数または整数）"
 
 #: command.help.command.name.description
 msgid "The name of the command that you need help."
-msgstr "§gコマンドの使用法: §e"
+msgstr "ブール値（True またはFalse のブール値）"
 
 #: command.help.title
 msgid "The command list of Matrix AntiCheat:"
-msgstr "§gコマンドの使用方法: §eコマンド名を入力するだけでOk"
+msgstr "コード（特定の数値に等しい長さのコード）"
 
 #: command.help.target.title
 msgid "Showing the usage of the selected command: %s"
-msgstr "文字列（任意の文字で構成された文字列）"
+msgstr "purecode (数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成されます)"
 
 #: command.help.target.notfound
 msgid "Not able to find the command, make sure you type a valid command so that we can show you the correct information."
-msgstr "数値（浮動小数点数または整数）"
+msgstr "選択肢（選択肢のリストから選んでね）"
 
 #: command.help.m.description
 msgid "§gDescription of the command: §e%s§g"
-msgstr "ブール値（True またはFalse のブール値）"
+msgstr "プレイヤー（オンラインのユーザー）"
 
 #: command.help.m.usage
 msgid "§gUsage of the command: §e"
-msgstr "コード（特定の数値に等しい長さのコード）"
+msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
 
 #: command.help.m.usage.empty
 msgid "§gUsage of the command: §eJust type the command name!"
-msgstr "purecode (数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成されます)"
+msgstr "§gType: §e%s"
 
 #: command.help.option.string
 msgid "string (A string that formed with any characters)"
-msgstr "選択肢（選択肢のリストから選んでね）"
+msgstr "§g説明: §e%s"
 
 #: command.help.option.number
 msgid "number (A float number or a integer)"
-msgstr "プレイヤー（オンラインのユーザー）"
+msgstr "§gType: §e%s"
 
 #: command.help.option.boolean
 msgid "boolean (A boolean value, true or false)"
-msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
+msgstr "(!オプション！)"
 
 #: command.help.option.code
 msgid "code (A code with length that is equal to a specific number)"
-msgstr "§gType: §e%s"
+msgstr ""
 
 #: command.help.option.purecode
 msgid "purecode (A purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z))"
-msgstr "§g説明: §e%s"
+msgstr ""
 
 #: command.help.option.choice
 msgid "choice (A choice between a list of options)"
-msgstr "§gType: §e%s"
+msgstr ""
 
 #: command.help.option.player
 msgid "player (A player name of a player that is online)"
-msgstr "(!オプション！)"
+msgstr ""
 
 #: command.help.option.target
 msgid "target (A player name of a player that is online but not an administrator of the server)"

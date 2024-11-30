@@ -50,3 +50,6 @@ export function fastSin(x: number) {
 export function fastCos(x: number) {
     return fastSin(x + HALF_PI);
 }
+export function fastTotalDelta (...x: number[]): number {
+    return x.slice(1).reduce((acc, val, i) => acc + (val - x[i]), 0);
+}

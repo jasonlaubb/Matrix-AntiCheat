@@ -179,6 +179,12 @@ msgstr "Item check"
 msgid "module.itemcheck.description"
 msgstr "Prevent the player from using the illegal item from the server."
 
+msgid "module.hop.name"
+msgstr "Anti Hop"
+
+msgid "module.hop.description"
+msgstr "An extra checks against the illegal movement motion, to prevent a silent bypass."
+
 msgid "command.about.description"
 msgstr "Show some basic information about Matrix AntiCheat."
 
