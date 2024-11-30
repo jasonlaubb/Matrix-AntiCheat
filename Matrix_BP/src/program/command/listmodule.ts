@@ -22,7 +22,7 @@ new Command()
 					.addText(buttonColour)
 					.addRawText(module.getName())
 					.endline()
-					.addText("§8")
+					.addText("§r§8")
 					.addTran(module.getToggleId()!)
 					.build()
 			);
