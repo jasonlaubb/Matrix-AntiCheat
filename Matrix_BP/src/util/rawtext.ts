@@ -14,6 +14,10 @@ class FastText {
         this.currentRawText.push({ translate: key, with: withString });
         return this;
     }
+    public addRawText (rawtext: RawText) {
+        this.currentRawText.push(...rawtext.rawtext!);
+        return this;        
+    }
     public addRaw(rawMessage: RawMessage) {
         this.currentRawText.push(rawMessage);
         return this;
@@ -33,8 +37,8 @@ class FastText {
 export function rawtext(...args: RawMessage[]) {
     return { rawtext: args } as RawText;
 }
-export function tTm(rawText: RawText) {
-    return rawtext(...rawText.rawtext!);
+export function tTm(rawText: RawText): RawMessage[] {
+    return [...rawText.rawtext!];
 }
 export function fastText() {
     return new FastText();

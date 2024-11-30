@@ -89,6 +89,7 @@ new Command()
 			}, 2400);
 		}
 	})
+	.register();
 function isPasswordCorrect (password: string, hash: string) {
 	const passwordHash = SHA256(password).toString();
 	return passwordHash == hash;

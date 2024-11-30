@@ -17,3 +17,6 @@ import "./detection/reach";
 import "./command/about";
 import "./command/help";
 import "./command/op";
+import "./command/deop";
+import "./command/setmodule";
+import "./command/listmodule";

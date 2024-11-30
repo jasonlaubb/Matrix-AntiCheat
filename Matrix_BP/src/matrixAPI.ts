@@ -267,10 +267,10 @@ class Module {
         return Config.modifiedConfig;
     }
     public static get registeredModule() {
-        return Module.moduleList;
+        return Module.moduleList.filter((module) => !module.locked);
     }
     public static findRegisteredModule(id: string) {
-        return Module.moduleList.find((module) => module.toggleId == id);
+        return Module.registeredModule.find((module) => module.toggleId == id);
     }
     public static sendError(error: Error) {
         console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`);
@@ -561,6 +561,7 @@ class Command {
     }
 }
 class Config {
+    private constructor () {}
     private static configData?: typeof defaultConfig = undefined;
     public static get modifiedConfig() {
         if (this.configData === undefined) throw new Error("Config is not loaded");
@@ -621,7 +622,7 @@ Player.prototype.safeIsOp = function () {
         return false;
     }
 };
-export { Module, Command };
+export { Module, Command, Config };
 // Start the AntiCheat
 Module.ignite();
 import { setupFlagFunction } from "./util/flag";
