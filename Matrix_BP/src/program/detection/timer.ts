@@ -4,7 +4,7 @@ import { calculateDistance, fastHypot, fastAbs } from "../../util/fastmath";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { rawtextTranslate } from "../../util/rawtext";
 import { world } from "@minecraft/server";
-const MAX_DEVIATION = 3;
+const MAX_DEVIATION = 4.1;
 const MAX_FLAG_AMOUNT = 7;
 interface TimerData {
     lastReset: number;
