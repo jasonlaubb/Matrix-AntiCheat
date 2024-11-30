@@ -62,6 +62,14 @@ msgstr ""
 msgid "Until %s"
 msgstr ""
 
+#: ui.runcommand
+msgid "Run Command!"
+msgstr ""
+
+#: ui.exit
+msgid "Exit"
+msgstr ""
+
 #: commandsynax.unknown
 msgid "Unknown command: %s, you can type -help to get some useful information about the commands."
 msgstr ""
@@ -392,5 +400,85 @@ msgstr ""
 
 #: command.op.incorrect
 msgid "You have typed the incorrect password, please try again later."
+msgstr ""
+
+#: command.deop.description
+msgid "Remove yourself from the administrators of the server."
+msgstr ""
+
+#: command.deop.success
+msgid "You have been removed from the administrators of the server."
+msgstr ""
+
+#: command.setmodule.description
+msgid "Toggle a module on or off."
+msgstr ""
+
+#: command.setmodule.module
+msgid "module's id"
+msgstr ""
+
+#: command.setmodule.module.description
+msgid "The id of the module that you want to toggle on or off."
+msgstr ""
+
+#: command.setmodule.state
+msgid "target state"
+msgstr ""
+
+#: command.setmodule.state.description
+msgid "State that you want to switch on or off for the module."
+msgstr ""
+
+#: command.setmodule.success.enabled
+msgid "Success! The module has been enabled by yourself."
+msgstr ""
+
+#: command.setmodule.success.disabled
+msgid "Success! The module has been disabled by yourself."
+msgstr ""
+
+#: command.setmodule.notfound
+msgid "Not able to find the module, make sure you type a valid module. You can use '-listmodules' to see the list of modules."
+msgstr ""
+
+#: command.setmodule.already.enabled
+msgid "The module has already been enabled. Do you want to disable it?"
+msgstr ""
+
+#: command.setmodule.already.disabled
+msgid "The module has already been disabled. Do you mean to enable it?"
+msgstr ""
+
+#: command.listmodule.description
+msgid "Show the list of modules."
+msgstr ""
+
+#: command.listmodule.title
+msgid "The list of the modules"
+msgstr ""
+
+#: command.listmodule.body
+msgid "Here is the list of modules. The button is the id of the module. Green means enabled, red means disabled. What a simple system, right?"
+msgstr ""
+
+#: command.listmodule.toggle.title
+msgid "Toggling the module"
+msgstr ""
+
+#: command.listmodule.toggle.body
+msgid "You can still use '-setmodule' to toggle a module on or off."
+msgstr ""
+
+#: command.listmodule.toggle.enable
+msgid "I want to enable this module."
+msgstr ""
+
+#: command.listmodule.toggle.disable
+msgid "I want to disable this module."
+msgstr ""
+
+#: command.listmodule.toggle.state
+msgid "What do you want to do with this module"
 msgstr ""
 

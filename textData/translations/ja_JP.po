@@ -62,241 +62,249 @@ msgstr "このコマンドを使用する権限がありません 最低限必�
 msgid "Until %s"
 msgstr "申し訳ありません このコマンドは既に無効になっています"
 
+#: ui.runcommand
+msgid "Run Command!"
+msgstr "不明なサブコマンド: %s, 使用できるサブコマンドを確認するには、-help <command> を使用して確認できます"
+
+#: ui.exit
+msgid "Exit"
+msgstr "おっと コマンドを使いたい場合には何かを入力する必要があるよ"
+
 #: commandsynax.unknown
 msgid "Unknown command: %s, you can type -help to get some useful information about the commands."
-msgstr "不明なサブコマンド: %s, 使用できるサブコマンドを確認するには、-help <command> を使用して確認できます"
+msgstr "§7>> §gコマンドに関する情報を見たい場合は、-help <command> を使用してください"
 
 #: commandsynax.permission
 msgid "No permission to use this command. The minimum permission required is 'level %s'"
-msgstr "おっと コマンドを使いたい場合には何かを入力する必要があるよ"
+msgstr "必須のパラメータ '%s' が指定されていません"
 
 #: commandsystem.disabled
 msgid "Oops, this command has been disabled."
-msgstr "§7>> §gコマンドに関する情報を見たい場合は、-help <command> を使用してください"
+msgstr "これはサブコマンドです　使用できるサブコマンドを確認するには、-help <command> と入力して確認してください"
 
 #: commandsynax.unknownsubcommand
 msgid "Unknown subcommand: %s, you can use -help <command> to know what subcommand you can use."
-msgstr "必須のパラメータ '%s' が指定されていません"
+msgstr "構文エラー: パラメータ '%1' はboolean値ですが、'%2 >>%3<< %4' と入力しました。'true' または 'false' のみが使えます"
 
 #: commandsynax.empty
 msgid "Oops, you have to type something if you want to use some commands."
-msgstr "これはサブコマンドです　使用できるサブコマンドを確認するには、-help <command> と入力して確認してください"
+msgstr "構文エラー: パラメータ '%1' には少なくとも %5 文字を含む文字列が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.tips
 msgid "§7>> §gUse -help <command> to get some useful information about the commands."
-msgstr "構文エラー: パラメータ '%1' はboolean値ですが、'%2 >>%3<< %4' と入力しました。'true' または 'false' のみが使えます"
+msgstr "構文エラー: パラメータ '%1' には最大 %5 文字の文字列が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.missing
 msgid "You missed a parameter '%s' which is required."
-msgstr "構文エラー: パラメータ '%1' には少なくとも %5 文字を含む文字列が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には整数が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.missing.subcommand
 msgid "This is a subcommand! You have to type -help <command> to know what subcommand you can use."
-msgstr "構文エラー: パラメータ '%1' には最大 %5 文字の文字列が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には有効な数値が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.boolean
 msgid "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2 >>%3<< %4'. Only 'true' or 'false' are allowed'."
-msgstr "構文エラー: パラメータ '%1' には整数が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には %5 より大きい数値が必要ですが、範囲外の '%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.string.low
 msgid "Syntax error: The parameter '%1' required a string that contains at least %5 characters, but you have typed '%2 >>%3<< %4'."
-msgstr "構文エラー: パラメータ '%1' には有効な数値が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には %5 より小さい数値が必要ですが、範囲外の '%2 >>%3<< %4' を入力しました"
 
 #: commandsynax.syntax.string.high
 msgid "Syntax error: The parameter '%1' required a string that contains at most %5 characters, but you have typed '%2 >>%3<< %4'."
-msgstr "構文エラー: パラメータ '%1' には %5 より大きい数値が必要ですが、範囲外の '%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には長さが %5 のコードが必要ですが、範囲外の '%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.integer.nan
 msgid "Syntax error: The parameter '%1' required a integer, but you have typed '%2 >>%3<< %4'."
-msgstr "構文エラー: パラメータ '%1' には %5 より小さい数値が必要ですが、範囲外の '%2 >>%3<< %4' を入力しました"
+msgstr "構文エラー: パラメータ '%1' には、数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成される純粋なコードが必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.number.nan
 msgid "Syntax error: The parameter '%1' required a valid number, but you have typed '%2 >>%3<< %4'."
-msgstr "構文エラー: パラメータ '%1' には長さが %5 のコードが必要ですが、範囲外の '%2 >>%3<< %4' と入力されています"
+msgstr "構文エラー: パラメータ '%1' には %5 からの選択が必要ですが、'%2 >>%3<< %4' と入力されています"
 
 #: commandsynax.syntax.number.low
 msgid "Syntax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2 >>%3<< %4' which is out of range."
-msgstr "構文エラー: パラメータ '%1' には、数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成される純粋なコードが必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "Anti Phase"
 
 #: commandsynax.syntax.number.high
 msgid "Syntax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
-msgstr "構文エラー: パラメータ '%1' には %5 からの選択が必要ですが、'%2 >>%3<< %4' と入力されています"
+msgstr "不正移動パケットでプレイヤーが壁を通り抜けるの防ぎます"
 
 #: commandsynax.syntax.code
 msgid "Syntax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
-msgstr "Anti Phase"
+msgstr "Firewall"
 
 #: commandsynax.syntax.purecode
 msgid "Syntax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2 >>%3<< %4'"
-msgstr "不正移動パケットでプレイヤーが壁を通り抜けるの防ぎます"
+msgstr "不正なパケットを含むプレイヤーがサーバーにアクセスできないようにします。例えば スパムボット等があるよ"
 
 #: commandsynax.syntax.choice
 msgid "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
-msgstr "Firewall"
+msgstr "Anti Name Spoofer"
 
 #: module.phase.name
 msgid "Anti Phase"
-msgstr "不正なパケットを含むプレイヤーがサーバーにアクセスできないようにします。例えば スパムボット等があるよ"
+msgstr "プレイヤーが自分の名前を無効な名前に変更してサーバーに参加するのを防ぎます"
 
 #: module.phase.description
 msgid "Prevent the player from passing through the walls with the illegal movement packet."
-msgstr "Anti Name Spoofer"
+msgstr "Anti KillAura"
 
 #: module.firewall.name
 msgid "Firewall"
-msgstr "プレイヤーが自分の名前を無効な名前に変更してサーバーに参加するのを防ぎます"
+msgstr "プレイヤーが違法なkill packetで他のプレイヤーを攻撃するのを防ぎます"
 
 #: module.firewall.description
 msgid "Prevent the player who contains bad packets from accessing the server. For example, spam bot."
-msgstr "Anti KillAura"
+msgstr "Anti Scaffold"
 
 #: module.namespoof.name
 msgid "Anti Name Spoofer"
-msgstr "プレイヤーが違法なkill packetで他のプレイヤーを攻撃するのを防ぎます"
+msgstr "プレイヤーがscaffold Hack を使用しておかしいブロックの置き方をするのを防ぎます"
 
 #: module.namespoof.description
 msgid "Prevent the player from changing their name to a invalid name and join the server."
-msgstr "Anti Scaffold"
+msgstr "Anti Insteabreak"
 
 #: module.killaura.name
 msgid "Anti KillAura"
-msgstr "プレイヤーがscaffold Hack を使用しておかしいブロックの置き方をするのを防ぎます"
+msgstr "プレイヤーが一発破壊でブロックを破壊できないようにします。このタイプのチートは、正しく構成されたレルムまたは BDS サーバーでは機能しません。"
 
 #: module.killaura.description
 msgid "Prevent the player from hitting other players with the illegal kill packet."
-msgstr "Anti Insteabreak"
+msgstr "Anti Reach"
 
 #: module.scaffold.name
 msgid "Anti Scaffold"
-msgstr "プレイヤーが一発破壊でブロックを破壊できないようにします。このタイプのチートは、正しく構成されたレルムまたは BDS サーバーでは機能しません。"
+msgstr "最大 4.5 ブロックまでのリーチ検出を提供します"
 
 #: module.scaffold.description
 msgid "Prevent the player from using the auto-brige hack to gain unfair advantage."
-msgstr "Anti Reach"
+msgstr "Anti Speed"
 
 #: module.insteabreak.name
 msgid "Anti Insteabreak"
-msgstr "最大 4.5 ブロックまでのリーチ検出を提供します"
+msgstr "最新かつ!最強のアンチスピードエンジン!!! 「bds prediction」の特性を利用して、プレイヤーの不正な動きを識別します"
 
 #: module.insteabreak.description
 msgid "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
-msgstr "Anti Speed"
+msgstr "Anti Fly"
 
 #: module.reach.name
 msgid "Anti Reach"
-msgstr "最新かつ!最強のアンチスピードエンジン!!! 「bds prediction」の特性を利用して、プレイヤーの不正な動きを識別します"
+msgstr "ほとんどのフライハックが機能しないようにします。誤検知の可能性は少しだけあります"
 
 #: module.reach.description
 msgid "An advanced anti reach solution that provided reach detection up to 4.5 blocks."
-msgstr "Anti Fly"
+msgstr "Anti Timer"
 
 #: module.speed.name
 msgid "Anti Speed"
-msgstr "ほとんどのフライハックが機能しないようにします。誤検知の可能性は少しだけあります"
+msgstr "誰かがチートを使用してゲーム速度を上げるのを防ぎます"
 
 #: module.speed.description
 msgid "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
-msgstr "Anti Timer"
+msgstr "Matrix AntiCheatに関する基本情報を表示します"
 
 #: module.fly.name
 msgid "Anti Fly"
-msgstr "誰かがチートを使用してゲーム速度を上げるのを防ぎます"
+msgstr "§bMatrix§a+ §7> §gMatrix AntiCheatについて<3"
 
 #: module.fly.description
 msgid "Prevent most of the fly hacks from working. There is a small probability of false positive."
-msgstr "Matrix AntiCheatに関する基本情報を表示します"
+msgstr "Author: jasonlaubb (Discord: @uwu_the_great)"
 
 #: module.timer.name
 msgid "Anti Timer"
-msgstr "§bMatrix§a+ §7> §gMatrix AntiCheatについて<3"
+msgstr "Github: %s"
 
 #: module.timer.description
 msgid "Prevent someone speed up their game speed to get an unfair advantage."
-msgstr "Author: jasonlaubb (Discord: @uwu_the_great)"
+msgstr "今のバージョン: %s"
 
 #: command.about.description
 msgid "Show some basic information about Matrix AntiCheat."
-msgstr "Github: %s"
+msgstr "ダウンロードしたいですか? Discord サーバーに参加してね！！: https://discord.gg/%s"
 
 #: command.about.title
 msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
-msgstr "今のバージョン: %s"
+msgstr "§bMatrix§a+ §7> §gMatrix Anticheat はあなたのゲーム体験を保護します。Discord: https://discord.gg/%s"
 
 #: command.about.author
 msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
-msgstr "ダウンロードしたいですか? Discord サーバーに参加してね！！: https://discord.gg/%s"
+msgstr "コマンドに関する便利な情報を取得できます。"
 
 #: command.about.github
 msgid "Github: %s"
-msgstr "§bMatrix§a+ §7> §gMatrix Anticheat はあなたのゲーム体験を保護します。Discord: https://discord.gg/%s"
+msgstr "コマンド名"
 
 #: command.about.version
 msgid "Current version: %s"
-msgstr "コマンドに関する便利な情報を取得できます。"
+msgstr "ヘルプが必要なコマンドの名前"
 
 #: command.about.joindc
 msgid "Want to download? Join our Discord Server: https://discord.gg/%s"
-msgstr "コマンド名"
+msgstr "Matrix AntiCheatのコマンドリスト:"
 
 #: ad.running
 msgid "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
-msgstr "ヘルプが必要なコマンドの名前"
+msgstr "選択したコマンドの使用方法を表示しています: %s"
 
 #: command.help.description
 msgid "Get the useful information about the commands."
-msgstr "Matrix AntiCheatのコマンドリスト:"
+msgstr "コマンドが見つかりません。正しい情報を表示できるように、有効なコマンドを入力してください。"
 
 #: command.help.command.name
 msgid "Command's name"
-msgstr "選択したコマンドの使用方法を表示しています: %s"
+msgstr "§gコマンドの説明: §e%s§g"
 
 #: command.help.command.name.description
 msgid "The name of the command that you need help."
-msgstr "コマンドが見つかりません。正しい情報を表示できるように、有効なコマンドを入力してください。"
+msgstr "§gコマンドの使用法: §e"
 
 #: command.help.title
 msgid "The command list of Matrix AntiCheat:"
-msgstr "§gコマンドの説明: §e%s§g"
+msgstr "§gコマンドの使用方法: §eコマンド名を入力するだけでOk"
 
 #: command.help.target.title
 msgid "Showing the usage of the selected command: %s"
-msgstr "§gコマンドの使用法: §e"
+msgstr "文字列（任意の文字で構成された文字列）"
 
 #: command.help.target.notfound
 msgid "Not able to find the command, make sure you type a valid command so that we can show you the correct information."
-msgstr "§gコマンドの使用方法: §eコマンド名を入力するだけでOk"
+msgstr "数値（浮動小数点数または整数）"
 
 #: command.help.m.description
 msgid "§gDescription of the command: §e%s§g"
-msgstr "文字列（任意の文字で構成された文字列）"
+msgstr "ブール値（True またはFalse のブール値）"
 
 #: command.help.m.usage
 msgid "§gUsage of the command: §e"
-msgstr "数値（浮動小数点数または整数）"
+msgstr "コード（特定の数値に等しい長さのコード）"
 
 #: command.help.m.usage.empty
 msgid "§gUsage of the command: §eJust type the command name!"
-msgstr "ブール値（True またはFalse のブール値）"
+msgstr "purecode (数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成されます)"
 
 #: command.help.option.string
 msgid "string (A string that formed with any characters)"
-msgstr "コード（特定の数値に等しい長さのコード）"
+msgstr "選択肢（選択肢のリストから選んでね）"
 
 #: command.help.option.number
 msgid "number (A float number or a integer)"
-msgstr "purecode (数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成されます)"
+msgstr "プレイヤー（オンラインのユーザー）"
 
 #: command.help.option.boolean
 msgid "boolean (A boolean value, true or false)"
-msgstr "選択肢（選択肢のリストから選んでね）"
+msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
 
 #: command.help.option.code
 msgid "code (A code with length that is equal to a specific number)"
-msgstr "プレイヤー（オンラインのユーザー）"
+msgstr "§gType: §e%s"
 
 #: command.help.option.purecode
 msgid "purecode (A purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z))"
-msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
+msgstr "§g説明: §e%s"
 
 #: command.help.option.choice
 msgid "choice (A choice between a list of options)"
@@ -304,15 +312,15 @@ msgstr "§gType: §e%s"
 
 #: command.help.option.player
 msgid "player (A player name of a player that is online)"
-msgstr "§g説明: §e%s"
+msgstr "(!オプション！)"
 
 #: command.help.option.target
 msgid "target (A player name of a player that is online but not an administrator of the server)"
-msgstr "§gType: §e%s"
+msgstr ""
 
 #: command.help.target.type
 msgid "§gType: §e%s"
-msgstr "(!オプション！)"
+msgstr ""
 
 #: command.help.target.description
 msgid "§gDescription: §e%s"
@@ -392,5 +400,85 @@ msgstr ""
 
 #: command.op.incorrect
 msgid "You have typed the incorrect password, please try again later."
+msgstr ""
+
+#: command.deop.description
+msgid "Remove yourself from the administrators of the server."
+msgstr ""
+
+#: command.deop.success
+msgid "You have been removed from the administrators of the server."
+msgstr ""
+
+#: command.setmodule.description
+msgid "Toggle a module on or off."
+msgstr ""
+
+#: command.setmodule.module
+msgid "module's id"
+msgstr ""
+
+#: command.setmodule.module.description
+msgid "The id of the module that you want to toggle on or off."
+msgstr ""
+
+#: command.setmodule.state
+msgid "target state"
+msgstr ""
+
+#: command.setmodule.state.description
+msgid "State that you want to switch on or off for the module."
+msgstr ""
+
+#: command.setmodule.success.enabled
+msgid "Success! The module has been enabled by yourself."
+msgstr ""
+
+#: command.setmodule.success.disabled
+msgid "Success! The module has been disabled by yourself."
+msgstr ""
+
+#: command.setmodule.notfound
+msgid "Not able to find the module, make sure you type a valid module. You can use '-listmodules' to see the list of modules."
+msgstr ""
+
+#: command.setmodule.already.enabled
+msgid "The module has already been enabled. Do you want to disable it?"
+msgstr ""
+
+#: command.setmodule.already.disabled
+msgid "The module has already been disabled. Do you mean to enable it?"
+msgstr ""
+
+#: command.listmodule.description
+msgid "Show the list of modules."
+msgstr ""
+
+#: command.listmodule.title
+msgid "The list of the modules"
+msgstr ""
+
+#: command.listmodule.body
+msgid "Here is the list of modules. The button is the id of the module. Green means enabled, red means disabled. What a simple system, right?"
+msgstr ""
+
+#: command.listmodule.toggle.title
+msgid "Toggling the module"
+msgstr ""
+
+#: command.listmodule.toggle.body
+msgid "You can still use '-setmodule' to toggle a module on or off."
+msgstr ""
+
+#: command.listmodule.toggle.enable
+msgid "I want to enable this module."
+msgstr ""
+
+#: command.listmodule.toggle.disable
+msgid "I want to disable this module."
+msgstr ""
+
+#: command.listmodule.toggle.state
+msgid "What do you want to do with this module"
 msgstr ""
 
