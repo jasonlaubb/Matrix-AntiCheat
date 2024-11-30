@@ -31,7 +31,7 @@ new Command()
                     .endline()
                     .addTranRawText("command.help.target.description", option.description)
                     .endline()
-                    .addTranRawText("command.help.target.type", rawtextTranslate("command.help.target.type." + option.type))
+                    .addTranRawText("command.help.target.type", rawtextTranslate("command.help.option." + option.type))
                     .endline();
             });
             command.optionalOption.forEach((option) => {
@@ -42,7 +42,7 @@ new Command()
                     .endline()
                     .addTranRawText("command.help.target.description", option.description)
                     .endline()
-                    .addTranRawText("command.help.target.type", rawtextTranslate("command.help.target.type." + option.type))
+                    .addTranRawText("command.help.target.type", rawtextTranslate("command.help.option." + option.type))
                     .endline();
             });
             player.sendMessage(message.build());
