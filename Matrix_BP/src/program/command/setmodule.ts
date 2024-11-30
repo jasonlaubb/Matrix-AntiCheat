@@ -35,4 +35,4 @@ new Command()
 			searchModule.enableModule();
 		}
 	})
-	
+	.register();
