@@ -1,6 +1,6 @@
 import { RawText } from "@minecraft/server";
 import { Command } from "../../matrixAPI";
-import { fastText, rawtext, rawtextTranslate, tTm } from "../../util/rawtext";
+import { fastText, rawtext, rawtextTranslate } from "../../util/rawtext";
 
 new Command()
     .setName("help")
@@ -21,16 +21,16 @@ new Command()
                 .endline()
                 .addTran("command.help.target.title", targetCommand)
                 .endline()
-                .addTranRaw("command.help.m.description", tTm(command.description))
+                .addTranRaw("command.help.m.description", command.description.rawtext![0])
                 .endline()
-                .addRaw(usageGenerator(command))
+                .addRawText(usageGenerator(command))
                 .endline();
             command.requiredOption.forEach((option) => {
                 message
                     .addText("§e- ")
-                    .addRaw(tTm(option.name))
+                    .addRawText(option.name)
                     .endline()
-                    .addTranRaw("command.help.target.description", tTm(option.description))
+                    .addTranRaw("command.help.target.description", option.description)
                     .endline()
                     .addTranRaw("command.help.target.type", rawtextTranslate("command.help.target.type." + option.type))
                     .endline();
@@ -38,10 +38,10 @@ new Command()
             command.optionalOption.forEach((option) => {
                 message
                     .addText("§e- ")
-                    .addRaw(tTm(option.name))
+                    .addRawText(option.name)
                     .addTran("command.help.target.optional")
                     .endline()
-                    .addTranRaw("command.help.target.description", tTm(option.description))
+                    .addTranRaw("command.help.target.description", option.description)
                     .endline()
                     .addTranRaw("command.help.target.type", rawtextTranslate("command.help.target.type." + option.type))
                     .endline();
@@ -53,9 +53,9 @@ new Command()
                 message
                     .addText("§g-" + command.availableId[0])
                     .space()
-                    .addRaw(usageGeneratorRaw(command))
+                    .addRawText(usageGeneratorRaw(command))
                     .addText("§b~ ")
-                    .addRaw(tTm(command.description))
+                    .addRawText(command.description)
                     .endline();
             });
             // Send the help message
@@ -72,10 +72,10 @@ function usageGenerator(command: Command): RawText {
         .addText("-" + command.availableId[0])
         .space();
     allRequired.forEach((option) => {
-        usage.addText("<").addRaw(tTm(option.name)).addText(">").space();
+        usage.addText("<").addRawText(option.name).addText(">").space();
     });
     allOptional.forEach((option) => {
-        usage.addText("[").addRaw(tTm(option.name)).addText("]").space();
+        usage.addText("[").addRawText(option.name).addText("]").space();
     });
     return usage.build();
 }
@@ -86,10 +86,10 @@ function usageGeneratorRaw(command: Command): RawText {
     if (allRequired.length == 0 && allOptional.length == 0) return rawtext({ text: " " });
     const usage = fastText();
     allRequired.forEach((option) => {
-        usage.addText("<").addRaw(tTm(option.name)).addText(">").space();
+        usage.addText("<").addRawText(option.name).addText(">").space();
     });
     allOptional.forEach((option) => {
-        usage.addText("[").addRaw(tTm(option.name)).addText("]").space();
+        usage.addText("[").addRawText(option.name).addText("]").space();
     });
     return usage.build();
 }
