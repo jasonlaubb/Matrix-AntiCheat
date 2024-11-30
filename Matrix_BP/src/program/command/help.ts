@@ -17,11 +17,10 @@ new Command()
                 return;
             }
             let message = fastText()
-                .addText("§bMatrix§a+ 7> §g")
-                .endline()
+                .addText("§bMatrix§a+ §7> §g")
                 .addTran("command.help.target.title", targetCommand)
                 .endline()
-                .addTranRaw("command.help.m.description", command.description.rawtext![0])
+                .addTranRawText("command.help.m.description", command.description)
                 .endline()
                 .addRawText(usageGenerator(command))
                 .endline();
@@ -30,9 +29,9 @@ new Command()
                     .addText("§e- ")
                     .addRawText(option.name)
                     .endline()
-                    .addTranRaw("command.help.target.description", option.description)
+                    .addTranRawText("command.help.target.description", option.description)
                     .endline()
-                    .addTranRaw("command.help.target.type", rawtextTranslate("command.help.target.type." + option.type))
+                    .addTranRawText("command.help.target.type", rawtextTranslate("command.help.target.type." + option.type))
                     .endline();
             });
             command.optionalOption.forEach((option) => {
@@ -41,14 +40,14 @@ new Command()
                     .addRawText(option.name)
                     .addTran("command.help.target.optional")
                     .endline()
-                    .addTranRaw("command.help.target.description", option.description)
+                    .addTranRawText("command.help.target.description", option.description)
                     .endline()
-                    .addTranRaw("command.help.target.type", rawtextTranslate("command.help.target.type." + option.type))
+                    .addTranRawText("command.help.target.type", rawtextTranslate("command.help.target.type." + option.type))
                     .endline();
             });
             player.sendMessage(message.build());
         } else {
-            let message = fastText().addText("§bMatrix§a+ 7> §g").addTran("command.help.title").endline();
+            let message = fastText().addText("§bMatrix§a+ §7> §g").addTran("command.help.title").endline();
             Command.allCommands.forEach((command) => {
                 message
                     .addText("§g-" + command.availableId[0])
