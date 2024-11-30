@@ -13,7 +13,7 @@ new Command()
         if (targetCommand) {
             const command = Command.searchCommand(targetCommand);
             if (!command) {
-                player.sendMessage(rawtextTranslate("command.help.target.notfound", targetCommand));
+                player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.help.target.notfound", targetCommand).build());
                 return;
             }
             let message = fastText()
@@ -26,7 +26,7 @@ new Command()
                 .endline();
             command.requiredOption.forEach((option) => {
                 message
-                    .addText("§e- ")
+                    .addText("§a- ")
                     .addRawText(option.name)
                     .endline()
                     .addTranRawText("command.help.target.description", option.description)
@@ -36,7 +36,7 @@ new Command()
             });
             command.optionalOption.forEach((option) => {
                 message
-                    .addText("§e- ")
+                    .addText("§a- ")
                     .addRawText(option.name)
                     .addTran("command.help.target.optional")
                     .endline()
