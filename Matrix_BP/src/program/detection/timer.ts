@@ -5,7 +5,7 @@ import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data
 import { rawtextTranslate } from "../../util/rawtext";
 import { world } from "@minecraft/server";
 const MAX_DEVIATION = 3;
-const MAX_FLAG_AMOUNT = 3;
+const MAX_FLAG_AMOUNT = 7;
 interface TimerData {
     lastReset: number;
     lastLocation: Vector3;

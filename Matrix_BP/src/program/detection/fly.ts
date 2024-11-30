@@ -50,7 +50,7 @@ function tickEvent(player: Player) {
     const surroundAir = isSurroundedByAir(player.location, player.dimension);
     if (player.isOnGround && velocityY === 0) {
         data.lastOnGroundLocation = player.location;
-    } else if (now - player.timeStamp.knockBack > 2000 && now - player.timeStamp.riptide > 5000 && data.lastVelocityY < -MAX_VELOCITY_Y && !player.hasTag("riding") && !player.isFlying && !player.isOnGround && !player.isGliding && surroundAir) {
+    } else if (now - player.timeStamp.knockBack > 2000 && now - player.timeStamp.riptide > 5000 && data.lastVelocityY < -MAX_VELOCITY_Y && !player.hasTag("riding") && !player.isFlying && !player.isOnGround && !player.isGliding && surroundAir && !data.velocityYList.some((yV) => yV == HIGH_VELOCITY_Y)) {
         if (velocityY > MAX_VELOCITY_Y) {
             player.teleport(data.lastOnGroundLocation);
             player.flag(fly);
@@ -60,16 +60,22 @@ function tickEvent(player: Player) {
         player.teleport(data.lastOnGroundLocation);
         player.flag(fly);
     }
-    data.velocityYList.push(velocityY);
-    if (data.velocityYList.length > 40) data.velocityYList.shift();
-    if (data.velocityYList.length >= 40 && !player.getEffect(MinecraftEffectTypes.JumpBoost) && data.velocityYList.some((yV) => yV < -MAX_VELOCITY_Y)) {
+    if (player.isFlying) {
+        data.velocityYList.push(HIGH_VELOCITY_Y);
+    } else {
+        data.velocityYList.push(velocityY);
+    }
+    if (data.velocityYList.length > 60) data.velocityYList.shift();
+    const minAmount = Math.min(...data.velocityYList);
+    const maxAmount = Math.max(...data.velocityYList);
+    if (data.velocityYList.length >= 60 && !player.getEffect(MinecraftEffectTypes.JumpBoost) && data.velocityYList.some((yV) => yV < -MAX_VELOCITY_Y)) {
         const { highestRepeatedVelocity, highestRepeatedAmount } = repeatChecks(data.velocityYList);
-        if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y) {
+        if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y && minAmount <= -MAX_VELOCITY_Y && maxAmount < HIGH_VELOCITY_Y) {
             player.teleport(data.lastOnGroundLocation);
             player.flag(fly);
         }
     }
-    if (!player.isGliding && fastAbs(velocityY) <= MAX_VELOCITY_Y && surroundAir && (player.isOnGround || player.hasTag("isOnGround"))) {
+    if (!player.isGliding && fastAbs(velocityY) <= HIGH_VELOCITY_Y && surroundAir && (player.isOnGround || player.hasTag("isOnGround"))) {
         player.flag(fly);
     }
     if (player.isGliding && !player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra) && JSON.stringify(player.location) != JSON.stringify(data.lastFlaggedLocation)) {
