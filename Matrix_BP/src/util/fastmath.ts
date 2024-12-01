@@ -22,9 +22,12 @@ export function fastRound(x: number) {
 }
 
 export function fastTrunc(x: number) {
+    if (x < 0) return (x - 0.5) | 0;
     return x | 0;
 }
-
+export function fastFloor(x: number) {
+    return x | 0;
+}
 export function fastAbs(x: number) {
     return x < 0 ? -x : x;
 }

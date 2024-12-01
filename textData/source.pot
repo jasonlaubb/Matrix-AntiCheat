@@ -188,6 +188,12 @@ msgstr "Anti Hop"
 msgid "module.hop.description"
 msgstr "An extra checks against the illegal movement motion, to prevent a silent bypass."
 
+msgid "module.aim.name"
+msgstr "Aim check"
+
+msgid "module.aim.description"
+msgstr "An extra checks against the illegal aim, to prevent the killaura or aim assist, credit to 4urxa."
+
 msgid "command.about.description"
 msgstr "Show some basic information about Matrix AntiCheat."
 

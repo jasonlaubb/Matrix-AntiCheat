@@ -15,6 +15,7 @@ export default {
         antiInsteaBreak: false,
         antiReach: true,
         itemCheck: false,
+        aimCheck: true,
     } as { [key: string]: boolean },
     command: {
         about: true,

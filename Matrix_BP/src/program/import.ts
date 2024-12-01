@@ -9,6 +9,7 @@ import "./detection/hop";
 import "./detection/phase";
 import "./detection/fly";
 import "./detection/killaura";
+import "./detection/aim";
 import "./detection/timer";
 import "./detection/namespoof";
 import "./detection/scaffold";
