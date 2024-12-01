@@ -95,7 +95,7 @@ function checkTimer() {
             }
             // Increase the flag amount
             const ratio = absDeviation / maxDeviation;
-            data.flagAmount += overSlow ? 1.5 : ratio < 1 ? ratio : 1;
+            data.flagAmount += overSlow ? 1.5 : ratio < 2.34 ? ratio : 2.34;
             data.lastFlagTimestamp = now;
             if (highDeviationState) {
                 player.teleport(data.lastNoSpeedLocation);
