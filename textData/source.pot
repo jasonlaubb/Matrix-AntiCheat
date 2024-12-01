@@ -59,6 +59,9 @@ msgstr "Run Command!"
 msgid "ui.exit"
 msgstr "Exit"
 
+msgid "ui.closechat"
+msgstr "§7>> §gPlease close the chat to receive your user interface (UI)."
+
 msgid "commandsynax.unknown"
 msgstr "Unknown command: %s, you can type -help to get some useful information about the commands."
 
@@ -379,3 +382,30 @@ msgstr "I want to disable this module."
 
 msgid "command.listmodule.toggle.state"
 msgstr "What do you want to do with this module"
+
+msgid "command.set.invalid"
+msgstr "Unknown path: %s, make sure you type a valid path. Use slash (/) to separate the path."
+
+msgid "command.set.number"
+msgstr "The path you want to set must be a number."
+
+msgid "command.set.boolean"
+msgstr "The path you want to set must be a boolean. Only 'true' or 'false' is allowed."
+
+msgid "command.set.success"
+msgstr "Success! The path '%1' has been set to '%2'."
+
+msgid "command.set.description"
+msgstr "Change the config dynamically. Without the data lost for different versions."
+
+msgid "command.set.key"
+msgstr "path (key)"
+
+msgid "command.set.key.description"
+msgstr "The path that you want to set. You should type it with slash (/) to separate the path. For example, 'modules/antiSpeed'."
+
+msgid "command.set.value"
+msgstr "value"
+
+msgid "command.set.value.description"
+msgstr "The value that you want to set. It should be a string, a boolean or a number depending on the type of the path."

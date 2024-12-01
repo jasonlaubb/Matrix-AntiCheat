@@ -21,3 +21,4 @@ import "./command/op";
 import "./command/deop";
 import "./command/setmodule";
 import "./command/listmodule";
+import "./command/set";

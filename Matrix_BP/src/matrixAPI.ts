@@ -596,9 +596,19 @@ class Config {
         if (configProperty === undefined) return undefined;
         if (typeof value != typeof configProperty) return false;
         if (typeof value == "object") throw new Error("Cannot set object to config");
+        world.setDynamicProperty("config::" + key.join("/"), value);
         const newValue = changeValueOfObject(this.configData, key, value);
         this.configData = newValue;
         return true;
+    }
+    public static isValid (key: string[]) {
+        const configProperty = getValueFromObject(defaultConfig, key);
+        return configProperty !== undefined;
+    }
+    public static get (key: string[]) {
+        const configProperty = getValueFromObject(this.configData, key);
+        if (configProperty === undefined) return undefined;
+        return configProperty;
     }
 }
 // Interfaces and types for Module
