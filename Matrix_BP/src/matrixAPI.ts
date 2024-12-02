@@ -400,7 +400,7 @@ class Command {
         };
         world.beforeEvents.chatSend.subscribe((event) => {
             // Checks if player is trying to use a command.
-            const isCommand = event.message.match(/^(\-|\!|\#|\$|\.|\=|\+|\?)[a-zA-Z]+(\s{1,2}\S+)*\s*$/g);
+            const isCommand = Command.isCommandArg(event.message);
             if (isCommand) {
                 event.cancel = true;
                 system.run(() => event.sender.runChatCommand(event.message.slice(1)));
@@ -408,7 +408,10 @@ class Command {
             }
         });
     }
-    public sendErrorToPlayer(player: Player, error: Error) {
+    public static isCommandArg (message: string): boolean {
+        return !!message?.match(/^(\-|\!|\#|\$|\.|\=|\+|\?)[a-zA-Z]+(\s{1,2}\S+)*\s*$/g);
+    }
+    public static sendErrorToPlayer(player: Player, error: Error) {
         player.sendMessage(
             fastText()
                 .addTran("error.happened")
