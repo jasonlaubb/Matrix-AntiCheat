@@ -15,6 +15,9 @@ import "./detection/namespoof";
 import "./detection/scaffold";
 import "./detection/insteabreak";
 import "./detection/reach";
+// Import the util modules
+import "./utility/welcomer";
+import "./utility/worldBorder";
 // Import the commands
 import "./command/about";
 import "./command/help";

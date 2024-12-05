@@ -415,3 +415,39 @@ msgstr "value"
 
 msgid "command.set.value.description"
 msgstr "The value that you want to set. It should be a string, a boolean or a number depending on the type of the path."
+
+msgid "module.welcomer.message"
+msgstr "Welcome! §e%s§r§g has joined the server with §e%2§g device."
+
+msgid "module.welcomer.device.console"
+msgstr "gaming console"
+
+msgid "module.welcomer.device.pc"
+msgstr "computer"
+
+msgid "module.welcomer.device.mobile"
+msgstr "mobile phone"
+
+msgid "module.welcomer.device.unknown"
+msgstr "unknown"
+
+msgid "module.welcomer.name"
+msgstr "Welcomer"
+
+msgid "module.welcomer.description"
+msgstr "Send a welcome message when a player joins the server."
+
+msgid "module.worldborder.name"
+msgstr "World Border"
+
+msgid "module.worldborder.description"
+msgstr "Generate a border to block the players from going out of the world."
+
+msgid "module.worldborder.danger"
+msgstr "Stop moving, you have arrived the boundary of the world!"
+
+msgid "module.worldborder.title"
+msgstr "§c§lStopped!§r"
+
+msgid "module.worldborder.subtitle"
+msgstr "§eYou will be auto teleported to the spawn in %s seconds."
