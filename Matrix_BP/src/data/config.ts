@@ -21,6 +21,7 @@ export default {
         worldBorder: false,
         chatRank: false,
         antiAfk: false,
+        antiCombatLog: false,
     } as { [key: string]: boolean },
     command: {
         about: true,

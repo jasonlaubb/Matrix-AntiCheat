@@ -36,6 +36,7 @@ export class IntegratedSystemEvent {
  */
 class Module {
     public static readonly version: [number, number, number] = [6, 0, 0];
+    public static readonly discordInviteLink = "CqZGXeRKPJ";
     // The var of index runtime
     private static moduleList: Module[] = [];
     private static playerLoopRunTime: IntegratedSystemEvent[] = [];
@@ -200,7 +201,7 @@ class Module {
                 }
             }
             system.runTimeout(() => {
-                if (player?.isValid()) player.sendMessage(rawtextTranslate("ad.running"));
+                if (player?.isValid()) player.sendMessage(rawtextTranslate("ad.running", Module.discordInviteLink));
             }, 200);
         });
         for (const module of Module.moduleList) {

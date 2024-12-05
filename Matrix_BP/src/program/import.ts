@@ -20,6 +20,7 @@ import "./utility/welcomer";
 import "./utility/worldBorder";
 import "./utility/chatRankAndAntiSpam";
 import "./utility/antiAfk";
+import "./utility/antiCombatLog";
 // Import the commands
 import "./command/about";
 import "./command/help";

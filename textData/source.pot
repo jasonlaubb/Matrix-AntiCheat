@@ -472,3 +472,21 @@ msgstr "Disconnect the player if they are not active for a long time."
 
 msgid "module.afk.disconnect"
 msgstr "%s has been disconnected due to AFK on this server for a long time."
+
+msgid "module.clog.name"
+msgstr "Anti Combat Log"
+
+msgid "module.clog.description"
+msgstr "Prevent someone leaves the combat log. Very basic so use others for your own anti combat log."
+
+msgid "module.clog.in.combat"
+msgstr "§gYou are in combat. §7§l(§r§e%s second(s) left§7§l)§r"
+
+msgid "module.clog.face.combat"
+msgstr "You are now in combat with §e%s§g."
+
+msgid "module.clog.leave.combat"
+msgstr "You are no longer in combat with %s."
+
+msgid "module.clog.killed"
+msgstr "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."

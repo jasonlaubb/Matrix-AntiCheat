@@ -16,7 +16,7 @@ new Command()
             .endline()
             .addTran("command.about.version", Module.version.join("."))
             .endline()
-            .addTran("command.about.joindc", "CqZGXeRKPJ")
+            .addTran("command.about.joindc", Module.discordInviteLink)
             .build();
         player.sendMessage(aboutMessage);
     })
