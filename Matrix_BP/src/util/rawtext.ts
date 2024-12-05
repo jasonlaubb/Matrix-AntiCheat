@@ -14,13 +14,13 @@ class FastText {
         this.currentRawText.push({ translate: key, with: withString });
         return this;
     }
-    public addTranRawText (key: string, withString: RawText) {
+    public addTranRawText(key: string, withString: RawText) {
         this.currentRawText.push({ translate: key, with: withString });
         return this;
     }
-    public addRawText (rawtext: RawText) {
+    public addRawText(rawtext: RawText) {
         this.currentRawText.push(...rawtext.rawtext!);
-        return this;        
+        return this;
     }
     public addRaw(rawMessage: RawMessage) {
         this.currentRawText.push(rawMessage);

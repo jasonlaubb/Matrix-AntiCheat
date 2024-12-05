@@ -4,7 +4,7 @@
  * @file latinise.js
  * @lines 3-993
  */
-const RECORD_DATA: Record<string, string> ={
+const RECORD_DATA: Record<string, string> = {
     Á: "A", // LATIN CAPITAL LETTER A WITH ACUTE
     Ă: "A", // LATIN CAPITAL LETTER A WITH BREVE
     Ắ: "A", // LATIN CAPITAL LETTER A WITH BREVE AND ACUTE
@@ -1091,8 +1091,8 @@ const RECORD_DATA: Record<string, string> ={
 /**
  * @description Normalize a string to be a valid data search string.
  */
-export function normalize (string: string) {
+export function normalize(string: string) {
     return string.replace(/[^A-Za-z0-9\[\] ]/g, function (x) {
         return RECORD_DATA[x] ?? x;
     });
-};
+}

@@ -36,12 +36,12 @@ export default {
             x: 0,
             y: 0,
             z: 0,
-        }
+        },
     },
     chatRank: {
         pattern: "§7§l<§r§f%rank%§l§7> §e%name%: §r%message%",
         splitter: "§r§7,§f",
         defaultRank: "Member",
         topRankOnly: false,
-    }
+    },
 };

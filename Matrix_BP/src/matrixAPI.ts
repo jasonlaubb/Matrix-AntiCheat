@@ -1,5 +1,5 @@
 import { Player, RawText, system, world } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui"; 
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
@@ -410,7 +410,7 @@ class Command {
             }
         });
     }
-    public static isCommandArg (message: string): boolean {
+    public static isCommandArg(message: string): boolean {
         return !!message?.match(/^(\-|\!|\#|\$|\.|\=|\+|\?)[a-zA-Z]+(\s{1,2}\S+)*\s*$/g);
     }
     public static sendErrorToPlayer(player: Player, error: Error) {
@@ -564,16 +564,14 @@ class Command {
     public static get allCommands() {
         return this.registeredCommands;
     }
-    public static typeTransferKey (type: OptionTypes) {
+    public static typeTransferKey(type: OptionTypes) {
         return "command.help.option." + type;
     }
 }
 export class DirectPanel {
-    private constructor () {}
-    public static async open (player: Player) {
-        const ui = new ActionFormData()
-            .title(rawtextTranslate("directpanel.title"))
-            .body(rawtextTranslate("directpanel.body"));
+    private constructor() {}
+    public static async open(player: Player) {
+        const ui = new ActionFormData().title(rawtextTranslate("directpanel.title")).body(rawtextTranslate("directpanel.body"));
         const allCommands = Command.allCommands;
         for (const command of allCommands) {
             const theAction = command.description;
@@ -594,9 +592,7 @@ export class DirectPanel {
                 .addText("§bMatrix§a+ §7> §g")
                 .addTran("directpanel.enter")
                 .build();
-            const ui = new ModalFormData()
-                .title(rawtextTranslate("directpanel.build"))
-                .textField(body, "Type it here. No need to add \"\"");
+            const ui = new ModalFormData().title(rawtextTranslate("directpanel.build")).textField(body, 'Type it here. No need to add ""');
             //@ts-expect-error
             const result = await ui.show(player);
             if (result.canceled || (result.formValues![0] as string).length == 0) return;
@@ -611,9 +607,7 @@ export class DirectPanel {
                 .addText("§bMatrix§a+ §7> §g")
                 .addTran("directpanel.enter")
                 .build();
-            const ui = new ModalFormData()
-                .title(rawtextTranslate("directpanel.build"))
-                .textField(body, "Keep this empty to skip (optional)");
+            const ui = new ModalFormData().title(rawtextTranslate("directpanel.build")).textField(body, "Keep this empty to skip (optional)");
             //@ts-expect-error
             const result = await ui.show(player);
             if (result.canceled) return;
@@ -627,7 +621,7 @@ export class DirectPanel {
     }
 }
 class Config {
-    private constructor () {}
+    private constructor() {}
     private static configData?: typeof defaultConfig = undefined;
     public static get modifiedConfig() {
         if (this.configData === undefined) throw new Error("Config is not loaded");
@@ -667,11 +661,11 @@ class Config {
         this.configData = newValue;
         return true;
     }
-    public static isValid (key: string[]) {
+    public static isValid(key: string[]) {
         const configProperty = getValueFromObject(defaultConfig, key);
         return configProperty !== undefined;
     }
-    public static get (key: string[]) {
+    public static get(key: string[]) {
         const configProperty = getValueFromObject(this.configData, key);
         if (configProperty === undefined) return undefined;
         return configProperty;

@@ -55,24 +55,24 @@ export function changeValueOfObject(object: any, keys: string[], value: any) {
     return object;
 }
 
-export function waitShowModalForm (ui: ModalFormData, player: Player): Promise<ModalFormResponse | null> {
-	return new Promise(async (resolve) => {
-		//@ts-expect-error
-		const res = await ui.show(player);
-		if (res.canceled && res.cancelationReason === FormCancelationReason.UserBusy) resolve(null);
-		await system.waitTicks(10);
-		const returnRes = await waitShowModalForm(ui, player);
-		resolve(returnRes);
-	})
+export function waitShowModalForm(ui: ModalFormData, player: Player): Promise<ModalFormResponse | null> {
+    return new Promise(async (resolve) => {
+        //@ts-expect-error
+        const res = await ui.show(player);
+        if (res.canceled && res.cancelationReason === FormCancelationReason.UserBusy) resolve(null);
+        await system.waitTicks(10);
+        const returnRes = await waitShowModalForm(ui, player);
+        resolve(returnRes);
+    });
 }
 
-export function waitShowActionForm (ui: ActionFormData, player: Player): Promise<ActionFormResponse | null> {
-	return new Promise(async (resolve) => {
-		//@ts-expect-error
-		const res = await ui.show(player);
-		if (res.canceled && res.cancelationReason === FormCancelationReason.UserBusy) resolve(null);
-		await system.waitTicks(10);
-		const returnRes = await waitShowActionForm(ui, player);
-		resolve(returnRes);
-	})
+export function waitShowActionForm(ui: ActionFormData, player: Player): Promise<ActionFormResponse | null> {
+    return new Promise(async (resolve) => {
+        //@ts-expect-error
+        const res = await ui.show(player);
+        if (res.canceled && res.cancelationReason === FormCancelationReason.UserBusy) resolve(null);
+        await system.waitTicks(10);
+        const returnRes = await waitShowActionForm(ui, player);
+        resolve(returnRes);
+    });
 }

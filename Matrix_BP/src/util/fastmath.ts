@@ -52,10 +52,10 @@ export function fastSin(x: number) {
 export function fastCos(x: number) {
     return fastSin(x + HALF_PI);
 }
-export function fastTotalDelta (...x: number[]): number {
+export function fastTotalDelta(...x: number[]): number {
     return x.slice(1).reduce((acc, val, i) => acc + (val - x[i]), 0);
 }
-export function fastSqrt (x: number) {
+export function fastSqrt(x: number) {
     if (Number.isNaN(x)) {
         return NaN;
     }
@@ -66,8 +66,8 @@ export function fastSqrt (x: number) {
     if (x !== 0) {
         while (t !== squareRoot) {
             t = squareRoot;
-            squareRoot = (t + (x / t)) / 2;
-        };
+            squareRoot = (t + x / t) / 2;
+        }
     }
 
     return squareRoot;

@@ -50,7 +50,17 @@ function tickEvent(player: Player) {
     const surroundAir = isSurroundedByAir(player.location, player.dimension);
     if (player.isOnGround && velocityY === 0) {
         data.lastOnGroundLocation = player.location;
-    } else if (now - player.timeStamp.knockBack > 2000 && now - player.timeStamp.riptide > 5000 && data.lastVelocityY < -MAX_VELOCITY_Y && !player.hasTag("riding") && !player.isFlying && !player.isOnGround && !player.isGliding && surroundAir && !data.velocityYList.some((yV) => yV == HIGH_VELOCITY_Y)) {
+    } else if (
+        now - player.timeStamp.knockBack > 2000 &&
+        now - player.timeStamp.riptide > 5000 &&
+        data.lastVelocityY < -MAX_VELOCITY_Y &&
+        !player.hasTag("riding") &&
+        !player.isFlying &&
+        !player.isOnGround &&
+        !player.isGliding &&
+        surroundAir &&
+        !data.velocityYList.some((yV) => yV == HIGH_VELOCITY_Y)
+    ) {
         if (velocityY > MAX_VELOCITY_Y) {
             player.teleport(data.lastOnGroundLocation);
             player.flag(fly);

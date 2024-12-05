@@ -61,7 +61,7 @@ new Command()
             player.sendMessage(message.build());
         }
     })
-	.register();
+    .register();
 function usageGenerator(command: Command): RawText {
     const allRequired = command.requiredOption;
     const allOptional = command.optionalOption;
