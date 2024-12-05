@@ -2,7 +2,6 @@ import { Vector3 } from "@minecraft/server";
 
 // Define variables
 export const PI = 105414357.0 / 33554432.0 + 1.984187159361080883e-9;
-const fastSqrt = Math.sqrt;
 // Angle functions
 export function calculateAngleFromView(pos1: Vector3, pos2: Vector3, rotationY: number): number {
     const commonAngle = (Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 180) / PI;
@@ -55,4 +54,21 @@ export function fastCos(x: number) {
 }
 export function fastTotalDelta (...x: number[]): number {
     return x.slice(1).reduce((acc, val, i) => acc + (val - x[i]), 0);
+}
+export function fastSqrt (x: number) {
+    if (Number.isNaN(x)) {
+        return NaN;
+    }
+    if (x < 0) x = -x;
+    let t;
+    let squareRoot = x / 2;
+
+    if (x !== 0) {
+        while (t !== squareRoot) {
+            t = squareRoot;
+            squareRoot = (t + (x / t)) / 2;
+        };
+    }
+
+    return squareRoot;
 }

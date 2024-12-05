@@ -30,9 +30,27 @@ export function arrayToList(arr: Array<any>) {
 }
 
 export function getAverageDifference(arr: number[]) {
+    return arr.slice(1).reduce((sum, current, index) => sum + (current - arr[index]), 0) / (arr.length - 1);
+}
+  
+export function fastAverage(arr: number[]) {
+    return arr.reduce((sum, current) => sum + current, 0) / arr.length;
+}
+import { fastSqrt } from "./fastmath";
+export function getStandardDeviation (numbers: number[]) {
+    const n = numbers.length;
+    if (n === 0) return 0;
+
     let sum = 0;
-    for (let i = 1; i < arr.length; i++) {
-        sum += arr[i] - arr[i - 1];
+    let sumSqr = 0;
+    
+    for (const num of numbers) {
+        sum += num;
+        sumSqr += num * num;
     }
-    return sum / (arr.length - 1);
+
+    const mean = sum / n;
+    const variance = (sumSqr - sum * mean) / (n - 1);
+    
+    return fastSqrt(variance);
 }

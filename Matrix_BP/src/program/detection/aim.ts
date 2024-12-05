@@ -2,8 +2,9 @@ import { Player } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { fastAbs, fastFloor } from "../../util/fastmath";
-import { getAbsoluteGcd, arrayToList, getAverageDifference } from "../../util/assets";
+import { getAbsoluteGcd, arrayToList, getAverageDifference, fastAverage, getStandardDeviation } from "../../util/assets";
 const EMPTY_ARRAY = new Array(100).fill(0);
+const SMALL_EMPTY_ARRAY = new Array(20).fill(0);
 interface AimData {
 	buffer: number[];
 	initialize: {
@@ -14,6 +15,8 @@ interface AimData {
 	previousPitch: number[];
 	previousDeltaYaw: number[];
 	previousDeltaPitch: number[];
+	yawAccelData: number[];
+	pitchAccelData: number[];
 	lastFlagTimestamp: number;
 }
 let eventId: IntegratedSystemEvent;
@@ -41,6 +44,8 @@ const aim = new Module()
 			previousPitch: EMPTY_ARRAY,
 			previousDeltaYaw: EMPTY_ARRAY,
 			previousDeltaPitch: EMPTY_ARRAY,
+			yawAccelData: SMALL_EMPTY_ARRAY,
+			pitchAccelData: SMALL_EMPTY_ARRAY,
 			lastFlagTimestamp: 0,
 		})
 	})
@@ -53,6 +58,8 @@ function tickEvent (player: Player) {
 	const { x: yaw, y: pitch } = player.getRotation();
 	const deltaYaw = fastAbs(yaw - data.previousYaw[0]);
 	const deltaPitch = fastAbs(pitch - data.previousPitch[0]);
+	const yawAccel = fastAbs(deltaYaw - data.previousDeltaYaw[0]);
+	const pitchAccel = fastAbs(deltaPitch - data.previousDeltaPitch[0]);
 	if (data.initialize.state) {
 		data = aimModule (player, data, deltaYaw, deltaPitch);
 	} else {
@@ -63,10 +70,15 @@ function tickEvent (player: Player) {
 		}
 	}
 	// Update the data :skull:
+	data.yawAccelData.unshift(yawAccel);
+	data.pitchAccelData.unshift(pitchAccel);
 	data.previousDeltaPitch.unshift(deltaPitch);
 	data.previousDeltaYaw.unshift(deltaYaw);
 	data.previousPitch.unshift(yaw);
 	data.previousYaw.unshift(pitch);
+	// Delete old data
+	data.yawAccelData.pop();
+	data.pitchAccelData.pop();
 	data.previousPitch.pop();
 	data.previousYaw.pop();
 	data.previousDeltaPitch.pop();
@@ -78,7 +90,8 @@ const EXTREME_YAW_ACCELERATION = 0.01;
 const EXTREME_DELTA_BUFFER = 10;
 const DELTA_CHECK_BUFFER = 5;
 const AMOUNT_CHECK_BUFFER = 18;
-const EMPTY_BUFFER = [0, 0, 0]
+const INVALID_CHECK_BUFFER = 15;
+const EMPTY_BUFFER = [0, 0, 0, 0];
 /**
  * @author 4urxa
  * @link https://github.com/Dream23322
@@ -160,6 +173,31 @@ function aimModule (player: Player, tickData: AimData, deltaYaw: number, deltaPi
 			data.buffer[2]++;
 			data.lastFlagTimestamp = now;
 			if (data.buffer[2] > AMOUNT_CHECK_BUFFER) {
+				player.flag(aim);
+			}
+		}
+	}
+	const deltaDifferent = fastAbs(deltaYaw - deltaPitch);
+	if (deltaDifferent < 0.1 && deltaYaw > 1 && isAttacking) {
+		data.buffer[3]++;
+		data.lastFlagTimestamp = now;
+		if (data.buffer[3] > EXTREME_DELTA_BUFFER) {
+			player.flag(aim);
+		}
+	}
+	if (isAttacking && deltaYaw >= 1.5) {
+		const yawAccelList = arrayToList(data.yawAccelData);
+		const pitchAccelList = arrayToList(data.pitchAccelData);
+		const yawAccelAverage = fastAverage(yawAccelList);
+		const pitchAccelAverage = fastAverage(pitchAccelList);
+		const yawAccelDeviation = getStandardDeviation(yawAccelList);
+		const pitchAccelDeviation = getStandardDeviation(pitchAccelList);
+		const averageInvalid = yawAccelAverage < 1 || pitchAccelAverage < 1;
+		const deviationInvalid = yawAccelDeviation < 5 && pitchAccelDeviation > 5;
+		if (averageInvalid && deviationInvalid) {
+			data.buffer[4]++;
+			data.lastFlagTimestamp = now;
+			if (data.buffer[4] > INVALID_CHECK_BUFFER) {
 				player.flag(aim);
 			}
 		}
