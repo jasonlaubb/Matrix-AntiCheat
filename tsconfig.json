@@ -6,7 +6,6 @@
     },
     "libChecking": false,
     "compilerOptions": {
-        "skipDefaultLibCheck": true,
         "target": "ESNext",
         "module": "ESNext",
         "moduleResolution": "node",
