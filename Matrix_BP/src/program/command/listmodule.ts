@@ -1,6 +1,7 @@
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Command, Module } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
+import { waitShowModalForm } from "../../util/util";
 
 new Command()
 	.setName("listmodule")
@@ -31,20 +32,20 @@ new Command()
 		const result = await listModule.show(player);
 		if (!result || result.canceled || result.selection! == 0) return;
 		const selectedModule = allModules[result.selection! - 1]!;
-		new ModalFormData()
+		const ui = new ModalFormData()
 			.title(rawtextTranslate("command.listmodule.toggle.title"))
 			.dropdown(fastText().addTran("command.listmodule.toggle.body").endline().addRawText(
 				selectedModule.getName()
 			).addText(": ").addRawText(selectedModule.getDescription()).endline().addTran("command.listmodule.toggle.state").build(), [rawtextTranslate("command.listmodule.toggle.disable"), rawtextTranslate("command.listmodule.toggle.enable")], 0)
-			.submitButton(rawtextTranslate("ui.runcommand"))
-			//@ts-expect-error
-			.show(player)
+			.submitButton(rawtextTranslate("ui.runcommand"));
+		player.sendMessage(rawtextTranslate("ui.closechat"));
+		waitShowModalForm(ui, player)
 			.then((result) => {
-				if (!result || result.canceled) return;
-				const state = result.formValues![0]!;
-				const toggleId = selectedModule.getToggleId()!;
-				// For the command handler, 0 & 1 can be used as false & true
-				player.runChatCommand(`setmodule ${toggleId} ${state}`);
-			})
+			if (!result || result.canceled) return;
+			const state = result.formValues![0]!;
+			const toggleId = selectedModule.getToggleId()!;
+			// For the command handler, 0 & 1 can be used as false & true
+			player.runChatCommand(`setmodule ${toggleId} ${state}`);
+		})
 	})
 	.register();

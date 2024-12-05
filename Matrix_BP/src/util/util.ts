@@ -1,4 +1,5 @@
-import { MemoryTier, PlatformType, Vector3 } from "@minecraft/server";
+import { MemoryTier, PlatformType, Player, system, Vector3 } from "@minecraft/server";
+import { ActionFormData, ActionFormResponse, FormCancelationReason, ModalFormData, ModalFormResponse } from "@minecraft/server-ui";
 /**
  *
  * @param memoryTier
@@ -52,4 +53,26 @@ export function changeValueOfObject(object: any, keys: string[], value: any) {
     }
     object[keys[keys.length - 1]] = value;
     return object;
+}
+
+export function waitShowModalForm (ui: ModalFormData, player: Player): Promise<ModalFormResponse | null> {
+	return new Promise(async (resolve) => {
+		//@ts-expect-error
+		const res = await ui.show(player);
+		if (res.canceled && res.cancelationReason === FormCancelationReason.UserBusy) resolve(null);
+		await system.waitTicks(10);
+		const returnRes = await waitShowModalForm(ui, player);
+		resolve(returnRes);
+	})
+}
+
+export function waitShowActionForm (ui: ActionFormData, player: Player): Promise<ActionFormResponse | null> {
+	return new Promise(async (resolve) => {
+		//@ts-expect-error
+		const res = await ui.show(player);
+		if (res.canceled && res.cancelationReason === FormCancelationReason.UserBusy) resolve(null);
+		await system.waitTicks(10);
+		const returnRes = await waitShowActionForm(ui, player);
+		resolve(returnRes);
+	})
 }

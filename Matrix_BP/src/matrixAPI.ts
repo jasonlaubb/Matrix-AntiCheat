@@ -580,9 +580,9 @@ export class DirectPanel {
             const commandId = command.availableId[0];
             ui.button(fastText().addText("§g").addRawText(theAction).addText("§7").endline().addTran("directpanel.button", commandId).build());
         }
-        //@ts-expect-error
-        const result = await ui.show(player);
-        if (result.canceled) return;
+        // Close the chat and continue... Easy right?
+        const result = await waitShowActionForm(ui, player);
+        if (!result || result.canceled) return;
         const commandSelected = allCommands[result.selection!];
         let currentString = commandSelected.availableId[0];
         for (const requiredOption of commandSelected.requiredOption) {
@@ -702,4 +702,4 @@ export { Module, Command, Config };
 // Start the AntiCheat
 Module.ignite();
 import { setupFlagFunction } from "./util/flag";
-import { changeValueOfObject, getValueFromObject } from "./util/util";
+import { changeValueOfObject, getValueFromObject, waitShowActionForm } from "./util/util";
