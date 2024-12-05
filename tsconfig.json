@@ -4,8 +4,9 @@
     "watchOptions": {
         "excludeDirectories": ["node_modules"]
     },
-    "libChecking": true,
+    "libChecking": false,
     "compilerOptions": {
+        "skipDefaultLibCheck": true,
         "target": "ESNext",
         "module": "ESNext",
         "moduleResolution": "node",
@@ -15,7 +16,7 @@
         "allowJs": true,
         "checkJs": false,
         "outDir": "Matrix_BP/scripts",
-        "typeRoots": ["./node_modules/@minecraft"],
+        "typeRoots": ["./node_modules/@minecraft", "./node_modules/@minecraft/server-ui", "./Matrix_BP/src/node_modules/vanilla-data"],
         "strictNullChecks": true,
         "strictFunctionTypes": true,
         "strictPropertyInitialization": true,

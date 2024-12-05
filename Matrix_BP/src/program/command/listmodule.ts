@@ -37,7 +37,7 @@ new Command()
 				selectedModule.getName()
 			).addText(": ").addRawText(selectedModule.getDescription()).endline().addTran("command.listmodule.toggle.state").build(), [rawtextTranslate("command.listmodule.toggle.disable"), rawtextTranslate("command.listmodule.toggle.enable")], 0)
 			.submitButton(rawtextTranslate("ui.runcommand"))
-			// @ts-expect-error
+			//@ts-expect-error
 			.show(player)
 			.then((result) => {
 				if (!result || result.canceled) return;
