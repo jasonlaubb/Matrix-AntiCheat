@@ -546,6 +546,10 @@ msgstr ""
 msgid "The value that you want to set. It should be a string, a boolean or a number depending on the type of the path."
 msgstr ""
 
+#: command.matrixui.description
+msgid "Open the Matrix AntiCheat UI panel."
+msgstr ""
+
 #: module.welcomer.message
 msgid "Welcome! §e%s§r§g has joined the server with §e%2§g device."
 msgstr ""
@@ -648,5 +652,25 @@ msgstr ""
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §gAnticheat §eUI §apanel§r"
+msgstr ""
+
+#: directpanel.title
+msgid "Tell me, what do you want to do?"
+msgstr ""
+
+#: directpanel.body
+msgid "Select an action from below buttons. I can generate the command string for you."
+msgstr ""
+
+#: directpanel.button
+msgid "Run '%s' command."
+msgstr ""
+
+#: directpanel.enter
+msgid "Enter the command string"
+msgstr ""
+
+#: directpanel.build
+msgid "Let build and run your command together."
 msgstr ""
 
