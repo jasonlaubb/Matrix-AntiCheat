@@ -1,4 +1,5 @@
 import { Player, RawText, system, world } from "@minecraft/server";
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui"; 
 import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
@@ -562,6 +563,67 @@ class Command {
     }
     public static get allCommands() {
         return this.registeredCommands;
+    }
+    public static typeTransferKey (type: OptionTypes) {
+        return "command.help.option." + type;
+    }
+}
+export class DirectPanel {
+    private constructor () {}
+    public static async open (player: Player) {
+        const ui = new ActionFormData()
+            .title(rawtextTranslate("directpanel.title"))
+            .body(rawtextTranslate("directpanel.body"));
+        const allCommands = Command.allCommands;
+        for (const command of allCommands) {
+            const theAction = command.description;
+            const commandId = command.availableId[0];
+            ui.button(fastText().addText("§g").addRawText(theAction).addText("§7").endline().addTran("directpanel.button", commandId).build());
+        }
+        //@ts-expect-error
+        const result = await ui.show(player);
+        if (result.canceled) return;
+        const commandSelected = allCommands[result.selection!];
+        let currentString = commandSelected.availableId[0];
+        for (const requiredOption of commandSelected.requiredOption) {
+            const body = fastText()
+                .addTranRawText("command.help.target.type", rawtextTranslate(Command.typeTransferKey(requiredOption.type)))
+                .endline()
+                .addTranRawText("command.help.target.description", requiredOption.description)
+                .endline()
+                .addText("§bMatrix§a+ §7> §g")
+                .addTran("directpanel.enter")
+                .build();
+            const ui = new ModalFormData()
+                .title(rawtextTranslate("directpanel.build"))
+                .textField(body, "Type it here. No need to add \"\"");
+            //@ts-expect-error
+            const result = await ui.show(player);
+            if (result.canceled || (result.formValues![0] as string).length == 0) return;
+            currentString += " " + result.formValues![0];
+        }
+        for (const optionalOption of commandSelected.optionalOption) {
+            const body = fastText()
+                .addTranRawText("command.help.target.type", rawtextTranslate(Command.typeTransferKey(optionalOption.type)))
+                .endline()
+                .addTranRawText("command.help.target.description", optionalOption.description)
+                .endline()
+                .addText("§bMatrix§a+ §7> §g")
+                .addTran("directpanel.enter")
+                .build();
+            const ui = new ModalFormData()
+                .title(rawtextTranslate("directpanel.build"))
+                .textField(body, "Keep this empty to skip (optional)");
+            //@ts-expect-error
+            const result = await ui.show(player);
+            if (result.canceled) return;
+            if ((result.formValues![0] as string).length == 0) {
+                break;
+            }
+            currentString += " " + result.formValues![0];
+        }
+        // Run the command for it.
+        player.runChatCommand(currentString);
     }
 }
 class Config {

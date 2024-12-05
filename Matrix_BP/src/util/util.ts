@@ -6,8 +6,6 @@ import { MemoryTier, PlatformType, Vector3 } from "@minecraft/server";
  */
 export function returnTierNumber(memoryTier: MemoryTier) {
     switch (memoryTier) {
-        case MemoryTier.Undetermined:
-            return -1;
         case MemoryTier.SuperLow:
             return 0;
         case MemoryTier.Low:

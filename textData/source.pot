@@ -490,3 +490,21 @@ msgstr "You are no longer in combat with %s."
 
 msgid "module.clog.killed"
 msgstr "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+
+msgid "item.matrix.itemui"
+msgstr "§r§l§bMatrix §gAnticheat §eUI §apanel§r"
+
+msgid "directpanel.title"
+msgstr "Tell me, what do you want to do?"
+
+msgid "directpanel.body"
+msgstr "Select an action from below buttons. I can generate the command string for you."
+
+msgid "directpanel.button"
+msgstr "Run '%s' command."
+
+msgid "directpanel.enter"
+msgstr "Enter the command string"
+
+msgid "directpanel.build"
+msgstr "Let build and run your command together."

@@ -70,6 +70,10 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
+#: ui.closechat
+msgid "§7>> §gPlease close the chat to receive your user interface (UI)."
+msgstr ""
+
 #: commandsynax.unknown
 msgid "Unknown command: %s, you can type -help to get some useful information about the commands."
 msgstr ""
@@ -236,6 +240,14 @@ msgstr ""
 
 #: module.hop.description
 msgid "An extra checks against the illegal movement motion, to prevent a silent bypass."
+msgstr ""
+
+#: module.aim.name
+msgid "Aim check"
+msgstr ""
+
+#: module.aim.description
+msgid "An extra checks against the illegal aim, to prevent the killaura or aim assist, credit to 4urxa."
 msgstr ""
 
 #: command.about.description
@@ -496,5 +508,145 @@ msgstr ""
 
 #: command.listmodule.toggle.state
 msgid "What do you want to do with this module"
+msgstr ""
+
+#: command.set.invalid
+msgid "Unknown path: %s, make sure you type a valid path. Use slash (/) to separate the path."
+msgstr ""
+
+#: command.set.number
+msgid "The path you want to set must be a number."
+msgstr ""
+
+#: command.set.boolean
+msgid "The path you want to set must be a boolean. Only 'true' or 'false' is allowed."
+msgstr ""
+
+#: command.set.success
+msgid "Success! The path '%1' has been set to '%2'."
+msgstr ""
+
+#: command.set.description
+msgid "Change the config dynamically. Without the data lost for different versions."
+msgstr ""
+
+#: command.set.key
+msgid "path (key)"
+msgstr ""
+
+#: command.set.key.description
+msgid "The path that you want to set. You should type it with slash (/) to separate the path. For example, 'modules/antiSpeed'."
+msgstr ""
+
+#: command.set.value
+msgid "value"
+msgstr ""
+
+#: command.set.value.description
+msgid "The value that you want to set. It should be a string, a boolean or a number depending on the type of the path."
+msgstr ""
+
+#: module.welcomer.message
+msgid "Welcome! §e%s§r§g has joined the server with §e%2§g device."
+msgstr ""
+
+#: module.welcomer.device.console
+msgid "gaming console"
+msgstr ""
+
+#: module.welcomer.device.pc
+msgid "computer"
+msgstr ""
+
+#: module.welcomer.device.mobile
+msgid "mobile phone"
+msgstr ""
+
+#: module.welcomer.device.unknown
+msgid "unknown"
+msgstr ""
+
+#: module.welcomer.name
+msgid "Welcomer"
+msgstr ""
+
+#: module.welcomer.description
+msgid "Send a welcome message when a player joins the server."
+msgstr ""
+
+#: module.worldborder.name
+msgid "World Border"
+msgstr ""
+
+#: module.worldborder.description
+msgid "Generate a border to block the players from going out of the world."
+msgstr ""
+
+#: module.worldborder.danger
+msgid "Stop moving, you have arrived the boundary of the world!"
+msgstr ""
+
+#: module.worldborder.title
+msgid "§c§lStopped!§r"
+msgstr ""
+
+#: module.worldborder.subtitle
+msgid "§eYou will be auto teleported to the spawn in %s seconds."
+msgstr ""
+
+#: module.chatrank.name
+msgid "Chat Rank & Anti Spam"
+msgstr ""
+
+#: module.chatrank.description
+msgid "Prevent the spamming on your server and provide a chat rank system."
+msgstr ""
+
+#: module.chatrank.bad
+msgid "Your message contains some sensitive word(s) which is not allowed."
+msgstr ""
+
+#: module.chatrank.slow
+msgid "Slow mode enabled! Please enter your message %s second(s) later."
+msgstr ""
+
+#: module.chatrank.repeated
+msgid "Please don't spam messages."
+msgstr ""
+
+#: module.afk.description
+msgid "Disconnect the player if they are not active for a long time."
+msgstr ""
+
+#: module.afk.disconnect
+msgid "%s has been disconnected due to AFK on this server for a long time."
+msgstr ""
+
+#: module.clog.name
+msgid "Anti Combat Log"
+msgstr ""
+
+#: module.clog.description
+msgid "Prevent someone leaves the combat log. Very basic so use others for your own anti combat log."
+msgstr ""
+
+#: module.clog.in.combat
+msgid "§gYou are in combat. §7§l(§r§e%s second(s) left§7§l)§r"
+msgstr ""
+
+#: module.clog.face.combat
+msgid "You are now in combat with §e%s§g."
+msgstr ""
+
+#: module.clog.leave.combat
+msgid "You are no longer in combat with %s."
+msgstr ""
+
+#: module.clog.killed
+msgid "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+msgstr ""
+
+#: item.matrix.itemui
+msgid "§r§l§bMatrix §gAnticheat §eUI §apanel§r"
 msgstr ""
 

@@ -15,7 +15,6 @@
             "minecraft:icon": "matrix:itemui",
             "minecraft:max_stack_size": 1,
             "minecraft:can_destroy_in_creative": false,
-            "minecraft:glint": true,
             "minecraft:should_despawn": true
         }
     }
