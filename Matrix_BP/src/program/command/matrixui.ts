@@ -1,3 +1,4 @@
+import { world } from "@minecraft/server";
 import { Command, DirectPanel } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 
@@ -10,3 +11,11 @@ new Command()
 		player.sendMessage(rawtextTranslate("ui.closechat"));
 		DirectPanel.open(player);
 	})
+	.register();
+
+world.afterEvents.itemUse.subscribe((event) => {
+	if (event?.itemStack?.typeId === "matrix:itemui") {
+		// Run that command.
+		event.source.runChatCommand("matrixui");
+	}
+})
