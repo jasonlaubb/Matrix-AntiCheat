@@ -18,6 +18,7 @@ import "./detection/reach";
 // Import the util modules
 import "./utility/welcomer";
 import "./utility/worldBorder";
+import "./utility/chatRankAndAntiSpam";
 // Import the commands
 import "./command/about";
 import "./command/help";

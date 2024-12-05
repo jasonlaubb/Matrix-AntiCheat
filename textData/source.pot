@@ -451,3 +451,18 @@ msgstr "§c§lStopped!§r"
 
 msgid "module.worldborder.subtitle"
 msgstr "§eYou will be auto teleported to the spawn in %s seconds."
+
+msgid "module.chatrank.name"
+msgstr "Chat Rank & Anti Spam"
+
+msgid "module.chatrank.description"
+msgstr "Prevent the spamming on your server and provide a chat rank system."
+
+msgid "module.chatrank.bad"
+msgstr "Your message contains some sensitive word(s) which is not allowed."
+
+msgid "module.chatrank.slow"
+msgstr "Slow mode enabled! Please enter your message %s second(s) later."4
+
+msgid "module.chatrank.repeated"
+msgstr "Please don't spam messages."

@@ -9,6 +9,9 @@ new Module()
 	.setName(rawtextTranslate("module.worldborder.name"))
 	.setDescription(rawtextTranslate("module.worldborder.description"))
 	.setToggleId("worldBorder")
+	.initPlayer((_playerId, player) => {
+		player.removeTag("matrix:worldBorderBlocked");
+	})
 	.onModuleEnable(() => {
 		eventId = Module.subscribePlayerTickEvent(worldBorder, false);
 	})

@@ -18,6 +18,7 @@ export default {
         aimCheck: true,
         welcomer: true,
         worldBorder: false,
+        chatRank: false,
     } as { [key: string]: boolean },
     command: {
         about: true,
@@ -34,4 +35,10 @@ export default {
             z: 0,
         }
     },
+    chatRank: {
+        pattern: "§7§l<§r§f%rank%§l§7> §e%name%: §r%message%",
+        splitter: "§r§7,§f",
+        defaultRank: "Member",
+        topRankOnly: false,
+    }
 };
