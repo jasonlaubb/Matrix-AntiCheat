@@ -16,9 +16,11 @@ export default {
         antiReach: true,
         itemCheck: false,
         aimCheck: true,
+        antiHop: true,
         welcomer: true,
         worldBorder: false,
         chatRank: false,
+        antiAfk: false,
     } as { [key: string]: boolean },
     command: {
         about: true,

@@ -466,3 +466,9 @@ msgstr "Slow mode enabled! Please enter your message %s second(s) later."4
 
 msgid "module.chatrank.repeated"
 msgstr "Please don't spam messages."
+
+msgid "module.afk.description"
+msgstr "Disconnect the player if they are not active for a long time."
+
+msgid "module.afk.disconnect"
+msgstr "%s has been disconnected due to AFK on this server for a long time."

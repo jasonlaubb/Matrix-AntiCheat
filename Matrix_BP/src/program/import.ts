@@ -19,6 +19,7 @@ import "./detection/reach";
 import "./utility/welcomer";
 import "./utility/worldBorder";
 import "./utility/chatRankAndAntiSpam";
+import "./utility/antiAfk";
 // Import the commands
 import "./command/about";
 import "./command/help";
