@@ -96,9 +96,9 @@ const EMPTY_BUFFER = [0, 0, 0, 0];
  * @author 4urxa
  * @link https://github.com/Dream23322
  * @license GPLv3
- * @description The aim checks from Isolate Anticheat that is made by 4urxa.
+ * @description The aim checks from Isolate Anticheat that are made by 4urxa.
  * @link https://github.com/Dream23322/Isolate-Anticheat/tree/2b01e79241f03fbaec9f2e36ec82fbf739fd1434/scripts/checks/combat/aim
- * @credit A big redit to 4urxa. He allowed me to use his code.
+ * @credit A big credit to 4urxa, he allowed me to use his code.
  * @recode jasonlaubb
  */
 function aimModule(player: Player, tickData: AimData, deltaYaw: number, deltaPitch: number) {
