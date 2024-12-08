@@ -30,4 +30,6 @@ import "./command/setmodule";
 import "./command/listmodule";
 import "./command/set";
 import "./command/matrixui";
+import "./command/vanish";
+import "./command/moderation";
 // ... setpassword, moderate related command, vanish invsee comming soon in this week (maybe).

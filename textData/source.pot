@@ -419,6 +419,108 @@ msgstr "The value that you want to set. It should be a string, a boolean or a nu
 msgid "command.matrixui.description"
 msgstr "Open the Matrix AntiCheat UI panel."
 
+msgid "command.vanish.description"
+msgstr "Make yourself invisible to other players. Even ESP will not be able to see you."
+
+msgid "command.vanish.success"
+msgstr "You have been vanished. Type this command again to make yourself visible again."
+
+msgid "command.vanish.deleted"
+msgstr "You are no longer to be vanished."
+
+msgid "command.vanish.failed"
+msgstr "Sorry, but you need to place Matrix anticheat above any-type of addon that includes 'player.json' entities file to use this command."
+
+msgid "command.moderation.target"
+msgstr "Target player"
+
+msgid "command.moderation.target.description"
+msgstr "The target player that you want to use this command on."
+
+msgid "command.moderation.duration"
+msgstr "Duration"
+
+msgid "command.moderation.duration.description"
+msgstr "The duration of the moderation action that you want to use this command on, in minutes. You can type 0 in order to set a permanent moderation action."
+
+msgid "command.moderation.admin"
+msgstr "Oops, you can not finish a moderation action to an administrator or yourself."
+
+msgid "command.moderation.success"
+msgstr "%1 has been §e%3g by %2"
+
+msgid "command.moderation.removal.failed"
+msgstr "Before you use the moderation removal or any related moderation command, you need to make sure the target player has been moderated."
+
+msgid "command.moderation.tempkick"
+msgstr "temp-kicked"
+
+msgid "command.moderation.kick"
+msgstr "kicked"
+
+msgid "command.moderation.ban"
+msgstr "banned"
+
+msgid "command.moderation.unban"
+msgstr "unbanned"
+
+msgid "command.moderation.softban"
+msgstr "soft-banned"
+
+msgid "command.moderation.unsoftban"
+msgstr "unsoft-banned"
+
+msgid "command.moderation.mute"
+msgstr "muted"
+
+msgid "command.moderation.unmute"
+msgstr "unmuted"
+
+msgid "command.moderation.freeze"
+msgstr "frozen"
+
+msgid "command.moderation.unfreeze"
+msgstr "unfrozen"
+
+msgid "command.moderation.warn"
+msgstr "warned"
+
+msgid "command.moderation.clearwarn"
+msgstr "cleared all warnings"
+
+msgid "command.moderation.warn.amount"
+msgstr "§7>> §g Amount of warnings: %s"
+
+msgid "command.tempkick.description"
+msgstr "Temporarily kick a player."
+
+msgid "command.kick.description"
+msgstr "Kick a player."
+
+msgid "command.ban.description"
+msgstr "Ban a player."
+
+msgid "command.unban.description"
+msgstr "Unban a player."
+
+msgid "command.softban.description"
+msgstr "Soft-ban a player."
+
+msgid "command.unsoftban.description"
+msgstr "Unsoft-ban a player."
+
+msgid "command.mute.description"
+msgstr "Mute a player."
+
+msgid "command.unmute.description"
+msgstr "Unmute a player."
+
+msgid "command.freeze.description"
+msgstr "Freeze a player."
+
+msgid "command.unfreeze.description"
+msgstr "Unfreeze a player."
+
 msgid "module.welcomer.message"
 msgstr "Welcome! §e%s§r§g has joined the server with §e%2§g device."
 
