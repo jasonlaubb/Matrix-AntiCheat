@@ -203,6 +203,11 @@ class Module {
             }
             system.runTimeout(() => {
                 if (player?.isValid()) player.sendMessage(rawtextTranslate("ad.running", Module.discordInviteLink));
+                let obj = world.scoreboard.getObjective('matrix:script-online');
+                if (!obj) {
+                    obj = world.scoreboard.addObjective('matrix:script-online', 'Made by jasonlaubb');
+                    obj.setScore('is_enabled', -1);
+                }
             }, 200);
         });
         for (const module of Module.moduleList) {
