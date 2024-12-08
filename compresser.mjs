@@ -36,10 +36,13 @@ async function obfuscateFile(filePath) {
         stringArray: false,
         deadCodeInjection: false,
         renameProperties: false,
-        renameGlobals: false,
+        renameGlobals: true,
         stringArrayIndexShift: false,
+        selfDefending: true,
+        identifierNamesGenerator: 'hexadecimal',
+        numbersToExpressions: false,
     });
-    await fs.promises.writeFile(filePath, fixedStart + obfuscatedCode.getObfuscatedCode());
+    await fs.promises.writeFile(filePath, obfuscatedCode.getObfuscatedCode());
 }
 let bar;
 async function onStart() {
