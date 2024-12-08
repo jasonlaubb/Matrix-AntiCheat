@@ -68,6 +68,27 @@ msgstr "Exit"
 msgid "ui.closechat"
 msgstr "§7>> §gPlease close the chat to receive your user interface (UI)."
 
+msgid "ui.config.title"
+msgstr "Press the button to continue"
+
+msgid "ui.config.button"
+msgstr "Continue >w<"
+
+msgid "ui.config.body"
+msgstr "You can change the config in the config file. You can also use the command -set <path> <value> to change a config value."
+
+msgid "ui.config.selector"
+msgstr "Config Selector | Matrix AntiCheat"
+
+msgid "ui.config.editor"
+msgstr "Config Editor | Matrix AntiCheat"
+
+msgid "ui.config.value"
+msgstr "New value you want to set"
+
+msgid "ui.config.loc"
+msgstr "§gCurrent path of the config: §e%s"
+
 msgid "commandsynax.unknown"
 msgstr "Unknown command: %s, you can type -help to get some useful information about the commands."
 
@@ -560,6 +581,24 @@ msgstr "The password has been cleared."
 msgid "command.clearpassword.already"
 msgstr "There is no password set."
 
+msgid "command.configui.description"
+msgstr "Configure the settings of Matrix anticheat by a user interface."
+
+msgid "command.setadmin.description"
+msgstr "Set a player as an administrator."
+
+msgid "command.setadmin.level"
+msgstr "Administrator level"
+
+msgid "command.setadmin.level.description"
+msgstr "The level of the administrator that you want to set. (Set to 0 in order to remove the player as an administrator)"
+
+msgid "command.setadmin.failed"
+msgstr "Failed to change the player's administrator level."
+
+msgid "command.setadmin.level.display"
+msgstr "§7>> §gAdministrator level: §eLevel %s"
+
 msgid "action.hint.exit.matrix:inv_container"
 msgstr "Tap the §lInventory button§r to open their Inventory."
 
@@ -640,6 +679,42 @@ msgstr "You are no longer in combat with %s."
 
 msgid "module.clog.killed"
 msgstr "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+
+msgid "module.captcha.detected"
+msgstr "§c§lSuspicious client detected!§r§7 %s has been disconnected due to using a suspicious client."
+
+msgid "module.captcha.keepmove"
+msgstr "§bMatrix§a+ §7> §gContinue your rotation movement for %s seconds more."
+
+msgid "module.captcha.checking"
+msgstr "§bMatrix§a+ §7> §gChecking your client... Please wait."
+
+msgid "module.captcha.continue"
+msgstr "§bMatrix§a+ §7> §gPlease §e§lMOVE YOUR ROTATION§r§g to continue the check process."
+
+msgid "module.captcha.title"
+msgstr "Captcha GUI | Matrix Anticheat"
+
+msgid "module.captcha.submit"
+msgstr "I have finished the question!"
+
+msgid "module.captcha.selectui"
+msgstr "§bPlease answer the question below correctly to verify you're a human."
+
+msgid "module.captcha.why"
+msgstr "§aWhy do you need to verify? Because we want to prevent the spamming bot from attacking the current server."
+
+msgid "module.captcha.question"
+msgstr "§gQuestion: §eWhat is the correct answer of %1 plus %2?"
+
+msgid "module.captcha.youranswer"
+msgstr "§gSelect the correct answer in below slider"
+
+msgid "module.captcha.recontinue"
+msgstr "§bMatrix§a+ §7> §gYou make it wrong, please try again."
+
+msgid "module.captcha.verified"
+msgstr "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
 
 msgid "item.matrix.itemui"
 msgstr "§r§l§bMatrix §gAnticheat §eUI §apanel§r"

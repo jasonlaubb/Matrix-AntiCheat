@@ -22,6 +22,7 @@ export default {
         chatRank: false,
         antiAfk: false,
         antiCombatLog: false,
+        captcha: false,
     } as { [key: string]: boolean },
     command: {
         about: true,
