@@ -1,7 +1,7 @@
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Command, Module } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
-import { waitShowModalForm } from "../../util/util";
+import { waitShowActionForm, waitShowModalForm } from "../../util/util";
 
 new Command()
     .setName("listmodule")
@@ -17,8 +17,8 @@ new Command()
             const buttonColour = isEnabled ? "§l§2" : "§l§c";
             listModule.button(fastText().addText(buttonColour).addRawText(module.getName()).endline().addText("§r§8").addTran(module.getToggleId()!).build());
         });
-        //@ts-expect-error
-        const result = await listModule.show(player);
+        player.sendMessage(rawtextTranslate("ui.closechat"));
+        const result = await waitShowActionForm(listModule, player);
         if (!result || result.canceled || result.selection! == 0) return;
         const selectedModule = allModules[result.selection! - 1]!;
         const ui = new ModalFormData()
@@ -29,7 +29,6 @@ new Command()
                 0
             )
             .submitButton(rawtextTranslate("ui.runcommand"));
-        player.sendMessage(rawtextTranslate("ui.closechat"));
         waitShowModalForm(ui, player).then((result) => {
             if (!result || result.canceled) return;
             const state = result.formValues![0]!;
