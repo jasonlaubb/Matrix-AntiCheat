@@ -14,6 +14,7 @@ export default {
         antiScaffold: true,
         antiInsteaBreak: false,
         antiReach: true,
+        antiPhase: true,
         itemCheck: false,
         aimCheck: true,
         antiHop: true,
@@ -47,6 +48,7 @@ export default {
         setpassword: true,
         clearpassword: true,
         configui: true,
+        setrank: true,
         reset: true,
     } as { [key: string]: boolean },
     flag: {
