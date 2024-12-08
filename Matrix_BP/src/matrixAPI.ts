@@ -436,8 +436,8 @@ class Command {
         const values = [];
         let currentIndex = 0;
         for (const option of command.requiredOption) {
-            const arg = args[currentIndex];
             currentIndex++;
+            const arg = args[currentIndex];
             if (!arg) {
                 player.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.missing", with: { rawtext: [option.name] } }));
                 player.sendMessage(rawtextTranslate("commandsynax.tips"));
