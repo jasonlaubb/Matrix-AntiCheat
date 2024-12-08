@@ -480,11 +480,16 @@ class Command {
                 return arg;
             }
             case "boolean": {
-                if (arg == "true" || arg == "false") return arg == "true";
                 switch (arg) {
+                    case "true":
+                    case "enable":
+                    case "yes":
                     case "1": {
                         return true;
                     }
+                    case "false":
+                    case "disable":
+                    case "no":
                     case "0": {
                         return false;
                     }
