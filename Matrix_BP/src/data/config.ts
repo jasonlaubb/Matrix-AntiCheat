@@ -17,7 +17,7 @@ export default {
         antiPhase: true,
         itemCheck: false,
         aimCheck: true,
-        antiHop: true,
+        antiHop: false, // Beta don't touch that.
         welcomer: true,
         worldBorder: false,
         chatRank: false,

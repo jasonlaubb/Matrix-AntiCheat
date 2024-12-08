@@ -128,8 +128,9 @@ function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
     const softBanStatus = player.getDynamicProperty("isSoftBanned") as number;
     if (softBanStatus) {
-        if (softBanStatus != -1 && Date.now() > softBanStatus) {
+        if ((softBanStatus != -1 && Date.now() > softBanStatus) || player.hasTag("matrix-debug:force-unsoftban")) {
             player.setDynamicProperty("isSoftBanned");
+            player.removeTag("matrix-debug:force-unsoftban")
             player.teleport(player.getSpawnPoint() ?? world.getDefaultSpawnLocation(), { dimension: world.getDimension(MinecraftDimensionTypes.Overworld) });
         } else {
             const id = system.runInterval(() => {
@@ -143,7 +144,7 @@ function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
                 }
                 const untilTime = softBanStatus == -1 ? rawtextTranslate("moderation.permanent") : rawtext({ text: new Date(softBanStatus).toUTCString() });
                 player.onScreenDisplay.updateSubtitle(rawtextTranslateRawText("moderation.softban.until", untilTime));
-                player.onScreenDisplay.setTitle(rawtextTranslate("moderation.softban.until"), { stayDuration: 10, fadeInDuration: 0, fadeOutDuration: 0 });
+                player.onScreenDisplay.setTitle(rawtextTranslate("moderation.softban.banned"), { stayDuration: 10, fadeInDuration: 0, fadeOutDuration: 0 });
             }, 5);
             const leaveEvent = world.afterEvents.playerLeave.subscribe(({ playerId }) => {
                 if (player.id != playerId) return;
