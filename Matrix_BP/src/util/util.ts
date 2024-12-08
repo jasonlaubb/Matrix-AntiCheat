@@ -57,22 +57,42 @@ export function changeValueOfObject(object: any, keys: string[], value: any) {
 
 export function waitShowModalForm(ui: ModalFormData, player: Player): Promise<ModalFormResponse | null> {
     return new Promise(async (resolve) => {
-        //@ts-expect-error
-        const res = await ui.show(player);
-        if (res.canceled && res.cancelationReason === FormCancelationReason.UserBusy) resolve(null);
-        await system.waitTicks(10);
-        const returnRes = await waitShowModalForm(ui, player);
-        resolve(returnRes);
+        do {
+            if (!player?.isValid()) break;
+            //@ts-expect-error
+            const res = await ui.show(player);
+            if (res.canceled) {
+                if (res.cancelationReason! === FormCancelationReason.UserBusy) {
+                    await system.waitTicks(20);
+                } else {
+                    break;
+                }
+            } else {
+                resolve(res);
+                return;
+            }
+        } while (true);
+        resolve(null);
     });
 }
 
 export function waitShowActionForm(ui: ActionFormData, player: Player): Promise<ActionFormResponse | null> {
     return new Promise(async (resolve) => {
-        //@ts-expect-error
-        const res = await ui.show(player);
-        if (res.canceled && res.cancelationReason === FormCancelationReason.UserBusy) resolve(null);
-        await system.waitTicks(10);
-        const returnRes = await waitShowActionForm(ui, player);
-        resolve(returnRes);
+        do {
+            if (!player?.isValid()) break;
+            //@ts-expect-error
+            const res = await ui.show(player);
+            if (res.canceled) {
+                if (res.cancelationReason! === FormCancelationReason.UserBusy) {
+                    await system.waitTicks(20);
+                } else {
+                    break;
+                }
+            } else {
+                resolve(res);
+                return;
+            }
+        } while (true);
+        resolve(null);
     });
 }

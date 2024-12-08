@@ -75,11 +75,11 @@ async function editor(player: Player, path: string[]) {
 }
 
 new Command()
-    .setName("confgui")
+    .setName("configui")
     .setMinPermissionLevel(4)
-    .setDescription(rawtextTranslate("command.confgui.description"))
+    .setDescription(rawtextTranslate("command.configui.description"))
     .onExecute(async (player) => {
-        player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("ui.closechat").build());
+        player.sendMessage(rawtextTranslate("ui.closechat"));
         const form = new ActionFormData().title(rawtextTranslate("ui.config.title")).body(rawtextTranslate("ui.config.body")).button(rawtextTranslate("ui.config.button"));
         const result = await waitShowActionForm(form, player);
         if (!result || result.canceled) return;

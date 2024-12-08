@@ -566,6 +566,12 @@ msgstr "You can not see your own inventory, this might cause some issues."
 msgid "command.setpassword.description"
 msgstr "Set a password for getting operator permissions."
 
+msgid "command.setpassword.password"
+msgstr "New password"
+
+msgid "command.setpassword.password.description"
+msgstr "The password that you want to set."
+
 msgid "command.setpassword.success"
 msgstr "The password has been set."
 
