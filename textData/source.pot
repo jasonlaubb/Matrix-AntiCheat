@@ -527,6 +527,45 @@ msgstr "Freeze a player."
 msgid "command.unfreeze.description"
 msgstr "Unfreeze a player."
 
+msgid "command.warn.description"
+msgstr "Warn a player."
+
+msgid "command.clearwarn.description"
+msgstr "Clear all warnings of a player."
+
+msgid "command.invsee.description"
+msgstr "See the inventory of a player."
+
+msgid "command.invsee.notice"
+msgstr "You can open the inventory ui by opening your inventory."
+
+msgid "command.invsee.self"
+msgstr "You can not see your own inventory, this might cause some issues."
+
+msgid "command.setpassword.description"
+msgstr "Set a password for getting operator permissions."
+
+msgid "command.setpassword.success"
+msgstr "The password has been set."
+
+msgid "command.setpassword.strength"
+msgstr "Your password should include lowerCase, upperCase, numbers and special characters."
+
+msgid "command.clearpassword.description"
+msgstr "Clear the password."
+
+msgid "command.clearpassword.success"
+msgstr "The password has been cleared."
+
+msgid "command.clearpassword.already"
+msgstr "There is no password set."
+
+msgid "action.hint.exit.matrix:inv_container"
+msgstr "Tap the §lInventory button§r to open their Inventory."
+
+msgid "action.hint.exit.console.matrix:inv_container"
+msgstr "Press §l:_input_key.inventory:§r to open their Inventory"
+
 msgid "module.welcomer.message"
 msgstr "Welcome! §e%s§r§g has joined the server with §e%2§g device."
 

@@ -12,7 +12,8 @@
             "minecraft:display_name": {
                 "value": "item.matrix.itemui"
             },
-            "minecraft:icon": "matrix:itemui",
+            "minecraft:icon": "matrix:diamond",
+            "minecraft:glint": true,
             "minecraft:max_stack_size": 1,
             "minecraft:can_destroy_in_creative": false,
             "minecraft:should_despawn": true

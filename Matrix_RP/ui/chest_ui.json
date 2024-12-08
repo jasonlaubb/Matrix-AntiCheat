@@ -1,0 +1,98 @@
+{
+	"namespace": "chest",
+	"chest_label": {
+	  "text": "",
+  
+	  "size": [ "100%c", "100%c" ],
+  
+	  "$new_custom_name|default": "$container_title",
+  
+	  "controls": [
+		{
+		  "stack": {
+			"type": "stack_panel",
+			"orientation": "horizontal",
+  
+			"size": [ "100%c", "100%cm" ],
+  
+			"controls": [
+			  {
+				"base_label@matrix:invsee_inventory.label": {
+				  "text": "$new_custom_name"
+				}
+			  }
+			]
+		  }
+		}
+	  ]
+  
+	},
+  
+  
+	"large_chest_panel_top_half": {
+	  "modifications": [
+		{
+		  "array_name": "controls",
+		  "operation": "insert_back",
+		  "value": [
+			{
+			  "inventory_viewer_grid@matrix:invsee_inventory.inventory_viewer_grid": {
+				"offset": [ 0, -2.5 ],
+				"ignored": "(not $use_custom_screen)"
+			  }
+			}
+		  ]
+		}
+	  ]
+	},
+  
+	"large_chest_panel_top_half/large_chest_grid": {
+	  "ignored": "$use_custom_screen"
+	},
+  
+  
+	/* Parse required variables to all screen */
+	"small_chest_screen": {
+	  "$container_name": "$container_title",
+	  "$use_custom_screen|default": false,
+  
+	  "modifications": [
+		{
+		  "array_name": "variables",
+		  "operation": "insert_back",
+		  "value": [
+			{
+			  "requires": "(not ($container_name - 'matrix:inventory::' = $container_name))",
+  
+			  "$screen_content": "chest.large_chest_panel",
+			  "$screen_bg_content": "common.screen_background",
+  
+			  "$new_custom_name": "($container_name - ('%.22s' * $container_name))",
+			  "$use_custom_screen": true
+			}
+		  ]
+		}
+	  ]
+	},
+  
+	"large_chest_screen": {
+	  "$container_name": "$container_title",
+	  "$use_custom_screen": false
+	},
+  
+	"ender_chest_screen": {
+	  "$container_name": "$container_title",
+	  "$use_custom_screen": false
+	},
+  
+	"shulker_box_screen": {
+	  "$container_name": "$container_title",
+	  "$use_custom_screen": false
+	},
+  
+	"barrel_screen": {
+	  "$container_name": "$container_title",
+	  "$use_custom_screen": false
+	}
+  
+  }

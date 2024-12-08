@@ -1,0 +1,7 @@
+{
+	"namespace": "pocket_containers",
+	"header_area/container_header": {
+	  "$new_custom_name|default": "$container_title",
+	  "$header_label": "$new_custom_name"
+	}
+}
