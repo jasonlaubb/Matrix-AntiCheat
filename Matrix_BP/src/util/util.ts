@@ -42,8 +42,12 @@ export function getAngleLimit(platformType: PlatformType): number {
     }
 }
 export function getValueFromObject(object: any, keys: string[]) {
-    for (const key of keys) {
-        object = object[key];
+    try {
+        for (const key of keys) {
+            object = object[key];
+        }
+    } catch {
+        return undefined;
     }
     return object;
 }

@@ -68,7 +68,8 @@ async function editor(player: Player, path: string[]) {
     //@ts-expect-error
     form.show(player).then((data) => {
         if (data.canceled) return;
-        const value = data.formValues![0];
+        let value = data.formValues![0];
+        if (typeof value == "number") value = value == 0 ? "false" : "true";
         // Run the config set command.
         player.runChatCommand(`set ${path.join("/")} "${value}"`);
     });

@@ -280,6 +280,9 @@ msgstr "string (A string that formed with any characters)"
 msgid "command.help.option.number"
 msgstr "number (A float number or a integer)"
 
+msgid "command.help.option.integer"
+msgstr "number (Integer only, including negative)"
+
 msgid "command.help.option.boolean"
 msgstr "boolean (A boolean value, true or false)"
 
