@@ -1,4 +1,4 @@
-import { Dimension, EntityHitEntityAfterEvent, Player, ScriptEventCommandMessageAfterEvent, system, Vector3, world } from "@minecraft/server";
+import { Dimension, EntityHitEntityAfterEvent, GameMode, Player, ScriptEventCommandMessageAfterEvent, system, Vector3, world } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { fastHypot } from "../../util/fastmath";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -57,7 +57,7 @@ function tickEvent(player: Player) {
     if (velocityX === 0 && velocityY === 0 && velocityZ === 0) {
         data.lastStopLocation = player.location;
     }
-    if (player.isSleeping || player.isFlying) {
+    if (player.isSleeping || player.isFlying || player.isGliding) {
         data.lastSleep = now;
     }
     if (
@@ -68,6 +68,7 @@ function tickEvent(player: Player) {
         now - data.lastAttackTimestamp > 1000 &&
         now - data.lastRidingEndTimestamp > 500 &&
         now - data.lastFlagTimestamp > 250 &&
+        player.getGameMode() !== GameMode.creative &&
         !player.isSleeping &&
         now - data.lastSleep > 1000 &&
         !player.hasTag("riding") &&

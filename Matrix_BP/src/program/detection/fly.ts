@@ -1,4 +1,4 @@
-import { Dimension, EquipmentSlot, Player, Vector3 } from "@minecraft/server";
+import { Dimension, EquipmentSlot, GameMode, Player, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { MinecraftEffectTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -59,6 +59,7 @@ function tickEvent(player: Player) {
         !player.isOnGround &&
         !player.isGliding &&
         surroundAir &&
+        player.getGameMode() !== GameMode.creative &&
         !data.velocityYList.some((yV) => yV == HIGH_VELOCITY_Y)
     ) {
         if (velocityY > MAX_VELOCITY_Y) {

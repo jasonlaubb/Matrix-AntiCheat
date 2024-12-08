@@ -1,4 +1,4 @@
-import { EntityHitEntityAfterEvent, Player, system, Vector3 } from "@minecraft/server";
+import { EntityHitEntityAfterEvent, GameMode, Player, system, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { calculateDistance, fastHypot, fastAbs } from "../../util/fastmath";
 import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -72,7 +72,7 @@ function checkTimer() {
     const players = Module.allNonAdminPlayers;
     for (const player of players) {
         const data = timerData.get(player.id)!;
-        if (data.isTickIgnored || data.totalDistance === 0 || now - data.lastReset < 2000) {
+        if (data.isTickIgnored || data.totalDistance === 0 || now - data.lastReset < 2000 || player.getGameMode() === GameMode.creative) {
             data.isTickIgnored = false;
             data.totalDistance = 0;
             data.totalVelocity = 0;
