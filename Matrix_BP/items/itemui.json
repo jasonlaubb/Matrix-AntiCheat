@@ -4,7 +4,6 @@
         "description": {
             "identifier": "matrix:itemui",
             "menu_category": {
-                "is_hidden_in_commands": false,
                 "category": "none"
             }
         },
