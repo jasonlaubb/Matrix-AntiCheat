@@ -3,15 +3,19 @@ export function getAbsoluteGcd(current: number, last: number) {
 
     let currentExpanded = Math.floor(current * EXPANDER);
     let lastExpanded = Math.floor(last * EXPANDER);
-
-    return gcd(currentExpanded, lastExpanded);
+    let ABS_GCD = 1;
+    try {
+        ABS_GCD = gcd(currentExpanded, lastExpanded);
+    } catch {
+    }
+    return ABS_GCD;
 }
 
 export function gcd(a: number, b: number) {
     if (a < b) {
         return gcd(b, a);
     }
-    if (Math.abs(b) < 0.001) {
+    if (fastAbs(b) < 0.001) {
         return a;
     } else {
         return gcd(b, a - Math.floor(a / b) * b);
@@ -36,7 +40,7 @@ export function getAverageDifference(arr: number[]) {
 export function fastAverage(arr: number[]) {
     return arr.reduce((sum, current) => sum + current, 0) / arr.length;
 }
-import { fastSqrt } from "./fastmath";
+import { fastAbs, fastSqrt } from "./fastmath";
 export function getStandardDeviation(numbers: number[]) {
     const n = numbers.length;
     if (n === 0) return 0;

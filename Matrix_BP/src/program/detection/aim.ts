@@ -1,8 +1,8 @@
 import { Player } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
-import { fastAbs, fastFloor } from "../../util/fastmath";
-import { getAbsoluteGcd, arrayToList, getAverageDifference, fastAverage, getStandardDeviation } from "../../util/assets";
+import { fastAbs } from "../../util/fastmath";
+import { arrayToList, getAverageDifference, fastAverage, getStandardDeviation } from "../../util/assets";
 const EMPTY_ARRAY = new Array(100).fill(0);
 const SMALL_EMPTY_ARRAY = new Array(20).fill(0);
 interface AimData {
@@ -103,7 +103,6 @@ const EMPTY_BUFFER = [0, 0, 0, 0];
  */
 function aimModule(player: Player, tickData: AimData, deltaYaw: number, deltaPitch: number) {
     const data = tickData;
-    const deltaPitch2 = data.previousDeltaPitch[0];
     const deltaYaw2 = data.previousDeltaYaw[0];
     const yawAccel = fastAbs(deltaYaw - deltaYaw2);
     const isAttacking = player.hasTag("attackTime");
@@ -120,48 +119,6 @@ function aimModule(player: Player, tickData: AimData, deltaYaw: number, deltaPit
         data.lastFlagTimestamp = now;
         if (data.buffer[1] > DELTA_CHECK_BUFFER) {
             player.flag(aim);
-        }
-    }
-    const constantYaw = getAbsoluteGcd(deltaYaw, deltaYaw2);
-    const constantPitch = getAbsoluteGcd(deltaPitch, deltaPitch2);
-    const divisorX = deltaYaw % constantYaw;
-    const divisorY = deltaPitch % constantPitch;
-    if ((deltaYaw > 0 && !Number.isFinite(divisorX)) || (deltaPitch > 0 && !Number.isFinite(divisorY))) {
-        data.buffer[1]++;
-        data.lastFlagTimestamp = now;
-        if (data.buffer[1] > DELTA_CHECK_BUFFER) {
-            player.flag(aim);
-        }
-    }
-    const currentYaw = deltaYaw / constantYaw;
-    const currentPitch = deltaPitch / constantPitch;
-    const floorYaw = fastFloor(currentYaw);
-    const floorPitch = fastFloor(currentPitch);
-    const moduloX = fastAbs(currentYaw - floorYaw);
-    const moduloY = fastAbs(currentPitch - floorPitch);
-    if ((moduloX > 0.5 && !Number.isFinite(moduloX)) || (moduloY > 0.5 && !Number.isFinite(moduloY))) {
-        data.buffer[1]++;
-        if (data.buffer[1] > DELTA_CHECK_BUFFER) {
-            data.lastFlagTimestamp = now;
-            player.flag(aim);
-        }
-    }
-    const previousY = deltaYaw2 / constantYaw;
-    const previousX = deltaPitch2 / constantPitch;
-    if (deltaYaw > 0 && deltaPitch > 0 && deltaYaw < 20 && deltaPitch < 20) {
-        const moduloY = currentYaw % previousY;
-        const moduloX = currentPitch % previousX;
-        const floorModuloY = fastAbs(fastFloor(moduloY) - moduloY);
-        const floorModuloX = fastAbs(fastFloor(moduloX) - moduloX);
-        const invalid1 = moduloY > 90 && floorModuloY > 0.1;
-        const invalid2 = moduloX > 90 && floorModuloX > 0.1;
-
-        if (invalid1 && invalid2 && isAttacking) {
-            data.lastFlagTimestamp = now;
-            data.buffer[1]++;
-            if (data.buffer[1] > DELTA_CHECK_BUFFER) {
-                player.flag(aim);
-            }
         }
     }
     const deltaPitchAmount = amountDeltaPitch(5, data.previousDeltaPitch);

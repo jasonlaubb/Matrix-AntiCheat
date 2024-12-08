@@ -2,8 +2,8 @@ import { Player, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { fastHypot, fastTotalDelta } from "../../util/fastmath";
-const MAX_DEVIATION = 0.7;
-const SPIKE_LIKE_LIMIT = 1.5;
+const MAX_DEVIATION = 1.5;
+const SPIKE_LIKE_LIMIT = 3;
 const MAX_FLAG_AMOUNT = 7;
 const MAX_FLAG_INTERVAL = 2000;
 interface HopData {

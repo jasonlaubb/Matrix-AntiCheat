@@ -36,4 +36,4 @@ import "./command/vanish";
 import "./command/moderation";
 import "./command/invsee";
 import "./command/setpassword";
-import "./command/confgui";
+import "./command/configui";

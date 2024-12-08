@@ -143,6 +143,11 @@ msgstr "Syntax error: The parameter '%1' required a purecode that only formed by
 msgid "commandsynax.syntax.choice"
 msgstr "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
 
+msgid "commandsynax.syntax.player"
+msgstr "Syntax error: The parameter '%1' required a player which is online, but you have typed '%2 >>%3<< %4'"
+
+msgid "commandsynax.syntax.target"
+msgstr "Syntax error: The parameter '%1' required a target which is online and not an administrator, but you have typed '%2 >>%3<< %4'"
 msgid "module.phase.name"
 msgstr "Anti Phase"
 
