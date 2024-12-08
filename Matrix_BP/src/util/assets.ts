@@ -6,8 +6,7 @@ export function getAbsoluteGcd(current: number, last: number) {
     let ABS_GCD = 1;
     try {
         ABS_GCD = gcd(currentExpanded, lastExpanded);
-    } catch {
-    }
+    } catch {}
     return ABS_GCD;
 }
 

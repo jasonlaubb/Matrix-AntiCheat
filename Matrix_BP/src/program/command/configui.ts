@@ -71,7 +71,7 @@ async function editor(player: Player, path: string[]) {
         let value = data.formValues![0] as string | number;
         if (typeof value == "number") value = value == 0 ? "false" : "true";
         // Run the config set command.
-        if (value?.includes(' ')) {
+        if (value?.includes(" ")) {
             player.runChatCommand(`set ${path.join("/")} "${value}"`);
         } else player.runChatCommand(`set ${path.join("/")} ${value}`);
     });
