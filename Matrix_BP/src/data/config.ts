@@ -47,6 +47,7 @@ export default {
         setpassword: true,
         clearpassword: true,
         configui: true,
+        reset: true,
     } as { [key: string]: boolean },
     flag: {
         banDuration: 604800,

@@ -210,12 +210,12 @@ class Module {
                 }
             }, 200);
         });
-        for (const module of Module.moduleList) {
-            if (module.locked || Module.config.modules[module.toggleId] === true) {
-                module.onEnable();
-                module.enabled = true;
+            for (const module of Module.moduleList) {
+                if (module.locked || Module.config.modules[module.toggleId] === true) {
+                    module.onEnable();
+                    module.enabled = true;
+                }
             }
-        }
         if (world.getAllPlayers().length > 0) {
             for (const player of world.getAllPlayers()) {
                 Module.currentPlayers.push(player);
