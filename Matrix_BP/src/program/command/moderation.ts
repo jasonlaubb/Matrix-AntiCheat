@@ -3,12 +3,6 @@ import { Command } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 // Import all moderation functions (Quite a lot lol)
 import { tempKick, ban, mute, softBan, strengthenKick, freeze, warn, unBan, unMute, unSoftBan, unFreeze, clearWarn, isBanned, isSoftBanned, isMuted, isFrozen, isUnBanned, isWarned, getWarns } from "../system/moderation";
-function isTargetAdmin(target: Player, player: Player): boolean {
-    const isAdmin = target.isAdmin();
-    const state = isAdmin || target.id === player.id;
-    if (state) player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.admin").build());
-    return state;
-}
 function minuteToMilliseconds(minute: number): number {
     return minute * 60000;
 }
@@ -16,10 +10,10 @@ new Command()
     .setName("tempkick")
     .setDescription(rawtextTranslate("command.tempkick.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as Player;
-        if (isTargetAdmin(targetPlayer, player)) return;
+        // Finish the action
         tempKick(targetPlayer);
         world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.tempkick").build()).build());
     })
@@ -28,10 +22,10 @@ new Command()
     .setName("kick")
     .setDescription(rawtextTranslate("command.kick.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as Player;
-        if (isTargetAdmin(targetPlayer, player)) return;
+        // Finish the action
         strengthenKick(targetPlayer);
         world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.kick").build()).build());
     })
@@ -40,7 +34,7 @@ new Command()
     .setName("ban")
     .setDescription(rawtextTranslate("command.ban.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .addOption(
         rawtextTranslate("command.moderation.duration"),
         rawtextTranslate("command.moderation.duration.description"),
@@ -53,7 +47,7 @@ new Command()
     )
     .onExecute(async (player, target, duration) => {
         const targetPlayer = target as Player;
-        if (isTargetAdmin(targetPlayer, player)) return;
+        // Finish the action
         const msDuration = minuteToMilliseconds(duration as number);
         if (isBanned(targetPlayer.name)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         ban(targetPlayer, msDuration);
@@ -64,7 +58,7 @@ new Command()
     .setName("softban")
     .setDescription(rawtextTranslate("command.softban.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .addOption(
         rawtextTranslate("command.moderation.duration"),
         rawtextTranslate("command.moderation.duration.description"),
@@ -77,7 +71,7 @@ new Command()
     )
     .onExecute(async (player, target, duration) => {
         const targetPlayer = target as Player;
-        if (isTargetAdmin(targetPlayer, player)) return;
+        // Finish the action
         const msDuration = minuteToMilliseconds(duration as number);
         if (isSoftBanned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         softBan(targetPlayer, msDuration);
@@ -88,7 +82,7 @@ new Command()
     .setName("mute")
     .setDescription(rawtextTranslate("command.mute.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .addOption(
         rawtextTranslate("command.moderation.duration"),
         rawtextTranslate("command.moderation.duration.description"),
@@ -101,7 +95,7 @@ new Command()
     )
     .onExecute(async (player, target, duration) => {
         const targetPlayer = target as Player;
-        if (isTargetAdmin(targetPlayer, player)) return;
+        // Finish the action
         const msDuration = minuteToMilliseconds(duration as number);
         if (isMuted(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         mute(targetPlayer, msDuration);
@@ -112,7 +106,7 @@ new Command()
     .setName("freeze")
     .setDescription(rawtextTranslate("command.freeze.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .addOption(
         rawtextTranslate("command.moderation.duration"),
         rawtextTranslate("command.moderation.duration.description"),
@@ -125,7 +119,7 @@ new Command()
     )
     .onExecute(async (player, target, duration) => {
         const targetPlayer = target as Player;
-        if (isTargetAdmin(targetPlayer, player)) return;
+        // Finish the action
         const msDuration = minuteToMilliseconds(duration as number);
         if (isFrozen(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         freeze(targetPlayer, msDuration);
@@ -183,10 +177,10 @@ new Command()
     .setName("warn")
     .setDescription(rawtextTranslate("command.warn.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as Player;
-        if (isTargetAdmin(targetPlayer, player)) return;
+        // Finish the action
         warn(targetPlayer);
         world.sendMessage(
             fastText()
@@ -209,10 +203,10 @@ new Command()
     .setName("clearwarn")
     .setDescription(rawtextTranslate("command.clearwarn.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as Player;
-        if (isTargetAdmin(targetPlayer, player)) return;
+        // Finish the action
         if (!isWarned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.clearwarn.failed").build());
         clearWarn(targetPlayer);
         world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.clearwarn").build()).build());

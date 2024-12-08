@@ -37,4 +37,5 @@ import "./command/moderation";
 import "./command/invsee";
 import "./command/setpassword";
 import "./command/configui";
+import "./command/rank";
 import "./command/reset";

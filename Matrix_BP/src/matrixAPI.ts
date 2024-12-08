@@ -547,7 +547,7 @@ class Command {
             case "player": {
                 const targetName = arg.startsWith("@") ? arg.substring(1) : arg;
                 const worldPlayers = world.getPlayers({ name: targetName });
-                if (worldPlayers.length == 0 || (option.type == "target" && worldPlayers[0].isAdmin())) {
+                if (worldPlayers.length == 0 || (option.type == "target" && (worldPlayers[0].isAdmin() || player.id === worldPlayers[0].id))) {
                     Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.player", option.name, beforeArgs, arg, afterArgs);
                     return null;
                 }
@@ -580,7 +580,7 @@ export class DirectPanel {
         for (const command of allCommands) {
             const theAction = command.description;
             const commandId = command.availableId[0];
-            ui.button(fastText().addText("§g").addRawText(theAction).addText("§7").endline().addTran("directpanel.button", commandId).build());
+            ui.button(fastText().addText("§1").addRawText(theAction).addText("§j").endline().addTran("directpanel.button", commandId).build());
         }
         // Close the chat and continue... Easy right?
         const result = await waitShowActionForm(ui, player);
@@ -629,7 +629,6 @@ class Config {
     private static configData?: typeof defaultConfig = undefined;
     public static get modifiedConfig() {
         if (this.configData === undefined) throw new Error("Config is not loaded");
-        world.sendMessage("Config:" + JSON.stringify(this.configData));
         return this.configData;
     }
     public static loadData() {

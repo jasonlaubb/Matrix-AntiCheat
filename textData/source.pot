@@ -613,6 +613,15 @@ msgstr "Failed to change the player's administrator level."
 msgid "command.setadmin.level.display"
 msgstr "§7>> §gAdministrator level: §eLevel %s"
 
+msgid "command.setrank.description"
+msgstr "Set a player's rank."
+
+msgid "command.setrank.rank"
+msgstr "Ranks"
+
+msgid "command.setrank.rank.description"
+msgstr "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
+
 msgid "action.hint.exit.matrix:inv_container"
 msgstr "Tap the §lInventory button§r to open their Inventory."
 
@@ -670,6 +679,9 @@ msgstr "Slow mode enabled! Please enter your message %s second(s) later."4
 msgid "module.chatrank.repeated"
 msgstr "Please don't spam messages."
 
+msgid "module.afk.name"
+msgstr "Anti AFK"
+
 msgid "module.afk.description"
 msgstr "Disconnect the player if they are not active for a long time."
 
@@ -693,6 +705,12 @@ msgstr "You are no longer in combat with %s."
 
 msgid "module.clog.killed"
 msgstr "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+
+msgid "module.captcha.name"
+msgstr "Captcha against bots"
+
+msgid "module.captcha.description"
+msgstr "Prevent the spamming bot from attacking the current server."
 
 msgid "module.captcha.detected"
 msgstr "§c§lSuspicious client detected!§r§7 %s has been disconnected due to using a suspicious client."

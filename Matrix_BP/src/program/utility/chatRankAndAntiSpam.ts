@@ -19,6 +19,7 @@ new Module()
     .initPlayer((playerId) => {
         spamData.set(playerId, {
             lastMessages: {},
+            lastMessageTime: 0,
         });
     })
     .initClear((playerId) => {
@@ -39,7 +40,7 @@ function onPlayerSendMessage(event: ChatSendBeforeEvent) {
     }
     const rankTag = player.getTags().find((tag) => tag.startsWith("matrix:rankTag::"));
     const ranks = rankTag ? rankTag.split("::")[1].split("//") : [Module.config.chatRank.defaultRank];
-    const chatRankMessage = Module.config.chatRank.pattern.replace("%rank%", ranks.join(", ")).replace("%player%", player.name).replace("%message%", messageNormalized);
+    const chatRankMessage = Module.config.chatRank.pattern.replace("%rank%", ranks.join(", ")).replace("%name%", player.name).replace("%message%", messageNormalized);
     system.run(() => {
         world.sendMessage(chatRankMessage);
     });
@@ -47,6 +48,7 @@ function onPlayerSendMessage(event: ChatSendBeforeEvent) {
 }
 interface SpamData {
     lastMessages: Record<string, number>;
+    lastMessageTime: number;
 }
 const spamData = new Map<string, SpamData>();
 function chatSpamming(player: Player, message: string) {
@@ -61,7 +63,7 @@ function chatSpamming(player: Player, message: string) {
     }
 
     const data = spamData.get(player.id)!;
-    if (data.lastMessages.length == 0) {
+    if (data.lastMessages.length <= 3) {
         data.lastMessages = {
             [message]: Date.now(),
         };
@@ -71,13 +73,13 @@ function chatSpamming(player: Player, message: string) {
     const list = Object.entries(data.lastMessages).sort((a, b) => b[1] - a[1]);
     const previousMessages = getPrevious4Messages(list);
     if (previousMessages.some(([msg]) => msg === message)) return "1";
-    const sendInterval = Date.now() - list[0][1];
+    const sendInterval = Date.now() - data.lastMessageTime;
     if (sendInterval < MIN_SEND_INTERVAL) {
         system.run(() => {
             player.sendMessage(
                 fastText()
                     .addText("§bMatrix§a+ §7> §c")
-                    .addTran("module.chatrank.slow", (sendInterval * 0.001).toFixed(3))
+                    .addTran("module.chatrank.slow", ((MIN_SEND_INTERVAL - sendInterval) * 0.001).toFixed(3))
                     .build()
             );
         });
@@ -92,6 +94,7 @@ function chatSpamming(player: Player, message: string) {
     }
     // Update the data
     data.lastMessages[message] = Date.now();
+    data.lastMessageTime = Date.now();
     spamData.set(player.id, data);
     return false;
 }
