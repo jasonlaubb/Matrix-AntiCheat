@@ -182,121 +182,129 @@ msgstr "最大 4.5 ブロックまでのリーチ検出を提供します"
 msgid "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
 msgstr "Anti Speed"
 
+#: commandsynax.syntax.player
+msgid "Syntax error: The parameter '%1' required a player which is online, but you have typed '%2 >>%3<< %4'"
+msgstr "最新かつ!最強のアンチスピードエンジン!!! 「bds prediction」の特性を利用して、プレイヤーの不正な動きを識別します"
+
+#: commandsynax.syntax.target
+msgid "Syntax error: The parameter '%1' required a target which is online and not an administrator, but you have typed '%2 >>%3<< %4'"
+msgstr "Anti Fly"
+
 #: module.phase.name
 msgid "Anti Phase"
-msgstr "最新かつ!最強のアンチスピードエンジン!!! 「bds prediction」の特性を利用して、プレイヤーの不正な動きを識別します"
+msgstr "ほとんどのフライハックが機能しないようにします。誤検知の可能性は少しだけあります"
 
 #: module.phase.description
 msgid "Prevent the player from passing through the walls with the illegal movement packet."
-msgstr "Anti Fly"
+msgstr "Anti Timer"
 
 #: module.firewall.name
 msgid "Firewall"
-msgstr "ほとんどのフライハックが機能しないようにします。誤検知の可能性は少しだけあります"
+msgstr "誰かがチートを使用してゲーム速度を上げるのを防ぎます"
 
 #: module.firewall.description
 msgid "Prevent the player who contains bad packets from accessing the server. For example, spam bot."
-msgstr "Anti Timer"
+msgstr "Matrix AntiCheatに関する基本情報を表示します"
 
 #: module.namespoof.name
 msgid "Anti Name Spoofer"
-msgstr "誰かがチートを使用してゲーム速度を上げるのを防ぎます"
+msgstr "§bMatrix§a+ §7> §gMatrix AntiCheatについて<3"
 
 #: module.namespoof.description
 msgid "Prevent the player from changing their name to a invalid name and join the server."
-msgstr "Matrix AntiCheatに関する基本情報を表示します"
+msgstr "Author: jasonlaubb (Discord: @uwu_the_great)"
 
 #: module.killaura.name
 msgid "Anti KillAura"
-msgstr "§bMatrix§a+ §7> §gMatrix AntiCheatについて<3"
+msgstr "Github: %s"
 
 #: module.killaura.description
 msgid "Prevent the player from hitting other players with the illegal kill packet."
-msgstr "Author: jasonlaubb (Discord: @uwu_the_great)"
+msgstr "今のバージョン: %s"
 
 #: module.scaffold.name
 msgid "Anti Scaffold"
-msgstr "Github: %s"
+msgstr "ダウンロードしたいですか? Discord サーバーに参加してね！！: https://discord.gg/%s"
 
 #: module.scaffold.description
 msgid "Prevent the player from using the auto-brige hack to gain unfair advantage."
-msgstr "今のバージョン: %s"
+msgstr "§bMatrix§a+ §7> §gMatrix Anticheat はあなたのゲーム体験を保護します。Discord: https://discord.gg/%s"
 
 #: module.insteabreak.name
 msgid "Anti Insteabreak"
-msgstr "ダウンロードしたいですか? Discord サーバーに参加してね！！: https://discord.gg/%s"
+msgstr "コマンドに関する便利な情報を取得できます。"
 
 #: module.insteabreak.description
 msgid "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
-msgstr "§bMatrix§a+ §7> §gMatrix Anticheat はあなたのゲーム体験を保護します。Discord: https://discord.gg/%s"
+msgstr "コマンド名"
 
 #: module.reach.name
 msgid "Anti Reach"
-msgstr "コマンドに関する便利な情報を取得できます。"
+msgstr "ヘルプが必要なコマンドの名前"
 
 #: module.reach.description
 msgid "An advanced anti reach solution that provided reach detection up to 4.5 blocks."
-msgstr "コマンド名"
+msgstr "Matrix AntiCheatのコマンドリスト:"
 
 #: module.speed.name
 msgid "Anti Speed"
-msgstr "ヘルプが必要なコマンドの名前"
+msgstr "選択したコマンドの使用方法を表示しています: %s"
 
 #: module.speed.description
 msgid "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
-msgstr "Matrix AntiCheatのコマンドリスト:"
+msgstr "コマンドが見つかりません。正しい情報を表示できるように、有効なコマンドを入力してください。"
 
 #: module.fly.name
 msgid "Anti Fly"
-msgstr "選択したコマンドの使用方法を表示しています: %s"
+msgstr "§gコマンドの説明: §e%s§g"
 
 #: module.fly.description
 msgid "Prevent most of the fly hacks from working. There is a small probability of false positive."
-msgstr "コマンドが見つかりません。正しい情報を表示できるように、有効なコマンドを入力してください。"
+msgstr "§gコマンドの使用法: §e"
 
 #: module.timer.name
 msgid "Anti Timer"
-msgstr "§gコマンドの説明: §e%s§g"
+msgstr "§gコマンドの使用方法: §eコマンド名を入力するだけでOk"
 
 #: module.timer.description
 msgid "Prevent someone speed up their game speed to get an unfair advantage."
-msgstr "§gコマンドの使用法: §e"
+msgstr "文字列（任意の文字で構成された文字列）"
 
 #: module.itemcheck.name
 msgid "Item check"
-msgstr "§gコマンドの使用方法: §eコマンド名を入力するだけでOk"
+msgstr "数値（浮動小数点数または整数）"
 
 #: module.itemcheck.description
 msgid "Prevent the player from using the illegal item from the server."
-msgstr "文字列（任意の文字で構成された文字列）"
+msgstr "ブール値（True またはFalse のブール値）"
 
 #: module.hop.name
 msgid "Anti Hop"
-msgstr "数値（浮動小数点数または整数）"
+msgstr "コード（特定の数値に等しい長さのコード）"
 
 #: module.hop.description
 msgid "An extra checks against the illegal movement motion, to prevent a silent bypass."
-msgstr "ブール値（True またはFalse のブール値）"
+msgstr "purecode (数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成されます)"
 
 #: module.aim.name
 msgid "Aim check"
-msgstr "コード（特定の数値に等しい長さのコード）"
+msgstr "選択肢（選択肢のリストから選んでね）"
 
 #: module.aim.description
 msgid "An extra checks against the illegal aim, to prevent the killaura or aim assist, credit to 4urxa."
-msgstr "purecode (数字 (0-9)、大文字と小文字 (a-z または A-Z) のみで構成されます)"
+msgstr "プレイヤー（オンラインのユーザー）"
 
 #: command.about.description
 msgid "Show some basic information about Matrix AntiCheat."
-msgstr "選択肢（選択肢のリストから選んでね）"
+msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
 
 #: command.about.title
 msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
-msgstr "プレイヤー（オンラインのユーザー）"
+msgstr "§gType: §e%s"
 
 #: command.about.author
 msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
-msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
+msgstr "§g説明: §e%s"
 
 #: command.about.github
 msgid "Github: %s"
@@ -304,15 +312,15 @@ msgstr "§gType: §e%s"
 
 #: command.about.version
 msgid "Current version: %s"
-msgstr "§g説明: §e%s"
+msgstr "(!オプション！)"
 
 #: command.about.joindc
 msgid "Want to download? Join our Discord Server: https://discord.gg/%s"
-msgstr "§gType: §e%s"
+msgstr ""
 
 #: ad.running
 msgid "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
-msgstr "(!オプション！)"
+msgstr ""
 
 #: command.help.description
 msgid "Get the useful information about the commands."
@@ -356,6 +364,10 @@ msgstr ""
 
 #: command.help.option.number
 msgid "number (A float number or a integer)"
+msgstr ""
+
+#: command.help.option.integer
+msgid "number (Integer only, including negative)"
 msgstr ""
 
 #: command.help.option.boolean
@@ -746,6 +758,14 @@ msgstr ""
 msgid "Set a password for getting operator permissions."
 msgstr ""
 
+#: command.setpassword.password
+msgid "New password"
+msgstr ""
+
+#: command.setpassword.password.description
+msgid "The password that you want to set."
+msgstr ""
+
 #: command.setpassword.success
 msgid "The password has been set."
 msgstr ""
@@ -790,6 +810,18 @@ msgstr ""
 msgid "§7>> §gAdministrator level: §eLevel %s"
 msgstr ""
 
+#: command.setrank.description
+msgid "Set a player's rank."
+msgstr ""
+
+#: command.setrank.rank
+msgid "Ranks"
+msgstr ""
+
+#: command.setrank.rank.description
+msgid "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
+msgstr ""
+
 #: action.hint.exit.matrix:inv_container
 msgid "Tap the §lInventory button§r to open their Inventory."
 msgstr ""
@@ -799,7 +831,11 @@ msgid "Press §l:_input_key.inventory:§r to open their Inventory"
 msgstr ""
 
 #: module.welcomer.message
-msgid "Welcome! §e%s§r§g has joined the server with §e%2§g device."
+msgid "Welcome! §e%s§r§g has joined the server!"
+msgstr ""
+
+#: module.welcomer.device
+msgid "§7>> §gDevice: §e%s"
 msgstr ""
 
 #: module.welcomer.device.console
@@ -866,6 +902,10 @@ msgstr ""
 msgid "Please don't spam messages."
 msgstr ""
 
+#: module.afk.name
+msgid "Anti AFK"
+msgstr ""
+
 #: module.afk.description
 msgid "Disconnect the player if they are not active for a long time."
 msgstr ""
@@ -896,6 +936,14 @@ msgstr ""
 
 #: module.clog.killed
 msgid "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+msgstr ""
+
+#: module.captcha.name
+msgid "Captcha against bots"
+msgstr ""
+
+#: module.captcha.description
+msgid "Prevent the spamming bot from attacking the current server."
 msgstr ""
 
 #: module.captcha.detected
@@ -947,7 +995,7 @@ msgid "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now 
 msgstr ""
 
 #: item.matrix.itemui
-msgid "§r§l§bMatrix §gAnticheat §eUI §apanel§r"
+msgid "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
 msgstr ""
 
 #: directpanel.title

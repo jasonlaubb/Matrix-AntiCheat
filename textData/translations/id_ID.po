@@ -182,6 +182,14 @@ msgstr ""
 msgid "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
 msgstr ""
 
+#: commandsynax.syntax.player
+msgid "Syntax error: The parameter '%1' required a player which is online, but you have typed '%2 >>%3<< %4'"
+msgstr ""
+
+#: commandsynax.syntax.target
+msgid "Syntax error: The parameter '%1' required a target which is online and not an administrator, but you have typed '%2 >>%3<< %4'"
+msgstr ""
+
 #: module.phase.name
 msgid "Anti Phase"
 msgstr ""
@@ -356,6 +364,10 @@ msgstr ""
 
 #: command.help.option.number
 msgid "number (A float number or a integer)"
+msgstr ""
+
+#: command.help.option.integer
+msgid "number (Integer only, including negative)"
 msgstr ""
 
 #: command.help.option.boolean
@@ -746,6 +758,14 @@ msgstr ""
 msgid "Set a password for getting operator permissions."
 msgstr ""
 
+#: command.setpassword.password
+msgid "New password"
+msgstr ""
+
+#: command.setpassword.password.description
+msgid "The password that you want to set."
+msgstr ""
+
 #: command.setpassword.success
 msgid "The password has been set."
 msgstr ""
@@ -790,6 +810,18 @@ msgstr ""
 msgid "§7>> §gAdministrator level: §eLevel %s"
 msgstr ""
 
+#: command.setrank.description
+msgid "Set a player's rank."
+msgstr ""
+
+#: command.setrank.rank
+msgid "Ranks"
+msgstr ""
+
+#: command.setrank.rank.description
+msgid "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
+msgstr ""
+
 #: action.hint.exit.matrix:inv_container
 msgid "Tap the §lInventory button§r to open their Inventory."
 msgstr ""
@@ -799,7 +831,11 @@ msgid "Press §l:_input_key.inventory:§r to open their Inventory"
 msgstr ""
 
 #: module.welcomer.message
-msgid "Welcome! §e%s§r§g has joined the server with §e%2§g device."
+msgid "Welcome! §e%s§r§g has joined the server!"
+msgstr ""
+
+#: module.welcomer.device
+msgid "§7>> §gDevice: §e%s"
 msgstr ""
 
 #: module.welcomer.device.console
@@ -866,6 +902,10 @@ msgstr ""
 msgid "Please don't spam messages."
 msgstr ""
 
+#: module.afk.name
+msgid "Anti AFK"
+msgstr ""
+
 #: module.afk.description
 msgid "Disconnect the player if they are not active for a long time."
 msgstr ""
@@ -896,6 +936,14 @@ msgstr ""
 
 #: module.clog.killed
 msgid "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+msgstr ""
+
+#: module.captcha.name
+msgid "Captcha against bots"
+msgstr ""
+
+#: module.captcha.description
+msgid "Prevent the spamming bot from attacking the current server."
 msgstr ""
 
 #: module.captcha.detected
@@ -947,7 +995,7 @@ msgid "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now 
 msgstr ""
 
 #: item.matrix.itemui
-msgid "§r§l§bMatrix §gAnticheat §eUI §apanel§r"
+msgid "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
 msgstr ""
 
 #: directpanel.title
