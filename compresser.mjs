@@ -2,21 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import obfuscator from 'javascript-obfuscator';
 import progressBar from 'progress';
-const fixedStart = `/**
- * @author jasonlaubb
- * @contributors https://github.com/jasonlaubb/Matrix-AntiCheat?tab=readme-ov-file#developers
- * @license AGPLv3
- * @link https://github.com/jasonlaubb/Matrix-AntiCheat
- */
-`;
 /**
  * @author jasonlaubb
  * @contributors https://github.com/jasonlaubb/Matrix-AntiCheat?tab=readme-ov-file#developers
  * @license AGPLv3
  * @link https://github.com/jasonlaubb/Matrix-AntiCheat
  */
-const directoryPath = './generated-package/Matrix-anti_BP/scripts';
-const whiteList = ['Default.js', 'Config.js', 'ChatFilterData.js', 'RegexBasedFilter.js', 'FastBrokenBlocks.js', 'EducationItemList.js', 'EnumData.js', 'FastBrokenBlocks.js', 'OperatorItemList.js', 'ValidPlayerProperty.js', ]
+const directoryPath = './Matrix_BP/scripts';
+const whiteList = ['',]
 async function traverseDirectory(directoryPath) {
     const files = await fs.promises.readdir(directoryPath, {
         withFileTypes: true
@@ -24,7 +17,7 @@ async function traverseDirectory(directoryPath) {
     for (const file of files) {
         const filePath = path.join(directoryPath, file.name);
         if (file.isDirectory()) {
-            if (file.name.includes('node_modules')) continue;
+            if (file.name.includes('node_modules') || file.name.includes('data')) continue;
             await traverseDirectory(filePath);
         } else if (file.isFile() && file.name.endsWith('.js') && !whiteList.includes(file.name)) {
             bar.tick({

@@ -328,191 +328,190 @@
                     "on_damage": {
                         "filters": {
                             "any_of": [
-                            {
-                                "any_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "matrix:pvp-disabled"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "matrix:impeccable"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:red"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:red"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:blue"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:blue"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:cyan"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:cyan"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:yellow"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:yellow"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:orange"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:orange"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:green"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:green"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:purple"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:purple"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:white"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:white"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:black"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:black"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:gray"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:gray"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:lime"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:lime"
-                                    }
-                                ]
-                            },
-                            {
-                                "all_of": [
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "self",
-                                        "value": "team:brown"
-                                    },
-                                    {
-                                        "test": "has_tag",
-                                        "subject": "other",
-                                        "value": "team:brown"
-                                    }
-                                ]
-                            }
-                            ]
+                                {
+                                    "any_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "matrix:pvp-disabled"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "matrix:impeccable"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:red"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:red"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:blue"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:blue"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:cyan"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:cyan"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:yellow"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:yellow"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:orange"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:orange"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:green"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:green"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:purple"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:purple"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:white"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:white"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:black"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:black"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:gray"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:gray"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:lime"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:lime"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "all_of": [
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "self",
+                                            "value": "team:brown"
+                                        },
+                                        {
+                                            "test": "has_tag",
+                                            "subject": "other",
+                                            "value": "team:brown"
+                                        }
+                                    ]
                                 }
-                    
+                            ]
+                        }
                     },
                     "deals_damage": "no",
                     "cause": "all"
@@ -536,11 +535,7 @@
                     "component_groups": ["matrix:unvanish"]
                 },
                 "queue_command": {
-                    "command": [
-                        "tag @s remove matrix:impeccable",
-                        "tag @s remove matrix:vanished",
-                        "effect @s minecraft:invisibility infinite 0 true"
-                    ],
+                    "command": ["tag @s remove matrix:impeccable", "tag @s remove matrix:vanished", "effect @s minecraft:invisibility infinite 0 true"],
                     "target": "self"
                 }
             },
@@ -549,10 +544,7 @@
                     "component_groups": ["matrix:vanish"]
                 },
                 "queue_command": {
-                    "command": [
-                        "tag @s add matrix:impeccable",
-                        "tag @s add matrix:vanished"
-                    ],
+                    "command": ["tag @s add matrix:impeccable", "tag @s add matrix:vanished"],
                     "target": "self"
                 }
             },

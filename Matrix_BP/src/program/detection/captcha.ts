@@ -55,7 +55,7 @@ async function onPlayerSpawn(event: PlayerSpawnAfterEvent) {
                         system.clearRun(interval);
                     }
                 }
-				lastRotationString = rotationString;
+                lastRotationString = rotationString;
             } catch (error) {
                 Module.sendError(error as Error);
                 resolve(false);
@@ -78,7 +78,13 @@ async function onPlayerSpawn(event: PlayerSpawnAfterEvent) {
         const ui = new ModalFormData()
             .title(rawtextTranslate("module.captcha.title"))
             .submitButton(rawtextTranslate("module.captcha.submit"))
-            .slider(fastText().addTran("module.captcha.selectui").endline().addTran("module.captcha.why").endline().addTran("module.captcha.question", question1.toString(), question2.toString()).endline().addTran("module.captcha.youranswer").build(), 0, 10, 1, ran(11))
+            .slider(
+                fastText().addTran("module.captcha.selectui").endline().addTran("module.captcha.why").endline().addTran("module.captcha.question", question1.toString(), question2.toString()).endline().addTran("module.captcha.youranswer").build(),
+                0,
+                10,
+                1,
+                ran(11)
+            )
             .toggle(rawtextTranslate("module.captcha.notabot"), false)
             //@ts-expect-error
             .show(player);
@@ -114,10 +120,10 @@ async function onPlayerSpawn(event: PlayerSpawnAfterEvent) {
         try {
             player.runCommand("ability @s mute false");
         } catch {
-			console.warn("Module :: Captcha :: Minecraft EDU is required to use defender without bypass!");
+            console.warn("Module :: Captcha :: Minecraft EDU is required to use defender without bypass!");
         }
     } else {
-		tempKick(player);
+        tempKick(player);
         world.sendMessage(rawtextTranslate("module.captcha.detected", player.id));
     }
 }
@@ -134,21 +140,21 @@ async function onPlayerInteract(event: PlayerInteractWithBlockBeforeEvent | Play
     event.cancel = true;
 }
 new Module()
-	.addCategory("detection")
-	.setName(rawtextTranslate("module.captcha.name"))
-	.setDescription(rawtextTranslate("module.captcha.description"))
-	.setToggleId("captcha")
-	.setPunishment("ban")
-	.onModuleEnable(() => {
-		world.afterEvents.playerSpawn.subscribe(onPlayerSpawn);
-		world.afterEvents.playerLeave.subscribe(onPlayerLeave);
-		world.beforeEvents.playerInteractWithBlock.subscribe(onPlayerInteract);
-		world.beforeEvents.playerInteractWithEntity.subscribe(onPlayerInteract);
-	})
-	.onModuleDisable(() => {
-		world.afterEvents.playerSpawn.unsubscribe(onPlayerSpawn);
-		world.afterEvents.playerLeave.unsubscribe(onPlayerLeave);
-		world.beforeEvents.playerInteractWithBlock.unsubscribe(onPlayerInteract);
-		world.beforeEvents.playerInteractWithEntity.unsubscribe(onPlayerInteract);
-	})
-	.register();
+    .addCategory("detection")
+    .setName(rawtextTranslate("module.captcha.name"))
+    .setDescription(rawtextTranslate("module.captcha.description"))
+    .setToggleId("captcha")
+    .setPunishment("ban")
+    .onModuleEnable(() => {
+        world.afterEvents.playerSpawn.subscribe(onPlayerSpawn);
+        world.afterEvents.playerLeave.subscribe(onPlayerLeave);
+        world.beforeEvents.playerInteractWithBlock.subscribe(onPlayerInteract);
+        world.beforeEvents.playerInteractWithEntity.subscribe(onPlayerInteract);
+    })
+    .onModuleDisable(() => {
+        world.afterEvents.playerSpawn.unsubscribe(onPlayerSpawn);
+        world.afterEvents.playerLeave.unsubscribe(onPlayerLeave);
+        world.beforeEvents.playerInteractWithBlock.unsubscribe(onPlayerInteract);
+        world.beforeEvents.playerInteractWithEntity.unsubscribe(onPlayerInteract);
+    })
+    .register();

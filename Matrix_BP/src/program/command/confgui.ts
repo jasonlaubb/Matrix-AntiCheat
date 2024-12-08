@@ -31,11 +31,7 @@ function selector(player: Player, path: string[]) {
         return entries as [string, string];
     });
 
-    const selectform = new ActionFormData().title(rawtextTranslate("ui.config.selector")).body(
-        fastText()
-            .addTran("ui.config.loc", path.join("/"))
-            .build()
-    );
+    const selectform = new ActionFormData().title(rawtextTranslate("ui.config.selector")).body(fastText().addTran("ui.config.loc", path.join("/")).build());
 
     for (const [key, value] of lulka) {
         selectform.button(`§g§l${key}§r\n§8${value}§r`);
@@ -50,46 +46,43 @@ function selector(player: Player, path: string[]) {
     });
 }
 async function editor(player: Player, path: string[]) {
-            const type = typeof Config.get(path)!;
-            const form = new ModalFormData().title(rawtextTranslate("ui.config.editor"));
-            switch (type) {
-                case "string": {
-                    form.textField(rawtextTranslate("ui.config.value"), "string");
-                    break;
-                }
-                case "number": {
-                    form.textField(rawtextTranslate("ui.config.value"), "number");
-                    break;
-                }
-                case "boolean": {
-                    form.dropdown(rawtextTranslate("ui.config.value"), ["FALSE (0)","TRUE (1)"]);
-                    break;
-                }
-                default: {
-                    throw new Error("Type Error: Undefined case");
-                }
-            }
-            //@ts-expect-error
-            form.show(player).then((data) => {
-                if (data.canceled) return;
-                const value = data.formValues![0];
-                // Run the config set command.
-                player.runChatCommand(`set ${path.join("/")} "${value}"`);
-            });
+    const type = typeof Config.get(path)!;
+    const form = new ModalFormData().title(rawtextTranslate("ui.config.editor"));
+    switch (type) {
+        case "string": {
+            form.textField(rawtextTranslate("ui.config.value"), "string");
+            break;
+        }
+        case "number": {
+            form.textField(rawtextTranslate("ui.config.value"), "number");
+            break;
+        }
+        case "boolean": {
+            form.dropdown(rawtextTranslate("ui.config.value"), ["FALSE (0)", "TRUE (1)"]);
+            break;
+        }
+        default: {
+            throw new Error("Type Error: Undefined case");
+        }
+    }
+    //@ts-expect-error
+    form.show(player).then((data) => {
+        if (data.canceled) return;
+        const value = data.formValues![0];
+        // Run the config set command.
+        player.runChatCommand(`set ${path.join("/")} "${value}"`);
+    });
 }
 
 new Command()
-	.setName("confgui")
-	.setMinPermissionLevel(4)
-	.setDescription(rawtextTranslate("command.confgui.description"))
-	.onExecute(async (player) => {
-		player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("ui.closechat").build());
-		const form = new ActionFormData()
-			.title(rawtextTranslate("ui.config.title"))
-			.body(rawtextTranslate("ui.config.body"))
-			.button(rawtextTranslate("ui.config.button"));
-		const result = await waitShowActionForm(form, player);
-		if (!result || result.canceled) return;
-		configUI(player).catch((e) => Command.sendErrorToPlayer(player, e));
-	})
-	.register();
+    .setName("confgui")
+    .setMinPermissionLevel(4)
+    .setDescription(rawtextTranslate("command.confgui.description"))
+    .onExecute(async (player) => {
+        player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("ui.closechat").build());
+        const form = new ActionFormData().title(rawtextTranslate("ui.config.title")).body(rawtextTranslate("ui.config.body")).button(rawtextTranslate("ui.config.button"));
+        const result = await waitShowActionForm(form, player);
+        if (!result || result.canceled) return;
+        configUI(player).catch((e) => Command.sendErrorToPlayer(player, e));
+    })
+    .register();

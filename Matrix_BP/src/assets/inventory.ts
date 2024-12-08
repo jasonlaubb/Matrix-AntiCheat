@@ -2,7 +2,7 @@ export { projectPlayerInventory, initializeInventorySync };
 import { world, system, EquipmentSlot, Player, ItemStack, Entity } from "@minecraft/server";
 function fetchInventory(entity: Entity): ItemStack[] {
     const container = entity.getComponent("inventory")!.container!;
-    let inventory = Array.from({ length: container.size }, (_, i) => container.getItem(i)).map(item => item ?? { typeId: "air", amount: 0 } as unknown as ItemStack);
+    let inventory = Array.from({ length: container.size }, (_, i) => container.getItem(i)).map((item) => item ?? ({ typeId: "air", amount: 0 } as unknown as ItemStack));
     return entity instanceof Player ? inventory.slice(9).concat(inventory.slice(0, 9)) : inventory;
 }
 function stringifyInventory(inventory: ItemStack[]): string {
@@ -17,7 +17,13 @@ function stringifyInventory(inventory: ItemStack[]): string {
 }
 function fetchPlayerEquipments(player: Player): ItemStack[] {
     const equipment = player.getComponent("equippable")!;
-    return [equipment.getEquipment(EquipmentSlot.Head), equipment.getEquipment(EquipmentSlot.Chest), equipment.getEquipment(EquipmentSlot.Legs), equipment.getEquipment(EquipmentSlot.Feet), equipment.getEquipment(EquipmentSlot.Offhand)] as unknown as ItemStack[];
+    return [
+        equipment.getEquipment(EquipmentSlot.Head),
+        equipment.getEquipment(EquipmentSlot.Chest),
+        equipment.getEquipment(EquipmentSlot.Legs),
+        equipment.getEquipment(EquipmentSlot.Feet),
+        equipment.getEquipment(EquipmentSlot.Offhand),
+    ] as unknown as ItemStack[];
 }
 function transformEquipmentStatsToString(equipment: ItemStack[]): string {
     return equipment
@@ -139,7 +145,7 @@ function pushChange(entityProjector: Entity, target: Player) {
     }
 }
 
-function initializeInventorySync () {
+function initializeInventorySync() {
     system.runInterval(() => {
         const inventoryViewerEntities = getInventoryViewerEntities("minecraft:overworld").concat(getInventoryViewerEntities("minecraft:nether")).concat(getInventoryViewerEntities("minecraft:the_end"));
         inventoryViewerEntities.forEach((entity) => {

@@ -50,6 +50,14 @@ msgstr ""
 msgid "§7>> §gIs that nothing working? Don't forget to enable Beta API and update our Matrix anticheat to the latest"
 msgstr ""
 
+#: function.script.online
+msgid "§7>> §aScript is active! It is so nice to have you here."
+msgstr ""
+
+#: function.script.offline
+msgid "§7>> §cScript is inactive! Please check if you have Beta-API enabled."
+msgstr ""
+
 #: moderation.permanent
 msgid "permanent"
 msgstr ""
@@ -72,6 +80,34 @@ msgstr ""
 
 #: ui.closechat
 msgid "§7>> §gPlease close the chat to receive your user interface (UI)."
+msgstr ""
+
+#: ui.config.title
+msgid "Press the button to continue"
+msgstr ""
+
+#: ui.config.button
+msgid "Continue >w<"
+msgstr ""
+
+#: ui.config.body
+msgid "You can change the config in the config file. You can also use the command -set <path> <value> to change a config value."
+msgstr ""
+
+#: ui.config.selector
+msgid "Config Selector | Matrix AntiCheat"
+msgstr ""
+
+#: ui.config.editor
+msgid "Config Editor | Matrix AntiCheat"
+msgstr ""
+
+#: ui.config.value
+msgid "New value you want to set"
+msgstr ""
+
+#: ui.config.loc
+msgid "§gCurrent path of the config: §e%s"
 msgstr ""
 
 #: commandsynax.unknown
@@ -550,6 +586,218 @@ msgstr ""
 msgid "Open the Matrix AntiCheat UI panel."
 msgstr ""
 
+#: command.vanish.description
+msgid "Make yourself invisible to other players. Even ESP will not be able to see you."
+msgstr ""
+
+#: command.vanish.success
+msgid "You have been vanished. Type this command again to make yourself visible again."
+msgstr ""
+
+#: command.vanish.deleted
+msgid "You are no longer to be vanished."
+msgstr ""
+
+#: command.vanish.failed
+msgid "Sorry, but you need to place Matrix anticheat above any-type of addon that includes 'player.json' entities file to use this command."
+msgstr ""
+
+#: command.moderation.target
+msgid "Target player"
+msgstr ""
+
+#: command.moderation.target.description
+msgid "The target player that you want to use this command on."
+msgstr ""
+
+#: command.moderation.duration
+msgid "Duration"
+msgstr ""
+
+#: command.moderation.duration.description
+msgid "The duration of the moderation action that you want to use this command on, in minutes. You can type 0 in order to set a permanent moderation action."
+msgstr ""
+
+#: command.moderation.admin
+msgid "Oops, you can not finish a moderation action to an administrator or yourself."
+msgstr ""
+
+#: command.moderation.success
+msgid "%1 has been §e%3g by %2"
+msgstr ""
+
+#: command.moderation.removal.failed
+msgid "Before you use the moderation removal or any related moderation command, you need to make sure the target player has been moderated."
+msgstr ""
+
+#: command.moderation.tempkick
+msgid "temp-kicked"
+msgstr ""
+
+#: command.moderation.kick
+msgid "kicked"
+msgstr ""
+
+#: command.moderation.ban
+msgid "banned"
+msgstr ""
+
+#: command.moderation.unban
+msgid "unbanned"
+msgstr ""
+
+#: command.moderation.softban
+msgid "soft-banned"
+msgstr ""
+
+#: command.moderation.unsoftban
+msgid "unsoft-banned"
+msgstr ""
+
+#: command.moderation.mute
+msgid "muted"
+msgstr ""
+
+#: command.moderation.unmute
+msgid "unmuted"
+msgstr ""
+
+#: command.moderation.freeze
+msgid "frozen"
+msgstr ""
+
+#: command.moderation.unfreeze
+msgid "unfrozen"
+msgstr ""
+
+#: command.moderation.warn
+msgid "warned"
+msgstr ""
+
+#: command.moderation.clearwarn
+msgid "cleared all warnings"
+msgstr ""
+
+#: command.moderation.warn.amount
+msgid "§7>> §g Amount of warnings: %s"
+msgstr ""
+
+#: command.tempkick.description
+msgid "Temporarily kick a player."
+msgstr ""
+
+#: command.kick.description
+msgid "Kick a player."
+msgstr ""
+
+#: command.ban.description
+msgid "Ban a player."
+msgstr ""
+
+#: command.unban.description
+msgid "Unban a player."
+msgstr ""
+
+#: command.softban.description
+msgid "Soft-ban a player."
+msgstr ""
+
+#: command.unsoftban.description
+msgid "Unsoft-ban a player."
+msgstr ""
+
+#: command.mute.description
+msgid "Mute a player."
+msgstr ""
+
+#: command.unmute.description
+msgid "Unmute a player."
+msgstr ""
+
+#: command.freeze.description
+msgid "Freeze a player."
+msgstr ""
+
+#: command.unfreeze.description
+msgid "Unfreeze a player."
+msgstr ""
+
+#: command.warn.description
+msgid "Warn a player."
+msgstr ""
+
+#: command.clearwarn.description
+msgid "Clear all warnings of a player."
+msgstr ""
+
+#: command.invsee.description
+msgid "See the inventory of a player."
+msgstr ""
+
+#: command.invsee.notice
+msgid "You can open the inventory ui by opening your inventory."
+msgstr ""
+
+#: command.invsee.self
+msgid "You can not see your own inventory, this might cause some issues."
+msgstr ""
+
+#: command.setpassword.description
+msgid "Set a password for getting operator permissions."
+msgstr ""
+
+#: command.setpassword.success
+msgid "The password has been set."
+msgstr ""
+
+#: command.setpassword.strength
+msgid "Your password should include lowerCase, upperCase, numbers and special characters."
+msgstr ""
+
+#: command.clearpassword.description
+msgid "Clear the password."
+msgstr ""
+
+#: command.clearpassword.success
+msgid "The password has been cleared."
+msgstr ""
+
+#: command.clearpassword.already
+msgid "There is no password set."
+msgstr ""
+
+#: command.configui.description
+msgid "Configure the settings of Matrix anticheat by a user interface."
+msgstr ""
+
+#: command.setadmin.description
+msgid "Set a player as an administrator."
+msgstr ""
+
+#: command.setadmin.level
+msgid "Administrator level"
+msgstr ""
+
+#: command.setadmin.level.description
+msgid "The level of the administrator that you want to set. (Set to 0 in order to remove the player as an administrator)"
+msgstr ""
+
+#: command.setadmin.failed
+msgid "Failed to change the player's administrator level."
+msgstr ""
+
+#: command.setadmin.level.display
+msgid "§7>> §gAdministrator level: §eLevel %s"
+msgstr ""
+
+#: action.hint.exit.matrix:inv_container
+msgid "Tap the §lInventory button§r to open their Inventory."
+msgstr ""
+
+#: action.hint.exit.console.matrix:inv_container
+msgid "Press §l:_input_key.inventory:§r to open their Inventory"
+msgstr ""
+
 #: module.welcomer.message
 msgid "Welcome! §e%s§r§g has joined the server with §e%2§g device."
 msgstr ""
@@ -648,6 +896,54 @@ msgstr ""
 
 #: module.clog.killed
 msgid "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+msgstr ""
+
+#: module.captcha.detected
+msgid "§c§lSuspicious client detected!§r§7 %s has been disconnected due to using a suspicious client."
+msgstr ""
+
+#: module.captcha.keepmove
+msgid "§bMatrix§a+ §7> §gContinue your rotation movement for %s seconds more."
+msgstr ""
+
+#: module.captcha.checking
+msgid "§bMatrix§a+ §7> §gChecking your client... Please wait."
+msgstr ""
+
+#: module.captcha.continue
+msgid "§bMatrix§a+ §7> §gPlease §e§lMOVE YOUR ROTATION§r§g to continue the check process."
+msgstr ""
+
+#: module.captcha.title
+msgid "Captcha GUI | Matrix Anticheat"
+msgstr ""
+
+#: module.captcha.submit
+msgid "I have finished the question!"
+msgstr ""
+
+#: module.captcha.selectui
+msgid "§bPlease answer the question below correctly to verify you're a human."
+msgstr ""
+
+#: module.captcha.why
+msgid "§aWhy do you need to verify? Because we want to prevent the spamming bot from attacking the current server."
+msgstr ""
+
+#: module.captcha.question
+msgid "§gQuestion: §eWhat is the correct answer of %1 plus %2?"
+msgstr ""
+
+#: module.captcha.youranswer
+msgid "§gSelect the correct answer in below slider"
+msgstr ""
+
+#: module.captcha.recontinue
+msgid "§bMatrix§a+ §7> §gYou make it wrong, please try again."
+msgstr ""
+
+#: module.captcha.verified
+msgid "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
 msgstr ""
 
 #: item.matrix.itemui

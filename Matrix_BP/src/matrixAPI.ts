@@ -203,10 +203,10 @@ class Module {
             }
             system.runTimeout(() => {
                 if (player?.isValid()) player.sendMessage(rawtextTranslate("ad.running", Module.discordInviteLink));
-                let obj = world.scoreboard.getObjective('matrix:script-online');
+                let obj = world.scoreboard.getObjective("matrix:script-online");
                 if (!obj) {
-                    obj = world.scoreboard.addObjective('matrix:script-online', 'Made by jasonlaubb');
-                    obj.setScore('is_enabled', -1);
+                    obj = world.scoreboard.addObjective("matrix:script-online", "Made by jasonlaubb");
+                    obj.setScore("is_enabled", -1);
                 }
             }, 200);
         });

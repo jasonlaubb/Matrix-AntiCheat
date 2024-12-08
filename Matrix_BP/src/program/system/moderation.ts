@@ -27,7 +27,7 @@ export function ban(player: Player, duration: number) {
     player.setDynamicProperty("isBanned", duration == -1 ? -1 : Date.now() + duration);
     kickForBan(player, duration);
 }
-export function isBanned (playerName: string) {
+export function isBanned(playerName: string) {
     const obj = world.scoreboard.getObjective(`matrix:banRecord`);
     if (!obj) {
         world.scoreboard.addObjective(`matrix:banRecord`, "Matrix AntiCheat");
@@ -46,7 +46,7 @@ export function unBan(playerName: string) {
     obj.setScore("::" + playerName, 0);
     return true;
 }
-export function isUnBanned (playerName: string) {
+export function isUnBanned(playerName: string) {
     const obj = world.scoreboard.getObjective(`matrix:unBanRequest`);
     if (!obj) {
         world.scoreboard.addObjective(`matrix:unBanRequest`, "Matrix AntiCheat");
@@ -210,7 +210,7 @@ function kickForBan(player: Player, banStatus: number) {
             tempKick(player);
         });
 }
-export function warn (player: Player) {
+export function warn(player: Player) {
     const obj = world.scoreboard.getObjective(`matrix:warnRecord`);
     if (!obj) {
         world.scoreboard.addObjective(`matrix:warnRecord`, "Matrix AntiCheat");
@@ -219,26 +219,26 @@ export function warn (player: Player) {
     obj.addScore("::" + player.name, 1);
 }
 
-export function clearWarn (player: Player) {
+export function clearWarn(player: Player) {
     const obj = world.scoreboard.getObjective(`matrix:warnRecord`);
     if (!obj) return;
     if (obj.getScore("::" + player.name)) {
         obj.removeParticipant("::" + player.name);
     }
 }
-export function isWarned (player: Player) {
+export function isWarned(player: Player) {
     const obj = world.scoreboard.getObjective(`matrix:warnRecord`);
     if (!obj) {
         world.scoreboard.addObjective(`matrix:warnRecord`, "Matrix AntiCheat");
         return isWarned(player);
-    };
+    }
     return !!obj.getScore("::" + player.name);
 }
-export function getWarns (player: Player) {
+export function getWarns(player: Player) {
     const obj = world.scoreboard.getObjective(`matrix:warnRecord`);
     if (!obj) {
         world.scoreboard.addObjective(`matrix:warnRecord`, "Matrix AntiCheat");
         return getWarns(player);
-    };
+    }
     return obj.getScore("::" + player.name) ?? 0;
 }
