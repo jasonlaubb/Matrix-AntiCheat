@@ -17,7 +17,7 @@ new Module()
 
 function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
-    world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("module.welcomer.message", fastText().addText(player.name).addTran(parseDeviceType(player.clientSystemInfo.platformType)).build()).build());
+    world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("module.welcomer.message", player.name).endline().addTranRawText("module.welcomer.device", rawtextTranslate(parseDeviceType(player.clientSystemInfo.platformType))).build());
 }
 function parseDeviceType(deviceType: PlatformType): string {
     switch (deviceType) {

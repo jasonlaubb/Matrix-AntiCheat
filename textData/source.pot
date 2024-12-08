@@ -629,7 +629,10 @@ msgid "action.hint.exit.console.matrix:inv_container"
 msgstr "Press §l:_input_key.inventory:§r to open their Inventory"
 
 msgid "module.welcomer.message"
-msgstr "Welcome! §e%s§r§g has joined the server with §e%2§g device."
+msgstr "Welcome! §e%s§r§g has joined the server!"
+
+msgid "module.welcomer.device"
+msgstr "§7>> §gDevice: §e%s"
 
 msgid "module.welcomer.device.console"
 msgstr "gaming console"
@@ -749,7 +752,7 @@ msgid "module.captcha.verified"
 msgstr "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
 
 msgid "item.matrix.itemui"
-msgstr "§r§l§bMatrix §gAnticheat §eUI §apanel§r"
+msgstr "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
 
 msgid "directpanel.title"
 msgstr "Tell me, what do you want to do?"
