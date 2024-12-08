@@ -52,11 +52,25 @@ export function getValueFromObject(object: any, keys: string[]) {
     return object;
 }
 export function changeValueOfObject(object: any, keys: string[], value: any) {
-    for (const key of keys.slice(0, keys.length - 1)) {
-        object = object[key];
+    switch (keys.length) {
+        case 1:
+            object[keys[0]] = value;
+            return object;
+        case 2:
+            object[keys[0]][keys[1]] = value;
+            return object;
+        case 3:
+            object[keys[0]][keys[1]][keys[2]] = value;
+            return object;
+        case 4:
+            object[keys[0]][keys[1]][keys[2]][keys[3]] = value;
+            return object;
+        case 5:
+            object[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]] = value;
+            return object;
+        default:
+            throw new Error("Too many keys!!!!");
     }
-    object[keys[keys.length - 1]] = value;
-    return object;
 }
 
 export function waitShowModalForm(ui: ModalFormData, player: Player): Promise<ModalFormResponse | null> {

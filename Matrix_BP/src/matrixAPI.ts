@@ -629,6 +629,7 @@ class Config {
     private static configData?: typeof defaultConfig = undefined;
     public static get modifiedConfig() {
         if (this.configData === undefined) throw new Error("Config is not loaded");
+        world.sendMessage("Config:" + JSON.stringify(this.configData));
         return this.configData;
     }
     public static loadData() {
