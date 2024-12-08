@@ -11,7 +11,7 @@ new Command()
     .addOption(rawtextTranslate("command.setpassword.password"), rawtextTranslate("command.setpassword.password.description"), "string", {
         lowerLimit: MIN_PASSWORD_LENGTH,
         upperLimit: 18,
-    })
+    }, false)
     .onExecute(async (player, passwordStr) => {
         const password = passwordStr as string;
         if (HIGHER_STRENGTH && (!caseCheck(password) || !numberCheck(password) || !specialCheck(password))) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setpassword.strength").build());
