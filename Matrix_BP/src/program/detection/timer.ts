@@ -89,7 +89,6 @@ function checkTimer() {
             data.negativeCombo++;
         } else data.negativeCombo = 0;
         const overSlow = data.negativeCombo >= 3;
-        player.runCommand("title @s actionbar " + actualDeviation.toFixed(2));
         if ((highDeviationState || absDeviation > maxDeviation * 0.31 || overSlow) && actualDeviation < 14) {
             if (now - data.lastFlagTimestamp > 3000) {
                 data.flagAmount = 0;
