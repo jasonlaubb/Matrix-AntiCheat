@@ -476,7 +476,7 @@ msgid "command.moderation.duration"
 msgstr "Duration"
 
 msgid "command.moderation.duration.description"
-msgstr "The duration of the moderation action that you want to use this command on, in minutes. You can type 0 in order to set a permanent moderation action."
+msgstr "The duration of the moderation action that you want to use this command on, in minutes. You leave it empty in order to set a permanent moderation action."
 
 msgid "command.moderation.admin"
 msgstr "Oops, you can not finish a moderation action to an administrator or yourself."
