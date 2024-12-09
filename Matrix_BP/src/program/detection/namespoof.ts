@@ -39,8 +39,29 @@ function playerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
         player.flag(namespoof);
     }
 }
-
+/**
+ * @description The supported characters.
+ * @data
+ * Latin-1 Supplement: \u00C0-\u017F
+ * Latin Extended-A: \u0180-\u024F
+ * Hangul: \uAC00-\uD7A3
+ * Katakana: \u3040-\u309F
+ * Hiragana: \u30A0-\u30FF
+ * Full-width Latin characters: \uFF66-\uFF9D
+ * Half-width Katakana: \u31F0-\u31FF
+ * CJK Unified Ideographs (Chinese, Japanese, Korean): \u4E00-\u9FFF
+ * Bengali: \u0980-\u09FF
+ * Devanagari: \u0900-\u097F
+ * Cyrillic: \u0400-\u04FF
+ * Greek: \u0370-\u03FF
+ * Thai: \u0E00-\u0E7F
+ */
+const validRange = /[\u00C0-\u017F\u0180-\u024F\uAC00-\uD7A3\u3040-\u309F\u30A0-\u30FF\uFF66-\uFF9D\u31F0-\u31FF\u4E00-\u9FFF\u0980-\u09FF\u0900-\u097F\u0400-\u04FF\u0370-\u03FF\u0E00-\u0E7F]/g;
+const nonASCIIRegex = /^[^a-zA-Z0-0_\s]+$/g;
 function isValidName(name: string): boolean {
-    const xboxNameRegex = /^[\u0041-\u005A\u0061-\u007A\u00C0-\u017F\u0180-\u024F\uAC00-\uD7A3\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u0900-\u097F\u0980-\u09FF\u0400-\u04FF\u0370-\u03FF\u0E00-\u0E7F\s_]{3,16}$/;
-    return xboxNameRegex.test(name);
+    const nonASCII = name.match(nonASCIIRegex);
+    if (nonASCII === null) return true;
+    return nonASCII.every((char) => {
+        return validRange.test(char);
+    })
 }
