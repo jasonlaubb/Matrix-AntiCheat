@@ -28,6 +28,7 @@ new Module()
     .register();
 const MIN_SEND_INTERVAL = 5000;
 const MAX_REPEAT_AMOUNT = 3;
+const MAX_MESSAGE_LENGTH = 256;
 function onPlayerSendMessage(event: ChatSendBeforeEvent) {
     const isCommandUsage = Command.isCommandArg(event.message);
     if (isCommandUsage) return;
@@ -86,7 +87,7 @@ function chatSpamming(player: Player, message: string) {
         return true;
     }
     const repeatedAmount = repeatedPattern(message);
-    if (repeatedAmount > MAX_REPEAT_AMOUNT) {
+    if (repeatedAmount > MAX_REPEAT_AMOUNT || message.length > MAX_MESSAGE_LENGTH) {
         system.run(() => {
             player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("module.chatrank.repeated").build());
         });
