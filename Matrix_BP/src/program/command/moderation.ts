@@ -130,7 +130,7 @@ new Command()
     .setName("unban")
     .setDescription(rawtextTranslate("command.unban.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "string", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as string;
         if (!isBanned(targetPlayer) || isUnBanned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
@@ -142,7 +142,7 @@ new Command()
     .setName("unmute")
     .setDescription(rawtextTranslate("command.unmute.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "string", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as Player;
         if (!isMuted(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
@@ -154,7 +154,7 @@ new Command()
     .setName("unfreeze")
     .setDescription(rawtextTranslate("command.unfreeze.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "string", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as Player;
         if (!isFrozen(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
@@ -166,7 +166,7 @@ new Command()
     .setName("unsoftban")
     .setDescription(rawtextTranslate("command.unsoftban.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "string", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as Player;
         if (!isSoftBanned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
