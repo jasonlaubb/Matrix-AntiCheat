@@ -90,7 +90,7 @@ function checkTimer() {
         } else data.negativeCombo = 0;
         const overSlow = data.negativeCombo >= 3;
         if (highDeviationState || absDeviation > maxDeviation * 0.31 || overSlow) {
-            if (now - data.lastFlagTimestamp > 5000) {
+            if (now - data.lastFlagTimestamp > 3000) {
                 data.flagAmount = 0;
             }
             // Increase the flag amount
