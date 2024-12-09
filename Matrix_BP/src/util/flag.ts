@@ -1,7 +1,7 @@
 import { Player, world } from "@minecraft/server";
 import { Module } from "../matrixAPI";
 import { rawtextTranslate } from "./rawtext";
-import { freeze, mute, softBan, strengthenKick, tempKick } from "../program/system/moderation";
+import { ban, freeze, mute, softBan, strengthenKick, tempKick } from "../program/system/moderation";
 export function setupFlagFunction() {
     Player.prototype.flag = function (detected: Module) {
         const punishment = detected.modulePunishment;
@@ -25,7 +25,7 @@ export function setupFlagFunction() {
                 softBan(this, -1);
                 break;
             case "ban":
-                softBan(this, Module.config.flag.banDuration);
+                ban(this, Module.config.flag.banDuration);
                 break;
         }} catch (error) {
             Module.sendError(error as Error);
