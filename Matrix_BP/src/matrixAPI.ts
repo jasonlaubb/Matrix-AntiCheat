@@ -401,7 +401,8 @@ class Command {
                 const argValues = Command.getArgValue(args, command, this);
                 if (argValues === null) return;
                 if (command?.executeFunc) {
-                    command.executeFunc(this, ...args.slice(1)).catch((error) => Module.sendError(error as Error));
+                    command.executeFunc(this, ...args.slice(1))
+                        .catch((error) => Command.sendErrorToPlayer(this, error as Error));
                 }
             }
         };
