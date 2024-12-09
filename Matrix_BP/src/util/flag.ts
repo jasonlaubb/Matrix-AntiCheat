@@ -7,6 +7,7 @@ export function setupFlagFunction() {
         const punishment = detected.modulePunishment;
         if (!punishment || this.isAdmin()) return;
         world.sendMessage(rawtextTranslate("util.flag.alert", this.name, detected.getToggleId()!, punishment));
+        if (this.hasTag("matrix-debug:punishmentResistance")) return this.sendMessage("§7[You are immune to punishments!]");
         try {
         switch (punishment) {
             case "kick":
@@ -29,7 +30,7 @@ export function setupFlagFunction() {
                 break;
         }} catch (error) {
             Module.sendError(error as Error);
-            if (!this.hasTag("punishmentResistance")) tempKick(this);
+            tempKick(this);
         }
     };
 }
