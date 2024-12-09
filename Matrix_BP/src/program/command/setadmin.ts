@@ -8,8 +8,8 @@ new Command()
     .setDescription(rawtextTranslate("command.setadmin.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
     .addOption(
-        rawtextTranslate("command.moderation.level"),
-        rawtextTranslate("command.moderation.level.description"),
+        rawtextTranslate("command.setadmin.level"),
+        rawtextTranslate("command.setadmin.level.description"),
         "integer",
         {
             lowerLimit: 0,

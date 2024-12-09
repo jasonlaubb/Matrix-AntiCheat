@@ -1,6 +1,5 @@
 import { Player, RawText, system, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import { declarePermissionFunction } from "./assets/permission";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
 import { Punishment } from "./program/system/moderation";
@@ -151,8 +150,6 @@ class Module {
         Module.tickLoopRunTime = func.removeFromList(Module.tickLoopRunTime);
     }
     public static ignite() {
-        // Declare the admin permission function
-        declarePermissionFunction();
         setupFlagFunction();
         // Debug utilities
         import("@minecraft/debug-utilities")
@@ -401,7 +398,7 @@ class Command {
                 const argValues = Command.getArgValue(args, command, this);
                 if (argValues === null) return;
                 if (command?.executeFunc) {
-                    command.executeFunc(this, ...args.slice(1))
+                    command.executeFunc(this, ...argValues)
                         .catch((error) => Command.sendErrorToPlayer(this, error as Error));
                 }
             }
@@ -695,6 +692,23 @@ Player.prototype.safeIsOp = function () {
         return this.isOp();
     } catch {
         return false;
+    }
+};
+Player.prototype.isAdmin = function () {
+    const isAdminState = ((this.getDynamicProperty("uniqueLevel") as number) ?? 0) >= 1;
+    return isAdminState;
+};
+Player.prototype.getPermissionLevel = function () {
+    return (this.getDynamicProperty("uniqueLevel") as number) ?? 0;
+};
+Player.prototype.setPermissionLevel = function (level: number) {
+    if (!Number.isInteger(level)) {
+        throw new Error("Player :: setPermissionLevel :: Level must be an integer.");
+    }
+    if (level == 0) {
+        this.setDynamicProperty("uniqueLevel");
+    } else {
+        this.setDynamicProperty("uniqueLevel", level);
     }
 };
 export { Module, Command, Config };
