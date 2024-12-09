@@ -21,7 +21,13 @@
     </a>
     <h1>Hack prevention</h1>
     <ul>
-        <li>Very much.</li>
+        <li>Anti Speed</li>
+        <li>Anti Fly</li>
+        <li>Anti Timer</li>
+        <li>Anti Kill Aura</li>
+        <li>Aim Checking</li>
+        <li>Anti Scaffold</li>
+        <li>And more...!</li>
     </ul>
     <h1>Developers</h1>
     <h3>Lead Developer</h3>
