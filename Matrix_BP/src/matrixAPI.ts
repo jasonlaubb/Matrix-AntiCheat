@@ -438,7 +438,7 @@ class Command {
         for (const option of command.requiredOption) {
             currentIndex++;
             const arg = args[currentIndex];
-            if (!arg) {
+            if (!arg || arg.length === 0) {
                 player.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.missing", with: { rawtext: [option.name] } }));
                 player.sendMessage(rawtextTranslate("commandsynax.tips"));
                 return null;
@@ -454,7 +454,7 @@ class Command {
             const arg = args[currentIndex];
             if (!arg) {
                 values.push(undefined);
-                continue;
+                break;
             }
             const beforeArgs = args.slice(0, currentIndex).join(" ");
             const afterArgs = args.slice(currentIndex + 1).join(" ");
@@ -462,7 +462,7 @@ class Command {
             if (value === null) return null;
             values.push(value);
         }
-        return args;
+        return values;
     }
     private static parseOption(player: Player, option: InputOption, arg: string, beforeArgs: string, afterArgs: string) {
         switch (option.type) {
