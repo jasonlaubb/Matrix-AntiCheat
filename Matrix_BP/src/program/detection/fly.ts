@@ -1,4 +1,4 @@
-import { Dimension, EquipmentSlot, GameMode, Player, Vector3 } from "@minecraft/server";
+import { Dimension, EquipmentSlot, GameMode, Player, system, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { MinecraftEffectTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
@@ -6,11 +6,16 @@ import { fastAbs } from "../../util/fastmath";
 const MAX_VELOCITY_Y = 0.7;
 const MIN_REQUIRED_REPEAT_AMOUNT = 6;
 const HIGH_VELOCITY_Y = 22;
+const MAX_BDS_PREDICTION = 20;
+const START_SKIP_CEHCK = 15000;
 interface FlyData {
     lastVelocityY: number;
     lastOnGroundLocation: Vector3;
     lastFlaggedLocation: Vector3;
     velocityYList: number[];
+    flagAmount: number;
+    lastFlagTimestamp: number;
+    hasStarted: number;
 }
 const flyData = new Map<string, FlyData>();
 let eventId: IntegratedSystemEvent;
@@ -33,6 +38,9 @@ const fly = new Module()
             lastOnGroundLocation: player.location,
             velocityYList: [],
             lastFlaggedLocation: player.location,
+            flagAmount: 0,
+            lastFlagTimestamp: 0,
+            hasStarted: Date.now(),
         });
     })
     .initClear((playerId) => {
@@ -48,9 +56,12 @@ function tickEvent(player: Player) {
     const data = flyData.get(player.id)!;
     const { y: velocityY } = player.getVelocity();
     const surroundAir = isSurroundedByAir(player.location, player.dimension);
+    const playerStarted = now - data.hasStarted > START_SKIP_CEHCK;
+    const isPlayerNotCreative = player.getGameMode() !== GameMode.creative;
     if (player.isOnGround && velocityY === 0) {
         data.lastOnGroundLocation = player.location;
     } else if (
+        playerStarted &&
         now - player.timeStamp.knockBack > 2000 &&
         now - player.timeStamp.riptide > 5000 &&
         data.lastVelocityY < -MAX_VELOCITY_Y &&
@@ -59,15 +70,22 @@ function tickEvent(player: Player) {
         !player.isOnGround &&
         !player.isGliding &&
         surroundAir &&
-        player.getGameMode() !== GameMode.creative &&
+        isPlayerNotCreative &&
         !data.velocityYList.some((yV) => yV == HIGH_VELOCITY_Y)
     ) {
         if (velocityY > MAX_VELOCITY_Y) {
+            if (now - data.lastFlagTimestamp > 7000) {
+                data.flagAmount = 0;
+            }
+            data.flagAmount++;
+            data.lastFlagTimestamp = now;
             player.teleport(data.lastOnGroundLocation);
-            player.flag(fly);
+            if (data.flagAmount >= 3) {
+                player.flag(fly);
+            }
         }
     }
-    if (velocityY > HIGH_VELOCITY_Y && !player.isGliding) {
+    if (playerStarted && velocityY > HIGH_VELOCITY_Y && !player.isGliding) {
         player.teleport(data.lastOnGroundLocation);
         player.flag(fly);
     }
@@ -79,20 +97,26 @@ function tickEvent(player: Player) {
     if (data.velocityYList.length > 60) data.velocityYList.shift();
     const minAmount = Math.min(...data.velocityYList);
     const maxAmount = Math.max(...data.velocityYList);
-    if (data.velocityYList.length >= 60 && !player.getEffect(MinecraftEffectTypes.JumpBoost) && data.velocityYList.some((yV) => yV < -MAX_VELOCITY_Y)) {
+    const bdsPrediction = calculateBdsPrediction(data.velocityYList);
+    if (playerStarted && isPlayerNotCreative && !player.isOnGround && data.velocityYList.length >= 60 && !player.getEffect(MinecraftEffectTypes.JumpBoost) && bdsPrediction >= MAX_BDS_PREDICTION) {
         const { highestRepeatedVelocity, highestRepeatedAmount } = repeatChecks(data.velocityYList);
         if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y && minAmount <= -MAX_VELOCITY_Y && maxAmount < HIGH_VELOCITY_Y) {
             player.teleport(data.lastOnGroundLocation);
             player.flag(fly);
         }
     }
-    if (!player.isGliding && fastAbs(velocityY) <= HIGH_VELOCITY_Y && surroundAir && (player.isOnGround || player.hasTag("isOnGround"))) {
+    if (playerStarted && !player.isGliding && fastAbs(velocityY) <= HIGH_VELOCITY_Y && surroundAir && (player.isOnGround || player.hasTag("isOnGround"))) {
         player.flag(fly);
     }
-    if (player.isGliding && !player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra) && JSON.stringify(player.location) != JSON.stringify(data.lastFlaggedLocation)) {
-        player.teleport(data.lastOnGroundLocation);
+    if (playerStarted && player.isGliding && !isEquippedWithElytra(player) && !player.hasTag("matrix:checkingGlideTag") && JSON.stringify(player.location) != JSON.stringify(data.lastFlaggedLocation)) {
+        player.addTag("matrix:checkingGlideTag");
+        system.run(() => {
+            player.removeTag("matrix:checkingGlideTag");
+            if (!player.isGliding || isEquippedWithElytra(player)) return;
+            player.teleport(data.lastFlaggedLocation);
+            player.flag(fly);
+        })
         data.lastFlaggedLocation = player.location;
-        player.flag(fly);
     }
     data.lastVelocityY = velocityY;
     flyData.set(player.id, data);
@@ -125,4 +149,12 @@ function repeatChecks(list: number[]) {
         }
     }
     return { highestRepeatedVelocity, highestRepeatedAmount };
+}
+function calculateBdsPrediction(list: number[]) {
+    return list.reduce((yV) => {
+        return yV < -MAX_VELOCITY_Y ? 1 : yV > MAX_VELOCITY_Y ? 1 : -1;
+    });
+}
+function isEquippedWithElytra(player: Player) {
+    return !!player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra)
 }
