@@ -16,6 +16,6 @@ new Command()
             .filter((x) => x.startsWith("matrix:rankTag::"))
             .forEach((x) => recivier.removeTag(x));
         recivier.addTag("matrix:rankTag::" + ranks);
-        player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.rank.success", recivier.name, rankString.replace(/§./g, "")).build());
+        player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.setrank.success", recivier.name, rankString.replace(/§./g, "")).build());
     })
     .register();

@@ -482,7 +482,10 @@ msgid "command.moderation.admin"
 msgstr "Oops, you can not finish a moderation action to an administrator or yourself."
 
 msgid "command.moderation.success"
-msgstr "%1 has been §e%3g by %2"
+msgstr "%2 has done a moderation action to %1"
+
+msgid "command.moderation.action"
+msgstr "§7>> §gModeration action: §e%s"
 
 msgid "command.moderation.removal.failed"
 msgstr "Before you use the moderation removal or any related moderation command, you need to make sure the target player has been moderated."

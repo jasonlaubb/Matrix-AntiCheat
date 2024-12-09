@@ -15,7 +15,7 @@ new Command()
         const targetPlayer = target as Player;
         // Finish the action
         tempKick(targetPlayer);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.tempkick").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.tempkick")).build());
     })
     .register();
 new Command()
@@ -27,7 +27,7 @@ new Command()
         const targetPlayer = target as Player;
         // Finish the action
         strengthenKick(targetPlayer);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.kick").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.kick")).build());
     })
     .register();
 new Command()
@@ -51,7 +51,7 @@ new Command()
         const msDuration = minuteToMilliseconds(duration as number);
         if (isBanned(targetPlayer.name)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         ban(targetPlayer, msDuration);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.ban").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.ban")).build());
     })
     .register();
 new Command()
@@ -75,7 +75,7 @@ new Command()
         const msDuration = minuteToMilliseconds(duration as number);
         if (isSoftBanned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         softBan(targetPlayer, msDuration);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.softban").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.softban")).build());
     })
     .register();
 new Command()
@@ -99,7 +99,7 @@ new Command()
         const msDuration = minuteToMilliseconds(duration as number);
         if (isMuted(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         mute(targetPlayer, msDuration);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.mute").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.mute")).build());
     })
     .register();
 new Command()
@@ -123,6 +123,7 @@ new Command()
         const msDuration = minuteToMilliseconds(duration as number);
         if (isFrozen(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         freeze(targetPlayer, msDuration);
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.freeze")).build());
     })
     .register();
 new Command()
@@ -134,7 +135,7 @@ new Command()
         const targetPlayer = target as string;
         if (!isBanned(targetPlayer) || isUnBanned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         unBan(targetPlayer);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer).addText(player.name).addTran("command.moderation.unban").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.unban")).build());
     })
     .register();
 new Command()
@@ -146,7 +147,7 @@ new Command()
         const targetPlayer = target as Player;
         if (!isMuted(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         unMute(targetPlayer);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.unmute").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.unmute")).build());
     })
     .register();
 new Command()
@@ -158,7 +159,7 @@ new Command()
         const targetPlayer = target as Player;
         if (!isFrozen(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         unFreeze(targetPlayer);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.unfreeze").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.unfreeze")).build());
     })
     .register();
 new Command()
@@ -170,7 +171,7 @@ new Command()
         const targetPlayer = target as Player;
         if (!isSoftBanned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
         unSoftBan(targetPlayer);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.unsoftban").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.unsoftban")).build());
     })
     .register();
 new Command()
@@ -185,14 +186,9 @@ new Command()
         world.sendMessage(
             fastText()
                 .addText("§bMatrix§a+ §7> §g")
-                .addTranRawText(
-                    "command.moderation.success",
-                    fastText()
-                        .addText(targetPlayer.name)
-                        .addText(player.name)
-                        .addTran("command.moderation.warn", targetPlayer.name)
-                        .build()
-                )
+                .addTran("command.moderation.success", targetPlayer.name, player.name)
+                .endline()
+                .addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.warn"))
                 .endline()
                 .addTran("command.warn.amount", getWarns(targetPlayer)?.toString() ?? "0")
                 .build()
@@ -209,6 +205,6 @@ new Command()
         // Finish the action
         if (!isWarned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.clearwarn.failed").build());
         clearWarn(targetPlayer);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTranRawText("command.moderation.success", fastText().addText(targetPlayer.name).addText(player.name).addTran("command.moderation.clearwarn").build()).build());
+        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.clearwarn")).build());
     })
     .register();
