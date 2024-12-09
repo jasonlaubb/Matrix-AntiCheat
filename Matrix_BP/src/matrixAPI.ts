@@ -543,7 +543,10 @@ class Command {
             }
             case "target":
             case "player": {
-                const targetName = arg.startsWith("@") ? arg.substring(1) : arg;
+                let targetName = arg.startsWith("@") ? arg.substring(1) : arg;
+                if (targetName.includes("\"")) {
+                    targetName = targetName.substring(1, targetName.length - 1);
+                }
                 const worldPlayers = world.getPlayers({ name: targetName });
                 if (worldPlayers.length == 0 || (option.type == "target" && (worldPlayers[0].isAdmin() || player.id === worldPlayers[0].id))) {
                     Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.player", option.name, beforeArgs, arg, afterArgs);

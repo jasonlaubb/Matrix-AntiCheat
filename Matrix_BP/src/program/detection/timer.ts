@@ -89,7 +89,8 @@ function checkTimer() {
             data.negativeCombo++;
         } else data.negativeCombo = 0;
         const overSlow = data.negativeCombo >= 3;
-        if (highDeviationState || absDeviation > maxDeviation * 0.31 || overSlow) {
+        player.runCommand("title @s actionbar " + actualDeviation.toFixed(2));
+        if ((highDeviationState || absDeviation > maxDeviation * 0.31 || overSlow) && actualDeviation < 14) {
             if (now - data.lastFlagTimestamp > 3000) {
                 data.flagAmount = 0;
             }
@@ -97,10 +98,6 @@ function checkTimer() {
             const ratio = absDeviation / maxDeviation;
             data.flagAmount += overSlow ? 1.5 : ratio < 2.34 ? ratio : 2.34;
             data.lastFlagTimestamp = now;
-            if (highDeviationState) {
-                player.teleport(data.lastNoSpeedLocation);
-                data.lastReset = now;
-            }
             if (data.flagAmount >= MAX_FLAG_AMOUNT) {
                 data.lastReset = now;
                 player.teleport(data.lastNoSpeedLocation);
@@ -130,7 +127,7 @@ function playerTickEvent(player: Player) {
         data.flyingNotOnGround = true;
         if (isTickIgnored) timerData.set(player.id, data);
     }
-    if (isTickIgnored || player.isGliding || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || (noVelocity && distance > 0.005) || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
+    if (isTickIgnored || player.isGliding || player.hasTag("riding") || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || (noVelocity && distance > 0.005) || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
         if (data.isTickIgnored) return;
         data.isTickIgnored = true;
         timerData.set(player.id, data);

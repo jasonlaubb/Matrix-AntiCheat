@@ -822,6 +822,10 @@ msgstr ""
 msgid "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
 msgstr ""
 
+#: command.setrank.success
+msgid "%1's rank has been set to %2."
+msgstr ""
+
 #: action.hint.exit.matrix:inv_container
 msgid "Tap the §lInventory button§r to open their Inventory."
 msgstr ""

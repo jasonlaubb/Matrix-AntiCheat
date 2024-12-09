@@ -2,7 +2,6 @@ import { Dimension, EquipmentSlot, GameMode, Player, system, Vector3 } from "@mi
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { MinecraftEffectTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { fastAbs } from "../../util/fastmath";
 const MAX_VELOCITY_Y = 0.7;
 const MIN_REQUIRED_REPEAT_AMOUNT = 6;
 const HIGH_VELOCITY_Y = 22;
@@ -85,7 +84,7 @@ function tickEvent(player: Player) {
             }
         }
     }
-    if (playerStarted && velocityY > HIGH_VELOCITY_Y && !player.isGliding) {
+    if (playerStarted && velocityY > HIGH_VELOCITY_Y && now - player.timeStamp.knockBack > 2000 && !player.isGliding) {
         player.teleport(data.lastOnGroundLocation);
         player.flag(fly);
     }
@@ -98,15 +97,12 @@ function tickEvent(player: Player) {
     const minAmount = Math.min(...data.velocityYList);
     const maxAmount = Math.max(...data.velocityYList);
     const bdsPrediction = calculateBdsPrediction(data.velocityYList);
-    if (playerStarted && isPlayerNotCreative && !player.isOnGround && data.velocityYList.length >= 60 && !player.getEffect(MinecraftEffectTypes.JumpBoost) && bdsPrediction >= MAX_BDS_PREDICTION) {
+    if (!player.hasTag("riding") && playerStarted && isPlayerNotCreative && !player.isOnGround && data.velocityYList.length >= 60 && !player.getEffect(MinecraftEffectTypes.JumpBoost) && bdsPrediction >= MAX_BDS_PREDICTION) {
         const { highestRepeatedVelocity, highestRepeatedAmount } = repeatChecks(data.velocityYList);
         if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y && minAmount <= -MAX_VELOCITY_Y && maxAmount < HIGH_VELOCITY_Y) {
             player.teleport(data.lastOnGroundLocation);
             player.flag(fly);
         }
-    }
-    if (playerStarted && !player.isGliding && fastAbs(velocityY) <= HIGH_VELOCITY_Y && surroundAir && (player.isOnGround || player.hasTag("isOnGround"))) {
-        player.flag(fly);
     }
     if (playerStarted && player.isGliding && !isEquippedWithElytra(player) && !player.hasTag("matrix:checkingGlideTag") && JSON.stringify(player.location) != JSON.stringify(data.lastFlaggedLocation)) {
         player.addTag("matrix:checkingGlideTag");

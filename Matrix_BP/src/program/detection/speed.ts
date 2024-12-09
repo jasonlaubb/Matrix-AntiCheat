@@ -57,7 +57,7 @@ function tickEvent(player: Player) {
     if (velocityX === 0 && velocityY === 0 && velocityZ === 0) {
         data.lastStopLocation = player.location;
     }
-    if (player.isSleeping || player.isFlying || player.isGliding) {
+    if (player.isSleeping || player.isFlying || player.isGliding || player.hasTag("riding")) {
         data.lastSleep = now;
     }
     if (
@@ -87,6 +87,7 @@ function tickEvent(player: Player) {
                 data.flagAmount = 0;
             }
             player.teleport(data.lastStopLocation);
+            player.sendMessage("speed lag backs")
         }
     }
 

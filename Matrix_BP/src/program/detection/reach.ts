@@ -26,7 +26,7 @@ const reach = new Module()
         delete locationTrackData[playerId];
     });
 reach.register();
-const MAX_REACH = 4.5;
+const MAX_REACH = 5.31;
 const MAX_ROTATION = 79;
 const TRACK_DURATION = 8000;
 interface TrackData {
@@ -85,10 +85,10 @@ function findMinimumDistance(playerLoc: Vector3[], targetLoc: Vector3[]) {
     const playerZ = playerLoc.map(({ z }) => z);
     const targetX = targetLoc.map(({ x }) => x);
     const targetZ = targetLoc.map(({ z }) => z);
-    const xDifferences = playerX.flatMap((x, i) => {
+    const xDifferences = playerX.map((x, i) => {
         return fastAbs(x - targetX[i]);
     });
-    const zDifferences = playerZ.flatMap((z, i) => {
+    const zDifferences = playerZ.map((z, i) => {
         return fastAbs(z - targetZ[i]);
     });
     return fastHypot(Math.min(...xDifferences), Math.min(...zDifferences));
