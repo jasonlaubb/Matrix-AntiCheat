@@ -26,7 +26,7 @@ const aim = new Module()
     .setName(rawtextTranslate("module.aim.name"))
     .setDescription(rawtextTranslate("module.aim.description"))
     .setToggleId("aimCheck")
-    .setPunishment("tempKick")
+    .setPunishment("ban")
     .onModuleEnable(() => {
         eventId = Module.subscribePlayerTickEvent(tickEvent, false);
     })

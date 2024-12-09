@@ -20,6 +20,7 @@ new Command()
     )
     .onExecute(async (player, passwordStr) => {
         const password = passwordStr as string;
+        if (!password) return;
         if (HIGHER_STRENGTH && (!caseCheck(password) || !numberCheck(password) || !specialCheck(password))) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setpassword.strength").build());
         Config.set(["security", "passwordHash"], SHA256(password).toString());
         if (!Module.config.security.containsPassword) {

@@ -7,6 +7,7 @@ export function setupFlagFunction() {
         const punishment = detected.modulePunishment;
         if (!punishment || this.isAdmin()) return;
         world.sendMessage(rawtextTranslate("util.flag.alert", this.name, detected.getToggleId()!, punishment));
+        try {
         switch (punishment) {
             case "kick":
                 strengthenKick(this);
@@ -26,6 +27,9 @@ export function setupFlagFunction() {
             case "ban":
                 softBan(this, Module.config.flag.banDuration);
                 break;
+        }} catch (error) {
+            Module.sendError(error as Error);
+            if (!this.hasTag("punishmentResistance")) tempKick(this);
         }
     };
 }
