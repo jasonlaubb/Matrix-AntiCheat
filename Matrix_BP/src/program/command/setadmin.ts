@@ -39,4 +39,5 @@ new Command()
                     .build()
             );
         }
-    });
+    })
+    .register();

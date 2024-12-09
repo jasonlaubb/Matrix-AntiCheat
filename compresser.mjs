@@ -38,8 +38,6 @@ async function obfuscateFile(filePath) {
         renameProperties: false,
         renameGlobals: true,
         stringArrayIndexShift: false,
-        selfDefending: true,
-        identifierNamesGenerator: 'hexadecimal',
         numbersToExpressions: false,
     });
     await fs.promises.writeFile(filePath, obfuscatedCode.getObfuscatedCode());
