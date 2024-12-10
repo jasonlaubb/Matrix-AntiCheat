@@ -16,7 +16,7 @@ new Command()
         }
         const toggleId = searchModule.getToggleId()!;
         const isEnabled = Module.config.modules[toggleId];
-        if (isEnabled == (state as boolean)) {
+        if (isEnabled === (state as boolean)) {
             if (isEnabled) {
                 player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setmodule.already").build());
             } else {
@@ -27,11 +27,11 @@ new Command()
         if (isEnabled) {
             // Disable the module
             Config.set(["modules", toggleId], false);
-            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setmodule.success.disabled").build());
+            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.setmodule.success.disabled").build());
             searchModule.disableModule();
         } else {
             Config.set(["modules", toggleId], true);
-            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setmodule.success.enabled").build());
+            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.setmodule.success.enabled").build());
             searchModule.enableModule();
         }
     })
