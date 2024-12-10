@@ -151,17 +151,6 @@ class Module {
     }
     public static ignite() {
         setupFlagFunction();
-        // Debug utilities
-        import("@minecraft/debug-utilities")
-            .catch(() => console.warn("index.js :: Failed to load @minecraft/debug-utilities"))
-            .then(async (debugUtilities) => {
-                try {
-                    const imported = debugUtilities as typeof import("@minecraft/debug-utilities");
-                    imported.disableWatchdogTimingWarnings(true);
-                } catch {
-                    Module.sendError(new Error("index.js :: Failed to load @minecraft/debug-utilities"));
-                }
-            });
         // Disable Watchdog Timing Warnings
         system.beforeEvents.watchdogTerminate.subscribe((event) => {
             try {
