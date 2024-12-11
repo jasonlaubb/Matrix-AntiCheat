@@ -1,5 +1,5 @@
 import { EntityHitEntityAfterEvent, Player, Vector3, system, world } from "@minecraft/server";
-import { fastCos, fastHypot } from "../../util/fastmath";
+import { fastCos, fastHypot, fastAbs } from "../../util/fastmath";
 import { fastAbs } from "../../util/fastmath";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
@@ -26,7 +26,7 @@ const reach = new Module()
         delete locationTrackData[playerId];
     });
 reach.register();
-const MAX_REACH = 5.31;
+const MAX_REACH = 5.1;
 const MAX_ROTATION = 79;
 const TRACK_DURATION = 8000;
 interface TrackData {
@@ -55,7 +55,7 @@ function onEntityAttack({ damagingEntity: player, hitEntity: target }: EntityHit
     locationTrackData[target.id].lastValidTimeStamp = now;
     if (targetTrackInvalid || playerTrackInvalid) return;
     const { x: pitch } = player.getRotation();
-    if (pitch < MAX_ROTATION) {
+    if (fastAbs(pitch) < MAX_ROTATION) {
         const limit = calculateDistanceLimit(pitch);
         const distance = findMinimumDistance(playerLocationData.locationData, targetLocationData.locationData);
         if (distance > limit) {
