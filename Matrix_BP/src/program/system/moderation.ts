@@ -193,9 +193,8 @@ function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
 }
 
 function kickForBan(player: Player, banStatus: number) {
-    if (player.hasTag("punishmentResistance") && player.safeIsOp()) return;
     let message = "§aBan handled by Matrix AntiCheat\n";
-    if (banStatus == -1) {
+    if (banStatus === -1) {
         message += "§gRegretfully, you have been§e banned permanently§g on this server. If you think there is a mistake or you want to appeal, please contact the operator of the current server.";
     } else {
         message += "§gYou have been§e banned§g from the server, this ban will be valid until §e" + new Date(banStatus).toUTCString();
