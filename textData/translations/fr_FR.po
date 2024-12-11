@@ -1,6 +1,6 @@
 #: pack.description
 msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock. Required Beta API to work."
-msgstr ""
+msgstr "§7§¶La Solution Anti-Triche Suprême pour Minecraft Bedrock. API bêta requise pour fonctionner."
 
 #: permissions.chatmute
 msgid "§bMatrix§a+ §7> §cYou have been muted from the server!"
@@ -12,7 +12,7 @@ msgstr ""
 
 #: menu.loadingLevel
 msgid "Protected by Matrix AntiCheat"
-msgstr ""
+msgstr "Protégé par Matrix AntiCheat"
 
 #: json.packet
 msgid "§bMatrix§a+ §7> §e%1 §g packet§7(%2)§g received from %3"
@@ -24,39 +24,39 @@ msgstr ""
 
 #: error.name
 msgid "§7- Error: §e%s"
-msgstr ""
+msgstr "§7- Erreur: §e%s"
 
 #: error.description
 msgid "§7- Description: §e%s"
-msgstr ""
+msgstr "§7- Description: §e%s"
 
 #: error.stack
 msgid "§7- Stack: §e%s"
-msgstr ""
+msgstr "§7- Stack: §e%s"
 
 #: util.flag.alert
 msgid "§c§lCheat Alert! §r§7A cheater (%1§r§7) has been detected automatically by Matrix AntiCheat! We have automatically blocked it. §3(moduleId: %2, punishment: %3)§r"
-msgstr ""
+msgstr "§c§lAlerte Triche! §r§7Un tricheur (%1§r§7) a été détecté automatiquement par Matrix AntiCheat! Nous l'avons automatiquement bloqué. §3(moduleId : %2, punition : %3)§r"
 
 #: function.help
 msgid "§bMatrix§a+ §7> §gAre you looking for help? Join our Discord Server: https://discord.gg/%1. Feel free to ask there. You are currently on Matrix anticheat version %2. You can use -op to gain matrix administrator permission and use -help to get help for the commands."
-msgstr ""
+msgstr "§bMatrix§a+ §7> §gVous cherchez de l'aide? Rejoignez notre serveur Discord: https://discord.gg/%1. N'hésitez pas à demander là-bas. Vous êtes actuellement sur la version %2 de l'anti-triche Matrix. Vous pouvez utiliser -op pour obtenir l'autorisation d'administrateur de matrice et utiliser -help pour obtenir de l'aide sur les commandes."
 
 #: function.help.typeA
 msgid "§7>> §gIs the chat command not working? Try to disable or place Matrix Anticheat above any-type of the chat rank addon."
-msgstr ""
+msgstr "§7>> §gLa commande chat ne fonctionne pas? Essayez de désactiver ou de placer Matrix Anticheat au-dessus de tout type d'addon de chat rank."
 
 #: function.help.typeB
 msgid "§7>> §gIs that nothing working? Don't forget to enable Beta API and update our Matrix anticheat to the latest"
-msgstr ""
+msgstr "§7>> §gEst-ce que rien ne marche? N'oubliez pas d'activer l'API bêta et de mettre à jour notre anti-triche Matrix avec la dernière version."
 
 #: function.script.online
 msgid "§7>> §aScript is active! It is so nice to have you here."
-msgstr ""
+msgstr "§7>> §aScript est actif! C'est tellement agréable de vous avoir ici."
 
 #: function.script.offline
 msgid "§7>> §cScript is inactive! Please check if you have Beta-API enabled."
-msgstr ""
+msgstr "§7>> §cScript est inactif ! Veuillez vérifier si la bêta-API est activée."
 
 #: moderation.permanent
 msgid "permanent"
@@ -72,123 +72,123 @@ msgstr ""
 
 #: ui.runcommand
 msgid "Run Command!"
-msgstr ""
+msgstr "Exécuter"
 
 #: ui.exit
 msgid "Exit"
-msgstr ""
+msgstr "Fermer"
 
 #: ui.closechat
 msgid "§7>> §gPlease close the chat to receive your user interface (UI)."
-msgstr ""
+msgstr "§7>> §gVeuillez fermer le chat pour recevoir votre interface utilisateur (UI)."
 
 #: ui.config.title
 msgid "Press the button to continue"
-msgstr ""
+msgstr "Appuyez sur le bouton pour continuer"
 
 #: ui.config.button
 msgid "Continue >w<"
-msgstr ""
+msgstr "Continuer"
 
 #: ui.config.body
 msgid "You can change the config in the config file. You can also use the command -set <path> <value> to change a config value."
-msgstr ""
+msgstr "Vous pouvez modifier la configuration dans le fichier de configuration. Vous pouvez également utiliser la commande -set <path> <value> pour modifier une valeur de configuration."
 
 #: ui.config.selector
 msgid "Config Selector | Matrix AntiCheat"
-msgstr ""
+msgstr "Sélecteur de Config | Matrix AntiCheat"
 
 #: ui.config.editor
 msgid "Config Editor | Matrix AntiCheat"
-msgstr ""
+msgstr "Éditeur de Config | Matrix AntiCheat"
 
 #: ui.config.value
 msgid "New value you want to set"
-msgstr ""
+msgstr "Nouvelle valeur que vous souhaitez définir"
 
 #: ui.config.loc
 msgid "§gCurrent path of the config: §e%s"
-msgstr ""
+msgstr "§gChemin actuel de la config: §e%s"
 
 #: commandsynax.unknown
 msgid "Unknown command: %s, you can type -help to get some useful information about the commands."
-msgstr ""
+msgstr "Commande inconnue: %s, vous pouvez taper -help pour obtenir des informations utiles sur les commandes."
 
 #: commandsynax.permission
 msgid "No permission to use this command. The minimum permission required is 'level %s'"
-msgstr ""
+msgstr "Aucune autorisation pour utiliser cette commande. L'autorisation minimale requise est le 'niveau %s'."
 
 #: commandsystem.disabled
 msgid "Oops, this command has been disabled."
-msgstr ""
+msgstr "Oups, cette commande a été désactivée."
 
 #: commandsynax.unknownsubcommand
 msgid "Unknown subcommand: %s, you can use -help <command> to know what subcommand you can use."
-msgstr ""
+msgstr "Sous-commande inconnue: %s, vous pouvez utiliser -help <command> pour savoir quelle sous-commande vous pouvez utiliser."
 
 #: commandsynax.empty
 msgid "Oops, you have to type something if you want to use some commands."
-msgstr ""
+msgstr "Oups, vous devez taper quelque chose si vous souhaitez utiliser certaines commandes."
 
 #: commandsynax.tips
 msgid "§7>> §gUse -help <command> to get some useful information about the commands."
-msgstr ""
+msgstr "§7>> §gUtilisez -help <command> pour obtenir des informations utiles sur les commandes."
 
 #: commandsynax.missing
 msgid "You missed a parameter '%s' which is required."
-msgstr ""
+msgstr "Vous avez manqué un paramètre '%s' qui est obligatoire."
 
 #: commandsynax.missing.subcommand
 msgid "This is a subcommand! You have to type -help <command> to know what subcommand you can use."
-msgstr ""
+msgstr "C'est une sous-commande! Vous devez taper -help <command> pour savoir quelle sous-commande vous pouvez utiliser."
 
 #: commandsynax.syntax.boolean
 msgid "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2 >>%3<< %4'. Only 'true' or 'false' are allowed'."
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' est une valeur booléenne, mais vous avez tapé '%2 >>%3<< %4'. Seuls 'true' ou 'false' sont autorisés."
 
 #: commandsynax.syntax.string.low
 msgid "Syntax error: The parameter '%1' required a string that contains at least %5 characters, but you have typed '%2 >>%3<< %4'."
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait une chaîne contenant au moins %5 caractères, mais vous avez tapé '%2 >>%3<< %4'."
 
 #: commandsynax.syntax.string.high
 msgid "Syntax error: The parameter '%1' required a string that contains at most %5 characters, but you have typed '%2 >>%3<< %4'."
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait une chaîne contenant au plus %5 caractères, mais vous avez tapé '%2 >>%3<< %4'."
 
 #: commandsynax.syntax.integer.nan
 msgid "Syntax error: The parameter '%1' required a integer, but you have typed '%2 >>%3<< %4'."
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait un entier, mais vous avez tapé '%2 >>%3<< %4'."
 
 #: commandsynax.syntax.number.nan
 msgid "Syntax error: The parameter '%1' required a valid number, but you have typed '%2 >>%3<< %4'."
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait un nombre valide, mais vous avez tapé '%2 >>%3<< %4'."
 
 #: commandsynax.syntax.number.low
 msgid "Syntax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2 >>%3<< %4' which is out of range."
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait un nombre supérieur à %5, mais vous avez tapé '%2 >>%3<< %4' qui est hors plage."
 
 #: commandsynax.syntax.number.high
 msgid "Syntax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait un nombre inférieur à %5, mais vous avez tapé '%2 >>%3<< %4' qui est hors plage."
 
 #: commandsynax.syntax.code
 msgid "Syntax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait un code d'une longueur égale à %5, mais vous avez tapé '%2 >>%3<< %4', ce qui est hors plage."
 
 #: commandsynax.syntax.purecode
 msgid "Syntax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2 >>%3<< %4'"
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait un code pur formé uniquement de chiffres (0-9), de lettres majuscules et minuscules (a-z ou A-Z), mais vous avez tapé '%2 >>%3<< %4'."
 
 #: commandsynax.syntax.choice
 msgid "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait un choix entre %5, mais vous avez tapé '%2 >>%3<< %4'."
 
 #: commandsynax.syntax.player
 msgid "Syntax error: The parameter '%1' required a player which is online, but you have typed '%2 >>%3<< %4'"
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait un joueur en ligne, mais vous avez tapé '%2 >>%3<< %4'."
 
 #: commandsynax.syntax.target
 msgid "Syntax error: The parameter '%1' required a target which is online and not an administrator, but you have typed '%2 >>%3<< %4'"
-msgstr ""
+msgstr "Erreur de syntaxe: Le paramètre '%1' nécessitait une cible en ligne et non un administrateur, mais vous avez tapé '%2 >>%3<< %4'."
 
 #: module.phase.name
 msgid "Anti Phase"
@@ -304,27 +304,27 @@ msgstr ""
 
 #: command.about.author
 msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
-msgstr ""
+msgstr "Auteur: jasonlaubb (Discord: @uwu_the_great)"
 
 #: command.about.github
 msgid "Github: %s"
-msgstr ""
+msgstr "Github: %s"
 
 #: command.about.version
 msgid "Current version: %s"
-msgstr ""
+msgstr "Version actuelle : %s"
 
 #: command.about.joindc
 msgid "Want to download? Join our Discord Server: https://discord.gg/%s"
-msgstr ""
+msgstr "Vous voulez télécharger? Rejoignez notre serveur Discord: https://discord.gg/%s"
 
 #: ad.running
 msgid "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
-msgstr ""
+msgstr "§bMatrix§a+ §7> §gMatrix Anticheat protège votre expérience de jeu. Serveur Discord: https://discord.gg/%s"
 
 #: command.help.description
 msgid "Get the useful information about the commands."
-msgstr ""
+msgstr "Obtenez les informations utiles sur les commandes."
 
 #: command.help.command.name
 msgid "Command's name"
@@ -336,63 +336,63 @@ msgstr ""
 
 #: command.help.title
 msgid "The command list of Matrix AntiCheat:"
-msgstr ""
+msgstr "La liste des commandes de Matrix AntiCheat:"
 
 #: command.help.target.title
 msgid "Showing the usage of the selected command: %s"
-msgstr ""
+msgstr "Afficher l'utilisation de la commande sélectionnée: %s"
 
 #: command.help.target.notfound
 msgid "Not able to find the command, make sure you type a valid command so that we can show you the correct information."
-msgstr ""
+msgstr "Vous ne parvenez pas à trouver la commande, assurez-vous de saisir une commande valide afin que nous puissions vous montrer les informations correctes."
 
 #: command.help.m.description
 msgid "§gDescription of the command: §e%s§g"
-msgstr ""
+msgstr "§gDescription de la commande: §e%s§g"
 
 #: command.help.m.usage
 msgid "§gUsage of the command: §e"
-msgstr ""
+msgstr "§gUtilisation de la commande: §e"
 
 #: command.help.m.usage.empty
 msgid "§gUsage of the command: §eJust type the command name!"
-msgstr ""
+msgstr "§gUtilisation de la commande: §eTapez simplement le nom de la commande!"
 
 #: command.help.option.string
 msgid "string (A string that formed with any characters)"
-msgstr ""
+msgstr "string (Une chaîne formée avec n'importe quel caractère)"
 
 #: command.help.option.number
 msgid "number (A float number or a integer)"
-msgstr ""
+msgstr "nombre (Un nombre flottant ou un entier)"
 
 #: command.help.option.integer
 msgid "number (Integer only, including negative)"
-msgstr ""
+msgstr "nombre (entier uniquement, y compris les négatifs)"
 
 #: command.help.option.boolean
 msgid "boolean (A boolean value, true or false)"
-msgstr ""
+msgstr "boolean (Une valeur booléenne, true ou false)"
 
 #: command.help.option.code
 msgid "code (A code with length that is equal to a specific number)"
-msgstr ""
+msgstr "code (Un code dont la longueur est égale à un nombre spécifique)"
 
 #: command.help.option.purecode
 msgid "purecode (A purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z))"
-msgstr ""
+msgstr "purecode (Un purecode formé uniquement de chiffres (0-9), de lettres majuscules et minuscules (a-z ou A-Z))"
 
 #: command.help.option.choice
 msgid "choice (A choice between a list of options)"
-msgstr ""
+msgstr "choix (Un choix entre une liste d'options)"
 
 #: command.help.option.player
 msgid "player (A player name of a player that is online)"
-msgstr ""
+msgstr "joueur (le nom d'un joueur en ligne)"
 
 #: command.help.option.target
 msgid "target (A player name of a player that is online but not an administrator of the server)"
-msgstr ""
+msgstr "target (Le nom d'un joueur qui est en ligne mais qui n'est pas un administrateur du serveur)"
 
 #: command.help.target.type
 msgid "§gType: §e%s"
@@ -408,11 +408,11 @@ msgstr ""
 
 #: command.help.target.optional
 msgid " (optional)"
-msgstr ""
+msgstr "(facultatif)"
 
 #: command.op.description
 msgid "Make yourself to be an administrator of the server, just by a command."
-msgstr ""
+msgstr "Devenez administrateur du serveur, simplement par une commande."
 
 #: command.op.password
 msgid "admin password"
@@ -420,71 +420,71 @@ msgstr ""
 
 #: command.op.password.description
 msgid "The password that you have been set as the password for the command. If you have not set a password, just don't type anything here."
-msgstr ""
+msgstr "Le mot de passe que vous avez défini comme mot de passe pour la commande. Si vous n'avez pas défini de mot de passe, ne saisissez rien ici."
 
 #: command.op.statement.mismatch
 msgid "You have not set a password yet, you can just keep it empty."
-msgstr ""
+msgstr "Vous n'avez pas encore défini de mot de passe, vous pouvez simplement le laisser vide."
 
 #: command.op.statement.missing
 msgid "You should type the password as the password has been set."
-msgstr ""
+msgstr "Vous devez saisir le mot de passe car le mot de passe a été défini."
 
 #: command.op.statement.already
 msgid "You have the administrator permission already. What do you want anymore by using me?"
-msgstr ""
+msgstr "Vous disposez déjà de l'autorisation d'administrateur. Que veux-tu encore en m'utilisant?"
 
 #: command.op.overheat.password
 msgid "Huh, just try later, I have almost overheated myself."
-msgstr ""
+msgstr "Euh, essaie plus tard, j'ai presque surchauffé."
 
 #: command.op.overheat.normal
 msgid "You should finish the verification first!"
-msgstr ""
+msgstr "Vous devriez d'abord terminer la vérification!"
 
 #: command.op.success
 msgid "You have been set as an administrator of the server."
-msgstr ""
+msgstr "Vous avez été défini comme administrateur du serveur."
 
 #: command.op.start
 msgid "Seems like the server has no password yet, let's start a simple verification to verify about you're an administrator of the server or not."
-msgstr ""
+msgstr "On dirait que le serveur n'a pas encore de mot de passe, commençons une simple vérification pour vérifier que vous êtes ou non un administrateur du serveur."
 
 #: command.op.success.fast
 msgid "Success! We are able to verify you're an administrator of the server, you have been set as an administrator of the server."
-msgstr ""
+msgstr "Succès! Nous sommes en mesure de vérifier que vous êtes un administrateur du serveur, vous avez été défini comme administrateur du serveur."
 
 #: command.op.require
 msgid "Please type the following slash command (/) in the chat: '%s'."
-msgstr ""
+msgstr "Veuillez saisir la commande slash suivante (/) dans le chat : '%s'."
 
 #: command.op.require.cancel
 msgid "If you want to cancel the verification, just type the slash command (/) in chat: '%s'."
-msgstr ""
+msgstr "Si vous souhaitez annuler la vérification, tapez simplement la commande slash (/) dans le chat : '%s'."
 
 #: command.op.verify.failed
 msgid "Sorry, but you have typed a wrong command, please try again."
-msgstr ""
+msgstr "Désolé, mais vous avez tapé une mauvaise commande, veuillez réessayer."
 
 #: command.op.verify.success
 msgid "Success! You have been set as an administrator of the server."
-msgstr ""
+msgstr "Succès! Vous avez été défini comme administrateur du serveur."
 
 #: command.op.verify.cancel
 msgid "You have canceled the verification."
-msgstr ""
+msgstr "Vous avez annulé la vérification."
 
 #: command.op.incorrect
 msgid "You have typed the incorrect password, please try again later."
-msgstr ""
+msgstr "Vous avez saisi un mot de passe incorrect, veuillez réessayer plus tard."
 
 #: command.deop.description
 msgid "Remove yourself from the administrators of the server."
-msgstr ""
+msgstr "Supprimez-vous des administrateurs du serveur."
 
 #: command.deop.success
 msgid "You have been removed from the administrators of the server."
-msgstr ""
+msgstr "Vous avez été supprimé des administrateurs du serveur."
 
 #: command.setmodule.description
 msgid "Toggle a module on or off."
@@ -840,27 +840,27 @@ msgstr ""
 
 #: module.welcomer.message
 msgid "Welcome! §e%s§r§g has joined the server!"
-msgstr ""
+msgstr "Bienvenue! §e%s§r§g a rejoint le serveur!"
 
 #: module.welcomer.device
 msgid "§7>> §gDevice: §e%s"
-msgstr ""
+msgstr "§7>> §gAppareil: §e%s"
 
 #: module.welcomer.device.console
 msgid "gaming console"
-msgstr ""
+msgstr "Console"
 
 #: module.welcomer.device.pc
 msgid "computer"
-msgstr ""
+msgstr "PC"
 
 #: module.welcomer.device.mobile
 msgid "mobile phone"
-msgstr ""
+msgstr "Mobile"
 
 #: module.welcomer.device.unknown
 msgid "unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: module.welcomer.name
 msgid "Welcomer"
