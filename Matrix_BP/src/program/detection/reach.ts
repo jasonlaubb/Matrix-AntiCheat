@@ -26,7 +26,7 @@ const reach = new Module()
         delete locationTrackData[playerId];
     });
 reach.register();
-const MAX_REACH = 4.8;
+const MAX_REACH = 5.1;
 const MAX_ROTATION = 79;
 const TRACK_DURATION = 8000;
 interface TrackData {
