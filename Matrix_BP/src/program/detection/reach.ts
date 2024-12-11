@@ -55,7 +55,7 @@ function onEntityAttack({ damagingEntity: player, hitEntity: target }: EntityHit
     locationTrackData[target.id].lastValidTimeStamp = now;
     if (targetTrackInvalid || playerTrackInvalid) return;
     const { x: pitch } = player.getRotation();
-    if (pitch < MAX_ROTATION) {
+    if (fastAbs(pitch) < MAX_ROTATION) {
         const limit = calculateDistanceLimit(pitch);
         const distance = findMinimumDistance(playerLocationData.locationData, targetLocationData.locationData);
         if (distance > limit) {
