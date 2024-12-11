@@ -1,5 +1,5 @@
 import { EntityHitEntityAfterEvent, Player, Vector3, system, world } from "@minecraft/server";
-import { fastCos, fastHypot } from "../../util/fastmath";
+import { fastCos, fastHypot, fastAbs } from "../../util/fastmath";
 import { fastAbs } from "../../util/fastmath";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
