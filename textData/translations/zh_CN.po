@@ -306,6 +306,10 @@ msgstr "§bMatrix§a+ §7> §g关于Matrix反作弊 <3"
 msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
 msgstr "作者: jasonlaubb (Discord: @uwu_the_great)"
 
+#: command.about.github
+msgid "Github: %s"
+msgstr "Github: %s"
+
 #: command.about.version
 msgid "Current version: %s"
 msgstr "当前版本: %s"
@@ -398,623 +402,627 @@ msgstr "§g类型: §e%s"
 msgid "§gDescription: §e%s"
 msgstr "§g描述: §e%s"
 
+#: command.help.target.type
+msgid "§gType: §e%s"
+msgstr "（可选）"
+
 #: command.help.target.optional
 msgid " (optional)"
-msgstr "（可选）"
+msgstr "通过一个命令使自己成为服务器的管理员。"
 
 #: command.op.description
 msgid "Make yourself to be an administrator of the server, just by a command."
-msgstr "通过一个命令使自己成为服务器的管理员。"
+msgstr "管理员密码"
 
 #: command.op.password
 msgid "admin password"
-msgstr "管理员密码"
+msgstr "您为命令设置的密码。如果您没有设置密码，请在此处什么也不输入。"
 
 #: command.op.password.description
 msgid "The password that you have been set as the password for the command. If you have not set a password, just don't type anything here."
-msgstr "您为命令设置的密码。如果您没有设置密码，请在此处什么也不输入。"
+msgstr "您尚未设置密码，可以保持为空。"
 
 #: command.op.statement.mismatch
 msgid "You have not set a password yet, you can just keep it empty."
-msgstr "您尚未设置密码，可以保持为空。"
+msgstr "您应输入已设置的密码。"
 
 #: command.op.statement.missing
 msgid "You should type the password as the password has been set."
-msgstr "您应输入已设置的密码。"
+msgstr "您已经拥有管理员权限。您还想要什么呢？"
 
 #: command.op.statement.already
 msgid "You have the administrator permission already. What do you want anymore by using me?"
-msgstr "您已经拥有管理员权限。您还想要什么呢？"
+msgstr "呃，稍后再试，我快过热了。"
 
 #: command.op.overheat.password
 msgid "Huh, just try later, I have almost overheated myself."
-msgstr "呃，稍后再试，我快过热了。"
+msgstr "您应该先完成验证！"
 
 #: command.op.overheat.normal
 msgid "You should finish the verification first!"
-msgstr "您应该先完成验证！"
+msgstr "您已被设置为服务器的管理员。"
 
 #: command.op.success
 msgid "You have been set as an administrator of the server."
-msgstr "您已被设置为服务器的管理员。"
+msgstr "似乎服务器还没有密码，让我们开始一个简单的验证，以确认您是否是服务器的管理员。"
 
 #: command.op.start
 msgid "Seems like the server has no password yet, let's start a simple verification to verify about you're an administrator of the server or not."
-msgstr "似乎服务器还没有密码，让我们开始一个简单的验证，以确认您是否是服务器的管理员。"
+msgstr "成功！我们能够验证您是服务器的管理员，您已被设置为服务器的管理员。"
 
 #: command.op.success.fast
 msgid "Success! We are able to verify you're an administrator of the server, you have been set as an administrator of the server."
-msgstr "成功！我们能够验证您是服务器的管理员，您已被设置为服务器的管理员。"
+msgstr "请在聊天中输入以下斜杠命令（/）: '%s'。"
 
 #: command.op.require
 msgid "Please type the following slash command (/) in the chat: '%s'."
-msgstr "请在聊天中输入以下斜杠命令（/）: '%s'。"
+msgstr "如果您想取消验证，只需在聊天中输入斜杠命令（/）: '%s'。"
 
 #: command.op.require.cancel
 msgid "If you want to cancel the verification, just type the slash command (/) in chat: '%s'."
-msgstr "如果您想取消验证，只需在聊天中输入斜杠命令（/）: '%s'。"
+msgstr "抱歉，但您输入了错误的命令，请再试一次。"
 
 #: command.op.verify.failed
 msgid "Sorry, but you have typed a wrong command, please try again."
-msgstr "抱歉，但您输入了错误的命令，请再试一次。"
+msgstr "成功！您已被设置为服务器的管理员。"
 
 #: command.op.verify.success
 msgid "Success! You have been set as an administrator of the server."
-msgstr "成功！您已被设置为服务器的管理员。"
+msgstr "您已取消验证。"
 
 #: command.op.verify.cancel
 msgid "You have canceled the verification."
-msgstr "您已取消验证。"
+msgstr "您输入的密码不正确，请稍后再试。"
 
 #: command.op.incorrect
 msgid "You have typed the incorrect password, please try again later."
-msgstr "您输入的密码不正确，请稍后再试。"
+msgstr "将自己从服务器管理员中移除。"
 
 #: command.deop.description
 msgid "Remove yourself from the administrators of the server."
-msgstr "将自己从服务器管理员中移除。"
+msgstr "您已从服务器管理员中移除。"
 
 #: command.deop.success
 msgid "You have been removed from the administrators of the server."
-msgstr "您已从服务器管理员中移除。"
+msgstr "切换模块的启用或禁用状态。"
 
 #: command.setmodule.description
 msgid "Toggle a module on or off."
-msgstr "切换模块的启用或禁用状态。"
+msgstr "模块的ID"
 
 #: command.setmodule.module
 msgid "module's id"
-msgstr "模块的ID"
+msgstr "您想要切换的模块的ID。"
 
 #: command.setmodule.module.description
 msgid "The id of the module that you want to toggle on or off."
-msgstr "您想要切换的模块的ID。"
+msgstr "目标状态"
 
 #: command.setmodule.state
 msgid "target state"
-msgstr "目标状态"
+msgstr "您想要为模块切换的状态。"
 
 #: command.setmodule.state.description
 msgid "State that you want to switch on or off for the module."
-msgstr "您想要为模块切换的状态。"
+msgstr "成功！您已启用该模块。"
 
 #: command.setmodule.success.enabled
 msgid "Success! The module has been enabled by yourself."
-msgstr "成功！您已启用该模块。"
+msgstr "成功！您已禁用该模块。"
 
 #: command.setmodule.success.disabled
 msgid "Success! The module has been disabled by yourself."
-msgstr "成功！您已禁用该模块。"
+msgstr "无法找到该模块，请确保您输入有效的模块。您可以使用 '-listmodules' 查看模块列表。"
 
 #: command.setmodule.notfound
 msgid "Not able to find the module, make sure you type a valid module. You can use '-listmodules' to see the list of modules."
-msgstr "无法找到该模块，请确保您输入有效的模块。您可以使用 '-listmodules' 查看模块列表。"
+msgstr "该模块已启用。您想要禁用它吗？"
 
 #: command.setmodule.already.enabled
 msgid "The module has already been enabled. Do you want to disable it?"
-msgstr "该模块已启用。您想要禁用它吗？"
+msgstr "该模块已禁用。您是想启用它吗？"
 
 #: command.setmodule.already.disabled
 msgid "The module has already been disabled. Do you mean to enable it?"
-msgstr "该模块已禁用。您是想启用它吗？"
+msgstr "显示模块列表。"
 
 #: command.listmodule.description
 msgid "Show the list of modules."
-msgstr "显示模块列表。"
+msgstr "模块列表"
 
 #: command.listmodule.title
 msgid "The list of the modules"
-msgstr "模块列表"
+msgstr "这是模块列表。按钮是模块的ID。绿色表示启用，红色表示禁用。多简单的系统，对吧？"
 
 #: command.listmodule.body
 msgid "Here is the list of modules. The button is the id of the module. Green means enabled, red means disabled. What a simple system, right?"
-msgstr "这是模块列表。按钮是模块的ID。绿色表示启用，红色表示禁用。多简单的系统，对吧？"
+msgstr "切换模块"
 
 #: command.listmodule.toggle.title
 msgid "Toggling the module"
-msgstr "切换模块"
+msgstr "您仍然可以使用 '-setmodule' 来切换模块的启用或禁用状态。"
 
 #: command.listmodule.toggle.body
 msgid "You can still use '-setmodule' to toggle a module on or off."
-msgstr "您仍然可以使用 '-setmodule' 来切换模块的启用或禁用状态。"
+msgstr "我想启用该模块。"
 
 #: command.listmodule.toggle.enable
 msgid "I want to enable this module."
-msgstr "我想启用该模块。"
+msgstr "我想禁用该模块。"
 
 #: command.listmodule.toggle.disable
 msgid "I want to disable this module."
-msgstr "我想禁用该模块。"
+msgstr "您想对这个模块做什么"
 
 #: command.listmodule.toggle.state
 msgid "What do you want to do with this module"
-msgstr "您想对这个模块做什么"
+msgstr "未知路径: %s，请确保您输入有效路径。使用斜杠（/）分隔路径。"
 
 #: command.set.invalid
 msgid "Unknown path: %s, make sure you type a valid path. Use slash (/) to separate the path."
-msgstr "未知路径: %s，请确保您输入有效路径。使用斜杠（/）分隔路径。"
+msgstr "您想要设置的路径必须是一个数字。"
 
 #: command.set.number
 msgid "The path you want to set must be a number."
-msgstr "您想要设置的路径必须是一个数字。"
+msgstr "您想要设置的路径必须是布尔值。仅允许 'true' 或 'false'。"
 
 #: command.set.boolean
 msgid "The path you want to set must be a boolean. Only 'true' or 'false' is allowed."
-msgstr "您想要设置的路径必须是布尔值。仅允许 'true' 或 'false'。"
+msgstr "成功！路径 '%1' 已设置为 '%2'。"
 
 #: command.set.success
 msgid "Success! The path '%1' has been set to '%2'."
-msgstr "成功！路径 '%1' 已设置为 '%2'。"
+msgstr "动态更改配置。不会因为不同版本而丢失数据。"
 
 #: command.set.description
 msgid "Change the config dynamically. Without the data lost for different versions."
-msgstr "动态更改配置。不会因为不同版本而丢失数据。"
+msgstr "路径（键）"
 
 #: command.set.key
 msgid "path (key)"
-msgstr "路径（键）"
+msgstr "您想要设置的路径。您应使用斜杠（/）分隔路径。例如，'modules/antiSpeed'。"
 
 #: command.set.key.description
 msgid "The path that you want to set. You should type it with slash (/) to separate the path. For example, 'modules/antiSpeed'."
-msgstr "您想要设置的路径。您应使用斜杠（/）分隔路径。例如，'modules/antiSpeed'。"
+msgstr "值"
 
 #: command.set.value
 msgid "value"
-msgstr "值"
+msgstr "您想要设置的值。根据路径的类型，它应为字符串、布尔值或数字。"
 
 #: command.set.value.description
 msgid "The value that you want to set. It should be a string, a boolean or a number depending on the type of the path."
-msgstr "您想要设置的值。根据路径的类型，它应为字符串、布尔值或数字。"
+msgstr "打开Matrix反作弊用户界面面板。"
 
 #: command.matrixui.description
 msgid "Open the Matrix AntiCheat UI panel."
-msgstr "打开Matrix反作弊用户界面面板。"
+msgstr "让自己对其他玩家不可见。即使是ESP也无法看到您。"
 
 #: command.vanish.description
 msgid "Make yourself invisible to other players. Even ESP will not be able to see you."
-msgstr "让自己对其他玩家不可见。即使是ESP也无法看到您。"
+msgstr "您已被隐形。再次输入此命令以使自己再次可见。"
 
 #: command.vanish.success
 msgid "You have been vanished. Type this command again to make yourself visible again."
-msgstr "您已被隐形。再次输入此命令以使自己再次可见。"
+msgstr "您不再处于隐形状态。"
 
 #: command.vanish.deleted
 msgid "You are no longer to be vanished."
-msgstr "您不再处于隐形状态。"
+msgstr "抱歉，您需要将Matrix反作弊放在任何包含'player.json'实体文件的插件之上才能使用此命令。"
 
 #: command.vanish.failed
 msgid "Sorry, but you need to place Matrix anticheat above any-type of addon that includes 'player.json' entities file to use this command."
-msgstr "抱歉，您需要将Matrix反作弊放在任何包含'player.json'实体文件的插件之上才能使用此命令。"
+msgstr "目标玩家"
 
 #: command.moderation.target
 msgid "Target player"
-msgstr "目标玩家"
+msgstr "您想要使用此命令的目标玩家。"
 
 #: command.moderation.target.description
 msgid "The target player that you want to use this command on."
-msgstr "您想要使用此命令的目标玩家。"
+msgstr "持续时间"
 
 #: command.moderation.duration
 msgid "Duration"
-msgstr "持续时间"
+msgstr "您想要使用此命令的管理操作的持续时间（以分钟为单位）。如果留空，则设置为永久管理操作。"
 
 #: command.moderation.duration.description
 msgid "The duration of the moderation action that you want to use this command on, in minutes. You leave it empty in order to set a permanent moderation action."
-msgstr "您想要使用此命令的管理操作的持续时间（以分钟为单位）。如果留空，则设置为永久管理操作。"
+msgstr "哎呀，您不能对管理员或自己执行管理操作。"
 
 #: command.moderation.admin
 msgid "Oops, you can not finish a moderation action to an administrator or yourself."
-msgstr "哎呀，您不能对管理员或自己执行管理操作。"
+msgstr "%2 对 %1 执行了管理操作。"
 
 #: command.moderation.success
 msgid "%2 has done a moderation action to %1"
-msgstr "%2 对 %1 执行了管理操作。"
+msgstr "§7>> §g管理操作: §e%s"
 
 #: command.moderation.action
 msgid "§7>> §gModeration action: §e%s"
-msgstr "§7>> §g管理操作: §e%s"
+msgstr "在您使用管理移除或任何相关的管理命令之前，您需要确保目标玩家已被管理。"
 
 #: command.moderation.removal.failed
 msgid "Before you use the moderation removal or any related moderation command, you need to make sure the target player has been moderated."
-msgstr "在您使用管理移除或任何相关的管理命令之前，您需要确保目标玩家已被管理。"
+msgstr "临时踢出"
 
 #: command.moderation.tempkick
 msgid "temp-kicked"
-msgstr "临时踢出"
+msgstr "踢出"
 
 #: command.moderation.kick
 msgid "kicked"
-msgstr "踢出"
+msgstr "禁用"
 
 #: command.moderation.ban
 msgid "banned"
-msgstr "禁用"
+msgstr "解禁"
 
 #: command.moderation.unban
 msgid "unbanned"
-msgstr "解禁"
+msgstr "限制"
 
 #: command.moderation.softban
 msgid "soft-banned"
-msgstr "限制"
+msgstr "解除软禁"
 
 #: command.moderation.unsoftban
 msgid "unsoft-banned"
-msgstr "解除软禁"
+msgstr "静音"
 
 #: command.moderation.mute
 msgid "muted"
-msgstr "静音"
+msgstr "解除静音"
 
 #: command.moderation.unmute
 msgid "unmuted"
-msgstr "解除静音"
+msgstr "冻结"
 
 #: command.moderation.freeze
 msgid "frozen"
-msgstr "冻结"
+msgstr "解除冻结"
 
 #: command.moderation.unfreeze
 msgid "unfrozen"
-msgstr "解除冻结"
+msgstr "警告"
 
 #: command.moderation.warn
 msgid "warned"
-msgstr "警告"
+msgstr "清除所有警告"
 
 #: command.moderation.clearwarn
 msgid "cleared all warnings"
-msgstr "清除所有警告"
+msgstr "§7>> §g 警告数量: %s"
 
 #: command.moderation.warn.amount
 msgid "§7>> §g Amount of warnings: %s"
-msgstr "§7>> §g 警告数量: %s"
+msgstr "临时踢出一名玩家。"
 
 #: command.tempkick.description
 msgid "Temporarily kick a player."
-msgstr "临时踢出一名玩家。"
+msgstr "踢出一名玩家。"
 
 #: command.kick.description
 msgid "Kick a player."
-msgstr "踢出一名玩家。"
+msgstr "禁用一名玩家。"
 
 #: command.ban.description
 msgid "Ban a player."
-msgstr "禁用一名玩家。"
+msgstr "解禁一名玩家。"
 
 #: command.unban.description
 msgid "Unban a player."
-msgstr "解禁一名玩家。"
+msgstr "限制一名玩家。"
 
 #: command.softban.description
 msgid "Soft-ban a player."
-msgstr "限制一名玩家。"
+msgstr "解除限制一名玩家。"
 
 #: command.unsoftban.description
 msgid "Unsoft-ban a player."
-msgstr "解除限制一名玩家。"
+msgstr "静音一名玩家。"
 
 #: command.mute.description
 msgid "Mute a player."
-msgstr "静音一名玩家。"
+msgstr "解除静音一名玩家。"
 
 #: command.unmute.description
 msgid "Unmute a player."
-msgstr "解除静音一名玩家。"
+msgstr "冻结一名玩家。"
 
 #: command.freeze.description
 msgid "Freeze a player."
-msgstr "冻结一名玩家。"
+msgstr "解除冻结一名玩家。"
 
 #: command.unfreeze.description
 msgid "Unfreeze a player."
-msgstr "解除冻结一名玩家。"
+msgstr "警告一名玩家。"
 
 #: command.warn.description
 msgid "Warn a player."
-msgstr "警告一名玩家。"
+msgstr "清除一名玩家的所有警告。"
 
 #: command.clearwarn.description
 msgid "Clear all warnings of a player."
-msgstr "清除一名玩家的所有警告。"
+msgstr "查看一名玩家的物品栏。"
 
 #: command.invsee.description
 msgid "See the inventory of a player."
-msgstr "查看一名玩家的物品栏。"
+msgstr "您可以通过打开自己的物品栏来打开物品栏界面。"
 
 #: command.invsee.notice
 msgid "You can open the inventory ui by opening your inventory."
-msgstr "您可以通过打开自己的物品栏来打开物品栏界面。"
+msgstr "您无法查看自己的物品栏，这可能会导致一些问题。"
 
 #: command.invsee.self
 msgid "You can not see your own inventory, this might cause some issues."
-msgstr "您无法查看自己的物品栏，这可能会导致一些问题。"
+msgstr "设置获取操作员权限的密码。"
 
 #: command.setpassword.description
 msgid "Set a password for getting operator permissions."
-msgstr "设置获取操作员权限的密码。"
+msgstr "新密码"
 
 #: command.setpassword.password
 msgid "New password"
-msgstr "新密码"
+msgstr "您想要设置的密码。"
 
 #: command.setpassword.password.description
 msgid "The password that you want to set."
-msgstr "您想要设置的密码。"
+msgstr "密码已设置。"
 
 #: command.setpassword.success
 msgid "The password has been set."
-msgstr "密码已设置。"
+msgstr "您的密码应包含小写字母、大写字母、数字和特殊字符。"
 
 #: command.setpassword.strength
 msgid "Your password should include lowerCase, upperCase, numbers and special characters."
-msgstr "您的密码应包含小写字母、大写字母、数字和特殊字符。"
+msgstr "清除密码。"
 
 #: command.clearpassword.description
 msgid "Clear the password."
-msgstr "清除密码。"
+msgstr "密码已清除。"
 
 #: command.clearpassword.success
 msgid "The password has been cleared."
-msgstr "密码已清除。"
+msgstr "尚未设置密码。"
 
 #: command.clearpassword.already
 msgid "There is no password set."
-msgstr "尚未设置密码。"
+msgstr "通过用户界面配置Matrix反作弊的设置。"
 
 #: command.configui.description
 msgid "Configure the settings of Matrix anticheat by a user interface."
-msgstr "通过用户界面配置Matrix反作弊的设置。"
+msgstr "将一名玩家设置为管理员。"
 
 #: command.setadmin.description
 msgid "Set a player as an administrator."
-msgstr "将一名玩家设置为管理员。"
+msgstr "管理员级别"
 
 #: command.setadmin.level
 msgid "Administrator level"
-msgstr "管理员级别"
+msgstr "您想要设置的管理员级别。（设置为0以将玩家移除管理员身份）"
 
 #: command.setadmin.level.description
 msgid "The level of the administrator that you want to set. (Set to 0 in order to remove the player as an administrator)"
-msgstr "您想要设置的管理员级别。（设置为0以将玩家移除管理员身份）"
+msgstr "更改玩家的管理员级别失败。"
 
 #: command.setadmin.failed
 msgid "Failed to change the player's administrator level."
-msgstr "更改玩家的管理员级别失败。"
+msgstr "§7>> §g管理员级别: §e级别 %s"
 
 #: command.setadmin.level.display
 msgid "§7>> §gAdministrator level: §eLevel %s"
-msgstr "§7>> §g管理员级别: §e级别 %s"
+msgstr "设置玩家的等级。"
 
 #: command.setrank.description
 msgid "Set a player's rank."
-msgstr "设置玩家的等级。"
+msgstr "等级"
 
 #: command.setrank.rank
 msgid "Ranks"
-msgstr "等级"
+msgstr "您想要设置的玩家等级。使用逗号（,）分隔多个等级。"
 
 #: command.setrank.rank.description
 msgid "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
-msgstr "您想要设置的玩家等级。使用逗号（,）分隔多个等级。"
+msgstr "%1 的等级已设置为 %2。"
 
 #: command.setrank.success
 msgid "%1's rank has been set to %2."
-msgstr "%1 的等级已设置为 %2。"
+msgstr "点击§l物品栏按钮§r以打开他们的物品栏。"
 
 #: action.hint.exit.matrix:inv_container
 msgid "Tap the §lInventory button§r to open their Inventory."
-msgstr "点击§l物品栏按钮§r以打开他们的物品栏。"
+msgstr "按下§l:_input_key.inventory:§r以打开他们的物品栏"
 
 #: action.hint.exit.console.matrix:inv_container
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
-msgstr "按下§l:_input_key.inventory:§r以打开他们的物品栏"
+msgstr "欢迎！§e%s§r§g 已加入服务器！"
 
 #: module.welcomer.message
 msgid "Welcome! §e%s§r§g has joined the server!"
-msgstr "欢迎！§e%s§r§g 已加入服务器！"
+msgstr "§7>> §g设备: §e%s"
 
 #: module.welcomer.device
 msgid "§7>> §gDevice: §e%s"
-msgstr "§7>> §g设备: §e%s"
+msgstr "游戏控制台"
 
 #: module.welcomer.device.console
 msgid "gaming console"
-msgstr "游戏控制台"
+msgstr "电脑"
 
 #: module.welcomer.device.pc
 msgid "computer"
-msgstr "电脑"
+msgstr "手机"
 
 #: module.welcomer.device.mobile
 msgid "mobile phone"
-msgstr "手机"
+msgstr "未知"
 
 #: module.welcomer.device.unknown
 msgid "unknown"
-msgstr "未知"
+msgstr "欢迎"
 
 #: module.welcomer.name
 msgid "Welcomer"
-msgstr "欢迎"
+msgstr "当玩家加入服务器时发送欢迎消息。"
 
 #: module.welcomer.description
 msgid "Send a welcome message when a player joins the server."
-msgstr "当玩家加入服务器时发送欢迎消息。"
+msgstr "世界边界"
 
 #: module.worldborder.name
 msgid "World Border"
-msgstr "世界边界"
+msgstr "生成一个边界以阻止玩家离开世界。"
 
 #: module.worldborder.description
 msgid "Generate a border to block the players from going out of the world."
-msgstr "生成一个边界以阻止玩家离开世界。"
+msgstr "停止移动，您已到达世界的边界！"
 
 #: module.worldborder.danger
 msgid "Stop moving, you have arrived the boundary of the world!"
-msgstr "停止移动，您已到达世界的边界！"
+msgstr "§c§l已停止！§r"
 
 #: module.worldborder.title
 msgid "§c§lStopped!§r"
-msgstr "§c§l已停止！§r"
+msgstr "§e您将在 %s 秒后自动传送到出生点。"
 
 #: module.worldborder.subtitle
 msgid "§eYou will be auto teleported to the spawn in %s seconds."
-msgstr "§e您将在 %s 秒后自动传送到出生点。"
+msgstr "聊天等级与反垃圾信息"
 
 #: module.chatrank.name
 msgid "Chat Rank & Anti Spam"
-msgstr "聊天等级与反垃圾信息"
+msgstr "防止服务器上的垃圾信息，并提供聊天等级系统。"
 
 #: module.chatrank.description
 msgid "Prevent the spamming on your server and provide a chat rank system."
-msgstr "防止服务器上的垃圾信息，并提供聊天等级系统。"
+msgstr "您的消息包含一些不允许的敏感词。"
 
 #: module.chatrank.bad
 msgid "Your message contains some sensitive word(s) which is not allowed."
-msgstr "您的消息包含一些不允许的敏感词。"
+msgstr "慢速模式已启用！请在 %s 秒后输入您的消息。"
 
 #: module.chatrank.slow
 msgid "Slow mode enabled! Please enter your message %s second(s) later."
-msgstr "慢速模式已启用！请在 %s 秒后输入您的消息。"
+msgstr "请不要发送垃圾信息。"
 
 #: module.chatrank.repeated
 msgid "Please don't spam messages."
-msgstr "请不要发送垃圾信息。"
+msgstr "反挂机"
 
 #: module.afk.name
 msgid "Anti AFK"
-msgstr "反挂机"
+msgstr "如果玩家长时间不活动，则断开连接。"
 
 #: module.afk.description
 msgid "Disconnect the player if they are not active for a long time."
-msgstr "如果玩家长时间不活动，则断开连接。"
+msgstr "%s 因在此服务器上长时间挂机而被断开连接。"
 
 #: module.afk.disconnect
 msgid "%s has been disconnected due to AFK on this server for a long time."
-msgstr "%s 因在此服务器上长时间挂机而被断开连接。"
+msgstr "可疑的战斗作弊日志"
 
 #: module.clog.name
 msgid "Anti Combat Log"
-msgstr "可疑的战斗作弊日志"
+msgstr "防止有人离开战斗日志。非常基础，因此请使用其他方法进行反战斗日志。"
 
 #: module.clog.description
 msgid "Prevent someone leaves the combat log. Very basic so use others for your own anti combat log."
-msgstr "防止有人离开战斗日志。非常基础，因此请使用其他方法进行反战斗日志。"
+msgstr "§g您正在战斗中。§7§l(§r§e剩余 %s 秒§7§l)§r"
 
 #: module.clog.in.combat
 msgid "§gYou are in combat. §7§l(§r§e%s second(s) left§7§l)§r"
-msgstr "§g您正在战斗中。§7§l(§r§e剩余 %s 秒§7§l)§r"
+msgstr "您现在正在与 §e%s§g 战斗。"
 
 #: module.clog.face.combat
 msgid "You are now in combat with §e%s§g."
-msgstr "您现在正在与 §e%s§g 战斗。"
+msgstr "您不再与 %s 战斗。"
 
 #: module.clog.leave.combat
 msgid "You are no longer in combat with %s."
-msgstr "您不再与 %s 战斗。"
+msgstr "§c§l检测到战斗日志！§r§7 %1 在与 %2 战斗时离开了游戏。"
 
 #: module.clog.killed
 msgid "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
-msgstr "§c§l检测到战斗日志！§r§7 %1 在与 %2 战斗时离开了游戏。"
+msgstr "验证码防止机器人"
 
 #: module.captcha.name
 msgid "Captcha against bots"
-msgstr "验证码防止机器人"
+msgstr "防止垃圾信息机器人攻击当前服务器。"
 
 #: module.captcha.description
 msgid "Prevent the spamming bot from attacking the current server."
-msgstr "防止垃圾信息机器人攻击当前服务器。"
+msgstr "§c§l检测到可疑客户端！§r§7 %s 因使用可疑客户端而被断开连接。"
 
 #: module.captcha.detected
 msgid "§c§lSuspicious client detected!§r§7 %s has been disconnected due to using a suspicious client."
-msgstr "§c§l检测到可疑客户端！§r§7 %s 因使用可疑客户端而被断开连接。"
+msgstr "§bMatrix§a+ §7> §g继续旋转 %s 秒。"
 
 #: module.captcha.keepmove
 msgid "§bMatrix§a+ §7> §gContinue your rotation movement for %s seconds more."
-msgstr "§bMatrix§a+ §7> §g继续旋转 %s 秒。"
+msgstr "§bMatrix§a+ §7> §g正在检查您的客户端... 请稍候。"
 
 #: module.captcha.checking
 msgid "§bMatrix§a+ §7> §gChecking your client... Please wait."
-msgstr "§bMatrix§a+ §7> §g正在检查您的客户端... 请稍候。"
+msgstr "§bMatrix§a+ §7> §g请§e§l旋转§r§g以继续检查过程。"
 
 #: module.captcha.continue
 msgid "§bMatrix§a+ §7> §gPlease §e§lMOVE YOUR ROTATION§r§g to continue the check process."
-msgstr "§bMatrix§a+ §7> §g请§e§l旋转§r§g以继续检查过程。"
+msgstr "验证码界面 | Matrix反作弊"
 
 #: module.captcha.title
 msgid "Captcha GUI | Matrix Anticheat"
-msgstr "验证码界面 | Matrix反作弊"
+msgstr "我已完成问题！"
 
 #: module.captcha.submit
 msgid "I have finished the question!"
-msgstr "我已完成问题！"
+msgstr "§b请正确回答以下问题以验证您是人类。"
 
 #: module.captcha.selectui
 msgid "§bPlease answer the question below correctly to verify you're a human."
-msgstr "§b请正确回答以下问题以验证您是人类。"
+msgstr "§a为什么需要验证？因为我们要防止垃圾信息机器人攻击当前服务器。"
 
 #: module.captcha.why
 msgid "§aWhy do you need to verify? Because we want to prevent the spamming bot from attacking the current server."
-msgstr "§a为什么需要验证？因为我们要防止垃圾信息机器人攻击当前服务器。"
+msgstr "§g问题: §e%1 + %2 的正确答案是什么？"
 
 #: module.captcha.question
 msgid "§gQuestion: §eWhat is the correct answer of %1 plus %2?"
-msgstr "§g问题: §e%1 + %2 的正确答案是什么？"
+msgstr "§g在下面的滑块中选择正确答案"
 
 #: module.captcha.youranswer
 msgid "§gSelect the correct answer in below slider"
-msgstr "§g在下面的滑块中选择正确答案"
+msgstr "§bMatrix§a+ §7> §g您答错了，请再试一次。"
 
 #: module.captcha.recontinue
 msgid "§bMatrix§a+ §7> §gYou make it wrong, please try again."
-msgstr "§bMatrix§a+ §7> §g您答错了，请再试一次。"
+msgstr "§bMatrix§a+ §7> §g您已被验证为人类，现在可以使用服务器。"
 
 #: module.captcha.verified
 msgid "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
-msgstr "§bMatrix§a+ §7> §g您已被验证为人类，现在可以使用服务器。"
+msgstr "§r§l§bMatrix §g反作弊 §e用户界面§a 面板§r"
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
-msgstr "§r§l§bMatrix §g反作弊 §e用户界面§a 面板§r"
+msgstr "告诉我，您想做什么？"
 
 #: directpanel.title
 msgid "Tell me, what do you want to do?"
-msgstr "告诉我，您想做什么？"
+msgstr "从下面的按钮中选择一个动作。我可以为您生成命令字符串。"
 
 #: directpanel.body
 msgid "Select an action from below buttons. I can generate the command string for you."
-msgstr "从下面的按钮中选择一个动作。我可以为您生成命令字符串。"
+msgstr "运行 '%s' 命令。"
 
 #: directpanel.button
 msgid "Run '%s' command."
-msgstr "运行 '%s' 命令。"
+msgstr "输入命令字符串"
 
 #: directpanel.enter
 msgid "Enter the command string"
-msgstr "输入命令字符串"
+msgstr "让我们一起构建并运行您的命令。"
 
 #: directpanel.build
 msgid "Let build and run your command together."
-msgstr "让我们一起构建并运行您的命令。"
+msgstr ""
 
