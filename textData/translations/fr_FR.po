@@ -16,11 +16,11 @@ msgstr "Protégé par Matrix AntiCheat"
 
 #: json.packet
 msgid "§bMatrix§a+ §7> §e%1 §g packet§7(%2)§g received from %3"
-msgstr ""
+msgstr "§bMatrix§a+ §7> §e%1 §g paquet§7(%2)§g reçu de %3"
 
 #: error.happened
 msgid "§bMatrix§a+ §7> §gThere is some error from the script, please report it to the developer when you have time."
-msgstr ""
+msgstr "§bMatrix§a+ §7> §gIl y a une erreur dans le script, veuillez la signaler au développeur lorsque vous avez le temps."
 
 #: error.name
 msgid "§7- Error: §e%s"
@@ -40,7 +40,7 @@ msgstr "§c§lAlerte Triche! §r§7Un tricheur (%1§r§7) a été détecté auto
 
 #: function.help
 msgid "§bMatrix§a+ §7> §gAre you looking for help? Join our Discord Server: https://discord.gg/%1. Feel free to ask there. You are currently on Matrix anticheat version %2. You can use -op to gain matrix administrator permission and use -help to get help for the commands."
-msgstr "§bMatrix§a+ §7> §gVous cherchez de l'aide? Rejoignez notre serveur Discord: https://discord.gg/%1. N'hésitez pas à demander là-bas. Vous êtes actuellement sur la version %2 de l'anti-triche Matrix. Vous pouvez utiliser -op pour obtenir l'autorisation d'administrateur de matrice et utiliser -help pour obtenir de l'aide sur les commandes."
+msgstr "§bMatrix§a+ §7> §gVous cherchez de l'aide? Rejoignez notre serveur Discord: https://discord.gg/%1. N'hésitez pas à demander là-bas. Vous êtes actuellement sur la version %2 de l'anti-triche Matrix. Vous pouvez utiliser -op pour obtenir l'autorisation d'administrateur de matrix et utiliser -help pour obtenir de l'aide sur les commandes."
 
 #: function.help.typeA
 msgid "§7>> §gIs the chat command not working? Try to disable or place Matrix Anticheat above any-type of the chat rank addon."
@@ -52,11 +52,11 @@ msgstr "§7>> §gEst-ce que rien ne marche? N'oubliez pas d'activer l'API bêta 
 
 #: function.script.online
 msgid "§7>> §aScript is active! It is so nice to have you here."
-msgstr "§7>> §aScript est actif! C'est tellement agréable de vous avoir ici."
+msgstr "§7>> §aScript actif! C'est tellement agréable de vous avoir ici."
 
 #: function.script.offline
 msgid "§7>> §cScript is inactive! Please check if you have Beta-API enabled."
-msgstr "§7>> §cScript est inactif ! Veuillez vérifier si la bêta-API est activée."
+msgstr "§7>> §cScript inactif ! Veuillez vérifier si la bêta-API est activée."
 
 #: moderation.permanent
 msgid "permanent"
@@ -196,7 +196,7 @@ msgstr ""
 
 #: module.phase.description
 msgid "Prevent the player from passing through the walls with the illegal movement packet."
-msgstr ""
+msgstr "Empêche le joueur de traverser les murs avec des paquets de mouvements illégaux."
 
 #: module.firewall.name
 msgid "Firewall"
@@ -204,7 +204,7 @@ msgstr ""
 
 #: module.firewall.description
 msgid "Prevent the player who contains bad packets from accessing the server. For example, spam bot."
-msgstr ""
+msgstr "Empêche le joueur contenant des paquets défectueux d'accéder au serveur. Par exemple, un robot de spam."
 
 #: module.namespoof.name
 msgid "Anti Name Spoofer"
@@ -212,7 +212,7 @@ msgstr ""
 
 #: module.namespoof.description
 msgid "Prevent the player from changing their name to a invalid name and join the server."
-msgstr ""
+msgstr "Empêche le joueur de changer son nom en un nom invalide et rejoindre le serveur."
 
 #: module.killaura.name
 msgid "Anti KillAura"
@@ -220,7 +220,7 @@ msgstr ""
 
 #: module.killaura.description
 msgid "Prevent the player from hitting other players with the illegal kill packet."
-msgstr ""
+msgstr "Empêche le joueur de frapper d'autres joueurs avec des paquets de mise à mort illégaux."
 
 #: module.scaffold.name
 msgid "Anti Scaffold"
@@ -228,7 +228,7 @@ msgstr ""
 
 #: module.scaffold.description
 msgid "Prevent the player from using the auto-brige hack to gain unfair advantage."
-msgstr ""
+msgstr "Empêche le joueur d'utiliser le hack auto-brige pour obtenir un avantage injuste."
 
 #: module.insteabreak.name
 msgid "Anti Insteabreak"
@@ -236,7 +236,7 @@ msgstr ""
 
 #: module.insteabreak.description
 msgid "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
-msgstr ""
+msgstr "Empêche le joueur de briser le bloc sans interrompre le temps. Ce type de hack ne fonctionne pas sur un domaine ou un serveur BDS correctement configuré."
 
 #: module.reach.name
 msgid "Anti Reach"
@@ -244,7 +244,7 @@ msgstr ""
 
 #: module.reach.description
 msgid "An advanced anti reach solution that provided reach detection up to 4.5 blocks."
-msgstr ""
+msgstr "Une solution anti-reach avancée qui permet une détection de portée jusqu'à 4,5 blocs."
 
 #: module.speed.name
 msgid "Anti Speed"
@@ -252,7 +252,7 @@ msgstr ""
 
 #: module.speed.description
 msgid "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
-msgstr ""
+msgstr "Le moteur anti-speed le plus récent et le plus puissant. Utilisation de la propriété du phénomène 'prédiction bds' pour identifier les mouvements illégaux des joueurs."
 
 #: module.fly.name
 msgid "Anti Fly"
@@ -260,7 +260,7 @@ msgstr ""
 
 #: module.fly.description
 msgid "Prevent most of the fly hacks from working. There is a small probability of false positive."
-msgstr ""
+msgstr "Empêche la plupart des fly hacks de fonctionner. Il existe une faible probabilité de faux positifs."
 
 #: module.timer.name
 msgid "Anti Timer"
@@ -268,7 +268,7 @@ msgstr ""
 
 #: module.timer.description
 msgid "Prevent someone speed up their game speed to get an unfair advantage."
-msgstr ""
+msgstr "Empêche quelqu'un d'accélérer sa vitesse de jeu pour obtenir un avantage injuste."
 
 #: module.itemcheck.name
 msgid "Item check"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: module.itemcheck.description
 msgid "Prevent the player from using the illegal item from the server."
-msgstr ""
+msgstr "Empêche le joueur d'utiliser les objets illégaux du serveur."
 
 #: module.hop.name
 msgid "Anti Hop"
@@ -284,7 +284,7 @@ msgstr ""
 
 #: module.hop.description
 msgid "An extra checks against the illegal movement motion, to prevent a silent bypass."
-msgstr ""
+msgstr "Un contrôle supplémentaire contre les mouvements illégaux, pour empêcher un contournement silencieux."
 
 #: module.aim.name
 msgid "Aim check"
@@ -292,15 +292,15 @@ msgstr ""
 
 #: module.aim.description
 msgid "An extra checks against the illegal aim, to prevent the killaura or aim assist, credit to 4urxa."
-msgstr ""
+msgstr "Un contrôle supplémentaire contre la visée illégale, pour empêcher le killaura ou l'assistance à la visée, crédit à 4urxa."
 
 #: command.about.description
 msgid "Show some basic information about Matrix AntiCheat."
-msgstr ""
+msgstr "Affiche quelques informations de base sur Matrix AntiCheat."
 
 #: command.about.title
 msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
-msgstr ""
+msgstr "§bMatrix§a+ §7> §gÀ propos de Matrix AntiCheat <3"
 
 #: command.about.author
 msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
@@ -328,11 +328,11 @@ msgstr "Obtenez les informations utiles sur les commandes."
 
 #: command.help.command.name
 msgid "Command's name"
-msgstr ""
+msgstr "Nom de la commande"
 
 #: command.help.command.name.description
 msgid "The name of the command that you need help."
-msgstr ""
+msgstr "Le nom de la commande pour laquelle vous avez besoin d'aide."
 
 #: command.help.title
 msgid "The command list of Matrix AntiCheat:"
@@ -340,7 +340,7 @@ msgstr "La liste des commandes de Matrix AntiCheat:"
 
 #: command.help.target.title
 msgid "Showing the usage of the selected command: %s"
-msgstr "Afficher l'utilisation de la commande sélectionnée: %s"
+msgstr "Affiche l'utilisation de la commande sélectionnée: %s"
 
 #: command.help.target.notfound
 msgid "Not able to find the command, make sure you type a valid command so that we can show you the correct information."
@@ -364,11 +364,11 @@ msgstr "string (Une chaîne formée avec n'importe quel caractère)"
 
 #: command.help.option.number
 msgid "number (A float number or a integer)"
-msgstr "nombre (Un nombre flottant ou un entier)"
+msgstr "number (Un nombre flottant ou un entier)"
 
 #: command.help.option.integer
 msgid "number (Integer only, including negative)"
-msgstr "nombre (entier uniquement, y compris les négatifs)"
+msgstr "number (entier uniquement, y compris les négatifs)"
 
 #: command.help.option.boolean
 msgid "boolean (A boolean value, true or false)"
@@ -384,27 +384,27 @@ msgstr "purecode (Un purecode formé uniquement de chiffres (0-9), de lettres ma
 
 #: command.help.option.choice
 msgid "choice (A choice between a list of options)"
-msgstr "choix (Un choix entre une liste d'options)"
+msgstr "choice (Un choix entre une liste d'options)"
 
 #: command.help.option.player
 msgid "player (A player name of a player that is online)"
-msgstr "joueur (le nom d'un joueur en ligne)"
+msgstr "player (le nom d'un joueur en ligne)"
 
 #: command.help.option.target
 msgid "target (A player name of a player that is online but not an administrator of the server)"
-msgstr "target (Le nom d'un joueur qui est en ligne mais qui n'est pas un administrateur du serveur)"
+msgstr "target (Le nom d'un joueur en ligne mais qui n'est pas un administrateur du serveur)"
 
 #: command.help.target.type
 msgid "§gType: §e%s"
-msgstr ""
+msgstr "§gType: §e%s"
 
 #: command.help.target.description
 msgid "§gDescription: §e%s"
-msgstr ""
+msgstr "§gDescription: §e%s"
 
 #: command.help.target.type
 msgid "§gType: §e%s"
-msgstr ""
+msgstr "§gType: §e%s"
 
 #: command.help.target.optional
 msgid " (optional)"
@@ -412,7 +412,7 @@ msgstr "(facultatif)"
 
 #: command.op.description
 msgid "Make yourself to be an administrator of the server, just by a command."
-msgstr "Devenez administrateur du serveur, simplement par une commande."
+msgstr "Devenez administrateur du serveur, simplement avec une commande."
 
 #: command.op.password
 msgid "admin password"
