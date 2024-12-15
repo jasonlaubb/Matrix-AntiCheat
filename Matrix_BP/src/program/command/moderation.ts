@@ -2,7 +2,7 @@ import { Player, world } from "@minecraft/server";
 import { Command } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 // Import all moderation functions (Quite a lot lol)
-import { tempKick, ban, mute, softBan, strengthenKick, freeze, warn, unBan, unMute, unSoftBan, unFreeze, clearWarn, isBanned, isSoftBanned, isMuted, isFrozen, isUnBanned, isWarned, getWarns } from "../system/moderation";
+import { tempKick, ban, mute, softBan, strengthenKick, freeze, warn, unBan, unMute, unSoftBan, unFreeze, clearWarn, isBanned, isSoftBanned, isMuted, isFrozen, isUnBanned, isWarned, getWarns, bannedList } from "../system/moderation";
 function minuteToMilliseconds(minute: number): number {
     return minute * 60000;
 }
@@ -126,6 +126,18 @@ new Command()
         world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer.name, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.freeze")).build());
     })
     .register();
+new Command()
+    .setName("banlist")
+    .setDescription(rawtextTranslate("command.banlist.description"))
+    .setMinPermissionLevel(2)
+    .onExecute(async (player) => {
+        const banList = bannedList();
+        if (!banList) {
+            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.banlist.empty").build());
+        } else {
+            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.banlist.list", banList.length.toString(), banList.join("§7, §e")).build());
+        }
+    })
 new Command()
     .setName("unban")
     .setDescription(rawtextTranslate("command.unban.description"))

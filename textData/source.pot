@@ -568,6 +568,15 @@ msgstr "Unfreeze a player."
 msgid "command.warn.description"
 msgstr "Warn a player."
 
+msgid "command.banlist.empty"
+msgstr "Hopefully, there is no banned player right now."
+
+msgid "command.banlist.banned"
+msgstr "There is %1 banned player(s) on this server: §e%s"
+
+msgid "command.banlist.description"
+msgstr "Show the list of banned players."
+
 msgid "command.clearwarn.description"
 msgstr "Clear all warnings of a player."
 

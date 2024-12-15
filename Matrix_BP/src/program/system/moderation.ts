@@ -46,6 +46,13 @@ export function unBan(playerName: string) {
     obj.setScore("::" + playerName, 0);
     return true;
 }
+export function bannedList (): string[] | undefined {
+    const obj = world.scoreboard.getObjective(`matrix:banRecord`);
+    if (!obj) {
+        return undefined;
+    }
+    return obj.getParticipants().map((participant) => participant.displayName.slice(2));
+}
 export function isUnBanned(playerName: string) {
     const obj = world.scoreboard.getObjective(`matrix:unBanRequest`);
     if (!obj) {
