@@ -750,277 +750,289 @@ msgstr "查看一名玩家的物品栏。"
 msgid "Warn a player."
 msgstr "您可以通过打开自己的物品栏来打开物品栏界面。"
 
+#: command.banlist.empty
+msgid "Hopefully, there is no banned player right now."
+msgstr "您无法查看自己的物品栏，这可能会导致一些问题。"
+
+#: command.banlist.banned
+msgid "There is %1 banned player(s) on this server: §e%s"
+msgstr "设置获取操作员权限的密码。"
+
+#: command.banlist.description
+msgid "Show the list of banned players."
+msgstr "新密码"
+
 #: command.clearwarn.description
 msgid "Clear all warnings of a player."
-msgstr "您无法查看自己的物品栏，这可能会导致一些问题。"
+msgstr "您想要设置的密码。"
 
 #: command.invsee.description
 msgid "See the inventory of a player."
-msgstr "设置获取操作员权限的密码。"
+msgstr "密码已设置。"
 
 #: command.invsee.notice
 msgid "You can open the inventory ui by opening your inventory."
-msgstr "新密码"
+msgstr "您的密码应包含小写字母、大写字母、数字和特殊字符。"
 
 #: command.invsee.self
 msgid "You can not see your own inventory, this might cause some issues."
-msgstr "您想要设置的密码。"
+msgstr "清除密码。"
 
 #: command.setpassword.description
 msgid "Set a password for getting operator permissions."
-msgstr "密码已设置。"
+msgstr "密码已清除。"
 
 #: command.setpassword.password
 msgid "New password"
-msgstr "您的密码应包含小写字母、大写字母、数字和特殊字符。"
+msgstr "尚未设置密码。"
 
 #: command.setpassword.password.description
 msgid "The password that you want to set."
-msgstr "清除密码。"
+msgstr "通过用户界面配置Matrix反作弊的设置。"
 
 #: command.setpassword.success
 msgid "The password has been set."
-msgstr "密码已清除。"
+msgstr "将一名玩家设置为管理员。"
 
 #: command.setpassword.strength
 msgid "Your password should include lowerCase, upperCase, numbers and special characters."
-msgstr "尚未设置密码。"
+msgstr "管理员级别"
 
 #: command.clearpassword.description
 msgid "Clear the password."
-msgstr "通过用户界面配置Matrix反作弊的设置。"
+msgstr "您想要设置的管理员级别。（设置为0以将玩家移除管理员身份）"
 
 #: command.clearpassword.success
 msgid "The password has been cleared."
-msgstr "将一名玩家设置为管理员。"
+msgstr "更改玩家的管理员级别失败。"
 
 #: command.clearpassword.already
 msgid "There is no password set."
-msgstr "管理员级别"
+msgstr "§7>> §g管理员级别: §e级别 %s"
 
 #: command.configui.description
 msgid "Configure the settings of Matrix anticheat by a user interface."
-msgstr "您想要设置的管理员级别。（设置为0以将玩家移除管理员身份）"
+msgstr "设置玩家的等级。"
 
 #: command.setadmin.description
 msgid "Set a player as an administrator."
-msgstr "更改玩家的管理员级别失败。"
+msgstr "等级"
 
 #: command.setadmin.level
 msgid "Administrator level"
-msgstr "§7>> §g管理员级别: §e级别 %s"
+msgstr "您想要设置的玩家等级。使用逗号（,）分隔多个等级。"
 
 #: command.setadmin.level.description
 msgid "The level of the administrator that you want to set. (Set to 0 in order to remove the player as an administrator)"
-msgstr "设置玩家的等级。"
+msgstr "%1 的等级已设置为 %2。"
 
 #: command.setadmin.failed
 msgid "Failed to change the player's administrator level."
-msgstr "等级"
+msgstr "点击§l物品栏按钮§r以打开他们的物品栏。"
 
 #: command.setadmin.level.display
 msgid "§7>> §gAdministrator level: §eLevel %s"
-msgstr "您想要设置的玩家等级。使用逗号（,）分隔多个等级。"
+msgstr "按下§l:_input_key.inventory:§r以打开他们的物品栏"
 
 #: command.setrank.description
 msgid "Set a player's rank."
-msgstr "%1 的等级已设置为 %2。"
+msgstr "欢迎！§e%s§r§g 已加入服务器！"
 
 #: command.setrank.rank
 msgid "Ranks"
-msgstr "点击§l物品栏按钮§r以打开他们的物品栏。"
+msgstr "§7>> §g设备: §e%s"
 
 #: command.setrank.rank.description
 msgid "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
-msgstr "按下§l:_input_key.inventory:§r以打开他们的物品栏"
+msgstr "游戏控制台"
 
 #: command.setrank.success
 msgid "%1's rank has been set to %2."
-msgstr "欢迎！§e%s§r§g 已加入服务器！"
+msgstr "电脑"
 
 #: action.hint.exit.matrix:inv_container
 msgid "Tap the §lInventory button§r to open their Inventory."
-msgstr "§7>> §g设备: §e%s"
+msgstr "手机"
 
 #: action.hint.exit.console.matrix:inv_container
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
-msgstr "游戏控制台"
+msgstr "未知"
 
 #: module.welcomer.message
 msgid "Welcome! §e%s§r§g has joined the server!"
-msgstr "电脑"
+msgstr "欢迎"
 
 #: module.welcomer.device
 msgid "§7>> §gDevice: §e%s"
-msgstr "手机"
+msgstr "当玩家加入服务器时发送欢迎消息。"
 
 #: module.welcomer.device.console
 msgid "gaming console"
-msgstr "未知"
+msgstr "世界边界"
 
 #: module.welcomer.device.pc
 msgid "computer"
-msgstr "欢迎"
+msgstr "生成一个边界以阻止玩家离开世界。"
 
 #: module.welcomer.device.mobile
 msgid "mobile phone"
-msgstr "当玩家加入服务器时发送欢迎消息。"
+msgstr "停止移动，您已到达世界的边界！"
 
 #: module.welcomer.device.unknown
 msgid "unknown"
-msgstr "世界边界"
+msgstr "§c§l已停止！§r"
 
 #: module.welcomer.name
 msgid "Welcomer"
-msgstr "生成一个边界以阻止玩家离开世界。"
+msgstr "§e您将在 %s 秒后自动传送到出生点。"
 
 #: module.welcomer.description
 msgid "Send a welcome message when a player joins the server."
-msgstr "停止移动，您已到达世界的边界！"
+msgstr "聊天等级与反垃圾信息"
 
 #: module.worldborder.name
 msgid "World Border"
-msgstr "§c§l已停止！§r"
+msgstr "防止服务器上的垃圾信息，并提供聊天等级系统。"
 
 #: module.worldborder.description
 msgid "Generate a border to block the players from going out of the world."
-msgstr "§e您将在 %s 秒后自动传送到出生点。"
+msgstr "您的消息包含一些不允许的敏感词。"
 
 #: module.worldborder.danger
 msgid "Stop moving, you have arrived the boundary of the world!"
-msgstr "聊天等级与反垃圾信息"
+msgstr "慢速模式已启用！请在 %s 秒后输入您的消息。"
 
 #: module.worldborder.title
 msgid "§c§lStopped!§r"
-msgstr "防止服务器上的垃圾信息，并提供聊天等级系统。"
+msgstr "请不要发送垃圾信息。"
 
 #: module.worldborder.subtitle
 msgid "§eYou will be auto teleported to the spawn in %s seconds."
-msgstr "您的消息包含一些不允许的敏感词。"
+msgstr "反挂机"
 
 #: module.chatrank.name
 msgid "Chat Rank & Anti Spam"
-msgstr "慢速模式已启用！请在 %s 秒后输入您的消息。"
+msgstr "如果玩家长时间不活动，则断开连接。"
 
 #: module.chatrank.description
 msgid "Prevent the spamming on your server and provide a chat rank system."
-msgstr "请不要发送垃圾信息。"
+msgstr "%s 因在此服务器上长时间挂机而被断开连接。"
 
 #: module.chatrank.bad
 msgid "Your message contains some sensitive word(s) which is not allowed."
-msgstr "反挂机"
+msgstr "可疑的战斗作弊日志"
 
 #: module.chatrank.slow
 msgid "Slow mode enabled! Please enter your message %s second(s) later."
-msgstr "如果玩家长时间不活动，则断开连接。"
+msgstr "防止有人离开战斗日志。非常基础，因此请使用其他方法进行反战斗日志。"
 
 #: module.chatrank.repeated
 msgid "Please don't spam messages."
-msgstr "%s 因在此服务器上长时间挂机而被断开连接。"
+msgstr "§g您正在战斗中。§7§l(§r§e剩余 %s 秒§7§l)§r"
 
 #: module.afk.name
 msgid "Anti AFK"
-msgstr "可疑的战斗作弊日志"
+msgstr "您现在正在与 §e%s§g 战斗。"
 
 #: module.afk.description
 msgid "Disconnect the player if they are not active for a long time."
-msgstr "防止有人离开战斗日志。非常基础，因此请使用其他方法进行反战斗日志。"
+msgstr "您不再与 %s 战斗。"
 
 #: module.afk.disconnect
 msgid "%s has been disconnected due to AFK on this server for a long time."
-msgstr "§g您正在战斗中。§7§l(§r§e剩余 %s 秒§7§l)§r"
+msgstr "§c§l检测到战斗日志！§r§7 %1 在与 %2 战斗时离开了游戏。"
 
 #: module.clog.name
 msgid "Anti Combat Log"
-msgstr "您现在正在与 §e%s§g 战斗。"
+msgstr "验证码防止机器人"
 
 #: module.clog.description
 msgid "Prevent someone leaves the combat log. Very basic so use others for your own anti combat log."
-msgstr "您不再与 %s 战斗。"
+msgstr "防止垃圾信息机器人攻击当前服务器。"
 
 #: module.clog.in.combat
 msgid "§gYou are in combat. §7§l(§r§e%s second(s) left§7§l)§r"
-msgstr "§c§l检测到战斗日志！§r§7 %1 在与 %2 战斗时离开了游戏。"
+msgstr "§c§l检测到可疑客户端！§r§7 %s 因使用可疑客户端而被断开连接。"
 
 #: module.clog.face.combat
 msgid "You are now in combat with §e%s§g."
-msgstr "验证码防止机器人"
+msgstr "§bMatrix§a+ §7> §g继续旋转 %s 秒。"
 
 #: module.clog.leave.combat
 msgid "You are no longer in combat with %s."
-msgstr "防止垃圾信息机器人攻击当前服务器。"
+msgstr "§bMatrix§a+ §7> §g正在检查您的客户端... 请稍候。"
 
 #: module.clog.killed
 msgid "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
-msgstr "§c§l检测到可疑客户端！§r§7 %s 因使用可疑客户端而被断开连接。"
+msgstr "§bMatrix§a+ §7> §g请§e§l旋转§r§g以继续检查过程。"
 
 #: module.captcha.name
 msgid "Captcha against bots"
-msgstr "§bMatrix§a+ §7> §g继续旋转 %s 秒。"
+msgstr "验证码界面 | Matrix反作弊"
 
 #: module.captcha.description
 msgid "Prevent the spamming bot from attacking the current server."
-msgstr "§bMatrix§a+ §7> §g正在检查您的客户端... 请稍候。"
+msgstr "我已完成问题！"
 
 #: module.captcha.detected
 msgid "§c§lSuspicious client detected!§r§7 %s has been disconnected due to using a suspicious client."
-msgstr "§bMatrix§a+ §7> §g请§e§l旋转§r§g以继续检查过程。"
+msgstr "§b请正确回答以下问题以验证您是人类。"
 
 #: module.captcha.keepmove
 msgid "§bMatrix§a+ §7> §gContinue your rotation movement for %s seconds more."
-msgstr "验证码界面 | Matrix反作弊"
+msgstr "§a为什么需要验证？因为我们要防止垃圾信息机器人攻击当前服务器。"
 
 #: module.captcha.checking
 msgid "§bMatrix§a+ §7> §gChecking your client... Please wait."
-msgstr "我已完成问题！"
+msgstr "§g问题: §e%1 + %2 的正确答案是什么？"
 
 #: module.captcha.continue
 msgid "§bMatrix§a+ §7> §gPlease §e§lMOVE YOUR ROTATION§r§g to continue the check process."
-msgstr "§b请正确回答以下问题以验证您是人类。"
+msgstr "§g在下面的滑块中选择正确答案"
 
 #: module.captcha.title
 msgid "Captcha GUI | Matrix Anticheat"
-msgstr "§a为什么需要验证？因为我们要防止垃圾信息机器人攻击当前服务器。"
+msgstr "§bMatrix§a+ §7> §g您答错了，请再试一次。"
 
 #: module.captcha.submit
 msgid "I have finished the question!"
-msgstr "§g问题: §e%1 + %2 的正确答案是什么？"
+msgstr "§bMatrix§a+ §7> §g您已被验证为人类，现在可以使用服务器。"
 
 #: module.captcha.selectui
 msgid "§bPlease answer the question below correctly to verify you're a human."
-msgstr "§g在下面的滑块中选择正确答案"
+msgstr "§r§l§bMatrix §g反作弊 §e用户界面§a 面板§r"
 
 #: module.captcha.why
 msgid "§aWhy do you need to verify? Because we want to prevent the spamming bot from attacking the current server."
-msgstr "§bMatrix§a+ §7> §g您答错了，请再试一次。"
+msgstr "告诉我，您想做什么？"
 
 #: module.captcha.question
 msgid "§gQuestion: §eWhat is the correct answer of %1 plus %2?"
-msgstr "§bMatrix§a+ §7> §g您已被验证为人类，现在可以使用服务器。"
+msgstr "从下面的按钮中选择一个动作。我可以为您生成命令字符串。"
 
 #: module.captcha.youranswer
 msgid "§gSelect the correct answer in below slider"
-msgstr "§r§l§bMatrix §g反作弊 §e用户界面§a 面板§r"
+msgstr "运行 '%s' 命令。"
 
 #: module.captcha.recontinue
 msgid "§bMatrix§a+ §7> §gYou make it wrong, please try again."
-msgstr "告诉我，您想做什么？"
+msgstr "输入命令字符串"
 
 #: module.captcha.verified
 msgid "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
-msgstr "从下面的按钮中选择一个动作。我可以为您生成命令字符串。"
+msgstr "让我们一起构建并运行您的命令。"
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
-msgstr "运行 '%s' 命令。"
+msgstr ""
 
 #: directpanel.title
 msgid "Tell me, what do you want to do?"
-msgstr "输入命令字符串"
+msgstr ""
 
 #: directpanel.body
 msgid "Select an action from below buttons. I can generate the command string for you."
-msgstr "让我们一起构建并运行您的命令。"
+msgstr ""
 
 #: directpanel.button
 msgid "Run '%s' command."

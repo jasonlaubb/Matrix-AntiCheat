@@ -750,6 +750,18 @@ msgstr ""
 msgid "Warn a player."
 msgstr ""
 
+#: command.banlist.empty
+msgid "Hopefully, there is no banned player right now."
+msgstr ""
+
+#: command.banlist.banned
+msgid "There is %1 banned player(s) on this server: §e%s"
+msgstr ""
+
+#: command.banlist.description
+msgid "Show the list of banned players."
+msgstr ""
+
 #: command.clearwarn.description
 msgid "Clear all warnings of a player."
 msgstr ""

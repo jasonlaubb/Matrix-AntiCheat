@@ -750,6 +750,18 @@ msgstr ""
 msgid "Warn a player."
 msgstr ""
 
+#: command.banlist.empty
+msgid "Hopefully, there is no banned player right now."
+msgstr ""
+
+#: command.banlist.banned
+msgid "There is %1 banned player(s) on this server: §e%s"
+msgstr ""
+
+#: command.banlist.description
+msgid "Show the list of banned players."
+msgstr ""
+
 #: command.clearwarn.description
 msgid "Clear all warnings of a player."
 msgstr ""
@@ -836,39 +848,39 @@ msgstr ""
 
 #: command.setrank.success
 msgid "%1's rank has been set to %2."
-msgstr ""
+msgstr "Bienvenue! §e%s§r§g a rejoint le serveur!"
 
 #: action.hint.exit.matrix:inv_container
 msgid "Tap the §lInventory button§r to open their Inventory."
-msgstr ""
+msgstr "§7>> §gAppareil: §e%s"
 
 #: action.hint.exit.console.matrix:inv_container
 msgid "Press §l:_input_key.inventory:§r to open their Inventory"
-msgstr ""
+msgstr "Console"
 
 #: module.welcomer.message
 msgid "Welcome! §e%s§r§g has joined the server!"
-msgstr "Bienvenue! §e%s§r§g a rejoint le serveur!"
+msgstr "PC"
 
 #: module.welcomer.device
 msgid "§7>> §gDevice: §e%s"
-msgstr "§7>> §gAppareil: §e%s"
+msgstr "Mobile"
 
 #: module.welcomer.device.console
 msgid "gaming console"
-msgstr "Console"
+msgstr "Inconnu"
 
 #: module.welcomer.device.pc
 msgid "computer"
-msgstr "PC"
+msgstr ""
 
 #: module.welcomer.device.mobile
 msgid "mobile phone"
-msgstr "Mobile"
+msgstr ""
 
 #: module.welcomer.device.unknown
 msgid "unknown"
-msgstr "Inconnu"
+msgstr ""
 
 #: module.welcomer.name
 msgid "Welcomer"
