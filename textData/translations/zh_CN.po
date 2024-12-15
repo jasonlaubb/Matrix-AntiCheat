@@ -1022,6 +1022,18 @@ msgstr "输入命令字符串"
 msgid "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
 msgstr "让我们一起构建并运行您的命令。"
 
+#: module.autoclicker.name
+msgid "Anti Auto Clicker"
+msgstr ""
+
+#: module.autoclicker.description
+msgid "Prevent the high cps auto clicker from working."
+msgstr ""
+
+#: module.autoclicker.reach
+msgid "§c§lHey! §7Auto clicker is not allowed on this server. You have %2 out of %1 clicks per second now."
+msgstr ""
+
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
 msgstr ""
