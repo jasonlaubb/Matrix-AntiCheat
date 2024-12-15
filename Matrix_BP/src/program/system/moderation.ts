@@ -136,7 +136,6 @@ export function isFrozen(player: Player) {
 }
 function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
-    world.sendMessage("spawned player" + `${player.getDynamicProperty("isBanned")}`);
     const softBanStatus = player.getDynamicProperty("isSoftBanned") as number;
     if (softBanStatus) {
         if ((softBanStatus != -1 && Date.now() > softBanStatus) || player.hasTag("matrix-debug:force-unsoftban")) {
