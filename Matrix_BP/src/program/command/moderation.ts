@@ -130,7 +130,7 @@ new Command()
     .setName("unban")
     .setDescription(rawtextTranslate("command.unban.description"))
     .setMinPermissionLevel(2)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
+    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "string", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as string;
         if (!isBanned(targetPlayer) || isUnBanned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
