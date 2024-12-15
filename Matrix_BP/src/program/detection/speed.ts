@@ -10,6 +10,7 @@ interface SpeedData {
     lastFlagTimestamp: number;
     lastStopLocation: Vector3;
     lastSleep: number;
+    lastVelocity: Vector3;
 }
 let eventId: IntegratedSystemEvent;
 const speed = new Module()
@@ -36,6 +37,7 @@ const speed = new Module()
             lastFlagTimestamp: 0,
             lastStopLocation: player.location,
             lastSleep: 0,
+            lastVelocity: player.getVelocity(),
         });
     })
     .initClear((playerId) => {
@@ -53,7 +55,8 @@ const MIN_FLAG_TIME_INTERVAL = 400;
 function tickEvent(player: Player) {
     const data = speedData.get(player.id)!;
     const now = Date.now();
-    const { x: velocityX, y: velocityY, z: velocityZ } = player.getVelocity();
+    const velocity = player.getVelocity();
+    const { x: velocityX, y: velocityY, z: velocityZ } = velocity;
     if (velocityX === 0 && velocityY === 0 && velocityZ === 0) {
         data.lastStopLocation = player.location;
     }
@@ -75,7 +78,7 @@ function tickEvent(player: Player) {
         ((player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2) &&
         !isPlayerInSolid(player.location, player.getHeadLocation(), player.dimension)
     ) {
-        const velocityDelta = fastHypot(velocityX, velocityZ);
+        const velocityDelta = fastHypot(velocityX - data.lastVelocity.x, velocityZ - data.lastVelocity.z);
         if (velocityDelta > VELOCITY_DELTA_THRESHOLD) {
             if (now - data.lastFlagTimestamp > FLAG_TIMESTAMP_THRESHOLD) {
                 data.flagAmount = 0;
@@ -87,10 +90,9 @@ function tickEvent(player: Player) {
                 data.flagAmount = 0;
             }
             player.teleport(data.lastStopLocation);
-            player.sendMessage("speed lag backs")
         }
     }
-
+    data.lastVelocity = velocity;
     // Update data value.
     speedData.set(player.id, data);
 }
