@@ -9,26 +9,27 @@ export function setupFlagFunction() {
         world.sendMessage(rawtextTranslate("util.flag.alert", this.name, detected.getToggleId()!, punishment));
         if (this.hasTag("matrix-debug:punishmentResistance")) return this.sendMessage("§7[You are immune to punishments!]");
         try {
-        switch (punishment) {
-            case "kick":
-                strengthenKick(this);
-                break;
-            case "tempKick":
-                tempKick(this);
-                break;
-            case "freeze":
-                freeze(this, -1);
-                break;
-            case "mute":
-                mute(this, -1);
-                break;
-            case "softBan":
-                softBan(this, -1);
-                break;
-            case "ban":
-                ban(this, Module.config.flag.banDuration);
-                break;
-        }} catch (error) {
+            switch (punishment) {
+                case "kick":
+                    strengthenKick(this);
+                    break;
+                case "tempKick":
+                    tempKick(this);
+                    break;
+                case "freeze":
+                    freeze(this, -1);
+                    break;
+                case "mute":
+                    mute(this, -1);
+                    break;
+                case "softBan":
+                    softBan(this, -1);
+                    break;
+                case "ban":
+                    ban(this, Module.config.flag.banDuration);
+                    break;
+            }
+        } catch (error) {
             Module.sendError(error as Error);
             tempKick(this);
         }

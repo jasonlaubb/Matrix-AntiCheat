@@ -126,7 +126,16 @@ function playerTickEvent(player: Player) {
         data.flyingNotOnGround = true;
         if (isTickIgnored) timerData.set(player.id, data);
     }
-    if (isTickIgnored || player.isGliding || player.hasTag("riding") || player.isFlying || player.getEffect(MinecraftEffectTypes.Speed) || (noVelocity && distance > 0.005) || now - player.timeStamp.knockBack < 2500 || now - player.timeStamp.riptide < 5000) {
+    if (
+        isTickIgnored ||
+        player.isGliding ||
+        player.hasTag("riding") ||
+        player.isFlying ||
+        player.getEffect(MinecraftEffectTypes.Speed) ||
+        (noVelocity && distance > 0.005) ||
+        now - player.timeStamp.knockBack < 2500 ||
+        now - player.timeStamp.riptide < 5000
+    ) {
         if (data.isTickIgnored) return;
         data.isTickIgnored = true;
         timerData.set(player.id, data);

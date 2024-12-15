@@ -75,7 +75,7 @@ function tickEvent(player: Player) {
         !player.isSleeping &&
         now - data.lastSleep > 1000 &&
         !player.hasTag("riding") &&
-        ((player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2) &&
+        (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? 0) <= 2 &&
         !isPlayerInSolid(player.location, player.getHeadLocation(), player.dimension)
     ) {
         const velocityDelta = fastHypot(velocityX - data.lastVelocity.x, velocityZ - data.lastVelocity.z);

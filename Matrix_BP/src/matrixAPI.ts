@@ -35,7 +35,7 @@ export class IntegratedSystemEvent {
  * @warn You are not allowed to copy or modify this system unless you have declared yours as a fork from us.
  */
 class Module {
-    public static readonly version: [number, number, number] = [6, 0, 1];
+    public static readonly version: [number, number, number] = [6, 0, 10];
     public static readonly discordInviteLink = "CqZGXeRKPJ";
     // The var of index runtime
     private static moduleList: Module[] = [];
@@ -350,10 +350,13 @@ class Command {
     }
     public static initialize() {
         Player.prototype.runChatCommand = function (commandString: string) {
-            const args = commandString.trim().match(Command.optionMatchRegExp)?.map((arg) => {
-                if (arg.startsWith('"') && arg.endsWith('"')) return arg.slice(1, -1);
-                return arg;
-            });
+            const args = commandString
+                .trim()
+                .match(Command.optionMatchRegExp)
+                ?.map((arg) => {
+                    if (arg.startsWith('"') && arg.endsWith('"')) return arg.slice(1, -1);
+                    return arg;
+                });
             if (!args) {
                 this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.empty", with: [] }));
                 return;
@@ -390,8 +393,7 @@ class Command {
                 const argValues = Command.getArgValue(args, command, this);
                 if (argValues === null) return;
                 if (command?.executeFunc) {
-                    command.executeFunc(this, ...argValues)
-                        .catch((error) => Command.sendErrorToPlayer(this, error as Error));
+                    command.executeFunc(this, ...argValues).catch((error) => Command.sendErrorToPlayer(this, error as Error));
                 }
             }
         };

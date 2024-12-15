@@ -46,7 +46,7 @@ export function unBan(playerName: string) {
     obj.setScore("::" + playerName, 0);
     return true;
 }
-export function bannedList (): string[] | undefined {
+export function bannedList(): string[] | undefined {
     const obj = world.scoreboard.getObjective(`matrix:banRecord`);
     if (!obj) {
         return undefined;
@@ -137,7 +137,7 @@ function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (softBanStatus) {
         if ((softBanStatus != -1 && Date.now() > softBanStatus) || player.hasTag("matrix-debug:force-unsoftban")) {
             player.setDynamicProperty("isSoftBanned");
-            player.removeTag("matrix-debug:force-unsoftban")
+            player.removeTag("matrix-debug:force-unsoftban");
             player.teleport(player.getSpawnPoint() ?? world.getDefaultSpawnLocation(), { dimension: world.getDimension(MinecraftDimensionTypes.Overworld) });
         } else {
             const id = system.runInterval(() => {

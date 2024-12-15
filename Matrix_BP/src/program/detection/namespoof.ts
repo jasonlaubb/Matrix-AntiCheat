@@ -63,5 +63,5 @@ function isValidName(name: string): boolean {
     if (nonASCII === null) return true;
     return nonASCII.every((char) => {
         return validRange.test(char);
-    })
+    });
 }

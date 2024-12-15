@@ -111,7 +111,7 @@ function tickEvent(player: Player) {
             if (!player.isGliding || isEquippedWithElytra(player)) return;
             player.teleport(data.lastFlaggedLocation);
             player.flag(fly);
-        })
+        });
         data.lastFlaggedLocation = player.location;
     }
     data.lastVelocityY = velocityY;
@@ -152,5 +152,5 @@ function calculateBdsPrediction(list: number[]) {
     });
 }
 function isEquippedWithElytra(player: Player) {
-    return !!player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra)
+    return !!player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra);
 }
