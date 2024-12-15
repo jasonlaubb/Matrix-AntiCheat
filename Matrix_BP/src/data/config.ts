@@ -55,6 +55,9 @@ export default {
     flag: {
         banDuration: 604800,
     },
+    antiAutoClicker: {
+        maxCps: 24,
+    },
     worldBorder: {
         borderLength: 1000,
         useWorldSpawn: true,

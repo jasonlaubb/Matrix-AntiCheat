@@ -5,18 +5,19 @@ registerTimeStampModule();
 // Import the modules
 import "./detection/firewall";
 import "./detection/speed";
-import "./detection/hop";
 import "./detection/phase";
 import "./detection/fly";
 import "./detection/killaura";
 import "./detection/aim";
 import "./detection/timer";
+import "./detection/autoclicker";
 import "./detection/namespoof";
 import "./detection/scaffold";
 import "./detection/insteabreak";
 import "./detection/reach";
 import "./detection/invalidSprint";
 import "./detection/captcha";
+import "./detection/hop";
 // Import the util modules
 import "./utility/welcomer";
 import "./utility/worldBorder";

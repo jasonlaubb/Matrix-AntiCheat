@@ -772,6 +772,15 @@ msgstr "§bMatrix§a+ §7> §gYou make it wrong, please try again."
 msgid "module.captcha.verified"
 msgstr "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
 
+msgid "module.autoclicker.name"
+msgstr "Anti Auto Clicker"
+
+msgid "module.autoclicker.description"
+msgstr "Prevent the high cps auto clicker from working."
+
+msgid "module.autoclicker.reach"
+msgstr "§c§lHey! §7Auto clicker is not allowed on this server. You have %2 out of %1 clicks per second now."
+
 msgid "item.matrix.itemui"
 msgstr "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
 
