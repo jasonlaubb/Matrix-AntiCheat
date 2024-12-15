@@ -25,7 +25,7 @@ export function ban(player: Player, duration: number) {
     }
     obj.setScore("::" + player.name, 0);
     player.setDynamicProperty("isBanned", duration == -1 ? -1 : Date.now() + duration);
-    kickForBan(player, duration);
+    kickForBan(player, Date.now() + duration);
 }
 export function isBanned(playerName: string) {
     const obj = world.scoreboard.getObjective(`matrix:banRecord`);
