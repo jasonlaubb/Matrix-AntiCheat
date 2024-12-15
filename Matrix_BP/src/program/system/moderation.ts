@@ -9,6 +9,9 @@ export function registerModeration() {
         .onModuleEnable(() => {
             world.afterEvents.playerSpawn.subscribe(onPlayerSpawn);
         })
+        .initPlayer((_playerId, player) => {
+            onPlayerSpawn({ player: player, initialSpawn: true });
+        })
         .register();
 }
 export type Punishment = "tempKick" | "kick" | "softBan" | "ban" | "freeze" | "mute";
@@ -41,8 +44,8 @@ export function unBan(playerName: string) {
         world.scoreboard.addObjective(`matrix:unBanRequest`, "Matrix AntiCheat");
         return unBan(playerName);
     }
-    if (obj.getScore("::" + playerName)) return false;
-    if (!world.scoreboard.getObjective(`matrix:banRecord`)?.getScore("::" + playerName)) return null;
+    if (!obj!.getParticipants().every((id) => id.displayName.slice(2) !== playerName)) return null;
+    if (world.scoreboard.getObjective(`matrix:banRecord`)!.getParticipants().every((id) => id.displayName.slice(2) !== playerName)) return null;
     obj.setScore("::" + playerName, 0);
     return true;
 }
@@ -133,6 +136,7 @@ export function isFrozen(player: Player) {
 }
 function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn) return;
+    world.sendMessage("spawned player" + `${player.getDynamicProperty("isBanned")}`);
     const softBanStatus = player.getDynamicProperty("isSoftBanned") as number;
     if (softBanStatus) {
         if ((softBanStatus != -1 && Date.now() > softBanStatus) || player.hasTag("matrix-debug:force-unsoftban")) {
@@ -163,8 +167,8 @@ function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     const banStatus = player.getDynamicProperty("isBanned") as number;
     if (banStatus) {
         const unBanRequest = world.scoreboard.getObjective("matrix:unBanRequest");
-        const isUnBanned = !!unBanRequest?.getScore("::" + player.name);
-        if (isUnBanned || player.getDynamicProperty("isSoftBanned") || (banStatus != -1 && Date.now() > banStatus)) {
+        const isUnBanned = unBanRequest!.getParticipants().some((id) => id.displayName.slice(2) == player.name);
+        if (isUnBanned || (banStatus != -1 && Date.now() > banStatus)) {
             player.setDynamicProperty("isBanned");
             if (isUnBanned) {
                 unBanRequest!.removeParticipant("::" + player.name);
@@ -175,6 +179,16 @@ function onPlayerSpawn({ player, initialSpawn }: PlayerSpawnAfterEvent) {
             }
         } else {
             kickForBan(player, banStatus);
+        }
+    } else {
+        const unBanRequest = world.scoreboard.getObjective("matrix:unBanRequest");
+        const isUnBanned = unBanRequest!.getParticipants().some((id) => id.displayName.slice(2) == player.name);
+        if (isUnBanned) {
+            unBanRequest!.removeParticipant("::" + player.name);
+        }
+        const banRecord = world.scoreboard.getObjective(`matrix:banRecord`);
+        if (banRecord && banRecord.getScore("::" + player.name)) {
+            banRecord.removeParticipant("::" + player.name);
         }
     }
     const muteStatus = player.getDynamicProperty("isMuted") as number;

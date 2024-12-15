@@ -2,7 +2,7 @@ import { Player, world } from "@minecraft/server";
 import { Command } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 // Import all moderation functions (Quite a lot lol)
-import { tempKick, ban, mute, softBan, strengthenKick, freeze, warn, unBan, unMute, unSoftBan, unFreeze, clearWarn, isBanned, isSoftBanned, isMuted, isFrozen, isUnBanned, isWarned, getWarns, bannedList } from "../system/moderation";
+import { tempKick, ban, mute, softBan, strengthenKick, freeze, warn, unBan, unMute, unSoftBan, unFreeze, clearWarn, isBanned, isSoftBanned, isMuted, isFrozen, isWarned, getWarns, bannedList } from "../system/moderation";
 function minuteToMilliseconds(minute: number): number {
     return minute * 60000;
 }
@@ -135,9 +135,10 @@ new Command()
         if (!banList) {
             player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.banlist.empty").build());
         } else {
-            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.banlist.list", banList.length.toString(), banList.join("§7, §e")).build());
+            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.banlist.banned", banList.join("§7, §e"), banList.length.toString()).build());
         }
-    });
+    })
+    .register();
 new Command()
     .setName("unban")
     .setDescription(rawtextTranslate("command.unban.description"))
@@ -145,9 +146,12 @@ new Command()
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "string", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as string;
-        if (!isBanned(targetPlayer) || isUnBanned(targetPlayer)) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
-        unBan(targetPlayer);
-        world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.unban")).build());
+        const unBanResult = unBan(targetPlayer);
+        if (unBanResult) {
+            world.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.moderation.success", targetPlayer, player.name).endline().addTranRawText("command.moderation.action", rawtextTranslate("command.moderation.unban")).build());
+        } else {
+            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.moderation.removal.failed").build());
+        }
     })
     .register();
 new Command()
