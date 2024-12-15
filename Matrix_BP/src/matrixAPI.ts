@@ -280,7 +280,7 @@ class Command {
     public constructor() {}
     private static registeredCommands: Command[] = [];
     // The regular expression for the command.
-    private static readonly optionMatchRegExp = /(".+")|(\S+)/g;
+    private static readonly optionMatchRegExp = /(@{0,1}".+")|(\S+)/g;
     public static readonly OptionInputType: OptionTypes;
     public availableId: string[] = [];
     public minLevel = 0;
@@ -350,7 +350,10 @@ class Command {
     }
     public static initialize() {
         Player.prototype.runChatCommand = function (commandString: string) {
-            const args = commandString.trim().match(Command.optionMatchRegExp);
+            const args = commandString.trim().match(Command.optionMatchRegExp)?.map((arg) => {
+                if (arg.startsWith('"') && arg.endsWith('"')) return arg.slice(1, -1);
+                return arg;
+            });
             if (!args) {
                 this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.empty", with: [] }));
                 return;
@@ -532,10 +535,7 @@ class Command {
             }
             case "target":
             case "player": {
-                let targetName = arg.startsWith("@") ? arg.substring(1) : arg;
-                if (targetName.includes("\"")) {
-                    targetName = targetName.substring(1, targetName.length - 1);
-                }
+                const targetName = arg.startsWith("@") ? arg.substring(1) : arg;
                 const worldPlayers = world.getPlayers({ name: targetName });
                 if (worldPlayers.length == 0 || (option.type == "target" && (worldPlayers[0].isAdmin() || player.id === worldPlayers[0].id))) {
                     Command.sendSyntaxErrorMessage(player, "commandsynax.syntax.player", option.name, beforeArgs, arg, afterArgs);
