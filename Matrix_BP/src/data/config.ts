@@ -15,6 +15,7 @@ export default {
         antiInsteaBreak: false,
         antiReach: true,
         antiPhase: true,
+        antiInvalidSprint: true,
         itemCheck: false,
         aimCheck: true,
         antiHop: false, // Beta don't touch that.

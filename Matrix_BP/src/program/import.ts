@@ -15,6 +15,7 @@ import "./detection/namespoof";
 import "./detection/scaffold";
 import "./detection/insteabreak";
 import "./detection/reach";
+import "./detection/invalidSprint";
 import "./detection/captcha";
 // Import the util modules
 import "./utility/welcomer";

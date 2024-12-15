@@ -294,9 +294,17 @@ msgstr "選択肢（選択肢のリストから選んでね）"
 msgid "An extra checks against the illegal aim, to prevent the killaura or aim assist, credit to 4urxa."
 msgstr "プレイヤー（オンラインのユーザー）"
 
+#: module.invalidSprint.name
+msgid "Anti invalid sprint"
+msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
+
+#: module.invalidSprint.description
+msgid "Prevent the player from using the illegal sprint packet client."
+msgstr "§gType: §e%s"
+
 #: command.about.description
 msgid "Show some basic information about Matrix AntiCheat."
-msgstr "ターゲット（オンラインだがサーバーの管理者ではないプレイヤー）"
+msgstr "§g説明: §e%s"
 
 #: command.about.title
 msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
@@ -304,15 +312,15 @@ msgstr "§gType: §e%s"
 
 #: command.about.author
 msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
-msgstr "§g説明: §e%s"
+msgstr "(!オプション！)"
 
 #: command.about.github
 msgid "Github: %s"
-msgstr "§gType: §e%s"
+msgstr ""
 
 #: command.about.version
 msgid "Current version: %s"
-msgstr "(!オプション！)"
+msgstr ""
 
 #: command.about.joindc
 msgid "Want to download? Join our Discord Server: https://discord.gg/%s"

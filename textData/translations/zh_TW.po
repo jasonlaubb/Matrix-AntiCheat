@@ -294,6 +294,14 @@ msgstr ""
 msgid "An extra checks against the illegal aim, to prevent the killaura or aim assist, credit to 4urxa."
 msgstr ""
 
+#: module.invalidSprint.name
+msgid "Anti invalid sprint"
+msgstr ""
+
+#: module.invalidSprint.description
+msgid "Prevent the player from using the illegal sprint packet client."
+msgstr ""
+
 #: command.about.description
 msgid "Show some basic information about Matrix AntiCheat."
 msgstr ""

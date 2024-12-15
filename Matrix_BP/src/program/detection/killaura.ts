@@ -91,12 +91,12 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
         const pitchDifferent = fastAbs(pitch - intPitch);
         if ((data.lastAttackRot.x != pitch && data.lastAttackRot.y != yaw && yawDifferent < MIN_ROUND_DIFFERENCE && isNotTeleportYaw) || (pitchDifferent < MIN_ROUND_DIFFERENCE && isNotTeleportPitch)) {
             const now = Date.now();
-            if (now - data.lastRoundTimestamp > 7000) {
+            if (now - data.lastRoundTimestamp > 3000) {
                 data.roundFlagAmount = 0;
             }
             data.roundFlagAmount++;
             data.lastRoundTimestamp = now;
-            if (data.roundFlagAmount >= 3) {
+            if (data.roundFlagAmount >= 8) {
                 player.flag(killaura);
             }
         }
