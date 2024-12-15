@@ -844,7 +844,7 @@ msgstr "§7>> §g设备: §e%s"
 
 #: command.setrank.rank.description
 msgid "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
-msgstr "游戏控制台"
+msgstr "Xbox/PlayStation/Switch"
 
 #: command.setrank.success
 msgid "%1's rank has been set to %2."
