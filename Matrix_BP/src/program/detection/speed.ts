@@ -89,7 +89,7 @@ function tickEvent(player: Player) {
                 player.flag(speed);
                 data.flagAmount = 0;
             }
-            player.teleport(data.lastStopLocation);
+            if (velocityDelta >= 3) player.teleport(data.lastStopLocation);
         }
     }
     data.lastVelocity = velocity;
