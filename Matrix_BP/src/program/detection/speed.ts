@@ -85,7 +85,7 @@ function tickEvent(player: Player) {
             }
             data.lastFlagTimestamp = now;
             data.flagAmount++;
-            if (data.flagAmount >= 3) {
+            if (data.flagAmount >= 12) {
                 player.flag(speed);
                 data.flagAmount = 0;
             }
