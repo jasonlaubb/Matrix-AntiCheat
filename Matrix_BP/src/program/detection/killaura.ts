@@ -30,6 +30,8 @@ const killaura = new Module()
             roundFlagAmount: 0,
             lastAttackRot: player.getRotation(),
             lastRoundTimestamp: 0,
+            lastIntegerTimestamp: 0,
+            integerFlagAmount: 0,
         });
     })
     .initClear((playerId) => {
@@ -42,6 +44,8 @@ interface killAuraData {
     roundFlagAmount: number;
     lastAttackRot: Vector2;
     lastRoundTimestamp: number;
+    lastIntegerTimestamp: number;
+    integerFlagAmount: number;
 }
 const killauraData = new Map<string, killAuraData>();
 
@@ -82,8 +86,14 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
     // Checks if the player has integer pitch or yaw.
     const isNotTeleportYaw = yaw != 0;
     const isNotTeleportPitch = pitch != 0;
-    if ((Number.isInteger(pitch) && isNotTeleportPitch) || (Number.isInteger(yaw) && isNotTeleportYaw)) {
-        player.flag(killaura);
+    if ((Number.isInteger(pitch) && isNotTeleportPitch) || (Number.isInteger(yaw) && isNotTeleportYaw) && (data.lastAttackRot.x != pitch || data.lastAttackRot.y != yaw)) {
+        const now = Date.now();
+        if (now - data.lastIntegerTimestamp > 3000) {
+            data.integerFlagAmount = 0;
+        }
+        if (data.integerFlagAmount >= 3) {
+            player.flag(killaura);
+        }
     } else {
         const intRot = fastRound(yaw);
         const intPitch = fastRound(pitch);
@@ -91,7 +101,7 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
         const pitchDifferent = fastAbs(pitch - intPitch);
         if ((data.lastAttackRot.x != pitch && data.lastAttackRot.y != yaw && yawDifferent < MIN_ROUND_DIFFERENCE && isNotTeleportYaw) || (pitchDifferent < MIN_ROUND_DIFFERENCE && isNotTeleportPitch)) {
             const now = Date.now();
-            if (now - data.lastRoundTimestamp > 3000) {
+            if (now - data.lastRoundTimestamp > 2000) {
                 data.roundFlagAmount = 0;
             }
             data.roundFlagAmount++;
