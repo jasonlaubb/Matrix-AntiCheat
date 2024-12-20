@@ -916,19 +916,19 @@ msgstr ""
 
 #: module.chatrank.description
 msgid "Prevent the spamming on your server and provide a chat rank system."
-msgstr ""
+msgstr "Empêche le spam sur votre serveur et fournissez un système de chat rank."
 
 #: module.chatrank.bad
 msgid "Your message contains some sensitive word(s) which is not allowed."
-msgstr ""
+msgstr "Votre message contient des mots sensibles qui ne sont pas autorisés."
 
 #: module.chatrank.slow
 msgid "Slow mode enabled! Please enter your message %s second(s) later."
-msgstr ""
+msgstr "Mode lent activé! Veuillez saisir votre message %s seconde(s) plus tard."
 
 #: module.chatrank.repeated
 msgid "Please don't spam messages."
-msgstr ""
+msgstr "S'il vous plaît, ne spammez pas les messages."
 
 #: module.afk.name
 msgid "Anti AFK"
@@ -936,11 +936,11 @@ msgstr ""
 
 #: module.afk.description
 msgid "Disconnect the player if they are not active for a long time."
-msgstr ""
+msgstr "Déconnecte le joueur s'il n'est pas actif pendant une longue période."
 
 #: module.afk.disconnect
 msgid "%s has been disconnected due to AFK on this server for a long time."
-msgstr ""
+msgstr "%s a été déconnecté depuis longtemps en raison d'AFK sur ce serveur."
 
 #: module.clog.name
 msgid "Anti Combat Log"
@@ -948,23 +948,23 @@ msgstr ""
 
 #: module.clog.description
 msgid "Prevent someone leaves the combat log. Very basic so use others for your own anti combat log."
-msgstr ""
+msgstr "Empêche quelqu'un de quitter pendant un combat. Très basique, alors utilisez-en d'autres pour votre propre anti-déconnexion en combat."
 
 #: module.clog.in.combat
 msgid "§gYou are in combat. §7§l(§r§e%s second(s) left§7§l)§r"
-msgstr ""
+msgstr "§gVous êtes en combat. §7§l(§r§e%s seconde(s) restante§7§l)§r"
 
 #: module.clog.face.combat
 msgid "You are now in combat with §e%s§g."
-msgstr ""
+msgstr "Vous êtes en combat avec §e%s§g."
 
 #: module.clog.leave.combat
 msgid "You are no longer in combat with %s."
-msgstr ""
+msgstr "Vous n'êtes plus en combat avec %s."
 
 #: module.clog.killed
 msgid "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
-msgstr ""
+msgstr "§c§lDéconnexion en combat détecté!§r§7 %1 a quitté le jeu pendant le combat avec %2."
 
 #: module.captcha.name
 msgid "Captcha against bots"
@@ -972,7 +972,7 @@ msgstr ""
 
 #: module.captcha.description
 msgid "Prevent the spamming bot from attacking the current server."
-msgstr ""
+msgstr "Empêche les robots spammeur d'attaquer le serveur."
 
 #: module.captcha.detected
 msgid "§c§lSuspicious client detected!§r§7 %s has been disconnected due to using a suspicious client."
@@ -1028,11 +1028,11 @@ msgstr ""
 
 #: module.autoclicker.description
 msgid "Prevent the high cps auto clicker from working."
-msgstr ""
+msgstr "Empêche les auto click à cps élevés de fonctionner."
 
 #: module.autoclicker.reach
 msgid "§c§lHey! §7Auto clicker is not allowed on this server. You have %2 out of %1 clicks per second now."
-msgstr ""
+msgstr "§c§lHé! §7L'Auto clicker n'est pas autorisé sur ce serveur. Vous avez maintenant %2 clics sur %1 par seconde."
 
 #: item.matrix.itemui
 msgid "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
@@ -1040,21 +1040,21 @@ msgstr ""
 
 #: directpanel.title
 msgid "Tell me, what do you want to do?"
-msgstr ""
+msgstr "Dis-moi, que veux-tu faire ?"
 
 #: directpanel.body
 msgid "Select an action from below buttons. I can generate the command string for you."
-msgstr ""
+msgstr "Sélectionnez une action parmi les boutons ci-dessous. Je peux générer la chaîne de commande pour vous."
 
 #: directpanel.button
 msgid "Run '%s' command."
-msgstr ""
+msgstr "Exécutez la commande '%s'."
 
 #: directpanel.enter
 msgid "Enter the command string"
-msgstr ""
+msgstr "Entrez la chaîne de commande"
 
 #: directpanel.build
 msgid "Let build and run your command together."
-msgstr ""
+msgstr "Laissez construire et exécuter votre commande ensemble."
 
