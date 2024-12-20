@@ -204,6 +204,8 @@ const WORD_KEY_SET = new Set<string>([
     "憨巴子",
     "二青头",
     "arasr",
+    "diu",
+    "7+9",
 ]);
 
 export default WORD_KEY_SET;
