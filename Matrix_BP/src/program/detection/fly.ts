@@ -26,7 +26,7 @@ const fly = new Module()
     .setToggleId("antiFly")
     .setPunishment("ban")
     .onModuleEnable(() => {
-        eventId = Module.subscribePlayerTickEvent(tickEvent);
+        eventId = Module.subscribePlayerTickEvent(tickEvent, false);
     })
     .onModuleDisable(() => {
         Module.clearPlayerTickEvent(eventId);

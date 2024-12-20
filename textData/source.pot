@@ -799,8 +799,8 @@ msgstr "Enter the command string"
 msgid "directpanel.build"
 msgstr "Let build and run your command together."
 
-msgid "module.speedv2.name"
-msgstr "Speed (Version II)"
+msgid "module.prediction.name"
+msgstr "Prediction Module"
 
-msgid "module.speedv2.description"
-msgstr "Advanced anti speed engine, provided more powerful speed detection. Not conflict with 'antiSpeed'."
+msgid "module.prediction.description"
+msgstr "An advanced check that can detect more fly hacker."
