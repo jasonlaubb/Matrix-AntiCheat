@@ -133,11 +133,15 @@ export function fastSurround (centerLocation: Vector3, dimension: Dimension): (B
     }
 }
 export function fastBelow (centerLocation: Vector3, dimension: Dimension): (Block | undefined )[] | undefined {
-    const block = dimension.getBlock(centerLocation);
-    // directions
-    const blockBelow = block?.below();
-    if (!blockBelow) return undefined;
-    const blockBelowNorth = blockBelow.north();
-    const blockBelowSouth = blockBelow.south();
-    return [block, blockBelowNorth, blockBelow.east(), blockBelowSouth, blockBelow.west(), blockBelowNorth?.east(), blockBelowNorth?.west(), blockBelowSouth?.east(), blockBelowSouth?.west()];
+    try {
+        const block = dimension.getBlock(centerLocation);
+        // directions
+        const blockBelow = block?.below();
+        if (!blockBelow) return undefined;
+        const blockBelowNorth = blockBelow.north();
+        const blockBelowSouth = blockBelow.south();
+        return [block, blockBelowNorth, blockBelow.east(), blockBelowSouth, blockBelow.west(), blockBelowNorth?.east(), blockBelowNorth?.west(), blockBelowSouth?.east(), blockBelowSouth?.west()];
+    } catch {
+        return undefined;
+    }
 }
