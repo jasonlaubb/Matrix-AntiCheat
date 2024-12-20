@@ -81,7 +81,7 @@ function tickEvent (player: Player) {
 				data.totalFlagAmount = 0;
 			}
 			// Gravity check
-			data = checkGravity(data, now);
+			data = checkPrediction(data, now);
 			if (data.totalFlagAmount > THRESHOLD) {
 				player.flag(predictionModule);
 			}
@@ -99,14 +99,7 @@ function tickEvent (player: Player) {
 const DOWN_FACTOR = -0.00655;
 const THRESHOLD = 15;
 const MAX_INTERVAL = 5000;
-/**
- * Checks if the player is in a state that is not possible with normal gravity.
- * If the player is in such a state, the flag amount is incremented.
- * @param data The data object of the player.
- * @param now The current time.
- * @returns The data object of the player.
- */
-function checkGravity(data: PredictionData, now: number): PredictionData {
+function checkPrediction(data: PredictionData, now: number): PredictionData {
     // Check if the player is in the air.
     const isAllInAir = data.locationData.every((locationData) => locationData.inAir);
     if (!isAllInAir) return data;

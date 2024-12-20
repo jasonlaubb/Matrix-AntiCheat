@@ -32,13 +32,15 @@ export function fastAbs(x: number) {
 }
 
 export function fastHypot(x: number, y: number) {
-    x = fastAbs(x);
-    y = fastAbs(y);
-    const max = Math.max(x, y);
-    const min = Math.min(x, y);
-    if (max === 0) return 0;
-    const ratio = min / max;
-    return max * fastSqrt(1 + ratio * ratio);
+    try {
+        return pythag(x, y);
+    } catch (e) {
+        console.warn("[FastHypot] Error: " + e);
+        return Math.hypot(x, y);
+    }
+}
+export function pythag (a: number, b: number) {
+    return fastSqrt(a * a + b * b);
 }
 const DOUBLE_PI = PI * 2;
 const HALF_PI = PI * 0.5;
@@ -55,22 +57,41 @@ export function fastCos(x: number) {
 export function fastTotalDelta(...x: number[]): number {
     return x.slice(1).reduce((acc, val, i) => acc + (val - x[i]), 0);
 }
+const SQRT_TABLE = new Float32Array(1024);
+for (let i = 0; i < 1024; i++) {
+    SQRT_TABLE[i] = Math.sqrt(i);
+}
+/**
+ * @author 4urxa
+ * @description Fast sqrt
+ */
 export function fastSqrt(x: number) {
-    if (Number.isNaN(x)) {
-        return NaN;
-    }
-    if (x < 0) x = -x;
-    let t;
-    let squareRoot = x / 2;
-
-    if (x !== 0) {
-        while (t !== squareRoot) {
-            t = squareRoot;
-            squareRoot = (t + x / t) / 2;
+    try {
+        // Handle special cases
+        if (x < 0) return NaN;
+        if (x === 0 || x === 1) return x;
+        
+        // Use lookup table for small integers
+        if (x < 1024 && Number.isInteger(x)) {
+            return SQRT_TABLE[x];
         }
+        
+        // Fast inverse square root approximation
+        const halfX = x * 0.5;
+        let i = new Float32Array(1);
+        i[0] = x;
+        let j = new Int32Array(i.buffer);
+        j[0] = 0x5f375a86 - (j[0] >> 1);
+        let y = new Float32Array(j.buffer)[0];
+        
+        // One Newton iteration for better accuracy
+        y = y * (1.5 - (halfX * y * y));
+        
+        return x * y;
+    } catch (e) {
+        console.warn("[FastSqrt] Error: " + e);
+        return Math.sqrt(x);
     }
-
-    return squareRoot;
 }
 
 /**
