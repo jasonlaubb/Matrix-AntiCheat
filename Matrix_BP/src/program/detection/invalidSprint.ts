@@ -3,6 +3,11 @@ import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 let runId: IntegratedSystemEvent;
+interface SprintData {
+    lastFlag: number;
+    flagCount: number;
+}
+const sprintData = new Map<string, SprintData>();
 const invalidSprint = new Module()
     .setName(rawtextTranslate("module.invalidSprint.name"))
     .setDescription(rawtextTranslate("module.invalidSprint.description"))
@@ -10,10 +15,20 @@ const invalidSprint = new Module()
     .setPunishment("ban")
     .addCategory("detection")
     .onModuleEnable(() => {
-        Module.subscribePlayerTickEvent(tickEvent);
+        runId = Module.subscribePlayerTickEvent(tickEvent);
     })
     .onModuleDisable(() => {
+        sprintData.clear();
         Module.clearPlayerTickEvent(runId);
+    })
+    .initPlayer((playerId) => {
+        sprintData.set(playerId, {
+            lastFlag: 0,
+            flagCount: 0,
+        });
+    })
+    .initClear((playerId) => {
+        sprintData.delete(playerId);
     });
 invalidSprint.register();
 function isMovementKeyPressed(player: Player) {
@@ -22,8 +37,16 @@ function isMovementKeyPressed(player: Player) {
 }
 function tickEvent(player: Player) {
     if (!player.isSprinting) return;
+    const data = sprintData.get(player.id)!;
     if (player.isSneaking || !isMovementKeyPressed(player)) {
-        player.flag(invalidSprint);
+        const now = Date.now();
+        if (now - data.lastFlag > 1000) {
+            data.flagCount = 0;
+        }
+        data.lastFlag++;
+        if (data.flagCount > 10) {
+            player.flag(invalidSprint);
+        }
     } else if (player.getEffect(MinecraftEffectTypes.Blindness)) {
         system.run(() => {
             const stillEffect = player.getEffect(MinecraftEffectTypes.Blindness);
