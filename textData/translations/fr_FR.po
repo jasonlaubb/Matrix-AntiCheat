@@ -1058,3 +1058,11 @@ msgstr "Entrez la chaîne de commande"
 msgid "Let build and run your command together."
 msgstr "Laissez construire et exécuter votre commande ensemble."
 
+#: module.prediction.name
+msgid "Prediction Module"
+msgstr ""
+
+#: module.prediction.description
+msgid "An advanced check that can detect more fly hacker."
+msgstr ""
+
