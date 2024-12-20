@@ -4,11 +4,11 @@ msgstr "§7§¶La Solution Anti-Triche Suprême pour Minecraft Bedrock. API bêt
 
 #: permissions.chatmute
 msgid "§bMatrix§a+ §7> §cYou have been muted from the server!"
-msgstr ""
+msgstr "§bMatrix§a+ §7> §cVous avez été muter!"
 
 #: disconnectionScreen.unexpectedPacket
 msgid "Oops, something went wrong."
-msgstr ""
+msgstr "Oups, quelque chose s'est mal passé."
 
 #: menu.loadingLevel
 msgid "Protected by Matrix AntiCheat"
@@ -60,15 +60,15 @@ msgstr "§7>> §cScript inactif ! Veuillez vérifier si la bêta-API est activé
 
 #: moderation.permanent
 msgid "permanent"
-msgstr ""
+msgstr "permanent"
 
 #: moderation.softban.banned
 msgid "§cYou have been soft-banned§r"
-msgstr ""
+msgstr "§cVous avez été banni en douceur§r"
 
 #: moderation.softban.until
 msgid "Until %s"
-msgstr ""
+msgstr "Jusqu'à %s"
 
 #: ui.runcommand
 msgid "Run Command!"
@@ -424,7 +424,7 @@ msgstr "Devenez administrateur du serveur, simplement avec une commande."
 
 #: command.op.password
 msgid "admin password"
-msgstr ""
+msgstr "mot de passe admin"
 
 #: command.op.password.description
 msgid "The password that you have been set as the password for the command. If you have not set a password, just don't type anything here."
@@ -496,15 +496,15 @@ msgstr "Vous avez été supprimé des administrateurs du serveur."
 
 #: command.setmodule.description
 msgid "Toggle a module on or off."
-msgstr ""
+msgstr "Activer ou désactiver un module."
 
 #: command.setmodule.module
 msgid "module's id"
-msgstr ""
+msgstr "identifiant du module"
 
 #: command.setmodule.module.description
 msgid "The id of the module that you want to toggle on or off."
-msgstr ""
+msgstr "L'identifiant du module que vous souhaitez activer ou désactiver."
 
 #: command.setmodule.state
 msgid "target state"
@@ -512,147 +512,147 @@ msgstr ""
 
 #: command.setmodule.state.description
 msgid "State that you want to switch on or off for the module."
-msgstr ""
+msgstr "Indiquez que vous souhaitez allumer ou éteindre le module."
 
 #: command.setmodule.success.enabled
 msgid "Success! The module has been enabled by yourself."
-msgstr ""
+msgstr "Succès! Le module a été activé par vous-même."
 
 #: command.setmodule.success.disabled
 msgid "Success! The module has been disabled by yourself."
-msgstr ""
+msgstr "Succès! Le module a été désactivé par vous-même."
 
 #: command.setmodule.notfound
 msgid "Not able to find the module, make sure you type a valid module. You can use '-listmodules' to see the list of modules."
-msgstr ""
+msgstr "Impossible de trouver le module, assurez-vous de saisir un module valide. Vous pouvez utiliser '-listmodules' pour voir la liste des modules."
 
 #: command.setmodule.already.enabled
 msgid "The module has already been enabled. Do you want to disable it?"
-msgstr ""
+msgstr "Le module a déjà été activé. Voulez-vous le désactiver?"
 
 #: command.setmodule.already.disabled
 msgid "The module has already been disabled. Do you mean to enable it?"
-msgstr ""
+msgstr "Le module a déjà été désactivé. Voulez-vous l'activer ?"
 
 #: command.listmodule.description
 msgid "Show the list of modules."
-msgstr ""
+msgstr "Affiche la liste des modules."
 
 #: command.listmodule.title
 msgid "The list of the modules"
-msgstr ""
+msgstr "La liste des modules"
 
 #: command.listmodule.body
 msgid "Here is the list of modules. The button is the id of the module. Green means enabled, red means disabled. What a simple system, right?"
-msgstr ""
+msgstr "Voici la liste des modules. Le bouton est l'identifiant du module. Le vert signifie activé, le rouge signifie désactivé. Quel système simple, non?"
 
 #: command.listmodule.toggle.title
 msgid "Toggling the module"
-msgstr ""
+msgstr "Basculer le module"
 
 #: command.listmodule.toggle.body
 msgid "You can still use '-setmodule' to toggle a module on or off."
-msgstr ""
+msgstr "Vous pouvez toujours utiliser '-setmodule' pour activer ou désactiver un module."
 
 #: command.listmodule.toggle.enable
 msgid "I want to enable this module."
-msgstr ""
+msgstr "Je souhaite activer ce module."
 
 #: command.listmodule.toggle.disable
 msgid "I want to disable this module."
-msgstr ""
+msgstr "Je souhaite désactiver ce module."
 
 #: command.listmodule.toggle.state
 msgid "What do you want to do with this module"
-msgstr ""
+msgstr "Que veux-tu faire avec ce module?"
 
 #: command.set.invalid
 msgid "Unknown path: %s, make sure you type a valid path. Use slash (/) to separate the path."
-msgstr ""
+msgstr "Chemin inconnu: %s, assurez-vous de saisir un chemin valide. Utilisez un slash (/) pour séparer le chemin."
 
 #: command.set.number
 msgid "The path you want to set must be a number."
-msgstr ""
+msgstr "Le chemin que vous souhaitez définir doit être un nombre."
 
 #: command.set.boolean
 msgid "The path you want to set must be a boolean. Only 'true' or 'false' is allowed."
-msgstr ""
+msgstr "Le chemin que vous souhaitez définir doit être un booléen. Seuls 'vrai' ou 'faux' sont autorisés."
 
 #: command.set.success
 msgid "Success! The path '%1' has been set to '%2'."
-msgstr ""
+msgstr "Succès! Le chemin '%1' a été défini sur '%2'."
 
 #: command.set.description
 msgid "Change the config dynamically. Without the data lost for different versions."
-msgstr ""
+msgstr "Modifiez la configuration dynamiquement. Sans les données perdues pour les différentes versions."
 
 #: command.set.key
 msgid "path (key)"
-msgstr ""
+msgstr "chemin (clé)"
 
 #: command.set.key.description
 msgid "The path that you want to set. You should type it with slash (/) to separate the path. For example, 'modules/antiSpeed'."
-msgstr ""
+msgstr "Le chemin que vous souhaitez définir. Vous devez le taper avec un slash (/) pour séparer le chemin. Par exemple, 'modules/antiSpeed'."
 
 #: command.set.value
 msgid "value"
-msgstr ""
+msgstr "valeur"
 
 #: command.set.value.description
 msgid "The value that you want to set. It should be a string, a boolean or a number depending on the type of the path."
-msgstr ""
+msgstr "La valeur que vous souhaitez définir. Il doit s'agir d'une chaîne, d'un booléen ou d'un nombre selon le type du chemin."
 
 #: command.matrixui.description
 msgid "Open the Matrix AntiCheat UI panel."
-msgstr ""
+msgstr "Ouvre le panneau de l'interface utilisateur de Matrix AntiCheat."
 
 #: command.vanish.description
 msgid "Make yourself invisible to other players. Even ESP will not be able to see you."
-msgstr ""
+msgstr "Rendez-vous invisible aux yeux des autres joueurs. Même ESP ne pourra pas vous voir."
 
 #: command.vanish.success
 msgid "You have been vanished. Type this command again to make yourself visible again."
-msgstr ""
+msgstr "Vous êtes en vanish. Tapez à nouveau cette commande pour vous rendre à nouveau visible."
 
 #: command.vanish.deleted
 msgid "You are no longer to be vanished."
-msgstr ""
+msgstr "Vous n'êtes plus en vanish."
 
 #: command.vanish.failed
 msgid "Sorry, but you need to place Matrix anticheat above any-type of addon that includes 'player.json' entities file to use this command."
-msgstr ""
+msgstr "Désolé, mais vous devez placer Matrix anticheat au-dessus de tout type d'addon incluant le fichier d'entités 'player.json' pour utiliser cette commande."
 
 #: command.moderation.target
 msgid "Target player"
-msgstr ""
+msgstr "Joueur cible"
 
 #: command.moderation.target.description
 msgid "The target player that you want to use this command on."
-msgstr ""
+msgstr "Le joueur cible sur lequel vous souhaitez utiliser cette commande."
 
 #: command.moderation.duration
 msgid "Duration"
-msgstr ""
+msgstr "Durée"
 
 #: command.moderation.duration.description
 msgid "The duration of the moderation action that you want to use this command on, in minutes. You leave it empty in order to set a permanent moderation action."
-msgstr ""
+msgstr "La durée de l'action de modération sur laquelle vous souhaitez utiliser cette commande, en minutes. Vous le laissez vide afin de paramétrer une action de modération permanente."
 
 #: command.moderation.admin
 msgid "Oops, you can not finish a moderation action to an administrator or yourself."
-msgstr ""
+msgstr "Oups, vous ne pouvez pas terminer une action de modération auprès d'un administrateur ou de vous-même."
 
 #: command.moderation.success
 msgid "%2 has done a moderation action to %1"
-msgstr ""
+msgstr "%2 a effectué une action de modération sur %1"
 
 #: command.moderation.action
 msgid "§7>> §gModeration action: §e%s"
-msgstr ""
+msgstr "§7>> §gAction de modération: §e%s"
 
 #: command.moderation.removal.failed
 msgid "Before you use the moderation removal or any related moderation command, you need to make sure the target player has been moderated."
-msgstr ""
+msgstr "Avant d'utiliser la suppression de la modération ou toute commande de modération associée, vous devez vous assurer que le joueur cible a été modéré."
 
 #: command.moderation.tempkick
 msgid "temp-kicked"
