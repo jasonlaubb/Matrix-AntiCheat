@@ -5,7 +5,7 @@ import { calculateAngleFromView, calculateDistance, fastAbs, fastRound } from ".
 import { getAngleLimit } from "../../util/util";
 const KILLAURA_DISTANCE_THRESHOLD = 3.5;
 const KILLAURA_PVP_DISTANCE_THRESHOLD = 4.5;
-const KILLAURA_ROTATION_THRESHOLD = 79;
+const KILLAURA_ROTATION_THRESHOLD = 89;
 const MIN_ROUND_DIFFERENCE = 0.07;
 
 let eventId: IntegratedSystemEvent;
@@ -68,17 +68,21 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
         player.flag(killaura);
         return;
     }
-
+    const data = killauraData.get(player.id)!;
     if (distance > KILLAURA_DISTANCE_THRESHOLD && isPvp) {
         const angle = calculateAngleFromView(player.location, target.location, yaw);
         const angleLimit = getAngleLimit(player.clientSystemInfo.platformType);
         if (angle > angleLimit) {
-            player.flag(killaura);
-            return;
+            const now = Date.now();
+            if (now - data.lastIntegerTimestamp > 5000) {
+                data.integerFlagAmount = 0;
+            }
+            data.integerFlagAmount++;
+            if (data.integerFlagAmount >= 5) {
+                player.flag(killaura);
+            }
         }
     }
-
-    const data = killauraData.get(player.id)!;
     if (!data.entityHurtList.includes(target.id)) data.entityHurtList.push(target.id);
     if (data.entityHurtList.length >= 3) {
         player.flag(killaura);
@@ -91,6 +95,8 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
         if (now - data.lastIntegerTimestamp > 3000) {
             data.integerFlagAmount = 0;
         }
+        data.integerFlagAmount++;
+        data.lastIntegerTimestamp = now;
         if (data.integerFlagAmount >= 3) {
             player.flag(killaura);
         }
