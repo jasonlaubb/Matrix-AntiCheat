@@ -22,7 +22,7 @@ const predictionModule = new Module()
 		predictionData.clear();
 		Module.clearPlayerTickEvent(eventId);
 	})
-	.initPlayer((playerId) => {
+	.initPlayer((playerId, player) => {
 		predictionData.set(playerId, {
 			isInit: false,
 			spawnTime: Date.now(),
@@ -35,6 +35,7 @@ const predictionModule = new Module()
 			airTime: 0,
 			totalFlagAmount: 0,
 			lastFlagTimestamp: 0,
+			lastOnGroundLocation: player.location,
 		});
 	})
 	.initClear((playerId) => {
@@ -57,6 +58,7 @@ interface PredictionData {
 	airTime: number;
 	totalFlagAmount: number;
 	lastFlagTimestamp: number;
+	lastOnGroundLocation: Vector3;
 }
 const predictionData = new Map<string, PredictionData>();
 const badEffects = ["speed", "jump_boost", "slowness", "slow_falling", "levitation", "wind_charged"];
@@ -71,6 +73,9 @@ function tickEvent (player: Player) {
 	if (isPlayerInAir) {
 		data.airTime++;
 	} else data.airTime = 0;
+	if (player.isOnGround && velocity.y === 0) {
+		data.lastOnGroundLocation = player.location;
+	}
 	if (data.isInit && !player.isFlying && !player.isGliding) {
 		const hasBadEffect = badEffects.some((effect) => player.getEffect(effect));
 		const isDamaged = (now - player.timeStamp.knockBack < 2000) || (now - player.timeStamp.riptide < 5000);
@@ -83,7 +88,9 @@ function tickEvent (player: Player) {
 			// Gravity check
 			data = checkPrediction(data, now);
 			if (data.totalFlagAmount > THRESHOLD) {
+				player.teleport(data.lastOnGroundLocation);
 				player.flag(predictionModule);
+				data.totalFlagAmount = 0;
 			}
 		}
 	}
@@ -97,8 +104,8 @@ function tickEvent (player: Player) {
 	predictionData.set(player.id, data);
 }
 const DOWN_FACTOR = -0.00655;
-const THRESHOLD = 15;
-const MAX_INTERVAL = 5000;
+const THRESHOLD = 5;
+const MAX_INTERVAL = 4000;
 function checkPrediction(data: PredictionData, now: number): PredictionData {
     // Check if the player is in the air.
     const isAllInAir = data.locationData.every((locationData) => locationData.inAir);
