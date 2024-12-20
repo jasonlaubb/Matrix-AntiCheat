@@ -29,7 +29,7 @@ reach.register();
 const MAX_REACH = 4.5;
 const REACH_BUFFER = 2;
 const MAX_ROTATION = 79;
-const TRACK_DURATION = 8000;
+const TRACK_DURATION = 5000;
 interface TrackData {
     locationData: Vector3[];
     lastValidTimeStamp: number;
