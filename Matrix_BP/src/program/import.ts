@@ -5,6 +5,7 @@ registerTimeStampModule();
 // Import the modules
 import "./detection/firewall";
 import "./detection/speed";
+import "./detection/predictionModule";
 import "./detection/phase";
 import "./detection/fly";
 import "./detection/killaura";

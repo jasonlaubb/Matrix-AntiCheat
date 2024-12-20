@@ -15,7 +15,7 @@ const invalidSprint = new Module()
     .setPunishment("ban")
     .addCategory("detection")
     .onModuleEnable(() => {
-        runId = Module.subscribePlayerTickEvent(tickEvent);
+        runId = Module.subscribePlayerTickEvent(tickEvent, false);
     })
     .onModuleDisable(() => {
         sprintData.clear();

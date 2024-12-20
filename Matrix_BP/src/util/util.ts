@@ -1,5 +1,7 @@
-import { MemoryTier, PlatformType, Player, system, Vector3 } from "@minecraft/server";
+import { Dimension, MemoryTier, PlatformType, Player, system, Vector3 } from "@minecraft/server";
 import { ActionFormData, ActionFormResponse, FormCancelationReason, ModalFormData, ModalFormResponse } from "@minecraft/server-ui";
+import { fastBelow, fastSurround } from "./fastmath";
+import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 /**
  *
  * @param memoryTier
@@ -113,4 +115,32 @@ export function waitShowActionForm(ui: ActionFormData, player: Player): Promise<
         } while (true);
         resolve(null);
     });
+}
+/**
+ * @description Check if a block is surrounded by air
+ */
+export function isSurroundedByAir (centerLocation: Vector3, dimension: Dimension): boolean {
+    const surroundedBlocks = fastSurround(centerLocation, dimension);
+    if (!surroundedBlocks) return !!surroundedBlocks;
+    return surroundedBlocks.every((block) => block?.isAir);
+}
+export function isSteppingOnIceOrSlime ({ location, dimension }: Player): boolean {
+    const belowBlocks = fastBelow(location, dimension);
+    if (!belowBlocks) return false;
+    return belowBlocks.some((block) => block?.typeId?.includes("ice") || block?.typeId === MinecraftBlockTypes.Slime);
+}
+export function isMovedUp (lastPositions: Vector3[]) {
+    for (const [i, position] of lastPositions.entries()) {
+        if (i < lastPositions.length - 1) {
+            const deltaY = position.y - lastPositions[i + 1].y;
+            if (deltaY >= 0) return true;
+        }
+    }
+    return false;
+}
+export function getDelta(list: number[]) {
+    if (list.length < 2) {
+        throw new Error("List must have at least two elements");
+    }
+    return list.slice(0, -1).map((x, i) => x - list[i + 1]);
 }

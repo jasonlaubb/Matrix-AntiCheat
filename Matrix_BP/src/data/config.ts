@@ -6,6 +6,7 @@ export default {
     },
     modules: {
         antiSpeed: true,
+        predictionModule: true,
         antiFly: true,
         antiTimer: true,
         firewall: false, // Not tested :(

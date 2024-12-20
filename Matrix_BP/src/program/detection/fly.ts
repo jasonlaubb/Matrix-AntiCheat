@@ -1,6 +1,7 @@
-import { Dimension, EquipmentSlot, GameMode, Player, system, Vector3 } from "@minecraft/server";
+import { EquipmentSlot, GameMode, Player, system, Vector3 } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
+import { isSurroundedByAir } from "../../util/util";
 import { MinecraftEffectTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 const MAX_VELOCITY_Y = 0.7;
 const MIN_REQUIRED_REPEAT_AMOUNT = 6;
@@ -116,20 +117,6 @@ function tickEvent(player: Player) {
     }
     data.lastVelocityY = velocityY;
     flyData.set(player.id, data);
-}
-function isSurroundedByAir(centerLocation: Vector3, dimension: Dimension) {
-    return [-1, 0, 1].every((x) => {
-        return [-1, 0, 1].every((y) => {
-            return [-1, 0, 1].every((z) => {
-                const location = { x: centerLocation.x + x, y: centerLocation.y + y, z: centerLocation.z + z };
-                try {
-                    return dimension.getBlock(location)?.isAir;
-                } catch {
-                    return true;
-                }
-            });
-        });
-    });
 }
 
 function repeatChecks(list: number[]) {
