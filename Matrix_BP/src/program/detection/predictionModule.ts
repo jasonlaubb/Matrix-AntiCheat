@@ -68,7 +68,7 @@ function tickEvent (player: Player) {
 	}
 	const velocity = player.getVelocity();
 	const isPlayerInAir = !player.isOnGround && isSurroundedByAir(player.location, player.dimension);
-	if (player.isFalling) {
+	if (isPlayerInAir) {
 		data.airTime++;
 	} else data.airTime = 0;
 	if (data.isInit && !player.isFlying && !player.isGliding) {
