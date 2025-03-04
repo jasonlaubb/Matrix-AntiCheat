@@ -11,6 +11,7 @@ import { setupFlagFunction } from "./util/flag";
 import { changeValueOfObject, getValueFromObject, waitShowActionForm } from "./util/util";
 import { logRestart } from "./assets/logSystem";
 import { pythag } from "./util/fastmath";
+export { Module, Command, Config };
 // The class that store the tick event that is handled by the Module class
 type IntegratedPlayerCallback = (tickData: TickData, player: Player) => TickData;
 export class IntegratedSystemEvent {
@@ -886,7 +887,6 @@ function* loadModuleRegistry(): Generator<void, void, void> {
     }
     yield;
 }
-export { Module, Command, Config };
 registerModeration();
 registerTimeStampModule();
 // Start the AntiCheat
