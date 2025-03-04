@@ -10,7 +10,7 @@ export class ModPanel {
                 .dropDown(rawtextTranslate("ui.modpamel.sel.here"), allPlayers)
                 .show(admin);
             if (res.cancelled) return;
-            player = allPlayers[res.formValues[0]];
+            player = allPlayers[res.formValues![0]];
         } else {
             player = player.name;
         }
