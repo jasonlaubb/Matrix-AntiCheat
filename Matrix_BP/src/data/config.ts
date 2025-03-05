@@ -109,6 +109,10 @@ export default {
             enhanceDetection: true,
             locationCorrectDelay: 10,
         },
+        antiSpam: {
+            state: true,
+            messageCDms: 5000,
+        },
     },
     flag: {
         banDuration: 604800,
