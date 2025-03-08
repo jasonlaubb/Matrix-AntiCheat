@@ -27,7 +27,6 @@ new Module()
         spamData.delete(playerId);
     })
     .register();
-const MIN_SEND_INTERVAL = 5000;
 const MAX_REPEAT_AMOUNT = 3;
 const MAX_MESSAGE_LENGTH = 256;
 function onPlayerSendMessage(event: ChatSendBeforeEvent) {
@@ -54,6 +53,8 @@ interface SpamData {
 }
 const spamData = new Map<string, SpamData>();
 function chatSpamming(player: Player, message: string) {
+    const config = Module.config;
+    if (!config.sensitivity.antiSpam.state) return false;
     if (includeWordKeySet(message)) {
         sendBadWordMessage(player);
         return true;
@@ -76,7 +77,7 @@ function chatSpamming(player: Player, message: string) {
     const previousMessages = getPrevious4Messages(list);
     if (previousMessages.some(([msg]) => msg === message)) return "1";
     const sendInterval = Date.now() - data.lastMessageTime;
-    if (sendInterval < MIN_SEND_INTERVAL) {
+    if (sendInterval < config.sensitivity.antiSpam.messageCDms) {
         system.run(() => {
             player.sendMessage(
                 fastText()
