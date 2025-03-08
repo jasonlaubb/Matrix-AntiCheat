@@ -105,6 +105,10 @@ export interface TickData {
         lastEnderPeal: number;
         lastRiding: boolean;
     };
+    disabler: {
+        gliding: boolean;
+        lastFlagTimestamp: number;
+    }
 }
 export default [
     "./program/detection/firewall",

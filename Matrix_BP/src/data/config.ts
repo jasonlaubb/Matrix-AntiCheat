@@ -109,6 +109,10 @@ export default {
             enhanceDetection: true,
             locationCorrectDelay: 10,
         },
+        antiDisabler: {
+            noElytraInServer: true, // Set it to true if you have no elytra in your server, it will simply the disabler detection.
+            flagCooldown: 1000,
+        },
     },
     flag: {
         banDuration: 604800,
