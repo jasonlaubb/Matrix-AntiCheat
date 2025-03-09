@@ -1330,3 +1330,67 @@ msgstr ""
 msgid "Clear player echest"
 msgstr ""
 
+#: ui.modpanel.title
+msgid "Mod Panel | Matrix AntiCheat"
+msgstr ""
+
+#: ui.modpamel.sel.here
+msgid "Select here"
+msgstr ""
+
+#: ui.modpanel.mute
+msgid "§5Mute\n§8Run '-mute %1 %2'"
+msgstr ""
+
+#: ui.modpanel.kick
+msgid "§5Kick\n§8Run '-kick %1 %2'"
+msgstr ""
+
+#: ui.modpanel.ban
+msgid "§5Ban\n§8Run '-ban %1 %2 %3'"
+msgstr ""
+
+#: ui.modpanel.crash
+msgid "§5Crash\n§8Run '-crash %s'"
+msgstr ""
+
+#: module.disabler.name
+msgid "Anti Disabler"
+msgstr ""
+
+#: module.disabler.description
+msgid "Prevent user from using fake gliding tag to bypass the anticheat or server-auth-with-rewind system."
+msgstr ""
+
+#: command.mset.error
+msgid "Sorry, we could not read the key you have provided."
+msgstr ""
+
+#: command.mset.success
+msgid "Successfully run set command for %s times. This action cannot be reversed."
+msgstr ""
+
+#: command.mset.title
+msgid "Import settings"
+msgstr ""
+
+#: command.mset.input
+msgid "Setup key"
+msgstr ""
+
+#: command.mset.description
+msgid "Import settings by a key"
+msgstr ""
+
+#: command.export.title
+msgid "We will display the string key in the next messages. As there is the limit for the API, we can't let you copy the key directly. You can try to use some app like Google Lens to copy it."
+msgstr ""
+
+#: command.export.empty
+msgid "§bMatrix§a+ §7> §cUnable to generate the key as there is no data to be exported."
+msgstr ""
+
+#: command.export.description
+msgid "Export the settings to a key"
+msgstr ""
+
