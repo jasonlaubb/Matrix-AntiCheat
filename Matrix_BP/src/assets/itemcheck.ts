@@ -8,7 +8,7 @@ const legit = new Set(Object.values(MinecraftItemTypes) as string[]);
  */
 export function isItemIllegal(item: ItemStack) {
     const itemID = item.typeId;
-    return legit.has(itemID) && item.amount <= item.maxAmount && item.amount >= 0 && (item.nameTag?.length ?? 0) <= 256 && item.getLore().length == 0 && isLegalEnchantment(item);
+    return legit.has(itemID) && item.amount <= item.maxAmount && item.amount >= 0 && (item.nameTag?.length ?? 0) <= 256 && item.getLore().length == 0 && !isLegalEnchantment(item);
 }
 function isLegalEnchantment(item: ItemStack) {
     const enchantmentComponent = item.getComponent("enchantable");
