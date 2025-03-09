@@ -5,3 +5,4 @@
 [FAQ](/misc/faq.md)
 [Discord](https://discord.gg/CqZGXeRKPJ)
 [Download now](/misc/download.md)
+[Key generator](https://jasonlaubb.github.io/Matrix-AntiCheat/gen.html)
