@@ -31,7 +31,7 @@ export default {
         antiEntityFly: { state: true, punishment: "default" },
         antiElytraFly: { state: true, punishment: "default" },
         antiAutoClicker: { state: true, punishment: "default" },
-        antiAutoTool: { state: true, punishment: "default" },
+        antiAutoTool: { state: false, punishment: "default" },
         deviceBan: { state: false, punishment: "kick" },
     } as { [key: string]: { state: boolean; punishment: Punishment | "default" } },
     command: {
