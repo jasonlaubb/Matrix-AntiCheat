@@ -82,7 +82,7 @@ function chatSpamming(player: Player, message: string) {
             player.sendMessage(
                 fastText()
                     .addText("§bMatrix§a+ §7> §c")
-                    .addTran("module.chatrank.slow", ((MIN_SEND_INTERVAL - sendInterval) * 0.001).toFixed(3))
+                    .addTran("module.chatrank.slow", ((config.sensitivity.antiSpam.messageCDms - sendInterval) * 0.001).toFixed(3))
                     .build()
             );
         });

@@ -21,7 +21,7 @@ import { Player, RawText, system, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
-import { Punishment, matrixKick } from "./program/system/moderation";
+import { Punishment } from "./program/system/moderation";
 import { write } from "./assets/logSystem";
 import program, { TickData } from "./program/import";
 import { registerModeration } from "./program/system/moderation";

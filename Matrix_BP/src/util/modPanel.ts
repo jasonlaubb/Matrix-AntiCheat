@@ -4,7 +4,7 @@ import { ModalFormData, ActionFormData } from "@minecraft/server-ui";
 import { Module } from "../matrixAPI";
 export class ModPanel {
     private constructor () {};
-    public readonly open = async (admin: Player, player?: Player) => {
+    public static readonly open = async (admin: Player, player?: Player) => {
         let playerName = "";
         if (!player) {
             const allPlayers = world.getAllPlayers().map(({ name }) => name);

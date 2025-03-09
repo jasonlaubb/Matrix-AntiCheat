@@ -19,11 +19,11 @@ world.afterEvents.itemUse.subscribe((event) => {
         // Run that command.
         event.source.runChatCommand("matrixui");
     } else if (event.source.isAdmin() && event?.itemStack?.typeId === "matrix:mod_hammer") {
-        ModPannel.open(event.source);
+        ModPanel.open(event.source);
     }
 });
 world.afterEvents.entityHitEntity.subscribe((event) => {
     if (event.damagingEntity instanceof Player && event.hitEntity instanceof Player && event.damagingEntity.isAdmin() && event.damagingEntity.getComponent("equippable")?.getEquipment(EquipmentSlot.Mainhand)?.typeId === "matrix:mod_hammer") {
-        ModPannel.open(event.damagingEntity, event.hitEntity);
+        ModPanel.open(event.damagingEntity, event.hitEntity);
     }
 });
