@@ -15,7 +15,7 @@ new Command()
 			.title(rawtextTranslate("command.mset.title"))
 			.textField(rawtextTranslate("command.mset.input"), "<key here>")
 			.submitButton("Press to input"), player);
-		if (data === null ||data.canceled) return;
+		if (data === null || data.canceled) return;
 		const key = data.formValues![0] as string;
 		const match = key.match(MATCH_REG);
 		if (match === null || TEST_REG.test(key) === false) {
