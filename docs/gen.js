@@ -1,7 +1,34 @@
 var output = [];
 var currentPart = 1;
+setInterval(() => {
+	const input = document.getElementById("textbox").value;
+	if (input.length > 0) {
+		if (input.startsWith("#")) {
+			document.getElementById("gen").innerHTML = "Split key to input-able parts";
+		} else if (input.startsWith("{") || input.startsWith("export default")) {
+			document.getElementById("gen").innerHTML = "Convert json string to key";
+		} else {
+			document.getElementById("gen").innerHTML = "Not supported XwX";
+		}
+	} else {
+		document.getElementById("gen").innerHTML = "Type something to start...";
+	}
+}, 100);
 function generateKey () {
 	let input = document.getElementById("textbox").value;
+	if (input.length === 0) return;
+	if (input.startsWith("#") && input.endsWith("#")) {
+		if (!/^(#[(a-zA-Z)|/]+\,[^#]+#)+$/.test(input)) {
+			document.getElementById("output").innerHTML = "[Failed] Error: Failed to read the key.";
+			return;
+		}
+		document.getElementById("textbox").value = "";
+		currentPart = 1;
+		console.log(truncateString(outputt));
+		output = truncateString(input);
+		document.getElementById("output").innerHTML = output[0];
+		document.getElementById("copy-btn").innerHTML = `Copy (Part 1 of ${output.length})`;
+	}
 	input = input.replace("export default", "").trim();
 	if (input.endsWith(";")) input = input.slice(0, -1);
 	if (!input.startsWith("{") || !input.endsWith("}")) {
@@ -29,7 +56,6 @@ function generateKey () {
 	document.getElementById("output").innerHTML = output[0];
 	document.getElementById("copy-btn").innerHTML = `Copy (Part 1 of ${output.length})`;
 }
-
 function convertJson(obj, prefix = '') {
 	const result = {};
 	for (const key in obj) {
@@ -59,6 +85,15 @@ function copyText() {
 	if (currentPart > output.length) currentPart = 1;
 	document.getElementById("copy-btn").innerHTML = `Copy (Part ${currentPart} of ${output.length})`;
 	document.getElementById("output").innerHTML = output[currentPart - 1];
+}
+function copyAll() {
+	if (output.length > 0) {
+		navigator.clipboard.writeText(output.join("")).then(function() {
+		  console.log("Text copied to clipboard");
+		}, function(err) {
+		  console.error("Could not copy text: ", err);
+		});
+	}
 }
 function truncateString(s) {
 	const result = [];

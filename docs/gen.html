@@ -7,11 +7,12 @@
 </head>
 <body>
     <h1>Matrix AntiCheat Key Generator</h1>
-    <input type="text" id="textbox" placeholder="Enter the config string (.json)">
-    <button onclick="generateKey()">Generate settings key</button>
+    <input type="text" id="textbox" placeholder="Enter the key or json string here...">
+    <button onclick="generateKey()" id="gen">Type something to start...</button>
     <h2>Output:</h2>
     <p id="output">Click the button to generate</p>
     <button id="copy-btn" onclick="copyText()">Copy</button>
+    <button id="copy-all" onclick="copyAll()">Copy whole string</button>
     <script src="./gen.js"></script>
 </body>
 </html>
