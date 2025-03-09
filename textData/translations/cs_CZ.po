@@ -1394,3 +1394,7 @@ msgstr ""
 msgid "Export the settings to a key"
 msgstr ""
 
+#: item.matrix.hammer
+msgid "§g§lMod §bHammer§r"
+msgstr ""
+

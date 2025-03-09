@@ -1,11 +1,10 @@
-import { system } from "@minecraft/server";
+import { system, Player } from "@minecraft/server";
 import { Command, Config } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { ModalFormData } from "@minecraft/server-ui";
 import { waitShowModalForm } from "../../util/util";
 const MATCH_REG = /#[(a-zA-Z)|/]+\,[^#,]+#/g
 const TEST_REG = /^(#[(a-zA-Z)|/]+\,[^#,]+#)+$/
-let part: { [key: string]: number } = {};
 new Command()
 	.setDescription(rawtextTranslate("command.mset.description"))
 	.setName("mset")

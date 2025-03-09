@@ -1051,3 +1051,6 @@ msgstr "§bMatrix§a+ §7> §cUnable to generate the key as there is no data to 
 
 msgid "command.export.description"
 msgstr "Export the settings to a key"
+
+msgid "item.matrix.hammer"
+msgstr "§g§lMod §bHammer§r"
