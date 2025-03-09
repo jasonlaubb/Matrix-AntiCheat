@@ -158,4 +158,5 @@ export default [
     "./program/command/log",
     "./program/command/reconnect",
     "./program/command/setflagmsgto",
+    "./program/command/mset",
 ];

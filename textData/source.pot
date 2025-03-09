@@ -1021,3 +1021,30 @@ msgstr "§5Ban\n§8Run '-ban %1 %2 %3'"
 
 msgid "ui.modpanel.crash"
 msgstr "§5Crash\n§8Run '-crash %s'"
+
+msgid "module.disabler.name"
+msgstr "Anti Disabler"
+
+msgid "module.disabler.description"
+msgstr "Prevent user from using fake gliding tag to bypass the anticheat or server-auth-with-rewind system."
+
+msgid "command.mset.error"
+msgstr "Sorry, we could not read the key you have provided."
+
+msgid "command.mset.success"
+msgstr "Successfully run set command for %s times. This action cannot be reversed."
+
+msgid "command.mset.title"
+msgstr "Import settings"
+
+msgid "command.mset.input"
+msgstr "Setup key"
+
+msgid "command.mset.description"
+msgstr "Import settings by a key"
+
+msgid "command.export.title"
+msgstr "We will display the string key in the next messages. As there is the limit for the API, we can't let you copy the key directly. You can try to use some app like Google Lens to copy it."
+
+msgid "command.export.empty"
+msgstr "§bMatrix§a+ §7> §cUnable to generate the key as there is no data to be exported."

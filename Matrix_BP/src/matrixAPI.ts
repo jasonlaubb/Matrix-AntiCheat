@@ -633,14 +633,7 @@ class Config {
         return this.configData;
     }
     public static loadData() {
-        const allProperties = world.getDynamicPropertyIds();
-        const changedProperties = allProperties
-            .filter((property) => property.startsWith("config::"))
-            .map((property) => {
-                const key = property.replace("config::", "").split("/");
-                const value = world.getDynamicProperty(property);
-                return { id: property, key, value };
-            });
+        const changedProperties = Config.getChanges();
         this.configData = defaultConfig;
         for (const { key, value, id } of changedProperties) {
             const isInvalid = getValueFromObject(defaultConfig, key) === undefined;
@@ -659,8 +652,8 @@ class Config {
     public static set(key: string[], value: number | boolean | string) {
         const configProperty = getValueFromObject(defaultConfig, key);
         if (configProperty === undefined) return undefined;
-        if (typeof value != typeof configProperty) return false;
-        if (typeof value == "object") throw new Error("Cannot set object to config");
+        if (typeof value !== typeof configProperty) return false;
+        if (typeof value === "object") throw new Error("Cannot set object to config");
         world.setDynamicProperty("config::" + key.join("/"), value);
         const newValue = changeValueOfObject(this.configData, key, value);
         this.configData = newValue;
@@ -674,6 +667,17 @@ class Config {
         const configProperty = getValueFromObject(this.configData, key);
         if (configProperty === undefined) return undefined;
         return configProperty;
+    }
+    public static getChanges() {
+        const allProperties = world.getDynamicPropertyIds();
+        const changedProperties = allProperties
+        .filter((property) => property.startsWith("config::"))
+        .map((property) => {
+            const key = property.replace("config::", "").split("/");
+            const value = world.getDynamicProperty(property)!;
+            return { id: property, key, value };
+        });
+        return changedProperties;
     }
 }
 // Interfaces and types for Module
