@@ -18,7 +18,7 @@ world.afterEvents.itemUse.subscribe((event) => {
     if (event?.itemStack?.typeId === "matrix:itemui") {
         // Run that command.
         event.source.runChatCommand("matrixui");
-    } else (event.source.isAdmin() && event?.itemStack?.typeId === "matrix:mod_hammer") {
+    } else if (event.source.isAdmin() && event?.itemStack?.typeId === "matrix:mod_hammer") {
         ModPannel.open(event.source);
     }
 });
