@@ -1,8 +1,8 @@
 import { EquipmentSlot, Player } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { TickData } from "../import";
-import { MinecraftItemTypes } from "@minecraft/vanilla-data";
-import { rawtext, rawtextTranslate } from "../../util/rawtext";
+import { MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { rawtextTranslate } from "../../util/rawtext";
 let eventId: IntegratedSystemEvent;
 const disabler = new Module()
 	.setName(rawtextTranslate("module.disabler.name"))

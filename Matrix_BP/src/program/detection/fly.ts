@@ -1,8 +1,8 @@
-import { EquipmentSlot, GameMode, Player, system } from "@minecraft/server";
+import { GameMode, Player } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { isSurroundedByAir } from "../../util/util";
-import { MinecraftEffectTypes, MinecraftItemTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
+import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { fastAbs } from "../../util/fastmath";
 import { TickData } from "../import";
 const MAX_VELOCITY_Y = 0.7;
@@ -103,16 +103,6 @@ function tickEvent(tickData: TickData, player: Player) {
             player.flag(fly, { t: "3", bdsPrediction, highestRepeatedVelocity, highestRepeatedAmount, minAmount, maxAmount });
         }
     }
-    if (playerStarted && player.isGliding && !isEquippedWithElytra(player) && !player.hasTag("matrix:checkingGlideTag") && JSON.stringify(player.location) != JSON.stringify(data.lastFlaggedLocation)) {
-        player.addTag("matrix:checkingGlideTag");
-        system.run(() => {
-            player.removeTag("matrix:checkingGlideTag");
-            if (!player.isGliding || isEquippedWithElytra(player)) return;
-            player.teleport(data.lastFlaggedLocation);
-            player.flag(fly, { t: "4 (BDS disabler)" });
-        });
-        data.lastFlaggedLocation = player.location;
-    }
     tickData.fly = data;
     return tickData;
 }
@@ -135,7 +125,4 @@ function calculateBdsPrediction(list: number[]) {
     return list.reduce((yV) => {
         return yV < -MAX_VELOCITY_Y ? 1 : yV > MAX_VELOCITY_Y ? 1 : -1;
     });
-}
-function isEquippedWithElytra(player: Player) {
-    return !!player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Chest)?.getItem()?.matches(MinecraftItemTypes.Elytra);
 }

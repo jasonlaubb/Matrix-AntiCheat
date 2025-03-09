@@ -6,6 +6,7 @@ export default {
         passwordHash: "",
     },
     modules: {
+        antiDisabler: { state: true, punishment: "default" }, // You need to enable this even you are in realm environment
         antiSpeed: { state: true, punishment: "default" }, // Not suggesting to set this to false
         predictionModule: { state: false, punishment: "default" },
         antiFly: { state: true, punishment: "default" }, // Not suggesting to set this to false
@@ -17,8 +18,8 @@ export default {
         antiScaffold: { state: true, punishment: "default" },
         antiInsteaBreak: { state: false, punishment: "default" },
         antiReach: { state: true, punishment: "default" },
-        antiPhase: { state: true, punishment: "default" },
-        antiInvalidSprint: { state: true, punishment: "default" },
+        antiPhase: { state: true, punishment: "default" }, // Weak
+        antiInvalidSprint: { state: false, punishment: "default" },
         itemCheck: { state: false, punishment: "default" },
         aimCheck: { state: false, punishment: "default" },
         welcomer: { state: true, punishment: "none" },
@@ -114,7 +115,6 @@ export default {
             messageCDms: 5000,
         },
         antiDisabler: {
-            noElytraInServer: true, // Set it to true if you have no elytra in your server, it will simply the disabler detection.
             flagCooldown: 1000,
         },
     },

@@ -1,20 +1,23 @@
-import { rawtextTranslate } from "./util/rawtext";
-import { world } from "@minecraft/server";
+import { rawtextTranslate } from "./rawtext";
+import { Player, world } from "@minecraft/server";
+import { ModalFormData, ActionFormData } from "@minecraft/server-ui";
 export class ModPanel {
-    private constructor ();
+    private constructor () {};
     public readonly open = async (admin: Player, player?: Player) => {
+        let playerName = "";
         if (!player) {
-            const allPlayers = world.getAllPlayers().map(({ n }) => n);
+            const allPlayers = world.getAllPlayers().map(({ name }) => name);
             const res = await new ModalFormData()
                 .title(rawtextTranslate("ui.modpanel.sel.title"))
-                .dropDown(rawtextTranslate("ui.modpamel.sel.here"), allPlayers)
+                .dropdown(rawtextTranslate("ui.modpamel.sel.here"), allPlayers)
+                //@ts-expect-error
                 .show(admin);
-            if (res.cancelled) return;
-            player = allPlayers[res.formValues![0]];
+            if (res.canceled) return;
+            playerName = res.formValues![0] as string;
         } else {
-            player = player.name;
+            playerName = player.name;
         }
         new ActionFormData()
-        //unfinished
+
     }
 }

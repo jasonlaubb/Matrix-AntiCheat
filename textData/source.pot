@@ -1003,3 +1003,9 @@ msgstr "View log in previous day"
 
 msgid "command.echestwipe.sd"
 msgstr "Clear player echest"
+
+msgid "ui.modpanel.sel.title"
+msgstr "Select the player you want to moderate"
+
+msgid "ui.modpamel.sel.here"
+msgstr "Select here"

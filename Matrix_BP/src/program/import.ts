@@ -111,6 +111,7 @@ export interface TickData {
     }
 }
 export default [
+    "./program/detection/disabler",
     "./program/detection/firewall",
     "./program/detection/speed",
     "./program/detection/predictionModule",
