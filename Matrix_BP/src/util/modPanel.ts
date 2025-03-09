@@ -14,7 +14,7 @@ export class ModPanel {
                 //@ts-expect-error
                 .show(admin);
             if (res.canceled) return;
-            playerName = res.formValues![0] as string;
+            playerName = allPlayers[res.formValues![0] as number] as string;
         } else {
             playerName = player.name;
         }
