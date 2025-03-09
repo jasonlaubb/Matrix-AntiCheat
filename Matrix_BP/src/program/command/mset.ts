@@ -26,7 +26,7 @@ new Command()
 			const [key, ...nv] = value.slice(1, -1).split(",");
 			player.runChatCommand(`set ${key} "${nv.join(",")}"`)
 		});
-		player.sendMessage(rawtextTranslate("command.mset.success", match.length.toString()));
+		player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.mset.success", match.length.toString()).build());
 	})
 	.register();
 new Command()
@@ -43,7 +43,7 @@ new Command()
 			const strvalue = type === "boolean" ? (value ? "true" : "false") : value.toString();
 			outputkey += `#${strkey},${strvalue}#`;
 		})
-		player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.export.title").build());
+		player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.export.title").build());
 		system.runTimeout(() => {
 			player.sendMessage(outputkey.length > 0 ? outputkey : rawtextTranslate("command.export.empty"));
 		})
