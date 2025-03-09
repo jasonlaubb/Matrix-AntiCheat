@@ -1009,3 +1009,15 @@ msgstr "Mod Panel | Matrix AntiCheat"
 
 msgid "ui.modpamel.sel.here"
 msgstr "Select here"
+
+msgid "ui.modpanel.mute"
+msgstr "§5Mute\n§8Run '-mute %1 %2'"
+
+msgid "ui.modpanel.kick"
+msgstr "§5Kick\n§8Run '-kick %1 %2'"
+
+msgid "ui.modpanel.ban"
+msgstr "§5Ban\n§8Run '-ban %1 %2 %3'"
+
+msgid "ui.modpanel.crash"
+msgstr "§5Crash\n§8Run '-crash %s'"

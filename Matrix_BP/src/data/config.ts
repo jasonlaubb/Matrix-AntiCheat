@@ -144,4 +144,10 @@ export default {
     debug: {
         pauseAllPunishment: false, // Stop all punishment on util function.
     },
+    modPanel: {
+        muteMinutes: 15,
+        banMinutes: 1440,
+        banReason: "Banned by moderation tool",
+        kickReason: "Kicked by moderation tool",
+    },
 };
