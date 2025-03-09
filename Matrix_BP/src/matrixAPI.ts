@@ -391,13 +391,9 @@ class Command {
                     event.cancel = true;
                 } else {
                     const player = event.sender;
-                    system.run(() => {
-                        if (!player?.isValid()) return;
-                        // This isMoving is better than animationController isMoving, no false positive on that .u.
-                        if (player.isMoving()) {
-                            matrixKick(player, "Spammer is not allowed", `[Matrix API]`);
-                        }
-                    });
+                    if (player.isMoving()) {
+                        event.cancel = true;
+                    }
                 }
             }
         });
