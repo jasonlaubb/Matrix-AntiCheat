@@ -10,6 +10,7 @@ const elytraFly = new Module()
     .setToggleId("antiElytraFly")
     .setPunishment("kick")
     .addCategory("detection")
+    .affectedByRewind()
     .onModuleEnable(() => {
         runId = Module.subscribePlayerTickEvent(tickEvent, false);
         world.afterEvents.itemUse.subscribe(onItemUse);

@@ -63,7 +63,8 @@ const timer = new Module()
         world.afterEvents.entityHitEntity.unsubscribe(playerAttack);
         world.afterEvents.playerSpawn.unsubscribe(playerSpawn);
         timerData.clear();
-    });
+    })
+    .affectedByRewind();
 timer.register();
 /**
  * @author jasonlaubb, RamiGamerDev

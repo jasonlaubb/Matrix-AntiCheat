@@ -87,6 +87,7 @@ class Module {
     public playerLeave?: (playerId: string) => void;
     public enabled: boolean = false;
     public punishment?: Punishment;
+    public movementCheck: boolean = false;
     // This is the constructor of antiCheat
     public constructor() {}
     // For other uses
@@ -141,6 +142,10 @@ class Module {
     }
     public lockModule() {
         this.locked = true;
+        return this;
+    }
+    public affectedByRewind () {
+        this.movementCheck = true;
         return this;
     }
     public register() {
@@ -756,6 +761,10 @@ function* loadModuleRegistry(): Generator<void, void, void> {
             system.runJob(loadModuleList());
             function* loadModuleList() {
                 world.sendMessage(`(Reload) Import ended, starting initialization`);
+                if (Module.config.serverAuthWithRewind) {
+                    // Disable movement check
+                    Module.moduleList = Module.moduleList.filter((m) => !m.movementCheck);
+                }
                 try {
                     for (let i = 1; i <= Module.moduleList.length; i++) {
                         const module = Module.moduleList[i - 1];

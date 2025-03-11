@@ -17,6 +17,7 @@ const fly = new Module()
     .setDescription(rawtextTranslate("module.fly.description"))
     .setToggleId("antiFly")
     .setPunishment("ban")
+    .affectedByRewind()
     .onModuleEnable(() => {
         eventId = Module.subscribePlayerTickEvent(tickEvent, false);
     })

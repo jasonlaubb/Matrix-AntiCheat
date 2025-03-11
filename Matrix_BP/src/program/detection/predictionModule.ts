@@ -24,6 +24,7 @@ const predictionModule = new Module()
     .onModuleDisable(() => {
         Module.clearPlayerTickEvent(eventId);
     })
+    .affectedByRewind()
     .initPlayer((tickData, _playerId, player) => {
         tickData.predictionModule = {
             isInit: false,

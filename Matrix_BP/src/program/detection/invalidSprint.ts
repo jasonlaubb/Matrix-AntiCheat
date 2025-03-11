@@ -11,6 +11,7 @@ const invalidSprint = new Module()
     .setToggleId("antiInvalidSprint")
     .setPunishment("ban")
     .addCategory("detection")
+    .affectedByRewind()
     .onModuleEnable(() => {
         runId = Module.subscribePlayerTickEvent(tickEvent, false);
     })

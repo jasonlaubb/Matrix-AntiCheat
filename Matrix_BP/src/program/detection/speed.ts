@@ -22,6 +22,7 @@ const speed = new Module()
         world.afterEvents.itemUse.unsubscribe(itemUse);
         Module.clearPlayerTickEvent(eventId);
     })
+    .affectedByRewind()
     .initPlayer((tickData, _playerId, player) => {
         tickData.speed = {
             lastAttackTimestamp: 0,

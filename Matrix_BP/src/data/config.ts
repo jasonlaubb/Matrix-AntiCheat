@@ -1,16 +1,22 @@
 import { Punishment } from "../program/system/moderation";
 
 export default {
+    serverAuthWithRewind: true, // Cancel the registration of all movement check if server has enabled rewind.
     security: {
         containsPassword: false,
         passwordHash: "",
     },
     modules: {
-        antiDisabler: { state: true, punishment: "default" }, // You need to enable this even you are in realm environment
-        antiSpeed: { state: true, punishment: "default" }, // Not suggesting to set this to false
+        // movement
+        antiDisabler: { state: true, punishment: "default" },
+        antiSpeed: { state: true, punishment: "default" },
         predictionModule: { state: false, punishment: "default" },
-        antiFly: { state: true, punishment: "default" }, // Not suggesting to set this to false
-        antiTimer: { state: false, punishment: "default" }, // Eliminated detection
+        antiFly: { state: true, punishment: "default" },
+        antiTimer: { state: false, punishment: "default" },
+        antiPhase: { state: false, punishment: "default" },
+        antiEntityFly: { state: true, punishment: "default" },
+        antiElytraFly: { state: true, punishment: "default" },
+        // non-movement
         firewall: { state: false, punishment: "default" },
         antiNamespoof: { state: true, punishment: "default" },
         antiKillAura: { state: true, punishment: "default" },
@@ -18,7 +24,6 @@ export default {
         antiScaffold: { state: true, punishment: "default" },
         antiInsteaBreak: { state: false, punishment: "default" },
         antiReach: { state: true, punishment: "default" },
-        antiPhase: { state: true, punishment: "default" }, // Weak
         antiInvalidSprint: { state: false, punishment: "default" },
         itemCheck: { state: false, punishment: "default" },
         aimCheck: { state: false, punishment: "default" },
@@ -28,8 +33,6 @@ export default {
         antiAfk: { state: false, punishment: "none" },
         antiCombatLog: { state: false, punishment: "none" },
         captcha: { state: false, punishment: "none" },
-        antiEntityFly: { state: true, punishment: "default" },
-        antiElytraFly: { state: true, punishment: "default" },
         antiAutoClicker: { state: true, punishment: "default" },
         antiAutoTool: { state: false, punishment: "default" },
         deviceBan: { state: false, punishment: "kick" },

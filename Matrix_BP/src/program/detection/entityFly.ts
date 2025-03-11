@@ -12,6 +12,7 @@ const entityFly = new Module()
     .setDescription(rawtextTranslate("module.entityFly.description"))
     .setToggleId("antiEntityFly")
     .setPunishment("ban")
+    .affectedByRewind()
     .onModuleEnable(() => {
         runId = Module.subscribePlayerTickEvent(tickEvent, false);
     })

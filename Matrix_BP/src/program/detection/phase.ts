@@ -19,6 +19,7 @@ const antiPhase = new Module()
         };
         return tickData;
     })
+    .affectedByRewind()
     .onModuleEnable(() => {
         eventId = Module.subscribePlayerTickEvent(tickEvent, false);
     })
