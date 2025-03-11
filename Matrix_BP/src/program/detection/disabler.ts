@@ -22,7 +22,8 @@ const disabler = new Module()
 	})
 	.onModuleDisable(() => {
 		Module.clearPlayerTickEvent(eventId);
-	})
+	});
+disabler.register();
 function tickEvent (data: TickData, player: Player) {
 	const now = Date.now();
 	if (player.isGliding && data.disabler.gliding && now - data.disabler.lastFlagTimestamp > Module.config.sensitivity.antiDisabler.flagCooldown) {
