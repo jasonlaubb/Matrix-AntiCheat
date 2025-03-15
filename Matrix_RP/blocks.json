@@ -1,0 +1,7 @@
+{ 
+	"format_version": "1.19.30", 
+	"matrix:stone": { 
+	  	"textures": "stone",
+	    "sound": "stone" 
+	}
+}
