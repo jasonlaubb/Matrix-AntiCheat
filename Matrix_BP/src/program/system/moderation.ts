@@ -5,11 +5,12 @@ import { Module } from "../../matrixAPI";
 import { generateShortTimeStr, getTimeFromTimeString } from "../../util/util";
 import crashChar from "../../data/crashChar";
 function crashPlayer(player: Player) {
-    if (player.isAdmin()) return;
+    if (player.isAdmin() || player?.isCrashed === true) return;
     if (Module.config.debug.pauseAllPunishment) {
         world.sendMessage(rawtextTranslate("debug.pause", "crash", player.name));
         return;
     }
+    player.isCrashed = true;
     // This is the crash strength
     const crashText = crashChar.repeat(Module.config.security.crashStrength);
     const crashId = system.runInterval(() => {

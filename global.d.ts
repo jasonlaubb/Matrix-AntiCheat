@@ -19,6 +19,7 @@ declare module "@minecraft/server" {
 		mobAuraFlag: number;
 		mobAuraLastFlagTimestamp: number;
 		killAuraIdList: string[];
+		isCrashed: boolean;
 	}
 }
 interface Console {
