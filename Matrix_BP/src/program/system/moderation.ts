@@ -3,6 +3,23 @@ import { rawtextTranslate } from "../../util/rawtext";
 import { MinecraftDimensionTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { Module } from "../../matrixAPI";
 import { generateShortTimeStr, getTimeFromTimeString } from "../../util/util";
+import crashChar from "../../data/crashChar";
+function crashPlayer(player: Player) {
+    if (player.isAdmin()) return;
+    if (Module.config.debug.pauseAllPunishment) {
+        world.sendMessage(rawtextTranslate("debug.pause", "crash", player.name));
+        return;
+    }
+    // This is the crash strength
+    const crashText = crashChar.repeat(Module.config.security.crashStrength);
+    const crashId = system.runInterval(() => {
+        try {
+            player.sendMessage(crashText);
+        } catch {
+            system.clearRun(crashId);
+        }
+    });
+}
 export function registerModeration() {
     new Module()
         .lockModule()
@@ -15,32 +32,6 @@ export function registerModeration() {
 }
 export { Punishment, crashPlayer, banHandler, muteHandler, matrixKick };
 type Punishment = "none" | "crash" | "kick" | "ban" | "mute";
-function meaninglessCode() {
-    const includeString = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
-    let str = "";
-    for (let i = 0; i < 32; i++) {
-        str += includeString.charAt(Math.floor(Math.random() * includeString.length));
-    }
-    return `title @s title §m§l§o§k${new Array(32).fill(includeString).join("\n")}`;
-}
-function crashPlayer(player: Player, spam = meaninglessCode()) {
-    if (!player?.isValid() || player.isAdmin()) return;
-    if (!spam) {
-        if (Module.config.debug.pauseAllPunishment) {
-            world.sendMessage(rawtextTranslate("debug.pause", "crash", player.name));
-            return;
-        }
-    }
-    // Punish player
-    try {
-        for (let i = 0; i < 1000; i++) {
-            player.runCommand(spam);
-        }
-    } catch {
-    } finally {
-        system.run(() => crashPlayer(player, spam));
-    }
-}
 interface BanInfo {
     reason: string;
     dateEnd: number;

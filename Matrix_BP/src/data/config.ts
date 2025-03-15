@@ -5,6 +5,7 @@ export default {
     security: {
         containsPassword: false,
         passwordHash: "",
+        crashStrength: 50000, // How strong is the crash to player that can't be kicked.
     },
     modules: {
         // movement
