@@ -3,5 +3,25 @@
 	"matrix:stone": { 
 	  	"textures": "stone",
 	    "sound": "stone" 
-	}
+	},
+	"matrix:diamond_ore" : {
+		"sound" : "stone",
+		"textures" : "diamond_ore"
+	},
+	"matrix:deepslate_diamond_ore": {
+		"isotropic" : false,
+		"sound": "stone",
+		"textures": "deepslate_diamond_ore"
+	},
+	"ancient_debris" : {
+		"sound" : "ancient_debris",
+		"textures" : {
+		   "down" : "ancient_debris_top",
+		   "east" : "ancient_debris_side",
+		   "north" : "ancient_debris_side",
+		   "south" : "ancient_debris_side",
+		   "up" : "ancient_debris_top",
+		   "west" : "ancient_debris_side"
+		}
+	},
 }
