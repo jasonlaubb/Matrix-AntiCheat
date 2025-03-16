@@ -1,7 +1,7 @@
 import { Dimension, MemoryTier, PlatformType, Player, RawMessage, system, Vector3, VectorXZ } from "@minecraft/server";
 import { ActionFormData, ActionFormResponse, FormCancelationReason, ModalFormData, ModalFormResponse } from "@minecraft/server-ui";
 import { fastBelow, fastSurround } from "./fastmath";
-import { MinecraftBlockTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+import { MinecraftBlockTypes, MinecraftEntityTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 /**
  *
  * @param memoryTier
@@ -246,4 +246,12 @@ export function vanillaAny (item: string, ...array: string[]) {
 export function randomInt(min: number, max: number) {
     if (max === min) return min;
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+export function spawnExpOrbs (dimension: Dimension, location: Vector3, count: number, fortune: number = 0) {
+    if (count === 0) return;
+    // Increase the amount of xp orbs spawned
+    count *= (1 / (fortune + 1) + (fortune + 1) / 2);
+    for (let i = 0; i < count; i++) {
+        dimension.spawnEntity(MinecraftEntityTypes.XpOrb, location);
+    }
 }

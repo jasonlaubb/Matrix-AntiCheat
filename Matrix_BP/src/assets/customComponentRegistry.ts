@@ -1,5 +1,5 @@
 import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, ItemStack, Player, world } from "@minecraft/server";
-import { randomInt, vanillaAny } from "../util/util";
+import { randomInt, spawnExpOrbs, vanillaAny } from "../util/util";
 import { MinecraftEnchantmentTypes, MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { ModPanel } from "../util/modPanel";
 class matrixui implements ItemCustomComponent {
@@ -43,15 +43,17 @@ class diamondLoot implements BlockCustomComponent {
 	}
 	onPlayerDestroy ({ player, block: { location, dimension }, destroyedBlockPermutation: { type: { id }} }: BlockComponentPlayerDestroyEvent) {
 		const item = player?.getHeldItem();
-		if (player)
+		const level = (item?.getEnchantLevel(MinecraftEnchantmentTypes.Fortune) ?? 0) + 1;
+		if (player) {
 			if (!item || !vanillaAny(item.typeId, "iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe")) return;
+			spawnExpOrbs(dimension, location, randomInt(3, 7), level);
+		}
 		if (item && item.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) > 0) {
 			if (id.includes("deepslate"))
 				dimension.spawnItem(new ItemStack(MinecraftItemTypes.DeepslateDiamondOre, 1), location);
 			else;
 				dimension.spawnItem(new ItemStack(MinecraftItemTypes.DiamondOre, 1), location);
 		} else if (item) {
-			const level = item.getEnchantLevel(MinecraftEnchantmentTypes.Fortune) + 1;
 			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Diamond, randomInt(1, level)), location);
 		}
 	}
