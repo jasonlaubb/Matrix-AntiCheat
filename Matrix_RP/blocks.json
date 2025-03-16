@@ -1,94 +1,94 @@
 { 
 	"format_version": "1.19.30", 
 	"matrix:stone": { 
-	  	"textures": "m:stone",
+	  	"textures": "m_stone",
 	    "sound": "stone" 
 	},
 	"matrix:netherrack": {
 		"isotropic": false,
-		"textures": "m:netherrack",
+		"textures": "m_netherrack",
 		"sound": "stone"
 	},
 	"matrix:ancient_debris" : {
 		"sound" : "ancient_debris",
 		"textures" : {
-		   "down" : "ancient_debris_top",
-		   "east" : "ancient_debris_side",
-		   "north" : "ancient_debris_side",
-		   "south" : "ancient_debris_side",
-		   "up" : "ancient_debris_top",
-		   "west" : "ancient_debris_side"
+		   "down" : "m_ancient_debris_top",
+		   "east" : "m_ancient_debris_side",
+		   "north" : "m_ancient_debris_side",
+		   "south" : "m_ancient_debris_side",
+		   "up" : "m_ancient_debris_top",
+		   "west" : "m_ancient_debris_side"
 		}
 	},
 	"matrix:diamond_ore" : {
-		"sound" : "stone",
-		"textures" : "diamond_ore"
+		"sound": "stone",
+		"textures": "m_diamond_ore"
 	},
 	"matrix:deepslate_diamond_ore": {
 		"isotropic" : false,
 		"sound": "stone",
-		"textures": "m:deepslate_diamond_ore"
+		"textures": "m_deepslate_diamond_ore"
 	},
 	"matrix:gold_ore": {
-		"textures": "m:gold_ore",
+		"textures": "m_gold_ore",
 		"sound": "stone"
 	},
 	"matrix:deepslate_gold_ore": {
 		"isotropic": false,
-		"textures": "m:deepslate_gold_ore",
+		"textures": "m_deepslate_gold_ore",
 		"sound": "stone"
 	},
 	"matrix:emerald_ore": {
-		"textures": "m:emerald_ore",
+		"textures": "m_emerald_ore",
 		"sound": "stone"
 	},
 	"matrix:deepslate_emerald_ore": {
 		"isotropic": false,
-		"textures": "m:deepslate_emerald_ore",
+		"textures": "m_deepslate_emerald_ore",
 		"sound": "stone"
 	},
 	"matrix:iron_ore": {
-		"textures": "m:iron_ore",
+		"textures": "m_iron_ore",
 		"sound": "stone"
 	},
 	"matrix:deepslate_iron_ore": {
 		"isotropic": false,
-		"textures": "m:deepslate_iron_ore",
+		"textures": "m_deepslate_iron_ore",
 		"sound": "stone"
 	},
 	"matrix:lapis_ore": {
-		"textures": "m:lapis_ore",
+		"textures": "m_lapis_ore",
 		"sound": "stone"
 	},
 	"matrix:deepslate_lapis_ore": {
 		"isotropic": false,
-		"textures": "m:deepslate_lapis_ore",
+		"textures": "m_deepslate_lapis_ore",
 		"sound": "stone"
 	},
 	"matrix:redstone_ore": {
-		"textures": "m:redstone_ore",
+		"textures": "m_redstone_ore",
 		"sound": "stone"
 	},
 	"matrix:deepslate_redstone_ore": {
 		"isotropic": false,
-		"textures": "m:deepslate_redstone_ore",
+		"textures": "m_deepslate_redstone_ore",
 		"sound": "stone"
 	},
 	"matrix:coal_ore": {
-		"textures": "m:coal_ore",
+		"textures": "m_coal_ore",
 		"sound": "stone"
 	},
 	"matrix:deepslate_coal_ore": {
 		"isotropic": false,
-		"textures": "m:deepslate_coal_ore",
+		"textures": "m_deepslate_coal_ore",
 		"sound": "stone"
 	},
 	"matrix:quartz_ore": {
-		"textures": "m:quartz_ore",
+		"textures": "m_quartz_ore",
 		"sound": "stone"
 	},
 	"matrix:nether_gold_ore": {
-		"textures": "m:nether_gold_ore",
+		"textures": "m_nether_gold_ore",
 		"sound": "stone"
 	}
 }
