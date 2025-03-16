@@ -1,6 +1,6 @@
 import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, ItemStack } from "@minecraft/server";
 import { noDrop, randomInt, spawnExpOrbs, vanillaAny, weightRandom } from "./util";
-import { MinecraftEnchantmentTypes } from "@minecraft/vanilla-data";
+import { MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 /**
  * @author jasonlaubb
  * @description Create custom ore drops
