@@ -17,16 +17,17 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 			const item = player?.getHeldItem();
 			// Get the fortune level of the tool
 			const level = (item?.getEnchantLevel(MinecraftEnchantmentTypes.Fortune) ?? 0);
+			const silkTouch = item?.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) ?? 0 > 0;
 			// Get the multiplier
 			const multiplier = getMultiplier(level);
 			if (player) {
 				// Don't drop the item if player doesn't hold the suitable tool
 				if (!item || !vanillaAny(item.typeId, ...allowTool)) return;
 				// Spawn the exp orbs
-				if (maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs));
+				if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs));
 			}
 			// Drop original block if the tool has silk touch
-			if (item && item.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) > 0) {
+			if (item && silkTouch) {
 				if (deepTile && id.includes("deepslate"))
 					dimension.spawnItem(new ItemStack(deepTile, 1), location);
 				else;

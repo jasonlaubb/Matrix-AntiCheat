@@ -37,4 +37,5 @@ world.beforeEvents.worldInitialize.subscribe((init) => {
 	init.blockComponentRegistry.registerCustomComponent("redstoneLoot", tile(MinecraftItemTypes.RedstoneOre, MinecraftItemTypes.DeepslateRedstoneOre, MinecraftItemTypes.Redstone, ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 5], 1, 5, true));
 	init.blockComponentRegistry.registerCustomComponent("emeraldLoot", tile(MinecraftItemTypes.EmeraldOre, MinecraftItemTypes.DeepslateEmeraldOre, MinecraftItemTypes.Emerald, ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1], 3, 7));
 	init.blockComponentRegistry.registerCustomComponent("lapisLoot", tile(MinecraftItemTypes.LapisOre, MinecraftItemTypes.DeepslateLapisOre, MinecraftItemTypes.LapisLazuli, ["stone_pickaxe", "iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1], 2, 5));
+	init.blockComponentRegistry.registerCustomComponent("netheriteLoot", tile(MinecraftItemTypes.AncientDebris, null, MinecraftItemTypes.AncientDebris, ["diamond_pickaxe", "netherite_pickaxe"], null));
 })
