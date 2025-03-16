@@ -1,5 +1,5 @@
 {
-	"format_version": "1.21.60",
+	"format_version": 2,
 	"minecraft:block": {
 		"description": {
 			"identifier": "matrix:coal_ore"
@@ -38,7 +38,7 @@
 				"seconds_to_destroy": 15
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["coalLoot"]
+			"minecraft:custom_components": ["matrix:coalLoot"]
 		}
 	}
 }
