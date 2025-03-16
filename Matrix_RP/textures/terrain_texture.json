@@ -1,0 +1,71 @@
+{
+    "resource_pack_name": "Matrix AntiCheat RP",
+    "texture_data": {
+        "m:ancient_debris_side" : {
+            "textures" : "textures/blocks/m/ancient_debris_side"
+        },
+        "m:ancient_debris_top" : {
+            "textures" : "textures/blocks/m/ancient_debris_top"
+        },
+        "m:stone": {
+            "textures": "textures/blocks/m/stone"
+        },
+        "m:netherrack": {
+            "textures": "textures/blocks/m/netherrack"
+        },
+        "m:diamond_ore": {
+            "textures": "textures/blocks/m/diamond_ore"
+        },
+        "m:deepslate_diamond_ore": {
+            "textures": "textures/block/m/d/deepslate_diamond_ore"
+        },
+        "m:lapis_ore": {
+            "textures": "textures/blocks/m/lapis_ore"
+        },
+        "m:deepslate_lapis_ore": {
+            "textures": "textures/blocks/m/d/deepslate_lapis_ore"
+        },
+        "m:redstone_ore": {
+            "textures": "textures/blocks/m/redstone_ore"
+        },
+        "m:deepslate_redstone_ore": {
+            "textures": "textures/blocks/m/d/deepslate_redstone_ore"
+        },
+        "m:coal_ore": {
+            "textures": "textures/blocks/m/coal_ore"
+        },
+        "m:deepslate_coal_ore": {
+            "textures": "textures/blocks/m/d/deepslate_coal_ore"
+        },
+        "m:quartz_ore": {
+            "textures": "textures/blocks/m/quartz_ore"
+        },
+        "m:nether_gold_ore": {
+            "textures": "textures/blocks/m/nether_gold_ore"
+        },
+        "m:iron_ore": {
+            "textures": "textures/blocks/m/iron_ore"
+        },
+        "m:deepslate_iron_ore": {
+            "textures": "textures/blocks/m/d/deepslate_iron_ore"
+        },
+        "m:gold_ore": {
+            "textures": "textures/blocks/m/gold_ore"
+        },
+        "m:deepslate_gold_ore": {
+            "textures": "textures/blocks/m/d/deepslate_gold_ore"
+        },
+        "m:emerald_ore": {
+            "textures": "textures/blocks/m/emerald_ore"
+        },
+        "m:deepslate_emerald_ore": {
+            "textures": "textures/blocks/m/d/deepslate_emerald_ore"
+        },
+        "m:copper_ore": {
+            "textures": "textures/blocks/m/copper_ore"
+        },
+        "m:deepslate_copper_ore": {
+            "textures": "textures/blocks/m/d/deepslate_copper_ore"
+        }
+    }
+}
