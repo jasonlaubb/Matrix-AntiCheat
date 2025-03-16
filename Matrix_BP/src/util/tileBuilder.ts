@@ -17,11 +17,13 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 			const item = player?.getHeldItem();
 			// Get the fortune level of the tool
 			const level = (item?.getEnchantLevel(MinecraftEnchantmentTypes.Fortune) ?? 0);
+			// Get the multiplier
+			const multiplier = getMultiplier(level);
 			if (player) {
 				// Don't drop the item if player doesn't hold the suitable tool
 				if (!item || !vanillaAny(item.typeId, ...allowTool)) return;
 				// Spawn the exp orbs
-				if (maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs), level);
+				if (maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs));
 			}
 			// Drop original block if the tool has silk touch
 			if (item && item.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) > 0) {
@@ -32,7 +34,7 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 			} else {
 				// Drop the raw ore
 				if (baseRange) {
-					dimension.spawnItem(new ItemStack(dropItem, tileMultiplier(level, baseRange, normal)), location);
+					dimension.spawnItem(new ItemStack(dropItem, tileMultiplier(level, baseRange, multiplier, normal)), location);
 				} else {
 					dimension.spawnItem(new ItemStack(dropItem, 1), location);
 				}
@@ -41,7 +43,7 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 	}
 	return new OreTile();
 }
-function tileMultiplier (fortune: number = 0, baseRange: [number, number], normal: boolean = false) {
+function tileMultiplier (fortune: number = 0, baseRange: [number, number], multiplier: number, normal: boolean = false) {
 	if (normal) {
 		// Redstone dust uses this
 		return randomInt(baseRange[0], baseRange[1] + fortune);
@@ -51,6 +53,13 @@ function tileMultiplier (fortune: number = 0, baseRange: [number, number], norma
 	for (let i = 1; i <= fortune; i++) {
 		weightList.push([fortune + 1, 1]);
 	}
-	const multiplier = weightRandom(...weightList);
 	return tileDrop * multiplier;
+}
+function getMultiplier (fortune: number = 0) {
+	let weightList: [number, number][] = [[1, 2]];
+	for (let i = 1; i <= fortune; i++) {
+		weightList.push([fortune + 1, 1]);
+	}
+	const multiplier = weightRandom(...weightList);
+	return multiplier;
 }

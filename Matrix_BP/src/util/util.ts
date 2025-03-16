@@ -247,10 +247,8 @@ export function randomInt(min: number, max: number) {
     if (max === min) return min;
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-export function spawnExpOrbs (dimension: Dimension, location: Vector3, count: number, fortune: number = 0) {
+export function spawnExpOrbs (dimension: Dimension, location: Vector3, count: number) {
     if (count === 0) return;
-    // Increase the amount of xp orbs spawned
-    count *= (1 / (fortune + 1) + (fortune + 1) / 2);
     for (let i = 0; i < count; i++) {
         dimension.spawnEntity(MinecraftEntityTypes.XpOrb, location);
     }
