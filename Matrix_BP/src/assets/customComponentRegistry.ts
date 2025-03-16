@@ -1,5 +1,5 @@
 import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, ItemStack, Player, world } from "@minecraft/server";
-import { vanillaAny } from "../util/util";
+import { randomInt, vanillaAny } from "../util/util";
 import { MinecraftEnchantmentTypes, MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { ModPanel } from "../util/modPanel";
 class matrixui implements ItemCustomComponent {
@@ -51,8 +51,8 @@ class diamondLoot implements BlockCustomComponent {
 			else;
 				dimension.spawnItem(new ItemStack(MinecraftItemTypes.DiamondOre, 1), location);
 		} else if (item) {
-			const level = item.getEnchantLevel(MinecraftEnchantmentTypes.Fortune);
-			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Diamond, level + 1), location);
+			const level = item.getEnchantLevel(MinecraftEnchantmentTypes.Fortune) + 1;
+			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Diamond, randomInt(1, level)), location);
 		}
 	}
 }

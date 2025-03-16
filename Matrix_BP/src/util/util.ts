@@ -243,3 +243,7 @@ export function vanillaAny (item: string, ...array: string[]) {
     if (!item.startsWith("minecraft:")) return false;
     return array.some((a) => a.endsWith(item));
 }
+export function randomInt(min: number, max: number) {
+    if (max === min) return min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
