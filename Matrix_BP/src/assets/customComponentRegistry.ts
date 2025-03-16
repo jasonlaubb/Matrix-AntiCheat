@@ -1,5 +1,5 @@
 import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, ItemStack, Player, world } from "@minecraft/server";
-import { noDrop, randomInt, spawnExpOrbs, vanillaAny } from "../util/util";
+import { noDrop, randomInt, spawnExpOrbs, vanillaAny, weightRandom } from "../util/util";
 import { MinecraftEnchantmentTypes, MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { ModPanel } from "../util/modPanel";
 class matrixui implements ItemCustomComponent {
@@ -55,9 +55,16 @@ class diamondLoot implements BlockCustomComponent {
 			else;
 				dimension.spawnItem(new ItemStack(MinecraftItemTypes.DiamondOre, 1), location);
 		} else if (item) {
-			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Diamond, randomInt(1, level)), location);
+			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Diamond, diamondDrop(level)), location);
 		}
 	}
+}
+function diamondDrop (fortune: number = 0) {
+	const weightList: [number, number][] = [[1, 2]];
+	for (let i = 0; i < fortune; i++) {
+		weightList.push([fortune + 1, 2]);
+	}
+	return weightRandom(...weightList);
 }
 // Register the custom components
 world.beforeEvents.worldInitialize.subscribe((init) => {

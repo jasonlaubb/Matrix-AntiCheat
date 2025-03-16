@@ -258,3 +258,18 @@ export function spawnExpOrbs (dimension: Dimension, location: Vector3, count: nu
 export function noDrop () {
     return !world.gameRules.doTileDrops;
 }
+/**
+ * @param items Array of [item, weight]
+ */
+export function weightRandom(...items: [number, number][]): number {
+    const totalWeight = items.reduce((acc, [, weight]) => acc + weight, 0);
+    const random = Math.random() * totalWeight;
+    let cumulativeWeight = 0;
+    for (const [item, weight] of items) {
+        cumulativeWeight += weight;
+        if (random <= cumulativeWeight) {
+            return item;
+        }
+    }
+    return items[0][0];
+}
