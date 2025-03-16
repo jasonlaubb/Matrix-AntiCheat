@@ -37,7 +37,8 @@
 				],
 				"seconds_to_destroy": 150
 			},
-			"minecraft:custom_components": ["matrix:netheriteLoot"]
+			"minecraft:custom_components": ["matrix:netheriteLoot"],
+			"minecraft:loot": "loot_tables/air.json"
 		}
 	}
 }

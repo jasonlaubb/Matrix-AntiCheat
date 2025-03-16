@@ -41,7 +41,8 @@
 				"catch_chance_modifier": 1,
 				"destroy_chance_modifier": 0
 			},
-			"minecraft:custom_components": ["matrix:netherrackLoot"]
+			"minecraft:custom_components": ["matrix:netherrackLoot"],
+			"minecraft:loot": "loot_tables/air.json"
 		}
 	}
 }

@@ -38,7 +38,8 @@
 				"seconds_to_destroy": 22.5
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["matrix:coalLoot"]
+			"minecraft:custom_components": ["matrix:coalLoot"],
+			"minecraft:loot": "loot_tables/air.json"
 		}
 	}
 }

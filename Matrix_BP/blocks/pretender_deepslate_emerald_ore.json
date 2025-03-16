@@ -37,7 +37,8 @@
 				],
 				"seconds_to_destroy": 22.5
 			},
-			"minecraft:custom_components": ["matrix:emeraldLoot"]
+			"minecraft:custom_components": ["matrix:emeraldLoot"],
+			"minecraft:loot": "loot_tables/air.json"
 		}
 	}
 }

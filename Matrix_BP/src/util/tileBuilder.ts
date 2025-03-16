@@ -29,10 +29,11 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 			}
 			// Drop original block if the tool has silk touch
 			if (item && silkTouch) {
-				if (deepTile && id.includes("deepslate"))
+				if (deepTile && id.includes("deepslate")) {
 					dimension.spawnItem(new ItemStack(deepTile, 1), location);
-				else;
+				} else {
 					dimension.spawnItem(new ItemStack(silkTile, 1), location);
+				}
 			} else {
 				// Drop the raw ore
 				if (baseRange) {

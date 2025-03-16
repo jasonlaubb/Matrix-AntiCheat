@@ -16,7 +16,8 @@
             "minecraft:max_stack_size": 1,
             "minecraft:can_destroy_in_creative": false,
             "minecraft:hand_equipped": true,
-            "minecraft:custom_components": ["matrix:modPanel"]
+            "minecraft:custom_components": ["matrix:modPanel"],
+            "minecraft:loot": "loot_tables/air.json"
         }
     }
 }

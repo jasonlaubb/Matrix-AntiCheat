@@ -38,7 +38,8 @@
 				"seconds_to_destroy": 15
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["matrix:redstoneLoot"]
+			"minecraft:custom_components": ["matrix:redstoneLoot"],
+			"minecraft:loot": "loot_tables/air.json"
 		}
 	}
 }
