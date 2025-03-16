@@ -60,6 +60,7 @@ class diamondLoot implements BlockCustomComponent {
 	}
 }
 function diamondDrop (fortune: number = 0) {
+	if (fortune === 0) return 1;
 	const weightList: [number, number][] = [[1, 2]];
 	for (let i = 0; i < fortune; i++) {
 		weightList.push([fortune + 1, 2]);
