@@ -241,7 +241,7 @@ export function sendMessages(players: Player[], message: (RawMessage | string)[]
 }
 export function vanillaAny (item: string, ...array: string[]) {
     if (!item.startsWith("minecraft:")) return false;
-    return array.some((a) => a.endsWith(item));
+    return array.some((a) => item.endsWith(a));
 }
 export function randomInt(min: number, max: number) {
     if (max === min) return min;

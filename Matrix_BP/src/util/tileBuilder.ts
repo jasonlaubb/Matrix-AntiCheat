@@ -12,6 +12,7 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 		}
 		onPlayerDestroy ({ player, block: { location, dimension }, destroyedBlockPermutation: { type: { id }} }: BlockComponentPlayerDestroyEvent) {
 			// Skip if doTileDrop is false
+			player?.sendMessage(`You breaks a ${id}....`);
 			if (noDrop()) return;
 			// Get the tool that player use
 			const item = player?.getHeldItem();
