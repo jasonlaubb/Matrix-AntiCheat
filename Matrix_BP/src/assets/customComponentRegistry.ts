@@ -54,7 +54,7 @@ class diamondLoot implements BlockCustomComponent {
 				dimension.spawnItem(new ItemStack(MinecraftItemTypes.DeepslateDiamondOre, 1), location);
 			else;
 				dimension.spawnItem(new ItemStack(MinecraftItemTypes.DiamondOre, 1), location);
-		} else if (item) {
+		} else {
 			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Diamond, diamondDrop(level)), location);
 		}
 	}
