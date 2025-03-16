@@ -9,6 +9,7 @@
 				"explosion_resistance": 2
 			},
 			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 2,
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
@@ -34,8 +35,7 @@
 						"item": "minecraft:golden_pickaxe",
 						"destroy_speed": 0.05
 					}
-				],
-				"seconds_to_destroy": 2
+				]
 			},
 			"minecraft:flammable": {
 				"catch_chance_modifier": 1,
