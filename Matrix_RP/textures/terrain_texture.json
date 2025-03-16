@@ -20,7 +20,7 @@
             "textures": "textures/blocks/m/diamond_ore"
         },
         "m_deepslate_diamond_ore": {
-            "textures": "textures/block/m/d/deepslate_diamond_ore"
+            "textures": "textures/blocks/m/d/deepslate_diamond_ore"
         },
         "m_lapis_ore": {
             "textures": "textures/blocks/m/lapis_ore"
