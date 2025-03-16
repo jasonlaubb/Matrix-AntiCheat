@@ -2,7 +2,7 @@
 	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:diamond_ore"
+			"identifier": "matrix:deepslate_diamond_ore"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
