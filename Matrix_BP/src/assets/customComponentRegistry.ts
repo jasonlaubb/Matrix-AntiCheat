@@ -29,17 +29,33 @@ class stoneLoot implements BlockCustomComponent {
 	}
 	onPlayerDestroy ({ player, block: { location, dimension } }: BlockComponentPlayerDestroyEvent) {
 		const item = player?.getHeldItem();
-		if (player) {
+		if (player)
 			if (!item || !vanillaAny(item.typeId, "pickaxe")) return;
-		}
 		if (item && item.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) > 0)
 			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Stone, 1), location);
 		else;
 			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Cobblestone, 1), location);
 	}
 }
+class diamondLoot implements BlockCustomComponent {
+	constructor () {
+		this.onPlayerDestroy = this.onPlayerDestroy.bind(this);
+	}
+	onPlayerDestroy ({ player, block: { location, dimension } }: BlockComponentPlayerDestroyEvent) {
+		const item = player?.getHeldItem();
+		if (player)
+			if (!item || !vanillaAny(item.typeId, "iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe")) return;
+		if (item && item.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) > 0)
+			dimension.spawnItem(new ItemStack(MinecraftItemTypes.DiamondOre, 1), location);
+		else if (item) {
+			const level = item.getEnchantLevel(MinecraftEnchantmentTypes.Fortune);
+			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Diamond, level + 1), location);
+		}
+	}
+}
 world.beforeEvents.worldInitialize.subscribe((init) => {
 	init.itemComponentRegistry.registerCustomComponent("matrixui", new matrixui());
 	init.itemComponentRegistry.registerCustomComponent("modPanel", new modPanel());
 	init.blockComponentRegistry.registerCustomComponent("stoneLoot", new stoneLoot());
+	init.blockComponentRegistry.registerCustomComponent("diamondLoot", new diamondLoot());
 })
