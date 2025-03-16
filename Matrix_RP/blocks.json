@@ -4,16 +4,12 @@
 	  	"textures": "stone",
 	    "sound": "stone" 
 	},
-	"matrix:diamond_ore" : {
-		"sound" : "stone",
-		"textures" : "diamond_ore"
+	"matrix:netherrack": {
+		"isotropic": false,
+		"textures": "netherrack",
+		"sound": "stone"
 	},
-	"matrix:deepslate_diamond_ore": {
-		"isotropic" : false,
-		"sound": "stone",
-		"textures": "deepslate_diamond_ore"
-	},
-	"ancient_debris" : {
+	"matrix:ancient_debris" : {
 		"sound" : "ancient_debris",
 		"textures" : {
 		   "down" : "ancient_debris_top",
@@ -23,5 +19,76 @@
 		   "up" : "ancient_debris_top",
 		   "west" : "ancient_debris_side"
 		}
+	},
+	"matrix:diamond_ore" : {
+		"sound" : "stone",
+		"textures" : "diamond_ore"
+	},
+	"matrix:deepslate_diamond_ore": {
+		"isotropic" : false,
+		"sound": "stone",
+		"textures": "deepslate_diamond_ore"
+	},
+	"matrix:gold_ore": {
+		"textures": "gold_ore",
+		"sound": "stone"
+	},
+	"matrix:deepslate_gold_ore": {
+		"isotropic": false,
+		"textures": "deepslate_gold_ore",
+		"sound": "stone"
+	},
+	"matrix:emerald_ore": {
+		"textures": "emerald_ore",
+		"sound": "stone"
+	},
+	"matrix:deepslate_emerald_ore": {
+		"isotropic": false,
+		"textures": "deepslate_emerald_ore",
+		"sound": "stone"
+	},
+	"matrix:iron_ore": {
+		"textures": "iron_ore",
+		"sound": "stone"
+	},
+	"matrix:deepslate_iron_ore": {
+		"isotropic": false,
+		"textures": "deepslate_iron_ore",
+		"sound": "stone"
+	},
+	"matrix:lapis_ore": {
+		"textures": "lapis_ore",
+		"sound": "stone"
+	},
+	"matrix:deepslate_lapis_ore": {
+		"isotropic": false,
+		"textures": "deepslate_lapis_ore",
+		"sound": "stone"
+	},
+	"matrix:redstone_ore": {
+		"textures": "redstone_ore",
+		"sound": "stone"
+	},
+	"matrix:deepslate_redstone_ore": {
+		"isotropic": false,
+		"textures": "deepslate_redstone_ore",
+		"sound": "stone"
+	},
+	"matrix:coal_ore": {
+		"textures": "coal_ore",
+		"sound": "stone"
+	},
+	"matrix:deepslate_coal_ore": {
+		"isotropic": false,
+		"textures": "deepslate_coal_ore",
+		"sound": "stone"
+	},
+	"matrix:quartz_ore": {
+		"textures": "quartz_ore",
+		"sound": "stone"
+	},
+	"matrix:nether_gold_ore": {
+		"textures": "nether_gold_ore",
+		"sound": "stone"
 	}
 }

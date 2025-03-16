@@ -38,4 +38,7 @@ world.beforeEvents.worldInitialize.subscribe((init) => {
 	init.blockComponentRegistry.registerCustomComponent("emeraldLoot", tile(MinecraftItemTypes.EmeraldOre, MinecraftItemTypes.DeepslateEmeraldOre, MinecraftItemTypes.Emerald, ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1], 3, 7));
 	init.blockComponentRegistry.registerCustomComponent("lapisLoot", tile(MinecraftItemTypes.LapisOre, MinecraftItemTypes.DeepslateLapisOre, MinecraftItemTypes.LapisLazuli, ["stone_pickaxe", "iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1], 2, 5));
 	init.blockComponentRegistry.registerCustomComponent("netheriteLoot", tile(MinecraftItemTypes.AncientDebris, null, MinecraftItemTypes.AncientDebris, ["diamond_pickaxe", "netherite_pickaxe"], null));
+	init.blockComponentRegistry.registerCustomComponent("netherrackLoot", tile(MinecraftItemTypes.Netherrack, null, MinecraftItemTypes.Netherrack, ["pickaxe"], null));
+	init.blockComponentRegistry.registerCustomComponent("goldNuggetLoot", tile(MinecraftItemTypes.NetherGoldOre, null, MinecraftItemTypes.GoldNugget, ["pickaxe"], [2, 6], 0, 1));
+	init.blockComponentRegistry.registerCustomComponent("quartzLoot", tile(MinecraftItemTypes.QuartzOre, null, MinecraftItemTypes.Quartz, ["pickaxe"], [1, 1], 2, 5));
 })

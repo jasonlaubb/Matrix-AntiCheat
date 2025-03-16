@@ -2,7 +2,7 @@
 	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:stone"
+			"identifier": "matrix:netherrack"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
@@ -12,33 +12,36 @@
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 1.15
-					},
-					{
-						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 0.6
-					},
-					{
-						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 0.4
-					},
-					{
-						"item": "minecraft:diamond_pickaxe",
 						"destroy_speed": 0.3
 					},
 					{
+						"item": "minecraft:stone_pickaxe",
+						"destroy_speed": 0.15
+					},
+					{
+						"item": "minecraft:iron_pickaxe",
+						"destroy_speed": 0.1
+					},
+					{
+						"item": "minecraft:diamond_pickaxe",
+						"destroy_speed": 0.1
+					},
+					{
 						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 0.25
+						"destroy_speed": 0.1
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 0.2
+						"destroy_speed": 0.05
 					}
 				],
-				"seconds_to_destroy": 7.5
+				"seconds_to_destroy": 2
 			},
-			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["stoneLoot"]
+			"minecraft:flammable": {
+				"catch_chance_modifier": 1,
+				"destroy_chance_modifier": 0
+			},
+			"minecraft:custom_components": ["netherrackLoot"]
 		}
 	}
 }

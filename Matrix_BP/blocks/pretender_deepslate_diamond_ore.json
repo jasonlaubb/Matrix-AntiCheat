@@ -37,8 +37,6 @@
 				],
 				"seconds_to_destroy": 22.5
 			},
-			"minecraft:flammable": false,
-			"minecraft:map_color": [112, 112, 112],
 			"minecraft:custom_components": ["diamondLoot"]
 		}
 	}
