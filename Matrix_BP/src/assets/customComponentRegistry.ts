@@ -1,5 +1,5 @@
 import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, ItemStack, Player, world } from "@minecraft/server";
-import { randomInt, spawnExpOrbs, vanillaAny } from "../util/util";
+import { noDrop, randomInt, spawnExpOrbs, vanillaAny } from "../util/util";
 import { MinecraftEnchantmentTypes, MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { ModPanel } from "../util/modPanel";
 class matrixui implements ItemCustomComponent {
@@ -42,6 +42,7 @@ class diamondLoot implements BlockCustomComponent {
 		this.onPlayerDestroy = this.onPlayerDestroy.bind(this);
 	}
 	onPlayerDestroy ({ player, block: { location, dimension }, destroyedBlockPermutation: { type: { id }} }: BlockComponentPlayerDestroyEvent) {
+		if (noDrop()) return;
 		const item = player?.getHeldItem();
 		const level = (item?.getEnchantLevel(MinecraftEnchantmentTypes.Fortune) ?? 0) + 1;
 		if (player) {

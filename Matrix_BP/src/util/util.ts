@@ -1,4 +1,4 @@
-import { Dimension, MemoryTier, PlatformType, Player, RawMessage, system, Vector3, VectorXZ } from "@minecraft/server";
+import { Dimension, MemoryTier, PlatformType, Player, RawMessage, system, Vector3, VectorXZ, world } from "@minecraft/server";
 import { ActionFormData, ActionFormResponse, FormCancelationReason, ModalFormData, ModalFormResponse } from "@minecraft/server-ui";
 import { fastBelow, fastSurround } from "./fastmath";
 import { MinecraftBlockTypes, MinecraftEntityTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
@@ -254,4 +254,7 @@ export function spawnExpOrbs (dimension: Dimension, location: Vector3, count: nu
     for (let i = 0; i < count; i++) {
         dimension.spawnEntity(MinecraftEntityTypes.XpOrb, location);
     }
+}
+export function noDrop () {
+    return !world.gameRules.doTileDrops;
 }
