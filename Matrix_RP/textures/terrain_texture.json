@@ -1,5 +1,8 @@
 {
     "resource_pack_name": "Matrix AntiCheat RP",
+    "texture_name": "matrix.terrain",
+    "num_mip_levels": 4, // Quality of texture when viewed from a distance or at an angle
+    "padding": 8, // Prevent textures from visually overflowing into each other
     "texture_data": {
         "m_ancient_debris_side" : {
             "textures" : "textures/blocks/m/ancient_debris_side"
