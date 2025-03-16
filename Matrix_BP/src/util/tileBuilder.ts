@@ -36,8 +36,8 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 }
 function tileMultiplier (fortune: number = 0, baseRange: [number, number]) {
 	if (fortune === 0) return 1;
-	const weightList: [number, number][] = [[randomInt(...baseRange), 2]];
 	const [min, max] = baseRange;
+	const weightList: [number, number][] = [[randomInt(min, max), 2]];
 	for (let i = 0; i < fortune; i++) {
 		const level = i + 1;
 		weightList.push([randomInt(min * level, max * level), 1]);
