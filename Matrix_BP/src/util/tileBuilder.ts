@@ -41,15 +41,16 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 	}
 	return new OreTile();
 }
-function tileMultiplier (fortune: number = 0, baseRange: [number, number], normal: boolean) {
-	if (fortune === 0) return 1;
-	const [min, max] = baseRange;
-	const weightList: [number, number][] = [[randomInt(min, max), 2]];
-	for (let i = 1; i <= fortune; i++) {
-		const level = i + 1;
-		if (normal) {
-			weightList.push([randomInt(min, max + i), 1]);
-		} else weightList.push([randomInt(min + i, max * level), 1]);
+function tileMultiplier (fortune: number = 0, baseRange: [number, number], normal: boolean = false) {
+	if (normal) {
+		// Redstone dust uses this
+		return randomInt(baseRange[0], baseRange[1] + fortune);
 	}
-	return weightRandom(...weightList);
+	const tileDrop = randomInt(baseRange[0], baseRange[1]);
+	let weightList: [number, number][] = [[1, 2]];
+	for (let i = 1; i <= fortune; i++) {
+		weightList.push([fortune + 1, 1]);
+	}
+	const multiplier = weightRandom(...weightList);
+	return tileDrop * multiplier;
 }
