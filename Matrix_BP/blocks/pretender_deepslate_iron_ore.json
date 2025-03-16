@@ -6,36 +6,36 @@
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
-				"explosion_resistance": 30
+				"explosion_resistance": 15
 			},
 			"minecraft:destructible_by_mining": {
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 7.5
+						"destroy_speed": 11.25
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 1.15
+						"destroy_speed": 1.7
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 0.75
+						"destroy_speed": 1.15
 					},
 					{
 						"item": "minecraft:diamond_pickaxe",
-						"destroy_speed": 0.6
+						"destroy_speed": 0.85
 					},
 					{
 						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 0.5
+						"destroy_speed": 0.75
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 1.25
+						"destroy_speed": 1.9
 					}
 				],
-				"seconds_to_destroy": 15
+				"seconds_to_destroy": 22.5
 			},
 			"minecraft:map_color": [112, 112, 112],
 			"minecraft:custom_components": ["ironLoot"]

@@ -6,7 +6,7 @@
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
-				"explosion_resistance": 30
+				"explosion_resistance": 15
 			},
 			"minecraft:destructible_by_mining": {
 				"item_specific_speeds": [

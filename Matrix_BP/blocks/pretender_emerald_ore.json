@@ -2,7 +2,7 @@
 	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:iron_ore"
+			"identifier": "matrix:emerald_ore"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
@@ -16,7 +16,7 @@
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 1.15
+						"destroy_speed": 3.75
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
@@ -38,7 +38,7 @@
 				"seconds_to_destroy": 15
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["ironLoot"]
+			"minecraft:custom_components": ["emeraldLoot"]
 		}
 	}
 }

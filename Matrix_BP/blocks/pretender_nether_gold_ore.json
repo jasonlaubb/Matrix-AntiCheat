@@ -2,17 +2,17 @@
 	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:iron_ore"
+			"identifier": "matrix:nether_gold_ore"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
-				"explosion_resistance": 15
+				"explosion_resistance": 30
 			},
 			"minecraft:destructible_by_mining": {
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 7.5
+						"destroy_speed": 2.25
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
@@ -32,13 +32,13 @@
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 1.25
+						"destroy_speed": 0.4
 					}
 				],
 				"seconds_to_destroy": 15
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["ironLoot"]
+			"minecraft:custom_components": ["goldLoot"]
 		}
 	}
 }
