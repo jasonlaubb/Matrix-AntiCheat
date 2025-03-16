@@ -14,7 +14,8 @@
             "minecraft:icon": "banner_pattern",
             "minecraft:glint": true,
             "minecraft:max_stack_size": 1,
-            "minecraft:can_destroy_in_creative": false
+            "minecraft:can_destroy_in_creative": false,
+            "minecraft:custom_components": ["matrixui"]
         }
     }
 }

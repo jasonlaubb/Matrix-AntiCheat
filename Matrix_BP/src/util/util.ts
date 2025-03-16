@@ -239,3 +239,7 @@ export function sendMessages(players: Player[], message: (RawMessage | string)[]
         player.sendMessage(message);
     });
 }
+export function vanillaAny (item: string, ...array: string[]) {
+    if (!item.startsWith("minecraft:")) return false;
+    return array.some((a) => a.endsWith(item));
+}

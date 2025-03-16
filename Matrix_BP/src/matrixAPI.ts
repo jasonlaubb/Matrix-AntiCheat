@@ -17,7 +17,7 @@
 扁　　　扁　　　　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　扁扁扁　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　　　　　　扁扁　　　扁　　　扁扁扁扁　　　　　　　　扁
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
-import { Player, RawText, system, world } from "@minecraft/server";
+import { EquipmentSlot, ItemStack, Player, RawText, system, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
@@ -30,6 +30,7 @@ import { setupFlagFunction } from "./util/flag";
 import { changeValueOfObject, getValueFromObject, waitShowActionForm } from "./util/util";
 import { logRestart } from "./assets/logSystem";
 import { pythag } from "./util/fastmath";
+import "./assets/customComponentRegistry";
 export { Module, Command, Config };
 // The class that store the tick event that is handled by the Module class
 type IntegratedPlayerCallback = (tickData: TickData, player: Player) => TickData;
@@ -738,6 +739,18 @@ Player.prototype.isMoving = function () {
     const { x: vX, z: vZ } = this.getVelocity();
     return (iX !== 0 || vX !== 0) && (iY !== 0 || vZ !== 0);
 };
+Player.prototype.getHeldItem = function () {
+    return this.getComponent("equippable")!.getEquipment(EquipmentSlot.Mainhand);
+}
+ItemStack.prototype.getEnchantLevel = function (enchantmentId: string) {
+    const enchantmentComponent = this.getComponent("enchantable");
+    if (!enchantmentComponent) return 0;
+    try {
+        return (enchantmentComponent.getEnchantment(enchantmentId)?.level ?? -1) + 1;
+    } catch {
+        return 0;
+    }
+}
 function* loadModuleRegistry(): Generator<void, void, void> {
     try {
         const items = program;

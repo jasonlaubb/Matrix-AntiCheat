@@ -38,7 +38,7 @@
 				"seconds_to_destroy": 7.5
 			},
 			"minecraft:flammable": false,
-			"minecraft:loot": "loot_tables/matrix/stone.json"
+			"minecraft:custom_components": ["stoneLoot"]
 		}
 	}
 }

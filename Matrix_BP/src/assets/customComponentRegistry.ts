@@ -1,0 +1,45 @@
+import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, ItemStack, Player, world } from "@minecraft/server";
+import { vanillaAny } from "../util/util";
+import { MinecraftEnchantmentTypes, MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
+import { ModPanel } from "../util/modPanel";
+class matrixui implements ItemCustomComponent {
+	constructor () {
+		this.onUse = this.onUse.bind(this);
+	}
+	onUse ({ source }: ItemComponentUseEvent) {
+		source.runChatCommand("matrixui");
+	}
+}
+class modPanel implements ItemCustomComponent {
+	constructor () {
+		this.onUse = this.onUse.bind(this);
+	}
+	onUse ({ source }: ItemComponentUseEvent) {
+		if (!source.isAdmin()) return;
+		ModPanel.open(source);
+	}
+	onHitEntity ({ hitEntity, attackingEntity }: ItemComponentHitEntityEvent) {
+		if (hitEntity instanceof Player && attackingEntity instanceof Player && attackingEntity.isAdmin())
+			ModPanel.open(attackingEntity, hitEntity);
+	}
+}
+class stoneLoot implements BlockCustomComponent {
+	constructor () {
+		this.onPlayerDestroy = this.onPlayerDestroy.bind(this);
+	}
+	onPlayerDestroy ({ player, block: { location, dimension } }: BlockComponentPlayerDestroyEvent) {
+		const item = player?.getHeldItem();
+		if (player) {
+			if (!item || !vanillaAny(item.typeId, "pickaxe")) return;
+		}
+		if (item && item.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) > 0)
+			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Stone, 1), location);
+		else;
+			dimension.spawnItem(new ItemStack(MinecraftItemTypes.Cobblestone, 1), location);
+	}
+}
+world.beforeEvents.worldInitialize.subscribe((init) => {
+	init.itemComponentRegistry.registerCustomComponent("matrixui", new matrixui());
+	init.itemComponentRegistry.registerCustomComponent("modPanel", new modPanel());
+	init.blockComponentRegistry.registerCustomComponent("stoneLoot", new stoneLoot());
+})

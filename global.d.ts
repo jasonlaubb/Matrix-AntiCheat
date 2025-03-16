@@ -20,6 +20,10 @@ declare module "@minecraft/server" {
 		mobAuraLastFlagTimestamp: number;
 		killAuraIdList: string[];
 		isCrashed: boolean;
+		getHeldItem: () => ItemStack | undefined;
+	}
+	interface ItemStack {
+		getEnchantLevel: (id: string) => number;
 	}
 }
 interface Console {
