@@ -5,7 +5,7 @@ import { MinecraftEnchantmentTypes } from "@minecraft/vanilla-data";
  * @author jasonlaubb
  * @description Create custom ore drops
  */
-export default function tileBuilder (silkTile: string, deepTile: string | null, dropItem: string, allowTool: string[], baseRange: null | [number, number], minOrbs: number = 0, maxOrbs: number = 0) {
+export default function tileBuilder (silkTile: string, deepTile: string | null, dropItem: string, allowTool: string[], baseRange: null | [number, number], minOrbs: number = 0, maxOrbs: number = 0, normal: boolean = false) {
 	class OreTile implements BlockCustomComponent {
 		constructor () {
 			this.onPlayerDestroy = this.onPlayerDestroy.bind(this);
@@ -25,7 +25,7 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 					dimension.spawnItem(new ItemStack(silkTile, 1), location);
 			} else {
 				if (baseRange) {
-					dimension.spawnItem(new ItemStack(dropItem, tileMultiplier(level, baseRange)), location);
+					dimension.spawnItem(new ItemStack(dropItem, tileMultiplier(level, baseRange, normal)), location);
 				} else {
 					dimension.spawnItem(new ItemStack(dropItem, 1), location);
 				}
@@ -34,13 +34,15 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 	}
 	return new OreTile();
 }
-function tileMultiplier (fortune: number = 0, baseRange: [number, number]) {
+function tileMultiplier (fortune: number = 0, baseRange: [number, number], normal: boolean) {
 	if (fortune === 0) return 1;
 	const [min, max] = baseRange;
 	const weightList: [number, number][] = [[randomInt(min, max), 2]];
-	for (let i = 0; i < fortune; i++) {
+	for (let i = 1; i <= fortune; i++) {
 		const level = i + 1;
-		weightList.push([randomInt(min * level, max * level), 1]);
+		if (normal) {
+			weightList.push([randomInt(min, max + i), 1]);
+		} else weightList.push([randomInt(min + i, max * level), 1]);
 	}
 	return weightRandom(...weightList);
 }
