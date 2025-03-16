@@ -5,70 +5,70 @@
     "padding": 8, // Prevent textures from visually overflowing into each other
     "texture_data": {
         "m_ancient_debris_side" : {
-            "textures" : "textures/blocks/m_ancient_debris_side"
+            "textures" : ["textures/blocks/m_ancient_debris_side"]
         },
         "m_ancient_debris_top" : {
-            "textures" : "textures/blocks/m_ancient_debris_top"
+            "textures" : ["textures/blocks/m_ancient_debris_top"]
         },
         "m_stone": {
-            "textures": "textures/blocks/m_stone"
+            "textures": ["textures/blocks/m_stone"]
         },
         "m_netherrack": {
-            "textures": "textures/blocks/m_netherrack"
+            "textures": ["textures/blocks/m_netherrack"]
         },
         "m_diamond_ore": {
-            "textures": "textures/blocks/m_diamond_ore"
+            "textures": ["textures/blocks/m_diamond_ore"]
         },
         "m_deepslate_diamond_ore": {
-            "textures": "textures/blocks/m_deepslate_diamond_ore"
+            "textures": ["textures/blocks/m_deepslate_diamond_ore"]
         },
         "m_lapis_ore": {
-            "textures": "textures/blocks/m_lapis_ore"
+            "textures": ["textures/blocks/m_lapis_ore"]
         },
         "m_deepslate_lapis_ore": {
-            "textures": "textures/blocks/m_deepslate_lapis_ore"
+            "textures": ["textures/blocks/m_deepslate_lapis_ore"]
         },
         "m_redstone_ore": {
-            "textures": "textures/blocks/m_redstone_ore"
+            "textures": ["textures/blocks/m_redstone_ore"]
         },
         "m_deepslate_redstone_ore": {
-            "textures": "textures/blocks/m_deepslate_redstone_ore"
+            "textures": ["textures/blocks/m_deepslate_redstone_ore"]
         },
         "m_coal_ore": {
-            "textures": "textures/blocks/m_coal_ore"
+            "textures": ["textures/blocks/m_coal_ore"]
         },
         "m_deepslate_coal_ore": {
-            "textures": "textures/blocks/m_deepslate_coal_ore"
+            "textures": ["textures/blocks/m_deepslate_coal_ore"]
         },
         "m_quartz_ore": {
-            "textures": "textures/blocks/m_quartz_ore"
+            "textures": ["textures/blocks/m_quartz_ore"]
         },
         "m_nether_gold_ore": {
-            "textures": "textures/blocks/m_nether_gold_ore"
+            "textures": ["textures/blocks/m_nether_gold_ore"]
         },
         "m_iron_ore": {
-            "textures": "textures/blocks/m_iron_ore"
+            "textures": ["textures/blocks/m_iron_ore"]
         },
         "m_deepslate_iron_ore": {
-            "textures": "textures/blocks/m_deepslate_iron_ore"
+            "textures": ["textures/blocks/m_deepslate_iron_ore"]
         },
         "m_gold_ore": {
-            "textures": "textures/blocks/m_gold_ore"
+            "textures": ["textures/blocks/m_gold_ore"]
         },
         "m_deepslate_gold_ore": {
-            "textures": "textures/blocks/m_deepslate_gold_ore"
+            "textures": ["textures/blocks/m_deepslate_gold_ore"]
         },
         "m_emerald_ore": {
-            "textures": "textures/blocks/m_emerald_ore"
+            "textures": ["textures/blocks/m_emerald_ore"]
         },
         "m_deepslate_emerald_ore": {
-            "textures": "textures/blocks/m_deepslate_emerald_ore"
+            "textures": ["textures/blocks/m_deepslate_emerald_ore"]
         },
         "m_copper_ore": {
-            "textures": "textures/blocks/m_copper_ore"
+            "textures": ["textures/blocks/m_copper_ore"]
         },
         "m_deepslate_copper_ore": {
-            "textures": "textures/blocks/m_deepslate_copper_ore"
+            "textures": ["textures/blocks/m_deepslate_copper_ore"]
         }
     }
 }
