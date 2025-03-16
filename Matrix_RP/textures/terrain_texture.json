@@ -1,6 +1,6 @@
 {
     "resource_pack_name": "Matrix AntiCheat RP",
-    "texture_name": "matrix.terrain",
+    "texture_name": "atlas.terrain",
     "num_mip_levels": 4, // Quality of texture when viewed from a distance or at an angle
     "padding": 8, // Prevent textures from visually overflowing into each other
     "texture_data": {
