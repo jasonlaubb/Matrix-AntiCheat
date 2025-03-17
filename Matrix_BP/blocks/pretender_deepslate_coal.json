@@ -1,5 +1,5 @@
 {
-	"format_version": "1.21.10",
+	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
 			"identifier": "matrix:deepslate_coal"
@@ -9,37 +9,12 @@
 				"explosion_resistance": 30
 			},
 			"minecraft:destructible_by_mining": {
-				"item_specific_speeds": [
-					{
-						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 3.4
-					},
-					{
-						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 1.7
-					},
-					{
-						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 1.15
-					},
-					{
-						"item": "minecraft:diamond_pickaxe",
-						"destroy_speed": 0.85
-					},
-					{
-						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 0.75
-					},
-					{
-						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 0.6
-					}
-				],
 				"seconds_to_destroy": 22.5
 			},
 			"minecraft:map_color": [112, 112, 112],
 			"minecraft:custom_components": ["matrix:coalLoot"],
-			"minecraft:loot": "loot_tables/air.json"
+			"minecraft:loot": "loot_tables/air.json",
+			"tag:minecraft:is_pickaxe_item_destructible": {}
 		}
 	}
 }

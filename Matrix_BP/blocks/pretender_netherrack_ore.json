@@ -1,5 +1,5 @@
 {
-	"format_version": "1.21.10",
+	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
 			"identifier": "matrix:netherrack_ore"
@@ -9,40 +9,15 @@
 				"explosion_resistance": 2
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 2,
-				"item_specific_speeds": [
-					{
-						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 0.3
-					},
-					{
-						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 0.15
-					},
-					{
-						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 0.1
-					},
-					{
-						"item": "diamond_pickaxe",
-						"destroy_speed": 0.1
-					},
-					{
-						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 0.1
-					},
-					{
-						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 0.05
-					}
-				]
+				"seconds_to_destroy": 2
 			},
 			"minecraft:flammable": {
 				"catch_chance_modifier": 1,
 				"destroy_chance_modifier": 0
 			},
 			"minecraft:custom_components": ["matrix:netherrackLoot"],
-			"minecraft:loot": "loot_tables/air.json"
+			"minecraft:loot": "loot_tables/air.json",
+			"tag:minecraft:is_pickaxe_item_destructible": {}
 		}
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"format_version": "1.21.10",
+	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
 			"identifier": "matrix:netherite"
@@ -9,36 +9,11 @@
 				"explosion_resistance": 6000
 			},
 			"minecraft:destructible_by_mining": {
-				"item_specific_speeds": [
-					{
-						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 75
-					},
-					{
-						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 37.5
-					},
-					{
-						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 25
-					},
-					{
-						"item": "minecraft:diamond_pickaxe",
-						"destroy_speed": 5.65
-					},
-					{
-						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 5
-					},
-					{
-						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 12.5
-					}
-				],
 				"seconds_to_destroy": 150
 			},
 			"minecraft:custom_components": ["matrix:netheriteLoot"],
-			"minecraft:loot": "loot_tables/air.json"
+			"minecraft:loot": "loot_tables/air.json",
+			"tag:minecraft:is_pickaxe_item_destructible": {}
 		}
 	}
 }
