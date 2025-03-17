@@ -9,7 +9,7 @@
 				"explosion_resistance": 15
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 15
+				"seconds_to_destroy": 3
 			},
 			"minecraft:map_color": [112, 112, 112],
 			"minecraft:custom_components": ["matrix:emeraldLoot"],
