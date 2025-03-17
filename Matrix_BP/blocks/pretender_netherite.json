@@ -9,7 +9,7 @@
 				"explosion_resistance": 6000
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 150
+				"seconds_to_destroy": 30
 			},
 			"minecraft:custom_components": ["matrix:netheriteLoot"],
 			"minecraft:loot": "loot_tables/air.json",
