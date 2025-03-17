@@ -2,7 +2,7 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:deepslate_emerald_ore"
+			"identifier": "matrix:gold"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
@@ -12,32 +12,33 @@
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 11.25
+						"destroy_speed": 7.5
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 5.65
+						"destroy_speed": 3.75
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 1.15
-					},
-					{
-						"item": "minecraft:diamond_pickaxe",
-						"destroy_speed": 0.85
-					},
-					{
-						"item": "minecraft:netherite_pickaxe",
 						"destroy_speed": 0.75
 					},
 					{
+						"item": "minecraft:diamond_pickaxe",
+						"destroy_speed": 0.6
+					},
+					{
+						"item": "minecraft:netherite_pickaxe",
+						"destroy_speed": 0.5
+					},
+					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 1.9
+						"destroy_speed": 1.25
 					}
 				],
-				"seconds_to_destroy": 22.5
+				"seconds_to_destroy": 15
 			},
-			"minecraft:custom_components": ["matrix:emeraldLoot"],
+			"minecraft:map_color": [112, 112, 112],
+			"minecraft:custom_components": ["matrix:goldLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

@@ -1,8 +1,8 @@
 {
-    "resource_pack_name": "Matrix AntiCheat RP",
+    "resource_pack_name": "bridgeRP",
     "texture_name": "atlas.terrain",
-    "num_mip_levels": 4, // Quality of texture when viewed from a distance or at an angle
-    "padding": 8, // Prevent textures from visually overflowing into each other
+    "num_mip_levels": 4,
+    "padding": 8,
     "texture_data": {
         "m_ancient_debris_side" : {
             "textures" : ["textures/blocks/m_ancient_debris_side"]

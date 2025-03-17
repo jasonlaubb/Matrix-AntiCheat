@@ -2,21 +2,21 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:deepslate_gold_ore"
+			"identifier": "matrix:deepslate_coal"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
-				"explosion_resistance": 15
+				"explosion_resistance": 30
 			},
 			"minecraft:destructible_by_mining": {
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 11.25
+						"destroy_speed": 3.4
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 5.65
+						"destroy_speed": 1.7
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
@@ -32,13 +32,13 @@
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 1.9
+						"destroy_speed": 0.6
 					}
 				],
 				"seconds_to_destroy": 22.5
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["matrix:goldLoot"],
+			"minecraft:custom_components": ["matrix:coalLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

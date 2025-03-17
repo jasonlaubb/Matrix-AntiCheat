@@ -2,7 +2,7 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:lapis_ore"
+			"identifier": "matrix:deepslate_iron"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
@@ -12,33 +12,33 @@
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 7.5
+						"destroy_speed": 11.25
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 1.15
+						"destroy_speed": 1.7
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 0.75
+						"destroy_speed": 1.15
 					},
 					{
 						"item": "minecraft:diamond_pickaxe",
-						"destroy_speed": 0.6
+						"destroy_speed": 0.85
 					},
 					{
 						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 0.5
+						"destroy_speed": 0.75
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 1.25
+						"destroy_speed": 1.9
 					}
 				],
-				"seconds_to_destroy": 15
+				"seconds_to_destroy": 22.5
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["matrix:lapisLoot"],
+			"minecraft:custom_components": ["matrix:ironLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

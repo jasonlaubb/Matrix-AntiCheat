@@ -2,43 +2,43 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:stone"
+			"identifier": "matrix:iron"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
-				"explosion_resistance": 30
+				"explosion_resistance": 15
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 7.5,
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 1.15
+						"destroy_speed": 7.5
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 0.6
+						"destroy_speed": 1.15
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 0.4
+						"destroy_speed": 0.75
 					},
 					{
 						"item": "minecraft:diamond_pickaxe",
-						"destroy_speed": 0.3
+						"destroy_speed": 0.6
 					},
 					{
 						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 0.25
+						"destroy_speed": 0.5
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 0.2
+						"destroy_speed": 1.25
 					}
-				]
+				],
+				"seconds_to_destroy": 15
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["matrix:stoneLoot"],
+			"minecraft:custom_components": ["matrix:ironLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

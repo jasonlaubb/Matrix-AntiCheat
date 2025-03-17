@@ -2,7 +2,7 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:deepslate_iron_ore"
+			"identifier": "matrix:deepslate_gold"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
@@ -16,7 +16,7 @@
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 1.7
+						"destroy_speed": 5.65
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
@@ -38,7 +38,7 @@
 				"seconds_to_destroy": 22.5
 			},
 			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["matrix:ironLoot"],
+			"minecraft:custom_components": ["matrix:goldLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

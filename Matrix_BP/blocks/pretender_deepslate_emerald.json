@@ -2,21 +2,21 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:deepslate_lapis_ore"
+			"identifier": "matrix:deepslate_emerald"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
-				"explosion_resistance": 30
+				"explosion_resistance": 15
 			},
 			"minecraft:destructible_by_mining": {
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 3.4
+						"destroy_speed": 11.25
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 1.7
+						"destroy_speed": 5.65
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
@@ -32,13 +32,12 @@
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 0.6
+						"destroy_speed": 1.9
 					}
 				],
 				"seconds_to_destroy": 22.5
 			},
-			"minecraft:map_color": [112, 112, 112],
-			"minecraft:custom_components": ["matrix:coalLoot"],
+			"minecraft:custom_components": ["matrix:emeraldLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

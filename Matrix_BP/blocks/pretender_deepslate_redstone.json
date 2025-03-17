@@ -2,7 +2,7 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:deepslate_diamond_ore"
+			"identifier": "matrix:deepslate_redstone"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
@@ -37,7 +37,8 @@
 				],
 				"seconds_to_destroy": 22.5
 			},
-			"minecraft:custom_components": ["matrix:diamondLoot"],
+			"minecraft:map_color": [112, 112, 112],
+			"minecraft:custom_components": ["matrix:redstoneLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

@@ -2,42 +2,43 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:stone"
+			"identifier": "matrix:nether_gold"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
-				"explosion_resistance": 6000
+				"explosion_resistance": 30
 			},
 			"minecraft:destructible_by_mining": {
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 75
+						"destroy_speed": 2.25
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 37.5
+						"destroy_speed": 1.15
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 25
+						"destroy_speed": 0.75
 					},
 					{
 						"item": "minecraft:diamond_pickaxe",
-						"destroy_speed": 5.65
+						"destroy_speed": 0.6
 					},
 					{
 						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 5
+						"destroy_speed": 0.5
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 12.5
+						"destroy_speed": 0.4
 					}
 				],
-				"seconds_to_destroy": 150
+				"seconds_to_destroy": 15
 			},
-			"minecraft:custom_components": ["matrix:netheriteLoot"],
+			"minecraft:map_color": [112, 112, 112],
+			"minecraft:custom_components": ["matrix:goldNuggetLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

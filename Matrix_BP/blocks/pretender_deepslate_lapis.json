@@ -2,7 +2,7 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:deepslate_lapis_ore"
+			"identifier": "matrix:deepslate_lapis"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {

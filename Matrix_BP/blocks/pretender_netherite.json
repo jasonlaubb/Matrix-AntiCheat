@@ -2,46 +2,42 @@
 	"format_version": "1.21.10",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:netherrack"
+			"identifier": "matrix:netherite"
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
-				"explosion_resistance": 2
+				"explosion_resistance": 6000
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 2,
 				"item_specific_speeds": [
 					{
 						"item": "minecraft:wooden_pickaxe",
-						"destroy_speed": 0.3
+						"destroy_speed": 75
 					},
 					{
 						"item": "minecraft:stone_pickaxe",
-						"destroy_speed": 0.15
+						"destroy_speed": 37.5
 					},
 					{
 						"item": "minecraft:iron_pickaxe",
-						"destroy_speed": 0.1
+						"destroy_speed": 25
 					},
 					{
-						"item": "diamond_pickaxe",
-						"destroy_speed": 0.1
+						"item": "minecraft:diamond_pickaxe",
+						"destroy_speed": 5.65
 					},
 					{
 						"item": "minecraft:netherite_pickaxe",
-						"destroy_speed": 0.1
+						"destroy_speed": 5
 					},
 					{
 						"item": "minecraft:golden_pickaxe",
-						"destroy_speed": 0.05
+						"destroy_speed": 12.5
 					}
-				]
+				],
+				"seconds_to_destroy": 150
 			},
-			"minecraft:flammable": {
-				"catch_chance_modifier": 1,
-				"destroy_chance_modifier": 0
-			},
-			"minecraft:custom_components": ["matrix:netherrackLoot"],
+			"minecraft:custom_components": ["matrix:netheriteLoot"],
 			"minecraft:loot": "loot_tables/air.json"
 		}
 	}

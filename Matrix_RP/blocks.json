@@ -1,15 +1,15 @@
 { 
 	"format_version": "1.19.30", 
-	"matrix:stone": { 
+	"matrix:stone_ore": { 
 	  	"textures": "m_stone",
 	    "sound": "stone" 
 	},
-	"matrix:netherrack": {
+	"matrix:netherrack_ore": {
 		"isotropic": false,
 		"textures": "m_netherrack",
 		"sound": "stone"
 	},
-	"matrix:ancient_debris" : {
+	"matrix:netherite" : {
 		"sound" : "ancient_debris",
 		"textures" : {
 		   "down" : "m_ancient_debris_top",
@@ -20,74 +20,74 @@
 		   "west" : "m_ancient_debris_side"
 		}
 	},
-	"matrix:diamond_ore" : {
+	"matrix:diamond" : {
 		"sound": "stone",
 		"textures": "m_diamond_ore"
 	},
-	"matrix:deepslate_diamond_ore": {
+	"matrix:deepslate_diamond": {
 		"isotropic" : false,
 		"sound": "stone",
 		"textures": "m_deepslate_diamond_ore"
 	},
-	"matrix:gold_ore": {
+	"matrix:gold": {
 		"textures": "m_gold_ore",
 		"sound": "stone"
 	},
-	"matrix:deepslate_gold_ore": {
+	"matrix:deepslate_gold": {
 		"isotropic": false,
 		"textures": "m_deepslate_gold_ore",
 		"sound": "stone"
 	},
-	"matrix:emerald_ore": {
+	"matrix:emerald": {
 		"textures": "m_emerald_ore",
 		"sound": "stone"
 	},
-	"matrix:deepslate_emerald_ore": {
+	"matrix:deepslate_emerald": {
 		"isotropic": false,
 		"textures": "m_deepslate_emerald_ore",
 		"sound": "stone"
 	},
-	"matrix:iron_ore": {
+	"matrix:iron": {
 		"textures": "m_iron_ore",
 		"sound": "stone"
 	},
-	"matrix:deepslate_iron_ore": {
+	"matrix:deepslate_iron": {
 		"isotropic": false,
 		"textures": "m_deepslate_iron_ore",
 		"sound": "stone"
 	},
-	"matrix:lapis_ore": {
+	"matrix:lapis": {
 		"textures": "m_lapis_ore",
 		"sound": "stone"
 	},
-	"matrix:deepslate_lapis_ore": {
+	"matrix:deepslate_lapis": {
 		"isotropic": false,
 		"textures": "m_deepslate_lapis_ore",
 		"sound": "stone"
 	},
-	"matrix:redstone_ore": {
+	"matrix:redstone": {
 		"textures": "m_redstone_ore",
 		"sound": "stone"
 	},
-	"matrix:deepslate_redstone_ore": {
+	"matrix:deepslate_redstone": {
 		"isotropic": false,
 		"textures": "m_deepslate_redstone_ore",
 		"sound": "stone"
 	},
-	"matrix:coal_ore": {
+	"matrix:coal": {
 		"textures": "m_coal_ore",
 		"sound": "stone"
 	},
-	"matrix:deepslate_coal_ore": {
+	"matrix:deepslate_coal": {
 		"isotropic": false,
 		"textures": "m_deepslate_coal_ore",
 		"sound": "stone"
 	},
-	"matrix:quartz_ore": {
+	"matrix:quartz": {
 		"textures": "m_quartz_ore",
 		"sound": "stone"
 	},
-	"matrix:nether_gold_ore": {
+	"matrix:nether_gold": {
 		"textures": "m_nether_gold_ore",
 		"sound": "stone"
 	}
