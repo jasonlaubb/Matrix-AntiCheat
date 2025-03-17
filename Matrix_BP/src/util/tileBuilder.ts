@@ -1,4 +1,4 @@
-import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, ItemStack } from "@minecraft/server";
+import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, GameMode, ItemStack } from "@minecraft/server";
 import { noDrop, randomInt, spawnExpOrbs, vanillaAny, weightRandom } from "./util";
 import { MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 /**
@@ -12,8 +12,7 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 		}
 		onPlayerDestroy ({ player, block: { location, dimension }, destroyedBlockPermutation: { type: { id }} }: BlockComponentPlayerDestroyEvent) {
 			// Skip if doTileDrop is false
-			player?.sendMessage(`You breaks a ${id}....`);
-			if (noDrop()) return;
+			if (noDrop() || (player && player.getGameMode() === GameMode.creative)) return;
 			// Get the tool that player use
 			const item = player?.getHeldItem();
 			// Get the fortune level of the tool
