@@ -65,6 +65,7 @@ export default {
         daylog: true,
     } as { [key: string]: boolean },
     extraBlockOnSpammer: true,
+    unfollowRealmsPunishment: false,
     customize: {
         dataValueToPrecision: 4,
         askWetherFalseFlag: true,
