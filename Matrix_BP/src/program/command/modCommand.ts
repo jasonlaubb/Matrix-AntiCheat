@@ -2,6 +2,7 @@ import { Command } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { banHandler, matrixKick, crashPlayer, muteHandler } from "../system/moderation";
 import { Player, world } from "@minecraft/server";
+import { useRealmsplus } from "../../util/realmsplus";
 new Command()
     .setName("ban")
     .setMinPermissionLevel(2)
@@ -31,7 +32,9 @@ new Command()
     .onExecute(async (player, target) => {
         const targetPlayer = target as string;
         if (!banHandler.unban(targetPlayer)) {
-            player.sendMessage(rawtextTranslate("command.unban.notfound", targetPlayer));
+            if (useRealmsplus()) {
+                player.sendMessage(rawtextTranslate("command.unban.realmsplus", targetPlayer));
+            } else player.sendMessage(rawtextTranslate("command.unban.notfound", targetPlayer));
             return;
         }
         world.sendMessage(rawtextTranslate("command.unban.finish", targetPlayer, player.name));
