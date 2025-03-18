@@ -1,5 +1,5 @@
 import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, GameMode, ItemStack } from "@minecraft/server";
-import { noDrop, randomInt, spawnExpOrbs, vanillaAny, weightRandom } from "./util";
+import { noDrop, randomInt, spawnExpOrbs, weightRandom } from "./util";
 import { MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 /**
  * @author jasonlaubb
@@ -22,7 +22,7 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 			const multiplier = getMultiplier(level);
 			if (player) {
 				// Don't drop the item if player doesn't hold the suitable tool
-				if (!item || !vanillaAny(item.typeId, ...allowTool)) return;
+				if (allowTool && !(item && allowTool.some((tag) => item.hasTag(tag)))) return;
 				// Spawn the exp orbs
 				if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs));
 			}
