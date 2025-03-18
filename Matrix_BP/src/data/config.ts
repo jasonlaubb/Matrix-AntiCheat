@@ -76,6 +76,20 @@ export default {
         logAutoMod: true,
         logPlayerJoinLeave: true,
     },
+    // Settings related the ore hiding.
+    antiXray: {
+        hideCooldown: 3000,
+        hideVertical: {
+            x: 28,
+            y: 41,
+        },
+        hideHorizontal: {
+            x: 40,
+            y: 20,
+        },
+        viewUpAngle: -40,
+        viewDownAngle: 40,
+    },
     sensitivity: {
         antiSpeed: {
             correctSpikeDelta: true,
