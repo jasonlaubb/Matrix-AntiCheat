@@ -41,4 +41,5 @@ world.beforeEvents.worldInitialize.subscribe((init) => {
 	init.blockComponentRegistry.registerCustomComponent("matrix:netherrackLoot", tile(MinecraftItemTypes.Netherrack, null, MinecraftItemTypes.Netherrack, ["pickaxe"], null));
 	init.blockComponentRegistry.registerCustomComponent("matrix:goldNuggetLoot", tile(MinecraftItemTypes.NetherGoldOre, null, MinecraftItemTypes.GoldNugget, ["pickaxe"], [2, 6], 0, 1));
 	init.blockComponentRegistry.registerCustomComponent("matrix:quartzLoot", tile(MinecraftItemTypes.QuartzOre, null, MinecraftItemTypes.Quartz, ["pickaxe"], [1, 1], 2, 5));
+	init.blockComponentRegistry.registerCustomComponent("matrix:deepslateeLoot", tile(MinecraftItemTypes.Deepslate, null, MinecraftItemTypes.CobbledDeepslate, ["pickaxe"], null));
 })
