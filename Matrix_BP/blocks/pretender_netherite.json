@@ -9,7 +9,13 @@
 				"explosion_resistance": 6000
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 30
+				"seconds_to_destroy": 100,
+				"item_specific_speeds": [{
+			              "item": {
+                                           "tags": "q.any_tag('minecraft:is_pickaxe') && q.any_tag('minecraft:diamond_tier', 'minecraft:netherite_tier')"
+                                      },
+                                      "destroy_speed": 30
+				}]
 			},
 			"minecraft:custom_components": ["matrix:netheriteLoot"],
 			"minecraft:loot": "loot_tables/air.json",
