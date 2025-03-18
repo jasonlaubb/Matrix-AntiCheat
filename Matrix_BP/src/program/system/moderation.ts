@@ -4,6 +4,7 @@ import { MinecraftDimensionTypes } from "../../node_modules/@minecraft/vanilla-d
 import { Module } from "../../matrixAPI";
 import { generateShortTimeStr, getTimeFromTimeString } from "../../util/util";
 import crashChar from "../../data/crashChar";
+import { outboundEvent, useRealmsplus as urp } from "../util/realmsplus";
 function crashPlayer(player: Player) {
     if (player.isAdmin() || player?.isCrashed === true) return;
     if (Module.config.debug.pauseAllPunishment) {
@@ -44,6 +45,14 @@ function matrixKick(player: Player, reason: string = "No reason provided", respo
     if (Module.config.debug.pauseAllPunishment) {
         world.sendMessage(rawtextTranslate("debug.pause", "kick", player.name));
         return;
+    }
+    if (urp()) {
+        outboundEvent({
+            eventId: "realmsplus.realmKick",
+            data: {
+                username: player.name,
+            },
+        })
     }
     try {
         const { successCount } = world.getDimension(MinecraftDimensionTypes.Overworld).runCommand(`kick "${player.name}" §cYou have been kicked. §7[§bMatrix§7]\n§bReason: §e${reason}§r\n§bResponser: §e${responser}§r`);
