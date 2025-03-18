@@ -1056,4 +1056,4 @@ msgid "item.matrix.hammer"
 msgstr "§g§lMod §bHammer§r"
 
 msgid "command.unban.realmsplus"
-magstr "§bMatrix§a+ §7> §cUnable to unban %s, please use '/realm unban gamertag:%s option:<Current realm name>' in discord with realm+ bot'"
+msgstr "§bMatrix§a+ §7> §cUnable to unban %s, please use '/realm unban gamertag:%s option:<Current realm name>' in discord with realm+ bot'"
