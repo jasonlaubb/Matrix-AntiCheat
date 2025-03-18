@@ -8,7 +8,7 @@
 			"minecraft:destructible_by_explosion": {
 				"explosion_resistance": 15
 			},
-			"minecraft:destructible_by_mining": {
+			"minecraft:destructible_by_mining": [{
 				"seconds_to_destroy": 15,
 				"item_specific_speeds": {
 			              "item": {
@@ -16,7 +16,7 @@
                                       },
                                       "destroy_speed": 4.5
 				}
-			},
+			}],
 			"minecraft:custom_components": ["matrix:diamondLoot"],
 			"minecraft:loot": "loot_tables/air.json",
 			"tag:minecraft:is_pickaxe_item_destructible": {}
