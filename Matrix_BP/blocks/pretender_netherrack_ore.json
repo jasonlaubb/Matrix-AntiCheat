@@ -9,7 +9,13 @@
 				"explosion_resistance": 2
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 0.4
+				"seconds_to_destroy": 1.33,
+				"item_specific_speeds": [{
+			              "item": {
+                                           "tags": "q.any_tag('minecraft:is_pickaxe')"
+                                      },
+                                      "destroy_speed": 0.4
+				}]
 			},
 			"minecraft:flammable": {
 				"catch_chance_modifier": 1,
