@@ -9,7 +9,13 @@
 				"explosion_resistance": 30
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 1.5
+				"seconds_to_destroy": 5,
+				"item_specific_speeds": [{
+			              "item": {
+                                           "tags": "q.any_tag('minecraft:is_pickaxe')"
+                                      },
+                                      "destroy_speed": 1.5
+				}]
 			},
 			"minecraft:map_color": [112, 112, 112],
 			"minecraft:custom_components": ["matrix:stoneLoot"],
