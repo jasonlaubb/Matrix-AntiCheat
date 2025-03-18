@@ -10,12 +10,12 @@
 			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 15,
-				"item_specific_speeds": {
+				"item_specific_speeds": [{
 			              "item": {
                                            "tags": "q.any_tag('minecraft:is_pickaxe')"
                                       },
                                       "destroy_speed": 4.5
-				}
+				}]
 			},
 			"minecraft:map_color": [112, 112, 112],
 			"minecraft:custom_components": ["matrix:coalLoot"],
