@@ -9,7 +9,7 @@
 				"explosion_resistance": 30
 			},
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 14.99,
+				"seconds_to_destroy": 15,
 			        "item": {
                                     "tags": "q.any_tag('minecraft:is_pickaxe')"
                                 },
