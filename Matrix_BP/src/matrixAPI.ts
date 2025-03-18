@@ -393,7 +393,7 @@ class Command {
                 event.cancel = true;
                 return;
             } else if (!event.sender.isAdmin() && Module.config.extraBlockOnSpammer) {
-                if (event.message.match(/(\n)|(\r)/) || event.message.startsWith("* External")) {
+                if (event.message.match(/(\n)|(\r)|(\*\sExternal)/g) || event.message.length > 512) {
                     event.cancel = true;
                 } else {
                     const player = event.sender;
