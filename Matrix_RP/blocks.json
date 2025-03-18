@@ -26,7 +26,7 @@
 	},
 	"matrix:deepslate_diamond": {
 		"isotropic" : false,
-		"sound": "stone",
+		"sound": "deepslate",
 		"textures": "m_deepslate_diamond"
 	},
 	"matrix:gold": {
@@ -36,7 +36,7 @@
 	"matrix:deepslate_gold": {
 		"isotropic": false,
 		"textures": "m_deepslate_gold",
-		"sound": "stone"
+		"sound": "deepslate"
 	},
 	"matrix:emerald": {
 		"textures": "m_emerald",
@@ -45,7 +45,7 @@
 	"matrix:deepslate_emerald": {
 		"isotropic": false,
 		"textures": "m_deepslate_emerald",
-		"sound": "stone"
+		"sound": "deepslate"
 	},
 	"matrix:iron": {
 		"textures": "m_iron",
@@ -54,7 +54,7 @@
 	"matrix:deepslate_iron": {
 		"isotropic": false,
 		"textures": "m_deepslate_iron",
-		"sound": "stone"
+		"sound": "deepslate"
 	},
 	"matrix:lapis": {
 		"textures": "m_lapis",
@@ -63,7 +63,7 @@
 	"matrix:deepslate_lapis": {
 		"isotropic": false,
 		"textures": "m_deepslate_lapis",
-		"sound": "stone"
+		"sound": "deepslate"
 	},
 	"matrix:redstone": {
 		"textures": "m_redstone",
@@ -72,7 +72,7 @@
 	"matrix:deepslate_redstone": {
 		"isotropic": false,
 		"textures": "m_deepslate_redstone",
-		"sound": "stone"
+		"sound": "deepslate"
 	},
 	"matrix:coal": {
 		"textures": "m_coal",
@@ -81,7 +81,7 @@
 	"matrix:deepslate_coal": {
 		"isotropic": false,
 		"textures": "m_deepslate_coal",
-		"sound": "stone"
+		"sound": "deepslate"
 	},
 	"matrix:quartz": {
 		"textures": "m_quartz",
