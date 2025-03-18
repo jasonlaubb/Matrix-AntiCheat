@@ -50,9 +50,10 @@ function matrixKick(player: Player, reason: string = "No reason provided", respo
         outboundEvent({
             eventId: "realmsplus.realmKick",
             data: {
-                username: player.name,
+                gamertag: player.name,
             },
-        })
+        });
+        return;
     }
     try {
         const { successCount } = world.getDimension(MinecraftDimensionTypes.Overworld).runCommand(`kick "${player.name}" §cYou have been kicked. §7[§bMatrix§7]\n§bReason: §e${reason}§r\n§bResponser: §e${responser}§r`);
@@ -78,6 +79,17 @@ const banHandler = {
     ban: (player: Player, responser: string, indefinitely: boolean = true, time: number = 0, reason: string = "No reason provided") => {
         if (Module.config.debug.pauseAllPunishment) {
             world.sendMessage(rawtextTranslate("debug.pause", "ban", player.name));
+            return;
+        }
+        if (urp()) {
+            outboundEvent({
+                eventId: "realmsplus.realmBan",
+                data: {
+                    gamertag: player.name,
+                    duration: indefinitely ? undefined : `${Math.floor(time / 1000)}s`,
+                    reason,
+                },
+            });
             return;
         }
         world.setDynamicProperty(`isBanned::${player.name}`, JSON.stringify({ responser, reason, dateEnd: Date.now() + time, indefinitely: indefinitely, time }));
