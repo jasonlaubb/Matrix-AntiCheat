@@ -16,6 +16,9 @@
         "m_netherrack_ore": {
             "textures": ["textures/blocks/m_netherrack"]
         },
+        "m_deepslate_ore": {
+            "textures": ["textures/blocks/m_deepslate"]
+        },
         "m_diamond": {
             "textures": ["textures/blocks/m_diamond_ore"]
         },
