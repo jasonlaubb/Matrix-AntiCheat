@@ -9,6 +9,14 @@
 		"textures": "m_netherrack_ore",
 		"sound": "stone"
 	},
+	"matrix:deepslate_ore": {
+		"isotropic" : {
+                     "down" : true,
+                     "up" : true
+                },
+		"textures": "m_deepslate_ore",
+		"sound": "deepslate"
+	},
 	"matrix:netherite" : {
 		"sound" : "ancient_debris",
 		"textures" : {
