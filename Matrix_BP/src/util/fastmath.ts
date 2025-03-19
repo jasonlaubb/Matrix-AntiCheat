@@ -151,3 +151,11 @@ export function fastBelow(centerLocation: Vector3, dimension: Dimension): (Block
         return undefined;
     }
 }
+
+export function fastMin (a: number, b: number) {
+    return a < b ? a : b
+}
+
+export function fastMax (a: number, b: number) {
+    return a > b ? a : b
+}
