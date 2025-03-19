@@ -1,6 +1,8 @@
 export default {
-    "block": {
-        "stone": "matrix:stone_ore",
+    "ore": {
         "coal_ore": "matrix:coal",
     },
+    "nore": {
+        "stone": "matrix:stone_ore",
+    }
 }
