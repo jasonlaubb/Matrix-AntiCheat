@@ -116,6 +116,7 @@ export interface TickData {
     };
 }
 export default [
+    "./program/prevention/xray",
     "./program/detection/disabler",
     "./program/detection/firewall",
     "./program/detection/speed",
