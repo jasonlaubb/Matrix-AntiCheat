@@ -2,7 +2,7 @@ import { BlockVolume, Dimension, Player, system, Vector3 } from "@minecraft/serv
 import { Module, IntegratedSystemEvent } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { TickData } from "../import";
-import { fastMax, fastMin } from "../../util/fastmath";
+import { fastMax, fastMin, pythag } from "../../util/fastmath";
 import oreData from "../../data/oreData";
 const entries = Object.entries(oreData.ore).concat(Object.entries(oreData.nore));
 let eventId: IntegratedSystemEvent;
@@ -27,6 +27,14 @@ new Module()
 	})
 	.register();
 function onPlayerTick(tickData: TickData, player: Player) {
+	const now = Date.now();
+	const config = Module.config.antiXray;
+	if (now - tickData.xray.lastGenerate <= config.cooldown) return tickData;
+	const view = getRotArea(player.instant.rotation.x);
+	if (view !== tickData.xray.lastGenerateRotArea) {
+		replaceArea(player.dimension, player.location, config.horizontal.y, config.horizontal.y, config.horizontal.x);
+		tickData.xray.lastGenerate = now;
+	}
 	return tickData;
 }
 const LOWEST_Y = -64;
