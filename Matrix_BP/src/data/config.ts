@@ -80,6 +80,7 @@ export default {
     // Settings related the ore hiding.
     antiXray: {
         hideCooldown: 3000,
+        maxDistance: 5.5,
         hideVertical: {
             x: 14,
             y: 41,
