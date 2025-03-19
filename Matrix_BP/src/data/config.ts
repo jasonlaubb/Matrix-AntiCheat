@@ -81,11 +81,11 @@ export default {
     antiXray: {
         hideCooldown: 3000,
         hideVertical: {
-            x: 28,
+            x: 14,
             y: 41,
         },
         hideHorizontal: {
-            x: 40,
+            x: 20,
             y: 20,
         },
         viewUpAngle: -40,
