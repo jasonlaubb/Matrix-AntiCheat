@@ -69,6 +69,6 @@ function checkToolLevel (itemStack: ItemStack, item: string, level: number) {
 	const isItem = itemStack.typeId.includes(item);
 	if (!isItem) return;
 	if (level === 0) return true;
-	const tierTag = ["wood", "stone", "iron", "diamond", "netherite"].slice(level, 4).map((i) => "minecraft:" + i + "_tier");
+	const tierTag = ["stone", "iron", "diamond", "netherite"].slice(level - 1, 4).map((i) => "minecraft:" + i + "_tier");
 	return level === 0 || tierTag.some((tag) => itemStack.hasTag(tag));
 }
