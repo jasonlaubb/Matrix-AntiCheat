@@ -30,16 +30,16 @@ world.beforeEvents.worldInitialize.subscribe((init) => {
 	init.itemComponentRegistry.registerCustomComponent("matrix:modPanel", new modPanel());
 	// Pretender Blocks
 	init.blockComponentRegistry.registerCustomComponent("matrix:stoneLoot", tile(MinecraftItemTypes.Stone, null, MinecraftItemTypes.Cobblestone, ["pickaxe"], null));
-	init.blockComponentRegistry.registerCustomComponent("matrix:diamondLoot", tile(MinecraftItemTypes.DiamondOre, MinecraftItemTypes.DeepslateDiamondOre, MinecraftItemTypes.Diamond, ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1], 3, 7));
-	init.blockComponentRegistry.registerCustomComponent("matrix:coalLoot", tile(MinecraftItemTypes.CoalOre, MinecraftItemTypes.DeepslateCoalOre, MinecraftItemTypes.Coal, ["pickaxe"], [1, 1], 0, 2));
-	init.blockComponentRegistry.registerCustomComponent("matrix:ironLoot", tile(MinecraftItemTypes.IronOre, MinecraftItemTypes.DeepslateIronOre, MinecraftItemTypes.RawIron, ["stone_pickaxe", "iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1]));
-	init.blockComponentRegistry.registerCustomComponent("matrix:goldLoot", tile(MinecraftItemTypes.GoldOre, MinecraftItemTypes.DeepslateGoldOre, MinecraftItemTypes.RawGold, ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1]));
-	init.blockComponentRegistry.registerCustomComponent("matrix:redstoneLoot", tile(MinecraftItemTypes.RedstoneOre, MinecraftItemTypes.DeepslateRedstoneOre, MinecraftItemTypes.Redstone, ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 5], 1, 5, true));
-	init.blockComponentRegistry.registerCustomComponent("matrix:emeraldLoot", tile(MinecraftItemTypes.EmeraldOre, MinecraftItemTypes.DeepslateEmeraldOre, MinecraftItemTypes.Emerald, ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1], 3, 7));
-	init.blockComponentRegistry.registerCustomComponent("matrix:lapisLoot", tile(MinecraftItemTypes.LapisOre, MinecraftItemTypes.DeepslateLapisOre, MinecraftItemTypes.LapisLazuli, ["stone_pickaxe", "iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1], 2, 5));
-	init.blockComponentRegistry.registerCustomComponent("matrix:netheriteLoot", tile(MinecraftItemTypes.AncientDebris, null, MinecraftItemTypes.AncientDebris, ["diamond_pickaxe", "netherite_pickaxe"], null));
-	init.blockComponentRegistry.registerCustomComponent("matrix:netherrackLoot", tile(MinecraftItemTypes.Netherrack, null, MinecraftItemTypes.Netherrack, ["pickaxe"], null));
-	init.blockComponentRegistry.registerCustomComponent("matrix:goldNuggetLoot", tile(MinecraftItemTypes.NetherGoldOre, null, MinecraftItemTypes.GoldNugget, ["pickaxe"], [2, 6], 0, 1));
-	init.blockComponentRegistry.registerCustomComponent("matrix:quartzLoot", tile(MinecraftItemTypes.QuartzOre, null, MinecraftItemTypes.Quartz, ["pickaxe"], [1, 1], 2, 5));
-	init.blockComponentRegistry.registerCustomComponent("matrix:deepslateeLoot", tile(MinecraftItemTypes.Deepslate, null, MinecraftItemTypes.CobbledDeepslate, ["pickaxe"], null));
+	init.blockComponentRegistry.registerCustomComponent("matrix:diamondLoot", tile(MinecraftItemTypes.DiamondOre, MinecraftItemTypes.DeepslateDiamondOre, MinecraftItemTypes.Diamond, 2, [1, 1], 3, 7));
+	init.blockComponentRegistry.registerCustomComponent("matrix:coalLoot", tile(MinecraftItemTypes.CoalOre, MinecraftItemTypes.DeepslateCoalOre, MinecraftItemTypes.Coal, 0, [1, 1], 0, 2));
+	init.blockComponentRegistry.registerCustomComponent("matrix:ironLoot", tile(MinecraftItemTypes.IronOre, MinecraftItemTypes.DeepslateIronOre, MinecraftItemTypes.RawIron, 1, ["stone_pickaxe", "iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1]));
+	init.blockComponentRegistry.registerCustomComponent("matrix:goldLoot", tile(MinecraftItemTypes.GoldOre, MinecraftItemTypes.DeepslateGoldOre, MinecraftItemTypes.RawGold, 2, ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"], [1, 1]));
+	init.blockComponentRegistry.registerCustomComponent("matrix:redstoneLoot", tile(MinecraftItemTypes.RedstoneOre, MinecraftItemTypes.DeepslateRedstoneOre, MinecraftItemTypes.Redstone, 2, [1, 5], 1, 5, true));
+	init.blockComponentRegistry.registerCustomComponent("matrix:emeraldLoot", tile(MinecraftItemTypes.EmeraldOre, MinecraftItemTypes.DeepslateEmeraldOre, MinecraftItemTypes.Emerald, 2, [1, 1], 3, 7));
+	init.blockComponentRegistry.registerCustomComponent("matrix:lapisLoot", tile(MinecraftItemTypes.LapisOre, MinecraftItemTypes.DeepslateLapisOre, MinecraftItemTypes.LapisLazuli, 1 [1, 1], 2, 5));
+	init.blockComponentRegistry.registerCustomComponent("matrix:netheriteLoot", tile(MinecraftItemTypes.AncientDebris, null, MinecraftItemTypes.AncientDebris, 3, null));
+	init.blockComponentRegistry.registerCustomComponent("matrix:netherrackLoot", tile(MinecraftItemTypes.Netherrack, null, MinecraftItemTypes.Netherrack, 0, null));
+	init.blockComponentRegistry.registerCustomComponent("matrix:goldNuggetLoot", tile(MinecraftItemTypes.NetherGoldOre, null, MinecraftItemTypes.GoldNugget, 0, [2, 6], 0, 1));
+	init.blockComponentRegistry.registerCustomComponent("matrix:quartzLoot", tile(MinecraftItemTypes.QuartzOre, null, MinecraftItemTypes.Quartz, 0, [1, 1], 2, 5));
+	init.blockComponentRegistry.registerCustomComponent("matrix:deepslateeLoot", tile(MinecraftItemTypes.Deepslate, null, MinecraftItemTypes.CobbledDeepslate, 0, null));
 })
