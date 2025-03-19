@@ -108,7 +108,12 @@ export interface TickData {
     disabler: {
         gliding: boolean;
         lastFlagTimestamp: number;
-    }
+    };
+    xray: {
+        lastGenerate: number;
+        lastGenerateLocation: Vector3;
+        lastGenerateRotArea: 0 | 1 | 2;
+    };
 }
 export default [
     "./program/detection/disabler",
