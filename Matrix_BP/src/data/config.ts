@@ -156,9 +156,6 @@ export default {
         defaultRank: "Member",
         topRankOnly: false,
     },
-    antiXray: {
-        debug: false,
-    },
     userRecruitmentFunction: true,
     debug: {
         pauseAllPunishment: false, // Stop all punishment on util function.
