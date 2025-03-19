@@ -5,7 +5,7 @@ import { MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-da
  * @author jasonlaubb
  * @description Create custom ore drops
  */
-export default function tileBuilder (silkTile: string, deepTile: string | null, dropItem: string, allowTool: string[], baseRange: null | [number, number], minOrbs: number = 0, maxOrbs: number = 0, normal: boolean = false) {
+export default function tileBuilder (silkTile: string, toolLevel: number, dropItem: string, allowTool: [string, number]| null, baseRange: null | [number, number], minOrbs: number = 0, maxOrbs: number = 0, normal: boolean = false) {
 	class OreTile implements BlockCustomComponent {
 		constructor () {
 			this.onPlayerDestroy = this.onPlayerDestroy.bind(this);
@@ -22,7 +22,7 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 			const multiplier = getMultiplier(level);
 			if (player) {
 				// Don't drop the item if player doesn't hold the suitable tool
-				if (allowTool && !(item && allowTool.some((tag) => item.hasTag(tag)))) return;
+				if (toolLevel > 0 && !(item && !checkToolLevel("pickaxe", toolLevel)) return;
 				// Spawn the exp orbs
 				if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs));
 			}
@@ -64,4 +64,8 @@ function getMultiplier (fortune: number = 0) {
 	}
 	const multiplier = weightRandom(...weightList);
 	return multiplier;
+}
+function checkToolLevel (itemStack: ItemStack, item: string, level: number) {
+	const tierTag = [undefined, "stone", "iron", "diamond", "netherite"].slice(0, level).slice(1).map((i) => "minecraft:" + i + "_tier");
+	return item.typeId.includes(item) && tierTag.some((tag) => itemStack.hasTag(tag));
 }
