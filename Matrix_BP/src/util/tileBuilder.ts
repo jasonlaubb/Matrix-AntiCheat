@@ -22,7 +22,7 @@ export default function tileBuilder (silkTile: string, toolLevel: number, dropIt
 			const multiplier = getMultiplier(level);
 			if (player) {
 				// Don't drop the item if player doesn't hold the suitable tool
-				if (toolLevel > 0 && !(item && !checkToolLevel("pickaxe", toolLevel)) return;
+				if (toolLevel >= 0 && !(item && !checkToolLevel(item, "pickaxe", toolLevel)) return;
 				// Spawn the exp orbs
 				if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs));
 			}
@@ -66,6 +66,6 @@ function getMultiplier (fortune: number = 0) {
 	return multiplier;
 }
 function checkToolLevel (itemStack: ItemStack, item: string, level: number) {
-	const tierTag = [undefined, "stone", "iron", "diamond", "netherite"].slice(0, level).slice(1).map((i) => "minecraft:" + i + "_tier");
-	return item.typeId.includes(item) && tierTag.some((tag) => itemStack.hasTag(tag));
+	const tierTag = ["wood", "stone", "iron", "diamond", "netherite"].slice(level, 4).map((i) => "minecraft:" + i + "_tier");
+	return item.typeId.includes(item) && (level === 0 || tierTag.some((tag) => itemStack.hasTag(tag)));
 }
