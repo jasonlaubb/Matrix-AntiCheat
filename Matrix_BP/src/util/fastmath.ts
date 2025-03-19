@@ -14,7 +14,9 @@ export function calculateAngleFromView(pos1: Vector3, pos2: Vector3, rotationY: 
 export function calculateDistance(pos1: Vector3, pos2: Vector3): number {
     return pythag(pos1.x - pos2.x, pos1.z - pos2.z);
 }
-
+export function distance3d(pos1: Vector3, pos2: Vector3): number {
+    return pythag(pos1.x - pos2.x, pos1.y - pos2.y, pos1.z - pos2.z);
+}
 // General Maths functions
 export function fastRound(x: number) {
     return (x + 0.5) | 0;
