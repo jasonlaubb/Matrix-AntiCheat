@@ -98,5 +98,14 @@
 	"matrix:nether_gold": {
 		"textures": "m_nether_gold",
 		"sound": "stone"
+	},
+	"matrix:copper": {
+		"textures": "m_copper",
+		"sound": "stone"
+	},
+	"matrix:deepslate_copper": {
+		"isotropic": false,
+		"textures": "m_deepslate_copper",
+		"sound": "deepslate"
 	}
 }
