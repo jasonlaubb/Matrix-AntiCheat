@@ -51,5 +51,6 @@ function replaceArea(dimension: Dimension, location: Vector3, upHeight: number, 
 }
 
 function getRotArea(rotX: number) {
-	return rotX > 45 ? 0 : (rotX < -45 ? 2 : 1);
+	const config = Module.config.antiXray.middleView;
+	return rotX > config ? 0 : (rotX < -config ? 2 : 1);
 }

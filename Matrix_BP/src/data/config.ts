@@ -89,8 +89,7 @@ export default {
             x: 20,
             y: 20,
         },
-        viewUpAngle: -40,
-        viewDownAngle: 40,
+        middleView: 40,
     },
     sensitivity: {
         antiSpeed: {
