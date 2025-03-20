@@ -33,15 +33,27 @@ function onPlayerTick(tickData: TickData, player: Player) {
 	const view = getRotArea(player.instant.rotation.x);
 	let gen = false;
 	if (view !== tickData.xray.lastGenerateRotArea) {
-		// Not finished
-		replaceArea(player.dimension, player.location, config.vertical.y, config.vertical.y, config.horizontal.x);
+		switch (view) {
+			case 0: {
+				replaceArea(player.dimension, player.location, 0, config.vertical.y, config.vertical.x);
+				break;
+			}
+			case 1: {
+				replaceArea(player.dimension, player.location, config.horizontal.y, config.horizontal.x, config.horizontal.x);
+				break;
+			}
+			case 2: {
+				replaceArea(player.dimension, player.location, config.vertical.y, 0, config.vertical.x);
+				break;
+			}
+		}
 		gen = true;
 	} else if (distance3d(player.location, tickData.global.lastLocaton) > config.maxDistance) {
 		replaceArea(player.dimension, player.location, config.horizontal.y, config.horizontal.y, config.horizontal.x);
 		gen = true;
 	}
 	if (gen) {
-		
+		//unfinished
 	}
 	return tickData;
 }
