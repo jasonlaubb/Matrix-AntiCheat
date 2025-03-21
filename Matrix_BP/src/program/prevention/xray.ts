@@ -48,7 +48,7 @@ function onPlayerTick(tickData: TickData, player: Player) {
 			}
 		}
 		gen = true;
-	} else if (distance3d(player.location, tickData.global.lastLocation) > config.maxDistance) {
+	} else if (player.isMoving() && distance3d(player.location, tickData.global.lastLocation) > config.maxDistance) {
 		replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.y, config.hideHorizontal.x);
 		gen = true;
 	}
@@ -64,11 +64,12 @@ const HIGHEST_Y = 255;
 function replaceArea(dimension: Dimension, location: Vector3, upHeight: number, downHeight: number, horizontal: number) {
 	const minLocation = { x: location.x - horizontal, y: fastMin(HIGHEST_Y, fastMax(LOWEST_Y, location.y - downHeight)), z: location.z - horizontal };
 	const maxLocation = { x: location.x + horizontal, y: fastMax(LOWEST_Y, fastMin(HIGHEST_Y, location.y + upHeight)), z: location.z + horizontal };
+	const volume = new BlockVolume(minLocation, maxLocation);
 	function* replaceArea (): Generator<void, void, void> {
 		for (const [replaceId, withId] of entries) {
-			const fill = dimension.fillBlocks(new BlockVolume(minLocation, maxLocation), withId, {
+			const fill = dimension.fillBlocks(volume, withId, {
 				blockFilter: {
-					includeTypes: [replaceId]
+					includeTypes: [replaceId],
 				},
 				ignoreChunkBoundErrors: true,
 			});

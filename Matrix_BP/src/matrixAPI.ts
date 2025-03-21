@@ -737,7 +737,7 @@ Player.prototype.isAlive = function () {
 Player.prototype.isMoving = function () {
     const { x: iX, y: iY } = this.inputInfo.getMovementVector();
     const { x: vX, z: vZ } = this.getVelocity();
-    return (iX !== 0 || vX !== 0) && (iY !== 0 || vZ !== 0);
+    return (iX !== 0 && vX !== 0) || (iY !== 0 && vZ !== 0);
 };
 Player.prototype.getHeldItem = function () {
     return this.getComponent("equippable")!.getEquipment(EquipmentSlot.Mainhand);

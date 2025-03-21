@@ -79,7 +79,7 @@ export default {
     },
     // Settings related the ore hiding.
     antiXray: {
-        checkInterval: 1500,
+        checkInterval: 2200,
         maxDistance: 5.5,
         hideVertical: {
             x: 14,
