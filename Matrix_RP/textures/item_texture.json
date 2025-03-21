@@ -1,8 +1,11 @@
 {
     "resource_pack_name": "Matrix AntiCheat RP",
     "texture_data": {
-        "matrix:itemui": {
-            "textures": "textures/items/itemui"
+        "matrixui": {
+            "textures": ["textures/item/matrixui"]
+        },
+        "modhammer": {
+            "textures": ["textures/item/modhammer"]
         }
     }
 }

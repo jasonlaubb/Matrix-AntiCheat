@@ -257,6 +257,7 @@ class Command {
     public subCommands?: Command[];
     public description: RawText = rawtext({ text: "§cUnknown§r" });
     public shortDescription: RawText | null = null;
+    public buttonIcon: string = "textures/ui/chat_send.png";
     public setName(name: string) {
         this.availableId.push(name);
         return this;
@@ -275,6 +276,10 @@ class Command {
     }
     public addShortDescription(sd: RawText) {
         this.shortDescription = sd;
+        return this;
+    }
+    public addIcon (icon: string) {
+        this.buttonIcon = "textures/" +icon;
         return this;
     }
     public addOption(name: RawText, description: RawText, type: OptionTypes, typeInfo?: undefined | TypeInfo, optional = false) {
