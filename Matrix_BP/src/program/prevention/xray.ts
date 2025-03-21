@@ -29,31 +29,33 @@ new Module()
 function onPlayerTick(tickData: TickData, player: Player) {
 	const now = Date.now();
 	const config = Module.config.antiXray;
-	if (now - tickData.xray.lastGenerate <= config.cooldown) return tickData;
-	const view = getRotArea(player.instant.rotation.x);
+	if (now - tickData.xray.lastGenerate <= config.checkInterval) return tickData;
+	const view = getRotArea(tickData.instant.rotation.x);
 	let gen = false;
 	if (view !== tickData.xray.lastGenerateRotArea) {
 		switch (view) {
 			case 0: {
-				replaceArea(player.dimension, player.location, 0, config.vertical.y, config.vertical.x);
+				replaceArea(player.dimension, player.location, 0, config.hideVertical.y, config.hideVertical.x);
 				break;
 			}
 			case 1: {
-				replaceArea(player.dimension, player.location, config.horizontal.y, config.horizontal.x, config.horizontal.x);
+				replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.x, config.hideHorizontal.x);
 				break;
 			}
 			case 2: {
-				replaceArea(player.dimension, player.location, config.vertical.y, 0, config.vertical.x);
+				replaceArea(player.dimension, player.location, config.hideVertical.y, 0, config.hideVertical.x);
 				break;
 			}
 		}
 		gen = true;
-	} else if (distance3d(player.location, tickData.global.lastLocaton) > config.maxDistance) {
-		replaceArea(player.dimension, player.location, config.horizontal.y, config.horizontal.y, config.horizontal.x);
+	} else if (distance3d(player.location, tickData.global.lastLocation) > config.maxDistance) {
+		replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.y, config.hideHorizontal.x);
 		gen = true;
 	}
 	if (gen) {
-		//unfinished
+		tickData.xray.lastGenerate = now;
+		tickData.xray.lastGenerateLocation = player.location;
+		tickData.xray.lastGenerateRotArea = view;
 	}
 	return tickData;
 }
