@@ -13,7 +13,7 @@ new Module()
 	.addCategory("prevention")
 	.setToggleId("antiXray")
 	.onModuleEnable(() => {
-		eventId = Module.subscribePlayerTickEvent(onPlayerTick);
+		eventId = Module.subscribePlayerTickEvent(onPlayerTick, true);
 	})
 	.onModuleDisable(() => {
 		Module.clearTickEvent(eventId);
