@@ -4,6 +4,7 @@ import { rawtextTranslate } from "../../util/rawtext";
 import { TickData } from "../import";
 import { fastMax, fastMin, distance3d } from "../../util/fastmath";
 import oreData from "../../data/oreData";
+import { MinecraftDimensionTypes } from "@minecraft/vanilla-data";
 const entries = Object.entries(oreData.ore).concat(Object.entries(oreData.nore));
 let eventId: IntegratedSystemEvent;
 new Module()
@@ -29,7 +30,7 @@ new Module()
 function onPlayerTick(tickData: TickData, player: Player) {
 	const now = Date.now();
 	const config = Module.config.antiXray;
-	if (now - tickData.xray.lastGenerate <= config.checkInterval) return tickData;
+	if (player.dimension.id === MinecraftDimensionTypes.TheEnd || now - tickData.xray.lastGenerate <= config.checkInterval) return tickData;
 	const view = getRotArea(tickData.instant.rotation.x);
 	let gen = false;
 	if (view !== tickData.xray.lastGenerateRotArea) {
