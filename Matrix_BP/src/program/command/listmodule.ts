@@ -14,8 +14,8 @@ new Command()
         allModules.forEach((module) => {
             const toggleId = module.getToggleId()!;
             const isEnabled = Module.config.modules[toggleId]?.state;
-            const buttonColour = isEnabled ? "§l§2" : "§l§c";
-            listModule.button(fastText().addText(buttonColour).addRawText(module.getName()).endline().addText("§r§8").addTran(module.getToggleId()!).build());
+            const button = isEnabled ? { colour: "§l§2", icon: "textures/ui/protection-enabled.png" } : { colour: "§l§c", icon: "textures/ui/protection-disabled.png" };
+            listModule.button(fastText().addText(button.colour).addRawText(module.getName()).endline().addText("§r§8").addTran(module.getToggleId()!).build());
         });
         player.sendMessage(rawtextTranslate("ui.closechat"));
         const result = await waitShowActionForm(listModule, player);
@@ -34,7 +34,7 @@ new Command()
             const state = result.formValues![0]!;
             const toggleId = selectedModule.getToggleId()!;
             // For the command handler, 0 & 1 can be used as false & true
-            player.runChatCommand(`setmodule ${toggleId} ${state}`);
+            player.runChatCommand("setmodule", toggleId, state.toString());
         });
     })
     .register();

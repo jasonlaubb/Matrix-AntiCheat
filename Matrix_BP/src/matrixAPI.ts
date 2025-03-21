@@ -279,7 +279,7 @@ class Command {
         return this;
     }
     public addIcon (icon: string) {
-        this.buttonIcon = "textures/" +icon;
+        this.buttonIcon = "textures/" + icon + ".png";
         return this;
     }
     public addOption(name: RawText, description: RawText, type: OptionTypes, typeInfo?: undefined | TypeInfo, optional = false) {
@@ -575,7 +575,7 @@ export class DirectPanel {
         for (const command of allCommands) {
             const theAction = command.shortDescription ?? command.description;
             const commandId = command.availableId[0];
-            ui.button(fastText().addText("§7．§1").addRawText(theAction).addText("§7．§j").endline().addTran("directpanel.button", commandId).build());
+            ui.button(fastText().addText("§7．§1").addRawText(theAction).addText("§7．§j").endline().addTran("directpanel.button", commandId).build(), command.buttonIcon);
         }
         // Close the chat and continue... Easy right?
         const result = await waitShowActionForm(ui, player);
