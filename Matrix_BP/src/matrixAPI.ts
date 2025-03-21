@@ -594,7 +594,13 @@ export class DirectPanel {
             const ui = new ModalFormData().title(rawtextTranslate("directpanel.build"));
             const playerNameArray = world.getAllPlayers().map(({ name }) => name);
             const notPlayerTarget = requiredOption.type !== "player" && requiredOption.type !== "target";
-            if (notPlayerTarget) {
+            const isChoice = requiredOption.type === "choice";
+            const isBoolean = requiredOption.type === "boolean";
+            if (isChoice) {
+                ui.dropdown(body, requiredOption.typeInfo!.arrayRange!, 0);
+            } else if (isBoolean) {
+                ui.dropdown(body, ["True (1)", "False (0)"], 0);
+            } else if (notPlayerTarget) {
                 ui.textField(body, "Type here...");
             } else {
                 ui.dropdown(body, playerNameArray, 0);
@@ -602,7 +608,7 @@ export class DirectPanel {
             //@ts-expect-error
             const result = await ui.show(player);
             if (result.canceled || (result.formValues![0] as string).length == 0) return;
-            currentCommand.push(notPlayerTarget ? result.formValues![0] as string : playerNameArray[result.formValues![0] as number]);
+            currentCommand.push(isChoice ? requiredOption.typeInfo!.arrayRange![result.formValues![0] as number] : (isBoolean ? (result.formValues![0] as number).toString() : (notPlayerTarget ? result.formValues![0] as string : playerNameArray[result.formValues![0] as number])));
         }
         for (const optionalOption of commandSelected.optionalOption) {
             const body = fastText()
@@ -616,7 +622,13 @@ export class DirectPanel {
             const ui = new ModalFormData().title(rawtextTranslate("directpanel.build"));
             const playerNameArray = world.getAllPlayers().map(({ name }) => name);
             const notPlayerTarget = optionalOption.type !== "player" && optionalOption.type !== "target";
-            if (notPlayerTarget) {
+            const isChoice = optionalOption.type === "choice";
+            const isBoolean = optionalOption.type === "boolean";
+            if (isChoice) {
+                ui.dropdown(body, optionalOption.typeInfo!.arrayRange!, 0);
+            } else if (isBoolean) {
+                ui.dropdown(body, ["True (1)", "False (0)"], 0)
+            }else if (notPlayerTarget) {
                 ui.textField(body, "Keep this empty to skip (optional)");
             } else {
                 ui.dropdown(body, playerNameArray, 0);
@@ -627,7 +639,7 @@ export class DirectPanel {
             if ((result.formValues![0] as string).length == 0) {
                 break;
             }
-            currentCommand.push(notPlayerTarget ? result.formValues![0] as string : playerNameArray[result.formValues![0] as number]);
+            currentCommand.push(isChoice ? optionalOption.typeInfo!.arrayRange![result.formValues![0] as number] : (isBoolean ? (result.formValues![0] as number).toString() : (notPlayerTarget ? result.formValues![0] as string : playerNameArray[result.formValues![0] as number])));
         }
         // Run the command for it.
         player.runChatCommand(...currentCommand);
