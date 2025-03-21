@@ -1066,3 +1066,6 @@ msgstr "Prevent user for using xray to see the ore locations directly."
 
 msgid "module.xray.warning"
 msgstr "Anti-Xray system is running to provide a fair game experience."
+
+msgid "commands.op.failed"
+msgstr "§bMatrix§a+ §7> §cFailed to op %s. If you want to get permission in Matrix, you can type '-op' in chat."
