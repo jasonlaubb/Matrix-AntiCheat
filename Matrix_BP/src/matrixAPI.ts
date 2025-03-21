@@ -321,14 +321,14 @@ class Command {
         Command.registeredCommands.push(this);
     }
     public static initialize() {
-        Player.prototype.runChatCommand = function (commandString: string) {
-            const args = commandString
+        Player.prototype.runChatCommand = function (...commandString: string[]) {
+            const args = commandString.length === 1 ? commandString[0]
                 .trim()
                 .match(Command.optionMatchRegExp)
                 ?.map((arg) => {
                     if (arg.startsWith('"') && arg.endsWith('"')) return arg.slice(1, -1);
                     return arg;
-                });
+                }) : commandString;
             if (!args) {
                 this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.empty", with: [] }));
                 return;
@@ -370,11 +370,12 @@ class Command {
                 const argValues = Command.getArgValue(args, command, this);
                 if (argValues === null) return;
                 if (Module.config.logSettings.logCommandUsage) {
+                    let logCmd = commandString.join(" ");
                     if (["op", "setpassword"].includes(command.availableId[0])) {
-                        commandString = `${args[0]} ****`;
+                        logCmd = `${args[0]} ****`;
                     }
                     write(false, `§1${command.availableId[0]} §8(ChatCMD)`, this.name, {
-                        executedCommand: commandString,
+                        executedCommand: logCmd,
                     });
                 }
                 if (command?.executeFunc) {
