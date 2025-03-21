@@ -2,7 +2,7 @@ import { BlockVolume, Dimension, Player, system, Vector3 } from "@minecraft/serv
 import { Module, IntegratedSystemEvent } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 import { TickData } from "../import";
-import { fastMax, fastMin } from "../../util/fastmath";
+import { fastMax, fastMin, distance3d } from "../../util/fastmath";
 import oreData from "../../data/oreData";
 const entries = Object.entries(oreData.ore).concat(Object.entries(oreData.nore));
 let eventId: IntegratedSystemEvent;
@@ -27,6 +27,34 @@ new Module()
 	})
 	.register();
 function onPlayerTick(tickData: TickData, player: Player) {
+	const now = Date.now();
+	const config = Module.config.antiXray;
+	if (now - tickData.xray.lastGenerate <= config.cooldown) return tickData;
+	const view = getRotArea(player.instant.rotation.x);
+	let gen = false;
+	if (view !== tickData.xray.lastGenerateRotArea) {
+		switch (view) {
+			case 0: {
+				replaceArea(player.dimension, player.location, 0, config.vertical.y, config.vertical.x);
+				break;
+			}
+			case 1: {
+				replaceArea(player.dimension, player.location, config.horizontal.y, config.horizontal.x, config.horizontal.x);
+				break;
+			}
+			case 2: {
+				replaceArea(player.dimension, player.location, config.vertical.y, 0, config.vertical.x);
+				break;
+			}
+		}
+		gen = true;
+	} else if (distance3d(player.location, tickData.global.lastLocaton) > config.maxDistance) {
+		replaceArea(player.dimension, player.location, config.horizontal.y, config.horizontal.y, config.horizontal.x);
+		gen = true;
+	}
+	if (gen) {
+		//unfinished
+	}
 	return tickData;
 }
 const LOWEST_Y = -64;
