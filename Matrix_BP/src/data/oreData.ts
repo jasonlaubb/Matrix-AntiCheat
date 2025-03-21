@@ -1,4 +1,4 @@
-export default {
+const map = {
     ore: {
         "minecraft:coal_ore": "matrix:coal",
         "minecraft:iron_ore": "matrix:iron",
@@ -16,5 +16,12 @@ export default {
         "minecraft:stone": "matrix:stone_ore",
         "minecraft:deepslate": "matrix:deepslate_ore",
         "minecraft:netherrack": "matrix:netherrack_ore",
-    }
+    },
 }
+export default map;
+export const stoneBlocks = Object.keys(map.nore).concat(Object.values(map.nore), [
+    "minecraft:granite",
+    "minecraft:diorite",
+    "minecraft:andesite",
+]);
+export const oreBlocks = Object.keys(map.ore).concat(Object.values(map.ore));
