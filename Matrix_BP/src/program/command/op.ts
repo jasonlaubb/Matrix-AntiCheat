@@ -9,6 +9,7 @@ new Command()
     .setMinPermissionLevel(0)
     .setDescription(rawtextTranslate("command.op.description"))
     .addShortDescription(rawtextTranslate("command.op.sd"))
+    .addIcon("ui/op")
     .addOption(rawtextTranslate("command.op.password"), rawtextTranslate("command.op.password.description"), "string", undefined, true)
     .onExecute(async (player, password) => {
         const config = Module.config;

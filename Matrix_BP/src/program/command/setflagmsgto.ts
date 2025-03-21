@@ -4,6 +4,7 @@ import { rawtextTranslate } from "../../util/rawtext";
 new Command()
     .setName("setflagmsgto")
     .setMinPermissionLevel(3)
+    .addIcon("ui/send_icon")
     .setAliases("flagmode", "setflagmesssagetarget", "fm")
     .setDescription(rawtextTranslate("command.setflagmsgto.description"))
     .addOption(

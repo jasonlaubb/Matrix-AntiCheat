@@ -2,11 +2,12 @@ import { Command } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { banHandler, matrixKick, crashPlayer, muteHandler } from "../system/moderation";
 import { Player, world } from "@minecraft/server";
-import { useRealmsplus } from "../../util/realmsplus";
+import { useRealmsPlus } from "../../util/realmsplus";
 new Command()
     .setName("ban")
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.ban.description"))
+    .addIcon("barrier")
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .addOption(rawtextTranslate("command.moderation.reason"), rawtextTranslate("command.moderation.reason.description"), "string", undefined, true)
     .addOption(
@@ -28,11 +29,12 @@ new Command()
     .setName("unban")
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.unban.description"))
+    .addIcon("ui/invite_base")
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "string", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as string;
         if (!banHandler.unban(targetPlayer)) {
-            if (useRealmsplus()) {
+            if (useRealmsPlus()) {
                 player.sendMessage(rawtextTranslate("command.unban.realmsplus", targetPlayer));
             } else player.sendMessage(rawtextTranslate("command.unban.notfound", targetPlayer));
             return;
@@ -43,6 +45,7 @@ new Command()
 new Command()
     .setName("banlist")
     .setMinPermissionLevel(1)
+    .addIcon("items/book_enchanted")
     .setDescription(rawtextTranslate("command.banlist.description"))
     .onExecute(async (player) => {
         const bannedPlayer = banHandler.bannedList();
@@ -55,6 +58,7 @@ new Command()
     .register();
 new Command()
     .setName("kick")
+    .addIcon("items/diamond_sword")
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.kick.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
@@ -67,6 +71,7 @@ new Command()
     .register();
 new Command()
     .setName("crash")
+    .addIcon("ui/ErrorGlyph")
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.crash.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
@@ -78,6 +83,7 @@ new Command()
     .register();
 new Command()
     .setName("mute")
+    .addIcon("ui/mute_on")
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.mute.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
@@ -98,6 +104,7 @@ new Command()
     .register();
 new Command()
     .setName("unmute")
+    .addIcon("ui/mute_off")
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.unmute.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)

@@ -3,6 +3,7 @@ import { Command } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 new Command()
     .setName("setrank")
+    .addIcon("ui/bubble")
     .setDescription(rawtextTranslate("command.setrank.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
     .addOption(rawtextTranslate("command.setrank.rank"), rawtextTranslate("command.setrank.rank.description"), "string", undefined, false)

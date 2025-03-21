@@ -8,6 +8,7 @@ const TEST_REG = /^(#[(a-zA-Z)|/]+\,[^#,]+#)+$/
 new Command()
 	.setDescription(rawtextTranslate("command.mset.description"))
 	.setName("mset")
+	.addIcon("ui/gear")
 	.setMinPermissionLevel(3)
 	.setAliases("multiset", "fastset", "fset", "import")
 	.onExecute(async (player) => {

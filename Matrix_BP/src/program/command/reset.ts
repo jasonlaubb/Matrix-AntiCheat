@@ -3,7 +3,8 @@ import { rawtext } from "../../util/rawtext";
 
 new Command()
     .setName("reset")
-    .setDescription(rawtext({ text: "Reset Matrix AntiCheat." }))
+    .setDescription(rawtext({ text: "Reset Settings" }))
+    .addIcon("ui/move")
     .setMinPermissionLevel(4)
     .onExecute(async (player) => {
         player.sendMessage("<matrix-debug> Reset finished. This action is irreversible.");

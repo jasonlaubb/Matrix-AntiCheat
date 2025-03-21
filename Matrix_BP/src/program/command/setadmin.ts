@@ -5,6 +5,7 @@ import { fastText, rawtextTranslate } from "../../util/rawtext";
 new Command()
     .setName("setadmin")
     .setMinPermissionLevel(4)
+    .addIcon("ui/op")
     .setDescription(rawtextTranslate("command.setadmin.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
     .addOption(

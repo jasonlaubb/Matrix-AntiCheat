@@ -7,6 +7,7 @@ new Command()
     .setName("setpassword")
     .setAliases("passwords", "newpassword", "changepassword")
     .setMinPermissionLevel(4)
+    .addIcon("ui/invisibility_effect")
     .setDescription(rawtextTranslate("command.setpassword.description"))
     .addOption(
         rawtextTranslate("command.setpassword.password"),
