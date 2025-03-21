@@ -82,6 +82,7 @@ new Command()
     .setMinPermissionLevel(1)
     .addShortDescription(rawtextTranslate("command.configui.sd"))
     .setDescription(rawtextTranslate("command.configui.description"))
+    .addIcon("ui/icon_setting")
     .onExecute(async (player) => {
         player.sendMessage(rawtextTranslate("ui.closechat"));
         const form = new ActionFormData().title(rawtextTranslate("ui.config.title")).body(rawtextTranslate("ui.config.body")).button(rawtextTranslate("ui.config.button"));

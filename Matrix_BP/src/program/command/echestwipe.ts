@@ -8,6 +8,7 @@ new Command()
     .addShortDescription(rawtextTranslate("command.echestwipe.sd"))
     .setMinPermissionLevel(1)
     .setDescription(rawtextTranslate("command.echestwipe.description"))
+    .addIcon("blocks/ender_chest_front")
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .onExecute(async (player, target) => {
         const targetPlayer = target as Player;

@@ -6,6 +6,7 @@ Inv.initializeInventorySync();
 new Command()
     .setName("invsee")
     .setMinPermissionLevel(2)
+    .addIcon("gui/newgui/mob_effects/night_vision_effect")
     .setDescription(rawtextTranslate("command.invsee.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
     .onExecute(async (player, player2) => {

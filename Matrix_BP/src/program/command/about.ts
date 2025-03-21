@@ -7,6 +7,7 @@ new Command()
     .setMinPermissionLevel(0)
     .setDescription(rawtextTranslate("command.about.description"))
     .addShortDescription(rawtextTranslate("command.about.sd"))
+    .addIcon("ui/Feedback")
     .onExecute(async (player) => {
         const aboutMessage = fastText()
             .addTran("command.about.title")
