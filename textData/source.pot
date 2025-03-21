@@ -1057,3 +1057,12 @@ msgstr "§g§lMod §bHammer§r"
 
 msgid "command.unban.realmsplus"
 msgstr "§bMatrix§a+ §7> §cUnable to unban %s, please use '/realm unban gamertag:%s option:<Current realm name>' in discord with realm+ bot'"
+
+msgid "module.xray.name"
+msgstr "Anti Xray"
+
+msgid "module.xray.description"
+msgstr "Prevent user for using xray to see the ore locations directly."
+
+msgid "module.xray.warning"
+msgstr "Anti-Xray system is running to provide a fair game experience."

@@ -1,10 +1,11 @@
-import { BlockVolume, Dimension, Player, system, Vector3 } from "@minecraft/server";
+import { BlockVolume, Dimension, GameMode, Player, PlayerBreakBlockAfterEvent, system, Vector3, world } from "@minecraft/server";
 import { Module, IntegratedSystemEvent } from "../../matrixAPI";
-import { rawtextTranslate } from "../../util/rawtext";
+import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { TickData } from "../import";
 import { fastMax, fastMin, distance3d } from "../../util/fastmath";
 import oreData from "../../data/oreData";
 import { MinecraftDimensionTypes } from "@minecraft/vanilla-data";
+import { oreBlocks } from "../../data/oreData";
 const entries = Object.entries(oreData.ore).concat(Object.entries(oreData.nore));
 let eventId: IntegratedSystemEvent;
 new Module()
@@ -14,9 +15,11 @@ new Module()
 	.setToggleId("antiXray")
 	.onModuleEnable(() => {
 		eventId = Module.subscribePlayerTickEvent(onPlayerTick, true);
+		world.afterEvents.playerBreakBlock.subscribe(playerBreakBlock);
 	})
 	.onModuleDisable(() => {
 		Module.clearTickEvent(eventId);
+		world.afterEvents.playerBreakBlock.unsubscribe(playerBreakBlock);
 	})
 	.initPlayer((tickData, _playerId, player) => {
 		tickData.xray = {
@@ -59,6 +62,12 @@ function onPlayerTick(tickData: TickData, player: Player) {
 		tickData.xray.lastGenerateRotArea = view;
 	}
 	return tickData;
+}
+function playerBreakBlock ({ player, brokenBlockPermutation: { type: { id } } }: PlayerBreakBlockAfterEvent) {
+	if (player.getGameMode() !== GameMode.creative && Date.now() - (player.xrayLastWarned ?? 0) <= Module.config.antiXray.warnInterval && oreBlocks.includes(id)) {
+		player.xrayLastWarned = Date.now();
+		player.sendMessage(fastText().addText("§bMatrix§a+ §7> §a").addTran("module.xray.warning").build());
+	}
 }
 const LOWEST_Y = -64;
 const HIGHEST_Y = 255;

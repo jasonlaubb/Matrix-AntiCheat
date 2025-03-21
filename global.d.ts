@@ -21,6 +21,7 @@ declare module "@minecraft/server" {
 		killAuraIdList: string[];
 		isCrashed: boolean;
 		getHeldItem: () => ItemStack | undefined;
+		xrayLastWarned: number;
 	}
 	interface ItemStack {
 		getEnchantLevel: (id: string) => number;
