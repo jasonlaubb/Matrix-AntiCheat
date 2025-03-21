@@ -68,15 +68,13 @@ function replaceArea(dimension: Dimension, location: Vector3, upHeight: number, 
 	const volume = new BlockVolume(minLocation, maxLocation);
 	function* replaceArea (): Generator<void, void, void> {
 		for (const [replaceId, withId] of entries) {
-			const fill = dimension.fillBlocks(volume, withId, {
+			dimension.fillBlocks(volume, withId, {
 				blockFilter: {
 					includeTypes: [replaceId],
 				},
 				ignoreChunkBoundErrors: true,
 			});
-			if (fill.getCapacity() > 0) {
-				yield;
-			}
+			yield;
 		}
 	}
 	system.runJob(replaceArea());
