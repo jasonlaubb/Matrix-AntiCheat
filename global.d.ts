@@ -7,7 +7,7 @@ declare module "@minecraft/server" {
 		isAdmin: () => boolean;
 		getPermissionLevel: () => number;
 		setPermissionLevel: (level: number) => void;
-		runChatCommand: (command: string) => void;
+		runChatCommand: (...command: string[]) => void;
 		flag: (detected: Module, data?: { [key: string]: (string | number | (string | number)[]) }) => void;
 		safeIsOp: () => boolean;
 		isRiding: () => boolean;

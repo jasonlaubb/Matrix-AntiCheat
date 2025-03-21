@@ -30,19 +30,19 @@ export class ModPanel {
         if (res.canceled) return;
         switch (res.selection) {
             case 0: {
-                admin.runChatCommand(`mute "${playerName}" ${config.muteMinutes}`);
+                admin.runChatCommand("mute", playerName, config.muteMinutes.toString());
                 break;
             }
             case 1: {
-                admin.runChatCommand(`kick "${playerName}" "${config.kickReason}"`);
+                admin.runChatCommand("kick", playerName, config.kickReason);
                 break;
             }
             case 2: {
-                admin.runChatCommand(`ban "${playerName}" "${config.banReason}" ${config.banMinutes}`);
+                admin.runChatCommand("ban", playerName, config.banReason, config.banMinutes.toString());
                 break;
             }
             case 3: {
-                admin.runChatCommand(`crash "${playerName}"`);  
+                admin.runChatCommand("crash", playerName);  
                 break;
             }
         }

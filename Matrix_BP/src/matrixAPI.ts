@@ -576,7 +576,7 @@ export class DirectPanel {
         const result = await waitShowActionForm(ui, player);
         if (!result || result.canceled) return;
         const commandSelected = allCommands[result.selection!];
-        let currentString = commandSelected.availableId[0];
+        let currentCommand = [commandSelected.availableId[0]];
         for (const requiredOption of commandSelected.requiredOption) {
             const body = fastText()
                 .addTranRawText("command.help.target.type", rawtextTranslate(Command.typeTransferKey(requiredOption.type)))
@@ -597,7 +597,7 @@ export class DirectPanel {
             //@ts-expect-error
             const result = await ui.show(player);
             if (result.canceled || (result.formValues![0] as string).length == 0) return;
-            currentString += " " + (notPlayerTarget ? result.formValues![0] : '"' + playerNameArray[result.formValues![0] as number] + '"');
+            currentCommand.push(notPlayerTarget ? result.formValues![0] as string : playerNameArray[result.formValues![0] as number]);
         }
         for (const optionalOption of commandSelected.optionalOption) {
             const body = fastText()
@@ -622,10 +622,10 @@ export class DirectPanel {
             if ((result.formValues![0] as string).length == 0) {
                 break;
             }
-            currentString += " " + (notPlayerTarget ? result.formValues![0] : '"' + playerNameArray[result.formValues![0] as number] + '"');
+            currentCommand.push(notPlayerTarget ? result.formValues![0] as string : playerNameArray[result.formValues![0] as number]);
         }
         // Run the command for it.
-        player.runChatCommand(currentString);
+        player.runChatCommand(...currentCommand);
     }
 }
 class Config {
