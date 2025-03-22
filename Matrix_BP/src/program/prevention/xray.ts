@@ -36,11 +36,11 @@ new Module()
 function onPlayerTick(tickData: TickData, player: Player) {
 	const now = Date.now();
 	const config = Module.config.antiXray;
-	if (now - tickData.xray.timeStamp >= 1000) {
+	if (now - tickData.xray.timeStamp >= config.itemReplaceInterval) {
 		const inventory = player.getComponent("inventory")!.container!;
 		for (let i = 0; i < inventory.size; i++) {
 			const item = inventory.getItem(i);
-			if (!item || !item.typeId.startsWith("matrix:")) continue;
+			if (!item) continue;
 			const index: string | undefined = mapList[item.typeId];
 			if (index) {
 				inventory.setItem(i);
