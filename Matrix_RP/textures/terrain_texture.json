@@ -73,8 +73,11 @@
         "m_deepslate_copper": {
             "textures": ["textures/blocks/m_deepslate_copper_ore"]
         },
-        "uwu_craft_table": {
-            "textures": ["textures/blocks/uwu_craft_table"]
+        "uwu_craft_table_top": {
+            "textures": ["textures/blocks/uwu_craft_table_top"]
+        },
+        "uwu_craft_table_side": {
+            "textures": ["textures/blocks/uwu_craft_table_side"]
         }
     }
 }

@@ -109,7 +109,14 @@
 		"sound": "deepslate"
 	},
 	"matrix:uwu_craft_table": {
-		"textures": "uwu_craft_table",
+		"textures" : {
+			"down" : "uwu_craft_table_side",
+			"east" : "uwu_craft_table_side",
+			"north" : "uwu_craft_table_side",
+			"south" : "uwu_craft_table_side",
+			"up" : "uwu_craft_table_top",
+			"west" : "uwu_craft_table_side"
+		},
 		"sound": "budding_amethyst"
 	}
 }
