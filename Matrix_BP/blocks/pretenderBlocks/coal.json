@@ -12,7 +12,7 @@
 				"seconds_to_destroy": 10,
 				"item_specific_speeds": [{
 			              "item": {
-                                           "tags": "q.any_tag('minecraft:is_pickaxe')",
+                                           "tags": "q.any_tag('minecraft:is_pickaxe')"
                                       },
                                       "destroy_speed": 3
 				}]

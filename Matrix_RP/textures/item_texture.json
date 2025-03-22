@@ -6,6 +6,9 @@
         },
         "modhammer": {
             "textures": ["textures/item/modhammer"]
+        },
+        "uwu_crystal": {
+            "textures": ["textures/item/uwu_crystal"]
         }
     }
 }

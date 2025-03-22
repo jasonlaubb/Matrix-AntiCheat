@@ -12,7 +12,6 @@
                 "value": "item.matrix.hammer"
             },
             "minecraft:icon": "modhammer",
-            "minecraft:glint": true,
             "minecraft:max_stack_size": 1,
             "minecraft:can_destroy_in_creative": false,
             "minecraft:hand_equipped": true,

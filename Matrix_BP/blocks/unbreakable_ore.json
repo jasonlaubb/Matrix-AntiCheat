@@ -1,0 +1,16 @@
+{
+	"format_version": "1.21.60",
+	"minecraft:block": {
+		"description": {
+			"identifier": "matrix:uwu_craft_table"
+		},
+		"components": {
+			"minecraft:destructible_by_explosion": false,
+			"minecraft:destructible_by_mining": false,
+			"minecraft:map_color": [112, 112, 112],
+			"minecraft:crafting_table": {
+				"crafting_tags": ["crafting_table"]
+			}
+		}
+	}
+}
