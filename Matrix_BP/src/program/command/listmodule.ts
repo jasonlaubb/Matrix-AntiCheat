@@ -16,7 +16,7 @@ new Command()
             const toggleId = module.getToggleId()!;
             const isEnabled = Module.config.modules[toggleId]?.state;
             const button = isEnabled ? { colour: "§l§2", icon: "textures/ui/protection-enabled.png" } : { colour: "§l§c", icon: "textures/ui/protection-disabled.png" };
-            listModule.button(fastText().addText(button.colour).addRawText(module.getName()).endline().addText("§r§8").addTran(module.getToggleId()!).build());
+            listModule.button(fastText().addText(button.colour).addRawText(module.getName()).endline().addText("§r§8").addTran(module.getToggleId()!).build(), button.icon);
         });
         player.sendMessage(rawtextTranslate("ui.closechat"));
         const result = await waitShowActionForm(listModule, player);
