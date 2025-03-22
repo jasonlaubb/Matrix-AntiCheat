@@ -52,7 +52,7 @@ function onPlayerTick(tickData: TickData, player: Player) {
 			}
 		}
 		gen = true;
-	} else if (player.isMoving() && distance3d(player.location, tickData.xray.lastGenerateLocation) > config.maxDistance) {
+	} else if (distance3d(player.location, tickData.xray.lastGenerateLocation) > config.maxDistance) {
 		replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.y, config.hideHorizontal.x);
 		gen = true;
 	}
