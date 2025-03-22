@@ -2,7 +2,11 @@
 	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:coal"
+			"identifier": "matrix:coal",
+			"menu_category": {
+				"is_hidden_in_commands": true,
+				"category": "none"
+			}
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": {
