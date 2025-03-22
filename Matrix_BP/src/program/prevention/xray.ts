@@ -1,4 +1,4 @@
-import { BlockVolume, Dimension, GameMode, Player, PlayerBreakBlockAfterEvent, system, Vector3, world } from "@minecraft/server";
+import { BlockVolume, Dimension, GameMode, Player, PlayerBreakBlockAfterEvent, Vector3, world } from "@minecraft/server";
 import { Module, IntegratedSystemEvent } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { TickData } from "../import";
