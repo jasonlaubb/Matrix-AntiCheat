@@ -1,2 +1,3 @@
 * [Download](misc/download.md)
 * [FAQ](/misc/faq.md)
+* [Setup key](/misc/setupKey.md)
