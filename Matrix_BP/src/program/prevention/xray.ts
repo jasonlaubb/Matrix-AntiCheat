@@ -4,7 +4,7 @@ import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { TickData } from "../import";
 import { fastMax, fastMin, distance3d } from "../../util/fastmath";
 import oreData from "../../data/oreData";
-import { MinecraftDimensionTypes } from "@minecraft/vanilla-data";
+import { MinecraftDimensionTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 import { oreBlocks } from "../../data/oreData";
 const entries = Object.entries(oreData.ore).concat(Object.entries(oreData.nore));
 let eventId: IntegratedSystemEvent;
