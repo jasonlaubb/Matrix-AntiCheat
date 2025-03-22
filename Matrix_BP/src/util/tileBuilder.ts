@@ -5,12 +5,12 @@ import { MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-da
  * @author jasonlaubb
  * @description Create custom ore drops
  */
-export default function tileBuilder (silkTile: string, deepTile: string | null, dropItem: string, toolLevel: number, baseRange: null | [number, number], minOrbs: number = 0, maxOrbs: number = 0, normal: boolean = false) {
+export default function tileBuilder (dropItem: string, toolLevel: number, baseRange: null | [number, number], minOrbs: number = 0, maxOrbs: number = 0, normal: boolean = false) {
 	class OreTile implements BlockCustomComponent {
 		constructor () {
 			this.onPlayerDestroy = this.onPlayerDestroy.bind(this);
 		}
-		onPlayerDestroy ({ player, block: { location, dimension }, destroyedBlockPermutation: { type: { id }} }: BlockComponentPlayerDestroyEvent) {
+		onPlayerDestroy ({ player, block: { location, dimension } }: BlockComponentPlayerDestroyEvent) {
 			// Skip if doTileDrop is false
 			if (noDrop() || (player && player.getGameMode() === GameMode.creative)) return;
 			// Get the tool that player use
@@ -20,25 +20,20 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 			const silkTouch = item?.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) ?? 0 > 0;
 			// Get the multiplier
 			const multiplier = getMultiplier(level);
+			const centerLocation = getCentreLocation(location);
 			if (player) {
 				// Don't drop the item if player doesn't hold the suitable tool
 				if (toolLevel >= 0 && (!item || !checkToolLevel(item, "pickaxe", toolLevel))) return;
 				// Spawn the exp orbs
-				if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs));
+				if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, centerLocation, randomInt(minOrbs, maxOrbs));
 			}
 			// Drop original block if the tool has silk touch
-			if (item && silkTouch) {
-				if (deepTile && id.includes("deepslate")) {
-					dimension.spawnItem(new ItemStack(deepTile, 1), location);
-				} else {
-					dimension.spawnItem(new ItemStack(silkTile, 1), location);
-				}
-			} else {
+			if (!silkTouch) {
 				// Drop the raw ore
 				if (baseRange) {
-					dimension.spawnItem(new ItemStack(dropItem, tileMultiplier(level, baseRange, multiplier, normal)), location);
+					dimension.spawnItem(new ItemStack(dropItem, tileMultiplier(level, baseRange, multiplier, normal)), centerLocation);
 				} else {
-					dimension.spawnItem(new ItemStack(dropItem, 1), location);
+					dimension.spawnItem(new ItemStack(dropItem, 1), centerLocation);
 				}
 			}
 		}
@@ -71,4 +66,7 @@ function checkToolLevel (itemStack: ItemStack, item: string, level: number) {
 	if (level === 0) return true;
 	const tierTag = ["stone", "iron", "diamond", "netherite"].slice(level - 1).map((i) => "minecraft:" + i + "_tier");
 	return tierTag.some((tag) => itemStack.hasTag(tag));
+}
+function getCentreLocation (location: { x: number, y: number, z: number }) {
+	return { x: location.x - 0.5, y: location.y + 0.5, z: location.z - 0.5 };
 }
