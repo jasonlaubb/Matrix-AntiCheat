@@ -2,13 +2,13 @@
     "resource_pack_name": "Matrix AntiCheat RP",
     "texture_data": {
         "matrixui": {
-            "textures": ["textures/item/matrixui"]
+            "textures": ["textures/items/matrixui"]
         },
         "modhammer": {
-            "textures": ["textures/item/modhammer"]
+            "textures": ["textures/items/modhammer"]
         },
         "uwu_crystal": {
-            "textures": ["textures/item/uwu_crystal"]
+            "textures": ["textures/items/uwu_crystal"]
         }
     }
 }

@@ -1069,3 +1069,12 @@ msgstr "Anti-Xray system is running to provide a fair game experience."
 
 msgid "commands.op.failed"
 msgstr "§bMatrix§a+ §7> §cFailed to op %s. If you want to get permission in Matrix, you can type '-op' in chat."
+
+msgid "item.matrix.crystal"
+msgstr "§d§lCrystal of uwu§r"
+
+msgid "title.matrix:uwu_craft_table.name"
+msgstr "§d§lUwu §eCraft Table§r"
+
+msgid "matrix.table"
+msgstr "Uwu Craft Table"

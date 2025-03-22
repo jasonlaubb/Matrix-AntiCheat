@@ -26,6 +26,11 @@
 		},
 		"result": {
 			"item": "matrix:uwu_crystal"
-		}
+		},
+		"unlock": [
+			{
+				"item": "minecraft:bedrock"
+			}
+		]
 	}
 }
