@@ -2,7 +2,7 @@
 
 ## Matrix AntiCheat - The best Minecraft bedrock AntiCheat solution
 
-[FAQ](/misc/faq.md)
+[Getting started / FAQ](/misc/faq.md)
 [Discord](https://discord.gg/CqZGXeRKPJ)
 [Download now](/misc/download.md)
 [Key generator](https://jasonlaubb.github.io/Matrix-AntiCheat/gen.html)
