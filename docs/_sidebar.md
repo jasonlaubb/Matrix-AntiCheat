@@ -1,4 +1,5 @@
-* [Download](misc/download.md)
+* [Getting Started](/misc/start.md)
+* [Download](/misc/download.md)
 * [FAQ](/misc/faq.md)
 * [Setup key](/misc/setupKey.md)
 * [Matrix Items](/misc/items.md)
