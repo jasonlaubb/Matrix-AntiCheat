@@ -1085,5 +1085,5 @@ msgstr "Clear password"
 msgid "command.set.sd"
 msgstr "Set value by path"
 
-msgid "command.help.target.name.description"
+msgid "command.help.target.name"
 msgstr "§gParameter: §e%s"

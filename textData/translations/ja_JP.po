@@ -1438,7 +1438,7 @@ msgstr ""
 msgid "Set value by path"
 msgstr ""
 
-#: command.help.target.name.description
+#: command.help.target.name
 msgid "§gParameter: §e%s"
 msgstr ""
 
