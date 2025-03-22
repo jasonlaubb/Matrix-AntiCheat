@@ -103,12 +103,18 @@ Similarly, use `-setmodule <module's toggle id> true` to enable the module.
 
 You can also execute `-listmodule` to view the modules (including toggle id).
 
-# -op isnt working because it says command.op.start command.op.require command.op.require.cancel
+## -op isnt working because it says command.op.start command.op.require command.op.require.cancel
 
 Make sure you have enabled the resources pack of Matrix Anticheat. If it is not displaying, you can run the .mcaddon file again to let Minecraft installs that again.
 
-# Where is the chat rank and anti spam feature?
+## Where is the chat rank and anti spam feature?
 
 You can do `-setmodule chatRank enable` to enable it.
 
 Make sure to place Matrix below any addon with custom chat command.
+
+## Where is config file in your local device
+
+***The path of your config file in local device:*** C:\Users\\`(your username)`\AppData\Local\Packages\Microsoft.MinecraftUWP_`(some code)`\LocalState\games\com.mojang\behavior_packs\Matrix+Ant`(number)`
+
+It is in `Matrix_vX.X.X.mcaddon/BP/data/config.js` relatively.
