@@ -588,6 +588,8 @@ export class DirectPanel {
                 .endline()
                 .addTranRawText("command.help.target.description", requiredOption.description)
                 .endline()
+                .addTranRawText("command.help.target.name", requiredOption.name)
+                .endline()
                 .addText("§bMatrix§a+ §7> §g")
                 .addTran("directpanel.enter")
                 .build();
@@ -615,6 +617,8 @@ export class DirectPanel {
                 .addTranRawText("command.help.target.type", rawtextTranslate(Command.typeTransferKey(optionalOption.type)))
                 .endline()
                 .addTranRawText("command.help.target.description", optionalOption.description)
+                .endline()
+                .addTranRawText("command.help.target.name", optionalOption.name)
                 .endline()
                 .addText("§bMatrix§a+ §7> §g")
                 .addTran("directpanel.enter")

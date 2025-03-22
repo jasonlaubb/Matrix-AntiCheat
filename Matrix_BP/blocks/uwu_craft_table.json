@@ -14,7 +14,8 @@
 			"minecraft:crafting_table": {
 				"crafting_tags": ["uwu_table"],
 				"table_name": "matrix.table"
-			}
+			},
+			"minecraft:display_name": "tile.matrix:uwu_craft_table.name"
 		}
 	}
 }

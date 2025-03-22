@@ -1078,3 +1078,12 @@ msgstr "§d§lUwu §eCraft Table§r"
 
 msgid "matrix.table"
 msgstr "Uwu Crafting"
+
+msgid "command.clearpassword.sd"
+msgstr "Clear password"
+
+msgid "command.set.sd"
+msgstr "Set value by path"
+
+msgid "command.help.target.name.description"
+msgstr "§gParameter: §e%s"

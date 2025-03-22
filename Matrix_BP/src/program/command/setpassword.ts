@@ -35,6 +35,7 @@ new Command()
     .setAliases("deletepassword", "removepassword", "resetpassword")
     .setDescription(rawtextTranslate("command.clearpassword.description"))
     .setMinPermissionLevel(4)
+    .addIcon("blocks/obsidian")
     .onExecute(async (player) => {
         if (!Module.config.security.containsPassword) {
             player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.clearpassword.already").build());

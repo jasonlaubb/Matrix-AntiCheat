@@ -1,4 +1,4 @@
-import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, GameMode, ItemStack } from "@minecraft/server";
+import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, GameMode, ItemStack, world } from "@minecraft/server";
 import { noDrop, randomInt, spawnExpOrbs, weightRandom } from "./util";
 import { MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 /**
@@ -22,7 +22,8 @@ export default function tileBuilder (silkTile: string, deepTile: string | null, 
 			const multiplier = getMultiplier(level);
 			if (player) {
 				// Don't drop the item if player doesn't hold the suitable tool
-				if (toolLevel >= 0 && !(item && !checkToolLevel(item, "pickaxe", toolLevel))) return;
+				if (toolLevel >= 0 && (!item || !checkToolLevel(item, "pickaxe", toolLevel))) return;
+				world.sendMessage("Okay!")
 				// Spawn the exp orbs
 				if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, location, randomInt(minOrbs, maxOrbs));
 			}
@@ -67,8 +68,8 @@ function getMultiplier (fortune: number = 0) {
 }
 function checkToolLevel (itemStack: ItemStack, item: string, level: number) {
 	const isItem = itemStack.typeId.includes(item);
-	if (!isItem) return;
+	if (!isItem) return false;
 	if (level === 0) return true;
-	const tierTag = ["stone", "iron", "diamond", "netherite"].slice(level - 1, 4).map((i) => "minecraft:" + i + "_tier");
-	return level === 0 || tierTag.some((tag) => itemStack.hasTag(tag));
+	const tierTag = ["stone", "iron", "diamond", "netherite"].slice(level - 1, 3).map((i) => "minecraft:" + i + "_tier");
+	return tierTag.some((tag) => itemStack.hasTag(tag));
 }

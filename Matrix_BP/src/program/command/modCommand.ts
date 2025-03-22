@@ -7,7 +7,7 @@ new Command()
     .setName("ban")
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.ban.description"))
-    .addIcon("barrier")
+    .addIcon("blocks/barrier")
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
     .addOption(rawtextTranslate("command.moderation.reason"), rawtextTranslate("command.moderation.reason.description"), "string", undefined, true)
     .addOption(
