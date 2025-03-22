@@ -1077,4 +1077,4 @@ msgid "title.matrix:uwu_craft_table.name"
 msgstr "§d§lUwu §eCraft Table§r"
 
 msgid "matrix.table"
-msgstr "Uwu Craft Table"
+msgstr "Uwu Crafting"
