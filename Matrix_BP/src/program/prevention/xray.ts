@@ -47,6 +47,7 @@ function onPlayerTick(tickData: TickData, player: Player) {
 				inventory.addItem(new ItemStack(index, item.amount));
 			}
 		}
+		tickData.xray.timeStamp = now;
 	}
 	if (player.dimension.id === MinecraftDimensionTypes.TheEnd || now - tickData.xray.lastGenerate <= config.checkInterval) return tickData;
 	const view = getRotArea(tickData.instant.rotation.x);
