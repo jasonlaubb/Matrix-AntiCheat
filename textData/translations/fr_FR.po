@@ -1422,7 +1422,7 @@ msgstr ""
 msgid "§d§lCrystal of uwu§r"
 msgstr ""
 
-#: title.matrix:uwu_craft_table.name
+#: tile.matrix:uwu_craft_table.name
 msgid "§d§lUwu §eCraft Table§r"
 msgstr ""
 
