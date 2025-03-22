@@ -1,10 +1,9 @@
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/images/title.png">
 <p>The Supreme Anti-Cheat Solution for Minecraft Bedrock</p>
 <h1>Features</h1>
-<h2>Anti Xray</h2>
+<h2>Anti Xray Module</h2>
 <p>It is the efficient way to prevent unfair advantage caused by Xray hacking</p>
 <p>Works by changing the id and texture of the block</p>
-<a href="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/videos/antiXray.mp4" target_"_blank" rel="no_follow">Show case video</a>
 <h1>Discord support</h1>
 <p>Please join our official discord!</p>
 <a href="https://discord.gg/CqZGXeRKPJ" target="_blank" rel="nofollow">
