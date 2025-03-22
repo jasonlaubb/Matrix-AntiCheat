@@ -1,11 +1,13 @@
-import { BlockVolume, Dimension, GameMode, Player, PlayerBreakBlockAfterEvent, Vector3, world } from "@minecraft/server";
+import { BlockVolume, Dimension, GameMode, ItemStack, Player, PlayerBreakBlockAfterEvent, Vector3, world } from "@minecraft/server";
 import { Module, IntegratedSystemEvent } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { TickData } from "../import";
 import { fastMax, fastMin, distance3d } from "../../util/fastmath";
 import oreData from "../../data/oreData";
 import { MinecraftDimensionTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import { oreBlocks } from "../../data/oreData";
+import map, { oreBlocks } from "../../data/oreData";
+import { invertObject } from "../../util/util";
+const mapList = invertObject(map.ore);
 const entries = Object.entries(oreData.ore).concat(Object.entries(oreData.nore));
 let eventId: IntegratedSystemEvent;
 new Module()
@@ -26,6 +28,7 @@ new Module()
 			lastGenerate: 0,
 			lastGenerateLocation: player.location,
 			lastGenerateRotArea: getRotArea(player.getRotation().x),
+			timeStamp: 0,
 		};
 		return tickData;
 	})
@@ -33,6 +36,18 @@ new Module()
 function onPlayerTick(tickData: TickData, player: Player) {
 	const now = Date.now();
 	const config = Module.config.antiXray;
+	if (now - tickData.xray.timeStamp >= 1000) {
+		const inventory = player.getComponent("inventory")!.container!;
+		for (let i = 0; i < inventory.size; i++) {
+			const item = inventory.getItem(i);
+			if (!item || !item.typeId.startsWith("matrix:")) continue;
+			const index: string | undefined = mapList[item.typeId];
+			if (index) {
+				inventory.setItem(i);
+				inventory.addItem(new ItemStack(index, item.amount));
+			}
+		}
+	}
 	if (player.dimension.id === MinecraftDimensionTypes.TheEnd || now - tickData.xray.lastGenerate <= config.checkInterval) return tickData;
 	const view = getRotArea(tickData.instant.rotation.x);
 	let gen = false;

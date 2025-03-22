@@ -271,3 +271,10 @@ export function weightRandom(...items: [number, number][]): number {
     }
     return items[0][0];
 }
+export function invertObject (obj: { [key: string]: string }) {
+    const inverted = {} as { [key: string ]: string };
+    for (const key in obj) {
+        inverted[obj[key]] = key;
+    }
+    return inverted;
+}

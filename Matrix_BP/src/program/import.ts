@@ -113,6 +113,7 @@ export interface TickData {
         lastGenerate: number;
         lastGenerateLocation: Vector3;
         lastGenerateRotArea: 0 | 1 | 2;
+        timeStamp: number;
     };
 }
 export default [
