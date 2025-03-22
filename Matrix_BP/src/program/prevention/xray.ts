@@ -53,7 +53,20 @@ function onPlayerTick(tickData: TickData, player: Player) {
 		}
 		gen = true;
 	} else if (distance3d(player.location, tickData.xray.lastGenerateLocation) > config.maxDistance) {
-		replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.y, config.hideHorizontal.x);
+		switch (view) {
+			case 0: {
+				replaceArea(player.dimension, player.location, 0, config.hideVertical.y, config.hideVertical.x);
+				break;
+			}
+			case 1: {
+				replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.y, config.hideHorizontal.x);
+				break;
+			}
+			case 2: {
+				replaceArea(player.dimension, player.location, config.hideVertical.y, 0, config.hideVertical.x);
+				break;
+			}
+		}
 		gen = true;
 	}
 	if (gen) {
