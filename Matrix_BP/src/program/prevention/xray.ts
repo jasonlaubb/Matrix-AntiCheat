@@ -5,7 +5,7 @@ import { TickData } from "../import";
 import { fastMax, fastMin, distance3d } from "../../util/fastmath";
 import oreData from "../../data/oreData";
 import { MinecraftDimensionTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
-import map, { oreBlocks } from "../../data/oreData";
+import map from "../../data/oreData";
 import { invertObject } from "../../util/util";
 const mapList = invertObject(map.ore);
 const entries = Object.entries(oreData.ore).concat(Object.entries(oreData.nore));
@@ -92,7 +92,7 @@ function onPlayerTick(tickData: TickData, player: Player) {
 	return tickData;
 }
 function playerBreakBlock ({ player, brokenBlockPermutation: { type: { id } } }: PlayerBreakBlockAfterEvent) {
-	if (player.getGameMode() !== GameMode.creative && Date.now() - (player.xrayLastWarned ?? 0) <= Module.config.antiXray.warnInterval && oreBlocks.includes(id)) {
+	if (player.getGameMode() !== GameMode.creative && Date.now() - (player.xrayLastWarned ?? 0) <= Module.config.antiXray.warnInterval && id.startsWith("matrix:")) {
 		player.xrayLastWarned = Date.now();
 		player.sendMessage(fastText().addText("§bMatrix§a+ §7> §a").addTran("module.xray.warning").build());
 	}
