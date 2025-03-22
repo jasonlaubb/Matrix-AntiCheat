@@ -84,12 +84,12 @@ export default {
         warnInterval: 480000,
         maxDistance: 5.5,
         hideVertical: {
-            x: 12,
+            x: 10,
             y: 40,
         },
         hideHorizontal: {
             x: 20,
-            y: 10,
+            y: 8,
         },
         middleView: 40,
     },
