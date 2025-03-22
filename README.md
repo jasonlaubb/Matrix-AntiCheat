@@ -5,9 +5,7 @@
 	<h2>Anti Xray</h2>
 	<p>It is the efficient way to prevent unfair advantage caused by Xray hacking</p>
 	<p>Works by changing the id and texture of the block</p>
-	<video controls width="80%">
-		<source src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/videos/antiXray.mp4" type="video/mp4"/>
-	</video>
+	<video src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/main/docs/videos/antiXray.mp4" width="80%" controls></video>
 	<h1>Discord support</h1>
 	<p>Please join our official discord!</p>
 	<a href="https://discord.gg/CqZGXeRKPJ" target="_blank" rel="nofollow">
