@@ -2,4 +2,4 @@
 * [FAQ](/misc/faq.md)
 * [Setup key](/misc/setupKey.md)
 * [Matrix Items](/misc/items.md)
-* [Aternos](/misc/aternos.md)
+* [Setup in Aternos](/misc/aternos.md)
