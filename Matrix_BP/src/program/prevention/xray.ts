@@ -51,7 +51,7 @@ function onPlayerTick(tickData: TickData, player: Player) {
 	if (player.dimension.id === MinecraftDimensionTypes.TheEnd || now - tickData.xray.lastGenerate <= config.checkInterval) return tickData;
 	const view = getRotArea(tickData.instant.rotation.x);
 	let gen = false;
-	if (view !== tickData.xray.lastGenerateRotArea) {
+	if (view !== tickData.xray.lastGenerateRotArea || (distance3d(player.location, tickData.xray.lastGenerateLocation) > config.maxDistance)) {
 		switch (view) {
 			case 0: {
 				replaceArea(player.dimension, player.location, 0, config.hideVertical.y, config.hideVertical.x);
