@@ -50,8 +50,7 @@ function onPlayerTick(tickData: TickData, player: Player) {
 	}
 	if (player.dimension.id === MinecraftDimensionTypes.TheEnd || now - tickData.xray.lastGenerate <= config.checkInterval) return tickData;
 	const view = getRotArea(tickData.instant.rotation.x);
-	let gen = false;
-	if (view !== tickData.xray.lastGenerateRotArea || (distance3d(player.location, tickData.xray.lastGenerateLocation) > config.maxDistance)) {
+	if (view !== tickData.xray.lastGenerateRotArea || distance3d(player.location, tickData.xray.lastGenerateLocation) > config.maxDistance) {
 		switch (view) {
 			case 0: {
 				replaceArea(player.dimension, player.location, 0, config.hideVertical.y, config.hideVertical.x);
@@ -66,25 +65,6 @@ function onPlayerTick(tickData: TickData, player: Player) {
 				break;
 			}
 		}
-		gen = true;
-	} else if (distance3d(player.location, tickData.xray.lastGenerateLocation) > config.maxDistance) {
-		switch (view) {
-			case 0: {
-				replaceArea(player.dimension, player.location, 0, config.hideVertical.y, config.hideVertical.x);
-				break;
-			}
-			case 1: {
-				replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.y, config.hideHorizontal.x);
-				break;
-			}
-			case 2: {
-				replaceArea(player.dimension, player.location, config.hideVertical.y, 0, config.hideVertical.x);
-				break;
-			}
-		}
-		gen = true;
-	}
-	if (gen) {
 		tickData.xray.lastGenerate = now;
 		tickData.xray.lastGenerateLocation = player.location;
 		tickData.xray.lastGenerateRotArea = view;
