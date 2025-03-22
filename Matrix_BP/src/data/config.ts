@@ -8,6 +8,7 @@ export default {
         crashStrength: 50000, // How strong is the crash to player that can't be kicked.
     },
     modules: {
+        antiXray: { state: false, punishment: "none" },
         // movement
         antiDisabler: { state: true, punishment: "default" },
         antiSpeed: { state: true, punishment: "default" },
@@ -83,8 +84,8 @@ export default {
         warnInterval: 480000,
         maxDistance: 5.5,
         hideVertical: {
-            x: 14,
-            y: 41,
+            x: 12,
+            y: 40,
         },
         hideHorizontal: {
             x: 20,
