@@ -19,9 +19,9 @@ new Command()
         const isEnabled = Module.config.modules[toggleId]?.state;
         if (isEnabled === (state as boolean)) {
             if (isEnabled) {
-                player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setmodule.already").build());
+                player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setmodule.already.enabled").build());
             } else {
-                player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setmodule.disabled").build());
+                player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.setmodule.already.disabled").build());
             }
             return;
         }
