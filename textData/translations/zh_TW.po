@@ -1430,3 +1430,15 @@ msgstr ""
 msgid "Uwu Crafting"
 msgstr ""
 
+#: command.clearpassword.sd
+msgid "Clear password"
+msgstr ""
+
+#: command.set.sd
+msgid "Set value by path"
+msgstr ""
+
+#: command.help.target.name.description
+msgid "§gParameter: §e%s"
+msgstr ""
+
