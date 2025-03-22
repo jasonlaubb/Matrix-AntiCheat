@@ -1,4 +1,4 @@
-import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, GameMode, ItemStack } from "@minecraft/server";
+import { BlockComponentPlayerDestroyEvent, BlockCustomComponent, GameMode, ItemStack, Vector3 } from "@minecraft/server";
 import { noDrop, randomInt, spawnExpOrbs, weightRandom } from "./util";
 import { MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 /**
@@ -67,6 +67,6 @@ function checkToolLevel (itemStack: ItemStack, item: string, level: number) {
 	const tierTag = ["stone", "iron", "diamond", "netherite"].slice(level - 1).map((i) => "minecraft:" + i + "_tier");
 	return tierTag.some((tag) => itemStack.hasTag(tag));
 }
-function getCentreLocation (location: { x: number, y: number, z: number }) {
-	return { x: location.x + 0.5, y: location.y + 0.5, z: location.z + 0.5 };
+function getCentreLocation ({ x, y, z }: Vector3) {
+	return { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
 }
