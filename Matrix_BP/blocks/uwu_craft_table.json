@@ -2,7 +2,10 @@
 	"format_version": "1.21.60",
 	"minecraft:block": {
 		"description": {
-			"identifier": "matrix:uwu_craft_table"
+			"identifier": "matrix:uwu_craft_table",
+			"menu_category": {
+				"category": "items"
+			}
 		},
 		"components": {
 			"minecraft:destructible_by_explosion": false,
