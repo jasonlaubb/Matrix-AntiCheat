@@ -68,5 +68,5 @@ function checkToolLevel (itemStack: ItemStack, item: string, level: number) {
 	return tierTag.some((tag) => itemStack.hasTag(tag));
 }
 function getCentreLocation (location: { x: number, y: number, z: number }) {
-	return { x: location.x - 0.5, y: location.y + 0.5, z: location.z - 0.5 };
+	return { x: location.x + 0.5, y: location.y + 0.5, z: location.z + 0.5 };
 }
