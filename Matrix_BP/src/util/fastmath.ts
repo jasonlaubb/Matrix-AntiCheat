@@ -15,7 +15,7 @@ export function calculateDistance(pos1: Vector3, pos2: Vector3): number {
     return pythag(pos1.x - pos2.x, pos1.z - pos2.z);
 }
 export function distance3d(pos1: Vector3, pos2: Vector3): number {
-    return pythag(pos1.x - pos2.x, pos1.y - pos2.y, pos1.z - pos2.z);
+    return Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2 + (pos1.z - pos2.z) ** 2);
 }
 // General Maths functions
 export function fastRound(x: number) {

@@ -1398,3 +1398,35 @@ msgstr ""
 msgid "§g§lMod §bHammer§r"
 msgstr ""
 
+#: command.unban.realmsplus
+msgid "§bMatrix§a+ §7> §cUnable to unban %s, please use '/realm unban gamertag:%s option:<Current realm name>' in discord with realm+ bot'"
+msgstr ""
+
+#: module.xray.name
+msgid "Anti Xray"
+msgstr ""
+
+#: module.xray.description
+msgid "Prevent user for using xray to see the ore locations directly."
+msgstr ""
+
+#: module.xray.warning
+msgid "Anti-Xray system is running to provide a fair game experience."
+msgstr ""
+
+#: commands.op.failed
+msgid "§bMatrix§a+ §7> §cFailed to op %s. If you want to get permission in Matrix, you can type '-op' in chat."
+msgstr ""
+
+#: item.matrix.crystal
+msgid "§d§lCrystal of uwu§r"
+msgstr ""
+
+#: title.matrix:uwu_craft_table.name
+msgid "§d§lUwu §eCraft Table§r"
+msgstr ""
+
+#: matrix.table
+msgid "Uwu Crafting"
+msgstr ""
+

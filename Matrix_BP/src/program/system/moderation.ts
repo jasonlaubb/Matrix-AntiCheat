@@ -4,7 +4,7 @@ import { MinecraftDimensionTypes } from "../../node_modules/@minecraft/vanilla-d
 import { Module } from "../../matrixAPI";
 import { generateShortTimeStr, getTimeFromTimeString } from "../../util/util";
 import crashChar from "../../data/crashChar";
-import { outboundEvent, useRealmsplus as urp } from "../../util/realmsplus";
+import { outboundEvent, useRealmsPlus as urp } from "../../util/realmsplus";
 function crashPlayer(player: Player) {
     if (player.isAdmin() || player?.isCrashed === true) return;
     if (Module.config.debug.pauseAllPunishment) {
