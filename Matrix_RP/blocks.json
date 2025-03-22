@@ -107,5 +107,9 @@
 		"isotropic": false,
 		"textures": "m_deepslate_copper",
 		"sound": "deepslate"
+	},
+	"matrix:uwu_craft_table": {
+		"textures": "uwu_craft_table",
+		"sound": "budding_amethyst"
 	}
 }
