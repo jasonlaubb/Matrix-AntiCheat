@@ -75,7 +75,6 @@ function replaceArea(dimension: Dimension, location: Vector3, upHeight: number, 
 	const minLocation = { x: location.x - horizontal, y: fastMin(HIGHEST_Y, fastMax(LOWEST_Y, location.y - downHeight)), z: location.z - horizontal };
 	const maxLocation = { x: location.x + horizontal, y: fastMax(LOWEST_Y, fastMin(HIGHEST_Y, location.y + upHeight)), z: location.z + horizontal };
 	const volume = new BlockVolume(minLocation, maxLocation);
-	world.sendMessage(JSON.stringify(entries));
 	function* replaceArea (): Generator<void, void, void> {
 		for (const [replaceId, withId] of entries) {
 			dimension.fillBlocks(volume, withId, {
