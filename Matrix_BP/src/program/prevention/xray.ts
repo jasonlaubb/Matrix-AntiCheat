@@ -43,7 +43,7 @@ function onPlayerTick(tickData: TickData, player: Player) {
 				break;
 			}
 			case 1: {
-				replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.x, config.hideHorizontal.x);
+				replaceArea(player.dimension, player.location, config.hideHorizontal.y, config.hideHorizontal.y, config.hideHorizontal.x);
 				break;
 			}
 			case 2: {

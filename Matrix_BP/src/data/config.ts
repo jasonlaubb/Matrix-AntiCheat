@@ -88,7 +88,7 @@ export default {
         },
         hideHorizontal: {
             x: 20,
-            y: 20,
+            y: 10,
         },
         middleView: 40,
     },
