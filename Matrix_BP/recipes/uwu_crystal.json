@@ -2,35 +2,30 @@
 	"format_version": "1.20.10",
 	"minecraft:recipe_shaped": {
 		"description": {
-			"identifier": "matrix:uwu_craft_table"
+			"identifier": "matrix:uwu_crystal"
 		},
 		"tags": [
 			"crafting_table",
 			"uwu_table"
 		],
 		"pattern": [
+			"cac",
 			"aba",
-			"bcb",
-			"aba"
+			"cbc"
 		],
 		"key": {
 			"a": {
-				"item": "matrix:uwu_crystal"
+				"item": "minecraft:pink_wool"
 			},
 			"b": {
 				"item": "minecraft:bedrock"
 			},
 			"c": {
-				"item": "minecraft:crafting_table"
+				"item": "minecraft:amethyst_shard"
 			}
 		},
 		"result": {
-			"item": "matrix:uwu_craft_table"
-		},
-		"unlock": [
-			{
-				"item": "matrix:uwu_crystal"
-			}
-		]
+			"item": "matrix:uwu_crystal"
+		}
 	}
 }

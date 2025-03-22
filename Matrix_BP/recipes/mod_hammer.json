@@ -2,30 +2,30 @@
 	"format_version": "1.20.10",
 	"minecraft:recipe_shaped": {
 		"description": {
-			"identifier": "matrix:itemui"
+			"identifier": "matrix:mod_hammer"
 		},
 		"tags": [
 			"uwu_table"
 		],
 		"pattern": [
-			"aaa",
-			"aba",
-			"aaa"
+			"a",
+			"b",
+			"b"
 		],
 		"key": {
 			"a": {
-				"item": "matrix:uwu_crystal"
+				"item": "matrix:itemui"
 			},
 			"b": {
-				"item": "minecraft:redstone_block"
+				"item": "minecraft:amethyst_shard"
 			}
 		},
 		"result": {
-			"item": "matrix:itemui"
+			"item": "matrix:mod_hammer"
 		},
 		"unlock": [
 			{
-				"item": "matrix:uwu_crystal"
+				"item": "matrix:itemui"
 			}
 		]
 	}
