@@ -5,7 +5,6 @@ import { normalize } from "../../assets/latinNormalize";
 import latinVocabarySet from "../../data/filter/latinVocabarySet";
 import wordKeySet from "../../data/filter/wordKeySet";
 new Module()
-    .addCategory("utility")
     .setName(rawtextTranslate("module.chatrank.name"))
     .setDescription(rawtextTranslate("module.chatrank.description"))
     .setToggleId("chatRank")
@@ -117,12 +116,14 @@ function getPrevious4Messages(lastMessages: [string, number][]) {
     return lastMessages.slice(0, 4);
 }
 function includeWordKeySet(message: string) {
+    const lowerCased = message.toLowerCase();
     for (const key of wordKeySet) {
-        if (message.includes(key)) return true;
+        if (lowerCased.includes(key)) return true;
     }
     return false;
 }
 
 function includeLatinVocabarySet(word: string) {
-    return latinVocabarySet.has(word);
+    const lowerCased = word.toLowerCase();
+    return latinVocabarySet.has(lowerCased);
 }

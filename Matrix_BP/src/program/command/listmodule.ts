@@ -5,11 +5,15 @@ import { waitShowActionForm, waitShowModalForm } from "../../util/util";
 import { mdlType } from "../../data/category";
 new Command()
     .setName("listmodule")
-    .setAliases("modules", "toggles", "showmodules", "showtoggles", "togglelist")
+    .setAliases("modules", "toggles", "showmodules", "showtoggles", "togglelist", "listmodules")
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.listmodule.description"))
     .addIcon("blocks/bookshelf")
     .onExecute(async (player) => {
+        const select = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
+        for (const { name, icon } of mdlType) {
+            select.button(name, icon);
+        }
         const listModule = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
         const allModules = Module.registeredModule;
         allModules.forEach((module) => {

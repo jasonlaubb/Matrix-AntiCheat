@@ -132,7 +132,7 @@ class Module {
         this.playerLeave = func;
         return this;
     }
-    public onModulDisable(func: () => void) {
+    public onModuleDisable(func: () => void) {
         this.onDisable = func;
         return this;
     }
@@ -225,7 +225,7 @@ class Module {
         return Module.moduleList.filter((module) => !module.locked);
     }
     public static findRegisteredModule(id: string) {
-        return Module.registeredModule.find((module) => module.toggleId == id);
+        return Module.registeredModule.find((module) => module.toggleId.toLowerCase() === id.toLowerCase());
     }
     public static sendError(error: Error) {
         console.warn(`[Error] ${error.name}: ${error.message} : ${error?.stack ?? "Unknown"}`);
