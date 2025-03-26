@@ -30,7 +30,7 @@ import { setupFlagFunction } from "./util/flag";
 import { changeValueOfObject, getValueFromObject, waitShowActionForm } from "./util/util";
 import { logRestart } from "./assets/logSystem";
 import { pythag } from "./util/fastmath";
-import { mdlType } from "./data/category";
+import { cmdType } from "./data/category";
 import "./assets/customComponentRegistry";
 export { Module, Command, Config };
 // The class that store the tick event that is handled by the Module class
