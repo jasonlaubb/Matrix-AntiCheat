@@ -56,7 +56,7 @@ async function extraUI(player: Player) {
     const selectedType = selResult.selection! - 1;
     const isOther = selectedType === mdlType.length - 1;
     return Module.registeredModule.filter(({ tag }) => {
-        if (!tag) return isOther;
+        if (tag === undefined || tag <= 0) return isOther;
         return tag === selectedType;
     });
 }
