@@ -43,7 +43,7 @@ insteabreak.register();
  * @description The module against insteabreak hack. These types of hack is not working on the realm and bds server.
  */
 function onBlockBreak({ player, brokenBlockPermutation, itemStackBeforeBreak: tool, block }: PlayerBreakBlockAfterEvent) {
-    if (player.isAdmin() || brokenBlockPermutation.type.id == MinecraftBlockTypes.Air) return;
+    if (player.isAdmin() || brokenBlockPermutation.type.id === MinecraftBlockTypes.Air || brokenBlockPermutation.type.id === MinecraftBlockTypes.Netherrack) return;
     breakData[player.id].brokenBlocks.push({ blockPermutation: brokenBlockPermutation, blockPosition: block.location });
     const usingTool = tool && isTool(tool);
     if (
