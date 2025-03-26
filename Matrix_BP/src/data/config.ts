@@ -68,6 +68,8 @@ export default {
     extraBlockOnSpammer: true,
     unfollowRealmsPunishment: false,
     customize: {
+        moduleCategory: true,
+        commandCategory: true,
         dataValueToPrecision: 4,
         askWetherFalseFlag: true,
         banMinute: 10080,

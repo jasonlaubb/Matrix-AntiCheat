@@ -3,20 +3,14 @@ import { Player, world } from "@minecraft/server";
 import { rawtextTranslate, fastText } from "../util/rawtext";
 import { cmdType } from "../data/category";
 import { waitShowActionForm } from "../util/util";
-import { Command } from "../matrixAPI";
+import { Command, Module } from "../matrixAPI";
 export default async function (player: Player) {
-        const ui = new ActionFormData().title(rawtextTranslate("directpanel.title")).body(rawtextTranslate("directpanel.body"));
-        for (const { name, icon } of cmdType) {
-            ui.button(name, icon);
-        }
-        const result = await waitShowActionForm(ui, player);
-        if (!result || result.canceled) return;
-        const sel = result.selection!;
-        const isLastButton = sel === cmdType.length - 1;
-        const allCommands = Command.allCommands.filter(({ tag }) => {
-            if (!tag) return isLastButton;
-            return sel === tag;
-        });
+	let allCommands = Command.allCommands;
+	if (Module.config.customize.commandCategory) {
+		const result = await extraUI(player);
+		if (!result) return;
+		allCommands = result;
+	}
 		const ui2 = new ActionFormData().title(rawtextTranslate("directpanel.title")).body(rawtextTranslate("directpanel.body"));
         for (const command of allCommands) {
             const theAction = command.shortDescription ?? command.description;
@@ -26,7 +20,7 @@ export default async function (player: Player) {
         // Close the chat and continue... Easy right?
         const result2 = await waitShowActionForm(ui2, player);
         if (!result2 || result2.canceled) return;
-        const commandSelected = allCommands[result.selection!];
+        const commandSelected = allCommands[result2.selection!];
         let currentCommand = [commandSelected.availableId[0]];
         for (const requiredOption of commandSelected.requiredOption) {
             const body = fastText()
@@ -94,3 +88,18 @@ export default async function (player: Player) {
         // Run the command for it.
         player.runChatCommand(...currentCommand);
     }
+async function extraUI (player: Player) {
+	const ui = new ActionFormData().title(rawtextTranslate("directpanel.title")).body(rawtextTranslate("directpanel.body"));
+	for (const { name, icon } of cmdType) {
+		ui.button(name, icon);
+	}
+	const result = await waitShowActionForm(ui, player);
+	if (!result || result.canceled) return undefined;
+	const sel = result.selection!;
+	const isLastButton = sel === cmdType.length - 1;
+	const allCommands = Command.allCommands.filter(({ tag }) => {
+		if (!tag) return isLastButton;
+		return sel === tag;
+	});
+	return allCommands;
+}
