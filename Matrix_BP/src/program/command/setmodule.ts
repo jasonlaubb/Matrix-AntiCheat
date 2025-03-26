@@ -29,15 +29,11 @@ new Command()
             // Disable the module
             Config.set(["modules", toggleId, "state"], false);
             player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.setmodule.success.disabled").build());
-            if (searchModule?.disableModule) {
-                searchModule.disableModule();
-            }
+            searchModule.disableModule();
         } else {
             Config.set(["modules", toggleId, "state"], true);
             player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.setmodule.success.enabled").build());
-            if (searchModule?.enableModule()) {
-                searchModule.enableModule();
-            }
+            searchModule.enableModule();
         }
     })
     .register();
