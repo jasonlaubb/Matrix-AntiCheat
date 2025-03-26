@@ -3,6 +3,7 @@ import { Command, Module } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { waitShowActionForm, waitShowModalForm } from "../../util/util";
 import { mdlType } from "../../data/category";
+import { Player } from "@minecraft/server";
 new Command()
     .setName("listmodule")
     .setAliases("modules", "toggles", "showmodules", "showtoggles", "togglelist", "listmodules")
@@ -11,18 +12,12 @@ new Command()
     .addIcon("blocks/bookshelf")
     .setTag(2)
     .onExecute(async (player) => {
-        const select = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
-        for (const { name, icon } of mdlType) {
-            select.button(name, icon);
+        let allModules = Module.registeredModule;
+        if (Module.config.customize.moduleCategory) {
+            const selResult = await extraUI(player);
+            if (!selResult) return;
+            allModules = selResult;
         }
-        const selResult = await waitShowActionForm(select, player);
-        if (!selResult || selResult.canceled || selResult.selection === 0) return;
-        const selectedType = selResult.selection! - 1;
-        const isOther = selectedType === mdlType.length - 1;
-        const allModules = Module.registeredModule.filter(({ tag }) => {
-            if (!tag) return isOther;
-            return tag === selectedType;
-        });
         const listModule = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
         allModules.forEach((module) => {
             const toggleId = module.getToggleId()!;
@@ -51,3 +46,17 @@ new Command()
         });
     })
     .register();
+async function extraUI (player: Player) {
+    const select = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
+    for (const { name, icon } of mdlType) {
+        select.button(name, icon);
+    }
+    const selResult = await waitShowActionForm(select, player);
+    if (!selResult || selResult.canceled || selResult.selection === 0) return;
+    const selectedType = selResult.selection! - 1;
+    const isOther = selectedType === mdlType.length - 1;
+    return Module.registeredModule.filter(({ tag }) => {
+        if (!tag) return isOther;
+        return tag === selectedType;
+    });
+}
