@@ -82,8 +82,8 @@ class Module {
     public description!: RawText;
     public category: string = "§cUnknown§r";
     public locked: boolean = false;
-    public onEnable!: () => void;
-    public onDisable!: () => void;
+    public onEnable = () => {};
+    public onDisable = () => {};
     public playerSpawn?: (tickData: TickData, playerId: string, player: Player) => TickData;
     public playerLeave?: (playerId: string) => void;
     public enabled: boolean = false;
