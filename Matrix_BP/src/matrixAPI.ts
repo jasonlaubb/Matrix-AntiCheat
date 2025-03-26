@@ -580,7 +580,7 @@ export class DirectPanel {
         if (!result || result.canceled) return;
         const sel = result.selection!;
         const isLastButton = sel === cmdType.length - 1;
-        const allCommands = Command.allCommands.filter(({ tag } => {
+        const allCommands = Command.allCommands.filter(({ tag }) => {
             if (!tag) return isLastButton;
             return sel === tag;
         });
