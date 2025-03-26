@@ -80,7 +80,7 @@ class Module {
     public toggleId!: string;
     public name: RawText = rawtext({ text: "§cUnknown§r" });
     public description!: RawText;
-    public category: string = "§cUnknown§r";
+    public tag?: number;
     public locked: boolean = false;
     public onEnable = () => {};
     public onDisable = () => {};
@@ -91,9 +91,9 @@ class Module {
     public movementCheck: boolean = false;
     // This is the constructor of antiCheat
     public constructor() {}
-    // For other uses
-    public getCategory() {
-        return this.category;
+    public setTag(tag: number) {
+        this.tag = tag;
+        return this;
     }
     public getToggleId() {
         return this.locked ? null : this.toggleId;
@@ -121,10 +121,6 @@ class Module {
         this.punishment = punishment;
         return this;
     }
-    public addCategory(category: string) {
-        this.category = category;
-        return this;
-    }
     public onModuleEnable(func: () => void) {
         this.onEnable = func;
         return this;
@@ -137,7 +133,7 @@ class Module {
         this.playerLeave = func;
         return this;
     }
-    public onModuleDisable(func: () => void) {
+    public onModulDisable(func: () => void) {
         this.onDisable = func;
         return this;
     }
@@ -258,6 +254,11 @@ class Command {
     public description: RawText = rawtext({ text: "§cUnknown§r" });
     public shortDescription: RawText | null = null;
     public buttonIcon: string = "textures/ui/chat_send.png";
+    public tag?: number;
+    public setTag(tag: number) {
+        this.tag = tag;
+        return this;
+    }
     public setName(name: string) {
         this.availableId.push(name);
         return this;
