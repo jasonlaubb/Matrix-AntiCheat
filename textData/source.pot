@@ -1114,3 +1114,6 @@ msgstr "§dAntiCheat Logging"
 
 msgid "type.security"
 msgstr "§dSecurity"
+
+msgid "type.setting"
+msgstr "§dSettings"

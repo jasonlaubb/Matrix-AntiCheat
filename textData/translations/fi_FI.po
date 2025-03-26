@@ -1478,3 +1478,7 @@ msgstr ""
 msgid "§dSecurity"
 msgstr ""
 
+#: type.setting
+msgid "§dSettings"
+msgstr ""
+
