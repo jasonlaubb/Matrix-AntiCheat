@@ -81,8 +81,7 @@ export function changeValueOfObject(object: any, keys: string[], value: any) {
 export function waitShowModalForm(ui: ModalFormData, player: Player): Promise<ModalFormResponse | null> {
     return new Promise(async (resolve) => {
         do {
-            if (!player?.isValid()) break;
-            //@ts-expect-error
+            if (!player?.isValid) break;
             const res = await ui.show(player);
             if (res.canceled) {
                 if (res.cancelationReason! === FormCancelationReason.UserBusy) {
@@ -102,8 +101,7 @@ export function waitShowModalForm(ui: ModalFormData, player: Player): Promise<Mo
 export function waitShowActionForm(ui: ActionFormData, player: Player): Promise<ActionFormResponse | null> {
     return new Promise(async (resolve) => {
         do {
-            if (!player?.isValid()) break;
-            //@ts-expect-error
+            if (!player?.isValid) break;
             const res = await ui.show(player);
             if (res.canceled) {
                 if (res.cancelationReason! === FormCancelationReason.UserBusy) {
@@ -187,7 +185,6 @@ export async function parseLogUserInterface(logs: Log[], player: Player) {
         .title(rawtextTranslate("ui.log.detail"))
         .body([...message, ...detailText].join("\n"))
         .button(rawtextTranslate("ui.exit"), "ui/realms_red_x.png");
-    //@ts-expect-error
     detailUI.show(player);
 }
 export const day_ms = 1440000;

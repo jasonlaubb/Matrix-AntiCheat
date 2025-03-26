@@ -25,7 +25,7 @@ function crashPlayer(player: Player) {
 export function registerModeration() {
     new Module()
         .lockModule()
-        .addCategory("system")
+        .setTag(-1)
         .initPlayer((tickData, _playerId, player) => {
             onPlayerSpawn(player);
             return tickData;

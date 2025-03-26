@@ -11,7 +11,6 @@ export class ModPanel {
             const res = await new ModalFormData()
                 .title(rawtextTranslate("ui.modpanel.title"))
                 .dropdown(rawtextTranslate("ui.modpamel.sel.here"), allPlayers)
-                //@ts-expect-error
                 .show(admin);
             if (res.canceled) return;
             playerName = allPlayers[res.formValues![0] as number] as string;
@@ -25,7 +24,6 @@ export class ModPanel {
             .button(rawtextTranslate("ui.modpanel.kick", playerName, config.kickReason))
             .button(rawtextTranslate("ui.modpanel.ban", playerName, config.banReason, config.banMinutes.toString()))
             .button(rawtextTranslate("ui.modpanel.crash", playerName))
-            //@ts-expect-error
             .show(admin);
         if (res.canceled) return;
         switch (res.selection) {

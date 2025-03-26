@@ -10,7 +10,7 @@ export interface PlayerTimeStamp {
 export function registerTimeStampModule() {
     new Module()
         .lockModule()
-        .addCategory("system")
+        .setTag(-1)
         .onModuleEnable(() => {
             world.afterEvents.entityHurt.subscribe(onPlayerHurt);
             world.afterEvents.itemReleaseUse.subscribe(onPlayerThrow);
