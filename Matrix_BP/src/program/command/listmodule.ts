@@ -2,7 +2,7 @@ import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Command, Module } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { waitShowActionForm, waitShowModalForm } from "../../util/util";
-
+import { mdlType } from "../../data/category";
 new Command()
     .setName("listmodule")
     .setAliases("modules", "toggles", "showmodules", "showtoggles", "togglelist")
