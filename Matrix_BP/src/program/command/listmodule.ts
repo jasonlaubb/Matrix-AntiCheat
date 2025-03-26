@@ -14,8 +14,15 @@ new Command()
         for (const { name, icon } of mdlType) {
             select.button(name, icon);
         }
+        const selResult = await waitShowActionForm(select, player);
+        if (!selResult || selResult.canceled || selResult.selection === 0) return;
+        const selectedType = selResult.selection! - 1;
+        const isOther = selectedType === mdlType.length - 1;
+        const allModules = Module.registeredModule.filter(({ tag }) => {
+            if (!tag) return isOther;
+            return tag === selectedType;
+        });
         const listModule = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
-        const allModules = Module.registeredModule;
         allModules.forEach((module) => {
             const toggleId = module.getToggleId()!;
             const isEnabled = Module.config.modules[toggleId]?.state;
