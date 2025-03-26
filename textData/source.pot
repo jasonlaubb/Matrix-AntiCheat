@@ -1087,3 +1087,30 @@ msgstr "Set value by path"
 
 msgid "command.help.target.name"
 msgstr "§gParameter: §e%s"
+
+msgid "type.movement"
+msgstr "§dMovement detection"
+
+msgid "type.block"
+msgstr "§dBlock detection"
+
+msgid "type.combat"
+msgstr "§dCombat check"
+
+msgid "type.data"
+msgstr "§dData check"
+
+msgid "type.util"
+msgstr "§dUtility modules"
+
+msgid "type.other"
+msgstr "§dOthers"
+
+msgid "type.moderation"
+msgstr "§dModeration"
+
+msgid "type.log"
+msgstr "§dAntiCheat Logging"
+
+msgid "type.security"
+msgstr "§dSecurity"
