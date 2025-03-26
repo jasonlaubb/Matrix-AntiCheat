@@ -47,7 +47,7 @@ export default async function (player: Player) {
             } else {
                 ui3.dropdown(body, playerNameArray, 0);
             }
-            //@ts-expect-error
+
             const result3 = await ui3.show(player);
             if (result3.canceled || (result3.formValues![0] as string).length == 0) return;
             currentCommand.push(isChoice ? requiredOption.typeInfo!.arrayRange![result3.formValues![0] as number] : (isBoolean ? (result3.formValues![0] as number).toString() : (notPlayerTarget ? result3.formValues![0] as string : playerNameArray[result3.formValues![0] as number])));
@@ -77,7 +77,6 @@ export default async function (player: Player) {
             } else {
                 ui.dropdown(body, playerNameArray, 0);
             }
-			//@ts-expect-error
             const result = await ui.show(player);
             if (result.canceled) return;
             if ((result.formValues![0] as string).length == 0) {

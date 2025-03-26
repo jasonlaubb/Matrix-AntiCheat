@@ -37,7 +37,6 @@ function selector(player: Player, path: string[]) {
         selectform.button(`§g§l${key}§r\n§8${value}§r`);
     }
     selectform.button(rawtextTranslate("ui.exit"), "textures/ui/redX1.png");
-    //@ts-expect-error
     selectform.show(player).then((data) => {
         if (data.canceled) return;
         const selection = lulka[data.selection!];
@@ -65,7 +64,6 @@ async function editor(player: Player, path: string[]) {
             throw new Error("Type Error: Undefined case");
         }
     }
-    //@ts-expect-error
     form.show(player).then((data) => {
         if (data.canceled) return;
         let value = data.formValues![0] as string | number;

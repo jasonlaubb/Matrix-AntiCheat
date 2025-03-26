@@ -13,7 +13,6 @@ let eventId: IntegratedSystemEvent;
 new Module()
 	.setName(rawtextTranslate("module.xray.name"))
 	.setDescription(rawtextTranslate("module.xray.description"))
-	.addCategory("prevention")
 	.setToggleId("antiXray")
 	.onModuleEnable(() => {
 		eventId = Module.subscribePlayerTickEvent(onPlayerTick, true);

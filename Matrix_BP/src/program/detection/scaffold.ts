@@ -47,7 +47,7 @@ function onBlockPlace(event: PlayerPlaceBlockAfterEvent) {
     const block = event.block;
     const player = event.player;
     if (player.isFlying || player.getGameMode() == GameMode.creative || player.isAdmin()) return;
-    if (!block?.isValid()) {
+    if (!block?.isValid) {
         // Type 1
         player.flag(scaffold, { t: "1" });
         return;
@@ -205,7 +205,7 @@ function isVoidScaffolding(dimension: Dimension, blockLocation: Vector3) {
     const belowLocation = { x: blockLocation.x, y: blockLocation.y - 1, z: blockLocation.z };
     try {
         const belowBlock = dimension.getBlock(belowLocation);
-        return !!belowBlock?.isValid() && belowBlock.isAir;
+        return !!belowBlock?.isValid && belowBlock.isAir;
     } catch {
         return true;
     }

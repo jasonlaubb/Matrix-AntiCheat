@@ -195,7 +195,7 @@ class Module {
             }
         });
         // Run when the world fires
-        world.afterEvents.worldInitialize.subscribe(async () => {
+        world.afterEvents.worldLoad.subscribe(async () => {
             const currentTime = Date.now();
             system.runJob(loadModuleRegistry());
             new Promise<void>((resolve) => {
@@ -762,7 +762,7 @@ function* loadModuleRegistry(): Generator<void, void, void> {
                         }
                         Module.tickData.set(player.id, playerInitData);
                         system.runTimeout(() => {
-                            if (player?.isValid() && Module.config.userRecruitmentFunction) player.sendMessage(rawtextTranslate("ad.running", Module.discordInviteLink));
+                            if (player?.isValid && Module.config.userRecruitmentFunction) player.sendMessage(rawtextTranslate("ad.running", Module.discordInviteLink));
                             let obj = world.scoreboard.getObjective("matrix:script-online");
                             if (!obj) {
                                 obj = world.scoreboard.addObjective("matrix:script-online", "Made by jasonlaubb");
@@ -819,7 +819,7 @@ function* loadModuleRegistry(): Generator<void, void, void> {
                     system.runInterval(() => {
                         const allPlayers = Module.allWorldPlayers;
                         for (const player of allPlayers) {
-                            if (!player?.isValid()) continue;
+                            if (!player?.isValid) continue;
                             let data = Module.tickData.get(player.id)!;
                             const vel = player.getVelocity();
                             data.instant = {

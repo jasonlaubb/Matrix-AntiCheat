@@ -56,7 +56,7 @@ function entityHurt({ hurtEntity, damageSource: { cause, damagingEntity: attacke
     if (!player.hasTag("matrix:inCombat")) {
         player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("module.clog.face.combat", attacker.name).build());
         const id = system.runInterval(() => {
-            if (!player?.isValid()) return system.clearRun(id);
+            if (!player?.isValid) return system.clearRun(id);
             const info = getInfo(player)!;
             if (!player.hasTag("matrix:inCombat")) return system.clearRun(id);
             const { lastUpdate } = info;
@@ -66,7 +66,7 @@ function entityHurt({ hurtEntity, damageSource: { cause, damagingEntity: attacke
     if (!attacker.hasTag("matrix:inCombat")) {
         attacker.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("module.clog.face.combat", player.name).build());
         const id = system.runInterval(() => {
-            if (!attacker?.isValid()) return system.clearRun(id);
+            if (!attacker?.isValid) return system.clearRun(id);
             const info = getInfo(attacker)!;
             if (!attacker.hasTag("matrix:inCombat")) return system.clearRun(id);
             const { lastUpdate } = info;

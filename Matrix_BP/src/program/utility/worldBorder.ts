@@ -1,4 +1,4 @@
-import { Player, system, world } from "@minecraft/server";
+import { InputPermissionCategory, Player, system, world } from "@minecraft/server";
 import { IntegratedSystemEvent, Module } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { fastAbs } from "../../util/fastmath";
@@ -31,8 +31,8 @@ function worldBorder(tickData: TickData, player: Player) {
 
     if (differentX > maxDifferent || differentZ > maxDifferent) {
         player.addTag("matrix:worldBorderBlocked");
-        player.inputPermissions.cameraEnabled = false;
-        player.inputPermissions.movementEnabled = false;
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false)
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false)
         player.addEffect(MinecraftEffectTypes.Blindness, 600);
         player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("module.worldborder.danger").build());
         player.onScreenDisplay.setTitle(rawtextTranslate("module.worldborder.title"), {
@@ -42,13 +42,13 @@ function worldBorder(tickData: TickData, player: Player) {
         });
         player.onScreenDisplay.updateSubtitle(rawtextTranslate("module.worldborder.subtitle"));
         system.runTimeout(() => {
-            if (!player?.isValid()) return;
+            if (!player?.isValid) return;
             player.onScreenDisplay.updateSubtitle("");
             player.teleport(centerLocation);
             player.removeEffect(MinecraftEffectTypes.Blindness);
             player.removeTag("matrix:worldBorderBlocked");
-            player.inputPermissions.cameraEnabled = true;
-            player.inputPermissions.movementEnabled = true;
+            player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
+            player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
         }, 100);
     }
     return tickData;

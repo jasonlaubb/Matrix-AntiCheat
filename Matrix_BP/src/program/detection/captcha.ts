@@ -1,4 +1,4 @@
-import { PlayerInteractWithBlockBeforeEvent, PlayerInteractWithEntityBeforeEvent, PlayerLeaveAfterEvent, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
+import { InputPermissionCategory, PlayerInteractWithBlockBeforeEvent, PlayerInteractWithEntityBeforeEvent, PlayerLeaveAfterEvent, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { ModalFormData } from "@minecraft/server-ui";
 import { Module } from "../../matrixAPI";
@@ -24,8 +24,8 @@ async function onPlayerSpawn(event: PlayerSpawnAfterEvent) {
 
     // Defender bot checking
     player.sendMessage(rawtextTranslate("module.captcha.checking"));
-    player.inputPermissions.movementEnabled = false;
-    player.inputPermissions.cameraEnabled = true;
+    player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
+    player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
     try {
         player.runCommand("ability @s mute true");
     } catch {
@@ -86,7 +86,6 @@ async function onPlayerSpawn(event: PlayerSpawnAfterEvent) {
                 ran(11)
             )
             .toggle(rawtextTranslate("module.captcha.notabot"), false)
-            //@ts-expect-error
             .show(player);
         let uiNotAnswering = false;
         ui.then((result) => {
@@ -116,7 +115,7 @@ async function onPlayerSpawn(event: PlayerSpawnAfterEvent) {
         player.sendMessage(rawtextTranslate("module.captcha.verified"));
         defenderNotBlockingData.push(player.id);
         // Give back the movement permission
-        player.inputPermissions.movementEnabled = true;
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
         try {
             player.runCommand("ability @s mute false");
         } catch {

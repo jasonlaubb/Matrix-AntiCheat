@@ -73,7 +73,7 @@ function onEntityAttack({ damagingEntity: player, hitEntity: target }: EntityHit
 }
 function trackPlayer(player: Player) {
     const runId = system.runInterval(() => {
-        if (!player?.isValid()) {
+        if (!player?.isValid) {
             system.clearRun(runId);
             return;
         }

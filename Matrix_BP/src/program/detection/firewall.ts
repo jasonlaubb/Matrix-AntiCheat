@@ -7,7 +7,6 @@ const FIREWALL_LIMIT_THRESHOLD = 96;
 const FIREWALL_MIN_THRESHOLD = 6;
 
 const firewall = new Module()
-    .addCategory("detection")
     .setName(rawtextTranslate("module.firewall.name"))
     .setDescription(rawtextTranslate("module.firewall.description"))
     .setToggleId("firewall")

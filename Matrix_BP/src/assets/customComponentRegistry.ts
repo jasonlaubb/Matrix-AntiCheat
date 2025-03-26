@@ -1,4 +1,4 @@
-import { ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, Player, world } from "@minecraft/server";
+import { ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, Player, system } from "@minecraft/server";
 import { MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { ModPanel } from "../util/modPanel";
 import tile from "../util/tileBuilder";
@@ -24,7 +24,7 @@ class modPanel implements ItemCustomComponent {
 	}
 }
 // Register the custom components
-world.beforeEvents.worldInitialize.subscribe((init) => {
+system.beforeEvents.startup.subscribe((init) => {
 	// Matrix Items
 	init.itemComponentRegistry.registerCustomComponent("matrix:matrixui", new matrixui());
 	init.itemComponentRegistry.registerCustomComponent("matrix:modPanel", new modPanel());
