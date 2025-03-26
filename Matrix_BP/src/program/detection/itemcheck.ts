@@ -31,9 +31,9 @@ function tickEvent(player: Player) {
         const detect = itemDetector(item);
         if (detect && !isFlagged) {
             isFlagged = true;
+            container.setItem(i);
             player.flag(itemCheck, detect as any);
         }
-        container.setItem(i);
     }
 }
 function itemDetector(item: ItemStack) {
