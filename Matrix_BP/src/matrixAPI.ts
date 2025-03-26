@@ -18,7 +18,6 @@
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
 import { EquipmentSlot, ItemStack, Player, RawText, system, world } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import defaultConfig from "./data/config";
 import { fastText, rawtext, rawtextTranslate } from "./util/rawtext";
 import { Punishment } from "./program/system/moderation";
@@ -27,10 +26,9 @@ import program, { TickData } from "./program/import";
 import { registerModeration } from "./program/system/moderation";
 import { registerTimeStampModule } from "./program/system/playerProperty";
 import { setupFlagFunction } from "./util/flag";
-import { changeValueOfObject, getValueFromObject, waitShowActionForm } from "./util/util";
+import { changeValueOfObject, getValueFromObject } from "./util/util";
 import { logRestart } from "./assets/logSystem";
 import { pythag } from "./util/fastmath";
-import { cmdType } from "./data/category";
 import "./assets/customComponentRegistry";
 export { Module, Command, Config };
 // The class that store the tick event that is handled by the Module class
@@ -567,102 +565,6 @@ class Command {
     }
     public static typeTransferKey(type: OptionTypes) {
         return "command.help.option." + type;
-    }
-}
-export class DirectPanel {
-    private constructor() {}
-    public static async open(player: Player) {
-        const ui = new ActionFormData().title(rawtextTranslate("directpanel.title")).body(rawtextTranslate("directpanel.body"));
-        for (const { name, icon } of cmdType) {
-            ui.button(name, icon);
-        }
-        const result = await waitShowActionForm(ui, player);
-        if (!result || result.canceled) return;
-        const sel = result.selection!;
-        const isLastButton = sel === cmdType.length - 1;
-        const allCommands = Command.allCommands.filter(({ tag }) => {
-            if (!tag) return isLastButton;
-            return sel === tag;
-        });
-        this.openUI(player, allCommands);
-    }
-    private static async openUI(player: Player, allCommands: Command[]) {
-        const ui = new ActionFormData().title(rawtextTranslate("directpanel.title")).body(rawtextTranslate("directpanel.body"));
-        for (const command of allCommands) {
-            const theAction = command.shortDescription ?? command.description;
-            const commandId = command.availableId[0];
-            ui.button(fastText().addText("§7．§1").addRawText(theAction).addText("§7．§j").endline().addTran("directpanel.button", commandId).build(), command.buttonIcon);
-        }
-        // Close the chat and continue... Easy right?
-        const result = await waitShowActionForm(ui, player);
-        if (!result || result.canceled) return;
-        const commandSelected = allCommands[result.selection!];
-        let currentCommand = [commandSelected.availableId[0]];
-        for (const requiredOption of commandSelected.requiredOption) {
-            const body = fastText()
-                .addTranRawText("command.help.target.type", rawtextTranslate(Command.typeTransferKey(requiredOption.type)))
-                .endline()
-                .addTranRawText("command.help.target.description", requiredOption.description)
-                .endline()
-                .addTranRawText("command.help.target.name", requiredOption.name)
-                .endline()
-                .addText("§bMatrix§a+ §7> §g")
-                .addTran("directpanel.enter")
-                .build();
-            const ui = new ModalFormData().title(rawtextTranslate("directpanel.build"));
-            const playerNameArray = world.getAllPlayers().map(({ name }) => name);
-            const notPlayerTarget = requiredOption.type !== "player" && requiredOption.type !== "target";
-            const isChoice = requiredOption.type === "choice";
-            const isBoolean = requiredOption.type === "boolean";
-            if (isChoice) {
-                ui.dropdown(body, requiredOption.typeInfo!.arrayRange!, 0);
-            } else if (isBoolean) {
-                ui.dropdown(body, ["True (1)", "False (0)"], 0);
-            } else if (notPlayerTarget) {
-                ui.textField(body, "Type here...");
-            } else {
-                ui.dropdown(body, playerNameArray, 0);
-            }
-            //@ts-expect-error
-            const result = await ui.show(player);
-            if (result.canceled || (result.formValues![0] as string).length == 0) return;
-            currentCommand.push(isChoice ? requiredOption.typeInfo!.arrayRange![result.formValues![0] as number] : (isBoolean ? (result.formValues![0] as number).toString() : (notPlayerTarget ? result.formValues![0] as string : playerNameArray[result.formValues![0] as number])));
-        }
-        for (const optionalOption of commandSelected.optionalOption) {
-            const body = fastText()
-                .addTranRawText("command.help.target.type", rawtextTranslate(Command.typeTransferKey(optionalOption.type)))
-                .endline()
-                .addTranRawText("command.help.target.description", optionalOption.description)
-                .endline()
-                .addTranRawText("command.help.target.name", optionalOption.name)
-                .endline()
-                .addText("§bMatrix§a+ §7> §g")
-                .addTran("directpanel.enter")
-                .build();
-            const ui = new ModalFormData().title(rawtextTranslate("directpanel.build"));
-            const playerNameArray = world.getAllPlayers().map(({ name }) => name);
-            const notPlayerTarget = optionalOption.type !== "player" && optionalOption.type !== "target";
-            const isChoice = optionalOption.type === "choice";
-            const isBoolean = optionalOption.type === "boolean";
-            if (isChoice) {
-                ui.dropdown(body, optionalOption.typeInfo!.arrayRange!, 0);
-            } else if (isBoolean) {
-                ui.dropdown(body, ["True (1)", "False (0)"], 0)
-            }else if (notPlayerTarget) {
-                ui.textField(body, "Keep this empty to skip (optional)");
-            } else {
-                ui.dropdown(body, playerNameArray, 0);
-            }
-            //@ts-expect-error
-            const result = await ui.show(player);
-            if (result.canceled) return;
-            if ((result.formValues![0] as string).length == 0) {
-                break;
-            }
-            currentCommand.push(isChoice ? optionalOption.typeInfo!.arrayRange![result.formValues![0] as number] : (isBoolean ? (result.formValues![0] as number).toString() : (notPlayerTarget ? result.formValues![0] as string : playerNameArray[result.formValues![0] as number])));
-        }
-        // Run the command for it.
-        player.runChatCommand(...currentCommand);
     }
 }
 class Config {

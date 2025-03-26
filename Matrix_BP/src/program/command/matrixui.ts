@@ -1,5 +1,6 @@
-import { Command, DirectPanel } from "../../matrixAPI";
+import { Command } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
+import matrixUI from "../../assets/matrixui";
 
 new Command()
     .setName("matrixui")
@@ -9,6 +10,6 @@ new Command()
     .setDescription(rawtextTranslate("command.matrixui.description"))
     .onExecute(async (player) => {
         player.sendMessage(rawtextTranslate("ui.closechat"));
-        DirectPanel.open(player);
+        matrixUI(player);
     })
     .register();
