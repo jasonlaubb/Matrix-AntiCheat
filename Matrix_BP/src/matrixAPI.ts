@@ -410,8 +410,8 @@ class Command {
             }
         });
     }
-    public static isCommandArg(message: string): boolean {
-        return !!message?.match(/^(\-|\!|\#|\$|\.|\=|\+|\?)[a-zA-Z]+(\s{1,2}\S+)*\s*$/g);
+    public static isCommandArg(message: string) {
+        return message.startsWith(Module.config.customize.prefix) && message.slice(Module.config.customize.prefix.length).match(/^[a-zA-Z](\s.+)*$/);
     }
     public static sendErrorToPlayer(player: Player, error: Error) {
         player.sendMessage(

@@ -68,6 +68,7 @@ export default {
     extraBlockOnSpammer: true,
     unfollowRealmsPunishment: false,
     customize: {
+        prefix: "-",
         moduleCategory: true,
         commandCategory: true,
         dataValueToPrecision: 4,
@@ -140,6 +141,14 @@ export default {
         },
         antiDisabler: {
             flagCooldown: 1000,
+        },
+        illegalItemDefinition: {
+            nonVanillaID: true,
+            spawnEgg: true,
+            amountStack: true,
+            itemLore: true,
+            itemTag: true,
+            badEnchantment: true,
         },
     },
     flag: {
