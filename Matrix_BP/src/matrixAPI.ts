@@ -30,6 +30,7 @@ import { setupFlagFunction } from "./util/flag";
 import { changeValueOfObject, getValueFromObject, waitShowActionForm } from "./util/util";
 import { logRestart } from "./assets/logSystem";
 import { pythag } from "./util/fastmath";
+import { mdlType } from "./data/category";
 import "./assets/customComponentRegistry";
 export { Module, Command, Config };
 // The class that store the tick event that is handled by the Module class
@@ -572,7 +573,21 @@ export class DirectPanel {
     private constructor() {}
     public static async open(player: Player) {
         const ui = new ActionFormData().title(rawtextTranslate("directpanel.title")).body(rawtextTranslate("directpanel.body"));
-        const allCommands = Command.allCommands;
+        for (const { name, icon } of cmdType) {
+            ui.button(name, icon);
+        }
+        const result = await waitShowActionForm(ui, player);
+        if (!result || result.canceled) return;
+        const sel = result.selection!;
+        const isLastButton = sel === cmdType.length - 1;
+        const allCommands = Command.allCommands.filter(({ tag } => {
+            if (!tag) return isLastButton;
+            return sel === tag;
+        });
+        this.openUI(player, allCommands);
+    }
+    private static async openUI(player: Player, allCommands: Command[]) {
+        const ui = new ActionFormData().title(rawtextTranslate("directpanel.title")).body(rawtextTranslate("directpanel.body"));
         for (const command of allCommands) {
             const theAction = command.shortDescription ?? command.description;
             const commandId = command.availableId[0];
