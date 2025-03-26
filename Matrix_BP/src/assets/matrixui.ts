@@ -113,7 +113,7 @@ async function extraUI(player: Player) {
     const sel = result.selection!;
     const isLastButton = sel === cmdType.length - 1;
     const allCommands = Command.allCommands.filter(({ tag }) => {
-        if (tag === undefined || tag <= 0) return isLastButton;
+        if (tag === undefined || tag < 0) return isLastButton;
         return sel === tag;
     });
     return allCommands;
