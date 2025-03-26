@@ -140,7 +140,6 @@ async function onPlayerInteract(event: PlayerInteractWithBlockBeforeEvent | Play
     event.cancel = true;
 }
 new Module()
-    .addCategory("detection")
     .setName(rawtextTranslate("module.captcha.name"))
     .setDescription(rawtextTranslate("module.captcha.description"))
     .setToggleId("captcha")

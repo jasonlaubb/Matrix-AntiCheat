@@ -9,6 +9,7 @@ const autoTool = new Module()
     .setDescription(rawtextTranslate("module.autoTool.description"))
     .setToggleId("antiAutoTool")
     .setPunishment("kick")
+    .setTag(2)
     .onModuleEnable(() => {
         world.afterEvents.entityHitBlock.subscribe(blockHit);
         id = Module.subscribePlayerTickEvent(tickEvent, false);

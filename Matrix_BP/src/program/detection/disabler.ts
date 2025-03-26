@@ -6,10 +6,10 @@ import { rawtextTranslate } from "../../util/rawtext";
 let eventId: IntegratedSystemEvent;
 const disabler = new Module()
 	.setName(rawtextTranslate("module.disabler.name"))
+	.setTag(0)
 	.setDescription(rawtextTranslate("module.disabler.description"))
 	.setToggleId("antiDisabler")
 	.setPunishment("ban")
-	.addCategory("detection")
 	.initPlayer((tickData) => {
 		tickData.disabler = {
 			gliding: false,

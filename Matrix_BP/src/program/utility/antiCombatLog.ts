@@ -3,7 +3,7 @@ import { EntityDamageCause, EntityDieAfterEvent, EntityHurtAfterEvent, Player, P
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 
 new Module()
-    .addCategory("utility")
+    .setTag(4)
     .setName(rawtextTranslate("module.clog.name"))
     .setDescription(rawtextTranslate("module.clog.description"))
     .setToggleId("antiCombatLog")

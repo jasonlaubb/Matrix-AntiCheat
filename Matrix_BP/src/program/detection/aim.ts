@@ -22,7 +22,6 @@ interface AimData {
 }
 let eventId: IntegratedSystemEvent;
 const aim = new Module()
-    .addCategory("detection")
     .setName(rawtextTranslate("module.aim.name"))
     .setDescription(rawtextTranslate("module.aim.description"))
     .setToggleId("aimCheck")

@@ -9,7 +9,7 @@ const elytraFly = new Module()
     .setDescription(rawtextTranslate("module.elytraFly.description"))
     .setToggleId("antiElytraFly")
     .setPunishment("kick")
-    .addCategory("detection")
+    .setTag(3)
     .affectedByRewind()
     .onModuleEnable(() => {
         runId = Module.subscribePlayerTickEvent(tickEvent, false);

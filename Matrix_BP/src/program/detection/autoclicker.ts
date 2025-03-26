@@ -10,6 +10,7 @@ const autoClicker = new Module()
     .setDescription(rawtextTranslate("module.autoclicker.description"))
     .setToggleId("antiAutoClicker")
     .setPunishment("kick")
+    .setTag(1)
     .onModuleEnable(() => {
         runId = system.runInterval(tickEvent, 20);
         world.afterEvents.entityHitEntity.subscribe(entityHit);

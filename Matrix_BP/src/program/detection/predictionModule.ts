@@ -13,7 +13,7 @@ const EMPTY_LOCATION_DATA_ARRAY: LocationData[] = new Array(8).fill({ location: 
  * @description Optimized by jasonlaubb.
  */
 const predictionModule = new Module()
-    .addCategory("detection")
+    .setTag(0)
     .setName(rawtextTranslate("module.prediction.name"))
     .setDescription(rawtextTranslate("module.prediction.description"))
     .setToggleId("predictionModule")

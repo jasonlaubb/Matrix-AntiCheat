@@ -12,7 +12,7 @@ const MIN_ROUND_DIFFERENCE = 0.07;
 
 let eventId: IntegratedSystemEvent;
 const killaura = new Module()
-    .addCategory("detection")
+    .setTag(1)
     .setName(rawtextTranslate("module.killaura.name"))
     .setDescription(rawtextTranslate("module.killaura.description"))
     .setToggleId("antiKillAura")

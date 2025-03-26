@@ -7,7 +7,7 @@ import { checkRepetition } from "../../util/assets";
 import { TickData } from "../import";
 let runId: IntegratedSystemEvent;
 const entityFly = new Module()
-    .addCategory("detection")
+    .setTag(3)
     .setName(rawtextTranslate("module.entityFly.name"))
     .setDescription(rawtextTranslate("module.entityFly.description"))
     .setToggleId("antiEntityFly")

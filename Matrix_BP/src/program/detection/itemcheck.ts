@@ -4,7 +4,7 @@ import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 let eventId: number;
 const itemCheck = new Module()
-    .addCategory("detection")
+    .setTag(3)
     .setName(rawtextTranslate("module.itemcheck.name"))
     .setDescription(rawtextTranslate("module.itemcheck.description"))
     .setToggleId("itemCheck")

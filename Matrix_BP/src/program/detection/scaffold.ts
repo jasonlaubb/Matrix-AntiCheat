@@ -15,7 +15,7 @@ const MAX_ROTATION_X_DIFFERENCE = 10;
 const MAX_LOW_EXTENDER_ROTATION_X = 50;
 const LOW_EXTENDER_THRESHOLD = 1;
 const scaffold = new Module()
-    .addCategory("detection")
+    .setTag(2)
     .setName(rawtextTranslate("module.scaffold.name"))
     .setDescription(rawtextTranslate("module.scaffold.description"))
     .setToggleId("antiScaffold")

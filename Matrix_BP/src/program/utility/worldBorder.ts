@@ -6,7 +6,7 @@ import { MinecraftEffectTypes } from "../../node_modules/@minecraft/vanilla-data
 import { TickData } from "../import";
 let eventId: IntegratedSystemEvent;
 new Module()
-    .addCategory("utility")
+    .setTag(4)
     .setName(rawtextTranslate("module.worldborder.name"))
     .setDescription(rawtextTranslate("module.worldborder.description"))
     .setToggleId("worldBorder")

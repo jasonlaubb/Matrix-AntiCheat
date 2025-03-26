@@ -6,7 +6,7 @@ const MIN_NAME_LENGTH = 3;
 const MAX_NAME_LENGTH = 16;
 
 const namespoof = new Module()
-    .addCategory("detection")
+    .setTag(3)
     .setName(rawtextTranslate("module.namespoof.name"))
     .setDescription(rawtextTranslate("module.namespoof.description"))
     .setToggleId("antiNamespoof")

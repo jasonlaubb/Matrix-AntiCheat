@@ -3,7 +3,7 @@ import { Module } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 
 new Module()
-    .addCategory("utility")
+    .setTag(4)
     .setName(rawtextTranslate("module.welcomer.name"))
     .setDescription(rawtextTranslate("module.welcomer.description"))
     .setToggleId("welcomer")

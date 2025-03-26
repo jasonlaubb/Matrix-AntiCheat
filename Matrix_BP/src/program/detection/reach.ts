@@ -3,7 +3,7 @@ import { fastCos, fastHypot, fastAbs } from "../../util/fastmath";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 const reach = new Module()
-    .addCategory("detection")
+    .setTag(0)
     .setName(rawtextTranslate("module.reach.name"))
     .setDescription(rawtextTranslate("module.reach.description"))
     .setToggleId("antiReach")

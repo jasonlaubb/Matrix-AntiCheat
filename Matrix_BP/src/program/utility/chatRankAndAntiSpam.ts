@@ -5,6 +5,7 @@ import { normalize } from "../../assets/latinNormalize";
 import latinVocabarySet from "../../data/filter/latinVocabarySet";
 import wordKeySet from "../../data/filter/wordKeySet";
 new Module()
+    .setTag(4)
     .setName(rawtextTranslate("module.chatrank.name"))
     .setDescription(rawtextTranslate("module.chatrank.description"))
     .setToggleId("chatRank")

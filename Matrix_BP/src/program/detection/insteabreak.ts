@@ -14,7 +14,7 @@ const MAX_BREAK_IN_TICK = 6;
 let breakData: { [key: string]: BreakData } = {};
 let eventId: IntegratedSystemEvent;
 const insteabreak = new Module()
-    .addCategory("detection")
+    .setTag(3)
     .setName(rawtextTranslate("module.insteabreak.name"))
     .setDescription(rawtextTranslate("module.insteabreak.description"))
     .setToggleId("antiInsteabreak")

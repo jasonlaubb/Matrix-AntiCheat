@@ -12,7 +12,7 @@ const MAX_BDS_PREDICTION = 20;
 const START_SKIP_CHECK = 6000;
 let eventId: IntegratedSystemEvent;
 const fly = new Module()
-    .addCategory("detection")
+    .setTag(3)
     .setName(rawtextTranslate("module.fly.name"))
     .setDescription(rawtextTranslate("module.fly.description"))
     .setToggleId("antiFly")

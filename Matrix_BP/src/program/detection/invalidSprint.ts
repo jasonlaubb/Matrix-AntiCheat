@@ -10,7 +10,7 @@ const invalidSprint = new Module()
     .setDescription(rawtextTranslate("module.invalidSprint.description"))
     .setToggleId("antiInvalidSprint")
     .setPunishment("ban")
-    .addCategory("detection")
+    .setTag(0)
     .affectedByRewind()
     .onModuleEnable(() => {
         runId = Module.subscribePlayerTickEvent(tickEvent, false);

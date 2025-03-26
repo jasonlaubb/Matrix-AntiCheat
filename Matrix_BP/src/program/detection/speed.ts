@@ -10,6 +10,7 @@ const speed = new Module()
     .setDescription(rawtextTranslate("module.speed.description"))
     .setToggleId("antiSpeed")
     .setPunishment("ban")
+    .setTag(0)
     .onModuleEnable(() => {
         world.afterEvents.entityHitEntity.subscribe(onPlayerAttack);
         //system.afterEvents.scriptEventReceive.subscribe(onRidingEnded);

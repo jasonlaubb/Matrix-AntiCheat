@@ -3,7 +3,7 @@ import { calculateAngleFromView } from "../../util/fastmath";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
 const mobAura = new Module()
-    .addCategory("detection")
+    .setTag(1)
     .setName(rawtextTranslate("module.mobaura.name"))
     .setDescription(rawtextTranslate("module.mobaura.description"))
     .setToggleId("antiMobAura")

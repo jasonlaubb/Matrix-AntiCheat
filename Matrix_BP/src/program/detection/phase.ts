@@ -7,7 +7,7 @@ const MIN_SPEED = 0.25;
 const MAX_SPEED = 0.7;
 let eventId: IntegratedSystemEvent;
 const antiPhase = new Module()
-    .addCategory("detection")
+    .setTag(0)
     .setName(rawtextTranslate("module.phase.name"))
     .setDescription(rawtextTranslate("module.phase.description"))
     .setToggleId("antiPhase")

@@ -6,7 +6,7 @@ import { TickData } from "../import";
 const afkData = new Map<string, number>();
 let eventId: IntegratedSystemEvent;
 new Module()
-    .addCategory("utility")
+    .setTag(4)
     .setName(rawtextTranslate("module.afk.name"))
     .setDescription(rawtextTranslate("module.afk.description"))
     .setToggleId("antiAfk")

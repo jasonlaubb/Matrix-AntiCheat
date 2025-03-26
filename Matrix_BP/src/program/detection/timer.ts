@@ -26,7 +26,7 @@ let runId: number;
 let eventId: IntegratedSystemEvent;
 const timerData = new Map<string, TimerData>();
 const timer = new Module()
-    .addCategory("detection")
+    .setTag(0)
     .setName(rawtextTranslate("module.timer.name"))
     .setDescription(rawtextTranslate("module.timer.description"))
     .setToggleId("antiTimer")
