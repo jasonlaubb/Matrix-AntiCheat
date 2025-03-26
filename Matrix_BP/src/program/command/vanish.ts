@@ -8,6 +8,7 @@ new Command()
     .setMinPermissionLevel(1)
     .setDescription(rawtextTranslate("command.vanish.description"))
     .addIcon("ui/blindness_effect")
+    .setTag(3)
     .onExecute(async (player) => {
         try {
             if (player.hasTag("matrix:vanished")) {

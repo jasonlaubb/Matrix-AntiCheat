@@ -6,6 +6,7 @@ new Command()
     .setName("matrixui")
     .setAliases("ui", "openui", "uipanel", "panel", "openpanel")
     .addIcon("items/matrixui")
+    .setTag(-1)
     .setMinPermissionLevel(1)
     .setDescription(rawtextTranslate("command.matrixui.description"))
     .onExecute(async (player) => {

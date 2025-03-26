@@ -5,6 +5,7 @@ new Command()
     .setName("setflagmsgto")
     .setMinPermissionLevel(3)
     .addIcon("ui/send_icon")
+    .setTag(2)
     .setAliases("flagmode", "setflagmesssagetarget", "fm")
     .setDescription(rawtextTranslate("command.setflagmsgto.description"))
     .addOption(

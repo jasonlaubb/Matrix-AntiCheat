@@ -8,6 +8,7 @@ new Command()
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
     .addOption(rawtextTranslate("command.setrank.rank"), rawtextTranslate("command.setrank.rank.description"), "string", undefined, false)
     .setMinPermissionLevel(2)
+    .setTag(3)
     .onExecute(async (player, targetPlayer, rankTarget) => {
         const recivier = targetPlayer as Player;
         const rankString = rankTarget as string;

@@ -6,6 +6,7 @@ new Command()
     .setName("setadmin")
     .setMinPermissionLevel(4)
     .addIcon("ui/op")
+    .setTag(4)
     .setDescription(rawtextTranslate("command.setadmin.description"))
     .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
     .addOption(

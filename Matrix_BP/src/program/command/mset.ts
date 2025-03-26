@@ -10,6 +10,7 @@ new Command()
 	.setName("mset")
 	.addIcon("ui/gear")
 	.setMinPermissionLevel(3)
+	.setTag(2)
 	.setAliases("multiset", "fastset", "fset", "import")
 	.onExecute(async (player) => {
 		await loop(player);

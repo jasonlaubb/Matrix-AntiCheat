@@ -16,6 +16,10 @@ export const cmdType = [
         icon: "",
     },
     {
+        name: "type.security",
+        icon: "",
+    },
+    {
         name: "type.other",
         icon: "",
     },

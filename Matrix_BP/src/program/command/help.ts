@@ -5,6 +5,7 @@ import { fastText, rawtext, rawtextTranslate } from "../../util/rawtext";
 new Command()
     .setName("help")
     .setMinPermissionLevel(1)
+    .setTag(3)
     .setAliases("commands")
     .addIcon("items/book_written")
     .setDescription(rawtextTranslate("command.help.description"))

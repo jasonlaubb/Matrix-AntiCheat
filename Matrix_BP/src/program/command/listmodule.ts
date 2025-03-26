@@ -9,6 +9,7 @@ new Command()
     .setMinPermissionLevel(2)
     .setDescription(rawtextTranslate("command.listmodule.description"))
     .addIcon("blocks/bookshelf")
+    .setTag(2)
     .onExecute(async (player) => {
         const select = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
         for (const { name, icon } of mdlType) {

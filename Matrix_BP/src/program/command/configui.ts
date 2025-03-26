@@ -82,6 +82,7 @@ new Command()
     .setMinPermissionLevel(1)
     .addShortDescription(rawtextTranslate("command.configui.sd"))
     .setDescription(rawtextTranslate("command.configui.description"))
+    .setTag(2)
     .addIcon("ui/icon_setting")
     .onExecute(async (player) => {
         player.sendMessage(rawtextTranslate("ui.closechat"));

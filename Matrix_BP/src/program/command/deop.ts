@@ -6,6 +6,7 @@ new Command()
     .setAliases("deadmin", "deleteadmin", "deleteop")
     .setMinPermissionLevel(1)
     .setDescription(rawtextTranslate("command.deop.description"))
+    .setTag(4)
     .addIcon("ui/deop")
     .onExecute(async (player) => {
         player.setPermissionLevel(0);
