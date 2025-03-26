@@ -36,18 +36,18 @@ function tickEvent(player: Player) {
         container.setItem(i);
     }
 }
-function itemDetector (item: ItemStack) {
+function itemDetector(item: ItemStack) {
     const config = Module.config.sensitivity.illegalItemDefinition;
     if (config.nonVanillaID && item.typeId.startsWith("minecraft:") && !vanillaSet.has(item.typeId)) {
         return { t: 1, typeId: item.typeId };
     }
     if (config.amountStack && (item.amount <= 0 || item.amount > item.maxAmount)) {
-        return { t: 2, typeId: item.typeId };;
+        return { t: 2, typeId: item.typeId };
     }
     if (config.itemLore) {
         const lore = item.getLore().length;
         if (lore > 0) {
-            return { t: 3, loreAmount: lore.toString() }
+            return { t: 3, loreAmount: lore.toString() };
         }
     }
     if (config.itemTag && (item.keepOnDeath || item.getCanDestroy().length > 0 || item.getCanPlaceOn().length > 0)) {

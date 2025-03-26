@@ -5,68 +5,68 @@ import { MinecraftEnchantmentTypes } from "../node_modules/@minecraft/vanilla-da
  * @author jasonlaubb
  * @description Create custom ore drops
  */
-export default function tileBuilder (dropItem: string, toolLevel: number, baseRange: null | [number, number], minOrbs: number = 0, maxOrbs: number = 0, normal: boolean = false) {
-	class OreTile implements BlockCustomComponent {
-		constructor () {
-			this.onPlayerDestroy = this.onPlayerDestroy.bind(this);
-		}
-		onPlayerDestroy ({ player, block: { location, dimension } }: BlockComponentPlayerDestroyEvent) {
-			// Skip if doTileDrop is false
-			if (noDrop() || (player && player.getGameMode() === GameMode.creative)) return;
-			// Get the tool that player use
-			const item = player?.getHeldItem();
-			// Get the fortune level of the tool
-			const level = (item?.getEnchantLevel(MinecraftEnchantmentTypes.Fortune) ?? 0);
-			const silkTouch = item?.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) ?? 0 > 0;
-			// Get the multiplier
-			const multiplier = getMultiplier(level);
-			const centerLocation = getCentreLocation(location);
-			if (player) {
-				// Don't drop the item if player doesn't hold the suitable tool
-				if (toolLevel >= 0 && (!item || !checkToolLevel(item, "pickaxe", toolLevel))) return;
-				// Spawn the exp orbs
-				if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, centerLocation, randomInt(minOrbs, maxOrbs));
-			}
-			// Drop original block if the tool has silk touch
-			if (!silkTouch) {
-				// Drop the raw ore
-				if (baseRange) {
-					dimension.spawnItem(new ItemStack(dropItem, tileMultiplier(level, baseRange, multiplier, normal)), centerLocation);
-				} else {
-					dimension.spawnItem(new ItemStack(dropItem, 1), centerLocation);
-				}
-			}
-		}
-	}
-	return new OreTile();
+export default function tileBuilder(dropItem: string, toolLevel: number, baseRange: null | [number, number], minOrbs: number = 0, maxOrbs: number = 0, normal: boolean = false) {
+    class OreTile implements BlockCustomComponent {
+        constructor() {
+            this.onPlayerDestroy = this.onPlayerDestroy.bind(this);
+        }
+        onPlayerDestroy({ player, block: { location, dimension } }: BlockComponentPlayerDestroyEvent) {
+            // Skip if doTileDrop is false
+            if (noDrop() || (player && player.getGameMode() === GameMode.creative)) return;
+            // Get the tool that player use
+            const item = player?.getHeldItem();
+            // Get the fortune level of the tool
+            const level = item?.getEnchantLevel(MinecraftEnchantmentTypes.Fortune) ?? 0;
+            const silkTouch = item?.getEnchantLevel(MinecraftEnchantmentTypes.SilkTouch) ?? 0 > 0;
+            // Get the multiplier
+            const multiplier = getMultiplier(level);
+            const centerLocation = getCentreLocation(location);
+            if (player) {
+                // Don't drop the item if player doesn't hold the suitable tool
+                if (toolLevel >= 0 && (!item || !checkToolLevel(item, "pickaxe", toolLevel))) return;
+                // Spawn the exp orbs
+                if (!silkTouch && maxOrbs > 0) spawnExpOrbs(dimension, centerLocation, randomInt(minOrbs, maxOrbs));
+            }
+            // Drop original block if the tool has silk touch
+            if (!silkTouch) {
+                // Drop the raw ore
+                if (baseRange) {
+                    dimension.spawnItem(new ItemStack(dropItem, tileMultiplier(level, baseRange, multiplier, normal)), centerLocation);
+                } else {
+                    dimension.spawnItem(new ItemStack(dropItem, 1), centerLocation);
+                }
+            }
+        }
+    }
+    return new OreTile();
 }
-function tileMultiplier (fortune: number = 0, baseRange: [number, number], multiplier: number, normal: boolean = false) {
-	if (normal) {
-		// Redstone dust uses this
-		return randomInt(baseRange[0], baseRange[1] + fortune);
-	}
-	const tileDrop = randomInt(baseRange[0], baseRange[1]);
-	let weightList: [number, number][] = [[1, 2]];
-	for (let i = 1; i <= fortune; i++) {
-		weightList.push([fortune + 1, 1]);
-	}
-	return tileDrop * multiplier;
+function tileMultiplier(fortune: number = 0, baseRange: [number, number], multiplier: number, normal: boolean = false) {
+    if (normal) {
+        // Redstone dust uses this
+        return randomInt(baseRange[0], baseRange[1] + fortune);
+    }
+    const tileDrop = randomInt(baseRange[0], baseRange[1]);
+    let weightList: [number, number][] = [[1, 2]];
+    for (let i = 1; i <= fortune; i++) {
+        weightList.push([fortune + 1, 1]);
+    }
+    return tileDrop * multiplier;
 }
-function getMultiplier (fortune: number = 0) {
-	let weightList: [number, number][] = [[1, 2]];
-	for (let i = 1; i <= fortune; i++) {
-		weightList.push([fortune + 1, 1]);
-	}
-	const multiplier = weightRandom(...weightList);
-	return multiplier;
+function getMultiplier(fortune: number = 0) {
+    let weightList: [number, number][] = [[1, 2]];
+    for (let i = 1; i <= fortune; i++) {
+        weightList.push([fortune + 1, 1]);
+    }
+    const multiplier = weightRandom(...weightList);
+    return multiplier;
 }
-function checkToolLevel (itemStack: ItemStack, item: string, level: number) {
-	const isItem = itemStack.typeId.includes(item);
-	if (!isItem) return false;
-	if (level === 0) return true;
-	const tierTag = ["stone", "iron", "diamond", "netherite"].slice(level - 1).map((i) => "minecraft:" + i + "_tier");
-	return tierTag.some((tag) => itemStack.hasTag(tag));
+function checkToolLevel(itemStack: ItemStack, item: string, level: number) {
+    const isItem = itemStack.typeId.includes(item);
+    if (!isItem) return false;
+    if (level === 0) return true;
+    const tierTag = ["stone", "iron", "diamond", "netherite"].slice(level - 1).map((i) => "minecraft:" + i + "_tier");
+    return tierTag.some((tag) => itemStack.hasTag(tag));
 }
-function getCentreLocation ({ x, y, z }: Vector3) {
-	return { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
+function getCentreLocation({ x, y, z }: Vector3) {
+    return { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
 }

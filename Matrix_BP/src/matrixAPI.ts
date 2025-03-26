@@ -140,7 +140,7 @@ class Module {
         this.locked = true;
         return this;
     }
-    public affectedByRewind () {
+    public affectedByRewind() {
         this.movementCheck = true;
         return this;
     }
@@ -278,7 +278,7 @@ class Command {
         this.shortDescription = sd;
         return this;
     }
-    public addIcon (icon: string) {
+    public addIcon(icon: string) {
         this.buttonIcon = "textures/" + icon + ".png";
         return this;
     }
@@ -327,13 +327,16 @@ class Command {
     }
     public static initialize() {
         Player.prototype.runChatCommand = function (...commandString: string[]) {
-            const args = commandString.length === 1 ? commandString[0]
-                .trim()
-                .match(Command.optionMatchRegExp)
-                ?.map((arg) => {
-                    if (arg.startsWith('"') && arg.endsWith('"')) return arg.slice(1, -1);
-                    return arg;
-                }) : commandString;
+            const args =
+                commandString.length === 1
+                    ? commandString[0]
+                          .trim()
+                          .match(Command.optionMatchRegExp)
+                          ?.map((arg) => {
+                              if (arg.startsWith('"') && arg.endsWith('"')) return arg.slice(1, -1);
+                              return arg;
+                          })
+                    : commandString;
             if (!args) {
                 this.sendMessage(rawtext({ text: "§bMatrix§a+ §7> §c" }, { translate: "commandsynax.empty", with: [] }));
                 return;
@@ -613,12 +616,12 @@ class Config {
     public static getChanges() {
         const allProperties = world.getDynamicPropertyIds();
         const changedProperties = allProperties
-        .filter((property) => property.startsWith("config::"))
-        .map((property) => {
-            const key = property.replace("config::", "").split("/");
-            const value = world.getDynamicProperty(property)!;
-            return { id: property, key, value };
-        });
+            .filter((property) => property.startsWith("config::"))
+            .map((property) => {
+                const key = property.replace("config::", "").split("/");
+                const value = world.getDynamicProperty(property)!;
+                return { id: property, key, value };
+            });
         return changedProperties;
     }
 }
@@ -681,7 +684,7 @@ Player.prototype.isMoving = function () {
 };
 Player.prototype.getHeldItem = function () {
     return this.getComponent("equippable")!.getEquipment(EquipmentSlot.Mainhand);
-}
+};
 ItemStack.prototype.getEnchantLevel = function (enchantmentId: string) {
     const enchantmentComponent = this.getComponent("enchantable");
     if (!enchantmentComponent) return 0;
@@ -690,7 +693,7 @@ ItemStack.prototype.getEnchantLevel = function (enchantmentId: string) {
     } catch {
         return 0;
     }
-}
+};
 function* loadModuleRegistry(): Generator<void, void, void> {
     try {
         const items = program;

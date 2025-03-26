@@ -25,11 +25,7 @@ const map = {
         "minecraft:deepslate": "matrix:deepslate_ore",
         "minecraft:netherrack": "matrix:netherrack_ore",
     },
-}
+};
 export default map;
-export const stoneBlocks = Object.keys(map.nore).concat(Object.values(map.nore), [
-    "minecraft:granite",
-    "minecraft:diorite",
-    "minecraft:andesite",
-]);
+export const stoneBlocks = Object.keys(map.nore).concat(Object.values(map.nore), ["minecraft:granite", "minecraft:diorite", "minecraft:andesite"]);
 export const oreBlocks = Object.keys(map.ore).concat(Object.values(map.ore));

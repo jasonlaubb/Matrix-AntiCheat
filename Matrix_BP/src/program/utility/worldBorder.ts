@@ -31,8 +31,8 @@ function worldBorder(tickData: TickData, player: Player) {
 
     if (differentX > maxDifferent || differentZ > maxDifferent) {
         player.addTag("matrix:worldBorderBlocked");
-        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false)
-        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false)
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false);
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false);
         player.addEffect(MinecraftEffectTypes.Blindness, 600);
         player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("module.worldborder.danger").build());
         player.onScreenDisplay.setTitle(rawtextTranslate("module.worldborder.title"), {

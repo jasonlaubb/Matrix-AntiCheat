@@ -21,4 +21,4 @@ new Command()
         const flagMode = type as string;
         player.runChatCommand(`set flag/flagMode ${flagMode}`);
     })
-	.register();
+    .register();

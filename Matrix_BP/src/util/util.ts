@@ -236,7 +236,7 @@ export function sendMessages(players: Player[], message: (RawMessage | string)[]
         player.sendMessage(message);
     });
 }
-export function vanillaAny (item: string, ...array: string[]) {
+export function vanillaAny(item: string, ...array: string[]) {
     if (!item.startsWith("minecraft:")) return false;
     return array.some((a) => item.endsWith(a));
 }
@@ -244,13 +244,13 @@ export function randomInt(min: number, max: number) {
     if (max === min) return min;
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-export function spawnExpOrbs (dimension: Dimension, location: Vector3, count: number) {
+export function spawnExpOrbs(dimension: Dimension, location: Vector3, count: number) {
     if (count === 0) return;
     for (let i = 0; i < count; i++) {
         dimension.spawnEntity(MinecraftEntityTypes.XpOrb, location);
     }
 }
-export function noDrop () {
+export function noDrop() {
     return !world.gameRules.doTileDrops;
 }
 /**
@@ -268,8 +268,8 @@ export function weightRandom(...items: [number, number][]): number {
     }
     return items[0][0];
 }
-export function invertObject (obj: { [key: string]: string }) {
-    const inverted = {} as { [key: string ]: string };
+export function invertObject(obj: { [key: string]: string }) {
+    const inverted = {} as { [key: string]: string };
     for (const key in obj) {
         inverted[obj[key]] = key;
     }

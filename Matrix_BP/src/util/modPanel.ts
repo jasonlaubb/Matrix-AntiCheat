@@ -3,15 +3,12 @@ import { Player, world } from "@minecraft/server";
 import { ModalFormData, ActionFormData } from "@minecraft/server-ui";
 import { Module } from "../matrixAPI";
 export class ModPanel {
-    private constructor () {};
+    private constructor() {}
     public static readonly open = async (admin: Player, player?: Player) => {
         let playerName = "";
         if (!player) {
             const allPlayers = world.getAllPlayers().map(({ name }) => name);
-            const res = await new ModalFormData()
-                .title(rawtextTranslate("ui.modpanel.title"))
-                .dropdown(rawtextTranslate("ui.modpamel.sel.here"), allPlayers)
-                .show(admin);
+            const res = await new ModalFormData().title(rawtextTranslate("ui.modpanel.title")).dropdown(rawtextTranslate("ui.modpamel.sel.here"), allPlayers).show(admin);
             if (res.canceled) return;
             playerName = allPlayers[res.formValues![0] as number] as string;
         } else {
@@ -40,9 +37,9 @@ export class ModPanel {
                 break;
             }
             case 3: {
-                admin.runChatCommand("crash", playerName);  
+                admin.runChatCommand("crash", playerName);
                 break;
             }
         }
-    }
+    };
 }

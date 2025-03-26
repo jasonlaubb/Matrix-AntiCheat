@@ -1442,3 +1442,39 @@ msgstr ""
 msgid "§gParameter: §e%s"
 msgstr ""
 
+#: type.movement
+msgid "§dMovement detection"
+msgstr ""
+
+#: type.block
+msgid "§dBlock detection"
+msgstr ""
+
+#: type.combat
+msgid "§dCombat check"
+msgstr ""
+
+#: type.data
+msgid "§dData check"
+msgstr ""
+
+#: type.util
+msgid "§dUtility modules"
+msgstr ""
+
+#: type.other
+msgid "§dOthers"
+msgstr ""
+
+#: type.moderation
+msgid "§dModeration"
+msgstr ""
+
+#: type.log
+msgid "§dAntiCheat Logging"
+msgstr ""
+
+#: type.security
+msgid "§dSecurity"
+msgstr ""
+
