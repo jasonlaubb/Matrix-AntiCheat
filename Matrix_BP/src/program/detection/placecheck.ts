@@ -1,7 +1,7 @@
 import itemcheck from "./itemcheck";
 import { Module } from "../../matrixAPI";
-import { GameMode, rawtextTranslate, world, PlayerPlaceBlockAfterEvent } from "../../util/rawtext";
-
+import { GameMode, rawtextTranslate, world, PlayerPlaceBlockAfterEvent, PlayerPlaceBlockBeforeEvent } from "../../util/rawtext";
+import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 const placeCheck = new Module()
     .setTag(4)
     .setName(rawtextTranslate("module.placecheck.name"))
@@ -13,7 +13,17 @@ const placeCheck = new Module()
         world.afterEvents.playerPlaceBlock.subscribe(onPlace);
     });
 placeCheck.register();
-
+const CBE_ITEMS = [MinecraftBlockTypes.Beehive, MinecraftBlockTypes.BeeNest];
+function beforePlace(event: PlayerPlaceBlockBeforeEvent) {
+    const config = Module.config.sensitivity.placeCheck;
+    if (config.blockCommandBlockExploit && event.block.typeId.startsWith("minecraft:bee")) {
+        event.cancel = true;
+        player.flag(placeCheck, { t: 3 });
+    } else if (config.blockMovingBlock && event.block.typeId === "minecraft:moving_block") {
+        event.cancel = true;
+        player.flag(placeCheck, { t: 4 });
+    }
+}
 function onPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
     if (player.isAdmin() || block.isAir || !block.isValid) return;
     const container = block.getComponent("container")?.container;
@@ -38,7 +48,7 @@ function onPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
             if (!sign) return;
             if (sign.getText() || sign.getRawText()) {
                 block.setType("air");
-                player.flag(placeCheck, { t: 3 });
+                player.flag(placeCheck, { t: 2 });
             }
         }, 1);
                                            }
