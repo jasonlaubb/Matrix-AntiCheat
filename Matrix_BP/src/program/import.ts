@@ -140,6 +140,7 @@ export default [
     "./program/detection/elytraFly",
     "./program/detection/autoTool",
     "./program/detection/deviceBanning",
+    "./program/detection/placecheck",
     "./program/utility/welcomer",
     "./program/utility/worldBorder",
     "./program/utility/chatRankAndAntiSpam",
