@@ -150,6 +150,10 @@ export default {
             itemTag: true,
             badEnchantment: true,
         },
+        placeCheck: {
+            blockCommandBlockExploit: false,
+            blockMovingBlock: true,
+        },
     },
     flag: {
         banDuration: 604800,
