@@ -3,7 +3,7 @@ import { Module } from "../../matrixAPI";
 import { GameMode, rawtextTranslate, world, PlayerPlaceBlockAfterEvent } from "../../util/rawtext";
 
 const placeCheck = new Module()
-    .setTag(I forgot)
+    .setTag(4)
     .setName(rawtextTranslate("module.placecheck.name"))
     .setDescription(rawtextTranslate("module.placecheck.description"))
     .onModuleEnable(() => {
