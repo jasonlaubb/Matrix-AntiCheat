@@ -1,4 +1,4 @@
-import { ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, Player, system } from "@minecraft/server";
+import { ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, Player, system, RawText } from "@minecraft/server";
 import { MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { ModPanel } from "../util/modPanel";
 import tile from "../util/tileBuilder";
@@ -45,8 +45,11 @@ system.beforeEvents.startup.subscribe((init) => {
 });
 export class Command {
     public static commands: Command[] = [];
-    public static create (commandOption: (builder: Command) => Command) {
+    public static create (commandOption: (cmd: Command) => Command) {
         const commandBuild = commandOption(new Command());
         commands.push(commands);
     }
+    public name: RawText = { text: "" };
+    public description: RawText = { text: "" };
+    public execute: (...args: any[]) => void = () => {};
 }
