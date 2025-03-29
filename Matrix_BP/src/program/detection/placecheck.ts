@@ -1,6 +1,6 @@
 import itemcheck from "./itemcheck";
 import { Module } from "../../matrixAPI";
-import { GPlayerInteractWithBlockAfterEvent, GameMode, rawtextTranslate, world, PlayerPlaceBlockAfterEvent, PlayerPlaceBlockBeforeEvent } from "../../util/rawtext";
+import { PlayerInteractWithBlockAfterEvent, GameMode, rawtextTranslate, world, PlayerPlaceBlockAfterEvent, PlayerPlaceBlockBeforeEvent } from "../../util/rawtext";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 const placeCheck = new Module()
     .setTag(4)
