@@ -38,6 +38,7 @@ export default {
         antiAutoClicker: { state: true, punishment: "default" },
         antiAutoTool: { state: false, punishment: "default" },
         deviceBan: { state: false, punishment: "kick" },
+        placeCheck: { state: false, punishment: "default" },
     } as { [key: string]: { state: boolean; punishment: Punishment | "default" } },
     command: {
         about: true,
@@ -153,6 +154,7 @@ export default {
         placeCheck: {
             blockCommandBlockExploit: false,
             blockMovingBlock: true,
+            scanContainer: true,
         },
     },
     flag: {
