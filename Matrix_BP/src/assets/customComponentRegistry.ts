@@ -43,3 +43,6 @@ system.beforeEvents.startup.subscribe((init) => {
     init.blockComponentRegistry.registerCustomComponent("matrix:deepslateLoot", tile(MinecraftItemTypes.CobbledDeepslate, 0, null));
     init.blockComponentRegistry.registerCustomComponent("matrix:copperLoot", tile(MinecraftItemTypes.RawCopper, 0, [2, 5]));
 });
+export class Command {
+    public static 
+}
