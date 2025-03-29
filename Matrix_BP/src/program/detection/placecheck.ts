@@ -1,6 +1,6 @@
 import itemcheck from "./itemcheck";
 import { Module } from "../../matrixAPI";
-import { GameMode, rawtextTranslate, world, PlayerPlaceBlockAfterEvent, PlayerPlaceBlockBeforeEvent } from "../../util/rawtext";
+import { GPlayerInteractWithBlockAfterEvent, GameMode, rawtextTranslate, world, PlayerPlaceBlockAfterEvent, PlayerPlaceBlockBeforeEvent } from "../../util/rawtext";
 import { MinecraftBlockTypes } from "../../node_modules/@minecraft/vanilla-data/lib/index";
 const placeCheck = new Module()
     .setTag(4)
@@ -8,9 +8,11 @@ const placeCheck = new Module()
     .setDescription(rawtextTranslate("module.placecheck.description"))
     .onModuleEnable(() => {
         world.afterEvents.playerPlaceBlock.subscribe(onPlace);
+        world.beforeEvents.playerPlaceBlock.subscribe(beforePlace);
     })
     .onModuleDisable(() => {
-        world.afterEvents.playerPlaceBlock.subscribe(onPlace);
+        world.afterEvents.playerPlaceBlock.unsubscribe(onPlace);
+        world.beforeEvents.playerPlaceBlock.unsubscribe(onPlace);
     });
 placeCheck.register();
 const CBE_ITEMS = [MinecraftBlockTypes.Beehive, MinecraftBlockTypes.BeeNest];
@@ -21,7 +23,7 @@ function beforePlace(event: PlayerPlaceBlockBeforeEvent) {
         player.flag(placeCheck, { t: 3 });
     } else if (config.blockMovingBlock && event.block.typeId === "minecraft:moving_block") {
         event.cancel = true;
-        player.flag(placeCheck, { t: 4 });
+        player.flag(placeCheck, { t: 4 });world.afterEvents.playerPlaceBlock.subscribe(onPlace);
     }
 }
 function onPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
