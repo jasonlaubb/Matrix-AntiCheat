@@ -25,6 +25,7 @@ function onPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
             const result = itemcheck(item);
             if (result) {
                 if (!isFlagged) {
+                    result.t! = "1-" + result.t;
                     player.flag(placeCheck, result as any);
                     isFlagged = true;
                 }
@@ -33,5 +34,10 @@ function onPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
         }
     } else if (block.typeId.endsWith("sign")) system.runTimeout(() => {
         const sign = block.getComponent("sign");
+        if (!sign) return;
+        if (sign.getText() || sign.getRawText()) {
+            block.setType("air");
+            player.flag(placeCheck, { t: 2 });
+        }
     }, 1);
 }
