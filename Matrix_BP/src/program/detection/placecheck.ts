@@ -9,10 +9,12 @@ const placeCheck = new Module()
     .onModuleEnable(() => {
         world.afterEvents.playerPlaceBlock.subscribe(onPlace);
         world.beforeEvents.playerPlaceBlock.subscribe(beforePlace);
+        world.afterEvents.playerInteractBlock.subcribe(onInteract);
     })
     .onModuleDisable(() => {
         world.afterEvents.playerPlaceBlock.unsubscribe(onPlace);
         world.beforeEvents.playerPlaceBlock.unsubscribe(onPlace);
+        world.afterEvents.playerInteractBlock.unsubcribe(onInteract);
     });
 placeCheck.register();
 const CBE_ITEMS = [MinecraftBlockTypes.Beehive, MinecraftBlockTypes.BeeNest];
@@ -54,5 +56,15 @@ function onPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
             }
         }, 1);
                                            }
+    }
+}
+function onInteract({ block, isFirstEvent }: PlayerInteractWithBlockAfterEvent) {
+    if (!isFirstEvent || !Module.config.sensitivity.scanContainer) return;
+    const container = block.getComponent("container")?.container;
+    if (!container) return;
+    for (let i = 0; i < container.size; i++) {
+            const item = container.getItem(i);
+            if (!item || !itemcheck(item)) continue;
+            container.setItem(i);
     }
 }
