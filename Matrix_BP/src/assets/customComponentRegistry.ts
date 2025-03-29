@@ -44,5 +44,9 @@ system.beforeEvents.startup.subscribe((init) => {
     init.blockComponentRegistry.registerCustomComponent("matrix:copperLoot", tile(MinecraftItemTypes.RawCopper, 0, [2, 5]));
 });
 export class Command {
-    public static 
+    public static commands: Command[] = [];
+    public static create (commandOption: (builder: Command) => Command) {
+        const commandBuild = commandOption(new Command());
+        commands.push(commands);
+    }
 }
