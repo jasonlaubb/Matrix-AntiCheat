@@ -44,12 +44,20 @@ system.beforeEvents.startup.subscribe((init) => {
     init.blockComponentRegistry.registerCustomComponent("matrix:copperLoot", tile(MinecraftItemTypes.RawCopper, 0, [2, 5]));
 });
 export class Command {
+    private constructor ();
     public static commands: Command[] = [];
-    public static create (commandOption: (cmd: Command) => Command) {
+    public static create (name: RawText, description: RawText, commandOption: (cmd: Command) => Command, execute: (cmd: Command) => Command) {
         const commandBuild = commandOption(new Command());
+        commandBuild
         commands.push(commands);
     }
     public name: RawText = { text: "" };
     public description: RawText = { text: "" };
     public execute: (...args: any[]) => void = () => {};
+    public tag?: number;
+    public required: CommandOption[];
+    public optional: CommandOption[];
+    public addOption () {
+        return this;
+    }
 }
