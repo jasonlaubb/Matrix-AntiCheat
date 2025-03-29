@@ -32,12 +32,15 @@ function onPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
                 container.setItem(i);
             }
         }
-    } else if (block.typeId.endsWith("sign")) system.runTimeout(() => {
-        const sign = block.getComponent("sign");
-        if (!sign) return;
-        if (sign.getText() || sign.getRawText()) {
-            block.setType("air");
-            player.flag(placeCheck, { t: 2 });
-        }
-    }, 1);
+    } else {
+        if (block.typeId.endsWith("sign")) {system.runTimeout(() => {
+            const sign = block.getComponent("sign");
+            if (!sign) return;
+            if (sign.getText() || sign.getRawText()) {
+                block.setType("air");
+                player.flag(placeCheck, { t: 3 });
+            }
+        }, 1);
+                                           }
+    }
 }
