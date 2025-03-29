@@ -6,6 +6,7 @@ const placeCheck = new Module()
     .setTag(4)
     .setName(rawtextTranslate("module.placecheck.name"))
     .setDescription(rawtextTranslate("module.placecheck.description"))
+    .setPunishment(rawtextTranslate("module.placecheck.description"))
     .onModuleEnable(() => {
         world.afterEvents.playerPlaceBlock.subscribe(onPlace);
         world.beforeEvents.playerPlaceBlock.subscribe(beforePlace);
