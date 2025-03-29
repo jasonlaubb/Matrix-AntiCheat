@@ -43,6 +43,7 @@ system.beforeEvents.startup.subscribe((init) => {
     init.blockComponentRegistry.registerCustomComponent("matrix:deepslateLoot", tile(MinecraftItemTypes.CobbledDeepslate, 0, null));
     init.blockComponentRegistry.registerCustomComponent("matrix:copperLoot", tile(MinecraftItemTypes.RawCopper, 0, [2, 5]));
 });
+type OptionType = "integer" | "float" | "string" | "choice" | "boolean" | "player" | "target";
 export class Command {
     private constructor ();
     public static commands: Command[] = [];
@@ -57,12 +58,21 @@ export class Command {
     public description: RawText = { text: "" };
     public execute: (...args: any[]) => void = () => {};
     public tag?: number;
-    public required: CommandOption[];
-    public optional: CommandOption[];
-    public addOption () {
+    public required: CommandOption[] = [];
+    public optional: CommandOption[] = [];
+    public addOption (type: OptionType, name: RawText, desc: RawText) {
         return this;
     }
     public addOptionalOption () {
         return this;
     }
+    public setTag (tag: number) {
+        this.tag = tag;
+        return this;
+    }
+}
+interface CommandOption {
+    name: RawText;
+    description: RawText;
+    type: OptionType;
 }
