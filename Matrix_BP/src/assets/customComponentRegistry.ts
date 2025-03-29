@@ -48,7 +48,9 @@ export class Command {
     public static commands: Command[] = [];
     public static create (name: RawText, description: RawText, commandOption: (cmd: Command) => Command, execute: (cmd: Command) => Command) {
         const commandBuild = commandOption(new Command());
-        commandBuild
+        commandBuild.name = name;
+        commandBuild.description = description;
+        commandBuild.execute = execute;
         commands.push(commands);
     }
     public name: RawText = { text: "" };
@@ -58,6 +60,9 @@ export class Command {
     public required: CommandOption[];
     public optional: CommandOption[];
     public addOption () {
+        return this;
+    }
+    public addOptionalOption () {
         return this;
     }
 }
