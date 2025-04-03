@@ -1,3 +1,4 @@
+console.log("[Process] Start compiling");
 const { spawn } = require('node:child_process');
 const fs = require('fs');
 function compile() {
@@ -31,4 +32,6 @@ for (const lang of langList) {
 	}
 	fs.writeFileSync(createPath + lang + ".lang", texts.join("\n"));
 }
-console.log("[Text] Language file generated.")
+console.log("[Text] Language file generated.");
+// Unfinished
+console.log("[Process] Finish!");
