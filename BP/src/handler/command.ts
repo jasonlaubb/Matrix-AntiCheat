@@ -131,7 +131,7 @@ export class Command {
             for (let i = 0; i < subCommand.option.length; i++) {
                 const option = subCommand.option[i];
                 let input = args[i + 1];
-                if (!input && subCommand?.becomeOptional && subCommand.becomeOptional <= i) return handleReject(origin, id, args, reject("missingPara", i + 1));
+                if (!input && subCommand?.becomeOptional && subCommand.becomeOptional < i) return handleReject(origin, id, args, reject("missingPara", i + 1));
                 switch (option.type) {
                     //unfinished
                 }
