@@ -144,6 +144,6 @@ export class Command {
         }
     }
 }
-function handleReject (origin: CustomCommandOrigin, cmd: string, args: any[], reject: Rejection) {
+export function handleReject (origin: CustomCommandOrigin, cmd: string, args: any[], reject: Rejection) {
     return { status: CustomCommandStatus.Failure };
 }
