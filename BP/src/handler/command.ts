@@ -26,6 +26,9 @@ export class Command {
     public static readonly commands: Command[] = [];
     public static readonly registry: FinalRegistry[] = [];
     public static readonly requireEnum: [string, string[]][];
+    public static addEnum (name: string, ...val: string[]) {
+        Command.requireEnum.push([name, val]);
+    }
     public id: string;
     public desc: string;
     public readonly option: CommandOption[] = [];
@@ -114,12 +117,10 @@ export class Command {
                 name: subCommandName,
                 type: CustomCommandParamType.Enum,
             }],
-            optionalParameters: new Array(this.subCommandParaLength + 1)
-                .fill({ name: "parameter ", type: CustomCommandParamType.String } as CustomCommandParameter)
-                .map((para, i) => {
-                    para.name += i
-                    return para;
-                }),
+            optionalParameters: new Array(this.subCommandParaLength)
+                .map((_val, i) => {
+                    return { name: "parameter" + i, type: CustomCommandParamType.String } as CustomCommandParameter
+                }
             permissionLevel: this.permissionLevel,
         }
         const callback = function (origin: CustomCommandOrigin, ...args: (string | number | Entity | Player)[]): CustomCommandResult | undefined {
@@ -132,7 +133,7 @@ export class Command {
                 let input = args[i + 1];
                 if (!input && subCommand?.becomeOptional && subCommand.becomeOptional <= i) return handleReject(origin, id, args, reject("missingPara", i + 1));
                 switch (option.type) {
-
+                    //unfinished
                 }
                 const result = option.conditional(input, i + 1);
                 if (result === true) {
@@ -143,6 +144,10 @@ export class Command {
             }
             return { status: CustomCommandStatus.Success };
         }
+        Command.registry.push([customCommand, callback]);
+    }
+    public register () {
+        
     }
 }
 export function handleReject (origin: CustomCommandOrigin, cmd: string, args: any[], reject: Rejection) {
