@@ -1,10 +1,11 @@
 import { CustomCommand, CustomCommandParamType, Entity, Player, CustomCommandOrigin, CustomCommandParameter, CommandPermissionLevel, CustomCommandResult, CustomCommandStatus } from "@minecraft/server";
 const COMMAND_PREFIX = "m:";
+type CommandConditon = (input: string | number | Entity | Player, arg: number) => true | Rejection;
 interface CommandOption {
     type: CustomCommandParamType;
     name: string;
     desc: string;
-    conditional: (input: string | number | Entity | Player, arg: number) => true | Rejection;
+    conditional: CommandConditon;
 }
 type RejectReason = "noPerm" | "missingPara" | "typeInvalid" | "outOfRange" | "conditionOfPlayer" | "targetAdmin";
 interface Rejection {
@@ -49,14 +50,12 @@ export class Command {
         this.permissionLevel = level;
         return this;
     }
-    public addVanillaOption (id: string, desc: string, type: CustomCommandParamType) {
+    public addOption (id: string, desc: string, type: CustomCommandParamType, conditonal: CommandOption = (_input, _arg) => { return true; }) {
         const option: CommandOption = {
             type,
             name: id,
             desc,
-            conditional: (_input, _arg) => {
-                return true;
-            }
+            conditional,
         };
         this.option.push(option);
         return this;
