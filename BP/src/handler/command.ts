@@ -1,4 +1,5 @@
 import { CustomCommand, CustomCommandParamType, Entity, Player, CustomCommandOrigin, CustomCommandParameter, CommandPermissionLevel, CustomCommandResult, CustomCommandStatus } from "@minecraft/server";
+const COMMAND_PREFIX = "m:";
 interface CommandOption {
     type: CustomCommandParamType;
     name: string;
@@ -108,7 +109,7 @@ export class Command {
         Command.requireEnum.push([subCommandName, subCommandId]);
         const customCommand: CustomCommand = {
             description: this.desc,
-            name: this.id,
+            name: COMMAND_PREFIX + this.id,
             mandatoryParameters: [{
                 name: subCommandName,
                 type: CustomCommandParamType.Enum,
