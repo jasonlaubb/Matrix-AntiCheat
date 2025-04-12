@@ -119,7 +119,7 @@ export class Command {
             }],
             optionalParameters: new Array(this.subCommandParaLength)
                 .map((_val, i) => {
-                    return { name: "parameter" + i, type: CustomCommandParamType.String } as CustomCommandParameter
+                    return { name: "parameter" + (i + 1), type: CustomCommandParamType.String } as CustomCommandParameter
                 }
             permissionLevel: this.permissionLevel,
         }
