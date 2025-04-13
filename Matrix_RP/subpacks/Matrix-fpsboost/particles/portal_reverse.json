@@ -1,0 +1,22 @@
+// Delete particles for FPS boost - Matrix AntiCheat RP
+{
+    "format_version": "1.10.0",
+    "particle_effect": {
+        "description": {
+            "identifier": "minecraft:portal_reverse_particle",
+            "basic_render_parameters": {
+                "material": "particles_alpha",
+                "texture": "textures/particle/particles"
+            }
+        },
+        "components": {
+            "minecraft:emitter_lifetime_expression": {
+                "activation_expression": 0,
+                "expiration_expression": 1
+            },
+            "minecraft:emitter_rate_manual": {
+                "max_particles": 0
+            }
+        }
+    }
+}

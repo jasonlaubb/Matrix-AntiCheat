@@ -1,0 +1,44 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "§bMatrix§a+ §gAnti-Cheat §7(RP§7) V6.1.10§r",
+        "description": "pack.description",
+        "uuid": "44408a4d-808d-4c6a-bd46-77dd6c3f5fbb",
+        "version": [6, 1, 10],
+        "min_engine_version": [1, 21, 60]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "cdd2bd47-1f3b-4bcf-a603-6e611dbdac68",
+            "version": [1, 0, 0]
+        }
+    ],
+    "subpacks": [
+        {
+            "folder_name": "Matrix-fpsboost",
+            "name": "§aEnable FPS Booster",
+            "memory_tier": 0
+        },
+        {
+            "folder_name": "Matrix-nocrit",
+            "name": "§eDelete critical particles only",
+            "memory_tier": 0
+        },
+        {
+            "folder_name": "Matrix-vanilla",
+            "name": "§cDisable FPS Booster",
+            "memory_tier": 0
+        }
+    ],
+    "settings": [
+        {
+            "type": "label",
+            "text": "FPS booster can delete the particle you don't need to increase the performance of the server. Also, it can also be used for anti hit particles spamming."
+        },
+        {
+            "type": "label",
+            "text": "Move the slide to the left to enable FPS booster and right for disabling."
+        }
+    ]
+}

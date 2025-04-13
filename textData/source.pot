@@ -1,0 +1,1119 @@
+# Translator: jasonlaubb
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: PhraseApp (phraseapp.com)\n"
+
+msgid "pack.description"
+msgstr "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock. Required Beta API to work."
+
+msgid "permissions.chatmute"
+msgstr "§bMatrix§a+ §7> §cYou have been muted from the server!"
+
+msgid "disconnectionScreen.unexpectedPacket"
+msgstr "Oops, something went wrong."
+
+msgid "menu.loadingLevel"
+msgstr "Protected by Matrix AntiCheat"
+
+msgid "json.packet"
+msgstr "§bMatrix§a+ §7> §e%1 §g packet§7(%2)§g received from %3"
+
+msgid "error.happened"
+msgstr "§bMatrix§a+ §7> §gThere is some error from the script, please report it to the developer when you have time."
+
+msgid "error.name"
+msgstr "§7- Error: §e%s"
+
+msgid "error.description"
+msgstr "§7- Description: §e%s"
+
+msgid "error.stack"
+msgstr "§7- Stack: §e%s"
+
+msgid "util.flag.alert"
+msgstr "§c§lCheat Alert! §r§7A cheater (%1§r§7) has been detected automatically by Matrix AntiCheat! We have automatically blocked it. §3(moduleId: %2, punishment: %3)§r"
+
+msgid "function.help"
+msgstr "§bMatrix§a+ §7> §gAre you looking for help? Join our Discord Server: https://discord.gg/%1. Feel free to ask there. You are currently on Matrix anticheat version %2. You can use -op to gain matrix administrator permission and use -help to get help for the commands."
+
+msgid "function.help.typeA"
+msgstr "§7>> §gIs the chat command not working? Try to disable or place Matrix Anticheat above any-type of the chat rank addon."
+
+msgid "function.help.typeB"
+msgstr "§7>> §gIs that nothing working? Don't forget to enable Beta API and update our Matrix anticheat to the latest"
+
+msgid "function.script.online"
+msgstr "§7>> §aScript is active! It is so nice to have you here."
+
+msgid "function.script.offline"
+msgstr "§7>> §cScript is inactive! Please check if you have Beta-API enabled."
+
+msgid "moderation.permanent"
+msgstr "UNUSED_STRING"
+
+msgid "moderation.softban.banned"
+msgstr "UNUSED_STRING"
+
+msgid "moderation.softban.until"
+msgstr "UNUSED_STRING"
+
+msgid "ui.runcommand"
+msgstr "Run Command!"
+
+msgid "ui.exit"
+msgstr "Exit"
+
+msgid "ui.closechat"
+msgstr "§7>> §gPlease close the chat to receive your user interface (UI)."
+
+msgid "ui.config.title"
+msgstr "Press the button to continue"
+
+msgid "ui.config.button"
+msgstr "Continue >w<"
+
+msgid "ui.config.body"
+msgstr "You can change the config in the config file. You can also use the command -set <path> <value> to change a config value."
+
+msgid "ui.config.selector"
+msgstr "Config Selector | Matrix AntiCheat"
+
+msgid "ui.config.editor"
+msgstr "Config Editor | Matrix AntiCheat"
+
+msgid "ui.config.value"
+msgstr "New value you want to set"
+
+msgid "ui.config.loc"
+msgstr "§gCurrent path of the config: §e%s"
+
+msgid "commandsynax.unknown"
+msgstr "Unknown command: %s, you can type -help to get some useful information about the commands."
+
+msgid "commandsynax.permission"
+msgstr "No permission to use this command. The minimum permission required is 'level %s'"
+
+msgid "commandsystem.disabled"
+msgstr "Oops, this command has been disabled."
+
+msgid "commandsynax.unknownsubcommand"
+msgstr "Unknown subcommand: %s, you can use -help <command> to know what subcommand you can use."
+
+msgid "commandsynax.empty"
+msgstr "Oops, you have to type something if you want to use some commands."
+
+msgid "commandsynax.tips"
+msgstr "§7>> §gUse -help <command> to get some useful information about the commands."
+
+msgid "commandsynax.missing"
+msgstr "You missed a parameter '%s' which is required."
+
+msgid "commandsynax.missing.subcommand"
+msgstr "This is a subcommand! You have to type -help <command> to know what subcommand you can use."
+
+msgid "commandsynax.syntax.boolean"
+msgstr "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2 >>%3<< %4'. Only 'true' or 'false' are allowed'."
+
+msgid "commandsynax.syntax.string.low"
+msgstr "Syntax error: The parameter '%1' required a string that contains at least %5 characters, but you have typed '%2 >>%3<< %4'."
+
+msgid "commandsynax.syntax.string.high"
+msgstr "Syntax error: The parameter '%1' required a string that contains at most %5 characters, but you have typed '%2 >>%3<< %4'."
+
+msgid "commandsynax.syntax.integer.nan"
+msgstr "Syntax error: The parameter '%1' required a integer, but you have typed '%2 >>%3<< %4'."
+
+msgid "commandsynax.syntax.number.nan"
+msgstr "Syntax error: The parameter '%1' required a valid number, but you have typed '%2 >>%3<< %4'."
+
+msgid "commandsynax.syntax.number.low"
+msgstr "Syntax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2 >>%3<< %4' which is out of range."
+
+msgid "commandsynax.syntax.number.high"
+msgstr "Syntax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
+
+msgid "commandsynax.syntax.code"
+msgstr "Syntax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
+
+msgid "commandsynax.syntax.purecode"
+msgstr "Syntax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2 >>%3<< %4'"
+
+msgid "commandsynax.syntax.choice"
+msgstr "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
+
+msgid "commandsynax.syntax.player"
+msgstr "Syntax error: The parameter '%1' required a player which is online, but you have typed '%2 >>%3<< %4'"
+
+msgid "commandsynax.syntax.target"
+msgstr "Syntax error: The parameter '%1' required a target which is online and not an administrator, but you have typed '%2 >>%3<< %4'"
+msgid "module.phase.name"
+msgstr "Anti Phase"
+
+msgid "module.phase.description"
+msgstr "Prevent the player from passing through the walls with the illegal movement packet."
+
+msgid "module.firewall.name"
+msgstr "Firewall"
+
+msgid "module.firewall.description"
+msgstr "Prevent the player who contains bad packets from accessing the server. For example, spam bot."
+
+msgid "module.namespoof.name"
+msgstr "Anti Name Spoofer"
+
+msgid "module.namespoof.description"
+msgstr "Prevent the player from changing their name to a invalid name and join the server."
+
+msgid "module.killaura.name"
+msgstr "Anti KillAura"
+
+msgid "module.killaura.description"
+msgstr "Prevent the player from hitting other players with the illegal kill packet."
+
+msgid "module.scaffold.name"
+msgstr "Anti Scaffold"
+
+msgid "module.scaffold.description"
+msgstr "Prevent the player from using the auto-brige hack to gain unfair advantage."
+
+msgid "module.insteabreak.name"
+msgstr "Anti Insteabreak"
+
+msgid "module.insteabreak.description"
+msgstr "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
+
+msgid "module.reach.name"
+msgstr "Anti Reach"
+
+msgid "module.reach.description"
+msgstr "An advanced anti reach solution that provided reach detection up to 4.5 blocks."
+
+msgid "module.speed.name"
+msgstr "Anti Speed"
+
+msgid "module.speed.description"
+msgstr "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
+
+msgid "module.fly.name"
+msgstr "Anti Fly"
+
+msgid "module.fly.description"
+msgstr "Prevent most of the fly hacks from working. There is a small probability of false positive."
+
+msgid "module.timer.name"
+msgstr "Anti Timer"
+
+msgid "module.timer.description"
+msgstr "Prevent someone speed up their game speed to get an unfair advantage."
+
+msgid "module.itemcheck.name"
+msgstr "Item check"
+
+msgid "module.itemcheck.description"
+msgstr "Prevent the player from using the illegal item from the server."
+
+msgid "module.hop.name"
+msgstr "Anti Hop"
+
+msgid "module.hop.description"
+msgstr "An extra checks against the illegal movement motion, to prevent a silent bypass."
+
+msgid "module.aim.name"
+msgstr "Aim check"
+
+msgid "module.aim.description"
+msgstr "An extra checks against the illegal aim, to prevent the killaura or aim assist, credit to 4urxa."
+
+msgid "module.invalidSprint.name"
+msgstr "Anti invalid sprint"
+
+msgid "module.invalidSprint.description"
+msgstr "Prevent the player from using the illegal sprint packet client."
+
+msgid "command.about.description"
+msgstr "Show some basic information about Matrix AntiCheat."
+
+msgid "command.about.title"
+msgstr "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
+
+msgid "command.about.author"
+msgstr "Author: jasonlaubb (Discord: @uwu_the_great)"
+
+msgid "command.about.github"
+msgstr "Github: %s"
+
+msgid "command.about.version"
+msgstr "Current version: %s"
+
+msgid "command.about.joindc"
+msgstr "Want to download? Join our Discord Server: https://discord.gg/%s"
+
+msgid "ad.running"
+msgstr "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
+
+msgid "command.help.description"
+msgstr "Get the useful information about the commands."
+
+msgid "command.help.command.name"
+msgstr "Command's name"
+
+msgid "command.help.command.name.description"
+msgstr "The name of the command that you need help."
+
+msgid "command.help.title"
+msgstr "The command list of Matrix AntiCheat:"
+
+msgid "command.help.target.title"
+msgstr "Showing the usage of the selected command: %s"
+
+msgid "command.help.target.notfound"
+msgstr "Not able to find the command, make sure you type a valid command so that we can show you the correct information."
+
+msgid "command.help.m.description"
+msgstr "§gDescription of the command: §e%s§g"
+
+msgid "command.help.m.usage"
+msgstr "§gUsage of the command: §e"
+
+msgid "command.help.m.usage.empty"
+msgstr "§gUsage of the command: §eJust type the command name!"
+
+msgid "command.help.option.string"
+msgstr "string (A string that formed with any characters)"
+
+msgid "command.help.option.number"
+msgstr "number (A float number or a integer)"
+
+msgid "command.help.option.integer"
+msgstr "number (Integer only, including negative)"
+
+msgid "command.help.option.boolean"
+msgstr "boolean (A boolean value, true or false)"
+
+msgid "command.help.option.code"
+msgstr "code (A code with length that is equal to a specific number)"
+
+msgid "command.help.option.purecode"
+msgstr "purecode (A purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z))"
+
+msgid "command.help.option.choice"
+msgstr "choice (A choice between a list of options)"
+
+msgid "command.help.option.player"
+msgstr "player (A player name of a player that is online)"
+
+msgid "command.help.option.target"
+msgstr "target (A player name of a player that is online but not an administrator of the server)"
+
+msgid "command.help.target.type"
+msgstr "§gType: §e%s"
+
+msgid "command.help.target.description"
+msgstr "§gDescription: §e%s"
+
+msgid "command.help.target.optional"
+msgstr " (optional)"
+
+msgid "command.op.description"
+msgstr "Make yourself to be an administrator of the server, just by a command."
+
+msgid "command.op.password"
+msgstr "admin password"
+
+msgid "command.op.password.description"
+msgstr "The password that you have been set as the password for the command. If you have not set a password, just don't type anything here."
+
+msgid "command.op.statement.mismatch"
+msgstr "You have not set a password yet, you can just keep it empty."
+
+msgid "command.op.statement.missing"
+msgstr "You should type the password as the password has been set."
+
+msgid "command.op.statement.already"
+msgstr "You have the administrator permission already. What do you want anymore by using me?"
+
+msgid "command.op.overheat.password"
+msgstr "Huh, just try later, I have almost overheated myself."
+
+msgid "command.op.overheat.normal"
+msgstr "You should finish the verification first!"
+
+msgid "command.op.success"
+msgstr "You have been set as an administrator of the server."
+
+msgid "command.op.start"
+msgstr "Seems like the server has no password yet, let's start a simple verification to verify about you're an administrator of the server or not."
+
+msgid "command.op.success.fast"
+msgstr "Success! We are able to verify you're an administrator of the server, you have been set as an administrator of the server."
+
+msgid "command.op.require"
+msgstr "Please type the following slash command (/) in the chat: '%s'."
+
+msgid "command.op.require.cancel"
+msgstr "If you want to cancel the verification, just type the slash command (/) in chat: '%s'."
+
+msgid "command.op.verify.failed"
+msgstr "Sorry, but you have typed a wrong command, please try again."
+
+msgid "command.op.verify.success"
+msgstr "Success! You have been set as an administrator of the server."
+
+msgid "command.op.verify.cancel"
+msgstr "You have canceled the verification."
+
+msgid "command.op.incorrect"
+msgstr "You have typed the incorrect password, please try again later."
+
+msgid "command.deop.description"
+msgstr "Remove yourself from the administrators of the server."
+
+msgid "command.deop.success"
+msgstr "You have been removed from the administrators of the server."
+
+msgid "command.setmodule.description"
+msgstr "Toggle a module on or off."
+
+msgid "command.setmodule.module"
+msgstr "module's id"
+
+msgid "command.setmodule.module.description"
+msgstr "The id of the module that you want to toggle on or off."
+
+msgid "command.setmodule.state"
+msgstr "target state"
+
+msgid "command.setmodule.state.description"
+msgstr "State that you want to switch on or off for the module."
+
+msgid "command.setmodule.success.enabled"
+msgstr "Success! The module has been enabled by yourself."
+
+msgid "command.setmodule.success.disabled"
+msgstr "Success! The module has been disabled by yourself."
+
+msgid "command.setmodule.notfound"
+msgstr "Not able to find the module, make sure you type a valid module. You can use '-listmodules' to see the list of modules."
+
+msgid "command.setmodule.already.enabled"
+msgstr "The module has already been enabled. Do you want to disable it?"
+
+msgid "command.setmodule.already.disabled"
+msgstr "The module has already been disabled. Do you mean to enable it?"
+
+msgid "command.listmodule.description"
+msgstr "Show the list of modules."
+
+msgid "command.listmodule.title"
+msgstr "The list of the modules"
+
+msgid "command.listmodule.body"
+msgstr "Here is the list of modules. The button is the id of the module. Green means enabled, red means disabled. What a simple system, right?"
+
+msgid "command.listmodule.toggle.title"
+msgstr "Toggling the module"
+
+msgid "command.listmodule.toggle.body"
+msgstr "You can still use '-setmodule' to toggle a module on or off."
+
+msgid "command.listmodule.toggle.enable"
+msgstr "I want to enable this module."
+
+msgid "command.listmodule.toggle.disable"
+msgstr "I want to disable this module."
+
+msgid "command.listmodule.toggle.state"
+msgstr "What do you want to do with this module"
+
+msgid "command.set.invalid"
+msgstr "Unknown path: %s, make sure you type a valid path. Use slash (/) to separate the path."
+
+msgid "command.set.number"
+msgstr "The path you want to set must be a number."
+
+msgid "command.set.boolean"
+msgstr "The path you want to set must be a boolean. Only 'true' or 'false' is allowed."
+
+msgid "command.set.success"
+msgstr "Success! The path '%1' has been set to '%2'."
+
+msgid "command.set.description"
+msgstr "Change the config dynamically. Without the data lost for different versions."
+
+msgid "command.set.key"
+msgstr "path (key)"
+
+msgid "command.set.key.description"
+msgstr "The path that you want to set. You should type it with slash (/) to separate the path. For example, 'modules/antiSpeed'."
+
+msgid "command.set.value"
+msgstr "value"
+
+msgid "command.set.value.description"
+msgstr "The value that you want to set. It should be a string, a boolean or a number depending on the type of the path."
+
+msgid "command.matrixui.description"
+msgstr "Open the Matrix AntiCheat UI panel."
+
+msgid "command.vanish.description"
+msgstr "Make yourself invisible to other players. Even ESP will not be able to see you."
+
+msgid "command.vanish.success"
+msgstr "You have been vanished. Type this command again to make yourself visible again."
+
+msgid "command.vanish.deleted"
+msgstr "You are no longer to be vanished."
+
+msgid "command.vanish.failed"
+msgstr "Sorry, but you need to place Matrix anticheat above any-type of addon that includes 'player.json' entities file to use this command."
+
+msgid "command.moderation.target"
+msgstr "Target player"
+
+msgid "command.moderation.target.description"
+msgstr "The player that you want to use this command on."
+
+msgid "command.moderation.duration"
+msgstr "Duration"
+
+msgid "command.moderation.duration.description"
+msgstr "The duration of the moderation action that you want to use this command on, in minutes. You leave it empty in order to set a permanent moderation action."
+
+msgid "command.moderation.admin"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.success"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.action"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.removal.failed"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.tempkick"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.kick"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.ban"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.unban"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.softban"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.unsoftban"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.mute"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.unmute"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.freeze"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.unfreeze"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.warn"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.clearwarn"
+msgstr "UNUSED_STRING"
+
+msgid "command.moderation.warn.amount"
+msgstr "UNUSED_STRING"
+
+msgid "command.tempkick.description"
+msgstr "UNUSED_STRING"
+
+msgid "command.kick.description"
+msgstr "Kick a player."
+
+msgid "command.ban.description"
+msgstr "Ban a player."
+
+msgid "command.unban.description"
+msgstr "Unban a player."
+
+msgid "command.softban.description"
+msgstr "UNUSED_STRING"
+
+msgid "command.unsoftban.description"
+msgstr "UNUSED_STRING"
+
+msgid "command.mute.description"
+msgstr "Mute a player."
+
+msgid "command.unmute.description"
+msgstr "Unmute a player."
+
+msgid "command.freeze.description"
+msgstr "UNUSED_STRING"
+
+msgid "command.unfreeze.description"
+msgstr "UNUSED_STRING"
+
+msgid "command.warn.description"
+msgstr "Warn a player."
+
+msgid "command.banlist.empty"
+msgstr "Hopefully, there is no banned player right now."
+
+msgid "command.banlist.banned"
+msgstr "There is %1 banned player(s) on this server: §e%s"
+
+msgid "command.banlist.description"
+msgstr "Show the list of banned players."
+
+msgid "command.clearwarn.description"
+msgstr "Clear all warnings of a player."
+
+msgid "command.invsee.description"
+msgstr "See the inventory of a player."
+
+msgid "command.invsee.notice"
+msgstr "You can open the inventory ui by opening your inventory."
+
+msgid "command.invsee.self"
+msgstr "You can not see your own inventory, this might cause some issues."
+
+msgid "command.setpassword.description"
+msgstr "Set a password for getting operator permissions."
+
+msgid "command.setpassword.password"
+msgstr "New password"
+
+msgid "command.setpassword.password.description"
+msgstr "The password that you want to set."
+
+msgid "command.setpassword.success"
+msgstr "The password has been set."
+
+msgid "command.setpassword.strength"
+msgstr "Your password should include lowerCase, upperCase, numbers and special characters."
+
+msgid "command.clearpassword.description"
+msgstr "Clear the password."
+
+msgid "command.clearpassword.success"
+msgstr "The password has been cleared."
+
+msgid "command.clearpassword.already"
+msgstr "There is no password set."
+
+msgid "command.configui.description"
+msgstr "Configure the settings of Matrix anticheat by a user interface."
+
+msgid "command.setadmin.description"
+msgstr "Set a player as an administrator."
+
+msgid "command.setadmin.level"
+msgstr "Administrator level"
+
+msgid "command.setadmin.level.description"
+msgstr "The level of the administrator that you want to set. (Set to 0 in order to remove the player as an administrator)"
+
+msgid "command.setadmin.failed"
+msgstr "Failed to change the player's administrator level."
+
+msgid "command.setadmin.level.display"
+msgstr "§7>> §gAdministrator level: §eLevel %s"
+
+msgid "command.setrank.description"
+msgstr "Set a player's rank."
+
+msgid "command.setrank.rank"
+msgstr "Ranks"
+
+msgid "command.setrank.rank.description"
+msgstr "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
+
+msgid "command.setrank.success"
+msgstr "%1's rank has been set to %2."
+
+msgid "action.hint.exit.matrix:inv_container"
+msgstr "Tap the §lInventory button§r to open their Inventory."
+
+msgid "action.hint.exit.console.matrix:inv_container"
+msgstr "Press §l:_input_key.inventory:§r to open their Inventory"
+
+msgid "module.welcomer.message"
+msgstr "Welcome! §e%s§r§g has joined the server!"
+
+msgid "module.welcomer.device"
+msgstr "§7>> §gDevice: §e%s"
+
+msgid "module.welcomer.device.console"
+msgstr "gaming console"
+
+msgid "module.welcomer.device.pc"
+msgstr "computer"
+
+msgid "module.welcomer.device.mobile"
+msgstr "mobile phone"
+
+msgid "module.welcomer.device.unknown"
+msgstr "unknown"
+
+msgid "module.welcomer.name"
+msgstr "Welcomer"
+
+msgid "module.welcomer.description"
+msgstr "Send a welcome message when a player joins the server."
+
+msgid "module.worldborder.name"
+msgstr "World Border"
+
+msgid "module.worldborder.description"
+msgstr "Generate a border to block the players from going out of the world."
+
+msgid "module.worldborder.danger"
+msgstr "Stop moving, you have arrived the boundary of the world!"
+
+msgid "module.worldborder.title"
+msgstr "§c§lStopped!§r"
+
+msgid "module.worldborder.subtitle"
+msgstr "§eYou will be auto teleported to the spawn in %s seconds."
+
+msgid "module.chatrank.name"
+msgstr "Chat Rank & Anti Spam"
+
+msgid "module.chatrank.description"
+msgstr "Prevent the spamming on your server and provide a chat rank system."
+
+msgid "module.chatrank.bad"
+msgstr "Your message contains some sensitive word(s) which is not allowed."
+
+msgid "module.chatrank.slow"
+msgstr "Slow mode enabled! Please enter your message %s second(s) later."4
+
+msgid "module.chatrank.repeated"
+msgstr "Please don't spam messages."
+
+msgid "module.afk.name"
+msgstr "Anti AFK"
+
+msgid "module.afk.description"
+msgstr "Disconnect the player if they are not active for a long time."
+
+msgid "module.afk.disconnect"
+msgstr "%s has been disconnected due to AFK on this server for a long time."
+
+msgid "module.clog.name"
+msgstr "Anti Combat Log"
+
+msgid "module.clog.description"
+msgstr "Prevent someone leaves the combat log. Very basic so use others for your own anti combat log."
+
+msgid "module.clog.in.combat"
+msgstr "§gYou are in combat. §7§l(§r§e%s second(s) left§7§l)§r"
+
+msgid "module.clog.face.combat"
+msgstr "You are now in combat with §e%s§g."
+
+msgid "module.clog.leave.combat"
+msgstr "You are no longer in combat with %s."
+
+msgid "module.clog.killed"
+msgstr "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+
+msgid "module.captcha.name"
+msgstr "Captcha against bots"
+
+msgid "module.captcha.description"
+msgstr "Prevent the spamming bot from attacking the current server."
+
+msgid "module.captcha.detected"
+msgstr "§c§lSuspicious client detected!§r§7 %s has been disconnected due to using a suspicious client."
+
+msgid "module.captcha.keepmove"
+msgstr "§bMatrix§a+ §7> §gContinue your rotation movement for %s seconds more."
+
+msgid "module.captcha.checking"
+msgstr "§bMatrix§a+ §7> §gChecking your client... Please wait."
+
+msgid "module.captcha.continue"
+msgstr "§bMatrix§a+ §7> §gPlease §e§lMOVE YOUR ROTATION§r§g to continue the check process."
+
+msgid "module.captcha.title"
+msgstr "Captcha GUI | Matrix Anticheat"
+
+msgid "module.captcha.submit"
+msgstr "I have finished the question!"
+
+msgid "module.captcha.selectui"
+msgstr "§bPlease answer the question below correctly to verify you're a human."
+
+msgid "module.captcha.why"
+msgstr "§aWhy do you need to verify? Because we want to prevent the spamming bot from attacking the current server."
+
+msgid "module.captcha.question"
+msgstr "§gQuestion: §eWhat is the correct answer of %1 plus %2?"
+
+msgid "module.captcha.youranswer"
+msgstr "§gSelect the correct answer in below slider"
+
+msgid "module.captcha.recontinue"
+msgstr "§bMatrix§a+ §7> §gYou make it wrong, please try again."
+
+msgid "module.captcha.verified"
+msgstr "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
+
+msgid "module.autoclicker.name"
+msgstr "Anti Auto Clicker"
+
+msgid "module.autoclicker.description"
+msgstr "Prevent the high cps auto clicker from working."
+
+msgid "module.autoclicker.reach"
+msgstr "§c§lHey! §7Auto clicker is not allowed on this server. You have %2 out of %1 clicks per second now."
+
+msgid "item.matrix.itemui"
+msgstr "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
+
+msgid "directpanel.title"
+msgstr "Tell me, what do you want to do?"
+
+msgid "directpanel.body"
+msgstr "Select an action from below buttons. I can generate the command string for you."
+
+msgid "directpanel.button"
+msgstr "Run '%s' command."
+
+msgid "directpanel.enter"
+msgstr "Enter the command string"
+
+msgid "directpanel.build"
+msgstr "Let build and run your command together."
+
+msgid "module.prediction.name"
+msgstr "Prediction Module"
+
+msgid "module.prediction.description"
+msgstr "An advanced check that can detect more fly hacker."
+
+msgid "flag.detected.title"
+msgstr "§bMatrix§i│ §eSuspicious client detected"
+
+msgid "flag.detected.player"
+msgstr "   §fPlayer§r§i│ §f%s"
+
+msgid "flag.detected.module"
+msgstr "   §fModule§r§i│ §f%s"
+
+msgid "flag.detected.object"
+msgstr "   §fobject§r§i│ §ftype §i[§f%s§i] §f¬"
+
+msgid "flag.detected.none"
+msgstr "         §cNo data is given by the module."
+
+msgid "flag.detected.punishment"
+msgstr "   §fPunishment§r§i│ §f%s"
+
+msgid "flag.detected.false"
+msgstr "   §7[?] Is it a §cfalse flag§7? Please report it to the developer when you have time."
+
+msgid "command.moderation.reason.description"
+msgstr "The reason for the moderation action."
+
+msgid "command.moderation.reason"
+msgstr "Reason"
+
+msgid "module.entityFly.name"
+msgstr "Anti Entity Fly"
+
+msgid "module.entityFly.description"
+msgstr "Prevent the entity fly from working."
+
+msgid "command.echestwipe.success"
+msgstr "The echest of %s has been wiped successfully."
+
+msgid "command.echestwipe.description"
+msgstr "Wipe the ender chest of a player."
+
+msgid "command.fastlog.description"
+msgstr "Get the log in today, yesterday or the day before yesterday"
+
+msgid "command.log.day"
+msgstr "Day"
+
+msgid "command.log.day.description"
+msgstr "The day of the logs(s)"
+
+msgid "command.log.nodata"
+msgstr "No data. Unable to get the log that you want in the database."
+
+msgid "command.log.description"
+msgstr "View the recent logs in the database"
+
+msgid "command.log.amount"
+msgstr "Amount"
+
+msgid "command.log.amount.description"
+msgstr "The amount of the latest logs that you what to view."
+
+msgid "command.daylog.description"
+msgstr "View all of the logs in a specific day."
+
+msgid "command.log.month"
+msgstr "The month of the log(s)."
+
+msgid "command.log.years"
+msgstr "The years of the log(s)."
+
+msgid "command.log.invalid"
+msgstr "Invalid time: You should not select a time that is in the future."
+
+msgid "command.logui.description"
+msgstr "Select one of the the restart point and view all of the log(s) during the restart point to the next restart point."
+
+msgid "command.logui.title"
+msgstr "Select one of the restart point in below"
+
+msgid "command.logui.button"
+msgstr "Server initialization #%s"
+
+msgid "ui.log.title"
+msgstr "Log record | Timezone: %s"
+
+msgid "ui.log.body"
+msgstr "Click into the §gbutton§f of the log can see the §adetail information§f of the selected log. If you want to exit this ui, you can click the 'X' in the corner."
+
+msgid "ui.log.detail"
+msgstr "Detail information"
+
+msgid "command.echestwipe.description"
+msgstr "Clear a player's ender chest"
+
+msgid "command.help.sd"
+msgstr "Get the command list"
+
+msgid "command.logui.sd"
+msgstr "View logs by restart time"
+
+msgid "command.daylog.sd"
+msgstr "View logs by date"
+
+msgid "command.fastlog.ad"
+msgstr "View logs in past few days"
+
+msgid "command.setpassword.sd"
+msgstr "Change password"
+
+msgid "command.configui.sd"
+msgstr "Edit config"
+
+msgid "command.op.sd"
+msgstr "Gain matrix admin"
+
+msgid "command.deop.sd"
+msgstr "Remove your admin perm"
+
+msgid "command.vanish.sd"
+msgstr "(Un)vanish yourself"
+
+msgid "command.about.sd"
+msgstr "Get info of Matrix-anti"
+
+msgid "command.crash.description"
+msgstr "Crash a player."
+
+msgid "module.mobaura.name"
+msgstr "Anti Mob Aura"
+
+msgid "module.mobaura.description"
+msgstr "Spawn dummy when player attack a mob, checks if the player is attacking the dummy."
+
+msgid "module.elytraFly.name"
+msgstr "Anti Elytra Fly"
+
+msgid "module.elytraFly.description"
+msgstr "Prevent the player from using the illegal elytra flying."
+
+msgid "module.autotool.name"
+msgstr "Anti Auto Tool"
+
+msgid "module.autotool.description"
+msgstr "Checks if player is using autoTool hack to break blocks."
+
+msgid "module.deviceban.name"
+msgstr "Device Ban"
+
+msgid "module.deviceban.description"
+msgstr "Prevent the player from using a banned device to join the server."
+
+msgid "command.ban.finish"
+msgstr "§bMatrix§a+ §7>§g %1 has been banned by %2."
+
+msgid "command.unban.finish"
+msgstr "§bMatrix§a+ §7>§g %1 has been unbanned by %2."
+
+msgid "command.kick.finish"
+msgstr "§bMatrix§a+ §7>§g %1 has been kicked by %2."
+
+msgid "command.mute.finish"
+msgstr "§bMatrix§a+ §7>§g %1 has been muted by %2."
+
+msgid "command.unmute.finish"
+msgstr "§bMatrix§a+ §7>§g %1 has been unmuted by %2."
+
+msgid "command.warn.finish"
+msgstr "§bMatrix§a+ §7>§g %1 has been warned by %2. §7(Warns: %3)"
+
+msgid "command.clearwarn.finish"
+msgstr "§bMatrix§a+ §7> §gAll the warnings of %1 has been cleared by %2."
+
+msgid "command.unban.notfound"
+msgstr "§bMatrix§a+ §7> §cThe player %1 has not been banned yet. You can use -banlist to see the list of banned players."
+
+msgid "command.unmute.notfound"
+msgstr "§bMatrix§a+ §7> §cThe player %1 has not been muted yet."
+
+msgid "command.moderation.ban.expired"
+msgstr "§bMatrix§a+ §7> §aYour ban has expired!"
+
+msgid "command.moderation.mute.expired"
+msgstr "§bMatrix§a+ §7> §aYou're no longer to be muted"
+
+msgid "debug.pause"
+msgstr "§bMatrix§a+ §7> §7Punishment §e%1 §7to §e%2§r §7has been cancelled."
+
+msgid "command.setflagmsgto.description"
+msgstr "Change the flag mode"
+
+msgid "command.setflagmsgto.type"
+msgstr "Flag type"
+
+msgid "command.setflagmsgto.type.description"
+msgstr "The flag type that states what is the target that anticheat should send the notification to them when there is cheater detected."
+
+msgid "command.fastlog.sd"
+msgstr "View log in previous day"
+
+msgid "command.echestwipe.sd"
+msgstr "Clear player echest"
+
+msgid "ui.modpanel.title"
+msgstr "Mod Panel | Matrix AntiCheat"
+
+msgid "ui.modpamel.sel.here"
+msgstr "Select here"
+
+msgid "ui.modpanel.mute"
+msgstr "§5Mute\n§8Run '-mute %1 %2'"
+
+msgid "ui.modpanel.kick"
+msgstr "§5Kick\n§8Run '-kick %1 %2'"
+
+msgid "ui.modpanel.ban"
+msgstr "§5Ban\n§8Run '-ban %1 %2 %3'"
+
+msgid "ui.modpanel.crash"
+msgstr "§5Crash\n§8Run '-crash %s'"
+
+msgid "module.disabler.name"
+msgstr "Anti Disabler"
+
+msgid "module.disabler.description"
+msgstr "Prevent user from using fake gliding tag to bypass the anticheat or server-auth-with-rewind system."
+
+msgid "command.mset.error"
+msgstr "Sorry, we could not read the key you have provided."
+
+msgid "command.mset.success"
+msgstr "Successfully run set command for %s times. This action cannot be reversed."
+
+msgid "command.mset.title"
+msgstr "Import settings"
+
+msgid "command.mset.input"
+msgstr "Setup key"
+
+msgid "command.mset.description"
+msgstr "Import settings by a key"
+
+msgid "command.export.title"
+msgstr "We will display the string key in the next messages. As there is the limit for the API, we can't let you copy the key directly. You can try to use some app like Google Lens to copy it."
+
+msgid "command.export.empty"
+msgstr "§bMatrix§a+ §7> §cUnable to generate the key as there is no data to be exported."
+
+msgid "command.export.description"
+msgstr "Export the settings to a key"
+
+msgid "item.matrix.hammer"
+msgstr "§g§lMod §bHammer§r"
+
+msgid "command.unban.realmsplus"
+msgstr "§bMatrix§a+ §7> §cUnable to unban %s, please use '/realm unban gamertag:%s option:<Current realm name>' in discord with realm+ bot'"
+
+msgid "module.xray.name"
+msgstr "Anti Xray"
+
+msgid "module.xray.description"
+msgstr "Prevent user for using xray to see the ore locations directly."
+
+msgid "module.xray.warning"
+msgstr "Anti-Xray system is running to provide a fair game experience."
+
+msgid "commands.op.failed"
+msgstr "§bMatrix§a+ §7> §cFailed to op %s. If you want to get permission in Matrix, you can type '-op' in chat."
+
+msgid "item.matrix.crystal"
+msgstr "§d§lCrystal of uwu§r"
+
+msgid "tile.matrix:uwu_craft_table.name"
+msgstr "§d§lUwu §eCraft Table§r"
+
+msgid "matrix.table"
+msgstr "Uwu Crafting"
+
+msgid "command.clearpassword.sd"
+msgstr "Clear password"
+
+msgid "command.set.sd"
+msgstr "Set value by path"
+
+msgid "command.help.target.name"
+msgstr "§gParameter: §e%s"
+
+msgid "type.movement"
+msgstr "§dMovement detection"
+
+msgid "type.block"
+msgstr "§dBlock detection"
+
+msgid "type.combat"
+msgstr "§dCombat check"
+
+msgid "type.data"
+msgstr "§dData check"
+
+msgid "type.util"
+msgstr "§dUtility modules"
+
+msgid "type.other"
+msgstr "§dOthers"
+
+msgid "type.moderation"
+msgstr "§dModeration"
+
+msgid "type.log"
+msgstr "§dAntiCheat Logging"
+
+msgid "type.security"
+msgstr "§dSecurity"
+
+msgid "type.setting"
+msgstr "§dSettings"

@@ -1,0 +1,36 @@
+{
+	"format_version": "1.20.10",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "matrix:uwu_craft_table"
+		},
+		"tags": [
+			"crafting_table",
+			"uwu_table"
+		],
+		"pattern": [
+			"aba",
+			"bcb",
+			"aba"
+		],
+		"key": {
+			"a": {
+				"item": "matrix:uwu_crystal"
+			},
+			"b": {
+				"item": "minecraft:bedrock"
+			},
+			"c": {
+				"item": "minecraft:crafting_table"
+			}
+		},
+		"result": {
+			"item": "matrix:uwu_craft_table"
+		},
+		"unlock": [
+			{
+				"item": "matrix:uwu_crystal"
+			}
+		]
+	}
+}

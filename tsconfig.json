@@ -1,5 +1,5 @@
 {
-    "include": ["BP/src", "global.d.ts"],
+    "include": ["Matrix_BP/src", "global.d.ts"],
     "exclude": ["node_modules"],
     "watchOptions": {
         "excludeDirectories": ["node_modules"]
@@ -14,7 +14,7 @@
         "strict": true,
         "allowJs": true,
         "checkJs": false,
-        "outDir": "BP/scripts",
+        "outDir": "Matrix_BP/scripts",
         "typeRoots": ["./node_modules/@minecraft"],
         "strictNullChecks": true,
         "strictFunctionTypes": true,
@@ -30,6 +30,6 @@
         "sourceMap": false,
         "removeComments": true,
         "allowSyntheticDefaultImports": false,
-        "noEmitOnError": false
+        "noEmitOnError": false, // Still emit on error
     }
 }

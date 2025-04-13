@@ -1,8 +1,8 @@
-education.enable=true
+education.enable=false
 diagnose=true
 diagnostic.enable=true
 diagnose.objectives=true
 diagnose.tags=true
 diagnose.mcfunctions=true
 diagnostic.json=true
-diagnostic.lang=true
+diagnostic.lang=false

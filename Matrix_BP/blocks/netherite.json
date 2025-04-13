@@ -1,0 +1,33 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "matrix:netherite",
+            "menu_category": {
+                "is_hidden_in_commands": true,
+                "category": "none"
+            }
+        },
+        "components": {
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 6000
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 100,
+                "item_specific_speeds": [
+                    {
+                        "item": {
+                            "tags": "q.any_tag('minecraft:is_pickaxe') && q.any_tag('minecraft:diamond_tier', 'minecraft:netherite_tier')"
+                        },
+                        "destroy_speed": 30
+                    }
+                ]
+            },
+            "minecraft:custom_components": [
+                "matrix:netheriteLoot"
+            ],
+            "minecraft:loot": "loot_tables/air.json",
+            "tag:minecraft:is_pickaxe_item_destructible": {}
+        }
+    }
+}

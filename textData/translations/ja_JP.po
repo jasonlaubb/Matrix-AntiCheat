@@ -1,0 +1,1484 @@
+#: pack.description
+msgid "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock. Required Beta API to work."
+msgstr "§7§¶Minecraft Bedrock版向けの最高のアンチチートソリューション。動作にはBeta APIをオンにしてね。"
+
+#: permissions.chatmute
+msgid "§bMatrix§a+ §7> §cYou have been muted from the server!"
+msgstr "§bMatrix§a+ §7> §cあなたはサーバーからミュートされました！"
+
+#: disconnectionScreen.unexpectedPacket
+msgid "Oops, something went wrong."
+msgstr "申し訳ございません, 何かしらの問題が発生しました"
+
+#: menu.loadingLevel
+msgid "Protected by Matrix AntiCheat"
+msgstr "Matrix AntiCheatで保護されている"
+
+#: json.packet
+msgid "§bMatrix§a+ §7> §e%1 §g packet§7(%2)§g received from %3"
+msgstr "§bMatrix§a+ §7> §e%1 §g パケット§7(%2)§g から受け取った。 %3"
+
+#: error.happened
+msgid "§bMatrix§a+ §7> §gThere is some error from the script, please report it to the developer when you have time."
+msgstr "§bMatrix§a+ §7> §gスクリプトにエラーがあります時間がある場合に開発者に報告をお願いします！"
+
+#: error.name
+msgid "§7- Error: §e%s"
+msgstr "§7- エラー: §e%s"
+
+#: error.description
+msgid "§7- Description: §e%s"
+msgstr "§7- 説明: §e%s"
+
+#: error.stack
+msgid "§7- Stack: §e%s"
+msgstr "§7- パス: §e%s"
+
+#: util.flag.alert
+msgid "§c§lCheat Alert! §r§7A cheater (%1§r§7) has been detected automatically by Matrix AntiCheat! We have automatically blocked it. §3(moduleId: %2, punishment: %3)§r"
+msgstr "§c§lチート警告！ §r§7ハッカー: (%1§r§7) が Matrix AntiCheat によって自動的に検出された為　自動的にブロックしました。§3(moduleId: %2、punishment: %3)§r"
+
+#: function.help
+msgid "§bMatrix§a+ §7> §gAre you looking for help? Join our Discord Server: https://discord.gg/%1. Feel free to ask there. You are currently on Matrix anticheat version %2. You can use -op to gain matrix administrator permission and use -help to get help for the commands."
+msgstr "§bMatrix§a+ §7> §g助けをお探しですか？私たちのDiscordサーバーに参加してください： https://discord.gg/%1. お気軽にお問い合わせください。あなたは現在 Matrix anticheat バージョン %2 を使用しています。-opでマトリックスの管理者権限を、-helpでコマンドのヘルプを得ることができます。"
+
+#: function.help.typeA
+msgid "§7>> §gIs the chat command not working? Try to disable or place Matrix Anticheat above any-type of the chat rank addon."
+msgstr "§7>> §gチャットコマンドが機能しませんか？Matrix Anticheatを無効にするか、チャットランクアドオンのどのタイプよりも上に置いてみてください。"
+
+#: function.help.typeB
+msgid "§7>> §gIs that nothing working? Don't forget to enable Beta API and update our Matrix anticheat to the latest"
+msgstr "§7>> §g動作しない？ベータAPIを有効にして、Matrix anticheatを最新のものにアップデートすることをお忘れなく。"
+
+#: function.script.online
+msgid "§7>> §aScript is active! It is so nice to have you here."
+msgstr "§7>> §aスクリプトはアクティブです！あなたがここにいてくれてとてもうれしいです。"
+
+#: function.script.offline
+msgid "§7>> §cScript is inactive! Please check if you have Beta-API enabled."
+msgstr "§7>> §cスクリプトは無効です！ベータAPIが有効になっているか確認してください。"
+
+#: moderation.permanent
+msgid "UNUSED_STRING"
+msgstr "永久"
+
+#: moderation.softban.banned
+msgid "UNUSED_STRING"
+msgstr "あなたはソフト・バンされた"
+
+#: moderation.softban.until
+msgid "UNUSED_STRING"
+msgstr "まで %s"
+
+#: ui.runcommand
+msgid "Run Command!"
+msgstr "コマンドを実行!"
+
+#: ui.exit
+msgid "Exit"
+msgstr "終了"
+
+#: ui.closechat
+msgid "§7>> §gPlease close the chat to receive your user interface (UI)."
+msgstr "§7>> §gユーザーインターフェース(UI)を受け取るためにチャットを閉じてください。"
+
+#: ui.config.title
+msgid "Press the button to continue"
+msgstr "ボタンを押して続ける"
+
+#: ui.config.button
+msgid "Continue >w<"
+msgstr "続ける >w<"
+
+#: ui.config.body
+msgid "You can change the config in the config file. You can also use the command -set <path> <value> to change a config value."
+msgstr "コンフィグはコンフィグファイルで変更できる。コマンド -set <path> <value> を使ってコンフィグ値を変更できる。"
+
+#: ui.config.selector
+msgid "Config Selector | Matrix AntiCheat"
+msgstr "コンフィグセレクター | Matrix AntiCheat"
+
+#: ui.config.editor
+msgid "Config Editor | Matrix AntiCheat"
+msgstr "コンフィグエディタ | Matrix AntiCheat"
+
+#: ui.config.value
+msgid "New value you want to set"
+msgstr "設定したい新しい値"
+
+#: ui.config.loc
+msgid "§gCurrent path of the config: §e%s"
+msgstr "§gコンフィグの現在のパス： §e%s"
+
+#: commandsynax.unknown
+msgid "Unknown command: %s, you can type -help to get some useful information about the commands."
+msgstr "不明なコマンド: %s, -helpと入力すると、コマンドに関する便利な情報を得ることができる。"
+
+#: commandsynax.permission
+msgid "No permission to use this command. The minimum permission required is 'level %s'"
+msgstr "このコマンドを使用する権限がない。最低限必要なパーミッションは 'level %s'"
+
+#: commandsystem.disabled
+msgid "Oops, this command has been disabled."
+msgstr "おっと、このコマンドは無効になっていた。"
+
+#: commandsynax.unknownsubcommand
+msgid "Unknown subcommand: %s, you can use -help <command> to know what subcommand you can use."
+msgstr "不明なサブコマンド: %s, どのサブコマンドが使えるかは、-help <command>で確認できる。"
+
+#: commandsynax.empty
+msgid "Oops, you have to type something if you want to use some commands."
+msgstr "おっと、コマンドを使うには何か入力しなければならない。"
+
+#: commandsynax.tips
+msgid "§7>> §gUse -help <command> to get some useful information about the commands."
+msgstr "§7>> §gコマンドに関する便利な情報を得るには、-help <command>を使う。"
+
+#: commandsynax.missing
+msgid "You missed a parameter '%s' which is required."
+msgstr "パラメータがありません '%s' これは必須である。"
+
+#: commandsynax.missing.subcommand
+msgid "This is a subcommand! You have to type -help <command> to know what subcommand you can use."
+msgstr "これはサブコマンドである！どのサブコマンドが使えるかは、-help <command>と入力しなければわからない。"
+
+#: commandsynax.syntax.boolean
+msgid "Syntax error: The parameter '%1' is a boolean value, but you have typed '%2 >>%3<< %4'. Only 'true' or 'false' are allowed'."
+msgstr "構文エラーです： パラメータ '%1' はブール値ですが、'%2 >>%3<< %4' と入力しています。'true' または 'false' だけが許可されます。"
+
+#: commandsynax.syntax.string.low
+msgid "Syntax error: The parameter '%1' required a string that contains at least %5 characters, but you have typed '%2 >>%3<< %4'."
+msgstr "構文エラー： パラメータ '%1' には少なくとも %5 文字を含む文字列が必要でしたが、'%2 >>%3<< %4' と入力しました。"
+
+#: commandsynax.syntax.string.high
+msgid "Syntax error: The parameter '%1' required a string that contains at most %5 characters, but you have typed '%2 >>%3<< %4'."
+msgstr "構文エラー： パラメータ '%1' には最大 %5 文字を含む文字列が必要でしたが、'%2 >>%3<< %4' と入力しました。"
+
+#: commandsynax.syntax.integer.nan
+msgid "Syntax error: The parameter '%1' required a integer, but you have typed '%2 >>%3<< %4'."
+msgstr "構文エラー： パラメータ '%1' には整数が必要ですが、'%2 >>%3<< %4' と入力しました。"
+
+#: commandsynax.syntax.number.nan
+msgid "Syntax error: The parameter '%1' required a valid number, but you have typed '%2 >>%3<< %4'."
+msgstr "構文エラー： パラメータ '%1' には有効な数値が必要でしたが、'%2 >>%3<< %4' と入力しました。"
+
+#: commandsynax.syntax.number.low
+msgid "Syntax error: The parameter '%1' required a number that is larger than %5, but you have typed '%2 >>%3<< %4' which is out of range."
+msgstr "構文エラー： パラメータ '%1' には %5 より大きい数値が必要でしたが、範囲外の '%2 >>%3<< %4' を入力しました。"
+
+#: commandsynax.syntax.number.high
+msgid "Syntax error: The parameter '%1' required a number that is smaller than %5, but you have typed '%2 >>%3<< %4' which is out of range."
+msgstr "構文エラー： パラメータ '%1' には %5 より小さい数値が必要でしたが、範囲外の '%2 >>%3<< %4' を入力しました。"
+
+#: commandsynax.syntax.code
+msgid "Syntax error: The parameter '%1' required a code with length that is equal to %5, but you have typed '%2 >>%3<< %4', which is out of range."
+msgstr "構文エラーです： パラメータ '%1' には長さが %5 に等しいコードが必要でしたが、範囲外の '%2 >>%3<< %4' を入力しました。"
+
+#: commandsynax.syntax.purecode
+msgid "Syntax error: The parameter '%1' required a purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z), but you have typed '%2 >>%3<< %4'"
+msgstr "構文エラー： パラメータ '%1' には、数字 (0-9) と大文字と小文字 (a-z または A-Z) だけで形成されるピュア・コードが必要でしたが、'%2 >>%3<< %4' と入力しました。"
+
+#: commandsynax.syntax.choice
+msgid "Syntax error: The parameter '%1' required a choice between %5, but you have typed '%2 >>%3<< %4'"
+msgstr "構文エラー： パラメータ '%1' は %5 から選択する必要がありましたが、'%2 >>%3<< %4' と入力しました。"
+
+#: commandsynax.syntax.player
+msgid "Syntax error: The parameter '%1' required a player which is online, but you have typed '%2 >>%3<< %4'"
+msgstr "構文エラー： パラメータ '%1' はオンラインになっているプレイヤーを必要としましたが、'%2 >>%3<< %4' と入力しました。"
+
+#: commandsynax.syntax.target
+msgid "Syntax error: The parameter '%1' required a target which is online and not an administrator, but you have typed '%2 >>%3<< %4'"
+msgstr "構文エラー： パラメータ '%1' はオンラインであり、管理者でないターゲットを必要としましたが、'%2 >>%3<< %4' と入力しました。"
+
+#: module.phase.name
+msgid "Anti Phase"
+msgstr "Anti Phase"
+
+#: module.phase.description
+msgid "Prevent the player from passing through the walls with the illegal movement packet."
+msgstr "不正な移動パケットでプレイヤーが壁を通り抜けるのを防ぐ。"
+
+#: module.firewall.name
+msgid "Firewall"
+msgstr "Firewall"
+
+#: module.firewall.description
+msgid "Prevent the player who contains bad packets from accessing the server. For example, spam bot."
+msgstr "不正なパケットを含むプレイヤーがサーバーにアクセスできないようにする。例えば、スパムボット。"
+
+#: module.namespoof.name
+msgid "Anti Name Spoofer"
+msgstr "Anti Name Spoofer"
+
+#: module.namespoof.description
+msgid "Prevent the player from changing their name to a invalid name and join the server."
+msgstr "プレーヤーが無効な名前に変更してサーバーに参加するのを防ぐ。"
+
+#: module.killaura.name
+msgid "Anti KillAura"
+msgstr "Anti KillAura"
+
+#: module.killaura.description
+msgid "Prevent the player from hitting other players with the illegal kill packet."
+msgstr "不正なキルパケットを他のプレイヤーに当てないようにする。"
+
+#: module.scaffold.name
+msgid "Anti Scaffold"
+msgstr "Anti Scaffold"
+
+#: module.scaffold.description
+msgid "Prevent the player from using the auto-brige hack to gain unfair advantage."
+msgstr "プレーヤーが不当な利益を得るためにオートブリージハックを使用するのを防ぐ。"
+
+#: module.insteabreak.name
+msgid "Anti Insteabreak"
+msgstr "Anti Insteabreak"
+
+#: module.insteabreak.description
+msgid "Prevent the player from breaking the block without breaking time. These type of hack is not working on realm or a BDS server that is configured correctly."
+msgstr "時間切れなしでブロックを壊せないようにする。このタイプのハックはレルムや正しく設定されたBDSサーバーでは機能しません。"
+
+#: module.reach.name
+msgid "Anti Reach"
+msgstr "Anti Reach"
+
+#: module.reach.description
+msgid "An advanced anti reach solution that provided reach detection up to 4.5 blocks."
+msgstr "最大4.5ブロックまでのリーチを検出する先進的なアンチリーチ・ソリューション。"
+
+#: module.speed.name
+msgid "Anti Speed"
+msgstr "Anti Speed"
+
+#: module.speed.description
+msgid "The latest and strongest anti speed engine. Used the property of 'bds prediction' phenomenon to indentify the illegal movement from the players."
+msgstr "最新最強のアンチスピードエンジン。選手の不正な動きを特定する「bds prediction」現象の特性を利用。"
+
+#: module.fly.name
+msgid "Anti Fly"
+msgstr "Anti Fly"
+
+#: module.fly.description
+msgid "Prevent most of the fly hacks from working. There is a small probability of false positive."
+msgstr "ほとんどのフライハックが機能しないようにする。誤検知の確率は低い。"
+
+#: module.timer.name
+msgid "Anti Timer"
+msgstr "Anti Timer"
+
+#: module.timer.description
+msgid "Prevent someone speed up their game speed to get an unfair advantage."
+msgstr "誰かがゲームスピードを加速して不当な利益を得るのを防ぐ。"
+
+#: module.itemcheck.name
+msgid "Item check"
+msgstr "Item check"
+
+#: module.itemcheck.description
+msgid "Prevent the player from using the illegal item from the server."
+msgstr "プレイヤーがサーバーから不正なアイテムを使用するのを防ぐ。"
+
+#: module.hop.name
+msgid "Anti Hop"
+msgstr "Anti Hop"
+
+#: module.hop.description
+msgid "An extra checks against the illegal movement motion, to prevent a silent bypass."
+msgstr "不正な移動モーションに対する追加のチェック、サイレントバイパスを防ぐ。"
+
+#: module.aim.name
+msgid "Aim check"
+msgstr "Aim check"
+
+#: module.aim.description
+msgid "An extra checks against the illegal aim, to prevent the killaura or aim assist, credit to 4urxa."
+msgstr "不正なエイムに対する追加のチェック、キルオーラまたはエイムアシストを防ぐ、4urxaに感謝。"
+
+#: module.invalidSprint.name
+msgid "Anti invalid sprint"
+msgstr "Anti invalid sprint"
+
+#: module.invalidSprint.description
+msgid "Prevent the player from using the illegal sprint packet client."
+msgstr "プレイヤーが不正なスプリントパケットクライアントを使用するのを防ぐ。"
+
+#: command.about.description
+msgid "Show some basic information about Matrix AntiCheat."
+msgstr "Matrix AntiCheatに関する基本情報を表示します。"
+
+#: command.about.title
+msgid "§bMatrix§a+ §7> §gAbout Matrix AntiCheat <3"
+msgstr "§bMatrix§a+ §7> §gMatrix AntiCheatについて <3"
+
+#: command.about.author
+msgid "Author: jasonlaubb (Discord: @uwu_the_great)"
+msgstr "作者: jasonlaubb (Discord: @uwu_the_great)"
+
+#: command.about.github
+msgid "Github: %s"
+msgstr "Github: %s"
+
+#: command.about.version
+msgid "Current version: %s"
+msgstr "現在のバージョン: %s"
+
+#: command.about.joindc
+msgid "Want to download? Join our Discord Server: https://discord.gg/%s"
+msgstr "ダウンロードしたいですか？私たちのDiscordサーバーに参加してください: https://discord.gg/%s"
+
+#: ad.running
+msgid "§bMatrix§a+ §7> §gMatrix Anticheat is protecting your game experience. Discord server: https://discord.gg/%s"
+msgstr "§bMatrix§a+ §7> §gMatrix Anticheat があなたのゲーム体験を保護しています。Discordサーバー: https://discord.gg/%s"
+
+#: command.help.description
+msgid "Get the useful information about the commands."
+msgstr "コマンドに関する便利な情報を取得します。"
+
+#: command.help.command.name
+msgid "Command's name"
+msgstr "コマンドの名前"
+
+#: command.help.command.name.description
+msgid "The name of the command that you need help."
+msgstr "ヘルプが必要なコマンドの名前。"
+
+#: command.help.title
+msgid "The command list of Matrix AntiCheat:"
+msgstr "Matrix AntiCheatのコマンドリスト:"
+
+#: command.help.target.title
+msgid "Showing the usage of the selected command: %s"
+msgstr "選択したコマンドの使用方法を表示します: %s"
+
+#: command.help.target.notfound
+msgid "Not able to find the command, make sure you type a valid command so that we can show you the correct information."
+msgstr "コマンドが見つかりません。有効なコマンドを入力してください。そうすれば正しい情報を表示できます。"
+
+#: command.help.m.description
+msgid "§gDescription of the command: §e%s§g"
+msgstr "§gコマンドの説明： §e%s§g"
+
+#: command.help.m.usage
+msgid "§gUsage of the command: §e"
+msgstr "§gコマンドの使用法： §e"
+
+#: command.help.m.usage.empty
+msgid "§gUsage of the command: §eJust type the command name!"
+msgstr "§gコマンドの使い方 §コマンド名を入力するだけ！"
+
+#: command.help.option.string
+msgid "string (A string that formed with any characters)"
+msgstr "string (任意の文字で形成された文字列)"
+
+#: command.help.option.number
+msgid "number (A float number or a integer)"
+msgstr "number (浮動小数点数または整数)"
+
+#: command.help.option.integer
+msgid "number (Integer only, including negative)"
+msgstr "number (整数のみ、負の数を含む)"
+
+#: command.help.option.boolean
+msgid "boolean (A boolean value, true or false)"
+msgstr "boolean (真偽値、true または false)"
+
+#: command.help.option.code
+msgid "code (A code with length that is equal to a specific number)"
+msgstr "code (特定の数に等しい長さのコード)"
+
+#: command.help.option.purecode
+msgid "purecode (A purecode that only formed by number (0-9), upper and lower case letters (a-z or A-Z))"
+msgstr "pruecode (数字 (0-9) と大文字と小文字 (a-z または A-Z) だけで形成されるピュアコード)"
+
+#: command.help.option.choice
+msgid "choice (A choice between a list of options)"
+msgstr "choice (オプションのリストから選択)"
+
+#: command.help.option.player
+msgid "player (A player name of a player that is online)"
+msgstr "player (オンラインのプレイヤーのプレイヤー名)"
+
+#: command.help.option.target
+msgid "target (A player name of a player that is online but not an administrator of the server)"
+msgstr "target (オンラインのプレイヤー名、ただしサーバーの管理者ではない)"
+
+#: command.help.target.type
+msgid "§gType: §e%s"
+msgstr "§g種類: §e%s"
+
+#: command.help.target.description
+msgid "§gDescription: §e%s"
+msgstr "§g説明: §e%s"
+
+#: command.help.target.optional
+msgid " (optional)"
+msgstr " (オプション)"
+
+#: command.op.description
+msgid "Make yourself to be an administrator of the server, just by a command."
+msgstr "コマンドだけでサーバーの管理者になる。"
+
+#: command.op.password
+msgid "admin password"
+msgstr "管理者パスワード"
+
+#: command.op.password.description
+msgid "The password that you have been set as the password for the command. If you have not set a password, just don't type anything here."
+msgstr "コマンドのパスワードとして設定されているパスワード。パスワードを設定していない場合は、ここに何も入力しないでください。"
+
+#: command.op.statement.mismatch
+msgid "You have not set a password yet, you can just keep it empty."
+msgstr "パスワードはまだ設定していないので、空のままでよい。"
+
+#: command.op.statement.missing
+msgid "You should type the password as the password has been set."
+msgstr "パスワードが設定されているので、パスワードを入力する必要があります。"
+
+#: command.op.statement.already
+msgid "You have the administrator permission already. What do you want anymore by using me?"
+msgstr "すでに管理者権限を持っています。私を使って何をもう一度したいですか？"
+
+#: command.op.overheat.password
+msgid "Huh, just try later, I have almost overheated myself."
+msgstr "ああ、後で試してみてください、私はほぼ過熱しています。"
+
+#: command.op.overheat.normal
+msgid "You should finish the verification first!"
+msgstr "まず検証を終える必要があります！"
+
+#: command.op.success
+msgid "You have been set as an administrator of the server."
+msgstr "あなたはサーバーの管理者として設定されました。"
+
+#: command.op.start
+msgid "Seems like the server has no password yet, let's start a simple verification to verify about you're an administrator of the server or not."
+msgstr "サーバーにはまだパスワードがないようです。あなたがサーバーの管理者であるかどうかを確認するための簡単な検証を開始しましょう。"
+
+#: command.op.success.fast
+msgid "Success! We are able to verify you're an administrator of the server, you have been set as an administrator of the server."
+msgstr "成功！あなたがサーバーの管理者であることを確認できました、あなたはサーバーの管理者として設定されました。"
+
+#: command.op.require
+msgid "Please type the following slash command (/) in the chat: '%s'."
+msgstr "チャットに次のスラッシュコマンド(/)を入力してください: '%s'。"
+
+#: command.op.require.cancel
+msgid "If you want to cancel the verification, just type the slash command (/) in chat: '%s'."
+msgstr "検証をキャンセルしたい場合は、チャットに次のスラッシュコマンド(/)を入力してください: '%s'。"
+
+#: command.op.verify.failed
+msgid "Sorry, but you have typed a wrong command, please try again."
+msgstr "申し訳ありませんが、間違ったコマンドを入力してしまいました。もう一度お試しください。"
+
+#: command.op.verify.success
+msgid "Success! You have been set as an administrator of the server."
+msgstr "成功！あなたはサーバーの管理者として設定されました。"
+
+#: command.op.verify.cancel
+msgid "You have canceled the verification."
+msgstr "検証をキャンセルしました。"
+
+#: command.op.incorrect
+msgid "You have typed the incorrect password, please try again later."
+msgstr "間違ったパスワードを入力しました。後で再試行してください。"
+
+#: command.deop.description
+msgid "Remove yourself from the administrators of the server."
+msgstr "サーバーの管理者から自分自身を削除します。"
+
+#: command.deop.success
+msgid "You have been removed from the administrators of the server."
+msgstr "サーバーの管理者から削除されました。"
+
+#: command.setmodule.description
+msgid "Toggle a module on or off."
+msgstr "モジュールをオンまたはオフに切り替えます。"
+
+#: command.setmodule.module
+msgid "module's id"
+msgstr "モジュールのID"
+
+#: command.setmodule.module.description
+msgid "The id of the module that you want to toggle on or off."
+msgstr "オン・オフを切り替えたいモジュールのID。"
+
+#: command.setmodule.state
+msgid "target state"
+msgstr "ターゲット状態"
+
+#: command.setmodule.state.description
+msgid "State that you want to switch on or off for the module."
+msgstr "モジュールのオンまたはオフを切り替えたい状態。"
+
+#: command.setmodule.success.enabled
+msgid "Success! The module has been enabled by yourself."
+msgstr "成功しました！モジュールはあなたによって有効化されました。"
+
+#: command.setmodule.success.disabled
+msgid "Success! The module has been disabled by yourself."
+msgstr "成功しました！モジュールはあなたによって無効にされました。"
+
+#: command.setmodule.notfound
+msgid "Not able to find the module, make sure you type a valid module. You can use '-listmodules' to see the list of modules."
+msgstr "モジュールが見つかりません。有効なモジュールを入力していることを確認してください。モジュールのリストを表示するには '-listmodules' を使用できます。"
+
+#: command.setmodule.already.enabled
+msgid "The module has already been enabled. Do you want to disable it?"
+msgstr "モジュールはすでに有効になっています。無効にしますか？"
+
+#: command.setmodule.already.disabled
+msgid "The module has already been disabled. Do you mean to enable it?"
+msgstr "モジュールはすでに無効になっています。有効にするということですか？"
+
+#: command.listmodule.description
+msgid "Show the list of modules."
+msgstr "モジュールのリストを表示します。"
+
+#: command.listmodule.title
+msgid "The list of the modules"
+msgstr "モジュールのリスト"
+
+#: command.listmodule.body
+msgid "Here is the list of modules. The button is the id of the module. Green means enabled, red means disabled. What a simple system, right?"
+msgstr "ここにモジュールのリストがあります。ボタンはモジュールのIDです。緑は有効、赤は無効を意味します。シンプルなシステムですね？"
+
+#: command.listmodule.toggle.title
+msgid "Toggling the module"
+msgstr "モジュールの切り替え"
+
+#: command.listmodule.toggle.body
+msgid "You can still use '-setmodule' to toggle a module on or off."
+msgstr "'-setmodule'を使用してモジュールをオンまたはオフに切り替えることができます。"
+
+#: command.listmodule.toggle.enable
+msgid "I want to enable this module."
+msgstr "このモジュールを有効にしたい。"
+
+#: command.listmodule.toggle.disable
+msgid "I want to disable this module."
+msgstr "このモジュールを無効にしたい。"
+
+#: command.listmodule.toggle.state
+msgid "What do you want to do with this module"
+msgstr "このモジュールに何をしたいですか"
+
+#: command.set.invalid
+msgid "Unknown path: %s, make sure you type a valid path. Use slash (/) to separate the path."
+msgstr "不明なパス: %s、有効なパスを入力していることを確認してください。パスを区切るためにスラッシュ(/)を使用してください。"
+
+#: command.set.number
+msgid "The path you want to set must be a number."
+msgstr "設定したいパスは数値である必要があります。"
+
+#: command.set.boolean
+msgid "The path you want to set must be a boolean. Only 'true' or 'false' is allowed."
+msgstr "設定したいパスはブール値である必要があります。'true' または 'false' のみが許可されます。"
+
+#: command.set.success
+msgid "Success! The path '%1' has been set to '%2'."
+msgstr "成功しました！パス '%1' は '%2' に設定されました。"
+
+#: command.set.description
+msgid "Change the config dynamically. Without the data lost for different versions."
+msgstr "設定を動的に変更します。異なるバージョンでデータが失われることはありません。"
+
+#: command.set.key
+msgid "path (key)"
+msgstr "パス (key)"
+
+#: command.set.key.description
+msgid "The path that you want to set. You should type it with slash (/) to separate the path. For example, 'modules/antiSpeed'."
+msgstr "設定したいパス。パスを区切るためにスラッシュ(/)を使用して入力する必要があります。例: 'modules/antiSpeed'。"
+
+#: command.set.value
+msgid "value"
+msgstr "値"
+
+#: command.set.value.description
+msgid "The value that you want to set. It should be a string, a boolean or a number depending on the type of the path."
+msgstr "設定したい値。パスのタイプに応じて、文字列、ブール値、または数値である必要があります。"
+
+#: command.matrixui.description
+msgid "Open the Matrix AntiCheat UI panel."
+msgstr "Matrix AntiCheat UIパネルを開きます。"
+
+#: command.vanish.description
+msgid "Make yourself invisible to other players. Even ESP will not be able to see you."
+msgstr "他のプレイヤーに見えなくなります。ESPでもあなたを見ることができません。"
+
+#: command.vanish.success
+msgid "You have been vanished. Type this command again to make yourself visible again."
+msgstr "あなたは消えてしまった。もう一度このコマンドを入力すれば、再び姿を現すことができる。"
+
+#: command.vanish.deleted
+msgid "You are no longer to be vanished."
+msgstr "もう消えていません。"
+
+#: command.vanish.failed
+msgid "Sorry, but you need to place Matrix anticheat above any-type of addon that includes 'player.json' entities file to use this command."
+msgstr "申し訳ありませんが、このコマンドを使用するには、'player.json'エンティティファイルを含む任意のアドオンの上にMatrix anticheatを配置する必要があります。"
+
+#: command.moderation.target
+msgid "Target player"
+msgstr "対象"
+
+#: command.moderation.target.description
+msgid "The player that you want to use this command on."
+msgstr "このコマンドを使用したい対象。"
+
+#: command.moderation.duration
+msgid "Duration"
+msgstr "期間"
+
+#: command.moderation.duration.description
+msgid "The duration of the moderation action that you want to use this command on, in minutes. You leave it empty in order to set a permanent moderation action."
+msgstr "このコマンドを使用して設定したいモデレーションアクションの期間、分単位。永久的なモデレーションアクションを設定するには空にしておきます。"
+
+#: command.moderation.admin
+msgid "UNUSED_STRING"
+msgstr "あら、管理者または自分自身にモデレーションアクションを完了することはできません。"
+
+#: command.moderation.success
+msgid "UNUSED_STRING"
+msgstr "%2 が %1 にモデレーションアクションを行いました"
+
+#: command.moderation.action
+msgid "UNUSED_STRING"
+msgstr "§7>> §gモデレーションアクション： §e%s"
+
+#: command.moderation.removal.failed
+msgid "UNUSED_STRING"
+msgstr "モデレーションの削除または関連するモデレーションコマンドを使用する前に、対象プレイヤーがモデレートされていることを確認する必要があります。"
+
+#: command.moderation.tempkick
+msgid "UNUSED_STRING"
+msgstr "一時的なキック"
+
+#: command.moderation.kick
+msgid "UNUSED_STRING"
+msgstr "追い出される"
+
+#: command.moderation.ban
+msgid "UNUSED_STRING"
+msgstr "禁止"
+
+#: command.moderation.unban
+msgid "UNUSED_STRING"
+msgstr "禁止解除"
+
+#: command.moderation.softban
+msgid "UNUSED_STRING"
+msgstr "ソフト禁止"
+
+#: command.moderation.unsoftban
+msgid "UNUSED_STRING"
+msgstr "ソフト禁止解除"
+
+#: command.moderation.mute
+msgid "UNUSED_STRING"
+msgstr "ミュート"
+
+#: command.moderation.unmute
+msgid "UNUSED_STRING"
+msgstr "ミュート解除"
+
+#: command.moderation.freeze
+msgid "UNUSED_STRING"
+msgstr "凍結"
+
+#: command.moderation.unfreeze
+msgid "UNUSED_STRING"
+msgstr "凍結解除"
+
+#: command.moderation.warn
+msgid "UNUSED_STRING"
+msgstr "警告"
+
+#: command.moderation.clearwarn
+msgid "UNUSED_STRING"
+msgstr "すべての警告をクリア"
+
+#: command.moderation.warn.amount
+msgid "UNUSED_STRING"
+msgstr "§7>> §g 警告の数: %s"
+
+#: command.tempkick.description
+msgid "UNUSED_STRING"
+msgstr "プレイヤーを一時的にサーバーからキックする。"
+
+#: command.kick.description
+msgid "Kick a player."
+msgstr "サーバーからプレーヤーをキックする。"
+
+#: command.ban.description
+msgid "Ban a player."
+msgstr "プレイヤーをサーバーから追放する。"
+
+#: command.unban.description
+msgid "Unban a player."
+msgstr "ゲームプレーヤーの追放を取り消す。"
+
+#: command.softban.description
+msgid "UNUSED_STRING"
+msgstr "ゲームプレーヤーをソフト禁止"
+
+#: command.unsoftban.description
+msgid "UNUSED_STRING"
+msgstr "ゲームプレーヤーをソフト禁止解除"
+
+#: command.mute.description
+msgid "Mute a player."
+msgstr "ゲームプレーヤーをミュートする。"
+
+#: command.unmute.description
+msgid "Unmute a player."
+msgstr "ゲームプレーヤーのミュートを解除する。"
+
+#: command.freeze.description
+msgid "UNUSED_STRING"
+msgstr "プレイヤーを凍結する。"
+
+#: command.unfreeze.description
+msgid "UNUSED_STRING"
+msgstr "プレイヤーの凍結を解除する。"
+
+#: command.warn.description
+msgid "Warn a player."
+msgstr "プレイヤーに警告する。"
+
+#: command.banlist.empty
+msgid "Hopefully, there is no banned player right now."
+msgstr "たぶん、今は追放されたプレイヤーはいません。"
+
+#: command.banlist.banned
+msgid "There is %1 banned player(s) on this server: §e%s"
+msgstr "このサーバーには %1 人の追放されたプレイヤーがいます: §e%s"
+
+#: command.banlist.description
+msgid "Show the list of banned players."
+msgstr "追放されたプレイヤーのリストを表示します。"
+
+#: command.clearwarn.description
+msgid "Clear all warnings of a player."
+msgstr "プレイヤーのすべての警告をクリアします。"
+
+#: command.invsee.description
+msgid "See the inventory of a player."
+msgstr "プレイヤーのインベントリを見る。"
+
+#: command.invsee.notice
+msgid "You can open the inventory ui by opening your inventory."
+msgstr "インベントリを開くことでインベントリUIを開くことができます。"
+
+#: command.invsee.self
+msgid "You can not see your own inventory, this might cause some issues."
+msgstr "自分のインベントリを見ることはできません。これはいくつかの問題を引き起こす可能性があります。"
+
+#: command.setpassword.description
+msgid "Set a password for getting operator permissions."
+msgstr "オペレーター権限を取得するためのパスワードを設定します。"
+
+#: command.setpassword.password
+msgid "New password"
+msgstr "新しいパスワード"
+
+#: command.setpassword.password.description
+msgid "The password that you want to set."
+msgstr "設定したいパスワード。"
+
+#: command.setpassword.success
+msgid "The password has been set."
+msgstr "パスワードが設定されました。"
+
+#: command.setpassword.strength
+msgid "Your password should include lowerCase, upperCase, numbers and special characters."
+msgstr "パスワードには小文字、大文字、数字、特殊文字を含める必要があります。"
+
+#: command.clearpassword.description
+msgid "Clear the password."
+msgstr "パスワードをクリアします。"
+
+#: command.clearpassword.success
+msgid "The password has been cleared."
+msgstr "パスワードがクリアされました。"
+
+#: command.clearpassword.already
+msgid "There is no password set."
+msgstr "パスワードが設定されていません。"
+
+#: command.configui.description
+msgid "Configure the settings of Matrix anticheat by a user interface."
+msgstr "ユーザーインターフェースを使用してMatrix anticheatの設定を構成します。"
+
+#: command.setadmin.description
+msgid "Set a player as an administrator."
+msgstr "プレイヤーを管理者として設定します。"
+
+#: command.setadmin.level
+msgid "Administrator level"
+msgstr "管理者レベル"
+
+#: command.setadmin.level.description
+msgid "The level of the administrator that you want to set. (Set to 0 in order to remove the player as an administrator)"
+msgstr "設定したい管理者のレベル。 (プレイヤーを管理者として削除するには0に設定)"
+
+#: command.setadmin.failed
+msgid "Failed to change the player's administrator level."
+msgstr "プレイヤーの管理者レベルを変更できませんでした。"
+
+#: command.setadmin.level.display
+msgid "§7>> §gAdministrator level: §eLevel %s"
+msgstr "§7>> §g管理者レベル： §eLevel %s"
+
+#: command.setrank.description
+msgid "Set a player's rank."
+msgstr "プレイヤーのランクを設定します。"
+
+#: command.setrank.rank
+msgid "Ranks"
+msgstr "ランク"
+
+#: command.setrank.rank.description
+msgid "The rank of the player that you want to set. Use comma (,) to separate multiple ranks."
+msgstr "設定したいプレイヤーのランク。複数のランクを区切るためにカンマ(,)を使用します。"
+
+#: command.setrank.success
+msgid "%1's rank has been set to %2."
+msgstr "%1 のランクが %2 に設定されました。"
+
+#: action.hint.exit.matrix:inv_container
+msgid "Tap the §lInventory button§r to open their Inventory."
+msgstr "§lInventory button§rをタップすると、その人のインベントリーが開きます。"
+
+#: action.hint.exit.console.matrix:inv_container
+msgid "Press §l:_input_key.inventory:§r to open their Inventory"
+msgstr "§l:_input_key.inventory:§rをタップすると、その人のインベントリーが開きます。"
+
+#: module.welcomer.message
+msgid "Welcome! §e%s§r§g has joined the server!"
+msgstr "歓迎! §e%s§r§g がサーバーに参加しました！"
+
+#: module.welcomer.device
+msgid "§7>> §gDevice: §e%s"
+msgstr "§7>> §g装置: §e%s"
+
+#: module.welcomer.device.console
+msgid "gaming console"
+msgstr "ゲーム機"
+
+#: module.welcomer.device.pc
+msgid "computer"
+msgstr "コンピュータ"
+
+#: module.welcomer.device.mobile
+msgid "mobile phone"
+msgstr "携帯電話"
+
+#: module.welcomer.device.unknown
+msgid "unknown"
+msgstr "不明"
+
+#: module.welcomer.name
+msgid "Welcomer"
+msgstr "ウェルカマー"
+
+#: module.welcomer.description
+msgid "Send a welcome message when a player joins the server."
+msgstr "プレイヤーがサーバーに参加したときにウェルカムメッセージを送信します。"
+
+#: module.worldborder.name
+msgid "World Border"
+msgstr "ワールドボーダー"
+
+#: module.worldborder.description
+msgid "Generate a border to block the players from going out of the world."
+msgstr "プレイヤーがワールドから出るのを防ぐための境界を生成します。"
+
+#: module.worldborder.danger
+msgid "Stop moving, you have arrived the boundary of the world!"
+msgstr "動くのをやめて、あなたは世界の境界に到着しました！"
+
+#: module.worldborder.title
+msgid "§c§lStopped!§r"
+msgstr "§c§l止まった！§r"
+
+#: module.worldborder.subtitle
+msgid "§eYou will be auto teleported to the spawn in %s seconds."
+msgstr "§e %秒後にスポーンに自動テレポートされる。"
+
+#: module.chatrank.name
+msgid "Chat Rank & Anti Spam"
+msgstr "チャットランク＆アンチスパム"
+
+#: module.chatrank.description
+msgid "Prevent the spamming on your server and provide a chat rank system."
+msgstr "サーバーでのスパムを防ぎ、チャットランクシステムを提供します。"
+
+#: module.chatrank.bad
+msgid "Your message contains some sensitive word(s) which is not allowed."
+msgstr "あなたのメッセージには、許可されていない機密ワードが含まれています。"
+
+#: module.chatrank.slow
+msgid "Slow mode enabled! Please enter your message %s second(s) later."
+msgstr "スローモードが有効になっています！ %s秒後にメッセージを入力してください。"
+
+#: module.chatrank.repeated
+msgid "Please don't spam messages."
+msgstr "メッセージをスパムしないでください。"
+
+#: module.afk.name
+msgid "Anti AFK"
+msgstr "Anti AFK"
+
+#: module.afk.description
+msgid "Disconnect the player if they are not active for a long time."
+msgstr "長時間アクティブでない場合、プレイヤーを切断します。"
+
+#: module.afk.disconnect
+msgid "%s has been disconnected due to AFK on this server for a long time."
+msgstr "%s が長時間このサーバーでAFKだったため、切断されました。"
+
+#: module.clog.name
+msgid "Anti Combat Log"
+msgstr "Anti Combat Log"
+
+#: module.clog.description
+msgid "Prevent someone leaves the combat log. Very basic so use others for your own anti combat log."
+msgstr "誰かが戦闘ログを残すのを防ぎます。非常に基本的なので、自分自身のアンチコンバットログに他のものを使用してください。"
+
+#: module.clog.in.combat
+msgid "§gYou are in combat. §7§l(§r§e%s second(s) left§7§l)§r"
+msgstr "§gあなたは戦闘中です。 §7§l(§r§e%s秒残り§7§l)§r"
+
+#: module.clog.face.combat
+msgid "You are now in combat with §e%s§g."
+msgstr "あなたは今 §e%s§g と戦闘中です。"
+
+#: module.clog.leave.combat
+msgid "You are no longer in combat with %s."
+msgstr "あなたはもう %s と戦闘中ではありません。"
+
+#: module.clog.killed
+msgid "§c§lCombat log detected!§r§7 %1 has left the game during combat with %2."
+msgstr "§c§l戦闘ログが検出されました！§r§7 %1 は %2 との戦闘中にゲームを離れました。"
+
+#: module.captcha.name
+msgid "Captcha against bots"
+msgstr "ボットに対するキャプチャ"
+
+#: module.captcha.description
+msgid "Prevent the spamming bot from attacking the current server."
+msgstr "スパムボットが現在のサーバーを攻撃するのを防ぎます。"
+
+#: module.captcha.detected
+msgid "§c§lSuspicious client detected!§r§7 %s has been disconnected due to using a suspicious client."
+msgstr "§c§l疑わしいクライアントが検出されました！§r§7 %s は疑わしいクライアントを使用したため、切断されました。"
+
+#: module.captcha.keepmove
+msgid "§bMatrix§a+ §7> §gContinue your rotation movement for %s seconds more."
+msgstr "§bMatrix§a+ §7> §gさらに %s 秒間回転運動を続けてください。"
+
+#: module.captcha.checking
+msgid "§bMatrix§a+ §7> §gChecking your client... Please wait."
+msgstr "§bMatrix§a+ §7> §gクライアントをチェックしています... お待ちください。"
+
+#: module.captcha.continue
+msgid "§bMatrix§a+ §7> §gPlease §e§lMOVE YOUR ROTATION§r§g to continue the check process."
+msgstr "§bMatrix§a+ §7> §gチェックプロセスを続行するには、§e§l回転を動かしてください§r§g。"
+
+#: module.captcha.title
+msgid "Captcha GUI | Matrix Anticheat"
+msgstr "キャプチャGUI | Matrix Anticheat"
+
+#: module.captcha.submit
+msgid "I have finished the question!"
+msgstr "質問に答えました！"
+
+#: module.captcha.selectui
+msgid "§bPlease answer the question below correctly to verify you're a human."
+msgstr "§b以下の質問に正しく答えて、あなたが人間であることを確認してください。"
+
+#: module.captcha.why
+msgid "§aWhy do you need to verify? Because we want to prevent the spamming bot from attacking the current server."
+msgstr "§aなぜ検証する必要があるのですか？ 現在のサーバーを攻撃するスパムボットを防ぎたいからです。"
+
+#: module.captcha.question
+msgid "§gQuestion: §eWhat is the correct answer of %1 plus %2?"
+msgstr "§g質問: §e%1 に %2 を加えた正しい答えは何ですか？"
+
+#: module.captcha.youranswer
+msgid "§gSelect the correct answer in below slider"
+msgstr "§g以下のスライダーで正しい答えを選択してください"
+
+#: module.captcha.recontinue
+msgid "§bMatrix§a+ §7> §gYou make it wrong, please try again."
+msgstr "§bMatrix§a+ §7> §g間違えました、もう一度お試しください。"
+
+#: module.captcha.verified
+msgid "§bMatrix§a+ §7> §gYou have been verified as a human, and you can now use the server."
+msgstr "§bMatrix§a+ §7> §gあなたは人間として認証されました、そしてあなたは今サーバーを使用することができます。"
+
+#: module.autoclicker.name
+msgid "Anti Auto Clicker"
+msgstr "Anti Auto Clicke"
+
+#: module.autoclicker.description
+msgid "Prevent the high cps auto clicker from working."
+msgstr "高いcpsオートクリッカーが動作しないようにします。"
+
+#: module.autoclicker.reach
+msgid "§c§lHey! §7Auto clicker is not allowed on this server. You have %2 out of %1 clicks per second now."
+msgstr "§c§lおい！ §7このサーバーではオートクリッカーは許可されていません。あなたは今 %1 クリックのうち %2 クリックを行っています。"
+
+#: item.matrix.itemui
+msgid "§r§l§bMatrix §gAnticheat §eUI§a panel§r"
+msgstr "§r§l§bMatrix §gAnticheat §eUI§a パネル§r"
+
+#: directpanel.title
+msgid "Tell me, what do you want to do?"
+msgstr "どうしたい？"
+
+#: directpanel.body
+msgid "Select an action from below buttons. I can generate the command string for you."
+msgstr "以下のボタンからアクションを選択してください。コマンド文字列を生成することができます。"
+
+#: directpanel.button
+msgid "Run '%s' command."
+msgstr "'%s' コマンドを実行します。"
+
+#: directpanel.enter
+msgid "Enter the command string"
+msgstr "コマンド文字列を入力"
+
+#: directpanel.build
+msgid "Let build and run your command together."
+msgstr "一緒にコマンドを構築して実行しましょう。"
+
+#: module.prediction.name
+msgid "Prediction Module"
+msgstr "予測モジュール"
+
+#: module.prediction.description
+msgid "An advanced check that can detect more fly hacker."
+msgstr "より多くのフライハッカーを検出できる高度なチェックです。"
+
+#: flag.detected.title
+msgid "§bMatrix§i│ §eSuspicious client detected"
+msgstr "§bMatrix§i│ §e疑わしいクライアントが検出されました"
+
+#: flag.detected.player
+msgid "   §fPlayer§r§i│ §f%s"
+msgstr "   §fプレイヤー§r§i│ §f%s"
+
+#: flag.detected.module
+msgid "   §fModule§r§i│ §f%s"
+msgstr "   §fモジュール§r§i│ §f%s"
+
+#: flag.detected.object
+msgid "   §fobject§r§i│ §ftype §i[§f%s§i] §f¬"
+msgstr "   §fオブジェクト§r§i│ §fタイプ §i[§f%s§i] §f¬"
+
+#: flag.detected.none
+msgid "         §cNo data is given by the module."
+msgstr "         §cモジュールからのデータはありません。"
+
+#: flag.detected.punishment
+msgid "   §fPunishment§r§i│ §f%s"
+msgstr "   §f罰§r§i│ §f%s"
+
+#: flag.detected.false
+msgid "   §7[?] Is it a §cfalse flag§7? Please report it to the developer when you have time."
+msgstr "   §7[?] これは§c誤検出§7ですか？時間があるときに開発者に報告してください。"
+
+#: command.moderation.reason.description
+msgid "The reason for the moderation action."
+msgstr "管理アクションの理由。"
+
+#: command.moderation.reason
+msgid "Reason"
+msgstr "理由"
+
+#: module.entityFly.name
+msgid "Anti Entity Fly"
+msgstr "反エンティティ飛行"
+
+#: module.entityFly.description
+msgid "Prevent the entity fly from working."
+msgstr "エンティティ飛行の機能を防止します。"
+
+#: command.echestwipe.success
+msgid "The echest of %s has been wiped successfully."
+msgstr "%s のエンダーチェストが正常にクリアされました。"
+
+#: command.echestwipe.description
+msgid "Wipe the ender chest of a player."
+msgstr "プレイヤーのエンダーチェストをクリアします。"
+
+#: command.fastlog.description
+msgid "Get the log in today, yesterday or the day before yesterday"
+msgstr "今日、昨日、または一昨日のログを取得します。"
+
+#: command.log.day
+msgid "Day"
+msgstr "日"
+
+#: command.log.day.description
+msgid "The day of the logs(s)"
+msgstr "ログの日付"
+
+#: command.log.nodata
+msgid "No data. Unable to get the log that you want in the database."
+msgstr "データがありません。データベースから希望のログを取得できません。"
+
+#: command.log.description
+msgid "View the recent logs in the database"
+msgstr "データベースの最近のログを表示します。"
+
+#: command.log.amount
+msgid "Amount"
+msgstr "量"
+
+#: command.log.amount.description
+msgid "The amount of the latest logs that you what to view."
+msgstr "表示したい最新のログの量。"
+
+#: command.daylog.description
+msgid "View all of the logs in a specific day."
+msgstr "特定の日のすべてのログを表示します。"
+
+#: command.log.month
+msgid "The month of the log(s)."
+msgstr "ログの月。"
+
+#: command.log.years
+msgid "The years of the log(s)."
+msgstr "ログの年。"
+
+#: command.log.invalid
+msgid "Invalid time: You should not select a time that is in the future."
+msgstr "無効な時間：未来の時間を選択してはいけません。"
+
+#: command.logui.description
+msgid "Select one of the the restart point and view all of the log(s) during the restart point to the next restart point."
+msgstr "再起動ポイントの1つを選択し、再起動ポイントから次の再起動ポイントまでのすべてのログを表示します。"
+
+#: command.logui.title
+msgid "Select one of the restart point in below"
+msgstr "以下の再起動ポイントの1つを選択してください"
+
+#: command.logui.button
+msgid "Server initialization #%s"
+msgstr "サーバー初期化 #%s"
+
+#: ui.log.title
+msgid "Log record | Timezone: %s"
+msgstr "ログ記録 | タイムゾーン: %s"
+
+#: ui.log.body
+msgid "Click into the §gbutton§f of the log can see the §adetail information§f of the selected log. If you want to exit this ui, you can click the 'X' in the corner."
+msgstr "ログの§gボタン§fをクリックすると、選択したログの§a詳細情報§fが表示されます。このUIを終了するには、隅にある 'X' をクリックしてください。"
+
+#: ui.log.detail
+msgid "Detail information"
+msgstr "詳細情報"
+
+#: command.echestwipe.description
+msgid "Clear a player's ender chest"
+msgstr "プレイヤーのエンダーチェストをクリアします。"
+
+#: command.help.sd
+msgid "Get the command list"
+msgstr "コマンドリストを取得します"
+
+#: command.logui.sd
+msgid "View logs by restart time"
+msgstr "再起動時間でログを表示します"
+
+#: command.daylog.sd
+msgid "View logs by date"
+msgstr "日付でログを表示します"
+
+#: command.fastlog.ad
+msgid "View logs in past few days"
+msgstr "過去数日のログを表示します"
+
+#: command.setpassword.sd
+msgid "Change password"
+msgstr "パスワードを変更します"
+
+#: command.configui.sd
+msgid "Edit config"
+msgstr "設定を編集します"
+
+#: command.op.sd
+msgid "Gain matrix admin"
+msgstr "Matrix管理者になる"
+
+#: command.deop.sd
+msgid "Remove your admin perm"
+msgstr "管理者権限を削除します"
+
+#: command.vanish.sd
+msgid "(Un)vanish yourself"
+msgstr "（隠れる/現れる）"
+
+#: command.about.sd
+msgid "Get info of Matrix-anti"
+msgstr "Matrix-antiの情報を取得します"
+
+#: command.crash.description
+msgid "Crash a player."
+msgstr "プレイヤーをクラッシュさせます。"
+
+#: module.mobaura.name
+msgid "Anti Mob Aura"
+msgstr "反モブオーラ"
+
+#: module.mobaura.description
+msgid "Spawn dummy when player attack a mob, checks if the player is attacking the dummy."
+msgstr "プレイヤーがモブを攻撃したときにダミーを生成し、プレイヤーがダミーを攻撃しているかどうかをチェックします。"
+
+#: module.elytraFly.name
+msgid "Anti Elytra Fly"
+msgstr "反エリトラ飛行"
+
+#: module.elytraFly.description
+msgid "Prevent the player from using the illegal elytra flying."
+msgstr "プレイヤーが違法なエリトラ飛行を使用するのを防ぎます。"
+
+#: module.autotool.name
+msgid "Anti Auto Tool"
+msgstr ""
+
+#: module.autotool.description
+msgid "Checks if player is using autoTool hack to break blocks."
+msgstr ""
+
+#: module.deviceban.name
+msgid "Device Ban"
+msgstr ""
+
+#: module.deviceban.description
+msgid "Prevent the player from using a banned device to join the server."
+msgstr ""
+
+#: command.ban.finish
+msgid "§bMatrix§a+ §7>§g %1 has been banned by %2."
+msgstr ""
+
+#: command.unban.finish
+msgid "§bMatrix§a+ §7>§g %1 has been unbanned by %2."
+msgstr ""
+
+#: command.kick.finish
+msgid "§bMatrix§a+ §7>§g %1 has been kicked by %2."
+msgstr ""
+
+#: command.mute.finish
+msgid "§bMatrix§a+ §7>§g %1 has been muted by %2."
+msgstr ""
+
+#: command.unmute.finish
+msgid "§bMatrix§a+ §7>§g %1 has been unmuted by %2."
+msgstr ""
+
+#: command.warn.finish
+msgid "§bMatrix§a+ §7>§g %1 has been warned by %2. §7(Warns: %3)"
+msgstr ""
+
+#: command.clearwarn.finish
+msgid "§bMatrix§a+ §7> §gAll the warnings of %1 has been cleared by %2."
+msgstr ""
+
+#: command.unban.notfound
+msgid "§bMatrix§a+ §7> §cThe player %1 has not been banned yet. You can use -banlist to see the list of banned players."
+msgstr ""
+
+#: command.unmute.notfound
+msgid "§bMatrix§a+ §7> §cThe player %1 has not been muted yet."
+msgstr ""
+
+#: command.moderation.ban.expired
+msgid "§bMatrix§a+ §7> §aYour ban has expired!"
+msgstr ""
+
+#: command.moderation.mute.expired
+msgid "§bMatrix§a+ §7> §aYou're no longer to be muted"
+msgstr ""
+
+#: debug.pause
+msgid "§bMatrix§a+ §7> §7Punishment §e%1 §7to §e%2§r §7has been cancelled."
+msgstr ""
+
+#: command.setflagmsgto.description
+msgid "Change the flag mode"
+msgstr ""
+
+#: command.setflagmsgto.type
+msgid "Flag type"
+msgstr ""
+
+#: command.setflagmsgto.type.description
+msgid "The flag type that states what is the target that anticheat should send the notification to them when there is cheater detected."
+msgstr ""
+
+#: command.fastlog.sd
+msgid "View log in previous day"
+msgstr ""
+
+#: command.echestwipe.sd
+msgid "Clear player echest"
+msgstr ""
+
+#: ui.modpanel.title
+msgid "Mod Panel | Matrix AntiCheat"
+msgstr ""
+
+#: ui.modpamel.sel.here
+msgid "Select here"
+msgstr ""
+
+#: ui.modpanel.mute
+msgid "§5Mute\n§8Run '-mute %1 %2'"
+msgstr ""
+
+#: ui.modpanel.kick
+msgid "§5Kick\n§8Run '-kick %1 %2'"
+msgstr ""
+
+#: ui.modpanel.ban
+msgid "§5Ban\n§8Run '-ban %1 %2 %3'"
+msgstr ""
+
+#: ui.modpanel.crash
+msgid "§5Crash\n§8Run '-crash %s'"
+msgstr ""
+
+#: module.disabler.name
+msgid "Anti Disabler"
+msgstr ""
+
+#: module.disabler.description
+msgid "Prevent user from using fake gliding tag to bypass the anticheat or server-auth-with-rewind system."
+msgstr ""
+
+#: command.mset.error
+msgid "Sorry, we could not read the key you have provided."
+msgstr ""
+
+#: command.mset.success
+msgid "Successfully run set command for %s times. This action cannot be reversed."
+msgstr ""
+
+#: command.mset.title
+msgid "Import settings"
+msgstr ""
+
+#: command.mset.input
+msgid "Setup key"
+msgstr ""
+
+#: command.mset.description
+msgid "Import settings by a key"
+msgstr ""
+
+#: command.export.title
+msgid "We will display the string key in the next messages. As there is the limit for the API, we can't let you copy the key directly. You can try to use some app like Google Lens to copy it."
+msgstr ""
+
+#: command.export.empty
+msgid "§bMatrix§a+ §7> §cUnable to generate the key as there is no data to be exported."
+msgstr ""
+
+#: command.export.description
+msgid "Export the settings to a key"
+msgstr ""
+
+#: item.matrix.hammer
+msgid "§g§lMod §bHammer§r"
+msgstr ""
+
+#: command.unban.realmsplus
+msgid "§bMatrix§a+ §7> §cUnable to unban %s, please use '/realm unban gamertag:%s option:<Current realm name>' in discord with realm+ bot'"
+msgstr ""
+
+#: module.xray.name
+msgid "Anti Xray"
+msgstr ""
+
+#: module.xray.description
+msgid "Prevent user for using xray to see the ore locations directly."
+msgstr ""
+
+#: module.xray.warning
+msgid "Anti-Xray system is running to provide a fair game experience."
+msgstr ""
+
+#: commands.op.failed
+msgid "§bMatrix§a+ §7> §cFailed to op %s. If you want to get permission in Matrix, you can type '-op' in chat."
+msgstr ""
+
+#: item.matrix.crystal
+msgid "§d§lCrystal of uwu§r"
+msgstr ""
+
+#: tile.matrix:uwu_craft_table.name
+msgid "§d§lUwu §eCraft Table§r"
+msgstr ""
+
+#: matrix.table
+msgid "Uwu Crafting"
+msgstr ""
+
+#: command.clearpassword.sd
+msgid "Clear password"
+msgstr ""
+
+#: command.set.sd
+msgid "Set value by path"
+msgstr ""
+
+#: command.help.target.name
+msgid "§gParameter: §e%s"
+msgstr ""
+
+#: type.movement
+msgid "§dMovement detection"
+msgstr ""
+
+#: type.block
+msgid "§dBlock detection"
+msgstr ""
+
+#: type.combat
+msgid "§dCombat check"
+msgstr ""
+
+#: type.data
+msgid "§dData check"
+msgstr ""
+
+#: type.util
+msgid "§dUtility modules"
+msgstr ""
+
+#: type.other
+msgid "§dOthers"
+msgstr ""
+
+#: type.moderation
+msgid "§dModeration"
+msgstr ""
+
+#: type.log
+msgid "§dAntiCheat Logging"
+msgstr ""
+
+#: type.security
+msgid "§dSecurity"
+msgstr ""
+
+#: type.setting
+msgid "§dSettings"
+msgstr ""
+

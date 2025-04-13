@@ -1,0 +1,83 @@
+{
+    "resource_pack_name": "bridgeRP",
+    "texture_name": "atlas.terrain",
+    "num_mip_levels": 4,
+    "padding": 8,
+    "texture_data": {
+        "m_netherite_side" : {
+            "textures" : ["textures/blocks/m_ancient_debris_side"]
+        },
+        "m_netherite_top" : {
+            "textures" : ["textures/blocks/m_ancient_debris_top"]
+        },
+        "m_stone_ore": {
+            "textures": ["textures/blocks/m_stone"]
+        },
+        "m_netherrack_ore": {
+            "textures": ["textures/blocks/m_netherrack"]
+        },
+        "m_deepslate_ore": {
+            "textures": ["textures/blocks/m_deepslate_ore"]
+        },
+        "m_diamond": {
+            "textures": ["textures/blocks/m_diamond_ore"]
+        },
+        "m_deepslate_diamond": {
+            "textures": ["textures/blocks/m_deepslate_diamond_ore"]
+        },
+        "m_lapis": {
+            "textures": ["textures/blocks/m_lapis_ore"]
+        },
+        "m_deepslate_lapis": {
+            "textures": ["textures/blocks/m_deepslate_lapis_ore"]
+        },
+        "m_redstone": {
+            "textures": ["textures/blocks/m_redstone_ore"]
+        },
+        "m_deepslate_redstone": {
+            "textures": ["textures/blocks/m_deepslate_redstone_ore"]
+        },
+        "m_coal": {
+            "textures": ["textures/blocks/m_coal_ore"]
+        },
+        "m_deepslate_coal": {
+            "textures": ["textures/blocks/m_deepslate_coal_ore"]
+        },
+        "m_quartz": {
+            "textures": ["textures/blocks/m_quartz_ore"]
+        },
+        "m_nether_gold": {
+            "textures": ["textures/blocks/m_nether_gold_ore"]
+        },
+        "m_iron": {
+            "textures": ["textures/blocks/m_iron_ore"]
+        },
+        "m_deepslate_iron": {
+            "textures": ["textures/blocks/m_deepslate_iron_ore"]
+        },
+        "m_gold": {
+            "textures": ["textures/blocks/m_gold_ore"]
+        },
+        "m_deepslate_gold": {
+            "textures": ["textures/blocks/m_deepslate_gold_ore"]
+        },
+        "m_emerald": {
+            "textures": ["textures/blocks/m_emerald_ore"]
+        },
+        "m_deepslate_emerald": {
+            "textures": ["textures/blocks/m_deepslate_emerald_ore"]
+        },
+        "m_copper": {
+            "textures": ["textures/blocks/m_copper_ore"]
+        },
+        "m_deepslate_copper": {
+            "textures": ["textures/blocks/m_deepslate_copper_ore"]
+        },
+        "uwu_craft_table_top": {
+            "textures": ["textures/blocks/uwu_craft_table_top"]
+        },
+        "uwu_craft_table_side": {
+            "textures": ["textures/blocks/uwu_craft_table_side"]
+        }
+    }
+}

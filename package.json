@@ -1,7 +1,21 @@
 {
-  "dependencies": {
-    "@minecraft/server": "^2.0.0-beta.1.21.80-preview.27",
-    "@minecraft/server-ui": "^2.0.0-beta.1.21.80-preview.27",
-    "@minecraft/vanilla-data": "^1.21.70"
-  }
+    "name": "matrix-anticheat",
+    "productName": "Matrix-AntiCheat",
+    "description": "The best Minecraft bedrock AntiCheat",
+    "private": true,
+    "type": "module",
+    "dependencies": {
+        "@minecraft/server": "^2.0.0-beta.1.21.70-stable",
+        "@minecraft/server-ui": "^2.0.0-beta.1.21.70-stable",
+        "fs": "^0.0.1-security",
+        "gettext-parser": "^8.0.0",
+        "javascript-obfuscator": "^4.1.1",
+        "path": "^0.12.7",
+        "progress": "^2.0.3",
+        "progress-bar": "^0.1.1",
+        "typescript": "^5.3.3"
+    },
+    "devDependencies": {
+        "prettier": "3.2.5"
+    }
 }
