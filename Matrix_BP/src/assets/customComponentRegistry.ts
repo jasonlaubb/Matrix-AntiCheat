@@ -1,4 +1,4 @@
-import { ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, Player, system, RawText } from "@minecraft/server";
+import { ItemComponentHitEntityEvent, ItemComponentUseEvent, ItemCustomComponent, Player, system } from "@minecraft/server";
 import { MinecraftItemTypes } from "../node_modules/@minecraft/vanilla-data/lib/index";
 import { ModPanel } from "../util/modPanel";
 import tile from "../util/tileBuilder";
@@ -43,36 +43,3 @@ system.beforeEvents.startup.subscribe((init) => {
     init.blockComponentRegistry.registerCustomComponent("matrix:deepslateLoot", tile(MinecraftItemTypes.CobbledDeepslate, 0, null));
     init.blockComponentRegistry.registerCustomComponent("matrix:copperLoot", tile(MinecraftItemTypes.RawCopper, 0, [2, 5]));
 });
-type OptionType = "integer" | "float" | "string" | "choice" | "boolean" | "player" | "target";
-export class Command {
-    private constructor ();
-    public static commands: Command[] = [];
-    public static create (name: RawText, description: RawText, commandOption: (cmd: Command) => Command, execute: (cmd: Command) => Command) {
-        const commandBuild = commandOption(new Command());
-        commandBuild.name = name;
-        commandBuild.description = description;
-        commandBuild.execute = execute;
-        commands.push(commands);
-    }
-    public name: RawText = { text: "" };
-    public description: RawText = { text: "" };
-    public execute: (...args: any[]) => void = () => {};
-    public tag?: number;
-    public required: CommandOption[] = [];
-    public optional: CommandOption[] = [];
-    public addOption (type: OptionType, name: RawText, desc: RawText) {
-        return this;
-    }
-    public addOptionalOption () {
-        return this;
-    }
-    public setTag (tag: number) {
-        this.tag = tag;
-        return this;
-    }
-}
-interface CommandOption {
-    name: RawText;
-    description: RawText;
-    type: OptionType;
-}

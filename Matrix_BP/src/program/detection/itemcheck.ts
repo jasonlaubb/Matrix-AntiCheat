@@ -71,4 +71,3 @@ function itemDetector(item: ItemStack) {
     }
     return null;
 }
-export default itemDetector;

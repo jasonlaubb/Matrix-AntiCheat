@@ -29,29 +29,6 @@ import { setupFlagFunction } from "./util/flag";
 import { changeValueOfObject, getValueFromObject } from "./util/util";
 import { logRestart } from "./assets/logSystem";
 import { pythag } from "./util/fastmath";
-// Import command
-import "./program/command/about";
-import "./program/command/help";
-import "./program/command/op";
-import "./program/command/deop";
-import "./program/command/setadmin";
-import "./program/command/setmodule";
-import "./program/command/listmodule";
-import "./program/command/set";
-import "./program/command/matrixui";
-import "./program/command/vanish";
-import "./program/command/modCommand";
-import "./program/command/invsee";
-import "./program/command/setpassword";
-import "./program/command/configui";
-import "./program/command/echestwipe";
-import "./program/command/rank";
-import "./program/command/reset";
-import "./program/command/log";
-import "./program/command/reconnect";
-import "./program/command/setflagmsgto";
-import "./program/command/mset";
-// Setup custom component
 import "./assets/customComponentRegistry";
 export { Module, Command, Config };
 // The class that store the tick event that is handled by the Module class
