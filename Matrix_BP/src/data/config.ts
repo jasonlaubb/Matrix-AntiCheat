@@ -19,7 +19,6 @@ export default {
         antiEntityFly: { state: true, punishment: "default" },
         antiElytraFly: { state: true, punishment: "default" },
         // non-movement
-        firewall: { state: false, punishment: "default" },
         antiNamespoof: { state: true, punishment: "default" },
         antiKillAura: { state: true, punishment: "default" },
         antiMobAura: { state: true, punishment: "default" },
