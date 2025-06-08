@@ -123,12 +123,13 @@ export default {
             maxFlag: 35,
         },
         antiReach: {
-            maxReach: 4.5,
-            reachBuffer: 2,
-            maxFlag: 11,
+            maxReach: 4.75,
+            reachBuffer: 2.25,
+            maxFlag: 14,
+            maxTriggerInterval: 7000,
         },
         antiScaffold: {
-            scaffoldBlockLimit: 4,
+            scaffoldBlockLimit: 7,
         },
         antiPhase: {
             enhanceDetection: true,

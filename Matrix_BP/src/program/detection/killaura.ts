@@ -104,7 +104,7 @@ function entityHitEntity({ damagingEntity: player, hitEntity: target }: EntityHi
             }
             data.roundFlagAmount++;
             data.lastRoundTimestamp = now;
-            if (data.roundFlagAmount >= 8) {
+            if (data.roundFlagAmount >= 14) {
                 player.flag(killaura, { t: "6", deltaIntYaw, deltaIntPitch });
             }
         }

@@ -29,7 +29,6 @@ const reach = new Module()
     });
 reach.register();
 const MAX_ROTATION = 79;
-const TRACK_DURATION = 5000;
 interface TrackData {
     locationData: Vector3[];
     lastValidTimeStamp: number;
@@ -46,8 +45,8 @@ function onEntityAttack({ damagingEntity: player, hitEntity: target }: EntityHit
     const playerLocationData = locationTrackData[player.id]!;
     const targetLocationData = locationTrackData[target.id]!;
     const now = Date.now();
-    const playerTrackInvalid = now - playerLocationData.lastValidTimeStamp > TRACK_DURATION;
-    const targetTrackInvalid = now - targetLocationData.lastValidTimeStamp > TRACK_DURATION;
+    const playerTrackInvalid = now - playerLocationData.lastValidTimeStamp > Module.config.sensitivity.antiReach.maxTriggerInterval;
+    const targetTrackInvalid = now - targetLocationData.lastValidTimeStamp > Module.config.sensitivity.antiReach.maxTriggerInterval;
     if (playerTrackInvalid) {
         trackPlayer(player);
         locationTrackData[player.id].buffer = 0;
@@ -82,7 +81,7 @@ function trackPlayer(player: Player) {
         if (locationTrackData[player.id].locationData.length >= 5) {
             locationTrackData[player.id].locationData.shift();
         }
-        if (Date.now() - locationTrackData[player.id].lastValidTimeStamp > TRACK_DURATION) {
+        if (Date.now() - locationTrackData[player.id].lastValidTimeStamp > Module.config.sensitivity.antiReach.maxTriggerInterval) {
             system.clearRun(runId);
         }
     });
