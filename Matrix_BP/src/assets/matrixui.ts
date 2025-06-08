@@ -39,13 +39,13 @@ export default async function (player: Player) {
         const isChoice = requiredOption.type === "choice";
         const isBoolean = requiredOption.type === "boolean";
         if (isChoice) {
-            ui3.dropdown(body, requiredOption.typeInfo!.arrayRange!, 0);
+            ui3.dropdown(body, requiredOption.typeInfo!.arrayRange!, { defaultValueIndex: 0 });
         } else if (isBoolean) {
-            ui3.dropdown(body, ["True (1)", "False (0)"], 0);
+            ui3.dropdown(body, ["True (1)", "False (0)"], { defaultValueIndex: 0 });
         } else if (notPlayerTarget) {
             ui3.textField(body, "Type here...");
         } else {
-            ui3.dropdown(body, playerNameArray, 0);
+            ui3.dropdown(body, playerNameArray, { defaultValueIndex: 0 });
         }
 
         const result3 = await ui3.show(player);
@@ -77,13 +77,13 @@ export default async function (player: Player) {
         const isChoice = optionalOption.type === "choice";
         const isBoolean = optionalOption.type === "boolean";
         if (isChoice) {
-            ui.dropdown(body, optionalOption.typeInfo!.arrayRange!, 0);
+            ui.dropdown(body, optionalOption.typeInfo!.arrayRange!, { defaultValueIndex: 0 });
         } else if (isBoolean) {
-            ui.dropdown(body, ["True (1)", "False (0)"], 0);
+            ui.dropdown(body, ["True (1)", "False (0)"], { defaultValueIndex: 0 });
         } else if (notPlayerTarget) {
             ui.textField(body, "Keep this empty to skip (optional)");
         } else {
-            ui.dropdown(body, playerNameArray, 0);
+            ui.dropdown(body, playerNameArray, { defaultValueIndex: 0 });
         }
         const result = await ui.show(player);
         if (result.canceled) return;

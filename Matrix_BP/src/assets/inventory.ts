@@ -1,5 +1,5 @@
 export { projectPlayerInventory, initializeInventorySync };
-import { world, system, EquipmentSlot, Player, ItemStack, Entity } from "@minecraft/server";
+import { world, system, EquipmentSlot, Player, ItemStack, Entity, VanillaEntityIdentifier } from "@minecraft/server";
 function fetchInventory(entity: Entity): ItemStack[] {
     const container = entity.getComponent("inventory")!.container!;
     let inventory = Array.from({ length: container.size }, (_, i) => container.getItem(i)).map((item) => item ?? ({ typeId: "air", amount: 0 } as unknown as ItemStack));
@@ -39,7 +39,7 @@ function projectPlayerInventory(player: Player, sourcePlayer: Player) {
     const inventory = fetchInventory(player);
     const equipment = fetchPlayerEquipments(player);
 
-    const entityProjector = sourcePlayer.dimension.spawnEntity("matrix:inv_container", sourcePlayer.location);
+    const entityProjector = sourcePlayer.dimension.spawnEntity("matrix:inv_container" as VanillaEntityIdentifier, sourcePlayer.location);
     const entityProjectorContainer = entityProjector.getComponent("inventory")!.container;
 
     entityProjector.nameTag = `matrix:inventory::${transformEquipmentStatsToString(equipment)}:${player.name}`;
