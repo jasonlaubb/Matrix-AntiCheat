@@ -34,7 +34,7 @@ new Command()
             .dropdown(
                 fastText().addTran("command.listmodule.toggle.body").endline().addRawText(selectedModule.getName()).addText(": ").addRawText(selectedModule.getDescription()).endline().addTran("command.listmodule.toggle.state").build(),
                 [rawtextTranslate("command.listmodule.toggle.disable"), rawtextTranslate("command.listmodule.toggle.enable")],
-                0
+                { defaultValueIndex: 0 }
             )
             .submitButton(rawtextTranslate("ui.runcommand"));
         waitShowModalForm(ui, player).then((result) => {

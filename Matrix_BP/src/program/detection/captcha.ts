@@ -82,10 +82,9 @@ async function onPlayerSpawn(event: PlayerSpawnAfterEvent) {
                 fastText().addTran("module.captcha.selectui").endline().addTran("module.captcha.why").endline().addTran("module.captcha.question", question1.toString(), question2.toString()).endline().addTran("module.captcha.youranswer").build(),
                 0,
                 10,
-                1,
-                ran(11)
+                { defaultValue: ran(11) }
             )
-            .toggle(rawtextTranslate("module.captcha.notabot"), false)
+            .toggle(rawtextTranslate("module.captcha.notabot"), { defaultValue: false })
             .show(player);
         let uiNotAnswering = false;
         ui.then((result) => {

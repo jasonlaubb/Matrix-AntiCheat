@@ -1,4 +1,4 @@
-import { Dimension, EntityHitEntityAfterEvent, Player, Vector3, world } from "@minecraft/server";
+import { Dimension, EntityHitEntityAfterEvent, Player, VanillaEntityIdentifier, Vector3, world } from "@minecraft/server";
 import { calculateAngleFromView } from "../../util/fastmath";
 import { Module } from "../../matrixAPI";
 import { rawtextTranslate } from "../../util/rawtext";
@@ -64,7 +64,7 @@ function spawnDummy(centerLocation: Vector3, pitch: number, playerId: string, di
     const expectedSpawnLocation = { x: centerLocation.x + getRandomOffset(), y: centerLocation.y + SUMMON_Y_OFFSET, z: centerLocation.z + getRandomOffset() };
     const viewAngle = calculateAngleFromView(centerLocation, expectedSpawnLocation, pitch);
     if (viewAngle > SAFE_ANGLE_ZONE) {
-        const dummy = dimension.spawnEntity(TEST_ENTITY, expectedSpawnLocation);
+        const dummy = dimension.spawnEntity(TEST_ENTITY as VanillaEntityIdentifier, expectedSpawnLocation);
         dummy.addTag("matrix:dummy::" + playerId);
         return dummy;
     } else {
