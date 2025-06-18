@@ -19,7 +19,8 @@ new Module()
     })
     .onModuleDisable(() => {
         Module.clearPlayerTickEvent(eventId);
-    });
+    })
+    .register();
 
 function worldBorder(tickData: TickData, player: Player) {
     if (player.hasTag("matrix:worldBorderBlocked")) return tickData;
