@@ -17,7 +17,7 @@ export default {
     },
     cb(player, player2) {
         if (player2.length !== 1) {
-            player.sendMessage(rawtextTranslate("command.playerSelector.invalid"));
+            system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.invalid")));
             return { status: 1 };
         }
         system.run(() => {

@@ -83,7 +83,7 @@ export default {
     },
     cb(player) {
         system.run(async () => {
-        player.sendMessage(rawtextTranslate("ui.closechat"));
+            player.sendMessage(rawtextTranslate("ui.closechat"));
             const form = new ActionFormData().title(rawtextTranslate("ui.config.title")).body(rawtextTranslate("ui.config.body")).button(rawtextTranslate("ui.config.button"));
             const result = await waitShowActionForm(form, player);
             if (!result || result.canceled) return;
