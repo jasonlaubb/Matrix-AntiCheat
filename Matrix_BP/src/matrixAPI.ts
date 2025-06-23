@@ -215,7 +215,7 @@ class Module {
         return Module.currentPlayers;
     }
     public static get allNonAdminPlayers() {
-        return Module.currentPlayers.filter((player) => !player.isAdmin());
+        return Module.currentPlayers.filter((player) => !player.isOperator());
     }
     // Dynamic config system
     public static get config() {
@@ -286,31 +286,9 @@ class Config {
         return changedProperties;
     }
 }
-Player.prototype.isAdmin = function () {
-    try {
-        const isAdminState = ((this.getDynamicProperty("uniqueLevel") as number) ?? 0) >= 1;
-        return isAdminState;
-    } catch {
-        return false;
-    }
-};
-Player.prototype.getPermissionLevel = function () {
-    try {
-        return (this.getDynamicProperty("uniqueLevel") as number) ?? 0;
-    } catch {
-        return 0;
-    }
-};
-Player.prototype.setPermissionLevel = function (level: number) {
-    if (!Number.isInteger(level)) {
-        throw new Error("Player :: setPermissionLevel :: Level must be an integer.");
-    }
-    if (level == 0) {
-        this.setDynamicProperty("uniqueLevel");
-    } else {
-        this.setDynamicProperty("uniqueLevel", level);
-    }
-};
+Player.prototype.isOperator = function () {
+    return this.playerPermissionLevel === 2 || this.commandPermissionLevel >= 2;
+}
 Player.prototype.isRiding = function () {
     return !!this.getComponent("riding")?.entityRidingOn;
 };
@@ -471,7 +449,7 @@ function* loadModuleRegistry(): Generator<void, void, void> {
                             };
                             if (data?.global)
                                 Module.playerLoopRunTime.forEach((event) => {
-                                    if (!(!event.booleanData && player.isAdmin())) {
+                                    if (!(!event.booleanData && player.isOperator())) {
                                         try {
                                             const newData = event.moduleFunction(data, player);
                                             if (newData) data = newData;

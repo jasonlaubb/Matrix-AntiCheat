@@ -30,7 +30,7 @@ export default [
                 }
             ]
         },
-        cb: (player, path, value) => {
+        cb (player, path, value) {
             Config.set(path, value);
             player.sendMessage(
                 fastText()

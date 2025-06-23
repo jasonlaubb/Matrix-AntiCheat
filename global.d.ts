@@ -4,9 +4,10 @@ import { Module } from "./Matrix_BP/src/matrixAPI";
 import { PlayerTimeStamp } from "./Matrix_BP/src/program/system/playerProperty";
 declare module "@minecraft/server" {
 	interface Player {
-		isAdmin: () => boolean;
-		getPermissionLevel: () => number;
-		setPermissionLevel: (level: number) => void;
+		/**
+		 * @description Return true if the player is an operator.
+		 */
+		isOperator: () => boolean;
 		runChatCommand: (...command: string[]) => void;
 		flag: (detected: Module, data?: { [key: string]: (string | number | (string | number)[]) }) => void;
 		safeIsOp: () => boolean;

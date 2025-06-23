@@ -9,7 +9,7 @@ export default {
         permissionLevel: 0,
         cheatsRequired: false
     },
-    cb: (player) => {
+    cb (player) {
         const aboutMessage = fastText()
             .addTran("command.about.title")
             .endline()

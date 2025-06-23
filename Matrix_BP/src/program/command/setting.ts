@@ -1,9 +1,9 @@
-import { Player } from "@minecraft/server";
+import { Player, system } from "@minecraft/server";
 import { Config } from "../../matrixAPI";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
-import { Command } from "../../matrixAPI";
 import { waitShowActionForm } from "../../util/util";
+import type { cmd } from "../../assets/cmd";
 async function configUI(player: Player, path?: string[]) {
     if (!path) {
         selector(player, []);
@@ -37,11 +37,12 @@ function selector(player: Player, path: string[]) {
         selectform.button(`§g§l${key}§r\n§8${value}§r`);
     }
     selectform.button(rawtextTranslate("ui.exit"), "textures/ui/redX1.png");
+    //@ts-expect-error
     selectform.show(player).then((data) => {
         if (data.canceled) return;
         const selection = lulka[data.selection!];
         if (!selection) return;
-        configUI(player, [...path, selection[0]]).catch((e) => Command.sendErrorToPlayer(player, e));
+        configUI(player, [...path, selection[0]]);
     });
 }
 async function editor(player: Player, path: string[]) {
@@ -64,29 +65,29 @@ async function editor(player: Player, path: string[]) {
             throw new Error("Type Error: Undefined case");
         }
     }
+    //@ts-expect-error
     form.show(player).then((data) => {
         if (data.canceled) return;
         let value = data.formValues![0] as string | number;
         if (typeof value == "number") value = value == 0 ? "false" : "true";
-        // Run the config set command.
-        if (value?.includes(" ")) {
-            player.runChatCommand(`set ${path.join("/")} "${value}"`);
-        } else player.runChatCommand(`set ${path.join("/")} ${value}`);
+        // Run command for player
+        player.runCommand(`m:set${type} ${path.join(".")} ` + (value.includes(" ") ? `"${value}"` : value));
     });
 }
 
-new Command()
-    .setName("configui")
-    .setMinPermissionLevel(1)
-    .addShortDescription(rawtextTranslate("command.configui.sd"))
-    .setDescription(rawtextTranslate("command.configui.description"))
-    .setTag(2)
-    .addIcon("ui/icon_setting")
-    .onExecute(async (player) => {
+export default {
+    cc: {
+        name: "m:setting",
+        description: "Opens the configuration UI.",
+        permissionLevel: 2,
+    },
+    cb(player) {
+        system.run(async () => {
         player.sendMessage(rawtextTranslate("ui.closechat"));
-        const form = new ActionFormData().title(rawtextTranslate("ui.config.title")).body(rawtextTranslate("ui.config.body")).button(rawtextTranslate("ui.config.button"));
-        const result = await waitShowActionForm(form, player);
-        if (!result || result.canceled) return;
-        configUI(player).catch((e) => Command.sendErrorToPlayer(player, e));
-    })
-    .register();
+            const form = new ActionFormData().title(rawtextTranslate("ui.config.title")).body(rawtextTranslate("ui.config.body")).button(rawtextTranslate("ui.config.button"));
+            const result = await waitShowActionForm(form, player);
+            if (!result || result.canceled) return;
+            configUI(player);
+        })
+    },
+} as cmd;

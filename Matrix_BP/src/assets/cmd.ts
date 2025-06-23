@@ -1,7 +1,7 @@
 import { CustomCommand, CustomCommandOrigin, CustomCommandResult, Player, system } from "@minecraft/server";
 export interface cmd {
     cc: CustomCommand;
-    cb: (origin: Player, ...args: any[]) => CustomCommandResult | undefined;
+    cb: (player: Player, ...args: any[]) => CustomCommandResult | undefined;
     en?: {
         id: string;
         items: string[];
@@ -9,10 +9,12 @@ export interface cmd {
 }
 import about from "../program/command/about";
 import set from "../program/command/set";
+import setting from "../program/command/setting";
 system.beforeEvents.startup.subscribe((event) => {
     const commands: cmd[] = [
         about,
         ...set,
+        setting,
     ];
     const registery = event.customCommandRegistry;
     commands.forEach(({ cc, cb, en }) => {
