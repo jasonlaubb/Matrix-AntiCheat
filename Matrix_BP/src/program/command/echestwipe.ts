@@ -1,22 +1,6 @@
-import { Player, system } from "@minecraft/server";
-import { Command } from "../../matrixAPI";
+import { CustomCommandParamType, Player, system } from "@minecraft/server";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
-
-new Command()
-    .setName("echestwipe")
-    .setAliases("ecw", "enderchestwipe", "wipeenderchest", "clearenderchest", "clearechest", "wipeechest")
-    .addShortDescription(rawtextTranslate("command.echestwipe.sd"))
-    .setMinPermissionLevel(1)
-    .setTag(0)
-    .setDescription(rawtextTranslate("command.echestwipe.description"))
-    .addIcon("blocks/ender_chest_front")
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
-    .onExecute(async (player, target) => {
-        const targetPlayer = target as Player;
-        system.runJob(clearPlayerEnderchest(targetPlayer));
-        player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.echestwipe.success", targetPlayer.name).build());
-    })
-    .register();
+import type { cmd } from "../../assets/cmd";
 
 function* clearPlayerEnderchest(player: Player): Generator<void, void, void> {
     for (let i = 0; i < 27; i++) {
@@ -24,3 +8,27 @@ function* clearPlayerEnderchest(player: Player): Generator<void, void, void> {
         yield;
     }
 }
+export default {
+    cc: {
+        name: "m:echestwipe",
+        description: "Wipes the ender chest of a player.",
+        permissionLevel: 1,
+        mandatoryParameters: [
+            {
+                name: "target",
+                type: CustomCommandParamType.PlayerSelector,
+            }
+        ]
+    },
+    cb(player, target) {
+        if (target.length !== 1) {
+            system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.invalid")));
+            return { status: 1 };
+        }
+        system.run(() => {
+            system.runJob(clearPlayerEnderchest(target[0]));
+            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.echestwipe.success", target[0].name).build());
+        });
+        return { status: 0 };
+    }
+} as cmd;

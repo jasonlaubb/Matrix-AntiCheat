@@ -1117,3 +1117,6 @@ msgstr "§dSecurity"
 
 msgid "type.setting"
 msgstr "§dSettings"
+
+msgid "command.playerSelector.invalid"
+msgstr "§bMatrix§a+ §7> §cOne target should be selected! Not accepting more than one target or no target selected."

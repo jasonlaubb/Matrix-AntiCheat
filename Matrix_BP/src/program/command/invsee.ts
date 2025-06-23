@@ -1,19 +1,33 @@
-import { Player } from "@minecraft/server";
+import { CustomCommandParamType, Player, system } from "@minecraft/server";
 import * as Inv from "../../assets/inventory";
-import { Command } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
+import type { cmd } from "../../assets/cmd";
 Inv.initializeInventorySync();
-new Command()
-    .setName("invsee")
-    .setMinPermissionLevel(2)
-    .addIcon("gui/newgui/mob_effects/night_vision_effect")
-    .setTag(3)
-    .setDescription(rawtextTranslate("command.invsee.description"))
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "player", undefined, false)
-    .onExecute(async (player, player2) => {
-        const target = player2 as Player;
-        if (target.id === player.id) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.invsee.self").build());
-        if (!player.hasTag("riding")) Inv.projectPlayerInventory(target, player);
-        player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.invsee.notice").build());
-    })
-    .register();
+export default {
+    cc: {
+        name: "m:invsee",
+        description: "Allows you to see the inventory of another player.",
+        permissionLevel: 2,
+        mandatoryParameters: [
+            {
+                name: "target",
+                type: CustomCommandParamType.PlayerSelector,
+            }
+        ]
+    },
+    cb(player, player2) {
+        if (player2.length !== 1) {
+            player.sendMessage(rawtextTranslate("command.playerSelector.invalid"));
+            return { status: 1 };
+        }
+        system.run(() => {
+            const target = player2[0] as Player;
+                if (target.id === player.id) {
+                    player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.invsee.self").build());
+                }   
+                if (!player.hasTag("riding")) Inv.projectPlayerInventory(target, player);
+                player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.invsee.notice").build());
+        });
+        return { status: 0 };
+    }
+} as cmd;

@@ -88,6 +88,7 @@ export default {
             const result = await waitShowActionForm(form, player);
             if (!result || result.canceled) return;
             configUI(player);
-        })
+        });
+        return { status: 0 };
     },
 } as cmd;

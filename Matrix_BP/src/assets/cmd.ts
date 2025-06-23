@@ -10,11 +10,13 @@ export interface cmd {
 import about from "../program/command/about";
 import set from "../program/command/set";
 import setting from "../program/command/setting";
+import echestwipe from "../program/command/echestwipe";
 system.beforeEvents.startup.subscribe((event) => {
     const commands: cmd[] = [
         about,
         ...set,
         setting,
+        echestwipe,
     ];
     const registery = event.customCommandRegistry;
     commands.forEach(({ cc, cb, en }) => {

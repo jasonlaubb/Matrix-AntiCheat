@@ -1,7 +1,7 @@
 import { Config } from "../../matrixAPI";
 import { fastText } from "../../util/rawtext";
 import type { cmd } from "../../assets/cmd";
-import { CustomCommandParamType } from "@minecraft/server";
+import { CustomCommandParamType, system } from "@minecraft/server";
 import config from "../../data/config";
 function pathParser (data: any, type: "string" | "number" | "boolean", current: string = "") {
     const gains: string[] = [];
@@ -32,12 +32,12 @@ export default [
         },
         cb (player, path, value) {
             Config.set(path, value);
-            player.sendMessage(
+            system.run(() => player.sendMessage(
                 fastText()
                     .addText("§bMatrix§a+ §7> §g")
                     .addTran("command.set.success", path as string, value as string)
                     .build()
-            );
+            ));
         },
         en: {
             id: "m:pathStr",
@@ -62,12 +62,12 @@ export default [
         },
         cb: (player, path, value) => {
             Config.set(path, value);
-            player.sendMessage(
+            system.run(() => player.sendMessage(
                 fastText()
                     .addText("§bMatrix§a+ §7> §g")
                     .addTran("command.set.success", path as string, value as string)
                     .build()
-            );
+            ));
         },
         en: {
             id: "m:pathBool",
@@ -92,12 +92,12 @@ export default [
         },
         cb: (player, path, value) => {
             Config.set(path, value);
-            player.sendMessage(
+            system.run(() => player.sendMessage(
                 fastText()
                     .addText("§bMatrix§a+ §7> §g")
                     .addTran("command.set.success", path as string, value as string)
                     .build()
-            );
+            ));
         },
         en: {
             id: "m:pathNum",
