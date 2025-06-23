@@ -1,15 +1,15 @@
-import { Module, Command } from "../../matrixAPI";
-import { fastText, rawtextTranslate } from "../../util/rawtext";
-
-new Command()
-    .setName("about")
-    .setAliases("info", "version", "ver", "information", "uwu")
-    .setMinPermissionLevel(0)
-    .setTag(3)
-    .setDescription(rawtextTranslate("command.about.description"))
-    .addShortDescription(rawtextTranslate("command.about.sd"))
-    .addIcon("ui/Feedback")
-    .onExecute(async (player) => {
+import { Module } from "../../matrixAPI";
+import { fastText } from "../../util/rawtext";
+import type { cmd } from "../../assets/cmd";
+import { system } from "@minecraft/server";
+export default {
+    cc: {
+        name: "m:about",
+        description: "Displays information about the Matrix AntiCheat.",
+        permissionLevel: 0,
+        cheatsRequired: false
+    },
+    cb: (player) => {
         const aboutMessage = fastText()
             .addTran("command.about.title")
             .endline()
@@ -21,6 +21,7 @@ new Command()
             .endline()
             .addTran("command.about.joindc", Module.discordInviteLink)
             .build();
-        player.sendMessage(aboutMessage);
-    })
-    .register();
+        system.run(() => player.sendMessage(aboutMessage));
+        return { status: 0 };
+    }
+} as cmd;

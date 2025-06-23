@@ -1,65 +1,107 @@
-import { Command, Config } from "../../matrixAPI";
-import { fastText, rawtextTranslate } from "../../util/rawtext";
-
-new Command()
-    .setName("set")
-    .setMinPermissionLevel(3)
-    .setAliases("config", "setconfig", "configset", "setting")
-    .addIcon("ui/gear")
-    .setTag(2)
-    .setDescription(rawtextTranslate("command.set.description"))
-    .addOption(rawtextTranslate("command.set.key"), rawtextTranslate("command.set.key.description"), "string")
-    .addOption(rawtextTranslate("command.set.value"), rawtextTranslate("command.set.value.description"), "string")
-    .onExecute(async (player, key, value) => {
-        const path = (key as string).split("/");
-        const isValid = Config.isValid(path);
-        if (!isValid) {
+import { Config } from "../../matrixAPI";
+import { fastText } from "../../util/rawtext";
+import type { cmd } from "../../assets/cmd";
+import { CustomCommandParamType } from "@minecraft/server";
+import config from "../../data/config";
+function pathParser (data: any, type: "string" | "number" | "boolean", current: string = "") {
+    const gains: string[] = [];
+    for (const [key, value] of Object.entries(data)) {
+        const path = current ? `${current}.${key}` : key;
+        if (typeof value === "object") {
+            gains.push(...pathParser(value, type, path));
+        } else if (typeof value === type) gains.push(path);
+    }
+    return gains;
+}
+export default [
+    {
+        cc: {
+            name: "m:setstring",
+            description: "Sets a configuration value with string type.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "m:pathStr",
+                    type: CustomCommandParamType.Enum,
+                },
+                {
+                    name: "value",
+                    type: CustomCommandParamType.String,
+                }
+            ]
+        },
+        cb: (player, path, value) => {
+            Config.set(path, value);
             player.sendMessage(
                 fastText()
-                    .addText("§bMatrix§a+ §7> §c")
-                    .addTran("command.set.invalid", key as string)
+                    .addText("§bMatrix§a+ §7> §g")
+                    .addTran("command.set.success", path as string, value as string)
                     .build()
             );
-            return;
+        },
+        en: {
+            id: "m:pathStr",
+            items: pathParser(config, "string"),
         }
-        const typeExpected = typeof Config.get(path);
-        let typeValue = value as string | number | boolean;
-        switch (typeExpected) {
-            case "string": {
-                Config.set(path, value as string);
-                break;
-            }
-            case "number": {
-                const numberForm = parseInt(value as string);
-                if (Number.isNaN(numberForm)) {
-                    player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.set.number").build());
-                    return;
+    },
+    {
+        cc: {
+            name: "m:setboolean",
+            description: "Sets a configuration value with boolean type.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "m:pathBool",
+                    type: CustomCommandParamType.Enum,
+                },
+                {
+                    name: "value",
+                    type: CustomCommandParamType.Boolean,
                 }
-                typeValue = numberForm;
-                break;
-            }
-            case "boolean": {
-                if (value != "true" && value != "false") {
-                    player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.set.boolean").build());
-                    return;
-                }
-                typeValue = value == "true";
-                break;
-            }
-            case "object": {
-                player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.set.access").build());
-                return;
-            }
-            default: {
-                throw new Error("Unexpected type");
-            }
+            ]
+        },
+        cb: (player, path, value) => {
+            Config.set(path, value);
+            player.sendMessage(
+                fastText()
+                    .addText("§bMatrix§a+ §7> §g")
+                    .addTran("command.set.success", path as string, value as string)
+                    .build()
+            );
+        },
+        en: {
+            id: "m:pathBool",
+            items: pathParser(config, "boolean"),
         }
-        Config.set(path, typeValue);
-        player.sendMessage(
-            fastText()
-                .addText("§bMatrix§a+ §7> §g")
-                .addTran("command.set.success", key as string, value as string)
-                .build()
-        );
-    })
-    .register();
+    },
+    {
+        cc: {
+            name: "m:setnumber",
+            description: "Sets a configuration value with number type.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "m:pathNum",
+                    type: CustomCommandParamType.Enum,
+                },
+                {
+                    name: "value",
+                    type: CustomCommandParamType.Boolean,
+                }
+            ]
+        },
+        cb: (player, path, value) => {
+            Config.set(path, value);
+            player.sendMessage(
+                fastText()
+                    .addText("§bMatrix§a+ §7> §g")
+                    .addTran("command.set.success", path as string, value as string)
+                    .build()
+            );
+        },
+        en: {
+            id: "m:pathNum",
+            items: pathParser(config, "number"),
+        }
+    },
+] as cmd[];
