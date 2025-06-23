@@ -1120,3 +1120,9 @@ msgstr "§dSettings"
 
 msgid "command.playerSelector.invalid"
 msgstr "§bMatrix§a+ §7> §cOne target should be selected! Not accepting more than one target or no target selected."
+
+msgid "command.number.positive"
+msgstr "§bMatrix§a+ §7> §cPositive number required."
+
+msgid "command.playerSelector.admin"
+msgstr "§bMatrix§a+ §7> §cThis command has no effect on operator."

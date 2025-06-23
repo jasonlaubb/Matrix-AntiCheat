@@ -1,130 +1,102 @@
 import * as log from "../../assets/logSystem";
-import { Command } from "../../matrixAPI";
 import { rawtextTranslate, fastText } from "../../util/rawtext";
 import { day_ms, generateShortTimeStr, parseLogUserInterface, timeStringCorrectToDay, waitShowActionForm } from "../../util/util";
 import { ActionFormData } from "@minecraft/server-ui";
-new Command()
-    .setName("fastlog")
-    .setAliases("flog", "getlogbytime")
-    .addIcon("items/book_enchanted")
-    .setMinPermissionLevel(1)
-    .setTag(1)
-    .setDescription(rawtextTranslate("command.fastlog.description"))
-    .addShortDescription(rawtextTranslate("command.fastlog.sd"))
-    .addOption(
-        rawtextTranslate("command.log.day"),
-        rawtextTranslate("command.log.day.description"),
-        "choice",
-        {
-            arrayRange: ["today", "yesterday", "thedaybefore"],
+import type { cmd } from "../../assets/cmd";
+import { CustomCommandParamType, system } from "@minecraft/server";
+export default [
+    {
+        cc: {
+            name: "m:fastlog",
+            description: "Get logs specific to a day.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "m:previousDay",
+                    type: CustomCommandParamType.Enum,
+                }
+            ]
         },
-        false
-    )
-    .onExecute(async (player, day) => {
-        const selectedDay = day as "today" | "yesterday" | "thedaybefore";
-        const dayT = timeStringCorrectToDay(Date.now());
-        switch (selectedDay) {
-            case "yesterday": {
-                dayT.dayStart -= day_ms;
-                dayT.dayEnd -= day_ms;
-                break;
+        cb(player, previousDay) {
+            system.run(() => {
+            const selectedDay = previousDay as "today" | "yesterday" | "thedaybefore";
+            const dayT = timeStringCorrectToDay(Date.now());
+            switch (selectedDay) {
+                case "yesterday": {
+                    dayT.dayStart -= day_ms;
+                    dayT.dayEnd -= day_ms;
+                    break;
+                }
+                case "thedaybefore": {
+                    dayT.dayStart -= day_ms * 2;
+                    dayT.dayEnd -= day_ms * 2;
+                    break;
+                }
             }
-            case "thedaybefore": {
-                dayT.dayStart -= day_ms * 2;
-                dayT.dayEnd -= day_ms * 2;
-                break;
-            }
+            const logs = log.getLog(dayT.dayStart, dayT.dayEnd);
+            if (logs.length === 0) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.log.nodata").build());
+            parseLogUserInterface(logs, player);
+            });
+            return { status: 0 };
+        },
+        en: {
+            id: "m:previousDay",
+            items: ["today", "yesterday", "thedaybefore"],
         }
-        const logs = log.getLog(dayT.dayStart, dayT.dayEnd);
-        if (logs.length === 0) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.log.nodata").build());
-        parseLogUserInterface(logs, player);
-    })
-    .register();
-new Command()
-    .setName("log")
-    .addIcon("items/book_writable")
-    .setMinPermissionLevel(1)
-    .setTag(1)
-    .setAliases("openlog", "viewlog", "seelog", "getlog", "record")
-    .setDescription(rawtextTranslate("command.log.description"))
-    .addOption(
-        rawtextTranslate("command.log.amount"),
-        rawtextTranslate("command.log.amount.description"),
-        "integer",
-        {
-            lowerLimit: 5,
-            upperLimit: 500,
+    },
+    {
+        cc: {
+            name: "m:log",
+            description: "Get logs of the server.",
+            permissionLevel: 2,
+            optionalParameters: [
+                {
+                    name: "amount",
+                    type: CustomCommandParamType.Integer,
+                }
+            ]
         },
-        true
-    )
-    .onExecute(async (player, amount) => {
-        const showAmount = (amount as number) ?? 80;
-        const logs = log.getAllLogs().slice(0, showAmount);
-        if (logs.length === 0) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.log.nodata").build());
-        parseLogUserInterface(logs, player);
-    })
-    .register();
-new Command()
-    .setName("daylog")
-    .setAliases("dlog", "getlogbydate")
-    .addIcon("items/book_portfolio")
-    .setTag(1)
-    .addShortDescription(rawtextTranslate("command.daylog.sd"))
-    .setMinPermissionLevel(1)
-    .setDescription(rawtextTranslate("command.daylog.description"))
-    .addOption(rawtextTranslate("command.log.day"), rawtextTranslate("command.log.date"), "integer", {
-        lowerLimit: 1,
-        upperLimit: 31,
-    })
-    .addOption(rawtextTranslate("command.log.month"), rawtextTranslate("command.log.date"), "integer", {
-        lowerLimit: 1,
-        upperLimit: 12,
-    })
-    .addOption(
-        rawtextTranslate("command.log.years"),
-        rawtextTranslate("command.log.years"),
-        "integer",
-        {
-            lowerLimit: 1970,
+        cb(player, amount) {
+            system.run(() => {
+            const showAmount = (amount as number) ?? 80;
+            if (showAmount <= 0) return player.sendMessage(rawtextTranslate("command.number.positive"));
+            const logs = log.getAllLogs().slice(0, showAmount);
+            if (logs.length === 0) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.log.nodata").build());
+            parseLogUserInterface(logs, player);
+            });
+            return { status: 0 };
+        }
+    },
+    {
+        cc: {
+            name: "m:logui",
+            description: "Get logs of the server in a user interface.",
+            permissionLevel: 2,
         },
-        true
-    )
-    .onExecute(async (player, day, month, years) => {
-        // Target UTC time
-        const targetTime = new Date(`${years ?? new Date(Date.now()).getFullYear()}-${month}-${day}T00:00:00.000`).getTime() + new Date().getTimezoneOffset() * 60000;
-        if (targetTime > Date.now()) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.log.invalid").build());
-        const dayEnd = targetTime + 1439999;
-        const dayLogs = log.getLog(targetTime, dayEnd);
-        if (dayLogs.length === 0) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.log.nodata").build());
-        parseLogUserInterface(dayLogs, player);
-    })
-    .register();
-new Command()
-    .setName("logui")
-    .addIcon("items/book_writable")
-    .setAliases("logrecord", "getlogbyrestart")
-    .addShortDescription(rawtextTranslate("command.logui.sd"))
-    .setMinPermissionLevel(1)
-    .setDescription(rawtextTranslate("command.logui.description"))
-    .onExecute(async (player) => {
-        const ui = new ActionFormData().title(rawtextTranslate("command.logui.title"));
-        const restartLogs = log.getRestartLogs();
-        restartLogs.forEach((log) => {
-            ui.button(
-                fastText()
-                    .addTran("command.logui.button", log.amount)
-                    .endline()
-                    .addText("§8" + generateShortTimeStr(log.now))
-                    .build()
-            );
-        });
-        const result = await waitShowActionForm(ui, player);
-        if (result === null) return;
-        const selection = result.selection!;
-        const startTime = restartLogs[selection].now;
-        const endTime = restartLogs[selection - 1] ? restartLogs[selection - 1].now - 1 : Date.now();
-        const logs = log.getLog(startTime, endTime);
-        if (logs.length === 0) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.log.nodata").build());
-        parseLogUserInterface(logs, player);
-    })
-    .register();
+        cb(player) {
+            system.run(() => {
+                const ui = new ActionFormData().title(rawtextTranslate("command.logui.title"));
+                const restartLogs = log.getRestartLogs();
+                restartLogs.forEach((log) => {
+                    ui.button(
+                        fastText()
+                            .addTran("command.logui.button", log.amount)
+                            .endline()
+                            .addText("§8" + generateShortTimeStr(log.now))
+                            .build()
+                    );
+                });
+                waitShowActionForm(ui, player).then((result) => {
+                    if (result === null) return;
+                    const selection = result.selection!;
+                    const startTime = restartLogs[selection].now;
+                    const endTime = restartLogs[selection - 1] ? restartLogs[selection - 1].now - 1 : Date.now();
+                    const logs = log.getLog(startTime, endTime);
+                    if (logs.length === 0) return player.sendMessage(fastText().addText("§bMatrix§a+ §7> §c").addTran("command.log.nodata").build());
+                    parseLogUserInterface(logs, player);
+                });
+            });
+            return { status: 0 };
+        }
+    }
+] as cmd[];

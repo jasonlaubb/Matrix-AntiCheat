@@ -1,126 +1,209 @@
-import { Command } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { banHandler, matrixKick, crashPlayer, muteHandler } from "../system/moderation";
-import { Player, world } from "@minecraft/server";
+import { CustomCommandParamType, Player, system, world } from "@minecraft/server";
 import { useRealmsPlus } from "../../util/realmsplus";
-new Command()
-    .setName("ban")
-    .setMinPermissionLevel(2)
-    .setDescription(rawtextTranslate("command.ban.description"))
-    .addIcon("blocks/barrier")
-    .setTag(0)
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
-    .addOption(rawtextTranslate("command.moderation.reason"), rawtextTranslate("command.moderation.reason.description"), "string", undefined, true)
-    .addOption(
-        rawtextTranslate("command.moderation.duration"),
-        rawtextTranslate("command.moderation.duration.description"),
-        "integer",
-        {
-            lowerLimit: 15,
+import type { cmd } from "../../assets/cmd";
+export default [
+    {
+        cc: {
+            name: "m:ban",
+            description: "Bans a player from the server.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "target",
+                    type: CustomCommandParamType.PlayerSelector,
+                },
+            ],
+            optionalParameters: [
+                {
+                    name: "reason",
+                    type: CustomCommandParamType.String,
+                },
+                {
+                    name: "minute",
+                    type: CustomCommandParamType.Integer,
+                }
+            ]
         },
-        true
-    )
-    .onExecute(async (player, target, reason, time) => {
-        const targetPlayer = target as Player;
-        banHandler.ban(targetPlayer, player.name, !time, time ? (time as number) * 60000 : undefined, reason as string);
-        world.sendMessage(rawtextTranslate("command.ban.finish", targetPlayer.name, player.name));
-    })
-    .register();
-new Command()
-    .setName("unban")
-    .setMinPermissionLevel(2)
-    .setTag(0)
-    .setDescription(rawtextTranslate("command.unban.description"))
-    .addIcon("ui/invite_base")
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "string", undefined, false)
-    .onExecute(async (player, target) => {
-        const targetPlayer = target as string;
-        if (!banHandler.unban(targetPlayer)) {
-            if (useRealmsPlus()) {
-                player.sendMessage(rawtextTranslate("command.unban.realmsplus", targetPlayer));
-            } else player.sendMessage(rawtextTranslate("command.unban.notfound", targetPlayer));
-            return;
+        cb(player, target, reason, duration) {
+            if (target.length !== 1) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.invalid")));
+                return { status: 1 };
+            }
+            if (target[0].isOperator()) return system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.admin")));
+            system.run(() => {
+            const banDuration = duration ? (duration as number) * 60000 : undefined;
+            banHandler.ban(target[0], player.name, !banDuration, banDuration, reason as string);
+            world.sendMessage(rawtextTranslate("command.ban.finish", target[0].name, player.name));
+            });
+            return { status: 0 };
         }
-        world.sendMessage(rawtextTranslate("command.unban.finish", targetPlayer, player.name));
-    })
-    .register();
-new Command()
-    .setName("banlist")
-    .setMinPermissionLevel(1)
-    .addIcon("items/book_enchanted")
-    .setTag(0)
-    .setDescription(rawtextTranslate("command.banlist.description"))
-    .onExecute(async (player) => {
-        const bannedPlayer = banHandler.bannedList();
-        if (bannedPlayer.length === 0) {
-            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.banlist.empty").build());
-            return;
-        }
-        player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.banlist.banned", bannedPlayer.join(", "), bannedPlayer.length.toString()).build());
-    })
-    .register();
-new Command()
-    .setName("kick")
-    .addIcon("items/diamond_sword")
-    .setMinPermissionLevel(2)
-    .setTag(0)
-    .setDescription(rawtextTranslate("command.kick.description"))
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
-    .addOption(rawtextTranslate("command.moderation.reason"), rawtextTranslate("command.moderation.reason.descriotion"), "string", undefined, true)
-    .onExecute(async (player, target, reason) => {
-        const targetPlayer = target as Player;
-        matrixKick(targetPlayer, reason as string, player.name);
-        world.sendMessage(rawtextTranslate("command.kick.finish", targetPlayer.name, player.name));
-    })
-    .register();
-new Command()
-    .setName("crash")
-    .addIcon("ui/ErrorGlyph")
-    .setMinPermissionLevel(2)
-    .setDescription(rawtextTranslate("command.crash.description"))
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
-    .onExecute(async (player, target) => {
-        const targetPlayer = target as Player;
-        crashPlayer(targetPlayer);
-        world.sendMessage(rawtextTranslate("command.crash.finish", targetPlayer.name, player.name));
-    })
-    .register();
-new Command()
-    .setName("mute")
-    .addIcon("ui/mute_on")
-    .setTag(0)
-    .setMinPermissionLevel(2)
-    .setDescription(rawtextTranslate("command.mute.description"))
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
-    .addOption(
-        rawtextTranslate("command.moderation.duration"),
-        rawtextTranslate("command.moderation.duration.description"),
-        "integer",
-        {
-            lowerLimit: 1,
+    },
+    {
+        cc: {
+            name: "m:unban",
+            description: "Unbans a player from the server.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "target",
+                    type: CustomCommandParamType.String,
+                }
+            ]
         },
-        false
-    )
-    .onExecute(async (player, target, time) => {
-        const targetPlayer = target as Player;
-        muteHandler.mute(targetPlayer, (time as number) * 60000);
-        world.sendMessage(rawtextTranslate("command.mute.finish", targetPlayer.name, player.name));
-    })
-    .register();
-new Command()
-    .setName("unmute")
-    .addIcon("ui/mute_off")
-    .setTag(0)
-    .setMinPermissionLevel(2)
-    .setDescription(rawtextTranslate("command.unmute.description"))
-    .addOption(rawtextTranslate("command.moderation.target"), rawtextTranslate("command.moderation.target.description"), "target", undefined, false)
-    .onExecute(async (player, target) => {
-        const targetPlayer = target as Player;
-        if (!muteHandler.isMuted(targetPlayer)) {
-            player.sendMessage(rawtextTranslate("command.unmute.notfound", targetPlayer.name));
-            return;
+        cb(player, target) {
+            const targetPlayer = target as string;
+            system.run(() => {
+            if (!banHandler.unban(targetPlayer)) {
+                if (useRealmsPlus()) {
+                    player.sendMessage(rawtextTranslate("command.unban.realmsplus", targetPlayer));
+                } else {
+                    player.sendMessage(rawtextTranslate("command.unban.notfound", targetPlayer));
+                }
+            }
+            });
+            world.sendMessage(rawtextTranslate("command.unban.finish", targetPlayer, player.name));
+            return { status: 0 };
         }
-        muteHandler.unmute(targetPlayer);
-        world.sendMessage(rawtextTranslate("command.unmute.finish", targetPlayer.name, player.name));
-    })
-    .register();
+    },
+    {
+        cc: {
+            name: "m:banlist",
+            description: "Lists all banned players.",
+            permissionLevel: 2,
+        },
+        cb(player) {
+            system.run(() => {
+            const bannedPlayer = banHandler.bannedList();
+            if (bannedPlayer.length === 0) {
+                player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.banlist.empty").build());
+            }
+            player.sendMessage(fastText().addText("§bMatrix§a+ §7> §g").addTran("command.banlist.banned", bannedPlayer.join(", "), bannedPlayer.length.toString()).build());
+            });
+            return { status: 0 };
+        }
+    },
+    {
+        cc: {
+            name: "m:crash",
+            description: "Crashes a player [Beta Feature]",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "target",
+                    type: CustomCommandParamType.PlayerSelector,
+                }
+            ]
+        },
+        cb(player, target) {
+            if (target.length !== 1) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.invalid")));
+                return { status: 1 };
+            }
+            if (target[0].isOperator()) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.admin")));
+                return { status: 1 };
+            }
+            system.run(() => {
+                crashPlayer(target[0] as Player);
+                world.sendMessage(rawtextTranslate("command.crash.finish", target[0].name, player.name));
+            });
+            return { status: 0 };
+        }
+    },
+    {
+        cc: {
+            name: "m:kick2",
+            description: "Kicks a player from the server.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "target",
+                    type: CustomCommandParamType.PlayerSelector,
+                }
+            ]
+        },
+        cb(player, target) {
+            if (target.length !== 1) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.invalid")));
+                return { status: 1 };
+            }
+            if (target[0].isOperator()) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.admin")));
+                return { status: 1 };
+            }
+            system.run(() => {
+                matrixKick(target[0] as Player, undefined, player.name);
+                world.sendMessage(rawtextTranslate("command.kick.finish", target[0].name, player.name));
+            });
+            return { status: 0 };
+        }
+    },
+    {
+        cc: {
+            name: "m:mute",
+            description: "Mutes a player for a certain time.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "target",
+                    type: CustomCommandParamType.PlayerSelector,
+                },
+                {
+                    name: "minute",
+                    type: CustomCommandParamType.Integer,
+                }
+            ],
+        },
+        cb(player, target, time) {
+            if (target.length !== 1) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.invalid")));
+                return { status: 1 };
+            }
+            if (target[0].isOperator()) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.admin")));
+                return { status: 1 };
+            }
+            const muteTime = (time as number) * 60000;
+            if (muteTime <= 0) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.number.positive")));
+                return { status: 1 };
+            }
+            muteHandler.mute(target[0] as Player, muteTime);
+            world.sendMessage(rawtextTranslate("command.mute.finish", target[0].name, player.name));
+            return { status: 0 };
+        }
+    },
+    {
+        cc: {
+            name: "m:unmute",
+            description: "Unmutes a player.",
+            permissionLevel: 2,
+            mandatoryParameters: [
+                {
+                    name: "target",
+                    type: CustomCommandParamType.PlayerSelector,
+                }
+            ]
+        },
+        cb(player, target) {
+            if (target.length !== 1) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.invalid")));
+                return { status: 1 };
+            }
+            if (target[0].isOperator()) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.playerSelector.admin")));
+                return { status: 1 };
+            }
+            const targetPlayer = target[0] as Player;
+            if (!muteHandler.isMuted(targetPlayer)) {
+                system.run(() => player.sendMessage(rawtextTranslate("command.unmute.notfound", targetPlayer.name)));
+                return { status: 1 };
+            }
+            muteHandler.unmute(targetPlayer);
+            world.sendMessage(rawtextTranslate("command.unmute.finish", targetPlayer.name, player.name));
+            return { status: 0 };
+        }
+    }
+] as cmd[];

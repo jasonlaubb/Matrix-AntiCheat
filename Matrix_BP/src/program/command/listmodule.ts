@@ -1,18 +1,34 @@
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import { Command, Module } from "../../matrixAPI";
+import { Module } from "../../matrixAPI";
 import { fastText, rawtextTranslate } from "../../util/rawtext";
 import { waitShowActionForm, waitShowModalForm } from "../../util/util";
 import { mdlType } from "../../data/category";
-import { Player } from "@minecraft/server";
-new Command()
-    .setName("listmodule")
-    .setAliases("modules", "toggles", "showmodules", "showtoggles", "togglelist", "listmodules")
-    .setMinPermissionLevel(2)
-    .setDescription(rawtextTranslate("command.listmodule.description"))
-    .addIcon("blocks/bookshelf")
-    .setTag(2)
-    .onExecute(async (player) => {
-        let allModules = Module.registeredModule;
+import { Player, system } from "@minecraft/server";
+import type { cmd } from "../../assets/cmd";
+async function extraUI(player: Player) {
+    const select = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
+    for (const { name, icon } of mdlType) {
+        select.button(name, icon);
+    }
+    const selResult = await waitShowActionForm(select, player);
+    if (!selResult || selResult.canceled || selResult.selection === 0) return;
+    const selectedType = selResult.selection! - 1;
+    const isOther = selectedType === mdlType.length - 1;
+    return Module.registeredModule.filter(({ tag }) => {
+        if (tag === undefined || tag < 0) return isOther;
+        return tag === selectedType;
+    });
+}
+export default {
+    cc: {
+        name: "m:listmodule",
+        description: "Lists all modules and their states.",
+        permissionLevel: 2,
+        cheatsRequired: false
+    },
+    cb(player) {
+        system.run(async () => {
+            let allModules = Module.registeredModule;
         if (Module.config.customize.moduleCategory) {
             const selResult = await extraUI(player);
             if (!selResult) return;
@@ -44,19 +60,6 @@ new Command()
             // For the command handler, 0 & 1 can be used as false & true
             player.runChatCommand("setmodule", toggleId, state.toString());
         });
-    })
-    .register();
-async function extraUI(player: Player) {
-    const select = new ActionFormData().title(fastText().addTran("command.listmodule.title").addText(" | Matrix Anticheat").build()).body(rawtextTranslate("command.listmodule.body")).button(rawtextTranslate("ui.exit"));
-    for (const { name, icon } of mdlType) {
-        select.button(name, icon);
+        })
     }
-    const selResult = await waitShowActionForm(select, player);
-    if (!selResult || selResult.canceled || selResult.selection === 0) return;
-    const selectedType = selResult.selection! - 1;
-    const isOther = selectedType === mdlType.length - 1;
-    return Module.registeredModule.filter(({ tag }) => {
-        if (tag === undefined || tag < 0) return isOther;
-        return tag === selectedType;
-    });
-}
+} as cmd;
