@@ -1,7 +1,0 @@
-scripts/
-dist/
-node_modules/
-.github
-LICENSE
-gen/
-*.lang
