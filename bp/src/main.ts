@@ -1,4 +1,5 @@
 import { CustomCommandResult, CustomCommandParamType, Player, system } from "@minecraft/server";
+import info from "./command/info";
 // §7[§aMatrix§7]§7 §f
 Player.prototype.isOp = function() {
     return this.commandPermissionLevel >= 2;
@@ -16,10 +17,10 @@ export interface Command {
     optionalParameters?: Option[];
     parameters?: Option[];
     /** @warning Early execution, please add system.run if you want to do edit to world */
-    execute: (args: string[], player: Player) => CustomCommandResult;
+    execute: (player: Player, args: string[]) => CustomCommandResult;
 }
 system.beforeEvents.startup.subscribe((event) => {
-    const commands = [] as Command[];
+    const commands = [info] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
             case "string":
@@ -99,7 +100,7 @@ system.beforeEvents.startup.subscribe((event) => {
                 }
             }
             try {
-                return execute(args, player);
+                return execute(player, args);
             } catch (error) {
                 return { status: 1, message: `§7[§aMatrix§7]§7 §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}` };
             }
