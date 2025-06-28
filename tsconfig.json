@@ -1,0 +1,35 @@
+{
+    "include": ["bp/src", "global.d.ts"],
+    "exclude": ["node_modules"],
+    "watchOptions": {
+        "excludeDirectories": ["node_modules"]
+    },
+    "libChecking": false,
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "lib": ["ESNext"],
+        "noEmit": false,
+        "strict": true,
+        "allowJs": true,
+        "checkJs": false,
+        "outDir": "bp/scripts",
+        "typeRoots": ["./node_modules/@minecraft"],
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictPropertyInitialization": true,
+        "strictBindCallApply": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noImplicitAny": true,
+        "alwaysStrict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitThis": true,
+        "noUnusedParameters": true,
+        "sourceMap": false,
+        "removeComments": true,
+        "allowSyntheticDefaultImports": false,
+        "noEmitOnError": false,
+    }
+}
