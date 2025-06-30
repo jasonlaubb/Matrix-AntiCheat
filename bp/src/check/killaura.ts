@@ -56,7 +56,7 @@ function entityHurt ({ hurtEntity, damageSource: { damagingEntity: attacker, dam
                 attackerRecords.push(...attacker.antiReachRecords!);
                 hurtEntityRecords.push(...hurtEntity.antiReachRecords!);
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                if (absPitch < 50 && height >= 2 ? reachDistance : reachDistance - 0.5 > 4.35) {
+                if (reachDistance > (absPitch < 50 && height >= 2 ? 4.35 : 4.55)) {
                     // Recover health for the hurt entity if reach detected
                     addHP(hurtEntity, damage);
                 }
