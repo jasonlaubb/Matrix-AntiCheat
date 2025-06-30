@@ -7,4 +7,8 @@ declare module "@minecraft/server" {
          */
         isOp: () => boolean;
     }
+    interface Entity {
+        antiReachRecordTime?: number;
+        antiReachRecords?: Server.Vector3[];
+    }
 }
