@@ -28,7 +28,7 @@
         "noImplicitThis": true,
         "noUnusedParameters": true,
         "sourceMap": false,
-        "removeComments": true,
+        "removeComments": false,
         "allowSyntheticDefaultImports": false,
         "noEmitOnError": false,
     }

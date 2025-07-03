@@ -6,8 +6,14 @@ declare module "@minecraft/server" {
          * @returns {boolean}
          */
         isOp: () => boolean;
+        flag: (id: string, type: string, category: string, data?: { [key: string]: string | number }) => void;
+        // Detection data
+        killauraFlag: number;
+        killauraLastFlag: number;
+        killauraHitList: { id: string, time: number }[];
     }
     interface Entity {
+        // Detection data
         antiReachRecordTime?: number;
         antiReachRecords?: Server.Vector3[];
     }

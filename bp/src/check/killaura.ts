@@ -4,12 +4,10 @@ import { addHP } from "../util/util";
 export default {
     id: "antikillaura",
     enable: () => {
-        world.afterEvents.entityHurt.subscribe(entityHurt, {
-            entityTypes: ["minecraft:player", "minecraft:villager", "minecraft:villager_v2"],
-        })
+        world.afterEvents.entityHurt.subscribe(entityHurt);
     },
     disable: () => {
-
+        world.afterEvents.entityHurt.unsubscribe(entityHurt);
     }
 }
 function recordPosition (entity: Entity) {
@@ -40,8 +38,23 @@ function recordHeadPosition (entity: Entity) {
 function entityHurt ({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
     if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative") return;
     const now = Date.now();
+    attacker.killauraFlag ??= 0;
+    attacker.killauraLastFlag ??= 0;
+    attacker.killauraHitList ??= [];
+    if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id)) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
+    attacker.killauraHitList = attacker.killauraHitList.filter(({ time }) => now - time <= 100);
+    if (attacker.killauraHitList.length >= 2) {
+        attacker.killauraFlag++;
+        attacker.killauraLastFlag = now;
+        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "A", "Combat (Multi-aura)");
+        attacker.killauraHitList = [];
+        addHP(hurtEntity, damage);
+    }
     hurtEntity.antiReachRecordTime = now + 12000;
     attacker.antiReachRecordTime = now + 12000;
+    if (attacker.killauraFlag > 0 && now - attacker.killauraLastFlag > 12000) {
+        attacker.killauraFlag = 0;
+    }
     if (!attacker?.antiReachRecords) recordHeadPosition(attacker);
     if (!hurtEntity?.antiReachRecords) recordPosition(hurtEntity);
     const { x: pitch, y: yaw } = attacker.getRotation();
@@ -57,20 +70,28 @@ function entityHurt ({ hurtEntity, damageSource: { damagingEntity: attacker, dam
                 hurtEntityRecords.push(...hurtEntity.antiReachRecords!);
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
                 if (reachDistance > (absPitch < 50 && height >= 2 ? 4.35 : 4.55)) {
+                    attacker.killauraFlag++;
+                    attacker.killauraLastFlag = now;
+                    if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "B", "Combat (Reach)", { attackDistance, reachDistance });
                     // Recover health for the hurt entity if reach detected
                     addHP(hurtEntity, damage);
                 }
             }, 10);
         }
     }
-    if (attackDistance > 2.5 && fastAbs(pitch) > 75) {
+    if (attackDistance > 3 && fastAbs(pitch) > 75) {
+        attacker.killauraFlag++;
+        attacker.killauraLastFlag = now;
+        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "C", "Combat", { attackDistance, pitch });
         addHP(hurtEntity, damage);
     }
     if (attackDistance > 3.5) {
         const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
         if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" ? 135 : 85)) {
+            attacker.killauraFlag++;
+            attacker.killauraLastFlag = now;
+            if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat", { attackDistance, angle });
             addHP(hurtEntity, damage);
         }
     }
-    // UNFINISGED awa
 }
