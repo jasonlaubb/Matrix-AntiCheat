@@ -26,10 +26,10 @@ export function removePlayerInterval(callback: (player: Player) => any) {
     const index = loopForEach.indexOf(callback);
     if (index !== -1) loopForEach.splice(index, 1);
 }
-export function checkInterval(callback: (player: Player) => any) {
+export function addCheckInterval(callback: (player: Player) => any) {
     loopForCheck.push(callback);
 }
-export function uncheckInterval(callback: (player: Player) => any) {
+export function removeCheckInterval(callback: (player: Player) => any) {
     const index = loopForCheck.indexOf(callback);
     if (index !== -1) loopForCheck.splice(index, 1);
 }

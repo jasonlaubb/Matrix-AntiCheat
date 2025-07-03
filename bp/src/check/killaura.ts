@@ -1,13 +1,16 @@
 import { Entity, EntityHurtAfterEvent, Player, system, Vector3, world } from "@minecraft/server"
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance } from "../util/mathUtil";
 import { addHP } from "../util/util";
+import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
     id: "antikillaura",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
+        addCheckInterval(tickEvent);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
+        removeCheckInterval(tickEvent)
     }
 }
 function recordPosition (entity: Entity) {
@@ -94,4 +97,7 @@ function entityHurt ({ hurtEntity, damageSource: { damagingEntity: attacker, dam
             addHP(hurtEntity, damage);
         }
     }
+}
+function tickEvent (player: Player) {
+    // Aim check bruh
 }
