@@ -1,6 +1,6 @@
 import { CustomCommandResult, CustomCommandParamType, Player, system } from "@minecraft/server";
 import info from "./command/info";
-// §7[§aMatrix§7]§7 §f
+// §7[§aMatrix§7] §f
 Player.prototype.isOp = function() {
     return this.commandPermissionLevel >= 2;
 }
@@ -73,28 +73,28 @@ system.beforeEvents.startup.subscribe((event) => {
                         const tooLarge = param?.max && input > param.max;
                         const tooSmall = param?.min && input < param.min;
                         if (tooLarge || tooSmall) {
-                            if (param?.max && param.min) return { status: 1, message: `§7[§aMatrix§7]§7 §fParameter ${param.name} is out of range. Range: ${param.min} - ${param.max}` };
-                            if (tooLarge) return { status: 1, message: `§7[§aMatrix§7]§7 §fParameter ${param.name} is too large. Max value: ${param.max}` };
-                            if (tooSmall) return { status: 1, message: `§7[§aMatrix§7]§7 §fParameter ${param.name} is too small. Min value: ${param.min}` };
+                            if (param?.max && param.min) return { status: 1, message: `§7[§aMatrix§7] §fParameter ${param.name} is out of range. Range: ${param.min} - ${param.max}` };
+                            if (tooLarge) return { status: 1, message: `§7[§aMatrix§7] §fParameter ${param.name} is too large. Max value: ${param.max}` };
+                            if (tooSmall) return { status: 1, message: `§7[§aMatrix§7] §fParameter ${param.name} is too small. Min value: ${param.min}` };
                         }
                         break;
                     }
                     case "player":
                     case "playerTarget":
                     case "normalPlayerTarget": {
-                        if (input.length === 0) return { status: 1, message: "§7[§aMatrix§7]§7 §fNo match target" };
-                        if (input.length > 1) return { status: 1, message: "§7[§aMatrix§7]§7 §fMultiple targets found. Command failed." };
+                        if (input.length === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo match target" };
+                        if (input.length > 1) return { status: 1, message: "§7[§aMatrix§7] §fMultiple targets found. Command failed." };
                         if (param.type !== "player") {
-                            if (input[0].id === player.id) return { status: 1, message: "§7[§aMatrix§7]§7 §fYou cannot target yourself with this command." };
+                            if (input[0].id === player.id) return { status: 1, message: "§7[§aMatrix§7] §fYou cannot target yourself with this command." };
                             if (param.type === "playerTarget" && input[0].commandPermissionLevel >= player.commandPermissionLevel) {
-                                return { status: 1, message: "§7[§aMatrix§7]§7 §fYou cannot target a player with higher or equal command permission level." };
+                                return { status: 1, message: "§7[§aMatrix§7] §fYou cannot target a player with higher or equal command permission level." };
                             }
                         }
                         break;
                     }
                     case "string": {
                         if (param?.max && input.length > param.max) {
-                            return { status: 1, message: `§7[§aMatrix§7]§7 §fParameter ${param.name} is too long. Max length: ${param.max}` };
+                            return { status: 1, message: `§7[§aMatrix§7] §fParameter ${param.name} is too long. Max length: ${param.max}` };
                         }
                     }
                 }
@@ -102,11 +102,11 @@ system.beforeEvents.startup.subscribe((event) => {
             try {
                 return execute(player, args);
             } catch (error) {
-                return { status: 1, message: `§7[§aMatrix§7]§7 §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}` };
+                return { status: 1, message: `§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}` };
             }
         });
     });
-    const helpMessage = "§7[§aMatrix§7]§7 Showing all the slash commands of Matrix anticheat:\n" + commands.toSorted(({ name: a }, { name: b }) => a.localeCompare(b)).map(({ name, description, optionalParameters, parameters }) => {
+    const helpMessage = "§7[§aMatrix§7] Showing all the slash commands of Matrix anticheat:\n" + commands.toSorted(({ name: a }, { name: b }) => a.localeCompare(b)).map(({ name, description, optionalParameters, parameters }) => {
         let text = `§f/${name}`;
         parameters?.forEach(({ name, type }) => {
             text += ` <${name}: ${type.includes("player") ? "player" : type}>`;
