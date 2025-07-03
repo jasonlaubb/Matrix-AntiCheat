@@ -1,6 +1,7 @@
 import { CustomCommandResult, CustomCommandParamType, Player, system, world } from "@minecraft/server";
 import info from "./command/info";
 import { get } from "./util/database";
+import { tick } from "./util/tick";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function() {
     return this.commandPermissionLevel >= 2;
@@ -161,4 +162,8 @@ system.beforeEvents.startup.subscribe((event) => {
         }
         return { status: 0, message: helpMessage };
     });
+});
+
+world.afterEvents.worldLoad.subscribe(() => {
+    system.runInterval(tick);
 });
