@@ -1,5 +1,6 @@
 import { CustomCommandResult, CustomCommandParamType, Player, system, world } from "@minecraft/server";
 import info from "./command/info";
+import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
@@ -57,7 +58,7 @@ export interface Command {
 }
 classifyProperty();
 system.beforeEvents.startup.subscribe((event) => {
-    const commands = [info] as Command[];
+    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
             case "string":
