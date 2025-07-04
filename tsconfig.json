@@ -14,7 +14,7 @@
         "strict": true,
         "allowJs": true,
         "checkJs": false,
-        "outDir": "bp/scripts",
+        "outDir": "dist",
         "typeRoots": ["./node_modules/@minecraft"],
         "strictNullChecks": true,
         "strictFunctionTypes": true,

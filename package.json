@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "@minecraft/server": "^2.1.0-beta.1.21.90-stable",
-    "@minecraft/server-ui": "^2.1.0-beta.1.21.90-stable"
+    "@minecraft/server-ui": "^2.1.0-beta.1.21.90-stable",
+    "@rollup/plugin-terser": "^0.4.4",
+    "path": "^0.12.7",
+    "rollup": "^4.44.1"
   }
 }
