@@ -2,6 +2,8 @@ import { CustomCommandResult, CustomCommandParamType, Player, system, world } fr
 import info from "./command/info";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
+import property from "./data/property";
+import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function() {
     return this.commandPermissionLevel >= 2;
@@ -53,6 +55,7 @@ export interface Command {
     /** @warning Early execution, please add system.run if you want to do edit to world */
     execute: (player: Player, args: string[]) => CustomCommandResult;
 }
+classifyProperty();
 system.beforeEvents.startup.subscribe((event) => {
     const commands = [info] as Command[];
     function convertType(type: string): CustomCommandParamType {
@@ -75,6 +78,11 @@ system.beforeEvents.startup.subscribe((event) => {
                 return CustomCommandParamType.String;
         }
     }
+    const { stringValue, booleanValue, numberValue } = getPropertyType();
+    event.customCommandRegistry.registerEnum("matrix:stringProperty", stringValue);
+    event.customCommandRegistry.registerEnum("matrix:numberProperty", numberValue);
+    event.customCommandRegistry.registerEnum("matrix:booleanProperty", booleanValue);
+    event.customCommandRegistry.registerEnum("matrix:property", Object.keys(property));
     commands.forEach(({ name, description, requireOp, optionalParameters, parameters, execute }) => {
         event.customCommandRegistry.registerCommand({
             name: "matrix:" + name,
