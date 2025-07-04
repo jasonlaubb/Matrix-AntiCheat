@@ -7,12 +7,12 @@
     }, <-- Don't remove this comma
 */
 export default {
-  flagMessageTarget: {
-    type: "string",
-    value: "admin",
-  },
-  notifyTag: {
-    type: "string",
-    value: "flagNotify",
-  },
+    flagMessageTarget: {
+        type: "string",
+        value: "admin",
+    },
+    notifyTag: {
+        type: "string",
+        value: "flagNotify",
+    },
 };
