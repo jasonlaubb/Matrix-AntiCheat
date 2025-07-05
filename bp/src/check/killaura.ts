@@ -23,7 +23,7 @@ function recordPosition(entity: Entity) {
             return;
         }
         entity.antiReachRecords!.unshift(bottomLocation(entity.location));
-        if (entity.antiReachRecords!.length > 10) entity.antiReachRecords!.pop();
+        if (entity.antiReachRecords!.length > 15) entity.antiReachRecords!.pop();
     });
 }
 function bottomLocation({ x, y, z }: Vector3) {
@@ -39,7 +39,7 @@ function recordHeadPosition(entity: Entity) {
             return;
         }
         entity.antiReachRecords!.unshift(entity.getHeadLocation());
-        if (entity.antiReachRecords!.length > 10) entity.antiReachRecords!.pop();
+        if (entity.antiReachRecords!.length > 15) entity.antiReachRecords!.pop();
     });
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
@@ -90,7 +90,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                     // Recover health for the hurt entity if reach detected
                     addHP(hurtEntity, damage);
                 }
-            }, 10);
+            }, 15);
         }
     }
     if (attackDistance > 3 && fastAbs(pitch) > 75) {
