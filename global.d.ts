@@ -11,10 +11,13 @@ declare module "@minecraft/server" {
         killauraFlag: number;
         killauraLastFlag: number;
         killauraHitList: { id: string, time: number }[];
+        killauraPitch: number[];
+        killauraYaw: number[];
+        killaura45YawFlag: number[];
     }
     interface Entity {
         // Detection data
-        antiReachRecordTime?: number;
-        antiReachRecords?: Server.Vector3[];
+        antiReachRecordTime: number;
+        antiReachRecords: Server.Vector3[];
     }
 }

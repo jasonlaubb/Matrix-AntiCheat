@@ -100,19 +100,19 @@ export function lineDistance(line1: Vector3[], line2: Vector3[]) {
 
     return minDistance;
 }
-export function detectWavePattern(data: number[]) {
-    const peaks = [];
-    const troughs = [];
+export function detectPeaks(data: number[]) {
+    const posPeaks = [];
+    const negPeaks = [];
 
     for (let i = 1; i < data.length - 1; i++) {
         if (data[i] > data[i - 1] && data[i] > data[i + 1]) {
-            peaks.push(data[i]);
+            posPeaks.push({ index: i, value: data[i] });
         } else if (data[i] < data[i - 1] && data[i] < data[i + 1]) {
-            troughs.push(data[i]);
+            negPeaks.push({ index: i, value: data[i] });
         }
     }
 
-    return { peaks, troughs };
+    return { posPeaks, negPeaks };
 }
 export function calculateRelativeViewAngle(pos1: Vector3, pos2: Vector3, rotationY: number): number {
     const a = Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 57.29577951308232;

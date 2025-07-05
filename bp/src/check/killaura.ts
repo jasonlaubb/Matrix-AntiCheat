@@ -1,5 +1,5 @@
 import { Entity, EntityHurtAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, detectPeaks } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -101,7 +101,23 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             addHP(hurtEntity, damage);
         }
     }
+    if (yaw % 45 === 0) {
+        attacker.killauraFlag++;
+        attacker.killauraLastFlag = now;
+        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { attackDistance, yaw });
+        addHP(hurtEntity, damage);
+    }
 }
 function tickEvent(player: Player) {
-    // Aim check bruh
+    const { x: pitch, y: yaw } = player.getRotation();
+    player.killauraPitch ??= [];
+    player.killauraYaw ??= [];
+    if (player.killauraPitch.length > 80) {
+        const peaks = detectPeaks(player.killauraPitch);
+        player.onScreenDisplay.setActionBar("+Peak: " + peaks.posPeaks.length + " / -Peak: " + peaks.negPeaks.length);
+        player.killauraPitch.pop();
+        player.killauraYaw.pop();
+    }
+    player.killauraPitch.unshift(pitch);
+    player.killauraYaw.unshift(yaw);
 }
