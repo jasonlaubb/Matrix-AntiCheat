@@ -19,6 +19,7 @@ declare module "@minecraft/server" {
         nofallLastFallState: boolean;
         nofallLastOnGroundLocation: Vector3;
         autototemLastItem: [boolean, boolean];
+        chestauraContainerHasItem: boolean;
     }
     interface Entity {
         // Detection data

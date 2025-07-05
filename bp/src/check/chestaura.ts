@@ -15,5 +15,14 @@ function interact (event: PlayerInteractWithBlockBeforeEvent) {
     if (angle > (event.player.inputInfo.lastInputModeUsed === "Touch" ? 120 : 30)) {
         event.cancel = true;
         system.run(() => event.player.flag("ChestAura", "A", "Player", { angle: angle.toFixed(2) }));
+        return;
+    }
+    const container = event.block.getComponent("inventory")!.container!;
+    if (container.firstItem()) {
+        system.runTimeout(() => {
+            if (!container.firstItem()) {
+                event.player.flag("ChestAura", "B", "Player (ChestStealer)");
+            }
+        }, 3)
     }
 }
