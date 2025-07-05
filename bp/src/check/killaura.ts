@@ -1,5 +1,5 @@
 import { Entity, EntityHurtAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, detectPeaks, distanceXZ } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, detectPeaks, distanceXZ, minDifference } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -115,8 +115,15 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
-    const a = detectPeaks(attacker.killauraPitch);
-    attacker.sendMessage(`+Peak: ${a.posPeaks.join(", ")} | -Peak: ${a.negPeaks.join(", ")}`)
+    const { posPeaks, negPeaks } = detectPeaks(attacker.killauraPitch);
+    if (posPeaks.length >= 2 && negPeaks.length >= 2) {
+        const minDiffPos = minDifference(posPeaks)!;
+        const minDiffNeg = minDifference(negPeaks)!;
+        if (minDiffNeg < 1 && minDiffPos < 1) {
+            attacker.flag("Killaura", "F", "Combat", { minDiffPos, minDiffNeg });
+        }
+    }
+    attacker.sendMessage(`+Peak: ${posPeaks.join(", ")} | -Peak: ${negPeaks.join(", ")}`)
 }
 function tickEvent(player: Player) {
     const { x: pitch, y: yaw } = player.getRotation();
@@ -131,7 +138,7 @@ function tickEvent(player: Player) {
         if (xSpeed < 0.0001 && ySpeed > 0.0001) {
             player.killauraSmoothFlag++;
             if (player.killauraSmoothFlag > 30) {
-                player.flag("Killaura", "F", "Combat (Aim)", { xSpeed: xSpeed.toFixed(2), ySpeed: ySpeed.toFixed(2) });
+                player.flag("Killaura", "G", "Combat (Aim)", { xSpeed: xSpeed.toFixed(2), ySpeed: ySpeed.toFixed(2) });
                 player.killauraSmoothFlag = 0;
             }
         } else if (xSpeed >= 0.0001) {

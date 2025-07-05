@@ -100,3 +100,20 @@ export function calculateRelativeViewAngle(pos1: Vector3, pos2: Vector3, rotatio
     const c = b <= -180 ? b + 360 : b;
     return fastAbs(c);
 }
+export function minDifference(arr: number[]) {
+  if (arr.length < 2) return null; // Not enough numbers to compare
+
+  // Sort the array first
+  const sorted = arr.slice().sort((a, b) => a - b);
+
+  // Compare adjacent numbers for minimal difference
+  let minDiff = Infinity;
+  for (let i = 1; i < sorted.length; i++) {
+    const diff = sorted[i] - sorted[i - 1];
+    if (diff < minDiff) {
+      minDiff = diff;
+    }
+  }
+
+  return minDiff;
+}
