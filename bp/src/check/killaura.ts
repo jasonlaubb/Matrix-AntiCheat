@@ -113,7 +113,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
-    attacker.sendMessage(JSON.stringify(detectPeaks(attacker.killauraPitch)));
 }
 function tickEvent(player: Player) {
     const { x: pitch, y: yaw } = player.getRotation();
@@ -122,7 +121,15 @@ function tickEvent(player: Player) {
     if (player.killauraPitch.length > 40) {
         const peaks = detectPeaks(player.killauraPitch);
         const xSpeed = pitch - player.killauraPitch[0];
-        player.onScreenDisplay.setActionBar("+Peak: " + peaks.posPeaks.length + " / -Peak: " + peaks.negPeaks.length + "\nxSpeed: " + xSpeed.toFixed(5));
+        const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
+        if (xSpeed < 0.0001 && ySpeed > 0) {
+            player.killauraSmoothFlag++;
+        } else if (xSpeed >= 0.0001) {
+            player.killauraSmoothFlag = 0;
+        } else if (ySpeed === 0 && player.killauraSmoothFlag >= 0.5) {
+            player.killauraSmoothFlag -= 0.5;
+        }
+        player.onScreenDisplay.setActionBar("+Peak: " + peaks.posPeaks.length + " / -Peak: " + peaks.negPeaks.length + "\nxSpeed: " + xSpeed.toFixed(5) + "\nySpeed: " + ySpeed.toFixed(5));
         player.killauraPitch.pop();
         player.killauraYaw.pop();
     }
