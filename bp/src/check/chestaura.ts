@@ -8,7 +8,6 @@ export default {
         world.beforeEvents.playerInteractWithBlock.unsubscribe(interact);
     }
 }
-
 function interact (event: PlayerInteractWithBlockBeforeEvent) {
     if (event.block.typeId !== "minecraft:chest" || distanceXZ(event.player.location, event.block.location) < 2) return;
     const angle = calculateRelativeViewAngle(event.player.location, event.block.center(), event.player.getRotation().y);
