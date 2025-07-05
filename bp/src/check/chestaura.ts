@@ -1,4 +1,4 @@
-import { PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
+import { Container, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distanceXZ } from "../util/mathUtil";
 export default {
     enable() {
@@ -18,11 +18,46 @@ function interact (event: PlayerInteractWithBlockBeforeEvent) {
         return;
     }
     const container = event.block.getComponent("inventory")!.container!;
-    if (container.firstItem()) {
-        system.runTimeout(() => {
-            if (!container.firstItem()) {
-                event.player.flag("ChestAura", "B", "Player (ChestStealer)");
+    const containerFirstItem = container.firstItem();
+    if (containerFirstItem !== undefined) {
+        const itemAmount = stackInventoryItem(container);
+        system.run(() => event.player.sendMessage("StartChecking... Weight: " + itemAmount));
+        const now = Date.now();
+        event.player.chestauraLastLostIndex = containerFirstItem;
+        new Promise<number>((res) => {
+            const id = system.runInterval(() => {
+                const firstItem = container.firstItem();
+                if (firstItem === undefined) {
+                    res((Date.now() - now) / itemAmount);
+                    system.clearRun(id);
+                    return;
+                }
+                event.player.chestauraLastLostIndex = firstItem;
+            });
+        }).then((v) => {
+            if (v !== null) {
+                event.player.sendMessage("Time: " + v);
+            } else {
+                event.player.sendMessage("Not hacker");
             }
-        }, 3)
+        })
     }
+}
+
+function stackInventoryItem (container: Container) {
+    let unstackableAmount = 0;
+    const stackable = {} as { [key: string]: number };
+    for (let i = 0; i < container.size; i++) {
+        const item = container.getItem(i);
+        if (!item) continue;
+        if (item.isStackable) {
+            stackable[item.typeId] ??= 0;
+            stackable[item.typeId]++;
+            if (stackable[item.typeId] > item.maxAmount) {
+                unstackableAmount++;
+                stackable[item.typeId] = 1;
+            }
+        } else unstackableAmount++;
+    }
+    return unstackableAmount + Object.keys(stackable).length;
 }
