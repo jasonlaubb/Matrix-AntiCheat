@@ -1,5 +1,5 @@
 import { Entity, EntityHurtAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, detectPeaks, distanceXZ, minDifference } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -115,15 +115,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
-    const { posPeaks, negPeaks } = detectPeaks(attacker.killauraPitch);
-    if (posPeaks.length >= 2 || negPeaks.length >= 2) {
-        const minDiffPos = minDifference(posPeaks);
-        const minDiffNeg = minDifference(negPeaks);
-        attacker.sendMessage(`minDiffPos: ${minDiffPos} | minDiffNeg: ${minDiffNeg}`);
-        if (minDiffNeg && minDiffNeg < 1 || minDiffPos && minDiffPos < 1) {
-            attacker.flag("Killaura", "F", "Combat", { minDiffPos: minDiffPos ?? "undefined", minDiffNeg: minDiffNeg ?? "undefined" });
-        }
-    }
 }
 function tickEvent(player: Player) {
     const { x: pitch, y: yaw } = player.getRotation();
@@ -132,22 +123,19 @@ function tickEvent(player: Player) {
     player.killauraXSpeed ??= [];
     const xSpeed = pitch - (player.killauraPitch[0] ?? pitch);
     if (player.killauraPitch.length > 100) {
-        const peaks = detectPeaks(player.killauraPitch);
         const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
         player.killauraSmoothFlag ??= 0;
         if (xSpeed < 0.0001 && ySpeed > 0.0001) {
             player.killauraSmoothFlag++;
             if (player.killauraSmoothFlag > 30) {
-                player.flag("Killaura", "G", "Combat (Aim)", { xSpeed: xSpeed.toFixed(2), ySpeed: ySpeed.toFixed(2) });
+                player.flag("Killaura", "F", "Combat (Aim)", { xSpeed: xSpeed.toFixed(2), ySpeed: ySpeed.toFixed(2) });
                 player.killauraSmoothFlag = 0;
             }
         } else if (xSpeed >= 0.0001) {
             player.killauraSmoothFlag = 0;
         } else if (ySpeed === 0 && player.killauraSmoothFlag >= 0.5) {
             player.killauraSmoothFlag -= 0.5;
-        }
-        player.onScreenDisplay.setActionBar("+Peak: " + peaks.posPeaks.length + " / -Peak: " + peaks.negPeaks.length + "\nxSpeed: " + xSpeed.toFixed(5) + "\nySpeed: " + ySpeed.toFixed(5));
-        player.killauraPitch.pop();
+        }        player.killauraPitch.pop();
         player.killauraYaw.pop();
         player.killauraXSpeed.pop();
     }
