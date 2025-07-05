@@ -20,25 +20,23 @@ function interact (event: PlayerInteractWithBlockBeforeEvent) {
     const container = event.block.getComponent("inventory")!.container!;
     const containerFirstItem = container.firstItem();
     if (containerFirstItem !== undefined) {
-        const itemAmount = stackInventoryItem(container);
-        system.run(() => event.player.sendMessage("StartChecking... Weight: " + itemAmount));
+        const stackAmount = stackInventoryItem(container);
+        system.run(() => event.player.sendMessage("StartChecking... Weight: " + stackAmount));
         const now = Date.now();
         event.player.chestauraLastLostIndex = containerFirstItem;
         new Promise<number>((res) => {
             const id = system.runInterval(() => {
                 const firstItem = container.firstItem();
                 if (firstItem === undefined) {
-                    res((Date.now() - now) / itemAmount);
+                    res((Date.now() - now) / stackAmount);
                     system.clearRun(id);
                     return;
                 }
                 event.player.chestauraLastLostIndex = firstItem;
             });
-        }).then((v) => {
-            if (v !== null) {
-                event.player.sendMessage("Time: " + v);
-            } else {
-                event.player.sendMessage("Not hacker");
+        }).then((average) => {
+            if (average < 100) {
+                event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
             }
         })
     }
