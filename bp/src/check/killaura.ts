@@ -63,7 +63,10 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (attacker.killauraFlag > 0 && now - attacker.killauraLastFlag > 12000) {
         attacker.killauraFlag = 0;
     }
-    if (!attacker?.antiReachRecording) recordHeadPosition(attacker);
+    if (!attacker?.antiReachRecording) {
+        recordHeadPosition(attacker);
+        world.sendMessage("Start record")
+    }
     if (!hurtEntity?.antiReachRecording) recordPosition(hurtEntity);
     const { x: pitch, y: yaw } = attacker.getRotation();
     const absPitch = fastAbs(pitch);
