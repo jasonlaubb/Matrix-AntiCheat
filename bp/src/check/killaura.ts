@@ -69,9 +69,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     const { x: pitch, y: yaw } = attacker.getRotation();
     const absPitch = fastAbs(pitch);
     const attackDistance = distance(attacker.location, hurtEntity.location);
-    if (hurtEntity instanceof Player || hurtEntity.id.includes("villager")) {
+    if (hurtEntity instanceof Player || hurtEntity.typeId.includes("villager")) {
     const height = fastAbs(attacker.location.y - hurtEntity.location.y);
-    attacker.sendMessage(`Atk dis: ${attackDistance}`)
     if (attacker?.antiReachRecords && attacker.antiReachRecords.length >= 10 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 10) {
         const attackerRecords = attacker.antiReachRecords;
         const hurtEntityRecords = hurtEntity.antiReachRecords;
