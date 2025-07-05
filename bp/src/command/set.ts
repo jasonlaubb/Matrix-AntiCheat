@@ -1,5 +1,6 @@
 import type { Command } from "../main";
 import { world, system } from "@minecraft/server";
+import { getPropertyType } from "../util/propertyClassifier";
 import property from "../data/property";
 export const setBoolean = {
     name: "setboolean",
@@ -16,6 +17,7 @@ export const setBoolean = {
         },
     ],
     execute: (_player, [id, value]) => {
+        if (!getPropertyType().booleanValue.includes(id)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid property id..."}
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
@@ -38,6 +40,7 @@ export const setString = {
         },
     ],
     execute: (_player, [id, value]) => {
+        if (!getPropertyType().stringValue.includes(id)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid property id..."}
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
@@ -60,6 +63,7 @@ export const setNumber = {
         },
     ],
     execute: (_player, [id, value]) => {
+        if (!getPropertyType().numberValue.includes(id)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid property id..."};
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
@@ -130,6 +134,7 @@ export const getProperty = {
         },
     ],
     execute: (_player, [id]) => {
+        if (!Object.keys(property).includes(id)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid property id..."};
         const { type, value } = property[id as keyof typeof property];
         return {
             status: 0,
