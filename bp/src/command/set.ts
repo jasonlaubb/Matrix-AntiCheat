@@ -97,7 +97,7 @@ export const resetConfig = {
     },
 } as Command;
 export const clearProperty = {
-    name: "clearproperty",
+    name: "discard",
     description: "Reset 1 of the property (config) saved in dyanamic properties",
     requireOp: true,
     parameters: [
