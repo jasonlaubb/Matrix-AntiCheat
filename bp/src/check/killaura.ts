@@ -73,7 +73,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (attacker?.antiReachRecords && attacker.antiReachRecords.length >= 10 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 10) {
         const attackerRecords = attacker.antiReachRecords;
         const hurtEntityRecords = hurtEntity.antiReachRecords;
-        if (attackDistance > 4.35) {
+        if (attackDistance > 4.1) {
             system.runTimeout(() => {
                 attackerRecords.concat(attacker.antiReachRecords!);
                 hurtEntityRecords.concat(hurtEntity.antiReachRecords!);
@@ -83,7 +83,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                     attacker.killauraFlag++;
                     attacker.killauraLastFlag = now;
                     if (attacker.killauraFlag >= 3)
-                        attacker.sendMessage("You bad bad")
                         attacker.flag("Killaura", "B", "Combat (Reach)", {
                             attackDistance,
                             reachDistance,

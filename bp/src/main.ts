@@ -11,7 +11,7 @@ Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
 };
 Player.prototype.flag = function (id: string, type: string, category: string, data?: { [key: string]: string | number }) {
-    const flagMessage = `§7[§aMatrix§7] §e${this.name}§r§f has been detected for unfair adventage §7<${category}> §c[${id}/${type}]${data ? `§9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
+    const flagMessage = `§7[§aMatrix§7] §e${this.name}§r§f has been detected for unfair adventage §7<${category}> §c[${id}/${type}]${data ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
     const flagType = get("flagMessageTarget");
     let flagTarget: Player[] = [];
     switch (flagType) {
