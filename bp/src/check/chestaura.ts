@@ -9,7 +9,8 @@ export default {
     }
 }
 function interact (event: PlayerInteractWithBlockBeforeEvent) {
-    if (event.block.typeId !== "minecraft:chest" || distanceXZ(event.player.location, event.block.location) < 2) return;
+    const inventory = event.block.getComponent("inventory");
+    if (!inventory || distanceXZ(event.player.location, event.block.location) < 2) return;
     const angle = calculateRelativeViewAngle(event.player.location, event.block.center(), event.player.getRotation().y);
     system.run(() => event.player.sendMessage(angle.toString()));
     if (angle > (event.player.inputInfo.lastInputModeUsed === "Touch" ? 120 : 30)) {
@@ -17,27 +18,34 @@ function interact (event: PlayerInteractWithBlockBeforeEvent) {
         system.run(() => event.player.flag("ChestAura", "A", "Player", { angle: angle.toFixed(2) }));
         return;
     }
-    const container = event.block.getComponent("inventory")!.container!;
+    const container = inventory.container!;
     const containerFirstItem = container.firstItem();
     if (containerFirstItem !== undefined) {
         const stackAmount = stackInventoryItem(container);
         system.run(() => event.player.sendMessage("StartChecking... Weight: " + stackAmount));
         const now = Date.now();
         event.player.chestauraLastLostIndex = containerFirstItem;
-        new Promise<number>((res) => {
+        const maxTime = stackAmount * 300;
+        new Promise<number | null>((res) => {
             const id = system.runInterval(() => {
                 const firstItem = container.firstItem();
+                const current = Date.now();
                 if (firstItem === undefined) {
-                    res((Date.now() - now) / stackAmount);
+                    res((current - now) / stackAmount);
+                    system.clearRun(id);
+                    return;
+                } else if (current - now > maxTime) {
+                    res(null);
                     system.clearRun(id);
                     return;
                 }
                 event.player.chestauraLastLostIndex = firstItem;
             });
         }).then((average) => {
-            if (average < 100) {
+            if (average === null) return;
+            if (average < 150) {
                 event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
-            }
+            } else event.player.sendMessage("Time taken: " + average);
         })
     }
 }
