@@ -60,6 +60,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     hurtEntity.antiReachRecordTime = now + 12000;
     attacker.antiReachRecordTime = now + 12000;
     if (attacker.killauraFlag > 0 && now - attacker.killauraLastFlag > 12000) {
+        attacker.sendMessage("Reset!")
         attacker.killauraFlag = 0;
     }
     if (!attacker?.antiReachRecording) {
@@ -79,6 +80,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 const newRec2 = hurtEntityRecords.concat(hurtEntity.antiReachRecords!);
                 const reachDistance = lineDistance(newRec1, newRec2);
                 attacker.sendMessage(`Reach distance: ` + attackDistance + "/" + (absPitch < 50 && height >= 2 ? 4.55 : 4.25));
+                attacker.sendMessage(attacker.killauraFlag.toString());
                 if (reachDistance > (absPitch < 50 && height >= 2 ? 4.35 : 4.55)) {
                     attacker.killauraFlag++;
                     attacker.killauraLastFlag = now;
