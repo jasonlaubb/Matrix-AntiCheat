@@ -69,6 +69,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     const { x: pitch, y: yaw } = attacker.getRotation();
     const absPitch = fastAbs(pitch);
     const attackDistance = distance(attacker.location, hurtEntity.location);
+    if (hurtEntity instanceof Player || hurtEntity.id.includes("villager")) {
     const height = fastAbs(attacker.location.y - hurtEntity.location.y);
     if (attacker?.antiReachRecords && attacker.antiReachRecords.length >= 10 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 10) {
         const attackerRecords = attacker.antiReachRecords;
@@ -107,6 +108,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             addHP(hurtEntity, damage);
         }
     }
+    }
     if (yaw % 45 === 0) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
@@ -118,10 +120,11 @@ function tickEvent(player: Player) {
     const { x: pitch, y: yaw } = player.getRotation();
     player.killauraPitch ??= [];
     player.killauraYaw ??= [];
+    player.killauraXSpeed ??= [];
+    const ySpeed = fastAbs(yaw - (player.killauraYaw[0] ?? yaw));
     if (player.killauraPitch.length > 40) {
-        const peaks = detectPeaks(player.killauraPitch);
+        const peaks = detectPeaks(player.killauraXSpeed);
         const xSpeed = pitch - player.killauraPitch[0];
-        const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
         player.killauraSmoothFlag ??= 0;
         if (xSpeed < 0.0001 && ySpeed > 0.0001) {
             player.killauraSmoothFlag++;
@@ -140,4 +143,5 @@ function tickEvent(player: Player) {
     }
     player.killauraPitch.unshift(pitch);
     player.killauraYaw.unshift(yaw);
+    player.killauraXSpeed.unshift(ySpeed);
 }

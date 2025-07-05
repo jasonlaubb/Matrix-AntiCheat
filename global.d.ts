@@ -15,6 +15,7 @@ declare module "@minecraft/server" {
         killauraYaw: number[];
         killaura45YawFlag: number[];
         killauraSmoothFlag: number;
+        killauraXSpeed: number[];
     }
     interface Entity {
         // Detection data
