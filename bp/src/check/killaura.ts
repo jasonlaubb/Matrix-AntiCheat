@@ -116,10 +116,10 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         addHP(hurtEntity, damage);
     }
     const { posPeaks, negPeaks } = detectPeaks(attacker.killauraPitch);
-    if (posPeaks.length >= 2 && negPeaks.length >= 2) {
-        const minDiffPos = minDifference(posPeaks)!;
-        const minDiffNeg = minDifference(negPeaks)!;
-        if (minDiffNeg < 1 && minDiffPos < 1) {
+    if (posPeaks.length >= 3 || negPeaks.length >= 3) {
+        const minDiffPos = minDifference(posPeaks);
+        const minDiffNeg = minDifference(negPeaks);
+        if (minDiffNeg && minDiffNeg < 1 && minDiffPos && minDiffPos < 1) {
             attacker.flag("Killaura", "F", "Combat", { minDiffPos, minDiffNeg });
         }
     }
