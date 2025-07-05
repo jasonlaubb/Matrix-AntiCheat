@@ -26,12 +26,12 @@ export function fastAbs(x: number): number {
 export function lineDistance(line1: Vector3[], line2: Vector3[]) {
     const computeBoundingBox = (p1: Vector3, p2: Vector3) =>
         ({
-            minX: Math.min(p1.x, p2.x),
-            maxX: Math.max(p1.x, p2.x),
-            minY: Math.min(p1.y, p2.y),
-            maxY: Math.max(p1.y, p2.y),
-            minZ: Math.min(p1.z, p2.z),
-            maxZ: Math.max(p1.z, p2.z),
+            minX: min2(p1.x, p2.x),
+            maxX: max2(p1.x, p2.x),
+            minY: min2(p1.y, p2.y),
+            maxY: max2(p1.y, p2.y),
+            minZ: min2(p1.z, p2.z),
+            maxZ: max2(p1.z, p2.z),
         }) as BoundingBox;
     const boxesOverlap = (box1: BoundingBox, box2: BoundingBox) => box1.maxX >= box2.minX && box1.minX <= box2.maxX && box1.maxY >= box2.minY && box1.minY <= box2.maxY && box1.maxZ >= box2.minZ && box1.minZ <= box2.maxZ;
 
