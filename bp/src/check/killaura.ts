@@ -119,11 +119,11 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (posPeaks.length >= 2 || negPeaks.length >= 2) {
         const minDiffPos = minDifference(posPeaks);
         const minDiffNeg = minDifference(negPeaks);
+        attacker.sendMessage(`minDiffPos: ${minDiffPos} | minDiffNeg: ${minDiffNeg}`);
         if (minDiffNeg && minDiffNeg < 1 || minDiffPos && minDiffPos < 1) {
             attacker.flag("Killaura", "F", "Combat", { minDiffPos: minDiffPos ?? "undefined", minDiffNeg: minDiffNeg ?? "undefined" });
         }
     }
-    attacker.sendMessage(`+Peak: ${posPeaks.join(", ")} | -Peak: ${negPeaks.join(", ")}`)
 }
 function tickEvent(player: Player) {
     const { x: pitch, y: yaw } = player.getRotation();
@@ -131,7 +131,7 @@ function tickEvent(player: Player) {
     player.killauraYaw ??= [];
     player.killauraXSpeed ??= [];
     const xSpeed = pitch - (player.killauraPitch[0] ?? pitch);
-    if (player.killauraPitch.length > 40) {
+    if (player.killauraPitch.length > 100) {
         const peaks = detectPeaks(player.killauraPitch);
         const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
         player.killauraSmoothFlag ??= 0;
