@@ -1,11 +1,15 @@
 import { EquipmentSlot, Player } from "@minecraft/server";
-import { addCheckInterval } from "../util/tick";
+import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
     enable() {
         addCheckInterval(tickEvent);
+    },
+    disable() {
+        removeCheckInterval(tickEvent);
     }
 }
 function tickEvent (player: Player) {
+    if (player.isOp()) return;
     const offhand = player.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Offhand);
     const hasItem = offhand.getItem();
     player.autototemLastItem ??= [true, true];
