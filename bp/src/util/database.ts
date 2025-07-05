@@ -8,5 +8,5 @@ export function setUpProperty() {
     });
 }
 export function get(id: keyof typeof property): any {
-    return world.getDynamicProperty("database:" + id) ?? property[id];
+    return world.getDynamicProperty("database:" + id) ?? property[id].value;
 }

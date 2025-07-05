@@ -38,7 +38,6 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
             break;
         }
     }
-    this.sendMessage(`FlagTarget: ${flagType} | Target(s): ${flagTarget.length}`)
     if (flagTarget.length > 0) {
         flagTarget.forEach((player) => player.sendMessage(flagMessage));
     }
