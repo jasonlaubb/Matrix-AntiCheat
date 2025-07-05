@@ -87,7 +87,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                             attackDistance,
                             reachDistance,
                         });
-                    // Recover health for the hurt entity if reach detected
                     addHP(hurtEntity, damage);
                 }
             }, 10);
