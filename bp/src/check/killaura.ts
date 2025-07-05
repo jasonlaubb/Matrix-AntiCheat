@@ -122,10 +122,11 @@ function tickEvent(player: Player) {
         const peaks = detectPeaks(player.killauraPitch);
         const xSpeed = pitch - player.killauraPitch[0];
         const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
+        player.killauraSmoothFlag ??= 0;
         if (xSpeed < 0.0001 && ySpeed > 0.0001) {
             player.killauraSmoothFlag++;
             if (player.killauraSmoothFlag > 30) {
-                player.flag("Killaura", "F", "Combat (Aim)", { xSpeed, ySpeed });
+                player.flag("Killaura", "F", "Combat (Aim)", { xSpeed: xSpeed.toFixed(2), ySpeed: ySpeed.toFixed(2) });
                 player.killauraSmoothFlag = 0;
             }
         } else if (xSpeed >= 0.0001) {
