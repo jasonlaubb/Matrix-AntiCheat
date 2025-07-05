@@ -115,6 +115,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
+    const a = detectPeaks(attacker.killauraPitch);
+    attacker.sendMessage(`+Peak: ${a.posPeaks.join(", ")} | -Peak: ${a.negPeaks.join(", ")}`)
 }
 function tickEvent(player: Player) {
     const { x: pitch, y: yaw } = player.getRotation();
@@ -123,7 +125,7 @@ function tickEvent(player: Player) {
     player.killauraXSpeed ??= [];
     const xSpeed = pitch - (player.killauraPitch[0] ?? pitch);
     if (player.killauraPitch.length > 40) {
-        const peaks = detectPeaks(player.killauraXSpeed);
+        const peaks = detectPeaks(player.killauraPitch);
         const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
         player.killauraSmoothFlag ??= 0;
         if (xSpeed < 0.0001 && ySpeed > 0.0001) {

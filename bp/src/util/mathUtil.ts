@@ -86,9 +86,9 @@ export function detectPeaks(data: number[]) {
 
     for (let i = 1; i < data.length - 1; i++) {
         if (data[i] > data[i - 1] && data[i] > data[i + 1]) {
-            posPeaks.push({ index: i, value: data[i] });
+            posPeaks.push(data[i]);
         } else if (data[i] < data[i - 1] && data[i] < data[i + 1]) {
-            negPeaks.push({ index: i, value: data[i] });
+            negPeaks.push(data[i]);
         }
     }
 
