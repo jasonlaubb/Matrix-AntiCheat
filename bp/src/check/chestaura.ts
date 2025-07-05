@@ -11,7 +11,7 @@ export default {
 
 function interact (event: PlayerInteractWithBlockBeforeEvent) {
     if (event.block.typeId !== "minecraft:chest" || distanceXZ(event.player.location, event.block.location)) return;
-    if (distanceXZ(event.player.location, event.block.location)) return;
+    if (distanceXZ(event.player.location, event.block.location) < 2) return;
     const angle = calculateRelativeViewAngle(event.player.location, event.block.center(), event.player.getRotation().y);
     if (angle > (event.player.inputInfo.lastInputModeUsed === "Touch" ? 120 : 50)) {
         event.cancel = true;
