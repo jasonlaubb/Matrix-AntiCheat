@@ -79,7 +79,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 const newRec2 = hurtEntityRecords.concat(hurtEntity.antiReachRecords!);
                 const reachDistance = lineDistance(newRec1, newRec2);
                 attacker.sendMessage(`${reachDistance} / ${absPitch < 50 && height >= 2 ? 4.51 : 4.01}`)
-                if (reachDistance > (absPitch < 50 && height >= 2 ? 4.51 : 4.01)) {
+                if (reachDistance > (absPitch < 50 && height >= 2 ? 4.55 : 4.01)) {
                     attacker.killauraFlag++;
                     attacker.killauraLastFlag = now;
                     if (attacker.killauraFlag >= 3)
@@ -111,7 +111,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (yaw % 45 === 0) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
-        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { attackDistance, yaw });
+        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
 }
