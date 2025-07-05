@@ -9,7 +9,7 @@
 export default {
     flagMessageTarget: {
         type: "string",
-        value: "admin",
+        value: "all",
     },
     notifyTag: {
         type: "string",
