@@ -1,5 +1,5 @@
 import { Entity, EntityHurtAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, detectPeaks } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, detectPeaks, distanceXZ } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -92,13 +92,14 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             }, 10);
         }
     }
-    if (attackDistance > 3 && fastAbs(pitch) > 75) {
+    const distanceH = distanceXZ(attacker.location, hurtEntity.location);
+    if (distanceH > 3 && fastAbs(pitch) > 60) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "C", "Combat", { attackDistance, pitch });
         addHP(hurtEntity, damage);
     }
-    if (attackDistance > 3.5) {
+    if (distanceH > 3.5) {
         const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
         if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" ? 135 : 85)) {
             attacker.killauraFlag++;

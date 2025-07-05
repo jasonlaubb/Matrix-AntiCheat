@@ -18,20 +18,24 @@ export function distance(a: Vector3, b: Vector3): number {
     const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
+export function distanceXZ (a: Vector3, b: Vector3): number {
+    const dx = a.x - b.x, dz = a.z - b.z;
+    return Math.sqrt(dx * dx + dz * dz);
+}
 
 export function lineDistance(line1: Vector3[], line2: Vector3[]) {
     const segmentDistance = (p1: Vector3, p2: Vector3, q1: Vector3, q2: Vector3) => {
-        const u = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z };
-        const v = { x: q2.x - q1.x, y: q2.y - q1.y, z: q2.z - q1.z };
-        const w = { x: p1.x - q1.x, y: p1.y - q1.y, z: p1.z - q1.z };
+        const u = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z }
+        ,v = { x: q2.x - q1.x, y: q2.y - q1.y, z: q2.z - q1.z }
+        ,w = { x: p1.x - q1.x, y: p1.y - q1.y, z: p1.z - q1.z }
 
-        const a = u.x * u.x + u.y * u.y + u.z * u.z;
-        const b = u.x * v.x + u.y * v.y + u.z * v.z;
-        const c = v.x * v.x + v.y * v.y + v.z * v.z;
-        const d = u.x * w.x + u.y * w.y + u.z * w.z;
-        const e = v.x * w.x + v.y * w.y + v.z * w.z;
+        ,a = u.x * u.x + u.y * u.y + u.z * u.z
+        ,b = u.x * v.x + u.y * v.y + u.z * v.z
+        ,c = v.x * v.x + v.y * v.y + v.z * v.z
+        ,d = u.x * w.x + u.y * w.y + u.z * w.z
+        ,e = v.x * w.x + v.y * w.y + v.z * w.z
 
-        const D = a * c - b * b;
+        ,D = a * c - b * b;
 
         let sc, tc;
         if (D < 1e-6) {
@@ -49,8 +53,8 @@ export function lineDistance(line1: Vector3[], line2: Vector3[]) {
             x: p1.x + sc * u.x,
             y: p1.y + sc * u.y,
             z: p1.z + sc * u.z,
-        };
-        const closestPoint2 = {
+        }
+        ,closestPoint2 = {
             x: q1.x + tc * v.x,
             y: q1.y + tc * v.y,
             z: q1.z + tc * v.z,
