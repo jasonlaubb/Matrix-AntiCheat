@@ -140,6 +140,7 @@ function tickEvent(player: Player) {
         player.onScreenDisplay.setActionBar("+Peak: " + peaks.posPeaks.length + " / -Peak: " + peaks.negPeaks.length + "\nxSpeed: " + xSpeed.toFixed(5) + "\nySpeed: " + ySpeed.toFixed(5));
         player.killauraPitch.pop();
         player.killauraYaw.pop();
+        player.killauraXSpeed.pop();
     }
     player.killauraPitch.unshift(pitch);
     player.killauraYaw.unshift(yaw);
