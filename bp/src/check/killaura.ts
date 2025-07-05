@@ -39,7 +39,6 @@ function recordHeadPosition(entity: Entity) {
             return;
         }
         entity.antiReachRecords!.unshift(entity.getHeadLocation());
-        world.sendMessage(entity.antiReachRecords!.length.toString());
         if (entity.antiReachRecords!.length > 10) entity.antiReachRecords!.pop();
     });
 }
@@ -84,6 +83,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                     attacker.killauraFlag++;
                     attacker.killauraLastFlag = now;
                     if (attacker.killauraFlag >= 3)
+                        attacker.sendMessage("You bad bad")
                         attacker.flag("Killaura", "B", "Combat (Reach)", {
                             attackDistance,
                             reachDistance,
