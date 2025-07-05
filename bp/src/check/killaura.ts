@@ -121,10 +121,10 @@ function tickEvent(player: Player) {
     player.killauraPitch ??= [];
     player.killauraYaw ??= [];
     player.killauraXSpeed ??= [];
-    const ySpeed = fastAbs(yaw - (player.killauraYaw[0] ?? yaw));
+    const xSpeed = pitch - (player.killauraPitch[0] ?? pitch);
     if (player.killauraPitch.length > 40) {
         const peaks = detectPeaks(player.killauraXSpeed);
-        const xSpeed = pitch - player.killauraPitch[0];
+        const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
         player.killauraSmoothFlag ??= 0;
         if (xSpeed < 0.0001 && ySpeed > 0.0001) {
             player.killauraSmoothFlag++;
@@ -143,5 +143,5 @@ function tickEvent(player: Player) {
     }
     player.killauraPitch.unshift(pitch);
     player.killauraYaw.unshift(yaw);
-    player.killauraXSpeed.unshift(ySpeed);
+    player.killauraXSpeed.unshift(xSpeed);
 }
