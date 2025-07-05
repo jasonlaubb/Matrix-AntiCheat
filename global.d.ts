@@ -16,6 +16,8 @@ declare module "@minecraft/server" {
         killaura45YawFlag: number[];
         killauraSmoothFlag: number;
         killauraXSpeed: number[];
+        nofallLastFallState: boolean;
+        nofallLastOnGroundLocation: Vector3;
     }
     interface Entity {
         // Detection data
