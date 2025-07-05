@@ -6,99 +6,96 @@ export function max2(a: number, b: number): number {
 export function min2(a: number, b: number): number {
     return a < b ? a : b;
 }
-interface BoundingBox {
-    minX: number;
-    maxX: number;
-    minY: number;
-    maxY: number;
-    minZ: number;
-    maxZ: number;
-}
-export function distance(pos1: Vector3, pos2: Vector3): number {
-    return hypot(pos1.x - pos2.x, pos1.y - pos2.y, pos1.z - pos2.z);
-}
 export function hypot(x: number, y: number, z: number) {
     return Math.sqrt(x * x + y * y + z * z);
 }
 export function fastAbs(x: number): number {
     return x < 0 ? -x : x;
 }
-export function lineDistance(line1: Vector3[], line2: Vector3[]) {
-    const computeBoundingBox = (p1: Vector3, p2: Vector3) =>
-        ({
-            minX: min2(p1.x, p2.x),
-            maxX: max2(p1.x, p2.x),
-            minY: min2(p1.y, p2.y),
-            maxY: max2(p1.y, p2.y),
-            minZ: min2(p1.z, p2.z),
-            maxZ: max2(p1.z, p2.z),
-        }) as BoundingBox;
-    const boxesOverlap = (box1: BoundingBox, box2: BoundingBox) => box1.maxX >= box2.minX && box1.minX <= box2.maxX && box1.maxY >= box2.minY && box1.minY <= box2.maxY && box1.maxZ >= box2.minZ && box1.minZ <= box2.maxZ;
 
-    // Compute the shortest distance between two segments
-    const segmentDistance = (p1: Vector3, p2: Vector3, q1: Vector3, q2: Vector3) => {
-        const u = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z }; // Vector from p1 to p2
-        const v = { x: q2.x - q1.x, y: q2.y - q1.y, z: q2.z - q1.z }; // Vector from q1 to q2
-        const w = { x: p1.x - q1.x, y: p1.y - q1.y, z: p1.z - q1.z }; // Vector from q1 to p1
+// Simple distance function
+export function distance(a: Vector3, b: Vector3): number {
+    const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+}
 
-        const a = u.x * u.x + u.y * u.y + u.z * u.z; // u · u
-        const b = u.x * v.x + u.y * v.y + u.z * v.z; // u · v
-        const c = v.x * v.x + v.y * v.y + v.z * v.z; // v · v
-        const d = u.x * w.x + u.y * w.y + u.z * w.z; // u · w
-        const e = v.x * w.x + v.y * w.y + v.z * w.z; // v · w
+// Simplify using a threshold
+function simplifyLine(line: Vector3[], epsilon: number): Vector3[] {
+    if (line.length < 3) return line;
 
-        const D = a * c - b * b; // Determinant
+    const result: Vector3[] = [line[0]];
+    let prev = line[0];
 
-        let sc, tc;
-
-        if (D < 1e-6) {
-            sc = 0;
-            tc = d / b;
-        } else {
-            sc = (b * e - c * d) / D;
-            tc = (a * e - b * d) / D;
-        }
-
-        sc = max2(0, min2(1, sc));
-        tc = max2(0, min2(1, tc));
-
-        const closestPoint1 = {
-            x: p1.x + sc * u.x,
-            y: p1.y + sc * u.y,
-            z: p1.z + sc * u.z,
-        };
-        const closestPoint2 = {
-            x: q1.x + tc * v.x,
-            y: q1.y + tc * v.y,
-            z: q1.z + tc * v.z,
-        };
-
-        return distance(closestPoint1, closestPoint2);
-    };
-
-    let minDistance = Infinity;
-
-    // Iterate over all segments of line1 and line2
-    for (let i = 0; i < line1.length - 1; i++) {
-        const p1 = line1[i];
-        const p2 = line1[i + 1];
-        const box1 = computeBoundingBox(p1, p2);
-
-        for (let j = 0; j < line2.length - 1; j++) {
-            const q1 = line2[j];
-            const q2 = line2[j + 1];
-            const box2 = computeBoundingBox(q1, q2);
-
-            // Skip segments if their bounding boxes do not overlap
-            if (!boxesOverlap(box1, box2)) continue;
-
-            // Calculate distance between segments and update minDistance
-            const distance = segmentDistance(p1, p2, q1, q2);
-            minDistance = min2(minDistance, distance);
+    for (let i = 1; i < line.length - 1; i++) {
+        const point = line[i];
+        const dist = distance(prev, point);
+        if (dist >= epsilon) {
+            result.push(point);
+            prev = point;
         }
     }
 
-    return minDistance;
+    result.push(line[line.length - 1]);
+    return result;
+}
+
+// Segment-to-segment approximate distance
+function segmentDistance(p1: Vector3, p2: Vector3, q1: Vector3, q2: Vector3): number {
+    const u = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z };
+    const v = { x: q2.x - q1.x, y: q2.y - q1.y, z: q2.z - q1.z };
+    const w = { x: p1.x - q1.x, y: p1.y - q1.y, z: p1.z - q1.z };
+
+    const a = u.x * u.x + u.y * u.y + u.z * u.z;
+    const b = u.x * v.x + u.y * v.y + u.z * v.z;
+    const c = v.x * v.x + v.y * v.y + v.z * v.z;
+    const d = u.x * w.x + u.y * w.y + u.z * w.z;
+    const e = v.x * w.x + v.y * w.y + v.z * w.z;
+    const D = a * c - b * b;
+
+    let sc = 0, tc = 0;
+    if (D > 1e-6) {
+        sc = Math.max(0, Math.min(1, (b * e - c * d) / D));
+        tc = Math.max(0, Math.min(1, (a * e - b * d) / D));
+    }
+
+    const cp1 = {
+        x: p1.x + sc * u.x,
+        y: p1.y + sc * u.y,
+        z: p1.z + sc * u.z
+    };
+    const cp2 = {
+        x: q1.x + tc * v.x,
+        y: q1.y + tc * v.y,
+        z: q1.z + tc * v.z
+    };
+
+    return distance(cp1, cp2);
+}
+
+// Combined approximation function
+export function lineDistanceApprox(line1: Vector3[], line2: Vector3[], epsilon = 0.01, sampleRate = 2): number {
+    const simp1 = simplifyLine(line1, epsilon);
+    const simp2 = simplifyLine(line2, epsilon);
+
+    let minDist = Infinity;
+
+    for (let i = 0; i < simp1.length - 1; i += sampleRate) {
+        const p1 = simp1[i];
+        const p2 = simp1[Math.min(i + 1, simp1.length - 1)];
+
+        for (let j = 0; j < simp2.length - 1; j += sampleRate) {
+            const q1 = simp2[j];
+            const q2 = simp2[Math.min(j + 1, simp2.length - 1)];
+
+            const dist = segmentDistance(p1, p2, q1, q2);
+            if (dist < minDist) {
+                minDist = dist;
+                if (dist === 0) return 0;
+            }
+        }
+    }
+
+    return minDist;
 }
 export function detectPeaks(data: number[]) {
     const posPeaks = [];

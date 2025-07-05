@@ -1,5 +1,5 @@
 import { Entity, EntityHurtAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, detectPeaks } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistanceApprox, detectPeaks } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -71,7 +71,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             system.runTimeout(() => {
                 attackerRecords.push(...attacker.antiReachRecords!);
                 hurtEntityRecords.push(...hurtEntity.antiReachRecords!);
-                const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
+                const reachDistance = lineDistanceApprox(attackerRecords, hurtEntityRecords);
                 attacker.sendMessage(`Reach distance: ` + attackDistance)
                 if (reachDistance > (absPitch < 50 && height >= 2 ? 4.35 : 4.55)) {
                     attacker.killauraFlag++;
