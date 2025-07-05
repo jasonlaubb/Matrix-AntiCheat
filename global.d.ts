@@ -18,6 +18,7 @@ declare module "@minecraft/server" {
         killauraXSpeed: number[];
         nofallLastFallState: boolean;
         nofallLastOnGroundLocation: Vector3;
+        autototemLastItem: [boolean, boolean];
     }
     interface Entity {
         // Detection data

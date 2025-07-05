@@ -6,6 +6,7 @@ import { tick } from "./util/tick";
 import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import killaura from "./check/killaura";
+import autototem from "./check/autototem";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -224,4 +225,5 @@ system.beforeEvents.startup.subscribe((event) => {
 world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(tick);
     killaura.enable(); // Test use
+    autototem.enable();
 });
