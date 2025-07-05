@@ -83,8 +83,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                     attacker.killauraLastFlag = now;
                     if (attacker.killauraFlag >= 3)
                         attacker.flag("Killaura", "B", "Combat (Reach)", {
-                            attackDistance,
-                            reachDistance,
+                            attackDistance: attackDistance.toFixed(2),
+                            reachDistance: reachDistance.toFixed(2),
                         });
                     addHP(hurtEntity, damage);
                 }
@@ -95,7 +95,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (distanceH > 3 && fastAbs(pitch) > 60) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
-        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "C", "Combat", { attackDistance, pitch });
+        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
         addHP(hurtEntity, damage);
     }
     if (distanceH > 3.5) {
@@ -103,7 +103,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" ? 135 : 85)) {
             attacker.killauraFlag++;
             attacker.killauraLastFlag = now;
-            if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat", { attackDistance, angle });
+            if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat", { angle });
             addHP(hurtEntity, damage);
         }
     }
@@ -122,8 +122,12 @@ function tickEvent(player: Player) {
         const peaks = detectPeaks(player.killauraPitch);
         const xSpeed = pitch - player.killauraPitch[0];
         const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
-        if (xSpeed < 0.0001 && ySpeed > 0) {
+        if (xSpeed < 0.0001 && ySpeed > 0.0001) {
             player.killauraSmoothFlag++;
+            if (player.killauraSmoothFlag > 30) {
+                player.flag("Killaura", "F", "Combat (Aim)", { xSpeed, ySpeed });
+                player.killauraSmoothFlag = 0;
+            }
         } else if (xSpeed >= 0.0001) {
             player.killauraSmoothFlag = 0;
         } else if (ySpeed === 0 && player.killauraSmoothFlag >= 0.5) {
