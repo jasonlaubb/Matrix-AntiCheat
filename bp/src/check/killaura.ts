@@ -65,7 +65,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     }
     if (!attacker?.antiReachRecording) {
         recordHeadPosition(attacker);
-        world.sendMessage("Start record")
     }
     if (!hurtEntity?.antiReachRecording) recordPosition(hurtEntity);
     const { x: pitch, y: yaw } = attacker.getRotation();
@@ -77,10 +76,10 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         const hurtEntityRecords = hurtEntity.antiReachRecords;
         if (attackDistance > 4.35) {
             system.runTimeout(() => {
-                attackerRecords.push(...attacker.antiReachRecords!);
-                hurtEntityRecords.push(...hurtEntity.antiReachRecords!);
+                attackerRecords.concat(attacker.antiReachRecords!);
+                hurtEntityRecords.concat(hurtEntity.antiReachRecords!);
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                attacker.sendMessage(`Reach distance: ` + attackDistance)
+                attacker.sendMessage(`Reach distance: ` + attackDistance);
                 if (reachDistance > (absPitch < 50 && height >= 2 ? 4.35 : 4.55)) {
                     attacker.killauraFlag++;
                     attacker.killauraLastFlag = now;
