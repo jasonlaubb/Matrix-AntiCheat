@@ -135,7 +135,8 @@ function tickEvent(player: Player) {
             player.killauraSmoothFlag = 0;
         } else if (ySpeed === 0 && player.killauraSmoothFlag >= 0.5) {
             player.killauraSmoothFlag -= 0.5;
-        }        player.killauraPitch.pop();
+        }
+        player.killauraPitch.pop();
         player.killauraYaw.pop();
         player.killauraXSpeed.pop();
     }
