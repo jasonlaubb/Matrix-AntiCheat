@@ -119,8 +119,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (posPeaks.length >= 3 || negPeaks.length >= 3) {
         const minDiffPos = minDifference(posPeaks);
         const minDiffNeg = minDifference(negPeaks);
-        if (minDiffNeg && minDiffNeg < 1 && minDiffPos && minDiffPos < 1) {
-            attacker.flag("Killaura", "F", "Combat", { minDiffPos, minDiffNeg });
+        if (minDiffNeg && minDiffNeg < 1 || minDiffPos && minDiffPos < 1) {
+            attacker.flag("Killaura", "F", "Combat", { minDiffPos: minDiffPos ?? "undefined", minDiffNeg: minDiffNeg ?? "undefined" });
         }
     }
     attacker.sendMessage(`+Peak: ${posPeaks.join(", ")} | -Peak: ${negPeaks.join(", ")}`)
