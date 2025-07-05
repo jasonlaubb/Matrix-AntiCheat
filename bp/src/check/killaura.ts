@@ -78,7 +78,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 const newRec1 = attackerRecords.concat(attacker.antiReachRecords!);
                 const newRec2 = hurtEntityRecords.concat(hurtEntity.antiReachRecords!);
                 const reachDistance = lineDistance(newRec1, newRec2);
-                attacker.sendMessage(`${reachDistance} / ${absPitch < 50 && height >= 2 ? 4.51 : 4.01}`)
                 if (reachDistance > (absPitch < 50 && height >= 2 ? 4.55 : 4.01)) {
                     attacker.killauraFlag++;
                     attacker.killauraLastFlag = now;
@@ -114,14 +113,16 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
+    attacker.sendMessage(JSON.stringify(detectPeaks(attacker.killauraPitch)));
 }
 function tickEvent(player: Player) {
     const { x: pitch, y: yaw } = player.getRotation();
     player.killauraPitch ??= [];
     player.killauraYaw ??= [];
-    if (player.killauraPitch.length > 80) {
+    if (player.killauraPitch.length > 40) {
         const peaks = detectPeaks(player.killauraPitch);
-        player.onScreenDisplay.setActionBar("+Peak: " + peaks.posPeaks.length + " / -Peak: " + peaks.negPeaks.length);
+        const xSpeed = pitch - player.killauraPitch[0];
+        player.onScreenDisplay.setActionBar("+Peak: " + peaks.posPeaks.length + " / -Peak: " + peaks.negPeaks.length + "\nxSpeed: " + xSpeed.toFixed(5));
         player.killauraPitch.pop();
         player.killauraYaw.pop();
     }
