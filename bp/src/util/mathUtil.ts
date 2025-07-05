@@ -19,83 +19,62 @@ export function distance(a: Vector3, b: Vector3): number {
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
 
-// Simplify using a threshold
-function simplifyLine(line: Vector3[], epsilon: number): Vector3[] {
-    if (line.length < 3) return line;
+export function lineDistance(line1: Vector3[], line2: Vector3[]) {
+    const segmentDistance = (p1: Vector3, p2: Vector3, q1: Vector3, q2: Vector3) => {
+        const u = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z };
+        const v = { x: q2.x - q1.x, y: q2.y - q1.y, z: q2.z - q1.z };
+        const w = { x: p1.x - q1.x, y: p1.y - q1.y, z: p1.z - q1.z };
 
-    const result: Vector3[] = [line[0]];
-    let prev = line[0];
+        const a = u.x * u.x + u.y * u.y + u.z * u.z;
+        const b = u.x * v.x + u.y * v.y + u.z * v.z;
+        const c = v.x * v.x + v.y * v.y + v.z * v.z;
+        const d = u.x * w.x + u.y * w.y + u.z * w.z;
+        const e = v.x * w.x + v.y * w.y + v.z * w.z;
 
-    for (let i = 1; i < line.length - 1; i++) {
-        const point = line[i];
-        const dist = distance(prev, point);
-        if (dist >= epsilon) {
-            result.push(point);
-            prev = point;
+        const D = a * c - b * b;
+
+        let sc, tc;
+        if (D < 1e-6) {
+            sc = 0;
+            tc = (b !== 0) ? d / b : 0;
+        } else {
+            sc = (b * e - c * d) / D;
+            tc = (a * e - b * d) / D;
         }
-    }
 
-    result.push(line[line.length - 1]);
-    return result;
-}
+        sc = Math.max(0, Math.min(1, sc));
+        tc = Math.max(0, Math.min(1, tc));
 
-// Segment-to-segment approximate distance
-function segmentDistance(p1: Vector3, p2: Vector3, q1: Vector3, q2: Vector3): number {
-    const u = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z };
-    const v = { x: q2.x - q1.x, y: q2.y - q1.y, z: q2.z - q1.z };
-    const w = { x: p1.x - q1.x, y: p1.y - q1.y, z: p1.z - q1.z };
+        const closestPoint1 = {
+            x: p1.x + sc * u.x,
+            y: p1.y + sc * u.y,
+            z: p1.z + sc * u.z,
+        };
+        const closestPoint2 = {
+            x: q1.x + tc * v.x,
+            y: q1.y + tc * v.y,
+            z: q1.z + tc * v.z,
+        };
 
-    const a = u.x * u.x + u.y * u.y + u.z * u.z;
-    const b = u.x * v.x + u.y * v.y + u.z * v.z;
-    const c = v.x * v.x + v.y * v.y + v.z * v.z;
-    const d = u.x * w.x + u.y * w.y + u.z * w.z;
-    const e = v.x * w.x + v.y * w.y + v.z * w.z;
-    const D = a * c - b * b;
-
-    let sc = 0, tc = 0;
-    if (D > 1e-6) {
-        sc = Math.max(0, Math.min(1, (b * e - c * d) / D));
-        tc = Math.max(0, Math.min(1, (a * e - b * d) / D));
-    }
-
-    const cp1 = {
-        x: p1.x + sc * u.x,
-        y: p1.y + sc * u.y,
-        z: p1.z + sc * u.z
-    };
-    const cp2 = {
-        x: q1.x + tc * v.x,
-        y: q1.y + tc * v.y,
-        z: q1.z + tc * v.z
+        return distance(closestPoint1, closestPoint2);
     };
 
-    return distance(cp1, cp2);
-}
+    let minDistance = Infinity;
 
-// Combined approximation function
-export function lineDistanceApprox(line1: Vector3[], line2: Vector3[], epsilon = 0.01, sampleRate = 2): number {
-    const simp1 = simplifyLine(line1, epsilon);
-    const simp2 = simplifyLine(line2, epsilon);
+    for (let i = 0; i < line1.length - 1; i++) {
+        const p1 = line1[i];
+        const p2 = line1[i + 1];
 
-    let minDist = Infinity;
-
-    for (let i = 0; i < simp1.length - 1; i += sampleRate) {
-        const p1 = simp1[i];
-        const p2 = simp1[Math.min(i + 1, simp1.length - 1)];
-
-        for (let j = 0; j < simp2.length - 1; j += sampleRate) {
-            const q1 = simp2[j];
-            const q2 = simp2[Math.min(j + 1, simp2.length - 1)];
+        for (let j = 0; j < line2.length - 1; j++) {
+            const q1 = line2[j];
+            const q2 = line2[j + 1];
 
             const dist = segmentDistance(p1, p2, q1, q2);
-            if (dist < minDist) {
-                minDist = dist;
-                if (dist === 0) return 0;
-            }
+            minDistance = Math.min(minDistance, dist);
         }
     }
 
-    return minDist;
+    return minDistance;
 }
 export function detectPeaks(data: number[]) {
     const posPeaks = [];

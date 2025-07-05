@@ -19,5 +19,6 @@ declare module "@minecraft/server" {
         // Detection data
         antiReachRecordTime: number;
         antiReachRecords: Server.Vector3[];
+        antiReachRecording?: boolean;
     }
 }
