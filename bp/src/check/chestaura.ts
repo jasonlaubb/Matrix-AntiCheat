@@ -20,14 +20,21 @@ function interact (event: PlayerInteractWithBlockBeforeEvent) {
     }
     const container = inventory.container!;
     const containerFirstItem = container.firstItem();
-    if (containerFirstItem !== undefined) {
+    event.block.previousOpen = event.player.id;
+    if (containerFirstItem !== undefined && !event.block.chestauraIsTracking) {
         const stackAmount = stackInventoryItem(container);
         system.run(() => event.player.sendMessage("StartChecking... Weight: " + stackAmount));
         const now = Date.now();
         event.player.chestauraLastLostIndex = containerFirstItem;
-        const maxTime = stackAmount * 300;
+        const maxTime = stackAmount * 200;
         new Promise<number | null>((res) => {
+            event.block.chestauraIsTracking = true;
             const id = system.runInterval(() => {
+                if (!event.player?.isValid && event.block.previousOpen !== event.player.id) {
+                    system.clearRun(id);
+                    res(null);
+                    return;
+                }
                 const firstItem = container.firstItem();
                 const current = Date.now();
                 if (firstItem === undefined) {
