@@ -17,12 +17,15 @@ declare module "@minecraft/server" {
         killauraSmoothFlag: number;
         killauraXSpeed: number[];
         nofallLastFallState: boolean;
-        nofallLastOnGroundLocation: Vector3;
+        nofallLastOnGroundLocation: Server.Vector3;
         autototemLastItem: [boolean, boolean];
         chestauraLastLostIndex: number;
         disablerLastFlagged: boolean;
         ziplineLastPlace: number;
         ziplineFlag: number;
+        ziplineLastLoc: Server.Vector3;
+        scaffoldLastPlace: number;
+        scaffoldLastPlaceLoc: Server.Vector3;
     }
     interface Entity {
         // Detection data

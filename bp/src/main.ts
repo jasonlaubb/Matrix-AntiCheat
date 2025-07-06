@@ -9,6 +9,7 @@ import killaura from "./check/killaura";
 import autototem from "./check/autototem";
 import chestaura from "./check/chestaura";
 import zipline from "./check/zipline";
+import scaffold from "./check/scaffold";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -230,4 +231,5 @@ world.afterEvents.worldLoad.subscribe(() => {
     autototem.enable();
     chestaura.enable();
     zipline.enable();
+    scaffold.enable();
 });

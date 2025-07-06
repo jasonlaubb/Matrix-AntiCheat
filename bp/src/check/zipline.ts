@@ -1,4 +1,5 @@
-import { PlayerPlaceBlockBeforeEvent, world } from "@minecraft/server";
+import { GameMode, PlayerPlaceBlockBeforeEvent, world } from "@minecraft/server";
+import { distanceXZ } from "../util/mathUtil";
 export default {
     enable() {
         world.beforeEvents.playerPlaceBlock.subscribe(blockPlace)
@@ -10,12 +11,21 @@ export default {
 function blockPlace (event: PlayerPlaceBlockBeforeEvent) {
     const { block, player } = event;
     const height = block.location.y - player.location.y;
-    if (player.isOp() || height < 1.8 || height > 2) return;
+    if (player.isOp() || height < 1.8 || height > 2 || player.getGameMode() === GameMode.Creative) return;
     const now = Date.now();
     player.ziplineLastPlace ??= 0;
-    player.sendMessage("" + (now - player.ziplineLastPlace < 200))
-    if (now - player.ziplineLastPlace < 200 && player.inputInfo.getMovementVector().x < 0) {
-        player.flag("Zipline", "A", "Player", { interval: now - player.ziplineLastPlace });
-    }
+    if (player.ziplineLastLoc && now - player.ziplineLastPlace < 400 && player.inputInfo.getMovementVector().y > 0) {
+        if (distanceXZ(player.ziplineLastLoc, player.location) < distanceXZ(player.location, block.location)) {
+            event.cancel = true;
+            player.ziplineFlag ??= 0;
+            player.ziplineFlag++;
+            if (player.ziplineFlag > 3) {
+                player.flag("Zipline", "A", "Player", { height: height.toFixed(2) });
+                player.ziplineFlag = 0;
+            }
+
+        } else if (player.ziplineFlag >= 0.5) player.ziplineFlag -= 0.5;
+    } else player.ziplineFlag = 0;
     player.ziplineLastPlace = now;
+    player.ziplineLastLoc = block.location;
 }
