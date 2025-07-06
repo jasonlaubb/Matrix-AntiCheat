@@ -10,6 +10,7 @@ import autototem from "./check/autototem";
 import chestaura from "./check/chestaura";
 import zipline from "./check/zipline";
 import scaffold from "./check/scaffold";
+import extinguisher from "./check/extinguisher";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -232,4 +233,14 @@ world.afterEvents.worldLoad.subscribe(() => {
     chestaura.enable();
     zipline.enable();
     scaffold.enable();
+    extinguisher.enable();
+});
+world.beforeEvents.chatSend.subscribe((event) => {
+    if (!event.sender.isOp()) {
+        const { x, y } = event.sender.inputInfo.getMovementVector();
+        if (x !== 0 || y !== 0) {
+            event.cancel = true;
+            system.run(() => event.sender.sendMessage("§7[§aMatrix§7] §fYou cannot chat while moving, right? #owo"));
+        }
+    }
 });

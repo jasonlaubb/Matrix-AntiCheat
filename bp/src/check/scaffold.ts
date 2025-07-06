@@ -1,4 +1,4 @@
-import { PlayerPlaceBlockBeforeEvent, world, Block, system } from "@minecraft/server";
+import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode } from "@minecraft/server";
 import { locEqual } from "../util/util";
 import { calculateRelativeViewAngle, distanceXZ } from "../util/mathUtil";
 export default {
@@ -10,7 +10,7 @@ export default {
 function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { block, player } = event;
     const height = player.location.y - block.location.y;
-    if (height < 1 || height >= 2) return;
+    if (player.isOp() || player.isFlying || player.getGameMode() === GameMode.Creative || height < 1 || height >= 2) return;
     const { x: pitch, y: yaw } = player.getRotation();
     const isTouchInput = player.inputInfo.lastInputModeUsed === "Touch";
     const touchingBlock = getOnlyTouchBlock(block);
@@ -35,7 +35,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         }
     } else player.scaffoldIntPitch = 0;
     player.scaffoldBackwardFlag ??= 0;
-    if (distance > (isTouchInput  ? 2 : 1.2) && angle > (isTouchInput ? 120 : 45)) {
+    if (distance > (isTouchInput ? 2 : 1.2) && angle > (isTouchInput ? 120 : 45)) {
         event.cancel = true;
         player.scaffoldBackwardFlag++;
         if (player.scaffoldBackwardFlag >= 3) {
