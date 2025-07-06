@@ -6,7 +6,8 @@ export default {
     },
     disable() {
         world.beforeEvents.playerPlaceBlock.subscribe(blockPlace)
-    }
+    },
+    property: "antiZiplineEnable",
 }
 function blockPlace (event: PlayerPlaceBlockBeforeEvent) {
     const { block, player } = event;

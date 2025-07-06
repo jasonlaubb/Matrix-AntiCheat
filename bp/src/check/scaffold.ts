@@ -2,8 +2,12 @@ import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode } from "@mi
 import { locEqual } from "../util/util";
 import { calculateRelativeViewAngle, distanceXZ } from "../util/mathUtil";
 export default {
+    property: "antiScaffoldEnable",
     enable() {
         world.beforeEvents.playerPlaceBlock.subscribe(blockPlace);
+    },
+    disable() {
+        world.beforeEvents.playerPlaceBlock.unsubscribe(blockPlace);
     }
 }
 

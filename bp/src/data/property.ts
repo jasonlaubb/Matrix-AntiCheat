@@ -15,4 +15,28 @@ export default {
         type: "string",
         value: "flagNotify",
     },
+    antikillauraEnable: {
+        type: "boolean",
+        value: true,
+    },
+    antiautototemEnable: {
+        type: "boolean",
+        value: true,
+    },
+    antichestauraEnable: {
+        type: "boolean",
+        value: true,
+    },
+    antiziplineEnable: {
+        type: "boolean",
+        value: true,
+    },
+    antiscaffoldEnable: {
+        type: "boolean",
+        value: true,
+    },
+    antiextinguisherEnable: {
+        type: "boolean",
+        value: true,
+    },
 };
