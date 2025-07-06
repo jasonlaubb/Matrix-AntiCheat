@@ -20,6 +20,9 @@ declare module "@minecraft/server" {
         nofallLastOnGroundLocation: Vector3;
         autototemLastItem: [boolean, boolean];
         chestauraLastLostIndex: number;
+        disablerLastFlagged: boolean;
+        ziplineLastPlace: number;
+        ziplineFlag: number;
     }
     interface Entity {
         // Detection data
