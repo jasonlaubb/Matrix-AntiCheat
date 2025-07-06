@@ -26,9 +26,14 @@ declare module "@minecraft/server" {
         ziplineLastLoc: Server.Vector3;
         scaffoldLastPlace: number;
         scaffoldLastPlaceLoc: Server.Vector3;
+        scaffoldNoRotationFlag: number;
         scaffoldIntPitch: number;
         scaffoldBackwardFlag: number;
         scaffoldDownFlag: number;
+        scaffoldStrightXZ: "x" | "z";
+        scaffoldStraightCount: number;
+        scaffoldDiagFlag: number;
+        scaffoldExtenderFlag: number;
     }
     interface Entity {
         // Detection data
