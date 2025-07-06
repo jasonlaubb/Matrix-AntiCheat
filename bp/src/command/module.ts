@@ -22,7 +22,7 @@ export function initModules() {
         if (isEnabled) toggle.enable();
     }
 }
-export default {
+export const detect = {
     name: "detection",
     description: "Enable/disable detection of anticheat",
     requireOp: true,

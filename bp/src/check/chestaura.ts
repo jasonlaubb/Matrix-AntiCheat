@@ -7,7 +7,7 @@ export default {
     disable() {
         world.beforeEvents.playerInteractWithBlock.unsubscribe(interact);
     },
-    property: "antichestauraEnable",
+    property: "antiChestauraEnable",
 }
 function interact (event: PlayerInteractWithBlockBeforeEvent) {
     const inventory = event.block.getComponent("inventory");

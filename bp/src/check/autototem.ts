@@ -7,7 +7,7 @@ export default {
     disable() {
         removeCheckInterval(tickEvent);
     },
-    property: "antiautototemEnable",
+    property: "antiAutototemEnable",
 }
 function tickEvent (player: Player) {
     if (player.isOp()) return;

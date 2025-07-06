@@ -3,7 +3,7 @@ import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
-    property: "antikillauraEnable",
+    property: "antiKillauraEnable",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
         addCheckInterval(tickEvent);

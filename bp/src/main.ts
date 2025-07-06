@@ -1,11 +1,11 @@
 import { CustomCommandResult, CustomCommandParamType, Player, system, world } from "@minecraft/server";
 import info from "./command/info";
+import { detect, detectionList, initModules } from "./command/module";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
-import { initModules } from "./command/module";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -59,7 +59,7 @@ export interface Command {
 }
 classifyProperty();
 system.beforeEvents.startup.subscribe((event) => {
-    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty] as Command[];
+    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty, detect] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
             case "string":
@@ -85,6 +85,7 @@ system.beforeEvents.startup.subscribe((event) => {
     event.customCommandRegistry.registerEnum("matrix:numberProperty", numberValue);
     event.customCommandRegistry.registerEnum("matrix:booleanProperty", booleanValue);
     event.customCommandRegistry.registerEnum("matrix:property", Object.keys(property));
+    event.customCommandRegistry.registerEnum("matrix:detectionName", Object.keys(detectionList));
     commands.forEach(({ name, description, requireOp, optionalParameters, parameters, execute }) => {
         event.customCommandRegistry.registerCommand(
             {

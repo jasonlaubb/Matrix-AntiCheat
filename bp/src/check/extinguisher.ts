@@ -6,7 +6,7 @@ export default {
     disable() {
         world.beforeEvents.playerBreakBlock.unsubscribe(blockBreak);
     },
-    property: "antiextinguisherEnable",
+    property: "antiExtinguisherEnable",
 }
 function blockBreak (event: PlayerBreakBlockBeforeEvent) {
     const { block: { typeId }, player } = event;
