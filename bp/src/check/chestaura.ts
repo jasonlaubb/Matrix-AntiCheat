@@ -23,7 +23,6 @@ function interact (event: PlayerInteractWithBlockBeforeEvent) {
     event.block.previousOpen = event.player.id;
     if (containerFirstItem !== undefined && !event.block.chestauraIsTracking) {
         const stackAmount = stackInventoryItem(container);
-        system.run(() => event.player.sendMessage("StartChecking... Weight: " + stackAmount));
         const now = Date.now();
         event.player.chestauraLastLostIndex = containerFirstItem;
         const maxTime = stackAmount * 200;
@@ -52,7 +51,7 @@ function interact (event: PlayerInteractWithBlockBeforeEvent) {
             if (average === null) return;
             if (average < 150) {
                 event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
-            } else event.player.sendMessage("Time taken: " + average);
+            }
         })
     }
 }
@@ -66,9 +65,7 @@ function stackInventoryItem (container: Container) {
         if (item.maxAmount > 1) {
             stackable[item.typeId] ??= 0;
             stackable[item.typeId] += item.amount;
-            system.run(() => world.sendMessage(`§c[ChestAura] §fStacked item ${item.typeId} amount: ${stackable[item.typeId]}`));
             if (stackable[item.typeId] > item.maxAmount) {
-                system.run(() => world.sendMessage(`§c[ChestAura] §fStacked item ${item.typeId} exceeds max amount: ${item.maxAmount}`));
                 unstackableAmount++;
                 stackable[item.typeId] -= item.maxAmount;
             }
