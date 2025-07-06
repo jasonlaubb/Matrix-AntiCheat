@@ -13,7 +13,6 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     if (height < 1 || height >= 2) return;
     const { x: pitch, y: yaw } = player.getRotation();
     const isTouchInput = player.inputInfo.lastInputModeUsed === "Touch";
-    //system.run(() => player.sendMessage(`Scaffold: Height: ${height.toFixed(2)}, Pitch: ${pitch}, Loc: ${getOnlyTouchBlock(block) && locEqual(getOnlyTouchBlock(block)!.location, player.scaffoldLastPlaceLoc)}`));
     const touchingBlock = getOnlyTouchBlock(block);
     const centerLoc = block.center()
     ,angle = calculateRelativeViewAngle(player.location, centerLoc, yaw)
@@ -35,7 +34,6 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "B", "Player", { pitch }));
         }
     } else player.scaffoldIntPitch = 0;
-    //system.run(() => player.sendMessage(`Scaffold: Angle: ${angle.toFixed(2)}, Distance: ${distance.toFixed(2)}`));
     player.scaffoldBackwardFlag ??= 0;
     if (distance > (isTouchInput  ? 2 : 1.2) && angle > (isTouchInput ? 120 : 45)) {
         event.cancel = true;
@@ -60,11 +58,11 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldStraightCount = 0;
         player.scaffoldStrightXZ = strightX ? "x" : "z";
     }
-    player.sendMessage(`Scaffold: StrightXZ: ${player.scaffoldStrightXZ}, StraightCount: ${player.scaffoldStraightCount}, DiagFlag: ${player.scaffoldDiagFlag}, Interval: ${player.scaffoldLastPlace && now - player.scaffoldLastPlace}, Pitch: ${pitch}, Distance: ${distance}`);
+    //player.sendMessage(`Scaffold: StrightXZ: ${player.scaffoldStrightXZ}, StraightCount: ${player.scaffoldStraightCount}, DiagFlag: ${player.scaffoldDiagFlag}, Interval: ${player.scaffoldLastPlace && now - player.scaffoldLastPlace}, Pitch: ${pitch}, Distance: ${distance}`);
     player.scaffoldDiagFlag ??= 0;
     if (player.scaffoldLastPlace && now - player.scaffoldLastPlace < 500 && player.scaffoldStraightCount < 5) {
         player.scaffoldDiagFlag++;
-        if (player.scaffoldDiagFlag >= 5) {
+        if (player.scaffoldDiagFlag >= 6) {
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "E", "Player", { diagCount: player.scaffoldDiagFlag }));
         }
