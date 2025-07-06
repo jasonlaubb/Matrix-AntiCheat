@@ -236,11 +236,10 @@ world.afterEvents.worldLoad.subscribe(() => {
     extinguisher.enable();
 });
 world.beforeEvents.chatSend.subscribe((event) => {
-    if (!event.sender.isOp()) {
-        const { x, y } = event.sender.inputInfo.getMovementVector();
-        if (x !== 0 || y !== 0) {
-            event.cancel = true;
-            system.run(() => event.sender.sendMessage("§7[§aMatrix§7] §fYou cannot chat while moving, right? #owo"));
-        }
+    const { x, y } = event.sender.inputInfo.getMovementVector();
+    if (x !== 0 || y !== 0) {
+        event.cancel = true;
+        system.run(() => event.sender.sendMessage("§7[§aMatrix§7] §fPlease do not chat while you're moving!"));
+        return;
     }
 });
