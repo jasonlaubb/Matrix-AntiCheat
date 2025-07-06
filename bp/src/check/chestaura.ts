@@ -63,12 +63,14 @@ function stackInventoryItem (container: Container) {
     for (let i = 0; i < container.size; i++) {
         const item = container.getItem(i);
         if (!item) continue;
-        if (item.isStackable) {
+        if (item.maxAmount > 1) {
             stackable[item.typeId] ??= 0;
-            stackable[item.typeId]++;
+            stackable[item.typeId] += item.amount;
+            system.run(() => world.sendMessage(`§c[ChestAura] §fStacked item ${item.typeId} amount: ${stackable[item.typeId]}`));
             if (stackable[item.typeId] > item.maxAmount) {
+                system.run(() => world.sendMessage(`§c[ChestAura] §fStacked item ${item.typeId} exceeds max amount: ${item.maxAmount}`));
                 unstackableAmount++;
-                stackable[item.typeId] = 1;
+                stackable[item.typeId] -= item.maxAmount;
             }
         } else unstackableAmount++;
     }
