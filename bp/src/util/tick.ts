@@ -1,4 +1,6 @@
 import { Player, world } from "@minecraft/server";
+import { get } from "./database";
+import { getPlayerRank } from "./util";
 
 const loopForEach = [] as ((player: Player) => any)[];
 const loopForCheck = [] as ((player: Player) => any)[];
@@ -6,10 +8,16 @@ const loop = [] as (() => any)[];
 
 export function tick() {
     const players = world.getAllPlayers();
+    const chatRankDisplayOnNameTag = get("chatRankDisplayOnNameTag");
+    const format = get("chatRankNameTagFormat");
     players.forEach((player) => {
         loop.forEach((f) => f());
         loopForEach.forEach((f) => f(player));
         if (!player.isOp()) loopForCheck.forEach((f) => f(player));
+        if (chatRankDisplayOnNameTag) {
+            const playerRank = getPlayerRank(player);
+            player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
+        }
     });
 }
 export function addInterval(callback: () => any) {
