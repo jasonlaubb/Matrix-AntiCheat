@@ -259,7 +259,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         if (now > data.expire) {
             world.setDynamicProperty("banData:" + player.id);
         } else {
-            player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gTime: §e${new Date(data.time).toLocaleString()}`);
+            player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: /*UNFINISHED*/`);
             return;
         }
     }
