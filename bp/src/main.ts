@@ -8,6 +8,7 @@ import { tick } from "./util/tick";
 import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
+import { BanData } from "./util/punishment";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -44,6 +45,9 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
         flagTarget.forEach((player) => player.sendMessage(flagMessage));
     }
 };
+Player.prototype.kick = function (reason: string) {
+    this.runCommand(`kick @s ${reason}`);
+}
 interface Option {
     name: string;
     type: "string" | "integer" | "float" | "boolean" | "enum" | "player" | "playerTarget" | "normalPlayerTarget";
@@ -247,8 +251,21 @@ world.beforeEvents.chatSend.subscribe((event) => {
     }
 });
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-    if (!initialSpawn || !get("chatRankDisplayOnNameTag")) return;
-    const playerRank = getPlayerRank(player);
-    const format = get("chatRankNameTagFormat");
-    player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
+    if (!initialSpawn) return;
+    const now = Date.now();
+    const banString = world.getDynamicProperty("banData:" + player.id) as string;
+    if (banString) {
+        const data = JSON.parse(banString) as BanData;
+        if (now > data.expire) {
+            world.setDynamicProperty("banData:" + player.id);
+        } else {
+            player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gTime: §e${new Date(data.time).toLocaleString()}`);
+            return;
+        }
+    }
+    if (get("chatRankDisplayOnNameTag")) {
+        const playerRank = getPlayerRank(player);
+        const format = get("chatRankNameTagFormat");
+        player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
+    }
 });

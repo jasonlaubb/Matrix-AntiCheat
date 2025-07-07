@@ -7,6 +7,7 @@ declare module "@minecraft/server" {
          */
         isOp: () => boolean;
         flag: (id: string, type: string, category: string, data?: { [key: string]: string | number }) => void;
+        kick: (reason: string) => void;
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;
