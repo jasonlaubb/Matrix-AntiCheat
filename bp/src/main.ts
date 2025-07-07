@@ -2,10 +2,12 @@ import { CustomCommandResult, CustomCommandParamType, Player, system, world } fr
 import info from "./command/info";
 import { detect, detectionList, initModules } from "./command/module";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
+import { rankadd, rankclear, ranklist, rankremove, rankset } from "./command/rank";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
+import { getPlayerRank } from "./util/util";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -55,11 +57,11 @@ export interface Command {
     optionalParameters?: Option[];
     parameters?: Option[];
     /** @warning Early execution, please add system.run if you want to do edit to world */
-    execute: (player: Player, args: string[]) => CustomCommandResult;
+    execute: (player: Player, args: any[]) => CustomCommandResult;
 }
 classifyProperty();
 system.beforeEvents.startup.subscribe((event) => {
-    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty, detect] as Command[];
+    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty, detect, rankadd, rankclear, ranklist, rankremove, rankset] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
             case "string":
@@ -233,4 +235,20 @@ world.beforeEvents.chatSend.subscribe((event) => {
         system.run(() => event.sender.sendMessage("§7[§aMatrix§7] §fPlease do not chat while you're moving!"));
         return;
     }
+    if (get("chatRankEnable")) {
+        const { message, sender: player } = event;
+        const playerRank = getPlayerRank(player);
+        const format = get("chatRankMessageFormat");
+        system.run(() => {
+            world.sendMessage(format.replace("{rank}", playerRank).replace("{player}", player.name).replace("{message}", message));
+        });
+        event.cancel = true;
+        return;
+    }
+});
+world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
+    if (!initialSpawn || !get("chatRankDisplayOnNameTag")) return;
+    const playerRank = getPlayerRank(player);
+    const format = get("chatRankNameTagFormat");
+    player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
 });

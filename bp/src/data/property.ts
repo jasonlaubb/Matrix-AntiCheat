@@ -15,6 +15,30 @@ export default {
         type: "string",
         value: "flagNotify",
     },
+    chatRankEnable: {
+        type: "boolean",
+        value: false,
+    },
+    chatRankMessageFormat: {
+        type: "string",
+        value: "§7[§f{rank}§r§7] §e{player}: §f§r{message}",
+    },
+    chatRankDisplayOnNameTag: {
+        type: "boolean",
+        value: true,
+    },
+    chatRankNameTagFormat: {
+        type: "string",
+        value: "§7[§f{rank}§r§7] §f{player}",
+    },
+    chatRankDefaultRank: {
+        type: "string",
+        value: "Member",
+    },
+    chatRankTagPrefix: {
+        type: "string",
+        value: "rank:"
+    },
     antiKillauraEnable: {
         type: "boolean",
         value: true,
