@@ -61,3 +61,11 @@ export const detect = {
         return { status: 0, message: `§7[§aMatrix§7] §f${name} detection has been ${enable ? "enabled" : "disabled"}!`};
     }
 } as Command;
+export const detectionlist = {
+    name: "detectionlist",
+    description: "List all detection including their status",
+    requireOp: true,
+    execute: (_player) => {
+        return { status: 0, message: `§7[§aMatrix§7] §fDetection list:\n${Object.entries(detectionList).map(([name, toggle]) => `§f- ${name}: ${get(toggle.property as keyof typeof property) ? "§aEnabled" : "§cDisabled"}`).join("\n")}` };
+    }
+} as Command;
