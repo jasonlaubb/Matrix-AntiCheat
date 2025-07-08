@@ -21,7 +21,7 @@ function blockPlace (event: PlayerPlaceBlockBeforeEvent) {
             player.ziplineFlag ??= 0;
             player.ziplineFlag++;
             if (player.ziplineFlag > 3) {
-                player.flag("Zipline", "A", "Player", { height: height.toFixed(2) });
+                player.flag("Zipline", "A", "Block", { height: height.toFixed(2) });
                 player.ziplineFlag = 0;
             }
 

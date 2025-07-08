@@ -23,7 +23,7 @@ function interactOrBreak (event: PlayerBreakBlockBeforeEvent | PlayerInteractWit
         if (bedSide) {
             if (surroundSolidCount(event.block) >= 5 && surroundSolidCount(bedSide) >= 5) {
                 event.cancel = true;
-                event.player.flag("Breaker", "B", "Block", { block: event.block.typeId });
+                event.player.flag("Breaker", "B", "Block (Bed)", { block: event.block.typeId });
             }
         }
     }
@@ -36,7 +36,7 @@ function getSurround (block: Block) {
     }
 }
 function surroundSolidCount (block: Block) {
-    return getSurround(block).filter(b => b && b.isSolid).length;
+    return getSurround(block).filter(b => b && (b.isSolid || isGlassBlock(b.typeId))).length;
 }
 function getBedSide (block: Block) {
     try {
@@ -44,4 +44,7 @@ function getBedSide (block: Block) {
     } catch {
         return undefined;
     }
+}
+function isGlassBlock (typeId: string) {
+    return typeId.startsWith("minecraft:") && typeId.endsWith("glass");
 }

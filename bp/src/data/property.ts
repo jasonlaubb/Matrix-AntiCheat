@@ -63,4 +63,8 @@ export default {
         type: "boolean",
         value: true,
     },
+    antiBreakerEnable: {
+        type: "boolean",
+        value: true,
+    },
 };

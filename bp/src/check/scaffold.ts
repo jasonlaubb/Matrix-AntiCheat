@@ -27,7 +27,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldNoRotationFlag++;
         if (player.scaffoldNoRotationFlag >= 3) {
             event.cancel = true;
-            system.run(() => player.flag("Scaffold", "A", "Player", { height, pitch: pitch.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "A", "Block", { height, pitch: pitch.toFixed(2) }));
         }
     } else player.scaffoldNoRotationFlag = 0;
     player.scaffoldIntPitch ??= 0;
@@ -35,7 +35,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldIntPitch++;
         event.cancel = true;
         if (player.scaffoldIntPitch >= 3) {
-            system.run(() => player.flag("Scaffold", "B", "Player", { pitch }));
+            system.run(() => player.flag("Scaffold", "B", "Block", { pitch }));
         }
     } else player.scaffoldIntPitch = 0;
     player.scaffoldBackwardFlag ??= 0;
