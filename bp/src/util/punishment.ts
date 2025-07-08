@@ -5,14 +5,12 @@ export interface BanData {
     reason: string;
     executor: string;
     expire: number;
-    time: number;
 }
 export interface NameBanData {
     name: string;
     reason: string;
     executor: string;
     expire: number;
-    time: number;
 }
 export function ban (player: Player, reason: string, expire: number) {
     const now = Date.now();
@@ -23,7 +21,6 @@ export function ban (player: Player, reason: string, expire: number) {
         reason,
         executor: player.name,
         expire,
-        time: now
     }));
 }
 export function banName (name: string, reason: string, executor: string, expire: number) {
@@ -34,6 +31,25 @@ export function banName (name: string, reason: string, executor: string, expire:
         reason,
         executor,
         expire,
-        time: now
     }));
+}
+export function checkPunish (player: Player) {
+    const banString = world.getDynamicProperty("banData:" + player.id) as string;
+    const now = Date.now();
+    if (banString) {
+        const data = JSON.parse(banString) as BanData;
+        if (now > data.expire) {
+            world.setDynamicProperty("banData:" + player.id);
+        } else {
+            player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: ${convertDurationString(data.expire - now)}`);
+            return;
+        }
+    }
+}
+function convertDurationString (ms: number) {
+    const seconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    return `${days}d ${hours % 24}h ${minutes % 60}m ${seconds % 60}s`;
 }
