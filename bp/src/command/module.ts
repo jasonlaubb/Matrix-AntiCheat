@@ -4,6 +4,7 @@ import chestaura from "../check/chestaura";
 import zipline from "../check/zipline";
 import scaffold from "../check/scaffold";
 import extinguisher from "../check/extinguisher";
+import breaker from "../check/breaker";
 import { get } from "../util/database";
 import type property from "../data/property";
 import type { Command } from "../main";
@@ -14,7 +15,8 @@ export const detectionList = {
     chestaura,
     zipline,
     scaffold,
-    extinguisher
+    extinguisher,
+    breaker,
 }
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
