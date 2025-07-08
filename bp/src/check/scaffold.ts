@@ -86,13 +86,17 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
 }
 
 function getOnlyTouchBlock (block: Block) {
-    const blocks = [block.below(), block.above(), block.north(), block.south(), block.west(), block.east()];
-    let touchingBlock: Block | undefined;
-    for (const b of blocks) {
-        if (b && b.isValid && !b.isAir) {
-            if (touchingBlock && !locEqual(touchingBlock.location, b.location)) return undefined;
-            touchingBlock = b;
+    try {
+        const blocks = [block.below(), block.above(), block.north(), block.south(), block.west(), block.east()];
+        let touchingBlock: Block | undefined;
+        for (const b of blocks) {
+            if (b && b.isValid && !b.isAir) {
+                if (touchingBlock && !locEqual(touchingBlock.location, b.location)) return undefined;
+                touchingBlock = b;
+            }
         }
+        return touchingBlock;
+    } catch {
+        return undefined;
     }
-    return touchingBlock;
 }
