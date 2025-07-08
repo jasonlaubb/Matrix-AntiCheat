@@ -1,6 +1,6 @@
 import { CustomCommandResult, CustomCommandParamType, Player, system, world } from "@minecraft/server";
 import info from "./command/info";
-import { detect, detectionList, initModules } from "./command/module";
+import { detect, detectionlist, detectionList, initModules } from "./command/module";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
 import { rankadd, rankclear, ranklist, rankremove, rankset } from "./command/rank";
 import { get } from "./util/database";
@@ -65,7 +65,7 @@ export interface Command {
 }
 classifyProperty();
 system.beforeEvents.startup.subscribe((event) => {
-    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty, detect, rankadd, rankclear, ranklist, rankremove, rankset] as Command[];
+    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty, detect, detectionlist, rankadd, rankclear, ranklist, rankremove, rankset] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
             case "string":
