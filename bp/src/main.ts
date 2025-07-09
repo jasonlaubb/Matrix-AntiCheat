@@ -1,4 +1,4 @@
-import { CustomCommandResult, CustomCommandParamType, Player, system, world } from "@minecraft/server";
+import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
 import info from "./command/info";
 import { detect, detectionlist, detectionList, initModules } from "./command/module";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
@@ -9,6 +9,7 @@ import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
+import { openGeneralUI } from "./util/ui";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -226,6 +227,16 @@ system.beforeEvents.startup.subscribe((event) => {
             return { status: 0, message: helpMessage };
         }
     );
+    event.itemComponentRegistry.registerCustomComponent("matrix:execute_ui", {
+        onUse: ({ source }) => {
+            if (source.isOp()) {
+                openGeneralUI(source);
+            } else {
+                source.sendMessage("§7[§aMatrix§7] §fNice try... but the item is overpowered and you aren't an operator to stop it from escaping!");
+                source.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Mainhand)!.setItem();
+            }
+        }
+    })
 });
 
 world.afterEvents.worldLoad.subscribe(() => {
