@@ -47,17 +47,15 @@ export const detect = {
         if (currentEnabled === enable) {
             return { status: 1, message: `§7[§aMatrix§7] §f${name} detection is already ${enable ? "enabled" : "disabled"}!`};
         }
-        if (enable) {
-            system.run(() => {
+        system.run(() => {
+            if (enable) {
                 world.setDynamicProperty(toggle.property, true);
                 toggle.enable();
-            });
-        } else {
-            system.run(() => {
+            } else {
                 toggle.disable();
                 world.setDynamicProperty(toggle.property, false);
-            });
-        }
+            }
+        });
         return { status: 0, message: `§7[§aMatrix§7] §f${name} detection has been ${enable ? "enabled" : "disabled"}!`};
     }
 } as Command;
