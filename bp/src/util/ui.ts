@@ -83,7 +83,7 @@ export function openGeneralUI (player: Player) {
                                                     .then((res) => {
                                                         if (res.canceled) return;
                                                         const value = res.formValues![0] as string;
-                                                        if (!value) return player.sendMessage("§7[§aMatrix§7] §fNew alue cannot be empty. Please use /discard to reset a value.");
+                                                        if (!value) return player.sendMessage("§7[§aMatrix§7] §fNew value cannot be empty. Please use /discard to reset a value.");
                                                         switch (type) {
                                                             case "string": {
                                                                 world.setDynamicProperty("database:" + selectedId, value);
@@ -96,7 +96,7 @@ export function openGeneralUI (player: Player) {
                                                                 break;
                                                             }
                                                             case "boolean": {
-                                                                const boolean = value as unknown as boolean;
+                                                                const boolean = res.formValues![0] as boolean;
                                                                 world.setDynamicProperty("database:" + selectedId, boolean);
                                                                 break;
                                                             }
@@ -111,7 +111,6 @@ export function openGeneralUI (player: Player) {
                                             }
                                         })
                                 });
-
                         })
                     break;
                 }
