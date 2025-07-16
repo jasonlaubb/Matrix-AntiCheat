@@ -1,7 +1,7 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Matrix Anticheat BP V7.0.0",
+        "name": "Matrix Anticheat V7.0.0",
         "description": "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock Edition.\n§cBeta API required",
         "uuid": "4420fb30-1a77-4628-9c93-26680fbd38c4",
         "version": [7, 0, 0],
@@ -27,10 +27,6 @@
         }
     ],
     "dependencies": [
-        {
-            "uuid": "18af5991-339c-436c-abef-48b060932423",
-            "version": [7, 0, 0]
-        },
         {
             "module_name": "@minecraft/server",
             "version": "2.1.0-beta"
