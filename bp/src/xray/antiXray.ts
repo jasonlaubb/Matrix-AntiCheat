@@ -228,15 +228,14 @@ world.beforeEvents.explosion.subscribe((event) => {
     if (event.dimension.id !== "minecraft:overworld" && event.dimension.id !== "minecraft:nether") return;
     if (!get("banXrayHandler") && get("antiXray")) {
         if (event.source && event.source.typeId === "minecraft:tnt") {
-            const nearPlayer = world.getPlayers({
+            const nearPlayer = event.dimension.getPlayers({
                 maxDistance: 13,
                 closest: 1,
-                minDistance: 0,
                 location: event.source.location,
             })[0];
             if (nearPlayer) {
                 const now = Date.now();
-                if (now - (nearPlayer.lastNoTntMsg ?? 0) < 15000) {
+                if (now - (nearPlayer.lastNoTntMsg ?? 0) > 15000) {
                     system.run(() => {
                         nearPlayer.sendMessage("§7[§aMatrix§7] §fSorry, but you cannot destroy blocks through explosion.");
                     })
