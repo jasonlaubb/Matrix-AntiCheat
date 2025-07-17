@@ -25,46 +25,46 @@ function posKeyXZ({ x, z }: VectorXZ) {
 }
 
 function saveChunkData(keyPrefix: string, data: Record<string, string>) {
-  const entries = Object.entries(data);
-  let part = 0;
-  let buffer: Record<string, string> = {};
-  let size = 0;
+    const entries = Object.entries(data);
+    let part = 0;
+    let buffer: Record<string, string> = {};
+    let size = 0;
 
-  for (const [pos, rawId] of entries) {
-    const entrySize = pos.length + rawId.length + 6;
-    if (size + entrySize > 32000) {
-      world.setDynamicProperty(`${keyPrefix}:${part}`, JSON.stringify(buffer));
-      part++;
-      buffer = {};
-      size = 0;
+    for (const [pos, rawId] of entries) {
+        const entrySize = pos.length + rawId.length + 6;
+        if (size + entrySize > 32000) {
+            world.setDynamicProperty(`${keyPrefix}:${part}`, JSON.stringify(buffer));
+            part++;
+            buffer = {};
+            size = 0;
+        }
+        buffer[pos] = rawId;
+        size += entrySize;
     }
-    buffer[pos] = rawId;
-    size += entrySize;
-  }
 
-  if (Object.keys(buffer).length > 0) {
-    world.setDynamicProperty(`${keyPrefix}:${part}`, JSON.stringify(buffer));
-  }
+    if (Object.keys(buffer).length > 0) {
+        world.setDynamicProperty(`${keyPrefix}:${part}`, JSON.stringify(buffer));
+    }
 
-  let cleanupPart = part + 1;
-  while (world.getDynamicProperty(`${keyPrefix}:${cleanupPart}`)) {
-    world.setDynamicProperty(`${keyPrefix}:${cleanupPart}`); // delete
-    cleanupPart++;
-  }
+    let cleanupPart = part + 1;
+    while (world.getDynamicProperty(`${keyPrefix}:${cleanupPart}`)) {
+        world.setDynamicProperty(`${keyPrefix}:${cleanupPart}`); // delete
+        cleanupPart++;
+    }
 }
 
 function loadChunkData(keyPrefix: string): Record<string, string> {
-  const data: Record<string, string> = {};
-  let part = 0;
+    const data: Record<string, string> = {};
+    let part = 0;
 
-  while (true) {
-    const raw = world.getDynamicProperty(`${keyPrefix}:${part}`) as string;
-    if (!raw) break;
-    Object.assign(data, JSON.parse(raw));
-    part++;
-  }
+    while (true) {
+        const raw = world.getDynamicProperty(`${keyPrefix}:${part}`) as string;
+        if (!raw) break;
+        Object.assign(data, JSON.parse(raw));
+        part++;
+    }
 
-  return data;
+    return data;
 }
 
 const includeTypes = [
@@ -88,141 +88,127 @@ const includeTypes = [
     "minecraft:deepslate_emerald_ore",
 ];
 export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
-  function* generator() {
-    const endX = startX + 15, endZ = startZ + 15;
-    const density = get("antiXrayGhostBlockDensity");
-    const maxMove = get("antiXrayMaxChangeInTick");
-    const iterator1 = dimension.getBlocks(
-      new BlockVolume({ x: startX, y: -63, z: startZ }, { x: endX, y: 32, z: endZ }),
-      { includeTypes },
-      true
-    ).getBlockLocationIterator();
+    function* generator() {
+        const endX = startX + 15,
+            endZ = startZ + 15;
+        const density = get("antiXrayGhostBlockDensity");
+        const maxMove = get("antiXrayMaxChangeInTick");
+        const iterator1 = dimension.getBlocks(new BlockVolume({ x: startX, y: -63, z: startZ }, { x: endX, y: 32, z: endZ }), { includeTypes }, true).getBlockLocationIterator();
 
-    const iterator2 = dimension.getBlocks(
-      new BlockVolume({ x: startX, y: 33, z: startZ }, { x: endX, y: 84, z: endZ }),
-      { includeTypes },
-      true
-    ).getBlockLocationIterator();
+        const iterator2 = dimension.getBlocks(new BlockVolume({ x: startX, y: 33, z: startZ }, { x: endX, y: 84, z: endZ }), { includeTypes }, true).getBlockLocationIterator();
 
-    const blocks = [...iterator1, ...iterator2];
-    let move = 0;
+        const blocks = [...iterator1, ...iterator2];
+        let move = 0;
         const chunkPrefix = `k:${Math.floor(startX / 16) * 16},${Math.floor(startZ / 16) * 16}`;
-    const chunkData = loadChunkData(chunkPrefix);
+        const chunkData = loadChunkData(chunkPrefix);
 
-    function recordModification(pos: Vector3, from: string) {
-      const rawId = from.replace("minecraft:", "");
-      chunkData[`${pos.x},${pos.y},${pos.z}`] = rawId;
-    }
-        for (const position of blocks) {
-      const block = dimension.getBlock(position);
-      if (!block || !block.isValid) continue;
-
-      const key = `${position.x},${position.y},${position.z}`;
-      const raw = chunkData[key];
-
-      if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
-        block.setType(`minecraft:${raw}`);
-        move++;
-      }
-
-      if (raw && !block.isSolid) {
-        delete chunkData[key];
-        continue;
-      }
-
-      if (["minecraft:stone", "minecraft:deepslate"].includes(block.typeId)) {
-        if (draw(density) && fastSurround(block)) {
-          recordModification(position, block.typeId);
-          block.setType("minecraft:" + (block.typeId === "minecraft:deepslate" ? "deepslate_" : "") + randomOre());
-          move++;
+        function recordModification(pos: Vector3, from: string) {
+            const rawId = from.replace("minecraft:", "");
+            chunkData[`${pos.x},${pos.y},${pos.z}`] = rawId;
         }
-      } else if (fastSurround(block)) {
-        recordModification(position, block.typeId);
-        block.setType(block.typeId.startsWith("minecraft:deepslate_") ? "minecraft:deepslate" : "minecraft:stone");
-        move++;
-      }
+        for (const position of blocks) {
+            const block = dimension.getBlock(position);
+            if (!block || !block.isValid) continue;
 
-      if (move >= maxMove) {
-        yield;
-      }
+            const key = `${position.x},${position.y},${position.z}`;
+            const raw = chunkData[key];
+
+            if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
+                block.setType(`minecraft:${raw}`);
+                move++;
+            }
+
+            if (raw && !block.isSolid) {
+                delete chunkData[key];
+                continue;
+            }
+
+            if (["minecraft:stone", "minecraft:deepslate"].includes(block.typeId)) {
+                if (draw(density) && fastSurround(block)) {
+                    recordModification(position, block.typeId);
+                    block.setType("minecraft:" + (block.typeId === "minecraft:deepslate" ? "deepslate_" : "") + randomOre());
+                    move++;
+                }
+            } else if (fastSurround(block)) {
+                recordModification(position, block.typeId);
+                block.setType(block.typeId.startsWith("minecraft:deepslate_") ? "minecraft:deepslate" : "minecraft:stone");
+                move++;
+            }
+
+            if (move >= maxMove) {
+                yield;
+            }
+        }
+
+        saveChunkData(chunkPrefix, chunkData);
     }
 
-    saveChunkData(chunkPrefix, chunkData);
-  }
-
-  return generator();
+    return generator();
 }
 const netherIncludeTypes = ["minecraft:nether_gold_ore", "minecraft:quartz_ore", "minecraft:netherrack", "minecraft:blackstone"];
 function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
-  function* generator() {
-    const endX = startX + 15, endZ = startZ + 15;
-    const density = get("antiXrayGhostBlockDensity");
-    const maxMove = get("antiXrayMaxChangeInTick");
-    const iterator1 = dimension.getBlocks(
-      new BlockVolume({ x: startX, y: 0, z: startZ }, { x: endX, y: 64, z: endZ }),
-      { includeTypes: netherIncludeTypes },
-      true
-    ).getBlockLocationIterator();
+    function* generator() {
+        const endX = startX + 15,
+            endZ = startZ + 15;
+        const density = get("antiXrayGhostBlockDensity");
+        const maxMove = get("antiXrayMaxChangeInTick");
+        const iterator1 = dimension.getBlocks(new BlockVolume({ x: startX, y: 0, z: startZ }, { x: endX, y: 64, z: endZ }), { includeTypes: netherIncludeTypes }, true).getBlockLocationIterator();
 
-    const iterator2 = dimension.getBlocks(
-      new BlockVolume({ x: startX, y: 65, z: startZ }, { x: endX, y: 128, z: endZ }),
-      { includeTypes: netherIncludeTypes },
-      true
-    ).getBlockLocationIterator();
+        const iterator2 = dimension.getBlocks(new BlockVolume({ x: startX, y: 65, z: startZ }, { x: endX, y: 128, z: endZ }), { includeTypes: netherIncludeTypes }, true).getBlockLocationIterator();
 
-    const blocks = [...iterator1, ...iterator2];
-    let move = 0;
+        const blocks = [...iterator1, ...iterator2];
+        let move = 0;
 
-    const chunkPrefix = `bn:${Math.floor(startX / 16) * 16},${Math.floor(startZ / 16) * 16}`;
-    const chunkData = loadChunkData(chunkPrefix);
+        const chunkPrefix = `bn:${Math.floor(startX / 16) * 16},${Math.floor(startZ / 16) * 16}`;
+        const chunkData = loadChunkData(chunkPrefix);
 
-    function recordModification(pos: Vector3, from: string) {
-      const rawId = from.replace("minecraft:", "");
-      chunkData[`${pos.x},${pos.y},${pos.z}`] = rawId;
-    }
-
-    function randomNetherOre(): string {
-      return ["nether_gold_ore", "quartz_ore"][Math.floor(Math.random() * 2)];
-    }
-
-    for (const position of blocks) {
-      const block = dimension.getBlock(position);
-      if (!block || !block.isValid) continue;
-
-      const key = `${position.x},${position.y},${position.z}`;
-      const raw = chunkData[key];
-
-      if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
-        block.setType(`minecraft:${raw}`);
-        move++;
-      }
-
-      if (raw && !block.isSolid) {
-        delete chunkData[key];
-        continue;
-      }
-
-      if (["minecraft:netherrack", "minecraft:blackstone"].includes(block.typeId)) {
-        if (draw(density) && fastSurround(block)) {
-          recordModification(position, block.typeId);
-          block.setType("minecraft:" + randomNetherOre());
-          move++;
+        function recordModification(pos: Vector3, from: string) {
+            const rawId = from.replace("minecraft:", "");
+            chunkData[`${pos.x},${pos.y},${pos.z}`] = rawId;
         }
-      } else if (fastSurround(block)) {
-        recordModification(position, block.typeId);
-        block.setType("minecraft:netherrack");
-        move++;
-      }
 
-      if (move >= maxMove) {
-        yield;
-      }
+        function randomNetherOre(): string {
+            return ["nether_gold_ore", "quartz_ore"][Math.floor(Math.random() * 2)];
+        }
+
+        for (const position of blocks) {
+            const block = dimension.getBlock(position);
+            if (!block || !block.isValid) continue;
+
+            const key = `${position.x},${position.y},${position.z}`;
+            const raw = chunkData[key];
+
+            if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
+                block.setType(`minecraft:${raw}`);
+                move++;
+            }
+
+            if (raw && !block.isSolid) {
+                delete chunkData[key];
+                continue;
+            }
+
+            if (["minecraft:netherrack", "minecraft:blackstone"].includes(block.typeId)) {
+                if (draw(density) && fastSurround(block)) {
+                    recordModification(position, block.typeId);
+                    block.setType("minecraft:" + randomNetherOre());
+                    move++;
+                }
+            } else if (fastSurround(block)) {
+                recordModification(position, block.typeId);
+                block.setType("minecraft:netherrack");
+                move++;
+            }
+
+            if (move >= maxMove) {
+                yield;
+            }
+        }
+
+        saveChunkData(chunkPrefix, chunkData);
     }
 
-    saveChunkData(chunkPrefix, chunkData);
-  }
-
-  return generator();
+    return generator();
 }
 
 world.beforeEvents.explosion.subscribe((event) => {
@@ -239,7 +225,7 @@ world.beforeEvents.explosion.subscribe((event) => {
                 if (now - (nearPlayer.lastNoTntMsg ?? 0) > 15000) {
                     system.run(() => {
                         nearPlayer.sendMessage("§7[§aMatrix§7] §fSorry, but you cannot destroy blocks through explosion.");
-                    })
+                    });
                     nearPlayer.lastNoTntMsg = now;
                 }
             }
@@ -263,141 +249,147 @@ function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
 const netherXrayCooldown = new Map<string, number>();
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
-  if (event.dimension.id !== "minecraft:nether") return;
+    if (event.dimension.id !== "minecraft:nether") return;
 
-  const solid = event.block.isSolid;
-  const chunk = getChunkOrigin(event.block.location);
-  const now = Date.now();
+    const solid = event.block.isSolid;
+    const chunk = getChunkOrigin(event.block.location);
+    const now = Date.now();
 
-  if (get("antiXray")) {
-    const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
+    if (get("antiXray")) {
+        const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
 
-    for (const targetChunk of targets) {
-      const key = posKeyXZ(targetChunk);
-      const cooldown = netherXrayCooldown.get(key) ?? 0;
+        for (const targetChunk of targets) {
+            const key = posKeyXZ(targetChunk);
+            const cooldown = netherXrayCooldown.get(key) ?? 0;
 
-      if (now - cooldown > get("antiXrayGenerateCooldown")) {
-        netherXrayCooldown.set(key, now);
-        system.runJob(replaceNetherArea(event.block.dimension, targetChunk));
-      }
+            if (now - cooldown > get("antiXrayGenerateCooldown")) {
+                netherXrayCooldown.set(key, now);
+                system.runJob(replaceNetherArea(event.block.dimension, targetChunk));
+            }
+        }
     }
-  }
 
-  if (!solid || get("banXrayHandler")) return;
+    if (!solid || get("banXrayHandler")) return;
 
-  const surrounds = returnSurroundSolid(event.block);
+    const surrounds = returnSurroundSolid(event.block);
 
-  system.run(() => {
-    const chunkMap = new Map<string, Record<string, string>>();
+    system.run(() => {
+        const chunkMap = new Map<string, Record<string, string>>();
 
-    surrounds.forEach((block) => {
-      const chunkPrefix = `bn:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
-      const key = `${block.location.x},${block.location.y},${block.location.z}`;
+        surrounds.forEach((block) => {
+            const chunkPrefix = `bn:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
+            const key = `${block.location.x},${block.location.y},${block.location.z}`;
 
-      if (!chunkMap.has(chunkPrefix)) {
-        chunkMap.set(chunkPrefix, loadChunkData(chunkPrefix));
-      }
+            if (!chunkMap.has(chunkPrefix)) {
+                chunkMap.set(chunkPrefix, loadChunkData(chunkPrefix));
+            }
 
-      const chunkData = chunkMap.get(chunkPrefix)!;
-      const raw = chunkData[key];
-      if (!raw) return;
+            const chunkData = chunkMap.get(chunkPrefix)!;
+            const raw = chunkData[key];
+            if (!raw) return;
 
-      block.setType("minecraft:" + raw);
-      delete chunkData[key];
+            block.setType("minecraft:" + raw);
+            delete chunkData[key];
+        });
+
+        for (const [chunkPrefix, chunkData] of chunkMap.entries()) {
+            saveChunkData(chunkPrefix, chunkData);
+        }
     });
-
-    for (const [chunkPrefix, chunkData] of chunkMap.entries()) {
-      saveChunkData(chunkPrefix, chunkData);
-    }
-  });
 });
 const xrayCooldown = new Map<string, number>();
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
-  if (event.dimension.id !== "minecraft:overworld") return;
+    if (event.dimension.id !== "minecraft:overworld") return;
 
-  const solid = event.block.isSolid;
-  const chunk = getChunkOrigin(event.block.location);
-  const now = Date.now();
+    const solid = event.block.isSolid;
+    const chunk = getChunkOrigin(event.block.location);
+    const now = Date.now();
 
-  if (get("antiXray")) {
-    const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
+    if (get("antiXray")) {
+        const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
 
-    for (const targetChunk of targets) {
-      const key = posKeyXZ(targetChunk);
-      const cooldown = xrayCooldown.get(key) ?? 0;
+        for (const targetChunk of targets) {
+            const key = posKeyXZ(targetChunk);
+            const cooldown = xrayCooldown.get(key) ?? 0;
 
-      if (now - cooldown > get("antiXrayGenerateCooldown")) {
-        xrayCooldown.set(key, now);
-        system.runJob(replaceArea(event.block.dimension, targetChunk));
-      }
+            if (now - cooldown > get("antiXrayGenerateCooldown")) {
+                xrayCooldown.set(key, now);
+                system.runJob(replaceArea(event.block.dimension, targetChunk));
+            }
+        }
     }
-  }
 
-  if (!solid || get("banXrayHandler")) return;
+    if (!solid || get("banXrayHandler")) return;
 
-  const surrounds = returnSurroundSolid(event.block);
+    const surrounds = returnSurroundSolid(event.block);
 
-  system.run(() => {
-    const chunkMap = new Map<string, Record<string, string>>();
+    system.run(() => {
+        const chunkMap = new Map<string, Record<string, string>>();
 
-    surrounds.forEach((block) => {
-      const chunkPrefix = `k:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
-      const key = `${block.location.x},${block.location.y},${block.location.z}`;
+        surrounds.forEach((block) => {
+            const chunkPrefix = `k:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
+            const key = `${block.location.x},${block.location.y},${block.location.z}`;
 
-      if (!chunkMap.has(chunkPrefix)) {
-        chunkMap.set(chunkPrefix, loadChunkData(chunkPrefix));
-      }
+            if (!chunkMap.has(chunkPrefix)) {
+                chunkMap.set(chunkPrefix, loadChunkData(chunkPrefix));
+            }
 
-      const chunkData = chunkMap.get(chunkPrefix)!;
-      const raw = chunkData[key];
-      if (!raw) return;
+            const chunkData = chunkMap.get(chunkPrefix)!;
+            const raw = chunkData[key];
+            if (!raw) return;
 
-      block.setType("minecraft:" + raw);
-      delete chunkData[key];
+            block.setType("minecraft:" + raw);
+            delete chunkData[key];
+        });
+
+        for (const [chunkPrefix, chunkData] of chunkMap.entries()) {
+            saveChunkData(chunkPrefix, chunkData);
+        }
     });
-
-    for (const [chunkPrefix, chunkData] of chunkMap.entries()) {
-      saveChunkData(chunkPrefix, chunkData);
-    }
-  });
 });
 addInterval(() => {
     if (get("banXrayHandler")) return;
     const silverfish = [
-      ...world.getDimension("minecraft:overworld").getEntities({
-          type: "minecraft:silverfish",
-      }),
-      ...world.getDimension("minecraft:the_end").getEntities({
-          type: "minecraft:silverfish",
-      }),
-      ...world.getDimension("minecraft:nether").getEntities({
-          type: "minecraft:silverfish",
-      }),
+        ...world.getDimension("minecraft:overworld").getEntities({
+            type: "minecraft:silverfish",
+        }),
+        ...world.getDimension("minecraft:the_end").getEntities({
+            type: "minecraft:silverfish",
+        }),
+        ...world.getDimension("minecraft:nether").getEntities({
+            type: "minecraft:silverfish",
+        }),
     ];
     if (silverfish.length === 0) return;
     silverfish.forEach((entity) => {
-      const { x, y, z } = floorPos(entity.location);
-      const blocks = entity.dimension.getBlocks(new BlockVolume({ x: x + 10, y: y + 5, z: z + 10 }, { x: x - 10, y: y - 5, z: z - 10 }), {
-        includeTypes: [
-          "minecraft:infested_stone",
-          "minecraft:infested_cobblestone",
-          "minecraft:infested_stone_bricks",
-          "minecraft:infested_cracked_stone_bricks",
-          "minecraft:infested_mossy_stone_bricks",
-          "minecraft:infested_chiseled_stone_bricks",
-          "minecraft:infested_deepslate"
-        ]
-      }, true).getBlockLocationIterator();
-      for (const pos of blocks) {
-        const block = entity.dimension.getBlock(pos);
-        if (!block || !block.isValid) continue;
-        block.setType(block.typeId.replace("infested_", ""));
-      }
-    })
+        const { x, y, z } = floorPos(entity.location);
+        const blocks = entity.dimension
+            .getBlocks(
+                new BlockVolume({ x: x + 10, y: y + 5, z: z + 10 }, { x: x - 10, y: y - 5, z: z - 10 }),
+                {
+                    includeTypes: [
+                        "minecraft:infested_stone",
+                        "minecraft:infested_cobblestone",
+                        "minecraft:infested_stone_bricks",
+                        "minecraft:infested_cracked_stone_bricks",
+                        "minecraft:infested_mossy_stone_bricks",
+                        "minecraft:infested_chiseled_stone_bricks",
+                        "minecraft:infested_deepslate",
+                    ],
+                },
+                true
+            )
+            .getBlockLocationIterator();
+        for (const pos of blocks) {
+            const block = entity.dimension.getBlock(pos);
+            if (!block || !block.isValid) continue;
+            block.setType(block.typeId.replace("infested_", ""));
+        }
+    });
 });
-function floorPos ({ x, y, z }: Vector3) {
-  return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) }
+function floorPos({ x, y, z }: Vector3) {
+    return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
 }
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
     event.cancel = true;
