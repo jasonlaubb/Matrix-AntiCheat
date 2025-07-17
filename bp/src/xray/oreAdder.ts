@@ -1,4 +1,4 @@
-import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume, system } from "@minecraft/server";
+import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume } from "@minecraft/server";
 export interface ModifyData {
     pos: Vector3;
     from: string;
