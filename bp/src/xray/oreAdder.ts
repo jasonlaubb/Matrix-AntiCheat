@@ -1,12 +1,12 @@
-import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume } from "@minecraft/server";
+import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume, system } from "@minecraft/server";
 import { get } from "../util/database";
 function fastSurround(block: Block) {
     return [block.above(), block.below(), block.north(), block.east(), block.west(), block.south()].every((b) => b?.isSolid);
 }
-export function returnSurroundSolid(block: Block) {
+function returnSurroundSolid(block: Block) {
     return [block.above(), block.below(), block.north(), block.east(), block.west(), block.south()].filter(block => block?.isSolid) as Block[];
 }
-export function getChunkOrigin({ x, z }: VectorXZ) {
+function getChunkOrigin({ x, z }: VectorXZ) {
     const chunkX = Math.floor(x / 16) * 16;
     const chunkZ = Math.floor(z / 16) * 16;
     return { x: chunkX, z: chunkZ };
@@ -26,10 +26,10 @@ function randomOre() {
         "emerald_ore",
     ][Math.floor(Math.random() * 8)];
 }
-export function posKeyXZ({ x, z }: VectorXZ) {
+function posKeyXZ({ x, z }: VectorXZ) {
     return `${x},${z}`;
 }
-export const includeTypes = [
+const includeTypes = [
     "minecraft:diamond_ore",
     "minecraft:deepslate_diamond_ore",
     "minecraft:iron_ore",
@@ -51,7 +51,7 @@ export const includeTypes = [
 ];
 // Min y: -63
 // Max y: 32
-export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
+function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
   function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
     const density = get("antiXrayGhostBlockDensity");
@@ -121,13 +121,13 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
 }
 
 
-export const netherIncludeTypes = [
+const netherIncludeTypes = [
       "minecraft:nether_gold_ore",
       "minecraft:quartz_ore",
       "minecraft:netherrack",
       "minecraft:blackstone"
     ];
-export function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
+function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
   function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
     const density = get("antiXrayGhostBlockDensity");
@@ -205,3 +205,170 @@ export function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }
 
   return generator();
 }
+
+world.beforeEvents.explosion.subscribe((event) => {
+    if (event.dimension.id !== "minecraft:overworld" || get("banXrayHandler")) return;
+  const impacted = event.getImpactedBlocks();
+  const newImpacted: Block[] = [];
+
+  for (const block of impacted) {
+    const key = `b:${block.location.x},${block.location.y},${block.location.z}`;
+    const raw = world.getDynamicProperty(key) as string;
+
+    if (includeTypes.includes(block.typeId) && raw) {
+      system.run(() => {
+        block.setType("minecraft:" + raw);
+        //@ts-ignore
+        console.log("Restored impacted block: " + raw);
+        world.setDynamicProperty(key); // Clean up
+      });
+    } else {
+      newImpacted.push(block); // Keep block in explosion list
+    }
+
+    // 🔍 Extra check: restore adjacent blocks
+    const neighbors = [
+      block.above(),
+      block.below(),
+      block.north(),
+      block.south(),
+      block.east(),
+      block.west()
+    ];
+
+    for (const neighbor of neighbors) {
+      if (!neighbor || !neighbor.isValid) continue;
+
+      const neighborKey = `b:${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
+      const neighborRaw = world.getDynamicProperty(neighborKey) as string;
+      if (!neighborRaw) continue;
+
+      system.run(() => {
+        neighbor.setType("minecraft:" + neighborRaw);
+        //@ts-ignore
+        console.log("Restored adjacent block: " + neighborRaw);
+        world.setDynamicProperty(neighborKey); // Clean up
+      });
+    }
+  }
+
+  event.setImpactedBlocks(newImpacted);
+});
+const xrayCooldown = new Map<string, number>();
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+    if (event.dimension.id !== "minecraft:overworld") return;
+  const solid = event.block.isSolid;
+  const chunk = getChunkOrigin(event.block.location);
+  const chunkKey = posKeyXZ(chunk);
+
+  if (get("antiXray")) {
+    const cooldown = xrayCooldown.get(chunkKey) ?? 0;
+    const now = Date.now();
+
+    if (now - cooldown > get("antiXrayGenerateCooldown")) {
+      xrayCooldown.set(chunkKey, now);
+      //@ts-ignore
+      console.log("Generating... " + chunkKey);
+      system.runJob(replaceArea(event.block.dimension, chunk));
+    }
+  }
+
+  if (!solid || get("banXrayHandler")) return;
+
+  const surrounds = returnSurroundSolid(event.block);
+
+  system.run(() => {
+    surrounds.forEach((block) => {
+      const key = `b:${block.location.x},${block.location.y},${block.location.z}`;
+      const raw = world.getDynamicProperty(key) as string;
+      if (!raw) return;
+
+      block.setType("minecraft:" + raw);
+      world.setDynamicProperty(key); // Clean up
+    });
+  });
+});
+world.beforeEvents.explosion.subscribe((event) => {
+  if (event.dimension.id !== "minecraft:nether" || get("banXrayHandler")) return;
+
+  const impacted = event.getImpactedBlocks();
+  const newImpacted: Block[] = [];
+
+  for (const block of impacted) {
+    const key = `bn:${block.location.x},${block.location.y},${block.location.z}`;
+    const raw = world.getDynamicProperty(key) as string;
+
+    if (raw) {
+      system.run(() => {
+        block.setType("minecraft:" + raw);
+        //@ts-ignore
+        console.log("Restored impacted nether block: " + raw);
+        world.setDynamicProperty(key); // Clean up
+      });
+    } else {
+      newImpacted.push(block); // Keep block in explosion list
+    }
+
+    // 🔍 Extra check: restore adjacent blocks
+    const neighbors = [
+      block.above(),
+      block.below(),
+      block.north(),
+      block.south(),
+      block.east(),
+      block.west()
+    ];
+
+    for (const neighbor of neighbors) {
+      if (!neighbor || !neighbor.isValid) continue;
+
+      const neighborKey = `bn:${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
+      const neighborRaw = world.getDynamicProperty(neighborKey) as string;
+      if (!neighborRaw) continue;
+
+      system.run(() => {
+        neighbor.setType("minecraft:" + neighborRaw);
+        //@ts-ignore
+        console.log("Restored adjacent nether block: " + neighborRaw);
+        world.setDynamicProperty(neighborKey); // Clean up
+      });
+    }
+  }
+
+  event.setImpactedBlocks(newImpacted);
+});
+const netherXrayCooldown = new Map<string, number>();
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+  if (event.dimension.id !== "minecraft:nether") return;
+
+  const solid = event.block.isSolid;
+  const chunk = getChunkOrigin(event.block.location);
+  const chunkKey = posKeyXZ(chunk);
+
+  if (get("antiXray")) {
+    const cooldown = netherXrayCooldown.get(chunkKey) ?? 0;
+    const now = Date.now();
+
+    if (now - cooldown > get("antiXrayGenerateCooldown")) {
+      netherXrayCooldown.set(chunkKey, now);
+      //@ts-ignore
+      console.log("Generating nether... " + chunkKey);
+      system.runJob(replaceNetherArea(event.block.dimension, chunk));
+    }
+  }
+
+  if (!solid || get("banXrayHandler")) return;
+
+  const surrounds = returnSurroundSolid(event.block);
+
+  system.run(() => {
+    surrounds.forEach((block) => {
+      const key = `bn:${block.location.x},${block.location.y},${block.location.z}`;
+      const raw = world.getDynamicProperty(key) as string;
+      if (!raw) return;
+
+      block.setType("minecraft:" + raw);
+      world.setDynamicProperty(key); // Clean up
+    });
+  });
+});
