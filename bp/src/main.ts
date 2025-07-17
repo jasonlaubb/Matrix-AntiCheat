@@ -311,6 +311,8 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 
     if (now - cooldown > get("antiXrayGenerateCooldown")) {
       xrayCooldown.set(chunkKey, now);
+      //@ts-ignore
+      console.log("Generating... " + posKeyXZ(chunk));
       system.runJob(replaceArea(event.block.dimension, chunk));
     }
   }
