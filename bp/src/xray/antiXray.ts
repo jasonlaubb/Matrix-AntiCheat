@@ -105,7 +105,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
 
     const blocks = [...iterator1, ...iterator2];
     let move = 0;
-        const chunkPrefix = `b:${Math.floor(startX / 16) * 16},${Math.floor(startZ / 16) * 16}`;
+        const chunkPrefix = `k:${Math.floor(startX / 16) * 16},${Math.floor(startZ / 16) * 16}`;
     const chunkData = loadChunkData(chunkPrefix);
 
     function recordModification(pos: Vector3, from: string) {
@@ -231,7 +231,7 @@ world.beforeEvents.explosion.subscribe((event) => {
   const newImpacted: Block[] = [];
 
   for (const block of impacted) {
-    const chunkPrefix = `b:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
+    const chunkPrefix = `k:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
     const chunkData = loadChunkData(chunkPrefix);
     const key = `${block.location.x},${block.location.y},${block.location.z}`;
     const raw = chunkData[key];
@@ -250,7 +250,7 @@ world.beforeEvents.explosion.subscribe((event) => {
     for (const neighbor of neighbors) {
       if (!neighbor || !neighbor.isValid) continue;
 
-      const neighborChunk = `b:${Math.floor(neighbor.location.x / 16) * 16},${Math.floor(neighbor.location.z / 16) * 16}`;
+      const neighborChunk = `k:${Math.floor(neighbor.location.x / 16) * 16},${Math.floor(neighbor.location.z / 16) * 16}`;
       const neighborData = loadChunkData(neighborChunk);
       const neighborKey = `${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
       const neighborRaw = neighborData[neighborKey];
@@ -404,7 +404,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     const chunkMap = new Map<string, Record<string, string>>();
 
     surrounds.forEach((block) => {
-      const chunkPrefix = `b:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
+      const chunkPrefix = `k:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
       const key = `${block.location.x},${block.location.y},${block.location.z}`;
 
       if (!chunkMap.has(chunkPrefix)) {
