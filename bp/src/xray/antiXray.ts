@@ -181,7 +181,7 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
     }
 
     function randomNetherOre(): string {
-      return ["nether_gold_ore", "quartz_ore"][Math.floor(Math.random() * 4)];
+      return ["nether_gold_ore", "quartz_ore"][Math.floor(Math.random() * 2)];
     }
 
     for (const position of blocks) {
