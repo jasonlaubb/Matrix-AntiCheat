@@ -1,8 +1,4 @@
 import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume } from "@minecraft/server";
-export interface ModifyData {
-    pos: Vector3;
-    from: string;
-}
 function fastSurround(block: Block) {
     return [block.above(), block.below(), block.north(), block.east(), block.west(), block.south()].every((b) => b?.isSolid);
 }
@@ -55,7 +51,6 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
   function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
 
-    // Original range: Y = -63 to 32
     const iterator1 = dimension.getBlocks(
       new BlockVolume(
         { x: startX, y: -63, z: startZ },
@@ -65,7 +60,6 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
       true
     ).getBlockLocationIterator();
 
-    // Extended range: Y = 33 to 64
     const iterator2 = dimension.getBlocks(
       new BlockVolume(
         { x: startX, y: 33, z: startZ },
@@ -75,28 +69,30 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
       true
     ).getBlockLocationIterator();
 
-    // Merge both iterators into one array
     const blocks = [...iterator1, ...iterator2];
-
-
     let move = 0;
 
     function recordModification(pos: Vector3, from: string) {
-      const key = `chunk:${pos.x},${pos.y},${pos.z}`;
-      world.setDynamicProperty(key, JSON.stringify({ from }));
+      const key = `bd:${pos.x},${pos.y},${pos.z}`;
+      const rawId = from.replace("minecraft:", ""); // Strip namespace
+      world.setDynamicProperty(key, rawId);
     }
 
     for (const position of blocks) {
       const block = dimension.getBlock(position);
       if (!block || !block.isValid) continue;
 
-      const key = `chunk:${position.x},${position.y},${position.z}`;
+      const key = `bd:${position.x},${position.y},${position.z}`;
       const raw = world.getDynamicProperty(key) as string;
-      const saved = raw ? JSON.parse(raw) as ModifyData : null;
 
-      if (saved && block.typeId !== saved.from && !block.isAir) {
-        block.setType(saved.from);
+      if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
+        block.setType(`minecraft:${raw}`);
         move++;
+        continue;
+      }
+
+      if (raw && !block.isSolid) {
+        world.setDynamicProperty(key); // Clean up
         continue;
       }
 

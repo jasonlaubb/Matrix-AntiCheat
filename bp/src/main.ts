@@ -10,7 +10,7 @@ import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
-import { getChunkOrigin, includeTypes, ModifyData, posKeyXZ, replaceArea, returnSurroundSolid } from "./xray/oreAdder";
+import { getChunkOrigin, includeTypes, posKeyXZ, replaceArea, returnSurroundSolid } from "./xray/oreAdder";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -276,24 +276,44 @@ world.beforeEvents.explosion.subscribe((event) => {
   const newImpacted: Block[] = [];
 
   for (const block of impacted) {
-    if (!includeTypes.includes(block.typeId)) {
-      newImpacted.push(block);
-      continue;
-    }
-
-    const key = `chunk:${block.location.x},${block.location.y},${block.location.z}`;
+    const key = `bd:${block.location.x},${block.location.y},${block.location.z}`;
     const raw = world.getDynamicProperty(key) as string;
-    if (!raw) {
-      newImpacted.push(block);
-      continue;
+
+    if (includeTypes.includes(block.typeId) && raw) {
+      system.run(() => {
+        block.setType("minecraft:" + raw);
+        //@ts-ignore
+        console.log("Restored impacted block: " + raw);
+        world.setDynamicProperty(key); // Clean up
+      });
+    } else {
+      newImpacted.push(block); // Keep block in explosion list
     }
 
-    const saved = JSON.parse(raw) as ModifyData;
+    // 🔍 Extra check: restore adjacent blocks
+    const neighbors = [
+      block.above(),
+      block.below(),
+      block.north(),
+      block.south(),
+      block.east(),
+      block.west()
+    ];
 
-    system.run(() => {
-      block.setType(saved.from);
-      world.setDynamicProperty(key, undefined); // Clean up
-    });
+    for (const neighbor of neighbors) {
+      if (!neighbor || !neighbor.isValid) continue;
+
+      const neighborKey = `bd:${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
+      const neighborRaw = world.getDynamicProperty(neighborKey) as string;
+      if (!neighborRaw) continue;
+
+      system.run(() => {
+        neighbor.setType("minecraft:" + neighborRaw);
+        //@ts-ignore
+        console.log("Restored adjacent block: " + neighborRaw);
+        world.setDynamicProperty(neighborKey); // Clean up
+      });
+    }
   }
 
   event.setImpactedBlocks(newImpacted);
@@ -312,7 +332,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     if (now - cooldown > get("antiXrayGenerateCooldown")) {
       xrayCooldown.set(chunkKey, now);
       //@ts-ignore
-      console.log("Generating... " + posKeyXZ(chunk));
+      console.log("Generating... " + chunkKey);
       system.runJob(replaceArea(event.block.dimension, chunk));
     }
   }
@@ -323,14 +343,11 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 
   system.run(() => {
     surrounds.forEach((block) => {
-      const key = `chunk:${block.location.x},${block.location.y},${block.location.z}`;
+      const key = `bd:${block.location.x},${block.location.y},${block.location.z}`;
       const raw = world.getDynamicProperty(key) as string;
       if (!raw) return;
 
-      const saved = JSON.parse(raw) as ModifyData;
-      block.setType(saved.from);
-      //@ts-ignore
-      console.log("Recovered: " + saved.from);
+      block.setType("minecraft:" + raw);
       world.setDynamicProperty(key); // Clean up
     });
   });
