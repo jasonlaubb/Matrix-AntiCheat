@@ -54,7 +54,7 @@ export const setNumber = {
     requireOp: true,
     parameters: [
         {
-            name: "stringProperty",
+            name: "numberProperty",
             type: "enum",
         },
         {
