@@ -1,4 +1,4 @@
-import { Block, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, world } from "@minecraft/server"
+import { Block, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, world } from "@minecraft/server";
 export default {
     property: "antiBreakerEnable",
     enable() {
@@ -8,13 +8,13 @@ export default {
     disable() {
         world.beforeEvents.playerBreakBlock.unsubscribe(interactOrBreak);
         world.beforeEvents.playerInteractWithBlock.unsubscribe(interactOrBreak);
-    }
-}
-function interactOrBreak (event: PlayerBreakBlockBeforeEvent | PlayerInteractWithBlockBeforeEvent) {
+    },
+};
+function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWithBlockBeforeEvent) {
     if (event.block.isAir || event.player.isOp()) return;
     if (event.block.typeId !== "minecraft:bed") {
         const surround = getSurround(event.block);
-        if (surround.every(block => block && block.isSolid)) {
+        if (surround.every((block) => block && block.isSolid)) {
             event.cancel = true;
             event.player.flag("Breaker", "A", "Block", { block: event.block.typeId });
         }
@@ -28,23 +28,23 @@ function interactOrBreak (event: PlayerBreakBlockBeforeEvent | PlayerInteractWit
         }
     }
 }
-function getSurround (block: Block) {
+function getSurround(block: Block) {
     try {
         return [block.above(), block.below(), block.east(), block.west(), block.north(), block.south()];
     } catch {
         return [];
     }
 }
-function surroundSolidCount (block: Block) {
-    return getSurround(block).filter(b => b && (b.isSolid || isGlassBlock(b.typeId))).length;
+function surroundSolidCount(block: Block) {
+    return getSurround(block).filter((b) => b && (b.isSolid || isGlassBlock(b.typeId))).length;
 }
-function getBedSide (block: Block) {
+function getBedSide(block: Block) {
     try {
-        return [block.east(), block.west(), block.north(), block.south()].find(b => b && b.typeId === "minecraft:bed");
+        return [block.east(), block.west(), block.north(), block.south()].find((b) => b && b.typeId === "minecraft:bed");
     } catch {
         return undefined;
     }
 }
-function isGlassBlock (typeId: string) {
+function isGlassBlock(typeId: string) {
     return typeId.startsWith("minecraft:") && typeId.endsWith("glass");
 }

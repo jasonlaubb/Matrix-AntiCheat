@@ -8,8 +8,8 @@ export default {
         world.beforeEvents.playerInteractWithBlock.unsubscribe(interact);
     },
     property: "antiChestauraEnable",
-}
-function interact (event: PlayerInteractWithBlockBeforeEvent) {
+};
+function interact(event: PlayerInteractWithBlockBeforeEvent) {
     const inventory = event.block.getComponent("inventory");
     if (!inventory || event.player.isOp() || distanceXZ(event.player.location, event.block.location) < 2) return;
     const angle = calculateRelativeViewAngle(event.player.location, event.block.center(), event.player.getRotation().y);
@@ -52,11 +52,11 @@ function interact (event: PlayerInteractWithBlockBeforeEvent) {
             if (average < 150) {
                 event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
             }
-        })
+        });
     }
 }
 
-function stackInventoryItem (container: Container) {
+function stackInventoryItem(container: Container) {
     let unstackableAmount = 0;
     const stackable = {} as { [key: string]: number };
     for (let i = 0; i < container.size; i++) {

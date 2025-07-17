@@ -37,7 +37,7 @@ export default {
     },
     chatRankTagPrefix: {
         type: "string",
-        value: "rank:"
+        value: "rank:",
     },
     antiKillauraEnable: {
         type: "boolean",

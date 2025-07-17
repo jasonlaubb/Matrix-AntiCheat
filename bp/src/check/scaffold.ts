@@ -8,8 +8,8 @@ export default {
     },
     disable() {
         world.beforeEvents.playerPlaceBlock.unsubscribe(blockPlace);
-    }
-}
+    },
+};
 
 function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { block, player } = event;
@@ -18,9 +18,9 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { x: pitch, y: yaw } = player.getRotation();
     const isTouchInput = player.inputInfo.lastInputModeUsed === "Touch";
     const touchingBlock = getOnlyTouchBlock(block);
-    const centerLoc = block.center()
-    ,angle = calculateRelativeViewAngle(player.location, centerLoc, yaw)
-    ,distance = distanceXZ(player.location, centerLoc);
+    const centerLoc = block.center(),
+        angle = calculateRelativeViewAngle(player.location, centerLoc, yaw),
+        distance = distanceXZ(player.location, centerLoc);
     const isNormalScaffold = touchingBlock && player.scaffoldLastPlaceLoc && locEqual(touchingBlock.location, player.scaffoldLastPlaceLoc);
     player.scaffoldNoRotationFlag ??= 0;
     if (player.scaffoldLastPlaceLoc && pitch < (isTouchInput ? 45 : 30) && isNormalScaffold && (distance <= 2.5 || distanceXZ(touchingBlock.center(), event.player.location) <= distance)) {
@@ -55,8 +55,8 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         }
     } else player.scaffoldDownFlag = 0;
     const strightX = player.scaffoldLastPlaceLoc?.x === block.location.x;
-    const strightZ = player.scaffoldLastPlaceLoc?.z === block.location.z
-    if ((strightX && player.scaffoldStrightXZ === "x" || strightZ && player.scaffoldStrightXZ === "z") && block.location.y === player.scaffoldLastPlaceLoc?.y) {
+    const strightZ = player.scaffoldLastPlaceLoc?.z === block.location.z;
+    if (((strightX && player.scaffoldStrightXZ === "x") || (strightZ && player.scaffoldStrightXZ === "z")) && block.location.y === player.scaffoldLastPlaceLoc?.y) {
         player.scaffoldStraightCount++;
     } else {
         player.scaffoldStraightCount = 0;
@@ -85,7 +85,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     }
 }
 
-function getOnlyTouchBlock (block: Block) {
+function getOnlyTouchBlock(block: Block) {
     try {
         const blocks = [block.below(), block.above(), block.north(), block.south(), block.west(), block.east()];
         let touchingBlock: Block | undefined;

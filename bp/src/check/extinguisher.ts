@@ -7,9 +7,12 @@ export default {
         world.beforeEvents.playerBreakBlock.unsubscribe(blockBreak);
     },
     property: "antiExtinguisherEnable",
-}
-function blockBreak (event: PlayerBreakBlockBeforeEvent) {
-    const { block: { typeId }, player } = event;
+};
+function blockBreak(event: PlayerBreakBlockBeforeEvent) {
+    const {
+        block: { typeId },
+        player,
+    } = event;
     if (typeId === "minecraft:fire") {
         event.cancel = true;
         system.run(() => player.flag("Extinguisher", "A", "Player", { block: typeId }));

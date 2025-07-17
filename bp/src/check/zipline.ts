@@ -2,14 +2,14 @@ import { GameMode, PlayerPlaceBlockBeforeEvent, world } from "@minecraft/server"
 import { distanceXZ } from "../util/mathUtil";
 export default {
     enable() {
-        world.beforeEvents.playerPlaceBlock.subscribe(blockPlace)
+        world.beforeEvents.playerPlaceBlock.subscribe(blockPlace);
     },
     disable() {
-        world.beforeEvents.playerPlaceBlock.subscribe(blockPlace)
+        world.beforeEvents.playerPlaceBlock.subscribe(blockPlace);
     },
     property: "antiZiplineEnable",
-}
-function blockPlace (event: PlayerPlaceBlockBeforeEvent) {
+};
+function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { block, player } = event;
     const height = block.location.y - player.location.y;
     if (player.isOp() || height < 1.8 || height > 2 || player.getGameMode() === GameMode.Creative) return;
@@ -24,7 +24,6 @@ function blockPlace (event: PlayerPlaceBlockBeforeEvent) {
                 player.flag("Zipline", "A", "Block", { height: height.toFixed(2) });
                 player.ziplineFlag = 0;
             }
-
         } else if (player.ziplineFlag >= 0.5) player.ziplineFlag -= 0.5;
     } else player.ziplineFlag = 0;
     player.ziplineLastPlace = now;

@@ -17,7 +17,7 @@ export const detectionList = {
     scaffold,
     extinguisher,
     breaker,
-}
+};
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
         const isEnabled = get(toggle.property as keyof typeof property);
@@ -36,7 +36,7 @@ export const detect = {
         {
             name: "enable",
             type: "boolean",
-        }
+        },
     ],
     execute: (_player, [name, enable]) => {
         const toggle = detectionList[name as keyof typeof detectionList];
@@ -45,7 +45,7 @@ export const detect = {
         }
         const currentEnabled = get(toggle.property as keyof typeof property);
         if (currentEnabled === enable) {
-            return { status: 1, message: `§7[§aMatrix§7] §f${name} detection is already ${enable ? "enabled" : "disabled"}!`};
+            return { status: 1, message: `§7[§aMatrix§7] §f${name} detection is already ${enable ? "enabled" : "disabled"}!` };
         }
         system.run(() => {
             if (enable) {
@@ -56,14 +56,19 @@ export const detect = {
                 world.setDynamicProperty(toggle.property, false);
             }
         });
-        return { status: 0, message: `§7[§aMatrix§7] §f${name} detection has been ${enable ? "enabled" : "disabled"}!`};
-    }
+        return { status: 0, message: `§7[§aMatrix§7] §f${name} detection has been ${enable ? "enabled" : "disabled"}!` };
+    },
 } as Command;
 export const detectionlist = {
     name: "detectionlist",
     description: "List all detection including their status",
     requireOp: true,
     execute: (_player) => {
-        return { status: 0, message: `§7[§aMatrix§7] §fDetection list:\n${Object.entries(detectionList).map(([name, toggle]) => `§f- ${name}: ${get(toggle.property as keyof typeof property) ? "§aEnabled" : "§cDisabled"}`).join("\n")}` };
-    }
+        return {
+            status: 0,
+            message: `§7[§aMatrix§7] §fDetection list:\n${Object.entries(detectionList)
+                .map(([name, toggle]) => `§f- ${name}: ${get(toggle.property as keyof typeof property) ? "§aEnabled" : "§cDisabled"}`)
+                .join("\n")}`,
+        };
+    },
 } as Command;

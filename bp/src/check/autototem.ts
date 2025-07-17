@@ -8,8 +8,8 @@ export default {
         removeCheckInterval(tickEvent);
     },
     property: "antiAutototemEnable",
-}
-function tickEvent (player: Player) {
+};
+function tickEvent(player: Player) {
     if (player.isOp()) return;
     const offhand = player.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Offhand);
     const hasItem = offhand.getItem();

@@ -15,32 +15,33 @@ export function fastAbs(x: number): number {
 
 // Simple distance function
 export function distance(a: Vector3, b: Vector3): number {
-    const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
+    const dx = a.x - b.x,
+        dy = a.y - b.y,
+        dz = a.z - b.z;
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
-export function distanceXZ (a: Vector3, b: Vector3): number {
-    const dx = a.x - b.x, dz = a.z - b.z;
+export function distanceXZ(a: Vector3, b: Vector3): number {
+    const dx = a.x - b.x,
+        dz = a.z - b.z;
     return Math.sqrt(dx * dx + dz * dz);
 }
 
 export function lineDistance(line1: Vector3[], line2: Vector3[]) {
     const segmentDistance = (p1: Vector3, p2: Vector3, q1: Vector3, q2: Vector3) => {
-        const u = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z }
-        ,v = { x: q2.x - q1.x, y: q2.y - q1.y, z: q2.z - q1.z }
-        ,w = { x: p1.x - q1.x, y: p1.y - q1.y, z: p1.z - q1.z }
-
-        ,a = u.x * u.x + u.y * u.y + u.z * u.z
-        ,b = u.x * v.x + u.y * v.y + u.z * v.z
-        ,c = v.x * v.x + v.y * v.y + v.z * v.z
-        ,d = u.x * w.x + u.y * w.y + u.z * w.z
-        ,e = v.x * w.x + v.y * w.y + v.z * w.z
-
-        ,D = a * c - b * b;
+        const u = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z },
+            v = { x: q2.x - q1.x, y: q2.y - q1.y, z: q2.z - q1.z },
+            w = { x: p1.x - q1.x, y: p1.y - q1.y, z: p1.z - q1.z },
+            a = u.x * u.x + u.y * u.y + u.z * u.z,
+            b = u.x * v.x + u.y * v.y + u.z * v.z,
+            c = v.x * v.x + v.y * v.y + v.z * v.z,
+            d = u.x * w.x + u.y * w.y + u.z * w.z,
+            e = v.x * w.x + v.y * w.y + v.z * w.z,
+            D = a * c - b * b;
 
         let sc, tc;
         if (D < 1e-6) {
             sc = 0;
-            tc = (b !== 0) ? d / b : 0;
+            tc = b !== 0 ? d / b : 0;
         } else {
             sc = (b * e - c * d) / D;
             tc = (a * e - b * d) / D;
@@ -50,15 +51,15 @@ export function lineDistance(line1: Vector3[], line2: Vector3[]) {
         tc = Math.max(0, Math.min(1, tc));
 
         const closestPoint1 = {
-            x: p1.x + sc * u.x,
-            y: p1.y + sc * u.y,
-            z: p1.z + sc * u.z,
-        }
-        ,closestPoint2 = {
-            x: q1.x + tc * v.x,
-            y: q1.y + tc * v.y,
-            z: q1.z + tc * v.z,
-        };
+                x: p1.x + sc * u.x,
+                y: p1.y + sc * u.y,
+                z: p1.z + sc * u.z,
+            },
+            closestPoint2 = {
+                x: q1.x + tc * v.x,
+                y: q1.y + tc * v.y,
+                z: q1.z + tc * v.z,
+            };
 
         return distance(closestPoint1, closestPoint2);
     };
@@ -101,19 +102,19 @@ export function calculateRelativeViewAngle(pos1: Vector3, pos2: Vector3, rotatio
     return fastAbs(c);
 }
 export function minDifference(arr: number[]) {
-  if (arr.length < 2) return null; // Not enough numbers to compare
+    if (arr.length < 2) return null; // Not enough numbers to compare
 
-  // Sort the array first
-  const sorted = arr.slice().sort((a, b) => a - b);
+    // Sort the array first
+    const sorted = arr.slice().sort((a, b) => a - b);
 
-  // Compare adjacent numbers for minimal difference
-  let minDiff = Infinity;
-  for (let i = 1; i < sorted.length; i++) {
-    const diff = sorted[i] - sorted[i - 1];
-    if (diff < minDiff) {
-      minDiff = diff;
+    // Compare adjacent numbers for minimal difference
+    let minDiff = Infinity;
+    for (let i = 1; i < sorted.length; i++) {
+        const diff = sorted[i] - sorted[i - 1];
+        if (diff < minDiff) {
+            minDiff = diff;
+        }
     }
-  }
 
-  return minDiff;
+    return minDiff;
 }

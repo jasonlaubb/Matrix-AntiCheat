@@ -49,7 +49,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
 };
 Player.prototype.kick = function (reason: string) {
     this.runCommand(`kick @s ${reason}`);
-}
+};
 interface Option {
     name: string;
     type: "string" | "integer" | "float" | "boolean" | "enum" | "player" | "playerTarget" | "normalPlayerTarget";
@@ -236,8 +236,8 @@ system.beforeEvents.startup.subscribe((event) => {
                 source.sendMessage("§7[§aMatrix§7] §fNice try... but the item is overpowered and you aren't an operator to stop it from escaping!");
                 source.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Mainhand)!.setItem();
             }
-        }
-    })
+        },
+    });
 });
 
 world.afterEvents.worldLoad.subscribe(() => {

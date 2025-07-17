@@ -12,28 +12,34 @@ export interface NameBanData {
     executor: string;
     expire: number;
 }
-export function ban (player: Player, reason: string, expire: number) {
+export function ban(player: Player, reason: string, expire: number) {
     const now = Date.now();
     if (expire <= now) return;
-    world.setDynamicProperty("banData:" + player.id, JSON.stringify({
-        name: player.name,
-        id: player.id, // Prevent name change bypass
-        reason,
-        executor: player.name,
-        expire,
-    }));
+    world.setDynamicProperty(
+        "banData:" + player.id,
+        JSON.stringify({
+            name: player.name,
+            id: player.id, // Prevent name change bypass
+            reason,
+            executor: player.name,
+            expire,
+        })
+    );
 }
-export function banName (name: string, reason: string, executor: string, expire: number) {
+export function banName(name: string, reason: string, executor: string, expire: number) {
     const now = Date.now();
     if (expire <= now) return;
-    world.setDynamicProperty("nameBanData:" + name, JSON.stringify({
-        name,
-        reason,
-        executor,
-        expire,
-    }));
+    world.setDynamicProperty(
+        "nameBanData:" + name,
+        JSON.stringify({
+            name,
+            reason,
+            executor,
+            expire,
+        })
+    );
 }
-export function checkPunish (player: Player) {
+export function checkPunish(player: Player) {
     const banString = world.getDynamicProperty("banData:" + player.id) as string;
     const now = Date.now();
     if (banString) {
@@ -46,7 +52,7 @@ export function checkPunish (player: Player) {
         }
     }
 }
-function convertDurationString (ms: number) {
+function convertDurationString(ms: number) {
     const seconds = Math.floor(ms / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
