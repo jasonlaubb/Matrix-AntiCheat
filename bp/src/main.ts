@@ -7,7 +7,7 @@ import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
-import { getPlayerRank, locEqual } from "./util/util";
+import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
 import { getChunkOrigin, includeTypes, ModifyData, posKeyXZ, replaceArea, returnSurroundSolid } from "./xray/oreAdder";
@@ -272,63 +272,62 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     }
 });
 world.beforeEvents.explosion.subscribe((event) => {
-    const impacted = event.getImpactedBlocks();
-    const newImpacted: Block[] = [];
-    for (let i = 0; i < impacted.length; i++) {
-        const block = impacted[i];
-        if (includeTypes.includes(block.typeId)) {
-            const id = "chunkdata:" + posKeyXZ(getChunkOrigin(block.location));
-            const check = world.getDynamicProperty(id) as string;
-            if (!check) {
-                newImpacted.push(block);
-                continue;
-            }
-            const modified = JSON.parse(check) as ModifyData[];
-            const data = modified.findIndex(({ pos }) => locEqual(pos, block.location));
-            if (data !== -1) {
-                system.run(() => {
-                    const current = world.getDynamicProperty(id) as string;
-                    const data = JSON.parse(current) as ModifyData[];
-                    const index = modified.findIndex(({ pos }) => locEqual(pos, block.location));
-                    block.setType(data[index].from);
-                    data.splice(index, 1);
-                    world.setDynamicProperty(JSON.stringify(data));
-                })
-            } else newImpacted.push(block);
-        } else newImpacted.push(block);
+  const impacted = event.getImpactedBlocks();
+  const newImpacted: Block[] = [];
+
+  for (const block of impacted) {
+    if (!includeTypes.includes(block.typeId)) {
+      newImpacted.push(block);
+      continue;
     }
-    if (newImpacted.length !== impacted.length) event.setImpactedBlocks(newImpacted);
+
+    const key = `chunk:${block.location.x},${block.location.y},${block.location.z}`;
+    const raw = world.getDynamicProperty(key) as string;
+    if (!raw) {
+      newImpacted.push(block);
+      continue;
+    }
+
+    const saved = JSON.parse(raw) as ModifyData;
+
+    system.run(() => {
+      block.setType(saved.from);
+      world.setDynamicProperty(key, undefined); // Clean up
+    });
+  }
+
+  event.setImpactedBlocks(newImpacted);
 });
 const xrayCooldown = new Map<string, number>();
+
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    const solid = event.block.isSolid;
-    if (get("antiXray")) {
-        const chunk = getChunkOrigin(event.block.location);
-        const cooldown = xrayCooldown.get(posKeyXZ(chunk)) ?? 0;
-        const now = Date.now();
-        if (get("antiXray") && now - cooldown > get("antiXrayGenerateCooldown")) {
-            xrayCooldown.set(posKeyXZ(event.block.location), now);
-            system.runJob(replaceArea(event.block.dimension, getChunkOrigin(chunk)));
-        }
+  const solid = event.block.isSolid;
+  const chunk = getChunkOrigin(event.block.location);
+  const chunkKey = posKeyXZ(chunk);
+
+  if (get("antiXray")) {
+    const cooldown = xrayCooldown.get(chunkKey) ?? 0;
+    const now = Date.now();
+
+    if (now - cooldown > get("antiXrayGenerateCooldown")) {
+      xrayCooldown.set(chunkKey, now);
+      system.runJob(replaceArea(event.block.dimension, chunk));
     }
-    if (!solid || get("banXrayHandler")) return;
-    const surrounds = returnSurroundSolid(event.block);
-    system.run(() => {
-        surrounds.forEach((block) => {
-            const chunkKey = "chunkdata:" + posKeyXZ(getChunkOrigin(block.location));
-            const rawData = world.getDynamicProperty(chunkKey) as string;
-            if (!rawData) return;
+  }
 
-            const modified = JSON.parse(rawData) as ModifyData[];
-            const index = modified.findIndex(({ pos }) => locEqual(pos, block.location));
-            if (index === -1) return;
+  if (!solid || get("banXrayHandler")) return;
 
-            // Restore original block type
-            block.setType(modified[index].from);
+  const surrounds = returnSurroundSolid(event.block);
 
-            // Remove from modification record
-            modified.splice(index, 1);
-            world.setDynamicProperty(chunkKey, JSON.stringify(modified));
-        });
+  system.run(() => {
+    surrounds.forEach((block) => {
+      const key = `chunk:${block.location.x},${block.location.y},${block.location.z}`;
+      const raw = world.getDynamicProperty(key) as string;
+      if (!raw) return;
+
+      const saved = JSON.parse(raw) as ModifyData;
+      block.setType(saved.from);
+      world.setDynamicProperty(key, undefined); // Clean up
     });
+  });
 });
