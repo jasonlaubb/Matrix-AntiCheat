@@ -67,7 +67,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
     const iterator2 = dimension.getBlocks(
       new BlockVolume(
         { x: startX, y: 33, z: startZ },
-        { x: endX, y: 64, z: endZ }
+        { x: endX, y: 84, z: endZ }
       ),
       { includeTypes },
       true
@@ -109,6 +109,93 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
       } else if (fastSurround(block)) {
         recordModification(position, block.typeId);
         block.setType(block.typeId.startsWith("minecraft:deepslate_") ? "minecraft:deepslate" : "minecraft:stone");
+        move++;
+      }
+
+      if (move >= 20) {
+        yield;
+      }
+    }
+  }
+
+  return generator();
+}
+
+
+export const netherIncludeTypes = [
+      "minecraft:nether_gold_ore",
+      "minecraft:quartz_ore",
+      "minecraft:netherrack",
+      "minecraft:blackstone"
+    ];
+export function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
+  function* generator() {
+    const endX = startX + 15, endZ = startZ + 15;
+    const density = get("antiXrayGhostBlockDensity");
+
+    const iterator1 = dimension.getBlocks(
+      new BlockVolume(
+        { x: startX, y: 0, z: startZ },
+        { x: endX, y: 64, z: endZ }
+      ),
+      { includeTypes: netherIncludeTypes },
+      true
+    ).getBlockLocationIterator();
+
+    const iterator2 = dimension.getBlocks(
+      new BlockVolume(
+        { x: startX, y: 65, z: startZ },
+        { x: endX, y: 128, z: endZ }
+      ),
+      { includeTypes: netherIncludeTypes },
+      true
+    ).getBlockLocationIterator();
+
+    const blocks = [...iterator1, ...iterator2];
+    let move = 0;
+
+    function recordModification(pos: Vector3, from: string) {
+      const key = `bn:${pos.x},${pos.y},${pos.z}`;
+      const rawId = from.replace("minecraft:", "");
+      world.setDynamicProperty(key, rawId);
+    }
+
+    function randomNetherOre(): string {
+      return [
+        "nether_gold_ore",
+        "quartz_ore",
+        "ancient_debris",
+        "ancient_debris",
+      ][Math.floor(Math.random() * 4)];
+    }
+
+    for (const position of blocks) {
+      const block = dimension.getBlock(position);
+      if (!block || !block.isValid) continue;
+
+      const key = `bn:${position.x},${position.y},${position.z}`;
+      const raw = world.getDynamicProperty(key) as string;
+
+      if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
+        block.setType(`minecraft:${raw}`);
+        move++;
+        continue;
+      }
+
+      if (raw && !block.isSolid) {
+        world.setDynamicProperty(key); // Clean up
+        continue;
+      }
+
+      if (["minecraft:netherrack", "minecraft:blackstone"].includes(block.typeId)) {
+        if (draw(density) && fastSurround(block)) {
+          recordModification(position, block.typeId);
+          block.setType("minecraft:" + randomNetherOre());
+          move++;
+        }
+      } else if (fastSurround(block)) {
+        recordModification(position, block.typeId);
+        block.setType("minecraft:netherrack");
         move++;
       }
 

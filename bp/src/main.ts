@@ -10,7 +10,7 @@ import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
-import { getChunkOrigin, includeTypes, posKeyXZ, replaceArea, returnSurroundSolid } from "./xray/oreAdder";
+import { getChunkOrigin, includeTypes, posKeyXZ, replaceArea, replaceNetherArea, returnSurroundSolid } from "./xray/oreAdder";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -272,6 +272,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     }
 });
 world.beforeEvents.explosion.subscribe((event) => {
+    if (event.dimension.id !== "minecraft:overworld" || get("banXrayHandler")) return;
   const impacted = event.getImpactedBlocks();
   const newImpacted: Block[] = [];
 
@@ -321,6 +322,7 @@ world.beforeEvents.explosion.subscribe((event) => {
 const xrayCooldown = new Map<string, number>();
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
+    if (event.dimension.id !== "minecraft:overworld") return;
   const solid = event.block.isSolid;
   const chunk = getChunkOrigin(event.block.location);
   const chunkKey = posKeyXZ(chunk);
@@ -344,6 +346,91 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
   system.run(() => {
     surrounds.forEach((block) => {
       const key = `b:${block.location.x},${block.location.y},${block.location.z}`;
+      const raw = world.getDynamicProperty(key) as string;
+      if (!raw) return;
+
+      block.setType("minecraft:" + raw);
+      world.setDynamicProperty(key); // Clean up
+    });
+  });
+});
+world.beforeEvents.explosion.subscribe((event) => {
+  if (event.dimension.id !== "minecraft:nether" || get("banXrayHandler")) return;
+
+  const impacted = event.getImpactedBlocks();
+  const newImpacted: Block[] = [];
+
+  for (const block of impacted) {
+    const key = `bn:${block.location.x},${block.location.y},${block.location.z}`;
+    const raw = world.getDynamicProperty(key) as string;
+
+    if (raw) {
+      system.run(() => {
+        block.setType("minecraft:" + raw);
+        //@ts-ignore
+        console.log("Restored impacted nether block: " + raw);
+        world.setDynamicProperty(key); // Clean up
+      });
+    } else {
+      newImpacted.push(block); // Keep block in explosion list
+    }
+
+    // 🔍 Extra check: restore adjacent blocks
+    const neighbors = [
+      block.above(),
+      block.below(),
+      block.north(),
+      block.south(),
+      block.east(),
+      block.west()
+    ];
+
+    for (const neighbor of neighbors) {
+      if (!neighbor || !neighbor.isValid) continue;
+
+      const neighborKey = `bn:${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
+      const neighborRaw = world.getDynamicProperty(neighborKey) as string;
+      if (!neighborRaw) continue;
+
+      system.run(() => {
+        neighbor.setType("minecraft:" + neighborRaw);
+        //@ts-ignore
+        console.log("Restored adjacent nether block: " + neighborRaw);
+        world.setDynamicProperty(neighborKey); // Clean up
+      });
+    }
+  }
+
+  event.setImpactedBlocks(newImpacted);
+});
+const netherXrayCooldown = new Map<string, number>();
+
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+  if (event.dimension.id !== "minecraft:nether") return;
+
+  const solid = event.block.isSolid;
+  const chunk = getChunkOrigin(event.block.location);
+  const chunkKey = posKeyXZ(chunk);
+
+  if (get("antiXray")) {
+    const cooldown = netherXrayCooldown.get(chunkKey) ?? 0;
+    const now = Date.now();
+
+    if (now - cooldown > get("antiXrayGenerateCooldown")) {
+      netherXrayCooldown.set(chunkKey, now);
+      //@ts-ignore
+      console.log("Generating nether... " + chunkKey);
+      system.runJob(replaceNetherArea(event.block.dimension, chunk));
+    }
+  }
+
+  if (!solid || get("banXrayHandler")) return;
+
+  const surrounds = returnSurroundSolid(event.block);
+
+  system.run(() => {
+    surrounds.forEach((block) => {
+      const key = `bn:${block.location.x},${block.location.y},${block.location.z}`;
       const raw = world.getDynamicProperty(key) as string;
       if (!raw) return;
 
