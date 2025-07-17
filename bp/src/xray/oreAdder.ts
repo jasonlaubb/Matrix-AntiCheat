@@ -73,7 +73,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
     let move = 0;
 
     function recordModification(pos: Vector3, from: string) {
-      const key = `bd:${pos.x},${pos.y},${pos.z}`;
+      const key = `b:${pos.x},${pos.y},${pos.z}`;
       const rawId = from.replace("minecraft:", ""); // Strip namespace
       world.setDynamicProperty(key, rawId);
     }
@@ -82,7 +82,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
       const block = dimension.getBlock(position);
       if (!block || !block.isValid) continue;
 
-      const key = `bd:${position.x},${position.y},${position.z}`;
+      const key = `b:${position.x},${position.y},${position.z}`;
       const raw = world.getDynamicProperty(key) as string;
 
       if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {

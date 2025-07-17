@@ -276,7 +276,7 @@ world.beforeEvents.explosion.subscribe((event) => {
   const newImpacted: Block[] = [];
 
   for (const block of impacted) {
-    const key = `bd:${block.location.x},${block.location.y},${block.location.z}`;
+    const key = `b:${block.location.x},${block.location.y},${block.location.z}`;
     const raw = world.getDynamicProperty(key) as string;
 
     if (includeTypes.includes(block.typeId) && raw) {
@@ -303,7 +303,7 @@ world.beforeEvents.explosion.subscribe((event) => {
     for (const neighbor of neighbors) {
       if (!neighbor || !neighbor.isValid) continue;
 
-      const neighborKey = `bd:${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
+      const neighborKey = `b:${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
       const neighborRaw = world.getDynamicProperty(neighborKey) as string;
       if (!neighborRaw) continue;
 
@@ -343,7 +343,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 
   system.run(() => {
     surrounds.forEach((block) => {
-      const key = `bd:${block.location.x},${block.location.y},${block.location.z}`;
+      const key = `b:${block.location.x},${block.location.y},${block.location.z}`;
       const raw = world.getDynamicProperty(key) as string;
       if (!raw) return;
 
