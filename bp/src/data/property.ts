@@ -69,7 +69,7 @@ export default {
     },
     banXrayHandler: {
         type: "boolean",
-        value: false,
+        value: false, // Disable all handler related to xray
     },
     antiXray: {
         type: "boolean",
@@ -77,14 +77,14 @@ export default {
     },
     antiXrayGenerateCooldown: {
         type: "number",
-        value: 480000,
+        value: 480000, // Cooldown of a chunk to generate again
     },
     antiXrayGhostBlockDensity: {
         type: "number",
-        value: 0.3, // Little: 0.005 | Few: 0.015 | Dense: 0.15 | Very dense: 0.3 | All: 1
+        value: 0.3, // Probability that a block will be generated to a ghost ore
     },
     antiXrayEnhancedGeneration: {
         type: "boolean",
-        value: true,
+        value: true, // Enable extra generation for also near 8 chunk
     },
 };
