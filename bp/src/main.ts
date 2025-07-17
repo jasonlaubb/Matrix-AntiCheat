@@ -319,8 +319,10 @@ world.beforeEvents.explosion.subscribe((event) => {
 
   event.setImpactedBlocks(newImpacted);
 });
+/*
+    Anti Xray Actual Code ----awa-----
+*/
 const xrayCooldown = new Map<string, number>();
-
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     if (event.dimension.id !== "minecraft:overworld") return;
   const solid = event.block.isSolid;
@@ -404,7 +406,6 @@ world.beforeEvents.explosion.subscribe((event) => {
   event.setImpactedBlocks(newImpacted);
 });
 const netherXrayCooldown = new Map<string, number>();
-
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
   if (event.dimension.id !== "minecraft:nether") return;
 
