@@ -1,4 +1,4 @@
-import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
+import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot, Block } from "@minecraft/server";
 import info from "./command/info";
 import { detect, detectionlist, detectionList, initModules } from "./command/module";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
@@ -7,9 +7,10 @@ import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
-import { getPlayerRank } from "./util/util";
+import { getPlayerRank, locEqual } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
+import { getChunkOrigin, includeTypes, ModifyData, posKeyXZ, returnSurroundSolid } from "./xray/oreAdder";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -269,4 +270,55 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         const format = get("chatRankNameTagFormat");
         player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
     }
+});
+world.beforeEvents.explosion.subscribe((event) => {
+    const impacted = event.getImpactedBlocks();
+    const newImpacted: Block[] = [];
+    for (let i = 0; i < impacted.length; i++) {
+        const block = impacted[i];
+        if (includeTypes.includes(block.typeId)) {
+            const id = "chunkdata:" + posKeyXZ(getChunkOrigin(block.location));
+            const check = world.getDynamicProperty(id) as string;
+            if (!check) {
+                newImpacted.push(block);
+                continue;
+            }
+            const modified = JSON.parse(check) as ModifyData[];
+            const data = modified.findIndex(({ pos }) => locEqual(pos, block.location));
+            if (data !== -1) {
+                system.run(() => {
+                    const current = world.getDynamicProperty(id) as string;
+                    const data = JSON.parse(current) as ModifyData[];
+                    const index = modified.findIndex(({ pos }) => locEqual(pos, block.location));
+                    block.setType(data[index].from);
+                    data.splice(index, 1);
+                    world.setDynamicProperty(JSON.stringify(data));
+                })
+            } else newImpacted.push(block);
+        } else newImpacted.push(block);
+    }
+    if (newImpacted.length !== impacted.length) event.setImpactedBlocks(newImpacted);
+});
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+    const solid = event.block.isSolid;
+    if (!solid) return;
+    const surrounds = returnSurroundSolid(event.block);
+    system.run(() => {
+        surrounds.forEach((block) => {
+            const chunkKey = "chunkdata:" + posKeyXZ(getChunkOrigin(block.location));
+            const rawData = world.getDynamicProperty(chunkKey) as string;
+            if (!rawData) return;
+
+            const modified = JSON.parse(rawData) as ModifyData[];
+            const index = modified.findIndex(({ pos }) => locEqual(pos, block.location));
+            if (index === -1) return;
+
+            // Restore original block type
+            block.setType(modified[index].from);
+
+            // Remove from modification record
+            modified.splice(index, 1);
+            world.setDynamicProperty(chunkKey, JSON.stringify(modified));
+        });
+    });
 });
