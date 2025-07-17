@@ -49,8 +49,6 @@ const includeTypes = [
             "minecraft:emerald_ore",
             "minecraft:deepslate_emerald_ore",
 ];
-// Min y: -63
-// Max y: 32
 function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
   function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
@@ -216,15 +214,13 @@ world.beforeEvents.explosion.subscribe((event) => {
     if (includeTypes.includes(block.typeId) && raw) {
       system.run(() => {
         block.setType("minecraft:" + raw);
-        //@ts-ignore
-        console.log("Restored impacted block: " + raw);
         world.setDynamicProperty(key); // Clean up
       });
     } else {
       newImpacted.push(block); // Keep block in explosion list
     }
 
-    // 🔍 Extra check: restore adjacent blocks
+    // Extra check: restore adjacent blocks
     const neighbors = [
       block.above(),
       block.below(),
@@ -243,8 +239,6 @@ world.beforeEvents.explosion.subscribe((event) => {
 
       system.run(() => {
         neighbor.setType("minecraft:" + neighborRaw);
-        //@ts-ignore
-        console.log("Restored adjacent block: " + neighborRaw);
         world.setDynamicProperty(neighborKey); // Clean up
       });
     }
@@ -265,8 +259,8 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 
     if (now - cooldown > get("antiXrayGenerateCooldown")) {
       xrayCooldown.set(chunkKey, now);
-      //@ts-ignore
-      console.log("Generating... " + chunkKey);
+      //@ts-expect-error
+      console.log("AntiXray: chunk encrypting" + chunkKey);
       system.runJob(replaceArea(event.block.dimension, chunk));
     }
   }
@@ -299,8 +293,6 @@ world.beforeEvents.explosion.subscribe((event) => {
     if (raw) {
       system.run(() => {
         block.setType("minecraft:" + raw);
-        //@ts-ignore
-        console.log("Restored impacted nether block: " + raw);
         world.setDynamicProperty(key); // Clean up
       });
     } else {
@@ -326,8 +318,6 @@ world.beforeEvents.explosion.subscribe((event) => {
 
       system.run(() => {
         neighbor.setType("minecraft:" + neighborRaw);
-        //@ts-ignore
-        console.log("Restored adjacent nether block: " + neighborRaw);
         world.setDynamicProperty(neighborKey); // Clean up
       });
     }
@@ -349,8 +339,8 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 
     if (now - cooldown > get("antiXrayGenerateCooldown")) {
       netherXrayCooldown.set(chunkKey, now);
-      //@ts-ignore
-      console.log("Generating nether... " + chunkKey);
+      //@ts-expect-error
+      console.log("AntiXray: chunk (nether) encrypting" + chunkKey);
       system.runJob(replaceNetherArea(event.block.dimension, chunk));
     }
   }
