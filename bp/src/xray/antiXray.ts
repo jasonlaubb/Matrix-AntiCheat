@@ -1,5 +1,6 @@
 import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume, system } from "@minecraft/server";
 import { get } from "../util/database";
+import { addInterval } from "../util/tick";
 function fastSurround(block: Block) {
     return [block.above(), block.below(), block.north(), block.east(), block.west(), block.south()].every((b) => b?.isSolid);
 }
@@ -361,6 +362,43 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     }
   });
 });
+addInterval(() => {
+    if (get("banXrayHandler")) return;
+    const silverfish = [
+      ...world.getDimension("minecraft:overworld").getEntities({
+          type: "minecraft:silverfish",
+      }),
+      ...world.getDimension("minecraft:the_end").getEntities({
+          type: "minecraft:silverfish",
+      }),
+      ...world.getDimension("minecraft:nether").getEntities({
+          type: "minecraft:silverfish",
+      }),
+    ];
+    if (silverfish.length === 0) return;
+    silverfish.forEach((entity) => {
+      const { x, y, z } = floorPos(entity.location);
+      const blocks = entity.dimension.getBlocks(new BlockVolume({ x: x + 10, y: y + 5, z: z + 10 }, { x: x - 10, y: y - 5, z: z + 10 }), {
+        includeTypes: [
+          "minecraft:infested_stone",
+          "minecraft:infested_cobblestone",
+          "minecraft:infested_stone_bricks",
+          "minecraft:infested_cracked_stone_bricks",
+          "minecraft:infested_mossy_stone_bricks",
+          "minecraft:infested_chiseled_stone_bricks",
+          "minecraft:infested_deepslate"
+        ]
+      }, true).getBlockLocationIterator();
+      for (const pos of blocks) {
+        const block = entity.dimension.getBlock(pos);
+        if (!block || !block.isValid) continue;
+        block.setType(block.typeId.replace("infested_", ""));
+      }
+    })
+});
+function floorPos ({ x, y, z }: Vector3) {
+  return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) }
+}
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
     event.cancel = true;
 });
