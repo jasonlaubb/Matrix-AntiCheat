@@ -81,6 +81,6 @@ export default {
     },
     antiXrayGhostBlockDensity: {
         type: "number",
-        value: 0.005, // Little: 0.005 | Some: 0.015 | Dense: 0.03 | Very dense: 0.3 
+        value: 0.005, // Little: 0.005 | Few: 0.015 | Dense: 0.15 | Very dense: 0.3 | All: 1
     },
 };
