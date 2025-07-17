@@ -20,9 +20,13 @@ function draw(probability: number): boolean {
 function randomOre() {
     return [
         "diamond_ore",
+        "diamond_ore",
         "iron_ore",
         "gold_ore",
-    ][Math.floor(Math.random() * 3)];
+        "redstone_ore",
+        "copper_ore",
+        "lapis_ore",
+    ][Math.floor(Math.random() * 7)];
 }
 export function posKeyXZ({ x, z }: VectorXZ) {
     return `${x},${z}`;
