@@ -25,7 +25,7 @@ export default {
     },
     chatRankDisplayOnNameTag: {
         type: "boolean",
-        value: true,
+        value: false,
     },
     chatRankNameTagFormat: {
         type: "string",
@@ -89,6 +89,6 @@ export default {
     },
     antiXrayMaxChangeInTick: {
         type: "number",
-        value: 21,
+        value: 21, // High value of this might cause HIGH spike lag...
     },
 };
