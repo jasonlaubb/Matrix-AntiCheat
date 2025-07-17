@@ -23,7 +23,8 @@ function randomOre() {
         "redstone_ore",
         "copper_ore",
         "lapis_ore",
-    ][Math.floor(Math.random() * 7)];
+        "emerald_ore",
+    ][Math.floor(Math.random() * 8)];
 }
 export function posKeyXZ({ x, z }: VectorXZ) {
     return `${x},${z}`;
@@ -44,7 +45,9 @@ export const includeTypes = [
             "minecraft:copper_ore",
             "minecraft:deepslate_copper_ore",
             "minecraft:stone",
-            "minecraft:deepslate"
+            "minecraft:deepslate",
+            "minecraft:emerald_ore",
+            "minecraft:deepslate_emerald_ore",
 ];
 // Min y: -63
 // Max y: 32

@@ -81,6 +81,6 @@ export default {
     },
     antiXrayGhostBlockDensity: {
         type: "number",
-        value: 0.03,
+        value: 0.015, // Increase to let xray cheater more diffcult to cheat...
     },
 };
