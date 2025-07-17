@@ -225,90 +225,11 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
 }
 
 world.beforeEvents.explosion.subscribe((event) => {
-  if (event.dimension.id !== "minecraft:overworld" || get("banXrayHandler")) return;
-
-  const impacted = event.getImpactedBlocks();
-  const newImpacted: Block[] = [];
-
-  for (const block of impacted) {
-    const chunkPrefix = `k:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
-    const chunkData = loadChunkData(chunkPrefix);
-    const key = `${block.location.x},${block.location.y},${block.location.z}`;
-    const raw = chunkData[key];
-
-    if (includeTypes.includes(block.typeId) && raw) {
-      system.run(() => {
-        block.setType("minecraft:" + raw);
-        delete chunkData[key];
-        saveChunkData(chunkPrefix, chunkData);
-      });
-    } else {
-      newImpacted.push(block);
+    if (event.dimension.id !== "minecraft:overworld" && event.dimension.id !== "minecraft:nether") return;
+    if (get("banXrayHandler") && get("antiXray")) {
+        event.setImpactedBlocks([]); // Cancel block damage
+        return;
     }
-
-    const neighbors = [block.above(), block.below(), block.north(), block.south(), block.east(), block.west()];
-    for (const neighbor of neighbors) {
-      if (!neighbor || !neighbor.isValid) continue;
-
-      const neighborChunk = `k:${Math.floor(neighbor.location.x / 16) * 16},${Math.floor(neighbor.location.z / 16) * 16}`;
-      const neighborData = loadChunkData(neighborChunk);
-      const neighborKey = `${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
-      const neighborRaw = neighborData[neighborKey];
-
-      if (!neighborRaw) continue;
-
-      system.run(() => {
-        neighbor.setType("minecraft:" + neighborRaw);
-        delete neighborData[neighborKey];
-        saveChunkData(neighborChunk, neighborData);
-      });
-    }
-  }
-
-  event.setImpactedBlocks(newImpacted);
-});
-world.beforeEvents.explosion.subscribe((event) => {
-  if (event.dimension.id !== "minecraft:nether" || get("banXrayHandler")) return;
-
-  const impacted = event.getImpactedBlocks();
-  const newImpacted: Block[] = [];
-
-  for (const block of impacted) {
-    const chunkPrefix = `bn:${Math.floor(block.location.x / 16) * 16},${Math.floor(block.location.z / 16) * 16}`;
-    const chunkData = loadChunkData(chunkPrefix);
-    const key = `${block.location.x},${block.location.y},${block.location.z}`;
-    const raw = chunkData[key];
-
-    if (raw) {
-      system.run(() => {
-        block.setType("minecraft:" + raw);
-        delete chunkData[key];
-        saveChunkData(chunkPrefix, chunkData);
-      });
-    } else {
-      newImpacted.push(block);
-    }
-
-    const neighbors = [block.above(), block.below(), block.north(), block.south(), block.east(), block.west()];
-    for (const neighbor of neighbors) {
-      if (!neighbor || !neighbor.isValid) continue;
-
-      const neighborChunk = `bn:${Math.floor(neighbor.location.x / 16) * 16},${Math.floor(neighbor.location.z / 16) * 16}`;
-      const neighborData = loadChunkData(neighborChunk);
-      const neighborKey = `${neighbor.location.x},${neighbor.location.y},${neighbor.location.z}`;
-      const neighborRaw = neighborData[neighborKey];
-
-      if (!neighborRaw) continue;
-
-      system.run(() => {
-        neighbor.setType("minecraft:" + neighborRaw);
-        delete neighborData[neighborKey];
-        saveChunkData(neighborChunk, neighborData);
-      });
-    }
-  }
-
-  event.setImpactedBlocks(newImpacted);
 });
 function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
     const chunks: VectorXZ[] = [];
