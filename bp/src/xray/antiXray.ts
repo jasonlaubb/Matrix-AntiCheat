@@ -378,7 +378,7 @@ addInterval(() => {
     if (silverfish.length === 0) return;
     silverfish.forEach((entity) => {
       const { x, y, z } = floorPos(entity.location);
-      const blocks = entity.dimension.getBlocks(new BlockVolume({ x: x + 10, y: y + 5, z: z + 10 }, { x: x - 10, y: y - 5, z: z + 10 }), {
+      const blocks = entity.dimension.getBlocks(new BlockVolume({ x: x + 10, y: y + 5, z: z + 10 }, { x: x - 10, y: y - 5, z: z - 10 }), {
         includeTypes: [
           "minecraft:infested_stone",
           "minecraft:infested_cobblestone",
