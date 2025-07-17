@@ -89,6 +89,6 @@ export default {
     },
     antiXrayMaxChangeInTick: {
         type: "number",
-        value: 40,
+        value: 21,
     },
 };

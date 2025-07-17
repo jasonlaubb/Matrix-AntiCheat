@@ -1,16 +1,13 @@
 import { Entity, EntityHurtAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP } from "../util/util";
-import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
     property: "antiKillauraEnable",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
-        addCheckInterval(tickEvent);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
-        removeCheckInterval(tickEvent);
     },
 };
 function recordPosition(entity: Entity) {
@@ -116,30 +113,4 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
-}
-function tickEvent(player: Player) {
-    const { x: pitch, y: yaw } = player.getRotation();
-    player.killauraPitch ??= [];
-    player.killauraYaw ??= [];
-    player.killauraXSpeed ??= [];
-    const xSpeed = pitch - (player.killauraPitch[0] ?? pitch);
-    if (player.killauraPitch.length > 100) {
-        const ySpeed = fastAbs(yaw - player.killauraYaw[0]);
-        player.killauraSmoothFlag ??= 0;
-        if (xSpeed === 0 && ySpeed > 0.0001) {
-            player.killauraSmoothFlag++;
-            if (player.killauraSmoothFlag > 30) {
-                player.flag("Killaura", "F", "Combat (Aim)", { xSpeed: xSpeed.toFixed(2), ySpeed: ySpeed.toFixed(2) });
-                player.killauraSmoothFlag = 0;
-            }
-        } else if (xSpeed > 0) {
-            player.killauraSmoothFlag = 0;
-        }
-        player.killauraPitch.pop();
-        player.killauraYaw.pop();
-        player.killauraXSpeed.pop();
-    }
-    player.killauraPitch.unshift(pitch);
-    player.killauraYaw.unshift(yaw);
-    player.killauraXSpeed.unshift(xSpeed);
 }
