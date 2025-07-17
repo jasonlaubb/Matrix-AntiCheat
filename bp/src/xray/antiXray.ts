@@ -226,8 +226,10 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
 
 world.beforeEvents.explosion.subscribe((event) => {
     if (event.dimension.id !== "minecraft:overworld" && event.dimension.id !== "minecraft:nether") return;
-    if (get("banXrayHandler") && get("antiXray")) {
-        event.setImpactedBlocks([]); // Cancel block damage
+    //@ts-ignore
+    console.log("Cancel explosion");
+    if (!get("banXrayHandler") && get("antiXray")) {
+        event.setImpactedBlocks([]);
         return;
     }
 });
