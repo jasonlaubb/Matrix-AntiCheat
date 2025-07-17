@@ -229,7 +229,10 @@ world.beforeEvents.explosion.subscribe((event) => {
     if (!get("banXrayHandler") && get("antiXray")) {
         if (event.source && event.source.typeId === "minecraft:tnt") {
             const nearPlayer = world.getPlayers({
-                maxDistance: 12
+                maxDistance: 13,
+                closest: 1,
+                minDistance: 0,
+                location: event.source.location,
             })[0];
             if (nearPlayer) {
                 const now = Date.now();
