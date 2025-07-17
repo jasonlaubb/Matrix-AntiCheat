@@ -90,7 +90,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
   function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
     const density = get("antiXrayGhostBlockDensity");
-
+    const maxMove = get("antiXrayMaxChangeInTick");
     const iterator1 = dimension.getBlocks(
       new BlockVolume({ x: startX, y: -63, z: startZ }, { x: endX, y: 32, z: endZ }),
       { includeTypes },
@@ -141,7 +141,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
         move++;
       }
 
-      if (move >= 20) {
+      if (move >= maxMove) {
         yield;
       }
     }
@@ -156,7 +156,7 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
   function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
     const density = get("antiXrayGhostBlockDensity");
-
+    const maxMove = get("antiXrayMaxChangeInTick");
     const iterator1 = dimension.getBlocks(
       new BlockVolume({ x: startX, y: 0, z: startZ }, { x: endX, y: 64, z: endZ }),
       { includeTypes: netherIncludeTypes },
@@ -213,7 +213,7 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
         move++;
       }
 
-      if (move >= 20) {
+      if (move >= maxMove) {
         yield;
       }
     }

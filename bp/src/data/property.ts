@@ -87,4 +87,8 @@ export default {
         type: "boolean",
         value: true, // Enable extra generation for also near 8 chunk
     },
+    antiXrayMaxChangeInTick: {
+        type: "number",
+        value: 40,
+    },
 };
