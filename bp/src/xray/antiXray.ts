@@ -226,9 +226,21 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
 
 world.beforeEvents.explosion.subscribe((event) => {
     if (event.dimension.id !== "minecraft:overworld" && event.dimension.id !== "minecraft:nether") return;
-    //@ts-ignore
-    console.log("Cancel explosion");
     if (!get("banXrayHandler") && get("antiXray")) {
+        if (event.source && event.source.typeId === "minecraft:tnt") {
+            const nearPlayer = world.getPlayers({
+                maxDistance: 16
+            })[0];
+            if (nearPlayer) {
+                const now = Date.now();
+                if (now - (nearPlayer.lastNoTntMsg ?? 0) < 15000) {
+                    system.run(() => {
+                        nearPlayer.sendMessage("§7[§aMatrix§7] §fSorry, but you cannot destroy blocks through explosion.");
+                    })
+                    nearPlayer.lastNoTntMsg = now;
+                }
+            }
+        }
         event.setImpactedBlocks([]);
         return;
     }
