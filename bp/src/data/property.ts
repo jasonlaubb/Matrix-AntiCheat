@@ -77,10 +77,14 @@ export default {
     },
     antiXrayGenerateCooldown: {
         type: "number",
-        value: 90000,
+        value: 480000,
     },
     antiXrayGhostBlockDensity: {
         type: "number",
-        value: 0.005, // Little: 0.005 | Few: 0.015 | Dense: 0.15 | Very dense: 0.3 | All: 1
+        value: 0.3, // Little: 0.005 | Few: 0.015 | Dense: 0.15 | Very dense: 0.3 | All: 1
+    },
+    antiXrayEnhancedGeneration: {
+        type: "boolean",
+        value: true,
     },
 };

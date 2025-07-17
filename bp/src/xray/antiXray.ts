@@ -196,40 +196,6 @@ world.beforeEvents.explosion.subscribe((event) => {
 
     event.setImpactedBlocks(newImpacted);
 });
-const xrayCooldown = new Map<string, number>();
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    if (event.dimension.id !== "minecraft:overworld") return;
-    const solid = event.block.isSolid;
-    const chunk = getChunkOrigin(event.block.location);
-    const chunkKey = posKeyXZ(chunk);
-
-    if (get("antiXray")) {
-        const cooldown = xrayCooldown.get(chunkKey) ?? 0;
-        const now = Date.now();
-
-        if (now - cooldown > get("antiXrayGenerateCooldown")) {
-            xrayCooldown.set(chunkKey, now);
-            //@ts-expect-error
-            console.log("AntiXray: chunk encrypting " + chunkKey);
-            system.runJob(replaceArea(event.block.dimension, chunk));
-        }
-    }
-
-    if (!solid || get("banXrayHandler")) return;
-
-    const surrounds = returnSurroundSolid(event.block);
-
-    system.run(() => {
-        surrounds.forEach((block) => {
-            const key = `b:${block.location.x},${block.location.y},${block.location.z}`;
-            const raw = world.getDynamicProperty(key) as string;
-            if (!raw) return;
-
-            block.setType("minecraft:" + raw);
-            world.setDynamicProperty(key); // Clean up
-        });
-    });
-});
 world.beforeEvents.explosion.subscribe((event) => {
     if (event.dimension.id !== "minecraft:nether" || get("banXrayHandler")) return;
 
@@ -268,23 +234,40 @@ world.beforeEvents.explosion.subscribe((event) => {
 
     event.setImpactedBlocks(newImpacted);
 });
+function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
+    const chunks: VectorXZ[] = [];
+    for (let dx = -1; dx <= 1; dx++) {
+        for (let dz = -1; dz <= 1; dz++) {
+            chunks.push({
+                x: center.x + dx * 16,
+                z: center.z + dz * 16,
+            });
+        }
+    }
+    return chunks;
+}
 const netherXrayCooldown = new Map<string, number>();
+
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     if (event.dimension.id !== "minecraft:nether") return;
 
     const solid = event.block.isSolid;
     const chunk = getChunkOrigin(event.block.location);
-    const chunkKey = posKeyXZ(chunk);
+    const now = Date.now();
 
     if (get("antiXray")) {
-        const cooldown = netherXrayCooldown.get(chunkKey) ?? 0;
-        const now = Date.now();
+        const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
 
-        if (now - cooldown > get("antiXrayGenerateCooldown")) {
-            netherXrayCooldown.set(chunkKey, now);
-            //@ts-expect-error
-            console.log("AntiXray: chunk (nether) encrypting " + chunkKey);
-            system.runJob(replaceNetherArea(event.block.dimension, chunk));
+        for (const targetChunk of targets) {
+            const key = posKeyXZ(targetChunk);
+            const cooldown = netherXrayCooldown.get(key) ?? 0;
+
+            if (now - cooldown > get("antiXrayGenerateCooldown")) {
+                netherXrayCooldown.set(key, now);
+                //@ts-expect-error
+                console.log("AntiXray: chunk (nether) encrypting " + key);
+                system.runJob(replaceNetherArea(event.block.dimension, targetChunk));
+            }
         }
     }
 
@@ -295,6 +278,46 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     system.run(() => {
         surrounds.forEach((block) => {
             const key = `bn:${block.location.x},${block.location.y},${block.location.z}`;
+            const raw = world.getDynamicProperty(key) as string;
+            if (!raw) return;
+
+            block.setType("minecraft:" + raw);
+            world.setDynamicProperty(key); // Clean up
+        });
+    });
+});
+const xrayCooldown = new Map<string, number>();
+
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+    if (event.dimension.id !== "minecraft:overworld") return;
+
+    const solid = event.block.isSolid;
+    const chunk = getChunkOrigin(event.block.location);
+    const now = Date.now();
+
+    if (get("antiXray")) {
+        const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
+
+        for (const targetChunk of targets) {
+            const key = posKeyXZ(targetChunk);
+            const cooldown = xrayCooldown.get(key) ?? 0;
+
+            if (now - cooldown > get("antiXrayGenerateCooldown")) {
+                xrayCooldown.set(key, now);
+                //@ts-expect-error
+                console.log("AntiXray: chunk encrypting " + key);
+                system.runJob(replaceArea(event.block.dimension, targetChunk));
+            }
+        }
+    }
+
+    if (!solid || get("banXrayHandler")) return;
+
+    const surrounds = returnSurroundSolid(event.block);
+
+    system.run(() => {
+        surrounds.forEach((block) => {
+            const key = `b:${block.location.x},${block.location.y},${block.location.z}`;
             const raw = world.getDynamicProperty(key) as string;
             if (!raw) return;
 
