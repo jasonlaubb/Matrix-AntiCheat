@@ -1,4 +1,5 @@
 import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume } from "@minecraft/server";
+import { get } from "../util/database";
 function fastSurround(block: Block) {
     return [block.above(), block.below(), block.north(), block.east(), block.west(), block.south()].every((b) => b?.isSolid);
 }
@@ -50,7 +51,7 @@ export const includeTypes = [
 export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
   function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
-
+    const density = get("antiXrayGhostBlockDensity");
     const iterator1 = dimension.getBlocks(
       new BlockVolume(
         { x: startX, y: -63, z: startZ },
@@ -97,7 +98,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
       }
 
       if (["minecraft:stone", "minecraft:deepslate"].includes(block.typeId)) {
-        if (draw(0.15) && fastSurround(block)) {
+        if (draw(density) && fastSurround(block)) {
           recordModification(position, block.typeId);
           block.setType("minecraft:" + (block.typeId === "minecraft:deepslate" ? "deepslate_" : "") + randomOre());
           move++;

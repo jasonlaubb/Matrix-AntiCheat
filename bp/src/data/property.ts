@@ -79,4 +79,8 @@ export default {
         type: "number",
         value: 90000,
     },
+    antiXrayGhostBlockDensity: {
+        type: "number",
+        value: 0.03,
+    },
 };
