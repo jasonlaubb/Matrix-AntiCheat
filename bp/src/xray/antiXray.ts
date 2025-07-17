@@ -260,7 +260,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     if (now - cooldown > get("antiXrayGenerateCooldown")) {
       xrayCooldown.set(chunkKey, now);
       //@ts-expect-error
-      console.log("AntiXray: chunk encrypting" + chunkKey);
+      console.log("AntiXray: chunk encrypting " + chunkKey);
       system.runJob(replaceArea(event.block.dimension, chunk));
     }
   }
@@ -340,7 +340,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     if (now - cooldown > get("antiXrayGenerateCooldown")) {
       netherXrayCooldown.set(chunkKey, now);
       //@ts-expect-error
-      console.log("AntiXray: chunk (nether) encrypting" + chunkKey);
+      console.log("AntiXray: chunk (nether) encrypting " + chunkKey);
       system.runJob(replaceNetherArea(event.block.dimension, chunk));
     }
   }
