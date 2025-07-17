@@ -329,7 +329,9 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 
       const saved = JSON.parse(raw) as ModifyData;
       block.setType(saved.from);
-      world.setDynamicProperty(key, undefined); // Clean up
+      //@ts-ignore
+      console.log("Recovered: " + saved.from);
+      world.setDynamicProperty(key); // Clean up
     });
   });
 });

@@ -50,7 +50,9 @@ export const includeTypes = [
 export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
   function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
-    const blocks = dimension.getBlocks(
+
+    // Original range: Y = -63 to 32
+    const iterator1 = dimension.getBlocks(
       new BlockVolume(
         { x: startX, y: -63, z: startZ },
         { x: endX, y: 32, z: endZ }
@@ -58,6 +60,20 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
       { includeTypes },
       true
     ).getBlockLocationIterator();
+
+    // Extended range: Y = 33 to 64
+    const iterator2 = dimension.getBlocks(
+      new BlockVolume(
+        { x: startX, y: 33, z: startZ },
+        { x: endX, y: 64, z: endZ }
+      ),
+      { includeTypes },
+      true
+    ).getBlockLocationIterator();
+
+    // Merge both iterators into one array
+    const blocks = [...iterator1, ...iterator2];
+
 
     let move = 0;
 
@@ -74,7 +90,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
       const raw = world.getDynamicProperty(key) as string;
       const saved = raw ? JSON.parse(raw) as ModifyData : null;
 
-      if (saved && block.typeId !== saved.from) {
+      if (saved && block.typeId !== saved.from && !block.isAir) {
         block.setType(saved.from);
         move++;
         continue;
@@ -86,7 +102,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
           block.setType("minecraft:" + (block.typeId === "minecraft:deepslate" ? "deepslate_" : "") + randomOre());
           move++;
         }
-      } else {
+      } else if (fastSurround(block)) {
         recordModification(position, block.typeId);
         block.setType(block.typeId.startsWith("minecraft:deepslate_") ? "minecraft:deepslate" : "minecraft:stone");
         move++;
