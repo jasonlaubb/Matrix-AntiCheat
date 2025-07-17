@@ -12,6 +12,8 @@ function getChunkOrigin({ x, z }: VectorXZ) {
     return { x: chunkX, z: chunkZ };
 }
 function draw(probability: number): boolean {
+    if (probability === 0) return false;
+    if (probability === 1) return true;
     return Math.random() < probability;
 }
 function randomOre() {
