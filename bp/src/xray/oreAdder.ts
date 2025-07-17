@@ -92,7 +92,6 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
       if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
         block.setType(`minecraft:${raw}`);
         move++;
-        continue;
       }
 
       if (raw && !block.isSolid) {
@@ -179,7 +178,6 @@ export function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }
       if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
         block.setType(`minecraft:${raw}`);
         move++;
-        continue;
       }
 
       if (raw && !block.isSolid) {
