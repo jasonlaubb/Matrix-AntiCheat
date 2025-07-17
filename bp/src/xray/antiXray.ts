@@ -426,4 +426,4 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 });
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
     event.cancel = true;
-})
+});
