@@ -10,7 +10,7 @@ import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
-import "./xray/oreAdder";
+import "./xray/antiXray";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
