@@ -67,4 +67,16 @@ export default {
         type: "boolean",
         value: true,
     },
+    banXrayHandler: {
+        type: "boolean",
+        value: false,
+    },
+    antiXray: {
+        type: "boolean",
+        value: false,
+    },
+    antiXrayGenerateCooldown: {
+        type: "number",
+        value: 90000,
+    },
 };

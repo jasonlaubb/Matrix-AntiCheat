@@ -1,4 +1,4 @@
-import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume } from "@minecraft/server";
+import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume, system } from "@minecraft/server";
 export interface ModifyData {
     pos: Vector3;
     from: string;
@@ -50,7 +50,8 @@ export const includeTypes = [
 ];
 // Min y: -63
 // Max y: 32
-export function* replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ) {
+export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
+    function* generator() {
     const endX = startX + 15, endZ = startZ + 15;
     const blocks = dimension.getBlocks(new BlockVolume(
         { x: startX, y: -63, z: startZ },
@@ -104,4 +105,7 @@ export function* replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vec
         }
     }
     world.setDynamicProperty("chunkdata:" + posKeyXZ({ x: startX, z: startZ }), JSON.stringify(modified));
+    
+}
+return generator();
 }

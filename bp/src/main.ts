@@ -10,7 +10,7 @@ import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank, locEqual } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
-import { getChunkOrigin, includeTypes, ModifyData, posKeyXZ, returnSurroundSolid } from "./xray/oreAdder";
+import { getChunkOrigin, includeTypes, ModifyData, posKeyXZ, replaceArea, returnSurroundSolid } from "./xray/oreAdder";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -299,9 +299,19 @@ world.beforeEvents.explosion.subscribe((event) => {
     }
     if (newImpacted.length !== impacted.length) event.setImpactedBlocks(newImpacted);
 });
+const xrayCooldown = new Map<string, number>();
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     const solid = event.block.isSolid;
-    if (!solid) return;
+    if (get("antiXray")) {
+        const chunk = getChunkOrigin(event.block.location);
+        const cooldown = xrayCooldown.get(posKeyXZ(chunk)) ?? 0;
+        const now = Date.now();
+        if (get("antiXray") && now - cooldown > get("antiXrayGenerateCooldown")) {
+            xrayCooldown.set(posKeyXZ(event.block.location), now);
+            system.runJob(replaceArea(event.block.dimension, getChunkOrigin(chunk)));
+        }
+    }
+    if (!solid || get("banXrayHandler")) return;
     const surrounds = returnSurroundSolid(event.block);
     system.run(() => {
         surrounds.forEach((block) => {
