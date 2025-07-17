@@ -119,8 +119,6 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
 
   return generator();
 }
-
-
 const netherIncludeTypes = [
       "minecraft:nether_gold_ore",
       "minecraft:quartz_ore",
