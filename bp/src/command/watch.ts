@@ -25,6 +25,9 @@ export default {
         } else if (!target) {
             return { status: 1, message: "§7[§aMatrix§7] §fPlease select a player!" };
         }
+        if (type) {
+            player.cameraType = type;
+        }
         const targetPlayer = target as Player;
         if (targetPlayer.dimension.id !== player.dimension.id) return { status: 1, message: "§7[§aMatrix§7] §fYou need to locate in same dimension with watch target." }
         const currentGameMode = player.getGameMode();
@@ -58,9 +61,10 @@ export default {
             switch (player.cameraType) {
                 case "head": {
                     const headPos = targetPlayer.getHeadLocation();
+                    const rotation = targetPlayer.getRotation();
                     player.camera.setCamera("minecraft:free", {
-                        location: { x: headPos.x, y: headPos.y + 1.5, z: headPos.z },
-                        rotation: targetPlayer.getRotation(),
+                        location: getFrontHeadLocation(headPos, rotation),
+                        rotation,
                     });
                     break;
                 }
@@ -96,5 +100,19 @@ function getBehindHeadLocation(headPos: Vector3, rotation: Vector2) {
         x: headPos.x - offsetX,
         y: headPos.y + 2,
         z: headPos.z - offsetZ
+    };
+}
+function getFrontHeadLocation(headPos: Vector3, rotation: Vector2) {
+    const yawDegrees = rotation.y;
+    const yawRadians = (yawDegrees * Math.PI) / 180;
+
+    // Calculate offset based on yaw only
+    const offsetX = -Math.sin(yawRadians) * 0.5;
+    const offsetZ = Math.cos(yawRadians) * 0.5;
+
+    return {
+        x: headPos.x + offsetX,
+        y: headPos.y + 2,
+        z: headPos.z + offsetZ
     };
 }
