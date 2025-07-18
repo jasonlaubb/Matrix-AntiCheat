@@ -5,13 +5,11 @@ export default {
     name: "watch",
     description: "Watch a player, you will not be seen by any method.",
     requireOp: true,
-    parameters: [
+    optionalParameters: [
         {
             name: "player",
             type: "playerTarget",
-        }
-    ],
-    optionalParameters: [
+        },
         {
             name: "viewType",
             type: "enum",
@@ -21,8 +19,11 @@ export default {
         if (player.isWatching) {
             if (type) {
                 player.cameraType = type;
+                return { status: 0, message: "§7[§aMatrix§7] §fSwitch camera type to §e" + type };
             } else player.isWatching = false;
-            return;
+            return { status: 0, message: "§7[§aMatrix§7] §fEscaped from watch mode." };
+        } else if (!target) {
+            return { status: 1, message: "§7[§aMatrix§7] §fPlease select a player!" };
         }
         const targetPlayer = target as Player;
         if (targetPlayer.dimension.id !== player.dimension.id) return { status: 1, message: "§7[§aMatrix§7] §fYou need to locate in same dimension with watch target." }
