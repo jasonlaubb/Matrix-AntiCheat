@@ -12,6 +12,7 @@ declare module "@minecraft/server" {
         lastNoTntMsg: number;
         // Watch command
         isWatching?: boolean;
+        cameraType?: "down" | "head" | "behind";
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;
