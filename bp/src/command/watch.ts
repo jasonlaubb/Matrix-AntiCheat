@@ -38,9 +38,9 @@ export default {
                 if (dimensionChange) return player.sendMessage("§7[§aMatrix§7] §fTarget player's dimension has been changed.");
                 return;
             }
+            const { x, y, z } = targetPlayer.location;
             player.camera.setCamera("minecraft:free", {
-                location: targetPlayer.location,
-                offsetFromTargetCenter: { x: 0, y: 2.5, z: 0 },
+                location: { x, y: y + 3, z }
             });
             player.onScreenDisplay.setActionBar(`§gWatching §e${player.name} §7| §gPress §eJUMP §gto escape`);
         });
