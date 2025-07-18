@@ -176,6 +176,7 @@ system.beforeEvents.startup.subscribe((event) => {
                                     };
                                 }
                             }
+                            args[i] = input[0];
                             break;
                         }
                         case "string": {

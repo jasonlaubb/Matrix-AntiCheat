@@ -2,7 +2,7 @@ import { GameMode, Player, system } from "@minecraft/server";
 import type { Command } from "../main";
 
 export default {
-    name: "minecraft:watch",
+    name: "watch",
     description: "Watch a player, you will not be seen by any method.",
     requireOp: true,
     parameters: [
