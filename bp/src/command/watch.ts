@@ -112,7 +112,7 @@ function getFrontHeadLocation(headPos: Vector3, rotation: Vector2) {
 
     return {
         x: headPos.x + offsetX,
-        y: headPos.y + 2,
+        y: headPos.y,
         z: headPos.z + offsetZ
     };
 }
