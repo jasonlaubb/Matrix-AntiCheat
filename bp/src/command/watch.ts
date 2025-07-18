@@ -12,7 +12,7 @@ export default {
         }
     ],
     execute: (player, [target]) => {
-        if (player.isWatching) return { status: 1, message: "§7[§aMatrix§7] §fPress §eJUMP§f button to escape watch mode." };
+        if (player.isWatching) return player.isWatching = false;
         const targetPlayer = target as Player;
         if (targetPlayer.dimension.id !== player.dimension.id) return { status: 1, message: "§7[§aMatrix§7] §fYou need to locate in same dimension with watch target." }
         const currentGameMode = player.getGameMode();
@@ -28,7 +28,7 @@ export default {
             const targetLeft = !targetPlayer || !targetPlayer.isValid;
             const dimensionChange = targetPlayer.dimension.id !== player.dimension.id;
             const jumpEscape = player.isJumping;
-            if (targetLeft || dimensionChange || jumpEscape) {
+            if (targetLeft || dimensionChange || jumpEscape || !player.isWatching) {
                 system.clearRun(id);
                 delete player.isWatching;
                 player.camera.clear();
@@ -40,10 +40,10 @@ export default {
             }
             const { x, y, z } = targetPlayer.location;
             player.camera.setCamera("minecraft:free", {
-                location: { x, y: y, z },
-                rotation: targetPlayer.getRotation(),
+                location: { x, y: y + 5, z },
+                facingEntity: target
             });
-            player.onScreenDisplay.setActionBar(`§gWatching §e${player.name} §7| §gPress §eJUMP §gto escape`);
+            player.onScreenDisplay.setActionBar(`§gWatching §e${player.name} §7| §gRun §ewatch§g command to escape`);
         });
         return { status: 0 };
     }
