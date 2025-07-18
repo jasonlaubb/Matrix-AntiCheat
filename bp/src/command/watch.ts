@@ -40,7 +40,8 @@ export default {
             }
             const { x, y, z } = targetPlayer.location;
             player.camera.setCamera("minecraft:free", {
-                location: { x, y: y + 3, z }
+                location: { x, y: y, z },
+                rotation: targetPlayer.getRotation(),
             });
             player.onScreenDisplay.setActionBar(`§gWatching §e${player.name} §7| §gPress §eJUMP §gto escape`);
         });
