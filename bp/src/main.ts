@@ -127,6 +127,7 @@ system.beforeEvents.startup.subscribe((event) => {
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
                     const param = parameters![i] ?? optionalParameters![i - parameters!.length];
+                    if (!param) continue;
                     switch (param.type) {
                         case "float":
                         case "integer": {
