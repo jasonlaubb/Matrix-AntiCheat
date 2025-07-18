@@ -78,7 +78,7 @@ export default {
     }
 } as Command;
 function getBehindHeadLocation(headPos: Vector3, rotation: Vector2) {
-    const yawDegrees = rotation.x;
+    const yawDegrees = rotation.y;
     const yawRadians = (yawDegrees * Math.PI) / 180;
 
     // Calculate offset based on yaw only
