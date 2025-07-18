@@ -10,6 +10,8 @@ declare module "@minecraft/server" {
         kick: (reason: string) => void;
         // Xray data
         lastNoTntMsg: number;
+        // Watch command
+        isWatching?: boolean;
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;
