@@ -57,17 +57,18 @@ export default {
             const { x, y, z } = targetPlayer.location;
             switch (player.cameraType) {
                 case "head": {
+                    const headPos = targetPlayer.getHeadLocation();
                     player.camera.setCamera("minecraft:free", {
-                        location: targetPlayer.getHeadLocation(),
-                        rotation: player.getRotation(),
-                        offsetFromTargetCenter: { x: 0, y: 1, z: 0 }
+                        location: { x: headPos.x, y: headPos.y + 1.5, z: headPos.z },
+                        rotation: targetPlayer.getRotation(),
                     });
                     break;
                 }
                 case "behind": {
+                    const headPos = targetPlayer.getHeadLocation();
                     player.camera.setCamera("minecraft:free", {
-                        facingLocation: targetPlayer.getHeadLocation(),
-                        location: getBehindHeadLocation(targetPlayer.getHeadLocation(), targetPlayer.getRotation()),
+                        facingLocation: headPos,
+                        location: getBehindHeadLocation(headPos, targetPlayer.getRotation()),
                     });
                     break;
                 }
