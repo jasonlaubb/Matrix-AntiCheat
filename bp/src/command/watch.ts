@@ -107,8 +107,8 @@ function getFrontHeadLocation(headPos: Vector3, rotation: Vector2) {
     const yawRadians = (yawDegrees * Math.PI) / 180;
 
     // Calculate offset based on yaw only
-    const offsetX = -Math.sin(yawRadians) * 0.5;
-    const offsetZ = Math.cos(yawRadians) * 0.5;
+    const offsetX = -Math.sin(yawRadians) * 0.4;
+    const offsetZ = Math.cos(yawRadians) * 0.4;
 
     return {
         x: headPos.x + offsetX,
