@@ -3,7 +3,7 @@ import info from "./command/info";
 import { detect, detectionlist, detectionList, initModules } from "./command/module";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
 import { rankadd, rankclear, ranklist, rankremove, rankset } from "./command/rank";
-import watch from "./command/watch";
+import watch, { cameraTypes } from "./command/watch";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
@@ -95,6 +95,7 @@ system.beforeEvents.startup.subscribe((event) => {
     event.customCommandRegistry.registerEnum("matrix:booleanProperty", booleanValue);
     event.customCommandRegistry.registerEnum("matrix:property", Object.keys(property));
     event.customCommandRegistry.registerEnum("matrix:detectionName", Object.keys(detectionList));
+    event.customCommandRegistry.registerEnum("matrix:viewType", cameraTypes);
     commands.forEach(({ name, description, requireOp, optionalParameters, parameters, execute }) => {
         event.customCommandRegistry.registerCommand(
             {
