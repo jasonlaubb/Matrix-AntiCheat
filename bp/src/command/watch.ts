@@ -1,4 +1,4 @@
-import { GameMode, Player, system, Vector2, Vector3 } from "@minecraft/server";
+import { GameMode, InputPermissionCategory, Player, system, Vector2, Vector3 } from "@minecraft/server";
 import type { Command } from "../main";
 export const cameraTypes = ["down", "head", "behind"]
 export default {
@@ -33,6 +33,8 @@ export default {
             player.addEffect("night_vision", 20000000, {
                 showParticles: false,
             });
+            player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false);
+            player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false);
         })
         const id = system.runInterval(() => {
             if (!player || !player.isValid) return system.clearRun(id);
@@ -45,6 +47,8 @@ export default {
                 player.camera.clear();
                 player.setGameMode(currentGameMode);
                 player.removeEffect("night_vision");
+                player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
+                player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
                 if (targetLeft) return player.sendMessage("§7[§aMatrix§7] §fTarget player has left the game.");
                 if (dimensionChange) return player.sendMessage("§7[§aMatrix§7] §fTarget player's dimension has been changed.");
                 return;
