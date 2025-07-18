@@ -3,6 +3,7 @@ import info from "./command/info";
 import { detect, detectionlist, detectionList, initModules } from "./command/module";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
 import { rankadd, rankclear, ranklist, rankremove, rankset } from "./command/rank";
+import watch from "./command/watch";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
@@ -67,7 +68,7 @@ export interface Command {
 }
 classifyProperty();
 system.beforeEvents.startup.subscribe((event) => {
-    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty, detect, detectionlist, rankadd, rankclear, ranklist, rankremove, rankset] as Command[];
+    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty, detect, detectionlist, rankadd, rankclear, ranklist, rankremove, rankset, watch] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
             case "string":
