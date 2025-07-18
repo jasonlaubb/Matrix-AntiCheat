@@ -60,6 +60,7 @@ export default {
                     player.camera.setCamera("minecraft:free", {
                         location: targetPlayer.getHeadLocation(),
                         rotation: player.getRotation(),
+                        offsetFromTargetCenter: { x: 0, y: 1, z: 0 }
                     });
                     break;
                 }
@@ -73,7 +74,7 @@ export default {
                 default: {
                     player.camera.setCamera("minecraft:free", {
                         rotation: { x: 90, y: targetPlayer.getRotation().y },
-                        location: { x, y: y + 8, z },
+                        location: { x, y: y + 9, z }
                     })
                 }
             } 
@@ -91,8 +92,8 @@ function getBehindHeadLocation(headPos: Vector3, rotation: Vector2) {
     const offsetZ = Math.cos(yawRadians) * 3.5;
 
     return {
-        x: headPos.x + offsetX,
+        x: headPos.x - offsetX,
         y: headPos.y + 2,
-        z: headPos.z + offsetZ
+        z: headPos.z - offsetZ
     };
 }

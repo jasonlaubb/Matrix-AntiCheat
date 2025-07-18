@@ -178,8 +178,6 @@ system.beforeEvents.startup.subscribe((event) => {
                                     };
                                 }
                             }
-                            //@ts-ignore
-                            console.log(JSON.stringify(input));
                             args[i] = input[0];
                             break;
                         }
