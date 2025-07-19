@@ -25,7 +25,7 @@ export const watchtp = {
                 facingLocation: player.watchPlayerPos,
             });
         })
-        return { status: 0, message: "§7[§aMatrix§7] §fTeleported" };
+        return { status: 0, message: "§7[§aMatrix§7] §fTeleported!" };
     }
 } as Command;
 export default {
