@@ -1,21 +1,48 @@
 import { GameMode, InputPermissionCategory, Player, system, Vector2, Vector3 } from "@minecraft/server";
 import type { Command } from "../main";
-export const cameraTypes = ["down", "head", "behind"]
+export const cameraTypes = ["down", "head", "behind"];
+export const watchtp = {
+    name: "watchtp",
+    description: "Teleport to the camera (watch mode) position.",
+    requireOp: true,
+    execute: (player) => {
+        if (!player?.isWatching || !player.watchTargetPos || !player.watchBeforeGM) return { status: 1, message: "§7[§aMatrix§7] §fYou're not watching anyone." };
+        system.run(() => {
+            delete player.isWatching;
+            delete player.watchPlayerPos;
+            delete player.watchTargetPos;
+            player.camera.clear();
+            player.setGameMode(player.watchBeforeGM!);
+            delete player.watchBeforeGM;
+            player.removeEffect("night_vision");
+            player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
+            player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
+            // Add effect & teleport
+            player.addEffect("invisible", 100, { showParticles: false });
+            player.removeEffect("night_vision");
+            player.addEffect("night_vision", 1200, { showParticles: false });
+            player.teleport(player.watchTargetPos!, {
+                facingLocation: player.watchPlayerPos,
+            });
+        })
+        return { status: 0, message: "§7[§aMatrix§7] §fTeleported" };
+    }
+} as Command;
 export default {
     name: "watch",
     description: "Watch a player, you will not be seen by any method.",
     requireOp: true,
     optionalParameters: [
         {
-            name: "player",
-            type: "playerTarget",
-        },
-        {
             name: "viewType",
             type: "enum",
+        },
+        {
+            name: "player",
+            type: "playerTarget",
         }
     ],
-    execute: (player, [target, type]) => {
+    execute: (player, [type, target]) => {
         if (player.isWatching) {
             if (type) {
                 player.cameraType = type;
@@ -31,6 +58,7 @@ export default {
         const targetPlayer = target as Player;
         if (targetPlayer.dimension.id !== player.dimension.id) return { status: 1, message: "§7[§aMatrix§7] §fYou need to locate in same dimension with watch target." }
         const currentGameMode = player.getGameMode();
+        player.watchBeforeGM = currentGameMode;
         player.isWatching = true;
         system.run(() => {
             player.setGameMode(GameMode.Spectator);
@@ -48,6 +76,8 @@ export default {
             if (targetLeft || dimensionChange || jumpEscape || !player.isWatching) {
                 system.clearRun(id);
                 delete player.isWatching;
+                delete player.watchPlayerPos;
+                delete player.watchTargetPos;
                 player.camera.clear();
                 player.setGameMode(currentGameMode);
                 player.removeEffect("night_vision");
@@ -58,29 +88,33 @@ export default {
                 return;
             }
             const { x, y, z } = targetPlayer.location;
+            player.watchPlayerPos = targetPlayer.getHeadLocation();
             switch (player.cameraType) {
                 case "head": {
-                    const headPos = targetPlayer.getHeadLocation();
+                    const headPos = player.watchPlayerPos;
                     const rotation = targetPlayer.getRotation();
+                    player.watchTargetPos = getFrontHeadLocation(headPos, rotation);
                     player.camera.setCamera("minecraft:free", {
-                        location: getFrontHeadLocation(headPos, rotation),
+                        location: player.watchTargetPos,
                         rotation,
                     });
                     break;
                 }
                 case "behind": {
-                    const headPos = targetPlayer.getHeadLocation();
+                    const headPos = player.watchPlayerPos;
+                    player.watchTargetPos = getBehindHeadLocation(headPos, targetPlayer.getRotation())
                     player.camera.setCamera("minecraft:free", {
                         facingLocation: headPos,
-                        location: getBehindHeadLocation(headPos, targetPlayer.getRotation()),
+                        location: player.watchTargetPos,
                     });
                     break;
                 }
                 default: {
+                    player.watchTargetPos = { x, y: y + 12, z }
                     player.camera.setCamera("minecraft:free", {
                         rotation: { x: 90, y: targetPlayer.getRotation().y },
-                        location: { x, y: y + 9, z }
-                    })
+                        location: player.watchTargetPos,
+                    });
                 }
             } 
             player.onScreenDisplay.setActionBar(`§gWatching §e${targetPlayer.name} §7| §gRun §ewatch§g command to escape`);
@@ -107,8 +141,8 @@ function getFrontHeadLocation(headPos: Vector3, rotation: Vector2) {
     const yawRadians = (yawDegrees * Math.PI) / 180;
 
     // Calculate offset based on yaw only
-    const offsetX = -Math.sin(yawRadians) * 0.4;
-    const offsetZ = Math.cos(yawRadians) * 0.4;
+    const offsetX = -Math.sin(yawRadians) * 0.5;
+    const offsetZ = Math.cos(yawRadians) * 0.5;
 
     return {
         x: headPos.x + offsetX,
