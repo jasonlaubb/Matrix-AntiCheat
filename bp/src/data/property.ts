@@ -69,7 +69,7 @@ export default {
     },
     banXrayHandler: {
         type: "boolean",
-        value: false, // Disable all handler related to xray
+        value: true, // Disable all handler related to xray
     },
     antiXray: {
         type: "boolean",
