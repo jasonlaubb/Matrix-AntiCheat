@@ -1,18 +1,18 @@
 import { Player, world } from "@minecraft/server";
-export interface BanData {
+interface BanData {
     name: string;
     id: string;
     reason: string;
     executor: string;
     expire: number;
 }
-export interface NameBanData {
+interface NameBanData {
     name: string;
     reason: string;
     executor: string;
     expire: number;
 }
-export function ban(player: Player, reason: string, expire: number) {
+export function ban(player: Player, reason: string, executor: string, expire: number) {
     const now = Date.now();
     if (expire <= now) return;
     world.setDynamicProperty(
@@ -21,9 +21,9 @@ export function ban(player: Player, reason: string, expire: number) {
             name: player.name,
             id: player.id, // Prevent name change bypass
             reason,
-            executor: player.name,
+            executor,
             expire,
-        })
+        } as BanData)
     );
 }
 export function banName(name: string, reason: string, executor: string, expire: number) {
@@ -36,7 +36,7 @@ export function banName(name: string, reason: string, executor: string, expire: 
             reason,
             executor,
             expire,
-        })
+        } as NameBanData)
     );
 }
 export function checkPunish(player: Player) {
@@ -46,6 +46,16 @@ export function checkPunish(player: Player) {
         const data = JSON.parse(banString) as BanData;
         if (now > data.expire) {
             world.setDynamicProperty("banData:" + player.id);
+        } else {
+            player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: ${convertDurationString(data.expire - now)}`);
+            return;
+        }
+    }
+    const nameBanString = world.getDynamicProperty("nameBanData:" + player.name) as string;
+    if (nameBanString) {
+        const data = JSON.parse(nameBanString) as NameBanData;
+        if (now > data.expire) {
+            world.setDynamicProperty("nameBanData:" + player.name);
         } else {
             player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: ${convertDurationString(data.expire - now)}`);
             return;
