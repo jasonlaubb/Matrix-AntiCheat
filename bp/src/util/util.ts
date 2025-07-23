@@ -22,3 +22,38 @@ export function getPlayerRank(player: Player) {
         });
     return tags.length > 0 ? tags.sort((a, b) => b.tier - a.tier || a.rank.localeCompare(b.rank))[0].rank : (get("chatRankDefaultRank") as string);
 }
+export function parseTime (timeUnit: string, value: number) {
+    switch (timeUnit) {
+        case "s":
+        case "second": {
+            return Math.floor(value * 1000);
+        }
+        case "m":
+        case "minute": {
+            return Math.floor(value * 60000);
+        }
+        case "h":
+        case "hour": {
+            return Math.floor(value * 3600000);
+        }
+        case "d":
+        case "day": {
+            return Math.floor(value * 86400000);
+        }
+        case "w":
+        case "week": {
+            return Math.floor(value * 604800000);
+        }
+        case "mo":
+        case "month": {
+            return Math.floor(value * 2592000000);
+        }
+        case "y":
+        case "year": {
+            return Math.floor(value * 31536000000);
+        }
+        default: {
+            return 0;
+        }
+    }
+}

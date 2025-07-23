@@ -12,6 +12,7 @@ import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
+import { timeUnits } from "./command/ban";
 import "./xray/antiXray";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
@@ -97,6 +98,7 @@ system.beforeEvents.startup.subscribe((event) => {
     event.customCommandRegistry.registerEnum("matrix:property", Object.keys(property));
     event.customCommandRegistry.registerEnum("matrix:detectionName", Object.keys(detectionList));
     event.customCommandRegistry.registerEnum("matrix:viewType", cameraTypes);
+    event.customCommandRegistry.registerEnum("matrix:timeUnit", timeUnits);
     commands.forEach(({ name, description, requireOp, optionalParameters, parameters, execute }) => {
         event.customCommandRegistry.registerCommand(
             {
