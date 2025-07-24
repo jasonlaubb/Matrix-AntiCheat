@@ -97,8 +97,8 @@ export const unban = {
     },
 } as Command;
 export const banlist = {
-    name: "unban",
-    description: "Unban a player",
+    name: "banlist",
+    description: "Show a list of banned player",
     requireOp: true,
     execute() {
         const ids = world.getDynamicPropertyIds();

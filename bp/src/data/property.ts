@@ -49,7 +49,7 @@ export default {
     },
     enablePunishmentIgnoreTag: {
         type: "boolean",
-        valie: false,
+        value: false,
     },
     antiKillauraEnable: {
         type: "boolean",
