@@ -39,6 +39,18 @@ export default {
         type: "string",
         value: "rank:",
     },
+    flagPunishmentType: {
+        type: "string",
+        value: "kick", // none, kick, ban
+    },
+    flagBanDuration: {
+        type: "number",
+        value: 604800000,
+    },
+    enablePunishmentIgnoreTag: {
+        type: "boolean",
+        valie: false,
+    },
     antiKillauraEnable: {
         type: "boolean",
         value: true,

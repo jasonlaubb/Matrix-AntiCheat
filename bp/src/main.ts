@@ -11,7 +11,7 @@ import { tick } from "./util/tick";
 import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
-import { checkPunish } from "./util/punishment";
+import { ban, checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
 import { timeUnits } from "./command/ban";
 import "./xray/antiXray";
@@ -49,6 +49,17 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
     }
     if (flagTarget.length > 0) {
         flagTarget.forEach((player) => player.sendMessage(flagMessage));
+    }
+    if (this.hasTag("matrix:ignore")) return;
+    const punishmentType = get("flagPunishmentType");
+    switch (punishmentType) {
+        case "kick": {
+            this.kick("Unfair advantage");
+            break;
+        }
+        case "ban": {
+            ban(this, "Unfair advantage", "Matrix AntiCheat", get("flagBanDuration"));
+        }
     }
 };
 Player.prototype.kick = function (reason: string) {
