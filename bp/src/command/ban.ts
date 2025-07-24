@@ -30,9 +30,9 @@ export const banCmd = {
     ],
     execute: (player, [target, reason, duration, timeUnit]) => {
         if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §fYou need to type time unit if you want to set a duration." };
-        if (!timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
+        if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
         system.run(() => {
-            ban(target, reason ?? "No reason provided", player.name, duration ? parseTime(timeUnit, duration) : undefined);
+            ban(target, reason ?? "No reason provided", player.name,  duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
             checkPunish(target);
         });
         return { status: 0, message: "§7[§aMatrix§7] §fBanned player: " + target.name };
@@ -69,7 +69,7 @@ export const banOffline = {
         if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §fYou need to type time unit if you want to set a duration." };
         if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
         system.run(() => {
-            banName(target, reason ?? "No reason provided", player.name, duration ? parseTime(timeUnit, duration) : undefined);
+            banName(target, reason ?? "No reason provided", player.name, duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
             checkPunish(player);
         });
         return { status: 0, message: "§7[§aMatrix§7] §fBanned player: " + target };
