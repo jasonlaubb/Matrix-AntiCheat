@@ -1,5 +1,5 @@
 import { Player, world } from "@minecraft/server";
-interface BanData {
+export interface BanData {
     name: string;
     reason: string;
     executor: string;
