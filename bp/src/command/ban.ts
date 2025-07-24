@@ -65,7 +65,7 @@ export const banOffline = {
     ],
     execute: (player, [target, reason, duration, timeUnit]) => {
         if (world.getDynamicProperty("nameBanData:" + target) || isBanned(target)) return { status: 1, message: "§7[§aMatrix§7] §fTarget player is already banned." };
-        if (world.getPlayers({ name: target })) return { status: 1};
+        if (world.getPlayers({ name: target })[0]) return { status: 1, message: "§7[§aMatrix§7] §fUse /ban instead of /banoffline if player is online!" };
         if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §fYou need to type time unit if you want to set a duration." };
         if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
         system.run(() => {
