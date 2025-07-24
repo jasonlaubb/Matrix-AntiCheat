@@ -59,6 +59,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
         }
         case "ban": {
             ban(this, "Unfair advantage", "Matrix AntiCheat", get("flagBanDuration"));
+            checkPunish(this);
         }
     }
 };

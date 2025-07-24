@@ -20,7 +20,7 @@ export default {
             };
         if (get("antiXray") === true) return {
             status: 1,
-            message: "§7[§aMatrix§7] §fAnti xray is already enabled. To disable, run '/setBoolean antiXray false'",
+            message: "§7[§aMatrix§7] §fAnti xray is already enabled. To disable, run '/setboolean antiXray false'",
         }
         system.run(() => {
             world.setDynamicProperty("database:antiXray", true);
