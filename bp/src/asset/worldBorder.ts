@@ -1,13 +1,19 @@
-import { DimensionType, Player, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerPlaceBlockBeforeEvent, world } from "@minecraft/server";
-import { addPlayerInterval } from "../util/tick";
+import { Player, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerPlaceBlockBeforeEvent, world } from "@minecraft/server";
+import { addPlayerInterval, removePlayerInterval } from "../util/tick";
 import { get } from "../util/database";
 import { fastAbs } from "../util/mathUtil";
 
 export function worldBorderOn () {
     addPlayerInterval(tickEvent);
+    world.beforeEvents.playerBreakBlock.subscribe(blockChange);
+    world.beforeEvents.playerPlaceBlock.subscribe(blockChange);
+    world.beforeEvents.playerInteractWithBlock.subscribe(blockChange);
 }
 export function worldBorderOff () {
-
+    removePlayerInterval(tickEvent);
+    world.beforeEvents.playerBreakBlock.unsubscribe(blockChange);
+    world.beforeEvents.playerPlaceBlock.unsubscribe(blockChange);
+    world.beforeEvents.playerInteractWithBlock.unsubscribe(blockChange);
 }
 const particleId = "minecraft:raid_omen_emitter";
 function tickEvent (player: Player) {
