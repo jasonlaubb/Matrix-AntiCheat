@@ -36,7 +36,7 @@ function tickEvent() {
     if (size <= 10) return;
     for (const player of players) {
     const { x: x1, y: y1, z: z1 } = player.location;
-    const baseY = Math.floor(y1) - 2;
+    const baseY = Math.floor(y1) - 3;
     const { x: x2, z: z2 } = spawnLoc;
 
     const xDiff = fastAbs(Math.floor(x1) - x2);
@@ -126,7 +126,7 @@ function tickEvent() {
         }
     }
     }
-    if (steps >= 20) steps = 0;
+    if (steps >= 10) steps = 0;
 }
 
 function blockChange(
