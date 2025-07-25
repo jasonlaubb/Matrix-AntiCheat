@@ -24,7 +24,7 @@ export function ban(player: Player, reason: string, executor: string, expire?: n
         } as BanData)
     );
 }
-export function isBanned (playerName: string) {
+export function isBanned(playerName: string) {
     const ids = world.getDynamicPropertyIds();
     for (const id of ids) {
         if (!id.startsWith("banData:")) continue;
@@ -54,7 +54,9 @@ export function checkPunish(player: Player) {
             world.setDynamicProperty("banData:" + player.id);
         } else {
             if (data.expire) {
-                player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: §e${convertDurationString(data.expire - now)}`);
+                player.kick(
+                    `§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: §e${convertDurationString(data.expire - now)}`
+                );
             } else {
                 player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}`);
             }
@@ -70,7 +72,9 @@ export function checkPunish(player: Player) {
             ban(player, data.reason, data.executor, data.expire);
             world.setDynamicProperty("nameBanData:" + player.name);
             if (data.expire) {
-                player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: §e${convertDurationString(data.expire - now)}`);
+                player.kick(
+                    `§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: §e${convertDurationString(data.expire - now)}`
+                );
             } else {
                 player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}`);
             }

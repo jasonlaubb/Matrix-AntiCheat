@@ -24,9 +24,9 @@ export const watchtp = {
             player.teleport(player.watchTargetPos!, {
                 facingLocation: player.watchPlayerPos,
             });
-        })
+        });
         return { status: 0, message: "§7[§aMatrix§7] §fTeleported!" };
-    }
+    },
 } as Command;
 export default {
     name: "watch",
@@ -40,7 +40,7 @@ export default {
         {
             name: "player",
             type: "playerTarget",
-        }
+        },
     ],
     execute: (player, [type, target]) => {
         if (player.isWatching) {
@@ -56,7 +56,7 @@ export default {
             player.cameraType = type;
         }
         const targetPlayer = target as Player;
-        if (targetPlayer.dimension.id !== player.dimension.id) return { status: 1, message: "§7[§aMatrix§7] §fYou need to locate in same dimension with watch target." }
+        if (targetPlayer.dimension.id !== player.dimension.id) return { status: 1, message: "§7[§aMatrix§7] §fYou need to locate in same dimension with watch target." };
         const currentGameMode = player.getGameMode();
         player.watchBeforeGM = currentGameMode;
         player.isWatching = true;
@@ -67,7 +67,7 @@ export default {
             });
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false);
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false);
-        })
+        });
         const id = system.runInterval(() => {
             if (!player || !player.isValid) return system.clearRun(id);
             const targetLeft = !targetPlayer || !targetPlayer.isValid;
@@ -102,7 +102,7 @@ export default {
                 }
                 case "behind": {
                     const headPos = player.watchPlayerPos;
-                    player.watchTargetPos = getBehindHeadLocation(headPos, targetPlayer.getRotation())
+                    player.watchTargetPos = getBehindHeadLocation(headPos, targetPlayer.getRotation());
                     player.camera.setCamera("minecraft:free", {
                         facingLocation: headPos,
                         location: player.watchTargetPos,
@@ -110,17 +110,17 @@ export default {
                     break;
                 }
                 default: {
-                    player.watchTargetPos = { x, y: y + 12, z }
+                    player.watchTargetPos = { x, y: y + 12, z };
                     player.camera.setCamera("minecraft:free", {
                         rotation: { x: 90, y: targetPlayer.getRotation().y },
                         location: player.watchTargetPos,
                     });
                 }
-            } 
+            }
             player.onScreenDisplay.setActionBar(`§gWatching §e${targetPlayer.name} §7| §gRun §ewatch§g command to escape`);
         });
         return { status: 0 };
-    }
+    },
 } as Command;
 function getBehindHeadLocation(headPos: Vector3, rotation: Vector2) {
     const yawDegrees = rotation.y;
@@ -133,7 +133,7 @@ function getBehindHeadLocation(headPos: Vector3, rotation: Vector2) {
     return {
         x: headPos.x - offsetX,
         y: headPos.y + 2,
-        z: headPos.z - offsetZ
+        z: headPos.z - offsetZ,
     };
 }
 function getFrontHeadLocation(headPos: Vector3, rotation: Vector2) {
@@ -147,6 +147,6 @@ function getFrontHeadLocation(headPos: Vector3, rotation: Vector2) {
     return {
         x: headPos.x + offsetX,
         y: headPos.y,
-        z: headPos.z + offsetZ
+        z: headPos.z + offsetZ,
     };
 }

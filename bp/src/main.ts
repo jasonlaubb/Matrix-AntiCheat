@@ -84,7 +84,29 @@ export interface Command {
 }
 classifyProperty();
 system.beforeEvents.startup.subscribe((event) => {
-    const commands = [info, setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty, detect, detectionlist, rankadd, rankclear, ranklist, rankremove, rankset, watch, antixrayenable, banCmd, banOffline, banlist, unban, worldBorder] as Command[];
+    const commands = [
+        info,
+        setBoolean,
+        setNumber,
+        setString,
+        resetConfig,
+        clearProperty,
+        getProperty,
+        detect,
+        detectionlist,
+        rankadd,
+        rankclear,
+        ranklist,
+        rankremove,
+        rankset,
+        watch,
+        antixrayenable,
+        banCmd,
+        banOffline,
+        banlist,
+        unban,
+        worldBorder,
+    ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
             case "string":

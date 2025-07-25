@@ -10,7 +10,7 @@ export const banCmd = {
     parameters: [
         {
             name: "player",
-            type: "playerTarget"
+            type: "playerTarget",
         },
     ],
     optionalParameters: [
@@ -25,18 +25,18 @@ export const banCmd = {
         },
         {
             name: "timeUnit",
-            type: "enum"
+            type: "enum",
         },
     ],
     execute: (player, [target, reason, duration, timeUnit]) => {
         if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §fYou need to type time unit if you want to set a duration." };
         if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
         system.run(() => {
-            ban(target, reason ?? "No reason provided", player.name,  duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
+            ban(target, reason ?? "No reason provided", player.name, duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
             checkPunish(target);
         });
         return { status: 0, message: "§7[§aMatrix§7] §fBanned player: " + target.name };
-    }
+    },
 } as Command;
 export const banOffline = {
     name: "banoffline",
@@ -45,7 +45,7 @@ export const banOffline = {
     parameters: [
         {
             name: "playerName",
-            type: "string"
+            type: "string",
         },
     ],
     optionalParameters: [
@@ -60,7 +60,7 @@ export const banOffline = {
         },
         {
             name: "timeUnit",
-            type: "enum"
+            type: "enum",
         },
     ],
     execute: (player, [target, reason, duration, timeUnit]) => {
@@ -73,7 +73,7 @@ export const banOffline = {
             checkPunish(player);
         });
         return { status: 0, message: "§7[§aMatrix§7] §fBanned player: " + target };
-    }
+    },
 } as Command;
 export const unban = {
     name: "unban",
@@ -114,6 +114,6 @@ export const banlist = {
         }
         if (banned.length > 0) {
             return { status: 0, message: "§7[§aMatrix§7] §fBanned player list: §e" + banned.join(", ") };
-        } else return { status: 0, message: "§7[§aMatrix§7] §fThere is no banned player yet." }
+        } else return { status: 0, message: "§7[§aMatrix§7] §fThere is no banned player yet." };
     },
 } as Command;

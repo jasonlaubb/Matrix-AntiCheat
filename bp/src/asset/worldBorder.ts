@@ -3,26 +3,26 @@ import { addPlayerInterval, removePlayerInterval } from "../util/tick";
 import { get } from "../util/database";
 import { fastAbs } from "../util/mathUtil";
 
-export function worldBorderOn () {
+export function worldBorderOn() {
     addPlayerInterval(tickEvent);
     world.beforeEvents.playerBreakBlock.subscribe(blockChange);
     world.beforeEvents.playerPlaceBlock.subscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.subscribe(blockChange);
 }
-export function worldBorderOff () {
+export function worldBorderOff() {
     removePlayerInterval(tickEvent);
     world.beforeEvents.playerBreakBlock.unsubscribe(blockChange);
     world.beforeEvents.playerPlaceBlock.unsubscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.unsubscribe(blockChange);
 }
 const particleId = "minecraft:raid_omen_emitter";
-function tickEvent (player: Player) {
+function tickEvent(player: Player) {
     const size = get("worldBorderSize") as number;
     const { x: x1, y, z: z1 } = player.location;
     const spawnLoc = world.getDefaultSpawnLocation();
     const { x: x2, z: z2 } = spawnLoc;
     const xDiff = fastAbs(x1 - x2);
-    const zDiff = fastAbs(z1 - z2)
+    const zDiff = fastAbs(z1 - z2);
     const x = xDiff > size;
     const z = zDiff > size;
     player.lastSafeLocation ??= spawnLoc;
@@ -36,14 +36,14 @@ function tickEvent (player: Player) {
         player.lastDimension = player.dimension.id;
     }
     if (get("worldBorderEffect")) {
-        if (xDiff <= 7) {
+        if (size - xDiff <= 7) {
             const targetX = x1 + size;
             const startZ = z1 - 5;
             for (let i = 0; i < 10; i++) {
                 player.dimension.spawnParticle(particleId, { x: targetX, y, z: startZ + i });
             }
         }
-        if (zDiff <= 7) {
+        if (size - zDiff <= 7) {
             const targetZ = z1 + size;
             const startX = x1 - 5;
             for (let x = 0; x < 10; x++) {
@@ -52,7 +52,7 @@ function tickEvent (player: Player) {
         }
     }
 }
-function blockChange (event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent | PlayerInteractWithBlockBeforeEvent) {
+function blockChange(event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent | PlayerInteractWithBlockBeforeEvent) {
     const { x, z } = event.block.location;
     const { x: x2, z: z2 } = world.getDefaultSpawnLocation();
     const size = get("worldBorderSize") as number;

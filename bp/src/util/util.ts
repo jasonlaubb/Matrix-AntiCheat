@@ -22,7 +22,7 @@ export function getPlayerRank(player: Player) {
         });
     return tags.length > 0 ? tags.sort((a, b) => b.tier - a.tier || a.rank.localeCompare(b.rank))[0].rank : (get("chatRankDefaultRank") as string);
 }
-export function parseTime (timeUnit: string, value: number) {
+export function parseTime(timeUnit: string, value: number) {
     switch (timeUnit) {
         case "s":
         case "second": {
