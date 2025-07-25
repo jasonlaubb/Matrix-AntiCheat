@@ -93,11 +93,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
             endZ = startZ + 15;
         const density = get("antiXrayGhostBlockDensity");
         const maxMove = get("antiXrayMaxChangeInTick");
-        const iterator1 = dimension.getBlocks(new BlockVolume({ x: startX, y: -63, z: startZ }, { x: endX, y: 32, z: endZ }), { includeTypes }, true).getBlockLocationIterator();
-
-        const iterator2 = dimension.getBlocks(new BlockVolume({ x: startX, y: 33, z: startZ }, { x: endX, y: 84, z: endZ }), { includeTypes }, true).getBlockLocationIterator();
-
-        const blocks = [...iterator1, ...iterator2];
+        const blocks = dimension.getBlocks(new BlockVolume({ x: startX, y: -63, z: startZ }, { x: endX, y: 32, z: endZ }), { includeTypes }, true).getBlockLocationIterator();
         let move = 0;
         const chunkPrefix = `k:${Math.floor(startX / 16) * 16},${Math.floor(startZ / 16) * 16}`;
         const chunkData = loadChunkData(chunkPrefix);
@@ -210,29 +206,16 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
 
     return generator();
 }
-
+world.beforeEvents.playerPlaceBlock.subscribe((event) => {
+    const id = event.block.typeId;
+    if (get("banXrayHandler") || !["minecraft:piston","minecraft:sticky_piston"].includes(id) || event.player.isOp() || event.dimension.id === "minecraft:the_end") return;
+    event.cancel = true;
+    system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fSorry, piston's placement is disallowed in this server."));
+});
 world.beforeEvents.explosion.subscribe((event) => {
-    if (event.dimension.id !== "minecraft:overworld" && event.dimension.id !== "minecraft:nether") return;
-    if (!get("banXrayHandler")) {
-        if (event.source && event.source.typeId === "minecraft:tnt") {
-            const nearPlayer = event.dimension.getPlayers({
-                maxDistance: 13,
-                closest: 1,
-                location: event.source.location,
-            })[0];
-            if (nearPlayer) {
-                const now = Date.now();
-                if (now - (nearPlayer.lastNoTntMsg ?? 0) > 15000) {
-                    system.run(() => {
-                        nearPlayer.sendMessage("§7[§aMatrix§7] §fSorry, but you cannot destroy blocks through explosion.");
-                    });
-                    nearPlayer.lastNoTntMsg = now;
-                }
-            }
-        }
-        event.setImpactedBlocks([]);
-        return;
-    }
+    if (event.dimension.id === "minecraft:the_end" || get("banXrayHandler")) return;
+    event.setImpactedBlocks([]);
+    return;
 });
 function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
     const chunks: VectorXZ[] = [];
