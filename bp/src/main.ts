@@ -14,7 +14,7 @@ import { getPlayerRank } from "./util/util";
 import { ban, checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
 import { timeUnits } from "./command/ban";
-import "./xray/antiXray";
+import "./asset/antiXray";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
