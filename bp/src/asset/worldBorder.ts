@@ -19,7 +19,6 @@ const particleId = "minecraft:blue_flame_particle";
 function tickEvent(player: Player) {
     const size = get("worldBorderSize") as number;
     const { x: x1, y: y1, z: z1 } = player.location;
-    const y = Math.floor(y1);
     const spawnLoc = world.getDefaultSpawnLocation();
     const { x: x2, z: z2 } = spawnLoc;
     const xDiff = fastAbs(x1 - x2);
@@ -42,31 +41,48 @@ function tickEvent(player: Player) {
 
     const nearX = xDist <= 7;
     const nearZ = zDist <= 7;
-    const posY = y + 1;
+
+    const height = 5; // Height of the wall
+    const baseY = Math.floor(y1);
+    const dzStart = z1 > z2 ? 0 : -19;
+const dxStart = x1 > x2 ? 0 : -19;
+
     if (nearX && nearZ) {
         const targetX = x1 > x2 ? x2 + size : x2 - size;
         const targetZ = z1 > z2 ? z2 + size : z2 - size;
 
-        // L-shape: vertical line along Z
-        for (let dz = 0; dz < 20; dz++) {
-            player.dimension.spawnParticle(particleId, { x: targetX, y: posY, z: targetZ - (z1 > z2 ? dz : -dz) });
-        }
+        // Vertical wall along Z axis (X boundary)
+for (let dz = 0; dz < 20; dz++) {
+    for (let dy = 0; dy < height; dy++) {
+        player.dimension.spawnParticle(particleId, {
+            x: targetX,
+            y: baseY + dy,
+            z: targetZ + dzStart + dz
+        });
+    }
+}
 
-        // L-shape: horizontal line along X
-        for (let dx = 0; dx < 20; dx++) {
-            player.dimension.spawnParticle(particleId, { x: targetX - (x1 > x2 ? dx : -dx), y: posY, z: targetZ });
-        }
+// Vertical wall along X axis (Z boundary)
+for (let dx = 0; dx < 20; dx++) {
+    for (let dy = 0; dy < height; dy++) {
+        player.dimension.spawnParticle(particleId, {
+            x: targetX + dxStart + dx,
+            y: baseY + dy,
+            z: targetZ
+        });
+    }
+}
     } else if (nearX) {
         const targetX = x1 > x2 ? x2 + size : x2 - size;
         const startZ = Math.floor(z1) - 10;
         for (let i = 0; i < 20; i++) {
-            player.dimension.spawnParticle(particleId, { x: targetX, y: posY, z: startZ + i });
+            player.dimension.spawnParticle(particleId, { x: targetX, y: baseY, z: startZ + i });
         }
     } else if (nearZ) {
         const targetZ = z1 > z2 ? z2 + size : z2 - size;
         const startX = Math.floor(x1) - 10;
         for (let x = 0; x < 20; x++) {
-            player.dimension.spawnParticle(particleId, { x: startX + x, y: posY, z: targetZ });
+            player.dimension.spawnParticle(particleId, { x: startX + x, y: baseY, z: targetZ });
         }
     }
 }
