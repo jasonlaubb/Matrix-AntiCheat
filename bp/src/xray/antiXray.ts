@@ -213,7 +213,7 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
 
 world.beforeEvents.explosion.subscribe((event) => {
     if (event.dimension.id !== "minecraft:overworld" && event.dimension.id !== "minecraft:nether") return;
-    if (!get("banXrayHandler") && get("antiXray")) {
+    if (!get("banXrayHandler")) {
         if (event.source && event.source.typeId === "minecraft:tnt") {
             const nearPlayer = event.dimension.getPlayers({
                 maxDistance: 13,
