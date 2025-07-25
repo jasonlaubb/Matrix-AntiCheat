@@ -1,37 +1,42 @@
 import {
-    Player,
     PlayerBreakBlockBeforeEvent,
     PlayerInteractWithBlockBeforeEvent,
     PlayerPlaceBlockBeforeEvent,
     Vector3,
     world
 } from "@minecraft/server";
-import { addPlayerInterval, removePlayerInterval } from "../util/tick";
+import { addInterval, removeInterval } from "../util/tick";
 import { get } from "../util/database";
 import { fastAbs } from "../util/mathUtil";
 
 export function worldBorderOn() {
-    addPlayerInterval(tickEvent);
+    addInterval(tickEvent);
     world.beforeEvents.playerBreakBlock.subscribe(blockChange);
     world.beforeEvents.playerPlaceBlock.subscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.subscribe(blockChange);
 }
 
 export function worldBorderOff() {
-    removePlayerInterval(tickEvent);
+    removeInterval(tickEvent);
     world.beforeEvents.playerBreakBlock.unsubscribe(blockChange);
     world.beforeEvents.playerPlaceBlock.unsubscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.unsubscribe(blockChange);
 }
 
 const particleId = "minecraft:blue_flame_particle";
-
-function tickEvent(player: Player) {
+let steps = 0;
+function tickEvent() {
+    const players = world.getAllPlayers();
+    steps++;
     const size = get("worldBorderSize") as number;
-    if (size <= 20) return;
+    const spawnLoc = world.getDefaultSpawnLocation();
+    const addEffect = get("worldBorderEffect");
+    const wallLength = 30;
+    const wallHeight = 12;
+    if (size <= 10) return;
+    for (const player of players) {
     const { x: x1, y: y1, z: z1 } = player.location;
     const baseY = Math.floor(y1) - 2;
-    const spawnLoc = world.getDefaultSpawnLocation();
     const { x: x2, z: z2 } = spawnLoc;
 
     const xDiff = fastAbs(Math.floor(x1) - x2);
@@ -59,14 +64,11 @@ function tickEvent(player: Player) {
         player.lastDimension = player.dimension.id;
     }
 
-    if (get("worldBorderEffect")) {
+    if (steps === 10 && addEffect) {
         const xDist = fastAbs(size - xDiff);
         const zDist = fastAbs(size - zDiff);
         const nearX = xDist <= 12;
         const nearZ = zDist <= 12;
-
-        const wallLength = 20;
-        const wallHeight = 8;
 
         const targetX = x1 > x2 ? x2 + size : x2 - size;
         const targetZ = z1 > z2 ? z2 + size : z2 - size;
@@ -105,7 +107,7 @@ function tickEvent(player: Player) {
                     player.dimension.spawnParticle(particleId, {
                         x: x1 > x2 ? targetX + 1 : targetX,
                         y: spawnY,
-                        z: Math.floor(z1) + i * dzDir,
+                        z: Math.floor(z1) - wallLength * .5 + i,
                     });
                 }
             }
@@ -115,7 +117,7 @@ function tickEvent(player: Player) {
                     const spawnY = baseY + dy;
                     if (spawnY > 320 || spawnY < -64) continue;
                     player.dimension.spawnParticle(particleId, {
-                        x: Math.floor(x1) + i * dxDir,
+                        x: Math.floor(x1) - wallLength * .5 + i,
                         y: spawnY,
                         z: z1 > z2 ? targetZ + 1 : targetZ,
                     });
@@ -123,6 +125,8 @@ function tickEvent(player: Player) {
             }
         }
     }
+    }
+    if (steps >= 20) steps = 0;
 }
 
 function blockChange(
