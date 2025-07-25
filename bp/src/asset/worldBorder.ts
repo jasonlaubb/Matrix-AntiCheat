@@ -15,7 +15,7 @@ export function worldBorderOff() {
     world.beforeEvents.playerPlaceBlock.unsubscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.unsubscribe(blockChange);
 }
-const particleId = "minecraft:note_particle";
+const particleId = "minecraft:blue_flame_particle";
 function tickEvent(player: Player) {
     const size = get("worldBorderSize") as number;
     const { x: x1, y, z: z1 } = player.location;
@@ -41,31 +41,31 @@ function tickEvent(player: Player) {
 
     const nearX = xDist <= 7;
     const nearZ = zDist <= 7;
-
+    const posY = y + 1;
     if (nearX && nearZ) {
         const targetX = x1 > x2 ? x2 + size : x2 - size;
         const targetZ = z1 > z2 ? z2 + size : z2 - size;
 
         // L-shape: vertical line along Z
         for (let dz = 0; dz < 20; dz++) {
-            player.dimension.spawnParticle(particleId, { x: targetX, y, z: targetZ - (z1 > z2 ? dz : -dz) });
+            player.dimension.spawnParticle(particleId, { x: targetX, y: posY, z: targetZ - (z1 > z2 ? dz : -dz) });
         }
 
         // L-shape: horizontal line along X
         for (let dx = 0; dx < 20; dx++) {
-            player.dimension.spawnParticle(particleId, { x: targetX - (x1 > x2 ? dx : -dx), y, z: targetZ });
+            player.dimension.spawnParticle(particleId, { x: targetX - (x1 > x2 ? dx : -dx), y: posY, z: targetZ });
         }
     } else if (nearX) {
         const targetX = x1 > x2 ? x2 + size : x2 - size;
-        const startZ = z1 - 10;
+        const startZ = Math.floor(z1) - 10;
         for (let i = 0; i < 20; i++) {
-            player.dimension.spawnParticle(particleId, { x: targetX, y, z: startZ + i });
+            player.dimension.spawnParticle(particleId, { x: targetX, y: posY, z: startZ + i });
         }
     } else if (nearZ) {
         const targetZ = z1 > z2 ? z2 + size : z2 - size;
-        const startX = x1 - 10;
+        const startX = Math.floor(x1) - 10;
         for (let x = 0; x < 20; x++) {
-            player.dimension.spawnParticle(particleId, { x: startX + x, y, z: targetZ });
+            player.dimension.spawnParticle(particleId, { x: startX + x, y: posY, z: targetZ });
         }
     }
 }
