@@ -38,14 +38,14 @@ function tickEvent(player: Player) {
     if (get("worldBorderEffect")) {
         if (fastAbs(size - xDiff) <= 7) {
             const targetX = x2 + size;
-            const startZ = z1 - 20;
+            const startZ = z1 - 10;
             for (let i = 0; i < 20; i++) {
                 player.dimension.spawnParticle(particleId, { x: targetX, y, z: startZ + i });
             }
         }
         if (fastAbs(size - zDiff) <= 7) {
             const targetZ = z2 + size;
-            const startX = x1 - 5;
+            const startX = x1 - 10;
             for (let x = 0; x < 20; x++) {
                 player.dimension.spawnParticle(particleId, { x: startX + x, y, z: targetZ });
             }

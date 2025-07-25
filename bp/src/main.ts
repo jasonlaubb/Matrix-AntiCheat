@@ -16,6 +16,7 @@ import { ban, checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
 import { timeUnits } from "./command/ban";
 import "./asset/antiXray";
+import { worldBorderOn } from "./asset/worldBorder";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -285,6 +286,7 @@ system.beforeEvents.startup.subscribe((event) => {
 world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(tick);
     initModules();
+    if (get("worldBorder")) worldBorderOn();
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const { x, y } = event.sender.inputInfo.getMovementVector();
