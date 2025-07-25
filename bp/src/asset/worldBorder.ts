@@ -3,6 +3,7 @@ import {
     PlayerBreakBlockBeforeEvent,
     PlayerInteractWithBlockBeforeEvent,
     PlayerPlaceBlockBeforeEvent,
+    Vector3,
     world
 } from "@minecraft/server";
 import { addPlayerInterval, removePlayerInterval } from "../util/tick";
@@ -27,6 +28,7 @@ const particleId = "minecraft:blue_flame_particle";
 
 function tickEvent(player: Player) {
     const size = get("worldBorderSize") as number;
+    if (size <= 20) return;
     const { x: x1, y: y1, z: z1 } = player.location;
     const baseY = Math.floor(y1) - 2;
     const spawnLoc = world.getDefaultSpawnLocation();
@@ -44,7 +46,7 @@ function tickEvent(player: Player) {
         const safeX = fastAbs(x2 - player.lastSafeLocation.x) <= size;
         const safeZ = fastAbs(z2 - player.lastSafeLocation.z) <= size;
         if (safeX && safeZ) {
-            player.teleport(player.lastSafeLocation, {
+            player.teleport(middleLoc(player.lastSafeLocation), {
                 dimension: world.getDimension(player.lastDimension)
             });
         } else {
@@ -135,4 +137,8 @@ function blockChange(
     if (fastAbs(x - x2) > size || fastAbs(z - z2) > size) {
         event.cancel = true;
     }
+}
+
+function middleLoc ({ x, y, z }: Vector3) {
+    return { x: x + .5, y, z: z + .5 };
 }
