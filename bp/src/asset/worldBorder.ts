@@ -18,7 +18,8 @@ export function worldBorderOff() {
 const particleId = "minecraft:blue_flame_particle";
 function tickEvent(player: Player) {
     const size = get("worldBorderSize") as number;
-    const { x: x1, y, z: z1 } = player.location;
+    const { x: x1, y: y1, z: z1 } = player.location;
+    const y = Math.floor(y1);
     const spawnLoc = world.getDefaultSpawnLocation();
     const { x: x2, z: z2 } = spawnLoc;
     const xDiff = fastAbs(x1 - x2);
@@ -74,7 +75,7 @@ function blockChange(event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBefore
     const { x, z } = event.block.location;
     const { x: x2, z: z2 } = world.getDefaultSpawnLocation();
     const size = get("worldBorderSize") as number;
-    if (fastAbs(x - x2) >= size || fastAbs(z - z2) >= size) {
+    if (fastAbs(x - x2) > size || fastAbs(z - z2) > size) {
         event.cancel = true;
     }
 }
