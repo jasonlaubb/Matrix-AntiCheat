@@ -103,4 +103,16 @@ export default {
         type: "number",
         value: 21, // High value of this might cause HIGH spike lag...
     },
+    worldBorder: {
+        type: "boolean",
+        value: false,
+    },
+    worldBorderSize: {
+        type: "number",
+        value: 10000, // Max X, Z diff from the world spawn (doge)
+    },
+    worldBorderEffect: {
+        type: "boolean",
+        value: true,
+    },
 };

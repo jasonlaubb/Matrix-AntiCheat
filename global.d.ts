@@ -10,6 +10,8 @@ declare module "@minecraft/server" {
         kick: (reason: string) => void;
         // Xray data
         lastNoTntMsg: number;
+        // WorldBorder data
+        lastSafeLocation: Vector3;
         // Watch command
         isWatching?: boolean;
         watchTargetPos?: Vector3;
