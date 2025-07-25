@@ -77,7 +77,7 @@ function tickEvent() {
 
         if (nearX && nearZ) {
             // L-shape corner wall
-            for (let i = 0; i < wallLength; i++) {
+            for (let i = 0; i <= wallLength; i++) {
                 for (let dy = 0; dy < wallHeight; dy++) {
                     const spawnY = baseY + dy;
                     if (spawnY > 320 || spawnY < -64) continue;
@@ -88,7 +88,7 @@ function tickEvent() {
                     });
                 }
             }
-            for (let i = 0; i < wallLength; i++) {
+            for (let i = 0; i <= wallLength; i++) {
                 for (let dy = 0; dy < wallHeight; dy++) {
                     const spawnY = baseY + dy;
                     if (spawnY > 320 || spawnY < -64) continue
