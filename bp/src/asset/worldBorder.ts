@@ -1,4 +1,4 @@
-import { Player, world } from "@minecraft/server";
+import { DimensionType, Player, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerPlaceBlockBeforeEvent, world } from "@minecraft/server";
 import { addPlayerInterval } from "../util/tick";
 import { get } from "../util/database";
 import { fastAbs } from "../util/mathUtil";
@@ -20,12 +20,14 @@ function tickEvent (player: Player) {
     const x = xDiff > size;
     const z = zDiff > size;
     player.lastSafeLocation ??= spawnLoc;
+    player.lastDimension ??= "minecraft:overworld";
     if (x || z) {
         if (fastAbs(x2 - player.lastSafeLocation.x) <= size && fastAbs(z2 - player.lastSafeLocation.z)) {
-            player.teleport(player.lastSafeLocation);
-        } else player.teleport(spawnLoc);
+            player.teleport(player.lastSafeLocation, { dimension: world.getDimension(player.lastDimension) });
+        } else player.teleport(spawnLoc, { dimension: world.getDimension("minecraft:overworld") });
     } else {
         player.lastSafeLocation = player.location;
+        player.lastDimension = player.dimension.id;
     }
     if (get("worldBorderEffect")) {
         if (xDiff <= 7) {
@@ -42,5 +44,13 @@ function tickEvent (player: Player) {
                 player.dimension.spawnParticle(particleId, { x: startX + x, y, z: targetZ });
             }
         }
+    }
+}
+function blockChange (event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent | PlayerInteractWithBlockBeforeEvent) {
+    const { x, z } = event.block.location;
+    const { x: x2, z: z2 } = world.getDefaultSpawnLocation();
+    const size = get("worldBorderSize") as number;
+    if (fastAbs(x - x2) > size || fastAbs(z - z2) > size) {
+        event.cancel = true;
     }
 }

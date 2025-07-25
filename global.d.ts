@@ -12,6 +12,7 @@ declare module "@minecraft/server" {
         lastNoTntMsg: number;
         // WorldBorder data
         lastSafeLocation: Vector3;
+        lastDimension: string;
         // Watch command
         isWatching?: boolean;
         watchTargetPos?: Vector3;
