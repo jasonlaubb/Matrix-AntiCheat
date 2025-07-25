@@ -253,7 +253,6 @@ system.beforeEvents.startup.subscribe((event) => {
             if (source.isOp()) {
                 openGeneralUI(source);
             } else {
-                source.sendMessage("§7[§aMatrix§7] §fNice try... but the item is overpowered and you aren't an operator to stop it from escaping!");
                 source.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Mainhand)!.setItem();
             }
         },
