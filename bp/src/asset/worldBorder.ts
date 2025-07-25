@@ -33,7 +33,7 @@ function tickEvent() {
     const addEffect = get("worldBorderEffect");
     const wallLength = 30;
     const wallHeight = 12;
-    if (size <= 10) return;
+    if (size < 10) return;
     for (const player of players) {
     const { x: x1, y: y1, z: z1 } = player.location;
     const baseY = Math.floor(y1) - 3;
