@@ -1,4 +1,10 @@
-import { Player, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerPlaceBlockBeforeEvent, world } from "@minecraft/server";
+import {
+    Player,
+    PlayerBreakBlockBeforeEvent,
+    PlayerInteractWithBlockBeforeEvent,
+    PlayerPlaceBlockBeforeEvent,
+    world
+} from "@minecraft/server";
 import { addPlayerInterval, removePlayerInterval } from "../util/tick";
 import { get } from "../util/database";
 import { fastAbs } from "../util/mathUtil";
@@ -9,85 +15,120 @@ export function worldBorderOn() {
     world.beforeEvents.playerPlaceBlock.subscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.subscribe(blockChange);
 }
+
 export function worldBorderOff() {
     removePlayerInterval(tickEvent);
     world.beforeEvents.playerBreakBlock.unsubscribe(blockChange);
     world.beforeEvents.playerPlaceBlock.unsubscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.unsubscribe(blockChange);
 }
+
 const particleId = "minecraft:blue_flame_particle";
+
 function tickEvent(player: Player) {
     const size = get("worldBorderSize") as number;
     const { x: x1, y: y1, z: z1 } = player.location;
+    const baseY = Math.floor(y1) - 2;
     const spawnLoc = world.getDefaultSpawnLocation();
     const { x: x2, z: z2 } = spawnLoc;
-    const xDiff = fastAbs(x1 - x2);
-    const zDiff = fastAbs(z1 - z2);
-    const x = xDiff > size;
-    const z = zDiff > size;
+
+    const xDiff = fastAbs(Math.floor(x1) - x2);
+    const zDiff = fastAbs(Math.floor(z1) - z2);
+    const outOfBoundsX = xDiff > size;
+    const outOfBoundsZ = zDiff > size;
+
     player.lastSafeLocation ??= spawnLoc;
     player.lastDimension ??= "minecraft:overworld";
-    if (x || z) {
-        if (fastAbs(x2 - player.lastSafeLocation.x) <= size && fastAbs(z2 - player.lastSafeLocation.z)) {
-            player.teleport(player.lastSafeLocation, { dimension: world.getDimension(player.lastDimension) });
-        } else player.teleport(spawnLoc, { dimension: world.getDimension("minecraft:overworld") }); // Nearly impossible situration but possible when admin change border size
+
+    if (outOfBoundsX || outOfBoundsZ) {
+        const safeX = fastAbs(x2 - player.lastSafeLocation.x) <= size;
+        const safeZ = fastAbs(z2 - player.lastSafeLocation.z) <= size;
+        if (safeX && safeZ) {
+            player.teleport(player.lastSafeLocation, {
+                dimension: world.getDimension(player.lastDimension)
+            });
+        } else {
+            player.teleport(spawnLoc, {
+                dimension: world.getDimension("minecraft:overworld")
+            });
+        }
     } else {
-        player.lastSafeLocation = player.location;
+        player.lastSafeLocation = { x: Math.floor(x1), y: y1, z: Math.floor(z1) };
         player.lastDimension = player.dimension.id;
     }
+
     if (get("worldBorderEffect")) {
-    const xDist = fastAbs(size - xDiff);
-    const zDist = fastAbs(size - zDiff);
+        const xDist = fastAbs(size - xDiff);
+        const zDist = fastAbs(size - zDiff);
+        const nearX = xDist <= 12;
+        const nearZ = zDist <= 12;
 
-    const nearX = xDist <= 7;
-    const nearZ = zDist <= 7;
+        const wallLength = 20;
+        const wallHeight = 8;
 
-    const height = 5; // Height of the wall
-    const baseY = Math.floor(y1);
-    const dzStart = z1 > z2 ? 0 : -19;
-const dxStart = x1 > x2 ? 0 : -19;
-
-    if (nearX && nearZ) {
         const targetX = x1 > x2 ? x2 + size : x2 - size;
         const targetZ = z1 > z2 ? z2 + size : z2 - size;
+        const dxDir = x1 > x2 ? -1 : 1;
+        const dzDir = z1 > z2 ? -1 : 1;
 
-        // Vertical wall along Z axis (X boundary)
-for (let dz = 0; dz < 20; dz++) {
-    for (let dy = 0; dy < height; dy++) {
-        player.dimension.spawnParticle(particleId, {
-            x: targetX,
-            y: baseY + dy,
-            z: targetZ + dzStart + dz
-        });
+        if (nearX && nearZ) {
+            // L-shape corner wall
+            for (let i = 0; i < wallLength; i++) {
+                for (let dy = 0; dy < wallHeight; dy++) {
+                    const spawnY = baseY + dy;
+                    if (spawnY > 320 || spawnY < -64) continue;
+                    player.dimension.spawnParticle(particleId, {
+                        x: x1 > x2 ? targetX + 1 : targetX,
+                        y: spawnY,
+                        z: targetZ + i * dzDir
+                    });
+                }
+            }
+            for (let i = 0; i < wallLength; i++) {
+                for (let dy = 0; dy < wallHeight; dy++) {
+                    const spawnY = baseY + dy;
+                    if (spawnY > 320 || spawnY < -64) continue
+                    player.dimension.spawnParticle(particleId, {
+                        x: targetX + i * dxDir,
+                        y: spawnY,
+                        z: z1 > z2 ? targetZ + 1 : targetZ,
+                    });
+                }
+            }
+        } else if (nearX) {
+            for (let i = 0; i < wallLength; i++) {
+                for (let dy = 0; dy < wallHeight; dy++) {
+                    const spawnY = baseY + dy;
+                    if (spawnY > 320 || spawnY < -64) continue;
+                    player.dimension.spawnParticle(particleId, {
+                        x: x1 > x2 ? targetX + 1 : targetX,
+                        y: spawnY,
+                        z: Math.floor(z1) + i * dzDir,
+                    });
+                }
+            }
+        } else if (nearZ) {
+            for (let i = 0; i < wallLength; i++) {
+                for (let dy = 0; dy < wallHeight; dy++) {
+                    const spawnY = baseY + dy;
+                    if (spawnY > 320 || spawnY < -64) continue;
+                    player.dimension.spawnParticle(particleId, {
+                        x: Math.floor(x1) + i * dxDir,
+                        y: spawnY,
+                        z: z1 > z2 ? targetZ + 1 : targetZ,
+                    });
+                }
+            }
+        }
     }
 }
 
-// Vertical wall along X axis (Z boundary)
-for (let dx = 0; dx < 20; dx++) {
-    for (let dy = 0; dy < height; dy++) {
-        player.dimension.spawnParticle(particleId, {
-            x: targetX + dxStart + dx,
-            y: baseY + dy,
-            z: targetZ
-        });
-    }
-}
-    } else if (nearX) {
-        const targetX = x1 > x2 ? x2 + size : x2 - size;
-        const startZ = Math.floor(z1) - 10;
-        for (let i = 0; i < 20; i++) {
-            player.dimension.spawnParticle(particleId, { x: targetX, y: baseY, z: startZ + i });
-        }
-    } else if (nearZ) {
-        const targetZ = z1 > z2 ? z2 + size : z2 - size;
-        const startX = Math.floor(x1) - 10;
-        for (let x = 0; x < 20; x++) {
-            player.dimension.spawnParticle(particleId, { x: startX + x, y: baseY, z: targetZ });
-        }
-    }
-}
-}
-function blockChange(event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent | PlayerInteractWithBlockBeforeEvent) {
+function blockChange(
+    event:
+        | PlayerBreakBlockBeforeEvent
+        | PlayerPlaceBlockBeforeEvent
+        | PlayerInteractWithBlockBeforeEvent
+) {
     const { x, z } = event.block.location;
     const { x: x2, z: z2 } = world.getDefaultSpawnLocation();
     const size = get("worldBorderSize") as number;
