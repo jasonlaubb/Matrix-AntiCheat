@@ -24,7 +24,7 @@ function tickEvent (player: Player) {
     if (x || z) {
         if (fastAbs(x2 - player.lastSafeLocation.x) <= size && fastAbs(z2 - player.lastSafeLocation.z)) {
             player.teleport(player.lastSafeLocation, { dimension: world.getDimension(player.lastDimension) });
-        } else player.teleport(spawnLoc, { dimension: world.getDimension("minecraft:overworld") });
+        } else player.teleport(spawnLoc, { dimension: world.getDimension("minecraft:overworld") }); // Nearly impossible situration but possible when admin change border size
     } else {
         player.lastSafeLocation = player.location;
         player.lastDimension = player.dimension.id;
