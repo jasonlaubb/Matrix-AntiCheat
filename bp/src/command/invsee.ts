@@ -31,21 +31,42 @@ function createLargeChest(dimension: Dimension, location: Vector3, items: ItemSt
 function stringXyz (location: Vector3) {
     return Object.values(location).join(",");
 }
+function midPoint ({ x, y, z }: Vector3, { x: x2, z: z2 }: Vector3) {
+    return { x: (x + x2) * .5 + .5, y: y + 1, z: (z + z2) * .5 + .5 }
+}
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     const block = event.block;
-    if (block.type.id !== "minecraft:chest") return;
+    if (block.type.id === "minecraft:chest") {
     const otherBlockPos = world.getDynamicProperty("invseeChest:" + stringXyz(block.location)) as Vector3;
     if (otherBlockPos === undefined) return;
     event.cancel = true;
+    if (!event.player.isOp()) {
+        system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to destroy this chest."));
+        return;
+    }
     system.run(() => {
         block.setType("air");
         event.dimension.getBlock(otherBlockPos)!.setType("air");
         event.dimension.getEntities({
-            location: event.block.location,
+            location: midPoint(event.block.location, otherBlockPos),
             maxDistance: 2,
             type: "minecraft:item",
         }).forEach((entity) => entity.kill());
     });
+    } else {
+        if (world.getDynamicProperty("invseeChest:" + stringXyz({ x: block.location.x, y: block.location.y + 1, z: block.location.z }))) {
+            event.cancel = true;
+            system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou cannot destroy this block."));
+        }
+    }
+});
+world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
+    const block = event.block;
+    if (block.type.id !== "minecraft:chest") return;
+    const data = world.getDynamicProperty("invseeChest:" + stringXyz(block.location));
+    if (!data || event.player.isOp()) return;
+    event.cancel = true;
+    system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to open this chest."))
 });
 export default {
     name: "invsee",
