@@ -7,7 +7,7 @@ export function oreAlertOff () {
 }
 function blockBreak (event: PlayerBreakBlockAfterEvent) {
     const { x, y, z } = event.block.location;
-    if (event.block.typeId === "minecraft:diamond_ore") {
+    if (event.brokenBlockPermutation.type.id === "minecraft:diamond_ore") {
         event.player.diamondFoundAmount ??= 0;
         if (event.player.diamondFoundAmount > 0) {
             event.player.diamondFoundAmount--;
@@ -15,7 +15,7 @@ function blockBreak (event: PlayerBreakBlockAfterEvent) {
         };
         const diamondInRange = event.dimension.getBlocks(new BlockVolume({ x: x + 3, y: y + 3, z: z + 3 }, { x: x - 3, y: y - 3, z: z - 3 }), {
             includeTypes: ["minecraft:diamond_ore"],
-        }).getBlockLocationIterator();
+        }, true).getBlockLocationIterator();
         for (const _ of diamondInRange) {
             event.player.diamondFoundAmount++;
         }
