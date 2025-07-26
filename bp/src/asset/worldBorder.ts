@@ -24,20 +24,21 @@ export function worldBorderOff() {
     world.beforeEvents.playerInteractWithBlock.unsubscribe(blockChange);
 }
 
-const particleId = "minecraft:blue_flame_particle";
 let steps = 0;
 function tickEvent() {
     const players = world.getAllPlayers();
     steps++;
-    const size = get("worldBorderSize") as number;
+    const size: number = get("worldBorderSize") as number;
     const spawnLoc = world.getDefaultSpawnLocation();
-    const addEffect = get("worldBorderEffect");
-    const wallLength = 16;
-    const wallHeight = 12;
+    const addEffect: boolean = get("worldBorderEffect");
+    const wallLength: number = get("worldBorderEffectLength");
+    const wallHeight: number = get("worldBorderEffectHeight");
+    const yOffset: number = get("worldBorderYOffset");
+    const particleId: string = get("worldBorderParticle");
     if (size < 10) return;
     for (const player of players) {
     const { x: x1, y: y1, z: z1 } = player.location;
-    const baseY = Math.floor(y1) - 3;
+    const baseY = Math.floor(y1) - yOffset;
     const { x: x2, z: z2 } = spawnLoc;
 
     const xDiff = fastAbs(Math.floor(x1) - x2);

@@ -115,4 +115,20 @@ export default {
         type: "boolean",
         value: true,
     },
+    worldBorderEffectLength: {
+        type: "number",
+        value: 16,
+    },
+    worldBorderEffectHeight: {
+        type: "number",
+        value: 12,
+    },
+    worldBorderYOffset: {
+        type: "number",
+        value: 3,
+    },
+    worldBorderParticle: {
+        type: "string",
+        value: "minecraft:blue_flame_particle",
+    }
 };
