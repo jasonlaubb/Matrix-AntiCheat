@@ -1,4 +1,5 @@
 import {
+    LocationInUnloadedChunkError,
     PlayerBreakBlockBeforeEvent,
     PlayerInteractWithBlockBeforeEvent,
     PlayerPlaceBlockBeforeEvent,
@@ -31,7 +32,7 @@ function tickEvent() {
     const size = get("worldBorderSize") as number;
     const spawnLoc = world.getDefaultSpawnLocation();
     const addEffect = get("worldBorderEffect");
-    const wallLength = 30;
+    const wallLength = 16;
     const wallHeight = 12;
     if (size < 10) return;
     for (const player of players) {
@@ -75,6 +76,7 @@ function tickEvent() {
         const dxDir = x1 > x2 ? -1 : 1;
         const dzDir = z1 > z2 ? -1 : 1;
         const zOffset = x1 > x2 && z1 > z2 ? 1 : 0;
+        try {
         if (nearX && nearZ) {
             // L-shape corner wall
             for (let i = 0; i < wallLength; i++) {
@@ -123,6 +125,10 @@ function tickEvent() {
                     });
                 }
             }
+        }
+        } catch (error) {
+            if (error instanceof LocationInUnloadedChunkError) return; // Ignore this error
+            throw error;
         }
     }
     }
