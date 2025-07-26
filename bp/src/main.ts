@@ -7,6 +7,7 @@ import watch, { cameraTypes } from "./command/watch";
 import antixrayenable from "./command/antixrayenable";
 import { banCmd, banOffline, banlist, unban } from "./command/ban";
 import worldBorder from "./command/worldBorder";
+import invsee from "./command/invsee";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
@@ -107,6 +108,7 @@ system.beforeEvents.startup.subscribe((event) => {
         banlist,
         unban,
         worldBorder,
+        invsee,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
@@ -279,6 +281,11 @@ system.beforeEvents.startup.subscribe((event) => {
             } else {
                 source.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Mainhand)!.setItem();
             }
+        },
+    });
+    event.itemComponentRegistry.registerCustomComponent("matrix:label", {
+        onUse: ({ source }) => {
+            source.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Mainhand)!.setItem();
         },
     });
 });
