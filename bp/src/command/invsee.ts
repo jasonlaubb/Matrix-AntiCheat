@@ -9,12 +9,13 @@ import { Command } from "../main";
 function createLargeChest(dimension: Dimension, location: Vector3, items: ItemStack[] = []) {
     const chest1 = location;
     const chest2 = { x: location.x + 1, y: location.y, z: location.z }; // Place second chest to the right
-
+    const chest1Pos = dimension.getBlock(chest1)!;
+    const chest2Pos = dimension.getBlock(chest2)!;
     // Place two chests side by side
-    dimension.getBlock(chest1)!.setType("minecraft:chest");
-    dimension.getBlock(chest2)!.setType("minecraft:chest");
-    world.setDynamicProperty("invseeChest:" + stringXyz(chest1), chest2);
-    world.setDynamicProperty("invseeChest:" + stringXyz(chest2), chest1);
+    chest1Pos.setType("minecraft:chest");
+    chest2Pos.setType("minecraft:chest");
+    world.setDynamicProperty("invseeChest:" + stringXyz(chest1Pos.location), chest2Pos.location);
+    world.setDynamicProperty("invseeChest:" + stringXyz(chest2Pos.location), chest1Pos.location);
     // Wait a tick to ensure they merge (optional if you're doing this in a tick-safe way)
     system.runTimeout(() => {
         const mergedChest = dimension.getBlock(chest1)!.getComponent("inventory")!.container!;
@@ -29,10 +30,6 @@ function createLargeChest(dimension: Dimension, location: Vector3, items: ItemSt
 }
 function stringXyz (location: Vector3) {
     return Object.values(location).join(",");
-}
-function parseXyz (location: string) {
-    const [x, y, z] = location.split(",").map((v) => parseInt(v));
-    return { x, y, z } as Vector3;
 }
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     const block = event.block;
