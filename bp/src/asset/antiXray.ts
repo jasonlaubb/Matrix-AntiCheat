@@ -207,8 +207,8 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
     return generator();
 }
 world.beforeEvents.playerPlaceBlock.subscribe((event) => {
-    const id = event.block.typeId;
-    if (get("banXrayHandler") || !["minecraft:piston", "minecraft:sticky_piston"].includes(id) || event.player.isOp() || event.dimension.id === "minecraft:the_end") return;
+    const id = event.permutationToPlace.type.id;
+    if (get("banXrayHandler") || (["minecraft:piston", "minecraft:sticky_piston"].includes(id)) || event.dimension.id === "minecraft:the_end") return;
     event.cancel = true;
     system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fSorry, piston's placement is disallowed in this server."));
 });
