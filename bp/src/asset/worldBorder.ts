@@ -74,21 +74,21 @@ function tickEvent() {
         const targetZ = z1 > z2 ? z2 + size : z2 - size;
         const dxDir = x1 > x2 ? -1 : 1;
         const dzDir = z1 > z2 ? -1 : 1;
-
+        const zOffset = x1 > x2 && z1 > z2 ? 1 : 0;
         if (nearX && nearZ) {
             // L-shape corner wall
-            for (let i = 0; i <= wallLength; i++) {
+            for (let i = 0; i < wallLength; i++) {
                 for (let dy = 0; dy < wallHeight; dy++) {
                     const spawnY = baseY + dy;
                     if (spawnY > 320 || spawnY < -64) continue;
                     player.dimension.spawnParticle(particleId, {
                         x: x1 > x2 ? targetX + 1 : targetX,
                         y: spawnY,
-                        z: targetZ + i * dzDir
+                        z: targetZ + i * dzDir + zOffset,
                     });
                 }
             }
-            for (let i = 0; i <= wallLength; i++) {
+            for (let i = 0; i < wallLength; i++) {
                 for (let dy = 0; dy < wallHeight; dy++) {
                     const spawnY = baseY + dy;
                     if (spawnY > 320 || spawnY < -64) continue
