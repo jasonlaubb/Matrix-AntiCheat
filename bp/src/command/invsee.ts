@@ -110,6 +110,9 @@ export default {
         if (boot) empty[52] = boot;
         system.run(() => {
             createLargeChest(player.dimension, player.location, empty);
+            player.tryTeleport({ x: Math.floor(player.location.x), y: Math.floor(player.location.y) + 1, z: Math.floor(player.location.z) }, {
+                rotation: { x: 97, y: player.getRotation().y },
+            });
         });
         return { status: 0 };
     }

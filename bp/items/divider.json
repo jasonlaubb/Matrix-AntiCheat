@@ -8,7 +8,7 @@
             "minecraft:display_name": {
                 "value": "§c§lDivider"
             },
-            "minecraft:icon": "cookie",
+            "minecraft:icon": "hopper",
             "minecraft:max_stack_size": 1,
             "minecraft:can_destroy_in_creative": false,
             "minecraft:custom_components": ["matrix:label"],
