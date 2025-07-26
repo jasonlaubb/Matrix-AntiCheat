@@ -17,6 +17,7 @@ import { ban, checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
 import { timeUnits } from "./command/ban";
 import "./asset/antiXray";
+import "./command/invsee";
 import { worldBorderOn } from "./asset/worldBorder";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {

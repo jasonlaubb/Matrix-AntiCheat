@@ -1,4 +1,4 @@
-import { Dimension, EquipmentSlot, ItemStack, Player, system, Vector3 } from "@minecraft/server";
+import { Dimension, EquipmentSlot, ItemStack, Player, system, Vector3, world } from "@minecraft/server";
 import { Command } from "../main";
 /**
  * Places a large chest at the given location and fills it with optional items.
@@ -13,7 +13,8 @@ function createLargeChest(dimension: Dimension, location: Vector3, items: ItemSt
     // Place two chests side by side
     dimension.getBlock(chest1)!.setType("minecraft:chest");
     dimension.getBlock(chest2)!.setType("minecraft:chest");
-
+    world.setDynamicProperty("invseeChest:" + stringXyz(chest1), chest2);
+    world.setDynamicProperty("invseeChest:" + stringXyz(chest2), chest1);
     // Wait a tick to ensure they merge (optional if you're doing this in a tick-safe way)
     system.runTimeout(() => {
         const mergedChest = dimension.getBlock(chest1)!.getComponent("inventory")!.container!;
@@ -26,6 +27,24 @@ function createLargeChest(dimension: Dimension, location: Vector3, items: ItemSt
     });
   }, 1); // Delay by 1 tick to allow merge
 }
+function stringXyz (location: Vector3) {
+    return Object.values(location).join(",");
+}
+function parseXyz (location: string) {
+    const [x, y, z] = location.split(",").map((v) => parseInt(v));
+    return { x, y, z } as Vector3;
+}
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+    const block = event.block;
+    if (block.typeId !== "minecraft:chest") return;
+    const otherBlockPos = world.getDynamicProperty("invseeChest:" + stringXyz(block.location)) as Vector3;
+    if (!otherBlockPos) return;
+    event.cancel = true;
+    system.run(() => {
+        block.setType("air");
+        event.dimension.getBlock(otherBlockPos)!.setType("air");
+    });
+});
 export default {
     name: "invsee",
     description: "View a player inventory",
