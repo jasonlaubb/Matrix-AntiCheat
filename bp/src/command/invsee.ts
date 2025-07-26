@@ -33,13 +33,18 @@ function stringXyz (location: Vector3) {
 }
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     const block = event.block;
-    if (block.typeId !== "minecraft:chest") return;
+    if (block.type.id !== "minecraft:chest") return;
     const otherBlockPos = world.getDynamicProperty("invseeChest:" + stringXyz(block.location)) as Vector3;
-    if (!otherBlockPos) return;
+    if (otherBlockPos === undefined) return;
     event.cancel = true;
     system.run(() => {
         block.setType("air");
         event.dimension.getBlock(otherBlockPos)!.setType("air");
+        event.dimension.getEntities({
+            location: event.block.location,
+            maxDistance: 2,
+            type: "minecraft:item",
+        }).forEach((entity) => entity.kill());
     });
 });
 export default {
