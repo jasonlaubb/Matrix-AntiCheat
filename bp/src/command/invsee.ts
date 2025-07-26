@@ -47,6 +47,8 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     system.run(() => {
         block.setType("air");
         event.dimension.getBlock(otherBlockPos)!.setType("air");
+        world.setDynamicProperty("invseeChest:" + stringXyz(block.location));
+        world.setDynamicProperty("invseeChest:" + stringXyz(otherBlockPos));
         event.dimension.getEntities({
             location: midPoint(event.block.location, otherBlockPos),
             maxDistance: 2,
@@ -110,7 +112,8 @@ export default {
         if (boot) empty[52] = boot;
         system.run(() => {
             createLargeChest(player.dimension, player.location, empty);
-            player.tryTeleport({ x: Math.floor(player.location.x), y: Math.floor(player.location.y) + 1, z: Math.floor(player.location.z) }, {
+            player.onScreenDisplay.setActionBar("§fRight click the chest to view the inventory");
+            player.tryTeleport({ x: Math.floor(player.location.x) + .5, y: Math.floor(player.location.y) + 1, z: Math.floor(player.location.z) + .5 }, {
                 rotation: { x: 97, y: player.getRotation().y },
             });
         });
