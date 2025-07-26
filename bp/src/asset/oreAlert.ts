@@ -8,6 +8,7 @@ export function oreAlertOff () {
 function blockBreak (event: PlayerBreakBlockAfterEvent) {
     const { x, y, z } = event.block.location;
     if (event.block.typeId === "minecraft:diamond_ore") {
+        event.player.diamondFoundAmount ??= 0;
         if (event.player.diamondFoundAmount > 0) {
             event.player.diamondFoundAmount--;
             return;

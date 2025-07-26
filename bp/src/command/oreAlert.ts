@@ -14,6 +14,6 @@ export default {
             } else oreAlertOn();
             world.setDynamicProperty("database:oreAlert", !isEnabled);
         });
-        return { status: 0, message: "§7[§aMatrix§7] §fSuccesfully " + isEnabled ? "disabled" : "enabled" + " ore alert." };
+        return { status: 0, message: "§7[§aMatrix§7] §fSuccesfully " + (isEnabled ? "disabled" : "enabled") + " ore alert." };
     },
 } as Command;
