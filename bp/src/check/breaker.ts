@@ -1,4 +1,4 @@
-import { Block, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, world } from "@minecraft/server";
+import { Block, LocationOutOfWorldBoundariesError, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, world } from "@minecraft/server";
 export default {
     property: "antiBreakerEnable",
     enable() {
@@ -31,8 +31,9 @@ function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWith
 function getSurround(block: Block) {
     try {
         return [block.above(), block.below(), block.east(), block.west(), block.north(), block.south()];
-    } catch {
-        return [];
+    } catch (error) {
+        if (error instanceof LocationOutOfWorldBoundariesError) return [];
+        throw error;
     }
 }
 function surroundSolidCount(block: Block) {
@@ -41,8 +42,9 @@ function surroundSolidCount(block: Block) {
 function getBedSide(block: Block) {
     try {
         return [block.east(), block.west(), block.north(), block.south()].find((b) => b && b.typeId === "minecraft:bed");
-    } catch {
-        return undefined;
+    } catch (error) {
+        if (error instanceof LocationOutOfWorldBoundariesError) return undefined;
+        throw error;
     }
 }
 function isGlassBlock(typeId: string) {

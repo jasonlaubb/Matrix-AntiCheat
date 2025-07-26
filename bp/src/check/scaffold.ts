@@ -1,4 +1,4 @@
-import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode } from "@minecraft/server";
+import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode, LocationOutOfWorldBoundariesError } from "@minecraft/server";
 import { locEqual } from "../util/util";
 import { calculateRelativeViewAngle, distanceXZ } from "../util/mathUtil";
 export default {
@@ -96,7 +96,8 @@ function getOnlyTouchBlock(block: Block) {
             }
         }
         return touchingBlock;
-    } catch {
-        return undefined;
+    } catch (error) {
+        if (error instanceof LocationOutOfWorldBoundariesError) return undefined;
+        throw error;
     }
 }
