@@ -130,5 +130,9 @@ export default {
     worldBorderParticle: {
         type: "string",
         value: "minecraft:blue_flame_particle",
-    }
+    },
+    oreAlert: {
+        type: "boolean",
+        value: false,
+    },
 };

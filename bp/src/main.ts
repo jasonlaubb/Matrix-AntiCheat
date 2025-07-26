@@ -19,6 +19,8 @@ import { timeUnits } from "./command/ban";
 import "./asset/antiXray";
 import "./command/invsee";
 import { worldBorderOn } from "./asset/worldBorder";
+import oreAlert from "./command/oreAlert";
+import { oreAlertOn } from "./asset/oreAlert";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -110,6 +112,7 @@ system.beforeEvents.startup.subscribe((event) => {
         unban,
         worldBorder,
         invsee,
+        oreAlert,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
@@ -295,6 +298,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(tick);
     initModules();
     if (get("worldBorder")) worldBorderOn();
+    if (get("oreAlert")) oreAlertOn();
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const { x, y } = event.sender.inputInfo.getMovementVector();

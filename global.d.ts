@@ -19,6 +19,8 @@ declare module "@minecraft/server" {
         watchPlayerPos?: Vector3;
         watchBeforeGM?: GameMode;
         cameraType?: "down" | "head" | "behind";
+        // Ore Alert
+        diamondFoundAmount: number;
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;
