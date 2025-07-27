@@ -28,7 +28,7 @@ function blockBreak (event: PlayerBreakBlockAfterEvent) {
         event.player.lastOreFoundData ??= {};
         world.getAllPlayers().forEach((player) => {
             if (!player.isOp()) return;
-            player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name} has just broken §e${id.replace("minecraft:", "").replace("_", " ")} §b[interval=${event.player.lastDiamondOresFound ? Math.floor((now - event.player.lastDiamondOresFound) / 1000) + "s" : "none"}]`);
+            player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name} has just broken §e${id.replace("minecraft:", "").replace("_", " ")} §b[interval=${event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"}]`);
         });
         event.player.lastOreFoundData[id] = now;
     }
