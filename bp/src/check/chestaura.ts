@@ -1,4 +1,4 @@
-import { Container, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
+import { Container, InvalidContainerError, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distanceXZ } from "../util/mathUtil";
 export default {
     enable() {
@@ -29,23 +29,30 @@ function interact(event: PlayerInteractWithBlockBeforeEvent) {
         new Promise<number | null>((res) => {
             event.block.chestauraIsTracking = true;
             const id = system.runInterval(() => {
-                if (!event.player?.isValid && event.block.previousOpen !== event.player.id) {
-                    system.clearRun(id);
+                try {
+                    if (!event.player?.isValid && event.block.previousOpen !== event.player.id) {
+                        system.clearRun(id);
+                        res(null);
+                        return;
+                    }
+                    const firstItem = container.firstItem();
+                    const current = Date.now();
+                    if (firstItem === undefined) {
+                        res((current - now) / stackAmount);
+                        system.clearRun(id);
+                        return;
+                    } else if (current - now > maxTime) {
+                        res(null);
+                        system.clearRun(id);
+                        return;
+                    }
+                    event.player.chestauraLastLostIndex = firstItem;
+                } catch (error) {
                     res(null);
-                    return;
-                }
-                const firstItem = container.firstItem();
-                const current = Date.now();
-                if (firstItem === undefined) {
-                    res((current - now) / stackAmount);
                     system.clearRun(id);
-                    return;
-                } else if (current - now > maxTime) {
-                    res(null);
-                    system.clearRun(id);
-                    return;
+                    if (error instanceof InvalidContainerError) return;
+                    throw error;
                 }
-                event.player.chestauraLastLostIndex = firstItem;
             });
         }).then((average) => {
             if (average === null) return;
