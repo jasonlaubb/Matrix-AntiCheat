@@ -26,7 +26,7 @@ function blockBreak (event: PlayerBreakBlockAfterEvent) {
     const now = Date.now();
     if (targetID.includes(id)) {
         event.player.lastOreFoundData ??= {};
-        if (now - event.player.lastOreFoundData[id] >= 6000) { 
+        if (!event.player.lastOreFoundData[id] || now - event.player.lastOreFoundData[id] >= 6000) { 
             world.getAllPlayers().forEach((player) => {
                 if (!player.isOp()) return;
                 player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name} has just broken §e${id.replace("minecraft:", "").replace("_", " ")} §b[interval=${event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"}]`);
