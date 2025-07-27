@@ -29,12 +29,11 @@ function blockBreak (event: PlayerBreakBlockAfterEvent) {
         if (!event.player.lastOreFoundData[id] || now - event.player.lastOreFoundData[id] >= 6000) { 
             world.getAllPlayers().forEach((player) => {
                 if (!player.isOp()) return;
-                player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name} §fhas just found and broken §e${id.replace("minecraft:", "").replace("_", " ")} §b[interval=${event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"}]`);
+                player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name} §fhas just found and broken §e${id.replace("minecraft:", "").replaceAll("_", " ")} §b[interval=${event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"}]`);
             });
         }
         event.player.lastOreFoundData[id] = now;
-    }
-    if (id === "minecraft:diamond_ore" && !get("antiXray")) {
+    } else if (id === "minecraft:diamond_ore") {
         event.player.diamondFoundAmount ??= 0;
         if (event.player.diamondFoundAmount > 0) {
             event.player.diamondFoundAmount--;

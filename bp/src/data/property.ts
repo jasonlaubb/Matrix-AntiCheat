@@ -93,7 +93,7 @@ export default {
     },
     antiXrayGhostBlockDensity: {
         type: "number",
-        value: 0.3, // Probability that a block will be generated to a ghost ore
+        value: 0.07, // Probability that a block will be generated to a ghost ore
     },
     antiXrayEnhancedGeneration: {
         type: "boolean",
