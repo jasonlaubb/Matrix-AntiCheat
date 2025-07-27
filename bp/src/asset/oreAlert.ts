@@ -24,12 +24,12 @@ function blockBreak (event: PlayerBreakBlockAfterEvent) {
     const { x, y, z } = event.block.location;
     const id = event.brokenBlockPermutation.type.id;
     const now = Date.now();
-    if (targetID.includes(id)) {
+    if (targetID.includes(id) && !(!get("antiXray") && id.endsWith("diamond_ore"))) {
         event.player.lastOreFoundData ??= {};
         if (!event.player.lastOreFoundData[id] || now - event.player.lastOreFoundData[id] >= 6000) { 
             world.getAllPlayers().forEach((player) => {
                 if (!player.isOp()) return;
-                player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name} has just broken §e${id.replace("minecraft:", "").replace("_", " ")} §b[interval=${event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"}]`);
+                player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name} §fhas just found and broken §e${id.replace("minecraft:", "").replace("_", " ")} §b[interval=${event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"}]`);
             });
         }
         event.player.lastOreFoundData[id] = now;
@@ -48,7 +48,7 @@ function blockBreak (event: PlayerBreakBlockAfterEvent) {
         }
         world.getAllPlayers().forEach((player) => {
             if (!player.isOp()) return;
-            player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name} found new piece of diamond ore(s) §b[size=${event.player.diamondFoundAmount + 1},interval=${event.player.lastDiamondOresFound ? Math.floor((now - event.player.lastDiamondOresFound) / 1000) + "s" : "none"}]`);
+            player.sendMessage(`§7[§aOre Alert§7] §e${event.player.name}§f found §anew§f piece of §ediamond ore(s) §b[size=${event.player.diamondFoundAmount + 1},interval=${event.player.lastDiamondOresFound ? Math.floor((now - event.player.lastDiamondOresFound) / 1000) + "s" : "none"}]`);
         });
         event.player.lastDiamondOresFound = now;
     }
