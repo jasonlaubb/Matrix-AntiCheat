@@ -21,6 +21,8 @@ declare module "@minecraft/server" {
         cameraType?: "down" | "head" | "behind";
         // Ore Alert
         diamondFoundAmount: number;
+        lastDiamondOresFound: number;
+        lastOreFoundData: { [key: string]: number };
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;
