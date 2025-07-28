@@ -1,7 +1,7 @@
 import { system, world } from "@minecraft/server";
-import { worldBorderOff, worldBorderOn } from "../asset/worldBorder";
 import type { Command } from "../main";
 import { get } from "../util/database";
+import { endNetherLockOff, endNetherLockOn } from "../asset/endNetherLock";
 export const endLock = {
     name: "endlock",
     requireOp: true,
@@ -12,8 +12,8 @@ export const endLock = {
         system.run(() => {
             if (isEnabled2) return;
             if (isEnabled) {
-                worldBorderOff();
-            } else worldBorderOn();
+                endNetherLockOff();
+            } else endNetherLockOn();
             world.setDynamicProperty("database:worldBorder", !isEnabled);
         });
         return { status: 0, message: `§7[§aMatrix§7] §fSuccessfully ${isEnabled ? "disabled" : "enabled"} end lock.` };
@@ -29,8 +29,8 @@ export const netherLock = {
         system.run(() => {
             if (isEnabled2) return;
             if (isEnabled) {
-                worldBorderOff();
-            } else worldBorderOn();
+                endNetherLockOff();
+            } else endNetherLockOn();
             world.setDynamicProperty("database:worldBorder", !isEnabled);
         });
         return { status: 0, message: `§7[§aMatrix§7] §fSuccessfully ${isEnabled ? "disabled" : "enabled"} nether lock.` };
