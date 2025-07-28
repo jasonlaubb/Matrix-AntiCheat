@@ -27,11 +27,11 @@ export function openGeneralUI(player: Player) {
                         const selection = res.selection!;
                         const toggle = Object.values(detectionList)[selection];
                         if (enableList[selection]) {
-                            world.setDynamicProperty(toggle.property, false);
+                            world.setDynamicProperty("database:" + toggle.property, false);
                             toggle.enable();
                         } else {
                             toggle.disable();
-                            world.setDynamicProperty(toggle.property, true);
+                            world.setDynamicProperty("database" + toggle.property, true);
                         }
                     });
                     break;
