@@ -31,7 +31,7 @@ export function openGeneralUI(player: Player) {
                             toggle.enable();
                         } else {
                             toggle.disable();
-                            world.setDynamicProperty("database" + toggle.property, true);
+                            world.setDynamicProperty("database:" + toggle.property, true);
                         }
                     });
                     break;
