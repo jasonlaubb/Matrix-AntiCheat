@@ -5,6 +5,7 @@ import zipline from "../check/zipline";
 import scaffold from "../check/scaffold";
 import extinguisher from "../check/extinguisher";
 import breaker from "../check/breaker";
+import instabreak from "../check/instabreak";
 import { get } from "../util/database";
 import type property from "../data/property";
 import type { Command } from "../main";
@@ -17,6 +18,7 @@ export const detectionList = {
     scaffold,
     extinguisher,
     breaker,
+    instabreak,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
