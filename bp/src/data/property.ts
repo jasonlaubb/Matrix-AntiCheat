@@ -135,4 +135,12 @@ export default {
         type: "boolean",
         value: false,
     },
+    endLock: {
+        type: "boolean",
+        value: false,
+    },
+    netherLock: {
+        type: "boolean",
+        value: false,
+    },
 };
