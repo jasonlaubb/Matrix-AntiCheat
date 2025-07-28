@@ -13,6 +13,7 @@ export function checkNetherEnd () {
     const lockNether = get("netherLock");
     const overworld = world.getDimension("minecraft:overworld");
     world.getAllPlayers().forEach((player) => {
+        if (player.isOp()) return;
         const dimension = player.dimension.id;
         if (lockNether && dimension === "minecraft:nether" || lockEnd && dimension === "minecraft:the_end") {
             player.teleport(world.getDefaultSpawnLocation(), {
@@ -22,6 +23,7 @@ export function checkNetherEnd () {
     })
 }
 function onDimensionChange ({ toDimension: { id }, player }: PlayerDimensionChangeAfterEvent) {
+    if (player.isOp()) return;
     if (get("netherLock") && id === "minecraft:nether" || get("endLock") && id === "minecraft:the_end") {
         player.teleport(world.getDefaultSpawnLocation(), {
             dimension: world.getDimension("minecraft:overworld"),
@@ -29,7 +31,7 @@ function onDimensionChange ({ toDimension: { id }, player }: PlayerDimensionChan
     }
 }
 function onJoin ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
-    if (!initialSpawn) return;
+    if (!initialSpawn || player.isOp()) return;
     const dimension = player.dimension.id;
     if (get("netherLock") && dimension === "minecraft:nether" || get("endLock") && dimension === "minecraft:the_end") {
         player.teleport(world.getDefaultSpawnLocation(), {
