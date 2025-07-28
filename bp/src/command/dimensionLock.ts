@@ -13,7 +13,10 @@ export const endLock = {
             if (isEnabled2) return;
             if (isEnabled) {
                 endNetherLockOff();
-            } else endNetherLockOn();
+            } else {
+                
+                endNetherLockOn();
+            }
             world.setDynamicProperty("database:worldBorder", !isEnabled);
         });
         return { status: 0, message: `§7[§aMatrix§7] §fSuccessfully ${isEnabled ? "disabled" : "enabled"} end lock.` };
