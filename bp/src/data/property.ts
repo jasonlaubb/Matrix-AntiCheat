@@ -79,10 +79,6 @@ export default {
         type: "boolean",
         value: true,
     },
-    antiinstabreakEnable: {
-        type: "boolean",
-        value: false,
-    },
     banXrayHandler: {
         type: "boolean",
         value: true, // Disable all handler related to xray
