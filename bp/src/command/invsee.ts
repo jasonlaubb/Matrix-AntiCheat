@@ -1,5 +1,6 @@
 import { Dimension, EquipmentSlot, ItemStack, Player, system, Vector3, world } from "@minecraft/server";
 import { Command } from "../main";
+import { stringXyz } from "../util/util";
 /**
  * Places a large chest at the given location and fills it with optional items.
  * @param dimension The dimension to place the chest in (e.g., world.overworld)
@@ -27,9 +28,6 @@ function createLargeChest(dimension: Dimension, location: Vector3, items: ItemSt
         }
     });
   }, 1); // Delay by 1 tick to allow merge
-}
-function stringXyz (location: Vector3) {
-    return Object.values(location).join(",");
 }
 function midPoint ({ x, y, z }: Vector3, { x: x2, z: z2 }: Vector3) {
     return { x: (x + x2) * .5 + .5, y: y + 1, z: (z + z2) * .5 + .5 }

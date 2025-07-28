@@ -50,6 +50,7 @@ declare module "@minecraft/server" {
         scaffoldStraightCount: number;
         scaffoldDiagFlag: number;
         scaffoldExtenderFlag: number;
+        instabreakLastHit: { time: number, id: string }[];
     }
     interface Entity {
         // Detection data
