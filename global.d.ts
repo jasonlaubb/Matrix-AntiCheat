@@ -23,6 +23,8 @@ declare module "@minecraft/server" {
         diamondFoundAmount: number;
         lastDiamondOresFound: number;
         lastOreFoundData: { [key: string]: number };
+        // Afk data
+        lastMoved: number;
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;

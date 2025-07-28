@@ -143,4 +143,8 @@ export default {
         type: "boolean",
         value: false,
     },
+    antiAfk: {
+        type: "boolean",
+        value: false,
+    },
 };
