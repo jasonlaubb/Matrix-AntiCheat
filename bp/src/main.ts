@@ -21,6 +21,8 @@ import "./command/invsee";
 import { worldBorderOn } from "./asset/worldBorder";
 import oreAlert from "./command/oreAlert";
 import { oreAlertOn } from "./asset/oreAlert";
+import { endLock, netherLock } from "./command/dimensionLock";
+import { endNetherLockOn } from "./asset/endNetherLock";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -113,6 +115,8 @@ system.beforeEvents.startup.subscribe((event) => {
         worldBorder,
         invsee,
         oreAlert,
+        endLock,
+        netherLock,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
@@ -299,6 +303,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     initModules();
     if (get("worldBorder")) worldBorderOn();
     if (get("oreAlert")) oreAlertOn();
+    if (get("endLock") || get("netherLock")) endNetherLockOn(); 
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const { x, y } = event.sender.inputInfo.getMovementVector();
