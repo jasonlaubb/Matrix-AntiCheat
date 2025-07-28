@@ -147,4 +147,8 @@ export default {
         type: "boolean",
         value: false,
     },
+    antiAfkMaxNotMoved: {
+        type: "number",
+        value: 600000,
+    },
 };

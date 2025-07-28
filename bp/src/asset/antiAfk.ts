@@ -1,4 +1,4 @@
-import { InputButton, Player } from "@minecraft/server";
+import { Player } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export function antiAfkOn () {
     addCheckInterval(tickEvent);
