@@ -43,27 +43,29 @@ function tickEvent() {
 
     const xDiff = fastAbs(Math.floor(x1) - x2);
     const zDiff = fastAbs(Math.floor(z1) - z2);
-    const outOfBoundsX = xDiff > size;
-    const outOfBoundsZ = zDiff > size;
+    if (!player.isOp()) {
+        const outOfBoundsX = xDiff > size;
+        const outOfBoundsZ = zDiff > size;
 
-    player.lastSafeLocation ??= spawnLoc;
-    player.lastDimension ??= "minecraft:overworld";
+        player.lastSafeLocation ??= spawnLoc;
+        player.lastDimension ??= "minecraft:overworld";
 
-    if (outOfBoundsX || outOfBoundsZ) {
-        const safeX = fastAbs(x2 - player.lastSafeLocation.x) <= size;
-        const safeZ = fastAbs(z2 - player.lastSafeLocation.z) <= size;
-        if (safeX && safeZ) {
-            player.teleport(middleLoc(player.lastSafeLocation), {
-                dimension: world.getDimension(player.lastDimension)
-            });
+        if (outOfBoundsX || outOfBoundsZ) {
+            const safeX = fastAbs(x2 - player.lastSafeLocation.x) <= size;
+            const safeZ = fastAbs(z2 - player.lastSafeLocation.z) <= size;
+            if (safeX && safeZ) {
+                player.teleport(middleLoc(player.lastSafeLocation), {
+                    dimension: world.getDimension(player.lastDimension)
+                });
+            } else {
+                player.teleport(spawnLoc, {
+                    dimension: world.getDimension("minecraft:overworld")
+                });
+            }
         } else {
-            player.teleport(spawnLoc, {
-                dimension: world.getDimension("minecraft:overworld")
-            });
+            player.lastSafeLocation = { x: Math.floor(x1), y: y1, z: Math.floor(z1) };
+            player.lastDimension = player.dimension.id;
         }
-    } else {
-        player.lastSafeLocation = { x: Math.floor(x1), y: y1, z: Math.floor(z1) };
-        player.lastDimension = player.dimension.id;
     }
 
     if (steps === 10 && addEffect) {
