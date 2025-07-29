@@ -1,7 +1,6 @@
 import { EntityHitBlockAfterEvent, InputMode, Player, system, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { get } from "../util/database";
-;
 export default {
     property: "antiAutotoolEnable",
     enable: () => {
