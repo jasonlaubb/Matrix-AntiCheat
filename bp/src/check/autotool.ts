@@ -18,8 +18,8 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player)) return;
     player.sendMessage("Index: " + (Date.now() - player.autotoolLastSwitch));
     const interval = Date.now() - player.autotoolLastSwitch;
-    const safeIndex = player.autotoolSafeIndex;
     if (interval <= 1) {
+        const safeIndex = player.autotoolSafeIndex;
         system.runTimeout(() => player.selectedSlotIndex = safeIndex, 1);
         player.flag("AutoTool", "A", "Player", { interval });
     }
