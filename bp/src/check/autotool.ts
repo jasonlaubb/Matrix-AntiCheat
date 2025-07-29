@@ -19,15 +19,9 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     player.sendMessage("Index: " + (Date.now() - player.autotoolLastSwitch));
     const interval = Date.now() - player.autotoolLastSwitch;
     const safeIndex = player.autotoolSafeIndex;
-    if (interval <= 20) {
-        player.selectedSlotIndex = safeIndex;
-        let i = 0;
-        const id = system.runInterval(() => {
-            i++;
-            player.sendMessage("set : " + safeIndex)
-            player.selectedSlotIndex = safeIndex;
-            if (i >= 20) system.clearRun(id);
-        }, 2);
+    if (interval <= 1) {
+        system.runTimeout(() => player.selectedSlotIndex = safeIndex, 1);
+        player.flag("AutoTool", "A", "Player", { interval });
     }
 }
 function blockBreak({ player }: PlayerBreakBlockAfterEvent) {
@@ -38,7 +32,6 @@ function blockBreak({ player }: PlayerBreakBlockAfterEvent) {
 function tickEvent (player: Player) {
     player.autotoolLastIndex ??= 0;
     if (player.autotoolLastIndex !== player.selectedSlotIndex) {
-        player.sendMessage("selected slot change");
         player.autotoolSafeIndex = player.autotoolLastIndex;
         player.autotoolLastSwitch = Date.now();
     }
