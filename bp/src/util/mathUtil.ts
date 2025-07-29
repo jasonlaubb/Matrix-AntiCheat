@@ -118,3 +118,7 @@ export function minDifference(arr: number[]) {
 
     return minDiff;
 }
+export function getVariance(data: number[]): number {
+    const mean = data.reduce((a, b) => a + b, 0) / data.length;
+    return data.reduce((a, b) => a + (b - mean) ** 2, 0) / data.length;
+}

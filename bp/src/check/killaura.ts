@@ -1,15 +1,18 @@
 import { Entity, EntityHurtAfterEvent, ItemReleaseUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, getVariance } from "../util/mathUtil";
 import { addHP } from "../util/util";
+import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
     property: "antiKillauraEnable",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
         world.afterEvents.itemReleaseUse.subscribe(releaseUse);
+        addCheckInterval(aimCheck);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
         world.afterEvents.itemReleaseUse.unsubscribe(releaseUse);
+        removeCheckInterval(aimCheck);
     },
 };
 function releaseUse ({ source: player, itemStack }: ItemReleaseUseAfterEvent) {
@@ -118,5 +121,16 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         attacker.killauraLastFlag = now;
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
+    }
+}
+function aimCheck (player: Player) {
+    player.killauraPitchHistory ??= [];
+    const { x: pitch } = player.getRotation();
+    player.killauraPitchHistory.unshift(pitch);
+    if (player.killauraPitchHistory.length > 20) {
+        player.killauraPitchHistory.pop();
+        const pitchVariance = getVariance(player.killauraPitchHistory);
+        player.onScreenDisplay.setActionBar("Variance = " + pitchVariance.toFixed(5));
+
     }
 }
