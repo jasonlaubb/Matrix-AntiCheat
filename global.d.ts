@@ -58,6 +58,8 @@ declare module "@minecraft/server" {
         autotoolLastSwitch: number;
         autotoolLastIndex: number;
         autotoolSafeIndex: number;
+        autotoolFlag: number;
+        autotoolLastFlag: number;
     }
     interface Entity {
         // Detection data

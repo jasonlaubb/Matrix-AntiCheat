@@ -1,4 +1,4 @@
-import { EntityHitBlockAfterEvent, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
+import { EntityHitBlockAfterEvent, InputMode, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 ;
 export default {
@@ -17,11 +17,17 @@ export default {
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player)) return;
     player.sendMessage("Index: " + (Date.now() - player.autotoolLastSwitch));
-    const interval = Date.now() - player.autotoolLastSwitch;
+    const now = Date.now();
+    const interval = now - player.autotoolLastSwitch;
     if (interval <= 1) {
-        const safeIndex = player.autotoolSafeIndex;
-        system.runTimeout(() => player.selectedSlotIndex = safeIndex, 1);
-        player.flag("AutoTool", "A", "Player", { interval });
+        if (player.inputInfo.lastInputModeUsed === InputMode.KeyboardAndMouse) {
+            const safeIndex = player.autotoolSafeIndex;
+            system.runTimeout(() => player.selectedSlotIndex = safeIndex, 1);
+            if (player.autotoolLastFlag && now - player.autotoolLastFlag < 120000) {
+                player.flag("AutoTool", "A", "Player", { interval });
+            }
+            player.autotoolLastFlag = now;
+        } else player.flag("AutoTool", "A", "Player", { interval });
     }
 }
 function blockBreak({ player }: PlayerBreakBlockAfterEvent) {
