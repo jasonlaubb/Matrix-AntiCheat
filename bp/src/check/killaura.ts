@@ -132,7 +132,7 @@ function aimCheck (player: Player) {
         if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 500) {
             if (pitch.toFixed(5) === "0.00000") {
                 player.killauraLastAttack = 0;
-                player.flag("Killaura", "F (Solstice)", "Combat");
+                player.flag("Killaura", "F", "Combat (Solstice)");
             }
         }
     }
