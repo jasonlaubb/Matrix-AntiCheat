@@ -54,6 +54,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     attacker.killauraFlag ??= 0;
     attacker.killauraLastFlag ??= 0;
     attacker.killauraHitList ??= [];
+    attacker.killauraLastAttack = now;
     if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && !(attacker.killauraLastRiptide && now - attacker.killauraLastRiptide < 3000)) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
     attacker.killauraHitList = attacker.killauraHitList.filter(({ time }) => now - time <= 100);
     if (attacker.killauraHitList.length >= 2) {
@@ -130,7 +131,11 @@ function aimCheck (player: Player) {
     if (player.killauraPitchHistory.length > 20) {
         player.killauraPitchHistory.pop();
         const pitchVariance = getVariance(player.killauraPitchHistory);
-        player.onScreenDisplay.setActionBar("Variance = " + pitchVariance.toFixed(5));
-
+        player.onScreenDisplay.setActionBar("Variance = " + pitchVariance.toFixed(1) + "\nPitch: " + pitch.toFixed(10));
+        if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 500) {
+            if (pitch.toFixed(5) === "0.00000") {
+                player.flag("Killaura", "F", "Combat");
+            }
+        }
     }
 }
