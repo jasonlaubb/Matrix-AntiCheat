@@ -9,6 +9,7 @@ import { get } from "../util/database";
 import type property from "../data/property";
 import type { Command } from "../main";
 import { system, world } from "@minecraft/server";
+import autotool from "../check/autotool";
 export const detectionList = {
     killaura,
     autototem,
@@ -17,6 +18,7 @@ export const detectionList = {
     scaffold,
     extinguisher,
     breaker,
+    autotool,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
