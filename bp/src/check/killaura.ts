@@ -1,5 +1,5 @@
 import { Entity, EntityHurtAfterEvent, ItemReleaseUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, getVariance } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -111,7 +111,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" ? 135 : 45)) {
                 attacker.killauraFlag++;
                 attacker.killauraLastFlag = now;
-                if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat", { angle });
+                if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat (HitBox)", { angle });
                 addHP(hurtEntity, damage);
             }
         }
@@ -129,12 +129,10 @@ function aimCheck (player: Player) {
     player.killauraPitchHistory.unshift(pitch);
     if (player.killauraPitchHistory.length > 20) {
         player.killauraPitchHistory.pop();
-        const pitchVariance = getVariance(player.killauraPitchHistory);
-        player.onScreenDisplay.setActionBar("Variance = " + pitchVariance.toFixed(1) + "\nPitch: " + pitch.toFixed(10));
         if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 500) {
             if (pitch.toFixed(5) === "0.00000") {
                 player.killauraLastAttack = 0;
-                player.flag("Killaura", "F", "Combat");
+                player.flag("Killaura", "F (Solstice)", "Combat");
             }
         }
     }
