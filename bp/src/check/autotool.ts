@@ -20,13 +20,15 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     const interval = Date.now() - player.autotoolLastSwitch;
     const safeIndex = player.autotoolSafeIndex;
     if (interval <= 20) {
+        player.selectedSlotIndex = safeIndex;
+        player.autotoolLastIndex = safeIndex;
         let i = 0;
         const id = system.runInterval(() => {
             i++;
             player.sendMessage("set : " + safeIndex)
             player.selectedSlotIndex = safeIndex;
             player.autotoolLastIndex = safeIndex;
-            if (i >= 40) system.clearRun(id);
+            if (i >= 20) system.clearRun(id);
         });
     }
 }
