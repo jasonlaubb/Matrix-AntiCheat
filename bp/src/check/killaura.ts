@@ -134,6 +134,7 @@ function aimCheck (player: Player) {
         player.onScreenDisplay.setActionBar("Variance = " + pitchVariance.toFixed(1) + "\nPitch: " + pitch.toFixed(10));
         if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 500) {
             if (pitch.toFixed(5) === "0.00000") {
+                player.killauraLastAttack = 0;
                 player.flag("Killaura", "F", "Combat");
             }
         }
