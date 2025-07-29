@@ -23,8 +23,9 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
         let i = 0;
         const id = system.runInterval(() => {
             i++;
+            player.sendMessage("set : " + safeIndex)
             player.selectedSlotIndex, player.autotoolLastIndex = safeIndex;
-            if (i >= 20) system.clearRun(id);
+            if (i >= 40) system.clearRun(id);
         });
     }
 }
