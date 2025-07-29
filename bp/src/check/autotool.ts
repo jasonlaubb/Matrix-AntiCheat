@@ -1,4 +1,4 @@
-import { EntityHitBlockAfterEvent, InvalidEntityError, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
+import { EntityHitBlockAfterEvent, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 ;
 export default {
