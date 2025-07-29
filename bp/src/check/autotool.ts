@@ -23,7 +23,7 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
         if (player.inputInfo.lastInputModeUsed === InputMode.KeyboardAndMouse) {
             const safeIndex = player.autotoolSafeIndex;
             system.runTimeout(() => player.selectedSlotIndex = safeIndex, 1);
-            if (player.autotoolLastFlag && now - player.autotoolLastFlag < 120000) {
+            if (player.autotoolLastFlag && now - player.autotoolLastFlag < 30000) {
                 player.flag("AutoTool", "A", "Player", { interval });
             }
             player.autotoolLastFlag = now;
