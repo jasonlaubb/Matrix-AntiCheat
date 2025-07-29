@@ -1,15 +1,21 @@
-import { Entity, EntityHurtAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
+import { Entity, EntityHurtAfterEvent, ItemReleaseUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP } from "../util/util";
 export default {
     property: "antiKillauraEnable",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
+        world.afterEvents.itemReleaseUse.subscribe(releaseUse);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
+        world.afterEvents.itemReleaseUse.unsubscribe(releaseUse);
     },
 };
+function releaseUse ({ source: player, itemStack }: ItemReleaseUseAfterEvent) {
+    if (!itemStack || itemStack.typeId !== "minecraft:trident" || player.isOp() || !itemStack.getComponent("enchantable")?.hasEnchantment("minecraft:riptide")) return;
+    player.killauraLastRiptide = Date.now();
+}
 function recordPosition(entity: Entity) {
     entity.antiReachRecords = [];
     entity.antiReachRecording = true;
@@ -45,7 +51,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     attacker.killauraFlag ??= 0;
     attacker.killauraLastFlag ??= 0;
     attacker.killauraHitList ??= [];
-    if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id)) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
+    if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && !(attacker.killauraLastRiptide && now - attacker.killauraLastRiptide < 3000)) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
     attacker.killauraHitList = attacker.killauraHitList.filter(({ time }) => now - time <= 100);
     if (attacker.killauraHitList.length >= 2) {
         attacker.killauraFlag++;
