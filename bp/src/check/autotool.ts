@@ -18,11 +18,12 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player)) return;
     player.sendMessage("Index: " + (Date.now() - player.autotoolLastSwitch));
     const interval = Date.now() - player.autotoolLastSwitch;
+    const safeIndex = player.autotoolSafeIndex;
     if (interval <= 20) {
         let i = 0;
         const id = system.runInterval(() => {
             i++;
-            player.selectedSlotIndex, player.autotoolLastIndex = player.autotoolSafeIndex;
+            player.selectedSlotIndex, player.autotoolLastIndex = safeIndex;
             if (i >= 20) system.clearRun(id);
         });
     }
