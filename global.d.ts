@@ -55,6 +55,8 @@ declare module "@minecraft/server" {
         scaffoldStraightCount: number;
         scaffoldDiagFlag: number;
         scaffoldExtenderFlag: number;
+        autotoolLastSwitch: number;
+        autotoolLastIndex: number;
     }
     interface Entity {
         // Detection data

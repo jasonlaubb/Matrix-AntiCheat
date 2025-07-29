@@ -79,6 +79,10 @@ export default {
         type: "boolean",
         value: true,
     },
+    antiAutotoolEnable: {
+        type: "boolean",
+        value: true,
+    },
     banXrayHandler: {
         type: "boolean",
         value: true, // Disable all handler related to xray
