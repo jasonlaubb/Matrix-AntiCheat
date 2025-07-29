@@ -1,4 +1,4 @@
-import { EntityHitBlockAfterEvent, Player, PlayerBreakBlockAfterEvent, world } from "@minecraft/server";
+import { EntityHitBlockAfterEvent, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 ;
 export default {
@@ -19,7 +19,9 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     player.sendMessage("Index: " + (Date.now() - player.autotoolLastSwitch));
 }
 function blockBreak({ player }: PlayerBreakBlockAfterEvent) {
-    player.sendMessage("Index: " + (Date.now() - player.autotoolLastSwitch));
+    system.runTimeout(() => {
+        player.sendMessage("Index: " + (Date.now() - player.autotoolLastSwitch));
+    });
 }
 function tickEvent (player: Player) {
     player.autotoolLastIndex ??= 0;
