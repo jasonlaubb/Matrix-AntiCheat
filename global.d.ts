@@ -73,3 +73,11 @@ declare module "@minecraft/server" {
         previousOpen: string;
     }
 }
+interface Console {
+    log: (data: any) => void;
+    warn: (data: any) => void;
+    error: (data: any) => void;
+}
+declare global {
+	var console: Console;
+}

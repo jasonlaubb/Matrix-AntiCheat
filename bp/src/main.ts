@@ -23,6 +23,7 @@ import oreAlert from "./command/oreAlert";
 import { oreAlertOn } from "./asset/oreAlert";
 import { endLock, netherLock } from "./command/dimensionLock";
 import { endNetherLockOn } from "./asset/endNetherLock";
+import { mute, unmute } from "./command/mute";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -117,6 +118,8 @@ system.beforeEvents.startup.subscribe((event) => {
         oreAlert,
         endLock,
         netherLock,
+        mute,
+        unmute,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {

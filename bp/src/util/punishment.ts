@@ -1,4 +1,4 @@
-import { Player, world } from "@minecraft/server";
+import { Player, system, world } from "@minecraft/server";
 export interface BanData {
     name: string;
     reason: string;
@@ -79,6 +79,33 @@ export function checkPunish(player: Player) {
                 player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}`);
             }
             return;
+        }
+    }
+    const muteData = player.getDynamicProperty("muteData:" + player.id) as number;
+    if (muteData) {
+        if (muteData !== -1 && now > muteData) {
+            player.setDynamicProperty("muteData:" + player.id);
+            try {
+                player.runCommand("ability @s mute false");
+            } catch {}
+        } else {
+            try {
+                player.runCommand("ability @s mute true");
+                if (muteData !== -1) {
+                    const id = system.runTimeout(() => {
+                        if (!player.isValid) return;
+                        player.setDynamicProperty("muteData:" + player.id);
+                        player.runCommand("ability @s mute false");
+                    }, Math.ceil((now - muteData) / 50));
+                    const leave = world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+                        if (playerId !== player.id) return;
+                        system.clearRun(id);
+                        world.afterEvents.playerLeave.unsubscribe(leave);
+                    })
+                }
+            } catch {
+                console.warn("Punishment :: Failed to mute due to edu not enabled.")
+            }
         }
     }
 }
