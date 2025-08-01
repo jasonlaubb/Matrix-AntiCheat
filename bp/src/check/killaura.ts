@@ -124,16 +124,11 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     }
 }
 function aimCheck (player: Player) {
-    player.killauraPitchHistory ??= [];
     const { x: pitch } = player.getRotation();
-    player.killauraPitchHistory.unshift(pitch);
-    if (player.killauraPitchHistory.length > 20) {
-        player.killauraPitchHistory.pop();
-        if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 500) {
-            if (pitch.toFixed(5) === "0.00000") {
-                player.killauraLastAttack = 0;
-                player.flag("Killaura", "F", "Combat (Solstice)");
-            }
+    if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 500) {
+        if (pitch.toFixed(5) === "0.00000") {
+            player.killauraLastAttack = 0;
+            player.flag("Killaura", "F", "Combat (Solstice)");
         }
     }
 }
