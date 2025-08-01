@@ -35,7 +35,6 @@ declare module "@minecraft/server" {
         killauraSmoothFlag: number;
         killauraXSpeed: number[];
         killauraLastRiptide: number;
-        killauraPitchHistory: number[];
         killauraLastAttack: number;
         nofallLastFallState: boolean;
         nofallLastOnGroundLocation: Server.Vector3;
