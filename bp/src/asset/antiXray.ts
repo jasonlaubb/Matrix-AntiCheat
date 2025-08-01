@@ -132,6 +132,7 @@ export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: Vect
             }
 
             if (move >= maxMove) {
+                move = 0;
                 yield;
             }
         }
@@ -197,6 +198,7 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
             }
 
             if (move >= maxMove) {
+                move = 0;
                 yield;
             }
         }
