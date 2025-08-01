@@ -109,7 +109,7 @@ export default {
     },
     antiXrayMaxChangeInTick: {
         type: "number",
-        value: 21, // High value of this might cause HIGH spike lag...
+        value: 8, // High value of this might cause HIGH spike lag...
     },
     worldBorder: {
         type: "boolean",
