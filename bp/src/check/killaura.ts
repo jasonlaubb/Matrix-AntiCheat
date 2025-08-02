@@ -143,7 +143,7 @@ function aimCheck (player: Player) {
     if (rot.y < 360 && rot.y > -360 && deltaY > 320 && player.killauraLastDeltaY < 30) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
-            player.flag("Killaura", "I", "Combat (Aim)");
+            player.flag("Killaura", "I", "Combat (Aim)", { deltaY});
         }
     }
     if (player.killauraRotHistory.length > 20) player.killauraRotHistory.pop();
