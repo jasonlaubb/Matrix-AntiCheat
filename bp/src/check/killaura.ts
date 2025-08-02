@@ -122,13 +122,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
-    if (isObstructedBetweenLocations(attacker.location, hurtEntity.location)) {
-        const headPos1 = hurtEntity.getHeadLocation();
-        const headPos2 = attacker.getHeadLocation();
-        const con1 = isObstructedBetweenLocations(attacker.location, headPos1);
-        const con2 = isObstructedBetweenLocations(headPos2, hurtEntity.location);
-        const con3 = isObstructedBetweenLocations(headPos1, headPos2);
-        if (con1 && con2 && con3) attacker.flag("Killaura", "J", "Combat (GhostHand)");
+    if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {
+        attacker.flag("Killaura", "J", "Combat (GhostHand)");
     }
 }
 function aimCheck (player: Player) {
@@ -207,4 +202,51 @@ function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: nu
   }
 
   return false;
+}
+function getCollisionPoints(entity: Entity): Vector3[] {
+  const loc = entity.location;
+  const head = entity.getHeadLocation();
+
+  const offsets = [
+    { x: 0, z: 0 }, // center
+    { x: 0.3, z: 0 },
+    { x: -0.3, z: 0 },
+    { x: 0, z: 0.3 },
+    { x: 0, z: -0.3 },
+    { x: 0.3, z: 0.3 },
+    { x: -0.3, z: -0.3 },
+    { x: 0.3, z: -0.3 },
+    { x: -0.3, z: 0.3 },
+  ];
+
+  const points: Vector3[] = [];
+
+  for (const offset of offsets) {
+    points.push({
+      x: loc.x + offset.x,
+      y: loc.y + 1.0, // shoulder height
+      z: loc.z + offset.z,
+    });
+    points.push({
+      x: head.x + offset.x,
+      y: head.y,
+      z: head.z + offset.z,
+    });
+  }
+
+  return points;
+}
+function hasClearPathBetweenEntities(attacker: Entity, target: Entity): boolean {
+  const attackerPoints = getCollisionPoints(attacker);
+  const targetPoints = getCollisionPoints(target);
+
+  for (const aPoint of attackerPoints) {
+    for (const tPoint of targetPoints) {
+      if (!isObstructedBetweenLocations(aPoint, tPoint)) {
+        return true; // At least one clear path
+      }
+    }
+  }
+
+  return false; // All paths obstructed
 }
