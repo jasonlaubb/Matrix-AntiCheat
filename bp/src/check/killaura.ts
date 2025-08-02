@@ -1,4 +1,4 @@
-import { Entity, EntityHurtAfterEvent, ItemReleaseUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
+import { Entity, EntityHurtAfterEvent, ItemReleaseUseAfterEvent, Player, system, Vector2, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -127,19 +127,44 @@ function aimCheck (player: Player) {
     const rot = player.getRotation();
     player.killauraLastDeltaY ??= 0;
     player.killauraLastYaw ??= rot.y;
+    player.killauraRotHistory ??= [];
+    player.killauraRotHistory.unshift(rot);
     const deltaY = fastAbs(rot.y - player.killauraLastYaw);
-    if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 500) {
+    if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
         if (rot.x.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
             player.flag("Killaura", "F", "Combat (Aim)");
+        }
+        if (player.killauraRotHistory.length > 20 && hasNonContinuousDuplicate(player.killauraRotHistory)) {
+            player.killauraRotHistory = [];
+            player.flag("Killaura", "G", "Combat (Aim)");
         }
     }
     if (rot.y < 360 && rot.y > -360 && deltaY > 320 && player.killauraLastDeltaY < 30) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
-            player.flag("Killaura", "G", "Combat (Aim)");
+            player.flag("Killaura", "I", "Combat (Aim)");
         }
     }
+    if (player.killauraRotHistory.length > 20) player.killauraRotHistory.pop();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
+}
+function hasNonContinuousDuplicate(vectors: Vector2[]): boolean {
+    const positions = new Map<string, number[]>();
+    const key = (v: Vector2) => `${v.x},${v.y}`;
+    for (let i = 0; i < vectors.length; i++) {
+        const k = key(vectors[i]);
+        const list = positions.get(k) ?? [];
+        list.push(i);
+        positions.set(k, list);
+    }
+    for (const indices of positions.values()) {
+        for (let i = 1; i < indices.length; i++) {
+            if (indices[i] - indices[i - 1] > 1) {
+            return true;
+            }
+        }
+    }
+    return false;
 }

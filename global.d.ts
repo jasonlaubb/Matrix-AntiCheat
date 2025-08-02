@@ -38,6 +38,7 @@ declare module "@minecraft/server" {
         killauraLastAttack: number;
         killauraLastYaw: number;
         killauraLastDeltaY: number;
+        killauraRotHistory: Vector2[];
         nofallLastFallState: boolean;
         nofallLastOnGroundLocation: Server.Vector3;
         autototemLastItem: [boolean, boolean];
