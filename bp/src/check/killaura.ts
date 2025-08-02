@@ -119,6 +119,10 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
+    attacker.sendMessage(damage.toString() + " / " + calculateExpectedBaseDamage(attacker, hurtEntity));
+    if (damage === 1.5) {
+        attacker.flag("Killaura", "I", "Combat (Critical)");
+    }
     if (yaw % 45 === 0) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
@@ -239,4 +243,77 @@ function isSuspiciousAimSnap(player: Player, deltaY: number): boolean {
     const isStableAfter = history.length === 5 && history[4] < 10;
 
     return isSpike && isStableAfter;
+}
+function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
+  const weaponBaseDamage: Record<string, number> = {
+    "minecraft:wooden_sword": 4,
+    "minecraft:stone_sword": 5,
+    "minecraft:iron_sword": 6,
+    "minecraft:diamond_sword": 7,
+    "minecraft:netherite_sword": 8,
+    "minecraft:wooden_axe": 7,
+    "minecraft:stone_axe": 9,
+    "minecraft:iron_axe": 9,
+    "minecraft:diamond_axe": 9,
+    "minecraft:netherite_axe": 10,
+    "minecraft:air": 0,
+  };
+
+  const inventory = attacker.getComponent("inventory")?.container;
+  const weapon = inventory?.getItem(attacker.selectedSlotIndex);
+  const weaponId = weapon?.typeId ?? "minecraft:air";
+  let baseDamage = (weaponBaseDamage[weaponId] ?? 0) + 1;
+
+  // 🔍 Check for Sharpness enchantment
+  const enchantments = weapon?.getComponent("enchantable");
+  const sharpnessLevel = enchantments?.getEnchantment("minecraft:sharpness")?.level ?? 0;
+
+  if (sharpnessLevel > 0) {
+    const extraDamage = 1.25 * sharpnessLevel;
+    baseDamage += extraDamage;
+  }
+
+  const armorReduction: Record<string, number> = {
+    "minecraft:leather_helmet": 0.04,
+    "minecraft:leather_chestplate": 0.12,
+    "minecraft:leather_leggings": 0.08,
+    "minecraft:leather_boots": 0.04,
+    "minecraft:golden_helmet": 0.08,
+    "minecraft:golden_chestplate": 0.20,
+    "minecraft:golden_leggings": 0.12,
+    "minecraft:golden_boots": 0.04,
+    "minecraft:chainmail_helmet": 0.08,
+    "minecraft:chainmail_chestplate": 0.20,
+    "minecraft:chainmail_leggings": 0.12,
+    "minecraft:chainmail_boots": 0.04,
+    "minecraft:iron_helmet": 0.08,
+    "minecraft:iron_chestplate": 0.24,
+    "minecraft:iron_leggings": 0.20,
+    "minecraft:iron_boots": 0.08,
+    "minecraft:diamond_helmet": 0.12,
+    "minecraft:diamond_chestplate": 0.32,
+    "minecraft:diamond_leggings": 0.24,
+    "minecraft:diamond_boots": 0.12,
+    "minecraft:netherite_helmet": 0.12,
+    "minecraft:netherite_chestplate": 0.32,
+    "minecraft:netherite_leggings": 0.24,
+    "minecraft:netherite_boots": 0.12,
+  };
+
+  const targetInventory = target.getComponent("inventory")?.container;
+  let totalReduction = 0;
+
+  if (targetInventory) {
+    for (let slot = 0; slot < targetInventory.size; slot++) {
+      const item = targetInventory.getItem(slot);
+      if (!item) continue;
+
+      const reduction = armorReduction[item.typeId] ?? 0;
+      totalReduction += reduction;
+    }
+  }
+
+  totalReduction = Math.min(totalReduction, 0.8);
+  const expectedDamage = baseDamage * (1 - totalReduction);
+  return expectedDamage;
 }
