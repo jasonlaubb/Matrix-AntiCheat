@@ -148,7 +148,7 @@ function aimCheck (player: Player) {
     if (rot.y < 180 && rot.y > -180 && isSuspiciousAimSnap(player, deltaY)) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
-            player.flag("Killaura", "I", "Combat (Aim Snap)", { deltaY });
+            player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
         }
         }
     if (player.killauraRotHistory.length > 60) player.killauraRotHistory.pop();
