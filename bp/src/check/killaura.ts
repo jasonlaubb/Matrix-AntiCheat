@@ -216,7 +216,7 @@ function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: nu
     const blockZ = Math.floor(z);
 
     const block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
-    if (block && block.isSolid) {
+    if (block && (block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass"))) {
       return true;
     }
   }
