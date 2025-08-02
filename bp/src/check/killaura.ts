@@ -136,7 +136,7 @@ function aimCheck (player: Player) {
     if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
         if (rot.x.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
-            player.flag("Killaura", "F", "Combat (Aim)", { pitch: rot.x });
+            player.flag("Killaura", "F", "Combat (Aim)");
         }
         const rotHistory = player.killauraRotHistory;
         const duplicateCount = countMeaningfulNonContinuousDuplicates(rotHistory);
