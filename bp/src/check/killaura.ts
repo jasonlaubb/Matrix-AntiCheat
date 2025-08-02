@@ -124,11 +124,22 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     }
 }
 function aimCheck (player: Player) {
-    const { x: pitch } = player.getRotation();
+    const rot = player.getRotation();
+    player.killauraLastDeltaY ??= 0;
+    player.killauraLastYaw ??= rot.y;
+    const deltaY = fastAbs(rot.y - player.killauraLastYaw);
     if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 500) {
-        if (pitch.toFixed(5) === "0.00000") {
+        if (rot.x.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
             player.flag("Killaura", "F", "Combat (Aim)");
         }
     }
+    if (rot.y < 360 && rot.y > -360 && deltaY > 320 && player.killauraLastDeltaY < 30) {
+        const isRiding = player.getComponent("riding")?.entityRidingOn;
+        if (!isRiding) {
+            player.flag("Killaura", "G", "Combat (Aim)");
+        }
+    }
+    player.killauraLastYaw = rot.y;
+    player.killauraLastDeltaY = deltaY;
 }
