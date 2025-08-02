@@ -115,7 +115,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 addHP(hurtEntity, damage);
             }
         }
-        if (!attacker.getEntitiesFromViewDirection().some(({ entity }) => entity.id === hurtEntity.id)) {
+        if (!attacker.getEntitiesFromViewDirection({ maxHorizontalRotation: 180, maxVerticalRotation: 90, minHorizontalRotation: -180, minVerticalRotation: -90 }).some(({ entity }) => entity.id === hurtEntity.id)) {
             attacker.flag("Killaura", "J", "Combat");
         }
     }
@@ -143,7 +143,7 @@ function aimCheck (player: Player) {
             player.flag("Killaura", "G", "Combat (Aim)");
         }
     }
-    if (rot.y < 360 && rot.y > -360 && deltaY > 320 && player.killauraLastDeltaY < 30) {
+    if (rot.y < 180 && rot.y > -180 && deltaY > 320 && player.killauraLastDeltaY < 30) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
             player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
