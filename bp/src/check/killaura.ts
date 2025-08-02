@@ -115,15 +115,15 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 addHP(hurtEntity, damage);
             }
         }
-        if (!attacker.getEntitiesFromViewDirection({ maxHorizontalRotation: 180, maxVerticalRotation: 90, minHorizontalRotation: -180, minVerticalRotation: -90 }).some(({ entity }) => entity.id === hurtEntity.id)) {
-            attacker.flag("Killaura", "J", "Combat");
-        }
     }
     if (yaw % 45 === 0) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
+    }
+    if (isObstructedBetweenLocations(attacker.getHeadLocation(), hurtEntity.location)) {
+        attacker.flag("Killaura", "E", "Combat")
     }
 }
 function aimCheck (player: Player) {
@@ -170,4 +170,36 @@ function hasNonContinuousDuplicate(vectors: Vector2[]): boolean {
         }
     }
     return false;
+}
+
+function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: number = 0.5): boolean {
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const dz = end.z - start.z;
+
+  const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  const steps = Math.floor(distance / stepSize);
+
+  const stepX = dx / steps;
+  const stepY = dy / steps;
+  const stepZ = dz / steps;
+
+  const dimension = world.getDimension("overworld");
+
+  for (let i = 0; i <= steps; i++) {
+    const x = start.x + stepX * i;
+    const y = start.y + stepY * i;
+    const z = start.z + stepZ * i;
+
+    const blockX = Math.floor(x);
+    const blockY = Math.floor(y);
+    const blockZ = Math.floor(z);
+
+    const block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
+    if (block && block.isSolid) {
+      return true;
+    }
+  }
+
+  return false;
 }
