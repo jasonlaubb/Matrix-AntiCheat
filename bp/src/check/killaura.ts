@@ -248,80 +248,75 @@ function isSuspiciousAimSnap(player: Player, deltaY: number): boolean {
     return isSpike && isStableAfter;
 }
 function calculateExpectedBaseDamage(attacker: Player, target: Entity): number | undefined {
-  const weaponBaseDamage: Record<string, number> = {
-  // Swords
-  "minecraft:wooden_sword": 4,
-  "minecraft:stone_sword": 5,
-  "minecraft:iron_sword": 6,
-  "minecraft:golden_sword": 4,
-  "minecraft:diamond_sword": 7,
-  "minecraft:netherite_sword": 8,
+    const weaponBaseDamage: Record<string, number> = {
+        // Swords
+        "minecraft:wooden_sword": 4,
+        "minecraft:stone_sword": 5,
+        "minecraft:iron_sword": 6,
+        "minecraft:golden_sword": 4,
+        "minecraft:diamond_sword": 7,
+        "minecraft:netherite_sword": 8,
 
-  // Axes
-  "minecraft:wooden_axe": 3,
-  "minecraft:stone_axe": 4,
-  "minecraft:iron_axe": 5,
-  "minecraft:golden_axe": 3,
-  "minecraft:diamond_axe": 6,
-  "minecraft:netherite_axe": 7,
+        // Axes
+        "minecraft:wooden_axe": 3,
+        "minecraft:stone_axe": 4,
+        "minecraft:iron_axe": 5,
+        "minecraft:golden_axe": 3,
+        "minecraft:diamond_axe": 6,
+        "minecraft:netherite_axe": 7,
 
-  // Pickaxes
-  "minecraft:wooden_pickaxe": 2,
-  "minecraft:stone_pickaxe": 3,
-  "minecraft:iron_pickaxe": 4,
-  "minecraft:golden_pickaxe": 2,
-  "minecraft:diamond_pickaxe": 5,
-  "minecraft:netherite_pickaxe": 6,
+        // Pickaxes
+        "minecraft:wooden_pickaxe": 2,
+        "minecraft:stone_pickaxe": 3,
+        "minecraft:iron_pickaxe": 4,
+        "minecraft:golden_pickaxe": 2,
+        "minecraft:diamond_pickaxe": 5,
+        "minecraft:netherite_pickaxe": 6,
 
-  // Shovels
-  "minecraft:wooden_shovel": 1,
-  "minecraft:stone_shovel": 2,
-  "minecraft:iron_shovel": 3,
-  "minecraft:golden_shovel": 1,
-  "minecraft:diamond_shovel": 4,
-  "minecraft:netherite_shovel": 5,
+        // Shovels
+        "minecraft:wooden_shovel": 1,
+        "minecraft:stone_shovel": 2,
+        "minecraft:iron_shovel": 3,
+        "minecraft:golden_shovel": 1,
+        "minecraft:diamond_shovel": 4,
+        "minecraft:netherite_shovel": 5,
 
-  // Hoes
-  "minecraft:wooden_hoe": 1,
-  "minecraft:stone_hoe": 1,
-  "minecraft:iron_hoe": 1,
-  "minecraft:golden_hoe": 1,
-  "minecraft:diamond_hoe": 1,
-  "minecraft:netherite_hoe": 1,
+        // Hoes
+        "minecraft:wooden_hoe": 1,
+        "minecraft:stone_hoe": 1,
+        "minecraft:iron_hoe": 1,
+        "minecraft:golden_hoe": 1,
+        "minecraft:diamond_hoe": 1,
+        "minecraft:netherite_hoe": 1,
 
-  // Fist
-  "minecraft:air": 0,
-};
+        // Fist
+        "minecraft:air": 0,
+    };
 
-  const inventory = attacker.getComponent("inventory")?.container;
-  const weapon = inventory?.getItem(attacker.selectedSlotIndex);
-  const weaponId = weapon?.typeId ?? "minecraft:air";
-  if (!weaponId.startsWith("minecraft:") || weaponId === "minecraft:mace") return undefined;
-  let baseDamage = (weaponBaseDamage[weaponId] ?? 0) + 1;
+    const inventory = attacker.getComponent("inventory")?.container;
+    const weapon = inventory?.getItem(attacker.selectedSlotIndex);
+    const weaponId = weapon?.typeId ?? "minecraft:air";
+    if (!weaponId.startsWith("minecraft:") || weaponId === "minecraft:mace") return undefined;
+    let baseDamage = (weaponBaseDamage[weaponId] ?? 0) + 1;
 
-  // 🔍 Check for Sharpness enchantment
-  const enchantments = weapon?.getComponent("enchantable");
-  const sharpnessLevel = enchantments?.getEnchantment("minecraft:sharpness")?.level ?? 0;
+    // 🔍 Check for Sharpness enchantment
+    const enchantments = weapon?.getComponent("enchantable");
+    const sharpnessLevel = enchantments?.getEnchantment("minecraft:sharpness")?.level ?? 0;
 
-  if (sharpnessLevel > 0) {
-    const extraDamage = 1.25 * sharpnessLevel;
-    attacker.sendMessage(extraDamage.toString());
-    baseDamage += extraDamage;
-  }
+    if (sharpnessLevel > 0) {
+        const extraDamage = 1.25 * sharpnessLevel;
+        attacker.sendMessage(extraDamage.toString());
+        baseDamage += extraDamage;
+    }
 
-  const armor = target.getComponent("equippable")!;
-  const totalReduction = armor ? armor.totalArmor * 0.04 : 0;
-  const protectionLevel = getProtectionLevel(armor);
-  const expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
-  return expectedDamage;
+    const armor = target.getComponent("equippable")!;
+    const totalReduction = armor ? armor.totalArmor * 0.04 : 0;
+    const protectionLevel = getProtectionLevel(armor);
+    const expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
+    return expectedDamage;
 }
-function getProtectionLevel (component: EntityEquippableComponent) {
-    const armor = [
-        component?.getEquipment(EquipmentSlot.Head),
-        component?.getEquipment(EquipmentSlot.Chest),
-        component?.getEquipment(EquipmentSlot.Legs),
-        component?.getEquipment(EquipmentSlot.Feet),
-    ]
+function getProtectionLevel(component: EntityEquippableComponent) {
+    const armor = [component?.getEquipment(EquipmentSlot.Head), component?.getEquipment(EquipmentSlot.Chest), component?.getEquipment(EquipmentSlot.Legs), component?.getEquipment(EquipmentSlot.Feet)];
     let protectionLevel = 0;
     armor.forEach((item) => {
         if (!item) return;
