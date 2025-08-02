@@ -296,7 +296,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
   const inventory = attacker.getComponent("inventory")?.container;
   const weapon = inventory?.getItem(attacker.selectedSlotIndex);
   const weaponId = weapon?.typeId ?? "minecraft:air";
-  if (!weaponId.startsWith("minecraft:")) return undefined;
+  if (!weaponId.startsWith("minecraft:") || weaponId === "minecraft:mace") return undefined;
   let baseDamage = (weaponBaseDamage[weaponId] ?? 0) + 1;
 
   // 🔍 Check for Sharpness enchantment
