@@ -138,9 +138,12 @@ function aimCheck (player: Player) {
             player.killauraLastAttack = 0;
             player.flag("Killaura", "F", "Combat (Aim)", { pitch: rot.x });
         }
-        if (player.killauraRotHistory.length > 10 && hasNonContinuousDuplicate(player.killauraRotHistory)) {
+        const rotHistory = player.killauraRotHistory;
+        const duplicateCount = countNonContinuousDuplicates(rotHistory);
+
+        if (rotHistory.length > 20 && duplicateCount >= 3) {
             player.killauraRotHistory = [];
-            player.flag("Killaura", "G", "Combat (Aim)");
+            player.flag("Killaura", "G", `Combat (Aim) - ${duplicateCount} non-continuous repeats`);
         }
     }
     if (rot.y < 180 && rot.y > -180 && deltaY > 320 && player.killauraLastDeltaY < 30) {
@@ -153,33 +156,26 @@ function aimCheck (player: Player) {
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
 }
-function hasNonContinuousDuplicate(vectors: Vector2[]): boolean {
+function countNonContinuousDuplicates(vectors: Vector2[]): number {
   const positions = new Map<string, number[]>();
   const key = (v: Vector2) => `${v.x},${v.y}`;
 
-  // Collect all indices for each unique vector
   for (let i = 0; i < vectors.length; i++) {
     const k = key(vectors[i]);
     if (!positions.has(k)) positions.set(k, []);
     positions.get(k)!.push(i);
   }
 
-  // Check for non-continuous duplicates
+  let count = 0;
   for (const indices of positions.values()) {
-    if (indices.length < 2) continue;
-
-    let isContinuous = true;
     for (let i = 1; i < indices.length; i++) {
-      if (indices[i] - indices[i - 1] !== 1) {
-        isContinuous = false;
-        break;
+      if (indices[i] - indices[i - 1] > 1) {
+        count++;
       }
     }
-
-    if (!isContinuous) return true;
   }
 
-  return false;
+  return count;
 }
 
 function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: number = 0.5): boolean {
