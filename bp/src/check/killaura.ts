@@ -122,8 +122,13 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
-    if (isObstructedBetweenLocations(attacker.getHeadLocation(), hurtEntity.location)) {
-        attacker.flag("Killaura", "E", "Combat")
+    if (isObstructedBetweenLocations(attacker.location, hurtEntity.location)) {
+        const headPos1 = hurtEntity.getHeadLocation();
+        const headPos2 = attacker.getHeadLocation();
+        const con1 = isObstructedBetweenLocations(attacker.location, headPos1);
+        const con2 = isObstructedBetweenLocations(headPos2, hurtEntity.location);
+        const con3 = isObstructedBetweenLocations(headPos1, headPos2);
+        if (con1 && con2 && con3) attacker.flag("Killaura", "J", "Combat (GhostHand)");
     }
 }
 function aimCheck (player: Player) {
