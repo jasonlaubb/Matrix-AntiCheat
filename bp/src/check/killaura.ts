@@ -116,13 +116,13 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             }
         }
         if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {
-            attacker.flag("Killaura", "J", "Combat (GhostHand)");
+            attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
     if (yaw % 45 === 0) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
-        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
+        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
 }
@@ -134,13 +134,13 @@ function aimCheck(player: Player) {
     if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
         if (rot.x.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
-            player.flag("Killaura", "F", "Combat (Aim)");
+            player.flag("Killaura", "G", "Combat (Aim)");
         }
     }
     if (rot.y < 180 && rot.y > -180 && isSuspiciousAimSnap(player, deltaY)) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
-            player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
+            player.flag("Killaura", "G", "Combat (Aim)", { deltaY });
         }
     }
     player.killauraLastYaw = rot.y;
