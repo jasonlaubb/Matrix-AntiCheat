@@ -140,7 +140,7 @@ function aimCheck(player: Player) {
     if (rot.y < 180 && rot.y > -180 && isSuspiciousAimSnap(player, deltaY)) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
-            player.flag("Killaura", "G", "Combat (Aim)", { deltaY });
+            player.flag("Killaura", "H", "Combat (Aim)", { deltaY });
         }
     }
     player.killauraLastYaw = rot.y;
