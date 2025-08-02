@@ -115,15 +115,15 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 addHP(hurtEntity, damage);
             }
         }
+        if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {
+            attacker.flag("Killaura", "J", "Combat (GhostHand)");
+        }
     }
     if (yaw % 45 === 0) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "E", "Combat", { yaw });
         addHP(hurtEntity, damage);
-    }
-    if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {
-        attacker.flag("Killaura", "J", "Combat (GhostHand)");
     }
 }
 function aimCheck (player: Player) {
