@@ -139,9 +139,9 @@ function aimCheck (player: Player) {
             player.flag("Killaura", "F", "Combat (Aim)", { pitch: rot.x });
         }
         const rotHistory = player.killauraRotHistory;
-        const duplicateCount = countNonContinuousDuplicates(rotHistory);
-
-        if (rotHistory.length > 20 && duplicateCount >= 3) {
+        const duplicateCount = countMeaningfulNonContinuousDuplicates(rotHistory);
+        player.sendMessage(duplicateCount.toString());
+        if (rotHistory.length > 60 && duplicateCount >= 3) {
             player.killauraRotHistory = [];
             player.flag("Killaura", "G", `Combat (Aim)`, { duplicateCount});
         }
@@ -152,11 +152,11 @@ function aimCheck (player: Player) {
             player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
         }
     }
-    if (player.killauraRotHistory.length > 10) player.killauraRotHistory.pop();
+    if (player.killauraRotHistory.length > 60) player.killauraRotHistory.pop();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
 }
-function countNonContinuousDuplicates(vectors: Vector2[]): number {
+function countMeaningfulNonContinuousDuplicates(vectors: Vector2[]): number {
   const positions = new Map<string, number[]>();
   const key = (v: Vector2) => `${v.x},${v.y}`;
 
@@ -167,9 +167,24 @@ function countNonContinuousDuplicates(vectors: Vector2[]): number {
   }
 
   let count = 0;
+
   for (const indices of positions.values()) {
+    if (indices.length < 2) continue;
+
+    // Skip if all are adjacent (like AAAAAAA)
+    let allAdjacent = true;
     for (let i = 1; i < indices.length; i++) {
-      if (indices[i] - indices[i - 1] > 1) {
+      if (indices[i] - indices[i - 1] !== 1) {
+        allAdjacent = false;
+        break;
+      }
+    }
+    if (allAdjacent) continue;
+
+    // Count non-adjacent returns that are not part of a streak
+    for (let i = 1; i < indices.length; i++) {
+      const gap = indices[i] - indices[i - 1];
+      if (gap > 1 && gap < 5) { // tweakable: ignore long gaps or short flicks
         count++;
       }
     }
