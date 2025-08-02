@@ -145,7 +145,7 @@ function aimCheck (player: Player) {
             player.flag("Killaura", "G", `Combat (Aim)`, { duplicateCount });
         }
     }
-    if (rot.y < 180 && rot.y > -180 && deltaY > 320 && player.killauraLastDeltaY < 30) {
+    if (rot.y < 180 && rot.y > -180 && deltaY > 160 && player.killauraLastDeltaY < 30) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
             player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
