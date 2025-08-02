@@ -133,7 +133,7 @@ function aimCheck (player: Player) {
     if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
         if (rot.x.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
-            player.flag("Killaura", "F", "Combat (Aim)");
+            player.flag("Killaura", "F", "Combat (Aim)", { pitch: rot.x });
         }
         if (player.killauraRotHistory.length > 20 && hasNonContinuousDuplicate(player.killauraRotHistory)) {
             player.killauraRotHistory = [];
@@ -143,7 +143,7 @@ function aimCheck (player: Player) {
     if (rot.y < 360 && rot.y > -360 && deltaY > 320 && player.killauraLastDeltaY < 30) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
-            player.flag("Killaura", "I", "Combat (Aim)", { deltaY});
+            player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
         }
     }
     if (player.killauraRotHistory.length > 20) player.killauraRotHistory.pop();
