@@ -1,5 +1,5 @@
 import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, ItemReleaseUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, max2 } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -307,7 +307,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
 
   const armor = target.getComponent("equippable")!;
   attacker.sendMessage(`${armor?.totalArmor} | ${armor.totalToughness}`);
-  let totalReduction = armor ? max2(armor.totalArmor / 5, armor.totalArmor - 4 * baseDamage / (armor.totalToughness - 8)) / 25 : 0;
+  const totalReduction = armor ? (baseDamage <= armor.totalArmor / 2 ? armor.totalArmor : armor.totalArmor - (baseDamage - armor.totalArmor / 2) / (armor.totalToughness / 4 + 2)) * 0.04 : 0;
   const protectionLevel = getProtectionLevel(armor);
   const expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
   return expectedDamage;
