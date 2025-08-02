@@ -130,8 +130,6 @@ function aimCheck(player: Player) {
     const rot = player.getRotation();
     player.killauraLastDeltaY ??= 0;
     player.killauraLastYaw ??= rot.y;
-    player.killauraRotHistory ??= [];
-    player.killauraRotHistory.unshift(rot);
     const deltaY = fastAbs(rot.y - player.killauraLastYaw);
     if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
         if (rot.x.toFixed(5) === "0.00000") {
@@ -145,7 +143,6 @@ function aimCheck(player: Player) {
             player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
         }
     }
-    if (player.killauraRotHistory.length > 60) player.killauraRotHistory.pop();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
 }
