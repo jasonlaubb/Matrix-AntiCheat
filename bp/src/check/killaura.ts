@@ -1,5 +1,5 @@
-import { Entity, EntityHurtAfterEvent, ItemReleaseUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
+import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, ItemReleaseUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, max2 } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -303,49 +303,28 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
     const extraDamage = 1.25 * sharpnessLevel;
     baseDamage += extraDamage;
   }
+  baseDamage = Math.floor(baseDamage);
 
-  const armorReduction: Record<string, number> = {
-    "minecraft:leather_helmet": 0.04,
-    "minecraft:leather_chestplate": 0.12,
-    "minecraft:leather_leggings": 0.08,
-    "minecraft:leather_boots": 0.04,
-    "minecraft:golden_helmet": 0.08,
-    "minecraft:golden_chestplate": 0.20,
-    "minecraft:golden_leggings": 0.12,
-    "minecraft:golden_boots": 0.04,
-    "minecraft:chainmail_helmet": 0.08,
-    "minecraft:chainmail_chestplate": 0.20,
-    "minecraft:chainmail_leggings": 0.12,
-    "minecraft:chainmail_boots": 0.04,
-    "minecraft:iron_helmet": 0.08,
-    "minecraft:iron_chestplate": 0.24,
-    "minecraft:iron_leggings": 0.20,
-    "minecraft:iron_boots": 0.08,
-    "minecraft:diamond_helmet": 0.12,
-    "minecraft:diamond_chestplate": 0.32,
-    "minecraft:diamond_leggings": 0.24,
-    "minecraft:diamond_boots": 0.12,
-    "minecraft:netherite_helmet": 0.12,
-    "minecraft:netherite_chestplate": 0.32,
-    "minecraft:netherite_leggings": 0.24,
-    "minecraft:netherite_boots": 0.12,
-  };
-
-  const targetInventory = target.getComponent("inventory")?.container;
-  let totalReduction = 0;
-
-  if (targetInventory) {
-    for (let slot = 0; slot < targetInventory.size; slot++) {
-      const item = targetInventory.getItem(slot);
-      if (!item) continue;
-
-      const reduction = armorReduction[item.typeId] ?? 0;
-      totalReduction += reduction;
-    }
-  }
-  // Not finished Bad AI write wrong code
-
-  totalReduction = Math.min(totalReduction, 0.8);
-  const expectedDamage = baseDamage * (1 - totalReduction);
-  return Math.floor(expectedDamage);
+  const armor = target.getComponent("equippable")!;
+  const { totalArmor, totalToughness } = armor;
+  const totalReduction = max2(totalArmor / 5, totalArmor - 4 * baseDamage / (totalToughness - 8));
+  const protectionLevel = getProtectionLevel(armor);
+  const expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
+  return expectedDamage;
+}
+function getProtectionLevel (component: EntityEquippableComponent) {
+    const armor = [
+        component.getEquipment(EquipmentSlot.Head),
+        component.getEquipment(EquipmentSlot.Chest),
+        component.getEquipment(EquipmentSlot.Legs),
+        component.getEquipment(EquipmentSlot.Feet),
+    ]
+    let protectionLevel = 0;
+    armor.forEach((item) => {
+        if (!item) return;
+        const enchant = item.getComponent("enchantable");
+        if (!enchant) return;
+        protectionLevel += enchant.getEnchantment("minecraft:protection")?.level ?? 0;
+    });
+    return protectionLevel;
 }
