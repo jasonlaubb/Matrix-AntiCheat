@@ -32,7 +32,7 @@ function saveChunkData(keyPrefix: string, data: Record<string, string>) {
 
     for (const [pos, rawId] of entries) {
         const entrySize = pos.length + rawId.length + 6;
-        if (size + entrySize > 32000) {
+        if (size + entrySize > 8191) {
             world.setDynamicProperty(`${keyPrefix}:${part}`, JSON.stringify(buffer));
             part++;
             buffer = {};
