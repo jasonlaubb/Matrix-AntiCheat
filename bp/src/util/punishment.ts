@@ -92,19 +92,22 @@ export function checkPunish(player: Player) {
             try {
                 player.runCommand("ability @s mute true");
                 if (muteData !== -1) {
-                    const id = system.runTimeout(() => {
-                        if (!player.isValid) return;
-                        player.setDynamicProperty("muteData:" + player.id);
-                        player.runCommand("ability @s mute false");
-                    }, Math.ceil((now - muteData) / 50));
+                    const id = system.runTimeout(
+                        () => {
+                            if (!player.isValid) return;
+                            player.setDynamicProperty("muteData:" + player.id);
+                            player.runCommand("ability @s mute false");
+                        },
+                        Math.ceil((now - muteData) / 50)
+                    );
                     const leave = world.afterEvents.playerLeave.subscribe(({ playerId }) => {
                         if (playerId !== player.id) return;
                         system.clearRun(id);
                         world.afterEvents.playerLeave.unsubscribe(leave);
-                    })
+                    });
                 }
             } catch {
-                console.warn("Punishment :: Failed to mute due to edu not enabled.")
+                console.warn("Punishment :: Failed to mute due to edu not enabled.");
             }
         }
     }

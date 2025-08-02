@@ -306,7 +306,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     initModules();
     if (get("worldBorder")) worldBorderOn();
     if (get("oreAlert")) oreAlertOn();
-    if (get("endLock") || get("netherLock")) endNetherLockOn(); 
+    if (get("endLock") || get("netherLock")) endNetherLockOn();
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const { x, y } = event.sender.inputInfo.getMovementVector();

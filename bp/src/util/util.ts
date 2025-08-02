@@ -57,6 +57,6 @@ export function parseTime(timeUnit: string, value: number) {
         }
     }
 }
-export function stringXyz (location: Vector3) {
+export function stringXyz(location: Vector3) {
     return Object.values(location).join(",");
 }

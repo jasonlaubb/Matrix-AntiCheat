@@ -4,7 +4,7 @@ import type { Command } from "../main";
 import { parseTime } from "../util/util";
 import { checkPunish } from "../util/punishment";
 
-function hasEducationalFeature () {
+function hasEducationalFeature() {
     try {
         new ItemStack("minecraft:chemistry_table");
         return true;
@@ -20,7 +20,7 @@ export const mute = {
         {
             name: "player",
             type: "playerTarget",
-        }
+        },
     ],
     optionalParameters: [
         {
@@ -31,7 +31,7 @@ export const mute = {
         {
             name: "timeUnit",
             type: "enum",
-        }
+        },
     ],
     execute: (player, [target, duration, timeUnit]) => {
         if (!hasEducationalFeature()) return { status: 1, message: "§7[§aMatrix§7] §fEducation edition required! " };
@@ -42,7 +42,7 @@ export const mute = {
             checkPunish(target);
         });
         return { status: 0, message: "§7[§aMatrix§7] §fMuted player: " + target.name };
-    }
+    },
 } as Command;
 export const unmute = {
     name: "unmute",
@@ -51,7 +51,7 @@ export const unmute = {
         {
             name: "player",
             type: "playerTarget",
-        }
+        },
     ],
     execute: (player, [target]) => {
         if (!hasEducationalFeature()) return { status: 1, message: "§7[§aMatrix§7] §fEducation edition required! " };
@@ -60,5 +60,5 @@ export const unmute = {
             player.runCommand("ability @s mute true");
         });
         return { status: 0, message: "§7[§aMatrix§7] §fMuted player: " + target.name };
-    }
+    },
 } as Command;

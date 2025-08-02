@@ -10,8 +10,8 @@ export default {
     disable: () => {
         world.afterEvents.entityHitBlock.unsubscribe(hitBlock);
         removeCheckInterval(tickEvent);
-    }
-}
+    },
+};
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player)) return;
     const now = Date.now();
@@ -19,7 +19,7 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (interval <= 1) {
         if (!get("antiAutoToolIgnoreKeyboardInput") && player.inputInfo.lastInputModeUsed === InputMode.KeyboardAndMouse) {
             const safeIndex = player.autotoolSafeIndex;
-            system.runTimeout(() => player.selectedSlotIndex = safeIndex, 1);
+            system.runTimeout(() => (player.selectedSlotIndex = safeIndex), 1);
             if (player.autotoolLastFlag && now - player.autotoolLastFlag < 30000) {
                 player.flag("AutoTool", "A", "Player", { interval });
             }
@@ -27,7 +27,7 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
         } else player.flag("AutoTool", "A", "Player", { interval });
     }
 }
-function tickEvent (player: Player) {
+function tickEvent(player: Player) {
     player.autotoolLastIndex ??= 0;
     if (player.autotoolLastIndex !== player.selectedSlotIndex) {
         player.autotoolSafeIndex = player.autotoolLastIndex;

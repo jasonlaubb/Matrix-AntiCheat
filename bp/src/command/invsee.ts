@@ -23,36 +23,38 @@ function createLargeChest(dimension: Dimension, location: Vector3, items: ItemSt
 
         // Fill chest with items
         items.forEach((item, index) => {
-        if (index < mergedChest.size) {
-            mergedChest.setItem(index, item);
-        }
-    });
-  }, 1); // Delay by 1 tick to allow merge
+            if (index < mergedChest.size) {
+                mergedChest.setItem(index, item);
+            }
+        });
+    }, 1); // Delay by 1 tick to allow merge
 }
-function midPoint ({ x, y, z }: Vector3, { x: x2, z: z2 }: Vector3) {
-    return { x: (x + x2) * .5 + .5, y: y + 1, z: (z + z2) * .5 + .5 }
+function midPoint({ x, y, z }: Vector3, { x: x2, z: z2 }: Vector3) {
+    return { x: (x + x2) * 0.5 + 0.5, y: y + 1, z: (z + z2) * 0.5 + 0.5 };
 }
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     const block = event.block;
     if (block.type.id === "minecraft:chest") {
-    const otherBlockPos = world.getDynamicProperty("invseeChest:" + stringXyz(block.location)) as Vector3;
-    if (otherBlockPos === undefined) return;
-    event.cancel = true;
-    if (!event.player.isOp()) {
-        system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to destroy this chest."));
-        return;
-    }
-    system.run(() => {
-        block.setType("air");
-        event.dimension.getBlock(otherBlockPos)!.setType("air");
-        world.setDynamicProperty("invseeChest:" + stringXyz(block.location));
-        world.setDynamicProperty("invseeChest:" + stringXyz(otherBlockPos));
-        event.dimension.getEntities({
-            location: midPoint(event.block.location, otherBlockPos),
-            maxDistance: 2,
-            type: "minecraft:item",
-        }).forEach((entity) => entity.kill());
-    });
+        const otherBlockPos = world.getDynamicProperty("invseeChest:" + stringXyz(block.location)) as Vector3;
+        if (otherBlockPos === undefined) return;
+        event.cancel = true;
+        if (!event.player.isOp()) {
+            system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to destroy this chest."));
+            return;
+        }
+        system.run(() => {
+            block.setType("air");
+            event.dimension.getBlock(otherBlockPos)!.setType("air");
+            world.setDynamicProperty("invseeChest:" + stringXyz(block.location));
+            world.setDynamicProperty("invseeChest:" + stringXyz(otherBlockPos));
+            event.dimension
+                .getEntities({
+                    location: midPoint(event.block.location, otherBlockPos),
+                    maxDistance: 2,
+                    type: "minecraft:item",
+                })
+                .forEach((entity) => entity.kill());
+        });
     } else {
         if (world.getDynamicProperty("invseeChest:" + stringXyz({ x: block.location.x, y: block.location.y + 1, z: block.location.z }))) {
             event.cancel = true;
@@ -66,7 +68,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
     const data = world.getDynamicProperty("invseeChest:" + stringXyz(block.location));
     if (!data || event.player.isOp()) return;
     event.cancel = true;
-    system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to open this chest."))
+    system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to open this chest."));
 });
 export default {
     name: "invsee",
@@ -75,7 +77,7 @@ export default {
         {
             name: "player",
             type: "player",
-        }
+        },
     ],
     requireOp: true,
     execute: (player, [target]) => {
@@ -111,10 +113,13 @@ export default {
         system.run(() => {
             createLargeChest(player.dimension, player.location, empty);
             player.onScreenDisplay.setActionBar("§fRight click the chest to view the inventory");
-            player.tryTeleport({ x: Math.floor(player.location.x) + .5, y: Math.floor(player.location.y) + 1, z: Math.floor(player.location.z) + .5 }, {
-                rotation: { x: 97, y: player.getRotation().y },
-            });
+            player.tryTeleport(
+                { x: Math.floor(player.location.x) + 0.5, y: Math.floor(player.location.y) + 1, z: Math.floor(player.location.z) + 0.5 },
+                {
+                    rotation: { x: 97, y: player.getRotation().y },
+                }
+            );
         });
         return { status: 0 };
-    }
+    },
 } as Command;

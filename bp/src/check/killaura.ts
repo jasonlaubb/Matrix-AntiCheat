@@ -15,7 +15,7 @@ export default {
         removeCheckInterval(aimCheck);
     },
 };
-function releaseUse ({ source: player, itemStack }: ItemReleaseUseAfterEvent) {
+function releaseUse({ source: player, itemStack }: ItemReleaseUseAfterEvent) {
     if (!itemStack || itemStack.typeId !== "minecraft:trident" || player.isOp() || !itemStack.getComponent("enchantable")?.hasEnchantment("minecraft:riptide")) return;
     player.killauraLastRiptide = Date.now();
 }
@@ -126,7 +126,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         addHP(hurtEntity, damage);
     }
 }
-function aimCheck (player: Player) {
+function aimCheck(player: Player) {
     const rot = player.getRotation();
     player.killauraLastDeltaY ??= 0;
     player.killauraLastYaw ??= rot.y;
@@ -150,138 +150,139 @@ function aimCheck (player: Player) {
         if (!isRiding) {
             player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
         }
-        }
+    }
     if (player.killauraRotHistory.length > 60) player.killauraRotHistory.pop();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
 }
 function countMeaningfulNonContinuousDuplicates(vectors: Vector2[]): number {
-  const positions = new Map<string, number[]>();
-  const key = (v: Vector2) => `${v.x},${v.y}`;
+    const positions = new Map<string, number[]>();
+    const key = (v: Vector2) => `${v.x},${v.y}`;
 
-  for (let i = 0; i < vectors.length; i++) {
-    const k = key(vectors[i]);
-    if (!positions.has(k)) positions.set(k, []);
-    positions.get(k)!.push(i);
-  }
-
-  let count = 0;
-
-  for (const indices of positions.values()) {
-    if (indices.length < 2) continue;
-
-    // Skip if all are adjacent (like AAAAAAA)
-    let allAdjacent = true;
-    for (let i = 1; i < indices.length; i++) {
-      if (indices[i] - indices[i - 1] !== 1) {
-        allAdjacent = false;
-        break;
-      }
+    for (let i = 0; i < vectors.length; i++) {
+        const k = key(vectors[i]);
+        if (!positions.has(k)) positions.set(k, []);
+        positions.get(k)!.push(i);
     }
-    if (allAdjacent) continue;
 
-    // Count non-adjacent returns that are not part of a streak
-    for (let i = 1; i < indices.length; i++) {
-      const gap = indices[i] - indices[i - 1];
-      if (gap > 1 && gap < 5) { // tweakable: ignore long gaps or short flicks
-        count++;
-      }
+    let count = 0;
+
+    for (const indices of positions.values()) {
+        if (indices.length < 2) continue;
+
+        // Skip if all are adjacent (like AAAAAAA)
+        let allAdjacent = true;
+        for (let i = 1; i < indices.length; i++) {
+            if (indices[i] - indices[i - 1] !== 1) {
+                allAdjacent = false;
+                break;
+            }
+        }
+        if (allAdjacent) continue;
+
+        // Count non-adjacent returns that are not part of a streak
+        for (let i = 1; i < indices.length; i++) {
+            const gap = indices[i] - indices[i - 1];
+            if (gap > 1 && gap < 5) {
+                // tweakable: ignore long gaps or short flicks
+                count++;
+            }
+        }
     }
-  }
 
-  return count;
+    return count;
 }
 
 function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: number = 0.5): boolean {
-  const dx = end.x - start.x;
-  const dy = end.y - start.y;
-  const dz = end.z - start.z;
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const dz = end.z - start.z;
 
-  const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-  const steps = Math.floor(distance / stepSize);
+    const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+    const steps = Math.floor(distance / stepSize);
 
-  const stepX = dx / steps;
-  const stepY = dy / steps;
-  const stepZ = dz / steps;
+    const stepX = dx / steps;
+    const stepY = dy / steps;
+    const stepZ = dz / steps;
 
-  const dimension = world.getDimension("overworld");
+    const dimension = world.getDimension("overworld");
 
-  for (let i = 0; i <= steps; i++) {
-    const x = start.x + stepX * i;
-    const y = start.y + stepY * i;
-    const z = start.z + stepZ * i;
+    for (let i = 0; i <= steps; i++) {
+        const x = start.x + stepX * i;
+        const y = start.y + stepY * i;
+        const z = start.z + stepZ * i;
 
-    const blockX = Math.floor(x);
-    const blockY = Math.floor(y);
-    const blockZ = Math.floor(z);
+        const blockX = Math.floor(x);
+        const blockY = Math.floor(y);
+        const blockZ = Math.floor(z);
 
-    const block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
-    if (block && (block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass"))) {
-      return true;
+        const block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
+        if (block && (block.isSolid || (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass")))) {
+            return true;
+        }
     }
-  }
 
-  return false;
+    return false;
 }
 function getCollisionPoints(entity: Entity): Vector3[] {
-  const loc = entity.location;
-  const head = entity.getHeadLocation();
+    const loc = entity.location;
+    const head = entity.getHeadLocation();
 
-  const offsets = [
-    { x: 0, z: 0 }, // center
-    { x: 0.3, z: 0 },
-    { x: -0.3, z: 0 },
-    { x: 0, z: 0.3 },
-    { x: 0, z: -0.3 },
-    { x: 0.3, z: 0.3 },
-    { x: -0.3, z: -0.3 },
-    { x: 0.3, z: -0.3 },
-    { x: -0.3, z: 0.3 },
-  ];
+    const offsets = [
+        { x: 0, z: 0 }, // center
+        { x: 0.3, z: 0 },
+        { x: -0.3, z: 0 },
+        { x: 0, z: 0.3 },
+        { x: 0, z: -0.3 },
+        { x: 0.3, z: 0.3 },
+        { x: -0.3, z: -0.3 },
+        { x: 0.3, z: -0.3 },
+        { x: -0.3, z: 0.3 },
+    ];
 
-  const points: Vector3[] = [];
+    const points: Vector3[] = [];
 
-  for (const offset of offsets) {
-    points.push({
-      x: loc.x + offset.x,
-      y: loc.y + 1.0, // shoulder height
-      z: loc.z + offset.z,
-    });
-    points.push({
-      x: head.x + offset.x,
-      y: head.y,
-      z: head.z + offset.z,
-    });
-  }
+    for (const offset of offsets) {
+        points.push({
+            x: loc.x + offset.x,
+            y: loc.y + 1.0, // shoulder height
+            z: loc.z + offset.z,
+        });
+        points.push({
+            x: head.x + offset.x,
+            y: head.y,
+            z: head.z + offset.z,
+        });
+    }
 
-  return points;
+    return points;
 }
 function hasClearPathBetweenEntities(attacker: Entity, target: Entity): boolean {
-  const attackerPoints = getCollisionPoints(attacker);
-  const targetPoints = getCollisionPoints(target);
+    const attackerPoints = getCollisionPoints(attacker);
+    const targetPoints = getCollisionPoints(target);
 
-  for (const aPoint of attackerPoints) {
-    for (const tPoint of targetPoints) {
-      if (!isObstructedBetweenLocations(aPoint, tPoint)) {
-        return true; // At least one clear path
-      }
+    for (const aPoint of attackerPoints) {
+        for (const tPoint of targetPoints) {
+            if (!isObstructedBetweenLocations(aPoint, tPoint)) {
+                return true; // At least one clear path
+            }
+        }
     }
-  }
 
-  return false; // All paths obstructed
+    return false; // All paths obstructed
 }
 function isSuspiciousAimSnap(player: Player, deltaY: number): boolean {
-  const history = player.killauraDeltaYHistory ?? [];
-  history.push(deltaY);
-  if (history.length > 5) history.shift(); // keep last 5
+    const history = player.killauraDeltaYHistory ?? [];
+    history.push(deltaY);
+    if (history.length > 5) history.shift(); // keep last 5
 
-  player.killauraDeltaYHistory = history;
+    player.killauraDeltaYHistory = history;
 
-  const recentAvg = history.slice(0, -1).reduce((a, b) => a + b, 0) / (history.length - 1);
-  const last = history[history.length - 1];
+    const recentAvg = history.slice(0, -1).reduce((a, b) => a + b, 0) / (history.length - 1);
+    const last = history[history.length - 1];
 
-  const isSpike = last > 160 && recentAvg < 20;
-  const isStableAfter = history.length === 5 && history[4] < 10;
+    const isSpike = last > 160 && recentAvg < 20;
+    const isStableAfter = history.length === 5 && history[4] < 10;
 
-  return isSpike && isStableAfter;
+    return isSpike && isStableAfter;
 }
