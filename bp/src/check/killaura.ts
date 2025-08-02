@@ -122,7 +122,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (!attacker.getEffect("minecraft:strength") && !hurtEntity.getEffect("minecraft:resistance") && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
-            attacker.flag("Killaura", "I", "Combat (Critical)");
+            attacker.flag("Killaura", "I", "Combat (Criticals)");
         }
     }
     if (yaw % 45 === 0) {
