@@ -1,4 +1,4 @@
-import { Block, LocationOutOfWorldBoundariesError, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, world } from "@minecraft/server";
+import { Block, LocationOutOfWorldBoundariesError, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
 export default {
     property: "antiBreakerEnable",
     enable() {
@@ -16,14 +16,14 @@ function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWith
         const surround = getSurround(event.block);
         if (surround.every((block) => block && block.isSolid)) {
             event.cancel = true;
-            event.player.flag("Breaker", "A", "Block", { block: event.block.typeId });
+            system.run(() => event.player.flag("Breaker", "A", "Block", { block: event.block.typeId }));
         }
     } else {
         const bedSide = getBedSide(event.block);
         if (bedSide) {
             if (surroundSolidCount(event.block) >= 5 && surroundSolidCount(bedSide) >= 5) {
                 event.cancel = true;
-                event.player.flag("Breaker", "B", "Block (Bed)", { block: event.block.typeId });
+                system.run(() => event.player.flag("Breaker", "B", "Block", { block: event.block.typeId }));
             }
         }
     }
