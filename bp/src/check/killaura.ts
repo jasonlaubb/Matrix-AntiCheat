@@ -246,18 +246,49 @@ function isSuspiciousAimSnap(player: Player, deltaY: number): boolean {
 }
 function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
   const weaponBaseDamage: Record<string, number> = {
-    "minecraft:wooden_sword": 4,
-    "minecraft:stone_sword": 5,
-    "minecraft:iron_sword": 6,
-    "minecraft:diamond_sword": 7,
-    "minecraft:netherite_sword": 8,
-    "minecraft:wooden_axe": 7,
-    "minecraft:stone_axe": 9,
-    "minecraft:iron_axe": 9,
-    "minecraft:diamond_axe": 9,
-    "minecraft:netherite_axe": 10,
-    "minecraft:air": 0,
-  };
+  // Swords
+  "minecraft:wooden_sword": 4,
+  "minecraft:stone_sword": 5,
+  "minecraft:iron_sword": 6,
+  "minecraft:golden_sword": 4,
+  "minecraft:diamond_sword": 7,
+  "minecraft:netherite_sword": 8,
+
+  // Axes
+  "minecraft:wooden_axe": 3,
+  "minecraft:stone_axe": 4,
+  "minecraft:iron_axe": 5,
+  "minecraft:golden_axe": 3,
+  "minecraft:diamond_axe": 6,
+  "minecraft:netherite_axe": 7,
+
+  // Pickaxes
+  "minecraft:wooden_pickaxe": 2,
+  "minecraft:stone_pickaxe": 3,
+  "minecraft:iron_pickaxe": 4,
+  "minecraft:golden_pickaxe": 2,
+  "minecraft:diamond_pickaxe": 5,
+  "minecraft:netherite_pickaxe": 6,
+
+  // Shovels
+  "minecraft:wooden_shovel": 1,
+  "minecraft:stone_shovel": 2,
+  "minecraft:iron_shovel": 3,
+  "minecraft:golden_shovel": 1,
+  "minecraft:diamond_shovel": 4,
+  "minecraft:netherite_shovel": 5,
+
+  // Hoes
+  "minecraft:wooden_hoe": 1,
+  "minecraft:stone_hoe": 1,
+  "minecraft:iron_hoe": 1,
+  "minecraft:golden_hoe": 1,
+  "minecraft:diamond_hoe": 1,
+  "minecraft:netherite_hoe": 1,
+
+  // Fist
+  "minecraft:air": 0,
+};
 
   const inventory = attacker.getComponent("inventory")?.container;
   const weapon = inventory?.getItem(attacker.selectedSlotIndex);
@@ -315,5 +346,5 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
 
   totalReduction = Math.min(totalReduction, 0.8);
   const expectedDamage = baseDamage * (1 - totalReduction);
-  return expectedDamage;
+  return Math.floor(expectedDamage);
 }
