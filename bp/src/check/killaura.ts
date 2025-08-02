@@ -119,9 +119,11 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
-    attacker.sendMessage(damage.toString() + " / " + calculateExpectedBaseDamage(attacker, hurtEntity));
-    if (damage === 1.5) {
-        attacker.flag("Killaura", "I", "Combat (Critical)");
+    if (!attacker.getEffect("minecraft:strength") && !hurtEntity.getEffect("minecraft:resistance")) {
+        const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
+        if (expectedDamage && damage > expectedDamage * 1.4) {
+            attacker.flag("Killaura", "I", "Combat (Critical)");
+        }
     }
     if (yaw % 45 === 0) {
         attacker.killauraFlag++;
@@ -244,7 +246,7 @@ function isSuspiciousAimSnap(player: Player, deltaY: number): boolean {
 
     return isSpike && isStableAfter;
 }
-function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
+function calculateExpectedBaseDamage(attacker: Player, target: Entity): number | undefined {
   const weaponBaseDamage: Record<string, number> = {
   // Swords
   "minecraft:wooden_sword": 4,
@@ -293,6 +295,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
   const inventory = attacker.getComponent("inventory")?.container;
   const weapon = inventory?.getItem(attacker.selectedSlotIndex);
   const weaponId = weapon?.typeId ?? "minecraft:air";
+  if (!weaponId.startsWith("minecraft:")) return undefined;
   let baseDamage = (weaponBaseDamage[weaponId] ?? 0) + 1;
 
   // 🔍 Check for Sharpness enchantment
@@ -306,6 +309,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
   }
 
   const armor = target.getComponent("equippable")!;
+  attacker.sendMessage("Armor: " + armor?.totalArmor)
   const totalReduction = armor ? armor.totalArmor * 0.04 : 0;
   const protectionLevel = getProtectionLevel(armor);
   const expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
