@@ -310,7 +310,6 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
   }
 
   const armor = target.getComponent("equippable")!;
-  attacker.sendMessage("Armor: " + armor?.totalArmor)
   const totalReduction = armor ? armor.totalArmor * 0.04 : 0;
   const protectionLevel = getProtectionLevel(armor);
   const expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
