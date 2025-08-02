@@ -306,17 +306,18 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
   baseDamage = Math.floor(baseDamage);
 
   const armor = target.getComponent("equippable")!;
-  let totalReduction = armor ? max2(armor.totalArmor / 5, armor.totalArmor - 4 * baseDamage / (armor.totalToughness - 8)) : 0;
+  attacker.sendMessage(`${armor?.totalArmor} | ${armor.totalToughness}`);
+  let totalReduction = armor ? max2(armor.totalArmor / 5, armor.totalArmor - 4 * baseDamage / (armor.totalToughness - 8)) / 25 : 0;
   const protectionLevel = getProtectionLevel(armor);
   const expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
   return expectedDamage;
 }
 function getProtectionLevel (component: EntityEquippableComponent) {
     const armor = [
-        component.getEquipment(EquipmentSlot.Head),
-        component.getEquipment(EquipmentSlot.Chest),
-        component.getEquipment(EquipmentSlot.Legs),
-        component.getEquipment(EquipmentSlot.Feet),
+        component?.getEquipment(EquipmentSlot.Head),
+        component?.getEquipment(EquipmentSlot.Chest),
+        component?.getEquipment(EquipmentSlot.Legs),
+        component?.getEquipment(EquipmentSlot.Feet),
     ]
     let protectionLevel = 0;
     armor.forEach((item) => {
