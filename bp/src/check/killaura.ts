@@ -149,6 +149,9 @@ function aimCheck(player: Player) {
             player.flag("Killaura", "H", "Combat (Aim)", { deltaY });
         }
     }
+    if (player.isFalling) {
+        player.sendMessage("FALLLLLLL");
+    }
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
 }
