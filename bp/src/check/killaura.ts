@@ -119,7 +119,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
-    if (!attacker.getEffect("minecraft:strength") && !hurtEntity.getEffect("minecraft:resistance")) {
+    if (!attacker.getEffect("minecraft:strength") && !hurtEntity.getEffect("minecraft:resistance") && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir > 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
             attacker.flag("Killaura", "I", "Combat (Critical)");
@@ -149,9 +149,7 @@ function aimCheck(player: Player) {
             player.flag("Killaura", "H", "Combat (Aim)", { deltaY });
         }
     }
-    if (player.isFalling) {
-        player.sendMessage("FALLLLLLL");
-    }
+    if (player.getVelocity().y !== 0) player.killauraLastInAir = Date.now();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
 }
