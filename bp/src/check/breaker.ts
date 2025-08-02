@@ -14,7 +14,7 @@ function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWith
     if (event.block.isAir || event.player.isOp()) return;
     if (event.block.typeId !== "minecraft:bed") {
         const surround = getSurround(event.block);
-        if (surround.every((block) => block && block.isSolid)) {
+        if (surround.every((block) => block && (block.isSolid || isGlassBlock(block.typeId)))) {
             event.cancel = true;
             system.run(() => event.player.flag("Breaker", "A", "Block", { block: event.block.typeId }));
         }
