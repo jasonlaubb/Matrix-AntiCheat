@@ -140,10 +140,9 @@ function aimCheck (player: Player) {
         }
         const rotHistory = player.killauraRotHistory;
         const duplicateCount = countMeaningfulNonContinuousDuplicates(rotHistory);
-        player.sendMessage(duplicateCount.toString());
         if (rotHistory.length > 60 && duplicateCount >= 3) {
             player.killauraRotHistory = [];
-            player.flag("Killaura", "G", `Combat (Aim)`, { duplicateCount});
+            player.flag("Killaura", "G", `Combat (Aim)`, { duplicateCount });
         }
     }
     if (rot.y < 180 && rot.y > -180 && deltaY > 320 && player.killauraLastDeltaY < 30) {
