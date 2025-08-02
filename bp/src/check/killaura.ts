@@ -134,7 +134,7 @@ function aimCheck(player: Player) {
     if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
         if (rot.x.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
-            player.flag("Killaura", "G", "Combat (Aim)");
+            player.flag("Killaura", "G", "Combat (Aim)", { pitch: rot.x });
         }
     }
     if (rot.y < 180 && rot.y > -180 && isSuspiciousAimSnap(player, deltaY)) {
