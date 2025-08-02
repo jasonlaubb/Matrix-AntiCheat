@@ -1,4 +1,4 @@
-import { Entity, EntityHurtAfterEvent, ItemReleaseUseAfterEvent, Player, system, Vector2, Vector3, world } from "@minecraft/server";
+import { Entity, EntityHurtAfterEvent, ItemReleaseUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -138,12 +138,6 @@ function aimCheck(player: Player) {
             player.killauraLastAttack = 0;
             player.flag("Killaura", "F", "Combat (Aim)");
         }
-        const rotHistory = player.killauraRotHistory;
-        const duplicateCount = countMeaningfulNonContinuousDuplicates(rotHistory);
-        if (rotHistory.length > 60 && duplicateCount >= 3) {
-            player.killauraRotHistory = [];
-            player.flag("Killaura", "G", `Combat (Aim)`, { duplicateCount });
-        }
     }
     if (rot.y < 180 && rot.y > -180 && isSuspiciousAimSnap(player, deltaY)) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
@@ -154,43 +148,6 @@ function aimCheck(player: Player) {
     if (player.killauraRotHistory.length > 60) player.killauraRotHistory.pop();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
-}
-function countMeaningfulNonContinuousDuplicates(vectors: Vector2[]): number {
-    const positions = new Map<string, number[]>();
-    const key = (v: Vector2) => `${v.x},${v.y}`;
-
-    for (let i = 0; i < vectors.length; i++) {
-        const k = key(vectors[i]);
-        if (!positions.has(k)) positions.set(k, []);
-        positions.get(k)!.push(i);
-    }
-
-    let count = 0;
-
-    for (const indices of positions.values()) {
-        if (indices.length < 2) continue;
-
-        // Skip if all are adjacent (like AAAAAAA)
-        let allAdjacent = true;
-        for (let i = 1; i < indices.length; i++) {
-            if (indices[i] - indices[i - 1] !== 1) {
-                allAdjacent = false;
-                break;
-            }
-        }
-        if (allAdjacent) continue;
-
-        // Count non-adjacent returns that are not part of a streak
-        for (let i = 1; i < indices.length; i++) {
-            const gap = indices[i] - indices[i - 1];
-            if (gap > 1 && gap < 5) {
-                // tweakable: ignore long gaps or short flicks
-                count++;
-            }
-        }
-    }
-
-    return count;
 }
 
 function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: number = 0.5): boolean {
