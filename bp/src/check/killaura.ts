@@ -49,7 +49,7 @@ function recordHeadPosition(entity: Entity) {
     });
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
-    if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative") return;
+    if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
     const now = Date.now();
     attacker.killauraFlag ??= 0;
     attacker.killauraLastFlag ??= 0;
@@ -119,7 +119,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
-    if (!attacker.getEffect("minecraft:strength") && !hurtEntity.getEffect("minecraft:resistance") && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir > 200)) {
+    if (!attacker.getEffect("minecraft:strength") && !hurtEntity.getEffect("minecraft:resistance") && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
             attacker.flag("Killaura", "I", "Combat (Critical)");
