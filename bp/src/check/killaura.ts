@@ -303,7 +303,6 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
     const extraDamage = 1.25 * sharpnessLevel;
     baseDamage += extraDamage;
   }
-  baseDamage = Math.floor(baseDamage);
 
   const armor = target.getComponent("equippable")!;
   attacker.sendMessage(`${armor?.totalArmor} | ${armor.totalToughness}`);
