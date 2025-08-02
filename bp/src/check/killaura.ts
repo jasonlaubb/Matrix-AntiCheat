@@ -145,12 +145,12 @@ function aimCheck (player: Player) {
             player.flag("Killaura", "G", `Combat (Aim)`, { duplicateCount });
         }
     }
-    if (rot.y < 180 && rot.y > -180 && deltaY > 160 && player.killauraLastDeltaY < 15) {
+    if (rot.y < 180 && rot.y > -180 && isSuspiciousAimSnap(player, deltaY)) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
-            player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
+            player.flag("Killaura", "I", "Combat (Aim Snap)", { deltaY });
         }
-    }
+        }
     if (player.killauraRotHistory.length > 60) player.killauraRotHistory.pop();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
@@ -269,4 +269,19 @@ function hasClearPathBetweenEntities(attacker: Entity, target: Entity): boolean 
   }
 
   return false; // All paths obstructed
+}
+function isSuspiciousAimSnap(player: Player, deltaY: number): boolean {
+  const history = player.killauraDeltaYHistory ?? [];
+  history.push(deltaY);
+  if (history.length > 5) history.shift(); // keep last 5
+
+  player.killauraDeltaYHistory = history;
+
+  const recentAvg = history.slice(0, -1).reduce((a, b) => a + b, 0) / (history.length - 1);
+  const last = history[history.length - 1];
+
+  const isSpike = last > 160 && recentAvg < 20;
+  const isStableAfter = history.length === 5 && history[4] < 10;
+
+  return isSpike && isStableAfter;
 }
