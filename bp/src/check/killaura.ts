@@ -343,6 +343,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number {
       totalReduction += reduction;
     }
   }
+  // Not finished Bad AI write wrong code
 
   totalReduction = Math.min(totalReduction, 0.8);
   const expectedDamage = baseDamage * (1 - totalReduction);
