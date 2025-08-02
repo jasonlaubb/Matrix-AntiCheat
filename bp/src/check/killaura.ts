@@ -115,6 +115,9 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 addHP(hurtEntity, damage);
             }
         }
+        if (!attacker.getEntitiesFromViewDirection().some(({ entity }) => entity.id === hurtEntity.id)) {
+            attacker.flag("Killaura", "J", "Combat");
+        }
     }
     if (yaw % 45 === 0) {
         attacker.killauraFlag++;
