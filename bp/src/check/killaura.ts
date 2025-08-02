@@ -138,7 +138,7 @@ function aimCheck (player: Player) {
             player.killauraLastAttack = 0;
             player.flag("Killaura", "F", "Combat (Aim)", { pitch: rot.x });
         }
-        if (player.killauraRotHistory.length > 20 && hasNonContinuousDuplicate(player.killauraRotHistory)) {
+        if (player.killauraRotHistory.length > 10 && hasNonContinuousDuplicate(player.killauraRotHistory)) {
             player.killauraRotHistory = [];
             player.flag("Killaura", "G", "Combat (Aim)");
         }
@@ -149,27 +149,37 @@ function aimCheck (player: Player) {
             player.flag("Killaura", "I", "Combat (Aim)", { deltaY });
         }
     }
-    if (player.killauraRotHistory.length > 20) player.killauraRotHistory.pop();
+    if (player.killauraRotHistory.length > 10) player.killauraRotHistory.pop();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
 }
 function hasNonContinuousDuplicate(vectors: Vector2[]): boolean {
-    const positions = new Map<string, number[]>();
-    const key = (v: Vector2) => `${v.x},${v.y}`;
-    for (let i = 0; i < vectors.length; i++) {
-        const k = key(vectors[i]);
-        const list = positions.get(k) ?? [];
-        list.push(i);
-        positions.set(k, list);
+  const positions = new Map<string, number[]>();
+  const key = (v: Vector2) => `${v.x},${v.y}`;
+
+  // Collect all indices for each unique vector
+  for (let i = 0; i < vectors.length; i++) {
+    const k = key(vectors[i]);
+    if (!positions.has(k)) positions.set(k, []);
+    positions.get(k)!.push(i);
+  }
+
+  // Check for non-continuous duplicates
+  for (const indices of positions.values()) {
+    if (indices.length < 2) continue;
+
+    let isContinuous = true;
+    for (let i = 1; i < indices.length; i++) {
+      if (indices[i] - indices[i - 1] !== 1) {
+        isContinuous = false;
+        break;
+      }
     }
-    for (const indices of positions.values()) {
-        for (let i = 1; i < indices.length; i++) {
-            if (indices[i] - indices[i - 1] > 1) {
-            return true;
-            }
-        }
-    }
-    return false;
+
+    if (!isContinuous) return true;
+  }
+
+  return false;
 }
 
 function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: number = 0.5): boolean {
