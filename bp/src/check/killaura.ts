@@ -115,7 +115,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
-    if (isPlayer && damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
+    if (damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
             addHP(hurtEntity, damage);
