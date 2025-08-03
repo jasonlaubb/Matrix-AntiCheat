@@ -1,5 +1,5 @@
 import { Dimension, EntityHitBlockAfterEvent, ItemStack, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
-import { addCheckInterval } from "../util/tick";
+import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import type { InstabreakData as BreakData, BrokenBlockList } from "../../../global";
 const MAX_BREAK_IN_TICK = 6;
 /**
@@ -138,5 +138,10 @@ export default {
         world.afterEvents.playerBreakBlock.subscribe(onBlockBreak);
         addCheckInterval(tickEvent);
         world.afterEvents.entityHitBlock.subscribe(onPlayerHitBlock);
+    },
+    disable: () => {
+        world.afterEvents.playerBreakBlock.unsubscribe(onBlockBreak);
+        removeCheckInterval(tickEvent);
+        world.afterEvents.entityHitBlock.unsubscribe(onPlayerHitBlock);
     }
 }
