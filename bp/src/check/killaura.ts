@@ -76,7 +76,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     const { x: pitch, y: yaw } = attacker.getRotation();
     const absPitch = fastAbs(pitch);
     const attackDistance = distance(attacker.location, hurtEntity.location);
-    if (hurtEntity instanceof Player || hurtEntity.typeId.includes("villager")) {
+    const isPlayer = hurtEntity instanceof Player;
+    if (isPlayer || hurtEntity.typeId.includes("villager")) {
         const height = attacker.location.y - hurtEntity.location.y;
         if (attacker?.antiReachRecords && attacker.antiReachRecords.length >= 10 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 10) {
             const attackerRecords = attacker.antiReachRecords;
@@ -117,12 +118,14 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         }
         if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
+            addHP(hurtEntity, damage);
         }
     }
-    if (!attacker.getEffect("minecraft:strength") && !hurtEntity.getEffect("minecraft:resistance") && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
+    if (isPlayer && damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
             attacker.flag("Killaura", "I", "Combat (Criticals)");
+            addHP(hurtEntity, damage);
         }
     }
     if (yaw % 45 === 0) {
@@ -298,7 +301,11 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
     const weaponId = weapon?.typeId ?? "minecraft:air";
     if (!weaponId.startsWith("minecraft:") || weaponId === "minecraft:mace") return undefined;
     let baseDamage = (weaponBaseDamage[weaponId] ?? 0) + 1;
-
+    const strength = attacker.getEffect("minecraft:strength")?.amplifier;
+    if (strength) {
+        const level = strength + 1;
+        baseDamage *= 1.3 ** level + (1.3 ** level - 1) / 0.3;
+    }
     // 🔍 Check for Sharpness enchantment
     const enchantments = weapon?.getComponent("enchantable");
     const sharpnessLevel = enchantments?.getEnchantment("minecraft:sharpness")?.level ?? 0;
@@ -312,7 +319,9 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
     const armor = target.getComponent("equippable")!;
     const totalReduction = armor ? armor.totalArmor * 0.04 : 0;
     const protectionLevel = getProtectionLevel(armor);
-    const expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
+    let expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
+    const resistance = target.getEffect("minecraft:resistance")?.amplifier;
+    if (resistance) expectedDamage *= (1 - (resistance + 1) * 0.2);
     return expectedDamage;
 }
 function getProtectionLevel(component: EntityEquippableComponent) {
