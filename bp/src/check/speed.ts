@@ -65,8 +65,8 @@ function tick(player: Player) {
         now - data.lastFlagTimestamp < 250 ||
         now - data.lastAttackTimestamp < 1000 ||
         now - data.lastRidingEndTimestamp < 500 ||
-        now - player.lastKnockback < 1500 ||
-        now - player.lastRiptide < 5000 ||
+        player.lastKnockback && now - player.lastKnockback < 1500 ||
+        player.lastRiptide && now - player.lastRiptide < 5000 ||
         player.getGameMode() === GameMode.Creative ||
         player.isSleeping ||
         now - data.lastSleep < 1000 ||
