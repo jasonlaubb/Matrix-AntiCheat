@@ -12,9 +12,9 @@ function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     });
 }
 function onEntityHurt ({ damageSource: { damagingEntity, damagingProjectile, cause } }: EntityHurtAfterEvent) {
-    if (!damagingEntity || cause !== EntityDamageCause.entityAttack || damagingProjectile || !(damagingEntity instanceof Player) || damagingEntity.isOp() || !damagingEntity.autoclickerAttackDuration) return;
+    if (!damagingEntity || cause !== EntityDamageCause.entityAttack || damagingProjectile || !(damagingEntity instanceof Player) || damagingEntity.isOp()) return;
     const now = Date.now();
-    if (damagingEntity.autoclickerAttackDuration === 0 || damagingEntity.autoclickerInitTimestamp && now - damagingEntity.autoclickerInitTimestamp > 12000) {
+    if (!damagingEntity.autoclickerAttackDuration || damagingEntity.autoclickerInitTimestamp && now - damagingEntity.autoclickerInitTimestamp > 12000) {
         damagingEntity.autoclickerAttackDuration = 0;
         damagingEntity.autoclickerInitTimestamp = now;
     }
