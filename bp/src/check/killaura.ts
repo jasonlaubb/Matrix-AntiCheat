@@ -161,16 +161,12 @@ function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: nu
     const dx = end.x - start.x;
     const dy = end.y - start.y;
     const dz = end.z - start.z;
-
     const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
     const steps = Math.floor(distance / stepSize);
-
     const stepX = dx / steps;
     const stepY = dy / steps;
     const stepZ = dz / steps;
-
     const dimension = world.getDimension("overworld");
-
     for (let i = 0; i <= steps; i++) {
         const x = start.x + stepX * i;
         const y = start.y + stepY * i;
@@ -185,7 +181,6 @@ function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: nu
             return true;
         }
     }
-
     return false;
 }
 function getCollisionPoints(entity: Entity): Vector3[] {
