@@ -1,6 +1,6 @@
 import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
-import { addHP } from "../util/util";
+import { addHP, banAttack } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
     property: "antiKillauraEnable",
@@ -111,15 +111,15 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             }
         }
         if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {
-            attacker.flag("Killaura", "E", "Combat (GhostHand)");
             addHP(hurtEntity, damage);
+            attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
     if (isPlayer && damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
-            attacker.flag("Killaura", "I", "Combat (Criticals)");
             addHP(hurtEntity, damage);
+            attacker.flag("Killaura", "I", "Combat (Criticals)");
         }
     }
     if (yaw % 45 === 0) {
@@ -137,12 +137,14 @@ function aimCheck(player: Player) {
     if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
         if (rot.x.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
+            banAttack(player, 100);
             player.flag("Killaura", "G", "Combat (Aim)", { pitch: rot.x });
         }
     }
     if (rot.y < 180 && rot.y > -180 && isSuspiciousAimSnap(player, deltaY)) {
         const isRiding = player.getComponent("riding")?.entityRidingOn;
         if (!isRiding) {
+            banAttack(player, 100);
             player.flag("Killaura", "H", "Combat (Aim)", { deltaY });
         }
     }

@@ -99,6 +99,14 @@ export default {
         type: "boolean",
         value: false,
     },
+    antiEntityFlyEnable: {
+        type: "boolean",
+        value: false,
+    },
+    antiElytraFlyEnable: {
+        type: "boolean",
+        value: false, // Possible to false
+    },
     banXrayHandler: {
         type: "boolean",
         value: true, // Disable all handler related to xray

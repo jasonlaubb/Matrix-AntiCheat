@@ -13,6 +13,7 @@ import autotool from "../check/autotool";
 import speed from "../check/speed";
 import fly from "../check/fly";
 import instabreak from "../check/instabreak";
+import entityFly from "../check/entityFly";
 export const detectionList = {
     killaura,
     autototem,
@@ -25,6 +26,7 @@ export const detectionList = {
     speed,
     fly,
     instabreak,
+    entityFly,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {

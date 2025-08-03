@@ -69,6 +69,11 @@ declare module "@minecraft/server" {
         flyData: FlyData;
         flyLastPistonPush: number,
         breakData: InstabreakData;
+        entityFlyData: EntityFlyData;
+        elytraFlyData: ElytraFlyData;
+        autoclickerAttackDuration: number;
+        autoclickerInitTimestamp: number;
+        autoclickerCpsCount: number;
     }
     interface Entity {
         // Detection data
@@ -120,8 +125,26 @@ interface FlyData {
 }
 export interface InstabreakData {
     brokenBlocks: BrokenBlockList;
-    brokenAmount: 0;
+    brokenAmount: number;
     startBreakingTime: number;
     flagInsteaBreak: boolean;
 }
 export type BrokenBlockList = { blockPermutation: Server.BlockPermutation; blockPosition: Server.Vector3 }[];
+export interface EntityFlyData {
+    pastVelocityY: number[]
+    lastNotRidingLocation: Server.Vector3,
+    prefectCombo: number,
+    superCombo: number,
+    illegalFactorAmount: number,
+}
+export interface ElytraFlyData {
+    startGlideTime: number,
+    startGlideSpeed: number,
+    isSpeedDecreasing: boolean,
+    highestGlidingSpeed: number,
+    isLastTickGliding: boolean,
+    usedRocket: boolean,
+    lastSpeedDeviation: number,
+    triggeredType2: boolean,
+    lastSpeedXZ: number;
+}
