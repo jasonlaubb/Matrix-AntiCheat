@@ -60,7 +60,7 @@ export const detect = {
                 world.setDynamicProperty(toggle.property, false);
             }
         });
-        if (["speed"].includes(name) && enable === true) {
+        if (["speed", "killaura", "fly"].includes(name) && enable === true) {
             return { status: 0, message: `§7[§aMatrix§7] §fTarget detection contains §apublic event handler§f. Please §crestart§f the server or run /reload to ensure no expected false positive will be given.`}
         }
         return { status: 0, message: `§7[§aMatrix§7] §f${name} detection has been ${enable ? "enabled" : "disabled"}!` };

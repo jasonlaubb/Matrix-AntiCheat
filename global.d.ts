@@ -66,6 +66,8 @@ declare module "@minecraft/server" {
         autotoolFlag: number;
         autotoolLastFlag: number;
         speedData: SpeedData;
+        flyData: FlyData;
+        flyLastPistonPush: number,
     }
     interface Entity {
         // Detection data
@@ -106,3 +108,12 @@ interface SpeedData {
     lastVelocity: Server.VectorXZ;
     lastSpeedXZ: number;
 }
+interface FlyData {
+        lastOnGroundLocation: Server.Vector3,
+        velocityYList: number[],
+        lastFlaggedLocation: Server.Vector3,
+        flagAmount: number,
+        lastFlagTimestamp: number,
+        hasStarted: number,
+        lastVelocityY: number;
+    }

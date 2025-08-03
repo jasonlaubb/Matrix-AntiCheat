@@ -10,8 +10,7 @@ import {
 } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { pythag } from "../util/mathUtil";
-import { MinecraftEffectTypes, MinecraftEnchantmentTypes, MinecraftItemTypes } from "@minecraft/vanilla-data/lib/index";
-
+import { isRiding } from "../util/util";
 const VELOCITY_DELTA_THRESHOLD = 0.7;
 const FLAG_TIMESTAMP_THRESHOLD = 8000;
 const TYPE1_MAX_FLAG = 15;
@@ -19,7 +18,7 @@ const TYPE2_MAX_FLAG = 10;
 const MAX_VELOCITY_EXAGGERATION = 1.5;
 
 function initPlayerData(player: Player) {
-    player["speedData"] = {
+    player.speedData = {
         lastAttackTimestamp: 0,
         lastRidingEndTimestamp: 0,
         flagAmount: 0,
@@ -39,12 +38,9 @@ function initPlayerData(player: Player) {
         lastVelocity: { x: 0, z: 0 },
     };
 }
-function isRiding(player: Player) {
-    return !!player.getComponent("minecraft:riding")?.entityRidingOn;
-}
 function tick(player: Player) {
-    if (!player["speedData"]) initPlayerData(player);
-    const data = player["speedData"];
+    if (!player.speedData) initPlayerData(player);
+    const data = player.speedData;
     const now = Date.now();
 
     const velocity = player.getVelocity();
@@ -58,7 +54,7 @@ function tick(player: Player) {
         data.lastSleep = now;
     }
 
-    const speedLevel = (player.getEffect(MinecraftEffectTypes.Speed)?.amplifier ?? -1) + 1;
+    const speedLevel = (player.getEffect("minecraft:speed")?.amplifier ?? -1) + 1;
     const ride = isRiding(player);
     const bypass =
         player.isFlying ||
@@ -144,22 +140,22 @@ function tick(player: Player) {
     data.lastLocation = player.location;
     data.lastVelocity = { x: velocityX, z: velocityZ };
     data.lastSpeedXZ = pythag(velocityX, velocityZ)
-    player["speedData"] = data;
+    player.speedData = data;
 }
 
 function onPlayerAttack(event: EntityHitEntityAfterEvent) {
     const player = event.damagingEntity;
     if (!(player instanceof Player)) return;
-    if (!player["speedData"]) initPlayerData(player);
-    player["speedData"].lastAttackTimestamp = Date.now();
+    if (!player.speedData) initPlayerData(player);
+    player.speedData.lastAttackTimestamp = Date.now();
 }
 
 function itemUse(event: ItemUseAfterEvent) {
     const { itemStack, source } = event;
     if (!(source instanceof Player)) return;
-    if (itemStack.typeId !== MinecraftItemTypes.EnderPearl) return;
-    if (!source["speedData"]) initPlayerData(source);
-    source["speedData"].lastEnderPeal = Date.now();
+    if (itemStack.typeId !== "minecraft:ender_peal") return;
+    if (!source.speedData) initPlayerData(source);
+    source.speedData.lastEnderPeal = Date.now();
 }
 
 function isPlayerInSolid(location: Vector3, headLocation: Vector3, dimension: Dimension) {
@@ -177,7 +173,7 @@ function isSwiftSneak(player: Player) {
     const leg = player.getComponent("equippable")?.getEquipmentSlot(EquipmentSlot.Legs)?.getItem();
     if (!leg) return false;
     const enchantment = leg.getComponent("enchantable");
-    return enchantment?.hasEnchantment(MinecraftEnchantmentTypes.SwiftSneak) ?? false;
+    return enchantment?.hasEnchantment("minecraft:swift_sneak") ?? false;
 }
 export default {
     property: "antiSpeedEnable",

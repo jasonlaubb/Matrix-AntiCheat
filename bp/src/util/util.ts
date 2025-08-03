@@ -1,4 +1,4 @@
-import { Entity, Player, Vector3 } from "@minecraft/server";
+import { Block, Dimension, Entity, Player, Vector3 } from "@minecraft/server";
 import { min2 } from "./mathUtil";
 import { get } from "./database";
 
@@ -59,4 +59,42 @@ export function parseTime(timeUnit: string, value: number) {
 }
 export function stringXyz(location: Vector3) {
     return Object.values(location).join(",");
+}
+export function fastSurround(centerLocation: Vector3, dimension: Dimension): (Block | undefined)[] | undefined {
+    try {
+        const block = dimension.getBlock(centerLocation);
+        // directions
+        const d = block!.below();
+        const u = block!.above();
+        const w = block!.west();
+        const e = block!.east();
+        const s = block!.south();
+        const n = block!.north();
+        const nw = n!.west();
+        const ne = n!.east();
+        const sw = s!.west();
+        const se = s!.east();
+        const uw = u!.west();
+        const ue = u!.east();
+        const us = u!.south();
+        const un = u!.north();
+        const dw = d!.west();
+        const de = d!.east();
+        const ds = d!.south();
+        const dn = d!.north();
+        const unw = un!.west();
+        const une = un!.east();
+        const usw = us!.west();
+        const use = us!.east();
+        const dsw = ds!.west();
+        const dse = ds!.east();
+        const dnw = dn!.west();
+        const dne = dn!.east();
+        return [d, u, w, e, s, n, nw, ne, sw, se, uw, ue, us, un, dw, de, ds, dn, unw, une, usw, use, dsw, dse, dnw, dne];
+    } catch {
+        return undefined;
+    }
+}
+export function isRiding(player: Player) {
+    return !!player.getComponent("minecraft:riding")?.entityRidingOn;
 }
