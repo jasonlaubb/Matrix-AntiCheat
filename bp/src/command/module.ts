@@ -63,11 +63,11 @@ export const detect = {
         }
         system.run(() => {
             if (enable) {
-                world.setDynamicProperty(toggle.property, true);
+                world.setDynamicProperty("database:" + toggle.property, true);
                 toggle.enable();
             } else {
                 toggle.disable();
-                world.setDynamicProperty(toggle.property, false);
+                world.setDynamicProperty("database:" + toggle.property, false);
             }
         });
         if (["speed", "killaura", "fly"].includes(name) && enable === true) {
