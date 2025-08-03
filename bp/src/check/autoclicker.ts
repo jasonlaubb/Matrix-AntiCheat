@@ -22,7 +22,7 @@ function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
                     player.autoclickerFlag++;
                     player.autoclickerLastFlag = now;
                     if (get("antiAutoClickerWarning")) {
-                        player.sendMessage("§c§lHey!§r§7 Auto clicker is not allowed!");
+                        player.sendMessage("§c§lHey!§r§7 Slow down your clicking.");
                         world.getAllPlayers().forEach((target) => {
                             if (!target.isOp()) return;
                             player.sendMessage(`§7[§aMatrix§7] §e${player.name} §fhas triggered auto-clicker flag.`);
