@@ -29,6 +29,7 @@ function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
                         });
                     }
                     if (player.autoclickerFlag >= get("antiAutoClickerMaxFlag")) {
+                        player.autoclickerFlag = 0;
                         player.flag("AutoClicker", "A", "Combat", { avgCps });
                     }
                 }
