@@ -10,6 +10,7 @@ import type property from "../data/property";
 import type { Command } from "../main";
 import { system, world } from "@minecraft/server";
 import autotool from "../check/autotool";
+import speed from "../check/speed";
 export const detectionList = {
     killaura,
     autototem,
@@ -19,6 +20,7 @@ export const detectionList = {
     extinguisher,
     breaker,
     autotool,
+    speed,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
@@ -58,6 +60,9 @@ export const detect = {
                 world.setDynamicProperty(toggle.property, false);
             }
         });
+        if (["speed"].includes(name) && enable === true) {
+            return { status: 0, message: `§7[§aMatrix§7] §fTarget detection contains §apublic event handler§f. Please §crestart§f the server or run /reload to ensure no expected false positive will be given.`}
+        }
         return { status: 0, message: `§7[§aMatrix§7] §f${name} detection has been ${enable ? "enabled" : "disabled"}!` };
     },
 } as Command;
