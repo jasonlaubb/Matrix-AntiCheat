@@ -113,7 +113,7 @@ export default {
     },
     antiAutoClickerMaxCps: {
         type: "number",
-        value: 13,
+        value: 14,
     },
     antiAutoClickerWarning: {
         type: "boolean",
