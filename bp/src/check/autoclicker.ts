@@ -6,7 +6,7 @@ function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     system.run(() => {
         player.autoclickerCpsCount++;
         if (player.autoclickerAttackDuration >= 3) {
-            const cps = player.autoclickerCpsCount / player.autoclickerAttackDuration * 0.5;
+            const cps = player.autoclickerCpsCount / player.autoclickerAttackDuration * 2;
             player.sendMessage("Cps: " + cps); // Debug message
         }
     });
