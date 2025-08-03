@@ -4,6 +4,7 @@ import {
     PistonActivateAfterEvent,
     Player,
     Vector3,
+    world,
 } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { fastAbs } from "../util/mathUtil";
@@ -39,7 +40,6 @@ function tick(player: Player) {
     const isPlayerNotCreative = player.getGameMode() !== GameMode.Creative;
     const pistonNotPushed = now - (player.flyLastPistonPush ?? 0) > 4000;
     const previousVelY = data.velocityYList[1];
-    const hasFlyDebugTag = player.hasTag("matrix:flyDebug");
 
     if (player.isOnGround && velocityY === 0) {
         data.lastOnGroundLocation = player.location;
@@ -63,7 +63,6 @@ function tick(player: Player) {
     ) {
         if (velocityY > MAX_VELOCITY_Y) {
             data.flagAmount += surroundAir ? 1 : 0.5;
-            if (hasFlyDebugTag) player.sendMessage(`<flyDebug> §a(+) increased to ${data.flagAmount}`);
             data.lastFlagTimestamp = now;
 
             if (data.flagAmount >= TYPE1_MAX_FLAG) {
@@ -80,7 +79,6 @@ function tick(player: Player) {
             (surroundAir && fastAbs(velocityY) < MAX_VELOCITY_Y && now - data.lastFlagTimestamp > 1200))
     ) {
         data.flagAmount -= 0.05;
-        if (hasFlyDebugTag) player.sendMessage(`<flyDebug> §c(-) decreased to ${data.flagAmount}`);
     }
 
     if (
@@ -177,8 +175,10 @@ export default {
     property: "antiFlyEnable",
     enable: () => {
         addCheckInterval(tick);
+        world.afterEvents.pistonActivate.subscribe(onPistonPush);
     },
     disable: () => {
         removeCheckInterval(tick);
+        world.afterEvents.pistonActivate.unsubscribe(onPistonPush);
     },
 };

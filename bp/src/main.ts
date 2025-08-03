@@ -308,9 +308,9 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (get("worldBorder")) worldBorderOn();
     if (get("oreAlert")) oreAlertOn();
     if (get("endLock") || get("netherLock")) endNetherLockOn();
-    const antiSpeed = get("antiSpeedEnable");
-    if (antiSpeed || get("antiKillauraEnable")) world.afterEvents.itemReleaseUse.subscribe(riptide);
-    if (antiSpeed) world.afterEvents.entityHurt.subscribe(knockback);
+    const movementModule = get("antiSpeedEnable") || get("antiFlyEnable");
+    if (movementModule || get("antiKillauraEnable")) world.afterEvents.itemReleaseUse.subscribe(riptide);
+    if (movementModule) world.afterEvents.entityHurt.subscribe(knockback);
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const { x, y } = event.sender.inputInfo.getMovementVector();

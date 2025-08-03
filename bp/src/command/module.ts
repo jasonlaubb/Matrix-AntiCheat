@@ -11,6 +11,7 @@ import type { Command } from "../main";
 import { system, world } from "@minecraft/server";
 import autotool from "../check/autotool";
 import speed from "../check/speed";
+import fly from "../check/fly";
 export const detectionList = {
     killaura,
     autototem,
@@ -21,6 +22,7 @@ export const detectionList = {
     breaker,
     autotool,
     speed,
+    fly,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {

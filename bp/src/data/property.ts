@@ -91,6 +91,10 @@ export default {
         type: "boolean",
         value: false,
     },
+    antiFlyEnable: {
+        type: "boolean",
+        value: false,
+    },
     banXrayHandler: {
         type: "boolean",
         value: true, // Disable all handler related to xray
