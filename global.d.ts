@@ -68,6 +68,7 @@ declare module "@minecraft/server" {
         speedData: SpeedData;
         flyData: FlyData;
         flyLastPistonPush: number,
+        breakData: InstabreakData;
     }
     interface Entity {
         // Detection data
@@ -109,11 +110,18 @@ interface SpeedData {
     lastSpeedXZ: number;
 }
 interface FlyData {
-        lastOnGroundLocation: Server.Vector3,
-        velocityYList: number[],
-        lastFlaggedLocation: Server.Vector3,
-        flagAmount: number,
-        lastFlagTimestamp: number,
-        hasStarted: number,
-        lastVelocityY: number;
-    }
+    lastOnGroundLocation: Server.Vector3,
+    velocityYList: number[],
+    lastFlaggedLocation: Server.Vector3,
+    flagAmount: number,
+    lastFlagTimestamp: number,
+    hasStarted: number,
+    lastVelocityY: number;
+}
+export interface InstabreakData {
+    brokenBlocks: BrokenBlockList;
+    brokenAmount: 0;
+    startBreakingTime: number;
+    flagInsteaBreak: boolean;
+}
+export type BrokenBlockList = { blockPermutation: Server.BlockPermutation; blockPosition: Server.Vector3 }[];

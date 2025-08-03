@@ -1,12 +1,6 @@
-import { BlockPermutation, Dimension, EntityHitBlockAfterEvent, ItemStack, Player, PlayerBreakBlockAfterEvent, system, Vector3, world } from "@minecraft/server";
+import { Dimension, EntityHitBlockAfterEvent, ItemStack, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
 import { addCheckInterval } from "../util/tick";
-type BrokenBlockList = { blockPermutation: BlockPermutation; blockPosition: Vector3 }[];
-interface BreakData {
-    brokenBlocks: BrokenBlockList;
-    brokenAmount: 0;
-    startBreakingTime: number;
-    flagInsteaBreak: boolean;
-}
+import type { InstabreakData as BreakData, BrokenBlockList } from "../../../global";
 const MAX_BREAK_IN_TICK = 6;
 /**
  * @author jasonlaubb
@@ -14,29 +8,29 @@ const MAX_BREAK_IN_TICK = 6;
  */
 function onBlockBreak({ player, brokenBlockPermutation, itemStackBeforeBreak: tool, block }: PlayerBreakBlockAfterEvent) {
     if (player.isOp() || brokenBlockPermutation.type.id === "minecraft:air" || brokenBlockPermutation.type.id === "minecraft:netherrack") return;
-    breakData[player.id].brokenBlocks.push({ blockPermutation: brokenBlockPermutation, blockPosition: block.location });
+    player.breakData.brokenBlocks.push({ blockPermutation: brokenBlockPermutation, blockPosition: block.location });
     const usingTool = tool && isTool(tool);
     if (
         !(player.getEffect("minecraft:haste") && usingTool) ||
         (usingTool && (tool.getComponent("enchantable")?.getEnchantment("minecraft:efficiency")?.level ?? 0) >= 2 && INSTA_BREAKABLE_SET.has(brokenBlockPermutation.type.id))
     ) {
-        breakData[player.id].brokenAmount++;
-        if (Date.now() > breakData[player.id].startBreakingTime) breakData[player.id].flagInsteaBreak = true;
+        player.breakData.brokenAmount++;
+        if (Date.now() > player.breakData.startBreakingTime) player.breakData.flagInsteaBreak = true;
     }
 }
 function onPlayerHitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (player instanceof Player && !player.isOp()) {
-        breakData[player.id].startBreakingTime = Date.now();
+        player.breakData.startBreakingTime = Date.now();
     }
 }
 function tickEvent(player: Player) {
-    if (breakData[player.id].brokenBlocks.length == 0) return;
-    if (breakData[player.id].brokenAmount > MAX_BREAK_IN_TICK || breakData[player.id].flagInsteaBreak) {
+    if (player.breakData.brokenBlocks.length == 0) return;
+    if (player.breakData.brokenAmount > MAX_BREAK_IN_TICK || player.breakData.flagInsteaBreak) {
         // Recover the blocks
-        system.runJob(recoverBlocks(breakData[player.id].brokenBlocks, player.dimension));
-        player.flag("Insteabreak", "A", "World", { type: breakData[player.id].flagInsteaBreak ? "instabreak" : "nuking", breakAmount: breakData[player.id].brokenAmount });
+        system.runJob(recoverBlocks(player.breakData.brokenBlocks, player.dimension));
+        player.flag("Insteabreak", "A", "World", { type: player.breakData.flagInsteaBreak ? "instabreak" : "nuking", breakAmount: player.breakData.brokenAmount });
     }
-    breakData[player.id] = DEFAULT_BREAK_DATA;
+    player.breakData = DEFAULT_BREAK_DATA;
 }
 function isTool(itemStack: ItemStack) {
     TOOL_SET.has(itemStack.type.id);
