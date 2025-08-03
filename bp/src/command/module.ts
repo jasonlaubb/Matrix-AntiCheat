@@ -12,6 +12,7 @@ import { system, world } from "@minecraft/server";
 import autotool from "../check/autotool";
 import speed from "../check/speed";
 import fly from "../check/fly";
+import instabreak from "../check/instabreak";
 export const detectionList = {
     killaura,
     autototem,
@@ -23,6 +24,7 @@ export const detectionList = {
     autotool,
     speed,
     fly,
+    instabreak,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
