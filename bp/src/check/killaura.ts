@@ -148,7 +148,7 @@ function aimCheck(player: Player) {
             player.flag("Killaura", "H", "Combat (Aim)", { deltaY });
         }
     }
-    if (player.getVelocity().y !== 0) player.killauraLastInAir = Date.now();
+    if (player.isFalling) player.killauraLastInAir = Date.now();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
 }
