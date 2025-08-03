@@ -107,6 +107,14 @@ export default {
         type: "boolean",
         value: false, // Possible to false
     },
+    antiAutoClickerEnable: {
+        type: "boolean",
+        value: false,
+    },
+    antiAutoClickerMaxCps: {
+        type: "number",
+        value: 24,
+    },
     banXrayHandler: {
         type: "boolean",
         value: true, // Disable all handler related to xray
