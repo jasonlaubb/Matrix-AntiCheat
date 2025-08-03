@@ -113,7 +113,15 @@ export default {
     },
     antiAutoClickerMaxCps: {
         type: "number",
-        value: 24,
+        value: 13,
+    },
+    antiAutoClickerWarning: {
+        type: "boolean",
+        value: true, // Send mesage to player & admin when player triggered autoclicker no-punishment flag
+    },
+    antiAutoClickerMaxFlag: {
+        type: "number",
+        value: 3,
     },
     banXrayHandler: {
         type: "boolean",

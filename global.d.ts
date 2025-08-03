@@ -73,6 +73,8 @@ declare module "@minecraft/server" {
         elytraFlyData: ElytraFlyData;
         autoclickerAttackDuration: number;
         autoclickerInitTimestamp: number;
+        autoclickerFlag: number;
+        autoclickerLastFlag: number;
         autoclickerCpsCount: number;
     }
     interface Entity {

@@ -1,4 +1,6 @@
 import { EntityDamageCause, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, system, world } from "@minecraft/server";
+import { get } from "../util/database";
+import { banAttack } from "../util/util";
 
 function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     if (!(player instanceof Player) || player.isOp()) return;
@@ -6,9 +8,31 @@ function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     system.run(() => {
         player.autoclickerCpsCount ??= 0;
         player.autoclickerCpsCount++;
-        if (player.autoclickerAttackDuration >= 3) {
+        if (player.autoclickerAttackDuration >= 3 && !player.getEffect("minecraft:weakness")) {
             const avgCps = player.autoclickerCpsCount / player.autoclickerAttackDuration * 2;
-            player.sendMessage("Avg cps: " + avgCps); // Debug message
+            if (avgCps > get("antiAutoClickerMaxCps")) {
+                banAttack(player, 40);
+                player.autoclickerAttackDuration = 0;
+                player.autoclickerCpsCount = 0;
+                const now = Date.now();
+                player.autoclickerFlag ??= 0;
+                player.autoclickerLastFlag ??= 0;
+                if (now - player.autoclickerLastFlag > 30000) player.autoclickerFlag = 0;
+                if (now - player.autoclickerLastFlag > 2000) {
+                    player.autoclickerFlag++;
+                    player.autoclickerLastFlag = now;
+                    if (get("antiAutoClickerWarning")) {
+                        player.sendMessage("§7[§aMatrix§7] §cAuto-clicker §fis not allowed! You §cmay be punished§f if you continue using such unfair advantage.");
+                        world.getAllPlayers().forEach((target) => {
+                            if (!target.isOp()) return;
+                            player.sendMessage(`§7[§aMatrix§7] §e${player.name} §fhas triggered auto-clicker flag.`);
+                        });
+                    }
+                    if (player.autoclickerFlag >= get("antiAutoClickerMaxFlag")) {
+                        player.flag("AutoClicker", "A", "Combat", { avgCps });
+                    }
+                }
+            }
         }
     });
 }
