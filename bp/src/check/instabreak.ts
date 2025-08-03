@@ -1,6 +1,6 @@
 import { Dimension, EntityHitBlockAfterEvent, ItemStack, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
-import type { InstabreakData as BreakData, BrokenBlockList } from "../../../global";
+import type { BrokenBlockList, InstabreakData } from "../../../global";
 const MAX_BREAK_IN_TICK = 6;
 /**
  * @author jasonlaubb
@@ -131,7 +131,7 @@ const DEFAULT_BREAK_DATA = {
     startBreakingTime: 0,
     brokenAmount: 0,
     flagInsteaBreak: false,
-} as BreakData;
+} as InstabreakData;
 export default {
     property: "antiInstabreakEnable",
     enable: () => {
