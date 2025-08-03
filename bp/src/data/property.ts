@@ -87,6 +87,10 @@ export default {
         type: "boolean",
         value: false, // Enable to prevent decimal cases falses by clicking both hotbar button & left-click for multiple times.
     },
+    antiSpeedEnable: {
+        type: "boolean",
+        value: false,
+    },
     banXrayHandler: {
         type: "boolean",
         value: true, // Disable all handler related to xray

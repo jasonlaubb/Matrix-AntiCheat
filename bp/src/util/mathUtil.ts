@@ -9,6 +9,9 @@ export function min2(a: number, b: number): number {
 export function hypot(x: number, y: number, z: number) {
     return Math.sqrt(x * x + y * y + z * z);
 }
+export function pythag(x: number, y: number) {
+    return Math.sqrt(x * x + y * y);
+}
 export function fastAbs(x: number): number {
     return x < 0 ? -x : x;
 }

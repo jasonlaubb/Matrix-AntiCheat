@@ -24,6 +24,7 @@ import { oreAlertOn } from "./asset/oreAlert";
 import { endLock, netherLock } from "./command/dimensionLock";
 import { endNetherLockOn } from "./asset/endNetherLock";
 import { mute, unmute } from "./command/mute";
+import { knockback, riptide } from "./asset/eventHandler";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -307,6 +308,9 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (get("worldBorder")) worldBorderOn();
     if (get("oreAlert")) oreAlertOn();
     if (get("endLock") || get("netherLock")) endNetherLockOn();
+    const antiSpeed = get("antiSpeedEnable");
+    if (antiSpeed || get("antiKillauraEnable")) world.afterEvents.itemReleaseUse.subscribe(riptide);
+    if (antiSpeed) world.afterEvents.entityHurt.subscribe(knockback);
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const { x, y } = event.sender.inputInfo.getMovementVector();

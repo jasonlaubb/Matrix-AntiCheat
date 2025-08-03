@@ -25,6 +25,9 @@ declare module "@minecraft/server" {
         lastOreFoundData: { [key: string]: number };
         // Afk data
         lastMoved: number;
+        // Detection handler data
+        lastRiptide: number;
+        lastKnockback: number;
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;
@@ -34,7 +37,6 @@ declare module "@minecraft/server" {
         killaura45YawFlag: number[];
         killauraSmoothFlag: number;
         killauraXSpeed: number[];
-        killauraLastRiptide: number;
         killauraLastAttack: number;
         killauraLastYaw: number;
         killauraLastDeltaY: number;
@@ -63,6 +65,7 @@ declare module "@minecraft/server" {
         autotoolSafeIndex: number;
         autotoolFlag: number;
         autotoolLastFlag: number;
+        speedData: SpeedData;
     }
     interface Entity {
         // Detection data
@@ -83,4 +86,23 @@ interface Console {
 }
 declare global {
 	var console: Console;
+}
+interface SpeedData {
+    lastAttackTimestamp: number,
+    lastRidingEndTimestamp: number,
+    flagAmount: number,
+    lastFlagTimestamp: number,
+    lastStopLocation: Server.Vector3,
+    lastSleep: number,
+    previousSpeed: number[],
+    timerFlagAmount: number,
+    lastTriggerLocation: Server.Vector3,
+    lastTimerFlagTimestamp: number,
+    timerMainFlagAmount: number,
+    lastSprint: boolean,
+    lastEnderPeal: number,
+    lastRiding: boolean,
+    lastLocation: Server.Vector3;
+    lastVelocity: Server.VectorXZ;
+    lastSpeedXZ: number;
 }
