@@ -4,6 +4,7 @@ function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     if (!(player instanceof Player) || player.isOp()) return;
     // Delay 1 tick
     system.run(() => {
+        player.autoclickerCpsCount ??= 0;
         player.autoclickerCpsCount++;
         if (player.autoclickerAttackDuration >= 3) {
             const avgCps = player.autoclickerCpsCount / player.autoclickerAttackDuration * 2;
@@ -16,6 +17,7 @@ function onEntityHurt ({ damageSource: { damagingEntity, damagingProjectile, cau
     const now = Date.now();
     if (!damagingEntity.autoclickerAttackDuration || damagingEntity.autoclickerInitTimestamp && now - damagingEntity.autoclickerInitTimestamp > 12000) {
         damagingEntity.autoclickerAttackDuration = 0;
+        damagingEntity.autoclickerCpsCount = 0;
         damagingEntity.autoclickerInitTimestamp = now;
     }
     damagingEntity.autoclickerAttackDuration++;
