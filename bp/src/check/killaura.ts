@@ -303,7 +303,6 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
 
     if (sharpnessLevel > 0) {
         const extraDamage = 1.25 * sharpnessLevel;
-        attacker.sendMessage(extraDamage.toString());
         baseDamage += extraDamage;
     }
 
