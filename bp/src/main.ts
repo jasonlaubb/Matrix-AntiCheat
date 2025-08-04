@@ -45,6 +45,8 @@ import { endNetherLockOn } from "./asset/endNetherLock";
 import { mute, unmute } from "./command/mute";
 import { knockback, riptide } from "./asset/eventHandler";
 import flaglog from "./command/flaglog";
+import chatrank from "./command/chatrank";
+import antispam from "./command/antispam";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -148,6 +150,8 @@ system.beforeEvents.startup.subscribe((event) => {
         mute,
         unmute,
         flaglog,
+        chatrank,
+        antispam,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
