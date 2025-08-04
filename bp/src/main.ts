@@ -375,7 +375,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
             event.cancel = true;
             return;
         }
-
+        player.lastMessage = now;
     }
     if (get("chatRankEnable")) {
         const { message, sender: player } = event;
