@@ -22,6 +22,7 @@ export const mute = {
             type: "playerTarget",
         },
     ],
+    requireOp: true,
     optionalParameters: [
         {
             name: "duration",
@@ -47,6 +48,7 @@ export const mute = {
 export const unmute = {
     name: "unmute",
     description: "Unmute a player",
+    requireOp: true,
     parameters: [
         {
             name: "player",
