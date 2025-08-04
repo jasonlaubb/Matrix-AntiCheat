@@ -337,6 +337,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
             if (player.tooFastFlag > get("antiSpamTooFastFlagLimit")) {
                 player.sendMessage("§7[§aMatrix§7] §fSlow down your message.");
                 player.lastMessage = now;
+                player.lastMessageRaw = event.message;
                 event.cancel = true;
                 return;
             }
@@ -347,6 +348,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
             event.cancel = true;
             return;
         }
+        player.lastMessageRaw = event.message;
         if (longestContinuousChar(event.message) > get("antiSpamMaxRepeatedArgLength")) {
             player.sendMessage("§7[§aMatrix§7] §fPlease don't spam message!"); // ! means it is worser than . (idk)
             player.lastMessage = now;
