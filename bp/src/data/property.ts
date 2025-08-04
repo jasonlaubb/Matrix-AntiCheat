@@ -209,7 +209,7 @@ export default {
     },
     antiSpamFastDef: {
         type: "number",
-        value: 4000,
+        value: 3000,
     },
     antiSpamTooFastFlagLimit: {
         type: "number",
