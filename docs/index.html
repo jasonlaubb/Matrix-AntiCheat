@@ -12,9 +12,11 @@
       --matrix: #5de0e6;
       --matrix-dark: #3aadc1;
       --github: #24292f;
+      --github-dark: #111217;
       --discord: #5865f2;
-      --curseforge-gradient1: #6d5cff;
-      --curseforge-gradient2: #a471f4;
+      --discord-dark: #4046a9;
+      --curseforge: #f87c1b;
+      --curseforge-dark: #d86c14;
       --white: #fff;
       --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
       --radius: 22px;
@@ -83,6 +85,7 @@
       align-items: center;
     }
     .btn {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -96,59 +99,107 @@
       font-family: inherit;
       cursor: pointer;
       box-shadow: 0 4px 16px 0 rgba(93, 224, 230, 0.13);
-      transition: transform 0.16s, box-shadow 0.16s, background 0.18s;
       outline: none;
-      text-decoration: none !important; /* Remove underline */
+      text-decoration: none !important;
+      overflow: hidden;
+      z-index: 1;
+      transition: transform 0.16s, box-shadow 0.16s, background 0.18s;
     }
     .btn:active {
       transform: scale(0.97);
       box-shadow: 0 2px 6px 0 rgba(93, 224, 230, 0.10);
     }
-    /* Modern CurseForge Minecraft style */
+
+    /* Gloss effect for all buttons */
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -75%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255,255,255,0.34) 0%,
+        rgba(255,255,255,0.70) 50%,
+        rgba(255,255,255,0.30) 100%
+      );
+      border-radius: 999px;
+      z-index: 2;
+      transition: left 0.6s cubic-bezier(.77,0,.175,1), opacity 0.2s;
+      opacity: 0.7;
+      pointer-events: none;
+      filter: blur(0.5px);
+    }
+    .btn:hover::before {
+      left: 120%;
+      opacity: 1;
+      transition: left 0.6s cubic-bezier(.77,0,.175,1), opacity 0.2s;
+    }
+
+    /* Button color styles */
     .btn-curseforge {
-      background: linear-gradient(90deg, var(--curseforge-gradient1), var(--curseforge-gradient2));
+      background: linear-gradient(90deg, var(--curseforge), var(--curseforge-dark));
       color: var(--white);
-      box-shadow: 0 8px 32px 0 rgba(109, 92, 255, 0.19);
+      box-shadow: 0 8px 32px 0 rgba(248, 124, 27, 0.19), 0 2px 16px 0 #fff2 inset;
       font-size: 1.18rem;
-      position: relative;
-      overflow: hidden;
       border: 2.5px solid #fff3;
-      text-shadow: 0 2px 4px #6d5cff22;
+      text-shadow: 0 2px 4px #a8561a44;
+      background-clip: padding-box;
       transition: background 0.18s, box-shadow 0.18s, transform 0.14s;
     }
     .btn-curseforge:hover {
-      background: linear-gradient(90deg, #a471f4, #6d5cff);
-      box-shadow: 0 6px 18px 0 rgba(109, 92, 255, 0.27);
-      transform: scale(1.035) rotate(-2deg);
+      background: linear-gradient(90deg, #ff9700, #b85200);
+      box-shadow: 0 6px 24px 0 rgba(248, 124, 27, 0.33), 0 2px 20px 0 #fff9 inset;
+      transform: scale(1.04) rotate(-2deg);
     }
-    .btn-curseforge svg {
+    .btn-curseforge img {
       width: 2em;
       height: 2em;
       margin-right: 0.4em;
-      border-radius: 50%;
-      box-shadow: 0 2px 10px #7a4fff25;
       flex-shrink: 0;
+      border-radius: 7px;
+      background: #fff2;
+      box-shadow: 0 2px 8px #f87c1b22;
+      z-index: 3;
+      position: relative;
     }
+
     .btn-github {
-      background: var(--github);
+      background: linear-gradient(90deg, var(--github), var(--github-dark));
       color: var(--white);
-      transition: background 0.16s;
+      border: 2.5px solid #fff2;
+      text-shadow: 0 2px 4px #0003;
+      background-clip: padding-box;
+      box-shadow: 0 8px 32px 0 rgba(36, 41, 47, 0.13), 0 2px 10px 0 #fff3 inset;
+      transition: background 0.18s, box-shadow 0.18s, transform 0.14s;
     }
     .btn-github:hover {
-      background: #444950;
+      background: linear-gradient(90deg, #444950, #1a1b1e);
+      box-shadow: 0 6px 18px 0 rgba(36, 41, 47, 0.19), 0 2px 16px 0 #fff5 inset;
+      transform: scale(1.04) rotate(-2deg);
     }
+
     .btn-discord {
-      background: var(--discord);
+      background: linear-gradient(90deg, var(--discord), var(--discord-dark));
       color: var(--white);
-      transition: background 0.16s;
+      border: 2.5px solid #fff2;
+      text-shadow: 0 2px 4px #5865f222;
+      background-clip: padding-box;
+      box-shadow: 0 8px 32px 0 rgba(88, 101, 242, 0.17), 0 2px 10px 0 #fff3 inset;
+      transition: background 0.18s, box-shadow 0.18s, transform 0.14s;
     }
     .btn-discord:hover {
-      background: #6473f5;
+      background: linear-gradient(90deg, #7e8fff, #3f44ba);
+      box-shadow: 0 6px 18px 0 rgba(88, 101, 242, 0.24), 0 2px 16px 0 #fff5 inset;
+      transform: scale(1.04) rotate(-2deg);
     }
+
     .btn svg {
       width: 1.3em;
       height: 1.3em;
       vertical-align: middle;
+      z-index: 3;
+      position: relative;
     }
     .sparkles {
       position: absolute;
@@ -173,30 +224,20 @@
       .title { font-size: 1.29rem;}
       .subtitle { font-size: 0.97rem;}
       .btn { font-size: 1rem; padding: 0.8rem 0;}
-      .btn-curseforge svg { width: 1.5em; height: 1.5em; }
+      .btn-curseforge img { width: 1.4em; height: 1.4em; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <span class="sparkles">Made by jasonlaubb</span>
+    <span class="sparkles">🌟✨</span>
     <div class="title">Matrix AntiCheat</div>
     <div class="subtitle">
       The Supreme Anti-Cheat Solution for Minecraft Bedrock.
     </div>
     <div class="buttons">
-      <a class="btn btn-curseforge" href="https://www.curseforge.com/minecraft-bedrock/addons/matrix-anti/" target="_blank" rel="noopener">
-        <!-- Cute, modern CurseForge "CF" in purple gradient circle -->
-        <svg viewBox="0 0 64 64" fill="none">
-          <defs>
-            <linearGradient id="cf_grad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#6d5cff"/>
-              <stop offset="1" stop-color="#a471f4"/>
-            </linearGradient>
-          </defs>
-          <circle cx="32" cy="32" r="31" fill="url(#cf_grad)" stroke="#fff" stroke-width="2"/>
-          <text x="14" y="46" font-size="32" font-family="Fredoka, Nunito, Arial, sans-serif" font-weight="bold" fill="#fff">CF</text>
-        </svg>
+      <a class="btn btn-curseforge" href="https://www.curseforge.com/minecraft-bedrock/addons/matrix-anti/download" target="_blank" rel="noopener">
+        <img src="./resources/curseForgeIcon.png" alt="CurseForge Icon">
         Download (.mcpack)
       </a>
       <a class="btn btn-github" href="https://github.com/jasonlaubb/Matrix-AntiCheat/" target="_blank" rel="noopener">
