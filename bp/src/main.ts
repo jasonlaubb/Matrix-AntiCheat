@@ -84,7 +84,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
     }
     const punishmentType = get("flagPunishmentType");
     world.setDynamicProperty("flagrecord:" + Date.now(), `§7[${new Date(Date.now()).toUTCString()}] §f${this.name} §r§8| §f${id}/${type} §8| §f${punishmentType}`);
-    const record = world.getDynamicPropertyIds().filter((id) => id.startsWith("flagrecord:"))
+    const record = world.getDynamicPropertyIds().filter((id) => id.startsWith("flagrecord:"));
     if (record.length > get("maxRecordAmount")) {
         const deleteId = record.sort()[0];
         world.setDynamicProperty(deleteId); // Delete the last record.
@@ -398,7 +398,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
 });
 function longestContinuousChar(str: string) {
     // Remove all whitespace
-    const cleaned = str.replaceAll(" ", '');
+    const cleaned = str.replaceAll(" ", "");
 
     if (cleaned.length === 0) return 0;
 
@@ -412,7 +412,7 @@ function longestContinuousChar(str: string) {
                 maxLen = currentLen;
             }
         } else {
-          currentLen = 1;
+            currentLen = 1;
         }
     }
 

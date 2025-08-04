@@ -4,16 +4,16 @@ import { ElytraFlyData } from "../../../global";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 function tickEvent(player: Player) {
     const data: ElytraFlyData = player.elytraFlyData ?? {
-            startGlideTime: 0,
-            startGlideSpeed: 0,
-            isSpeedDecreasing: false,
-            highestGlidingSpeed: 0,
-            isLastTickGliding: false,
-            usedRocket: false,
-            lastSpeedDeviation: 0,
-            triggeredType2: false,
-            lastSpeedXZ: 0,
-        };
+        startGlideTime: 0,
+        startGlideSpeed: 0,
+        isSpeedDecreasing: false,
+        highestGlidingSpeed: 0,
+        isLastTickGliding: false,
+        usedRocket: false,
+        lastSpeedDeviation: 0,
+        triggeredType2: false,
+        lastSpeedXZ: 0,
+    };
     const now = Date.now();
     if (!data.isLastTickGliding && player.isGliding) {
         data.startGlideTime = now;
@@ -70,5 +70,5 @@ export default {
     disable: () => {
         removeCheckInterval(tickEvent);
         world.afterEvents.itemUse.unsubscribe(onItemUse);
-    }
-}
+    },
+};

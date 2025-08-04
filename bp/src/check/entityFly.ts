@@ -13,12 +13,12 @@ const FACTOR = 100;
 function tickEvent(player: Player) {
     const isRiding = player.getComponent("riding")?.entityRidingOn;
     const data: EntityFlyData = player.entityFlyData ?? {
-            pastVelocityY: new Array(10).fill(0),
-            lastNotRidingLocation: player.location,
-            prefectCombo: 0,
-            superCombo: 0,
-            illegalFactorAmount: 0,
-        };
+        pastVelocityY: new Array(10).fill(0),
+        lastNotRidingLocation: player.location,
+        prefectCombo: 0,
+        superCombo: 0,
+        illegalFactorAmount: 0,
+    };
     const { x, y: velocityY, z } = player.getVelocity();
     data.pastVelocityY.push(velocityY);
     data.pastVelocityY.shift();
@@ -99,5 +99,5 @@ export default {
     },
     disable: () => {
         removeCheckInterval(tickEvent);
-    }
-}
+    },
+};

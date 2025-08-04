@@ -1,13 +1,4 @@
-import {
-    Dimension,
-    EntityHitEntityAfterEvent,
-    EquipmentSlot,
-    GameMode,
-    ItemUseAfterEvent,
-    Player,
-    Vector3,
-    world,
-} from "@minecraft/server";
+import { Dimension, EntityHitEntityAfterEvent, EquipmentSlot, GameMode, ItemUseAfterEvent, Player, Vector3, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { pythag } from "../util/mathUtil";
 import { isRiding } from "../util/util";
@@ -60,8 +51,8 @@ function tick(player: Player) {
         now - data.lastFlagTimestamp < 250 ||
         now - data.lastAttackTimestamp < 1000 ||
         now - data.lastRidingEndTimestamp < 500 ||
-        player.lastKnockback && now - player.lastKnockback < 1500 ||
-        player.lastRiptide && now - player.lastRiptide < 5000 ||
+        (player.lastKnockback && now - player.lastKnockback < 1500) ||
+        (player.lastRiptide && now - player.lastRiptide < 5000) ||
         player.getGameMode() === GameMode.Creative ||
         player.isSleeping ||
         now - data.lastSleep < 1000 ||
@@ -99,9 +90,7 @@ function tick(player: Player) {
             const velocitySpeed = player.speedData.lastSpeedXZ ?? 0;
             const normalDistance = distance * 0.5;
 
-            const condition = player.isSprinting && !isSwiftSneak(player)
-                ? normalDistance * 0.7
-                : normalDistance > velocitySpeed * 1.2 ** speedLevel;
+            const condition = player.isSprinting && !isSwiftSneak(player) ? normalDistance * 0.7 : normalDistance > velocitySpeed * 1.2 ** speedLevel;
 
             if (velocitySpeed > 0 && condition && now - data.lastEnderPeal > 1200 && distance > VELOCITY_DELTA_THRESHOLD && data.lastSprint === player.isSprinting) {
                 if (data.timerFlagAmount < 1) {
@@ -138,7 +127,7 @@ function tick(player: Player) {
     data.lastRiding = ride;
     data.lastLocation = player.location;
     data.lastVelocity = { x: velocityX, z: velocityZ };
-    data.lastSpeedXZ = pythag(velocityX, velocityZ)
+    data.lastSpeedXZ = pythag(velocityX, velocityZ);
     player.speedData = data;
 }
 

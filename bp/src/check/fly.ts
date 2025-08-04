@@ -1,12 +1,4 @@
-import {
-    Dimension,
-    EquipmentSlot,
-    GameMode,
-    PistonActivateAfterEvent,
-    Player,
-    Vector3,
-    world,
-} from "@minecraft/server";
+import { Dimension, EquipmentSlot, GameMode, PistonActivateAfterEvent, Player, Vector3, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { fastAbs } from "../util/mathUtil";
 import { fastSurround, isRiding } from "../util/util";
@@ -49,12 +41,7 @@ function tick(player: Player) {
         pistonNotPushed &&
         now - (player.lastKnockback ?? 0) > 2000 &&
         now - (player.lastRiptide ?? 0) > 5000 &&
-        (previousVelY < 0 ||
-            (previousVelY < 0 && velocityY === 0) ||
-            (velocityY > 0 &&
-                previousVelY / velocityY > 4 &&
-                previousVelY > 2.5 &&
-                fastAbs((player.flyData.lastVelocityY ?? 0) - velocityY) < 0.5)) &&
+        (previousVelY < 0 || (previousVelY < 0 && velocityY === 0) || (velocityY > 0 && previousVelY / velocityY > 4 && previousVelY > 2.5 && fastAbs((player.flyData.lastVelocityY ?? 0) - velocityY) < 0.5)) &&
         !isRiding(player) &&
         !player.isFlying &&
         !player.isGliding &&
@@ -74,21 +61,11 @@ function tick(player: Player) {
         }
     }
 
-    if (
-        data.flagAmount >= 0.05 &&
-        ((now - data.lastFlagTimestamp > 6000 && player.isOnGround) ||
-            (surroundAir && fastAbs(velocityY) < MAX_VELOCITY_Y && now - data.lastFlagTimestamp > 1200))
-    ) {
+    if (data.flagAmount >= 0.05 && ((now - data.lastFlagTimestamp > 6000 && player.isOnGround) || (surroundAir && fastAbs(velocityY) < MAX_VELOCITY_Y && now - data.lastFlagTimestamp > 1200))) {
         data.flagAmount -= 0.05;
     }
 
-    if (
-        pistonNotPushed &&
-        playerStarted &&
-        velocityY > HIGH_VELOCITY_Y &&
-        now - (player.lastKnockback ?? 0) > 2000 &&
-        !player.isGliding
-    ) {
+    if (pistonNotPushed && playerStarted && velocityY > HIGH_VELOCITY_Y && now - (player.lastKnockback ?? 0) > 2000 && !player.isGliding) {
         player.teleport(data.lastOnGroundLocation);
         player.flag("Fly", "B", "Movement", { velocityY });
     }
@@ -100,23 +77,10 @@ function tick(player: Player) {
     const maxAmount = Math.max(...data.velocityYList);
     const bdsPrediction = calculateBdsPrediction(data.velocityYList);
 
-    if (
-        pistonNotPushed &&
-        playerStarted &&
-        isPlayerNotCreative &&
-        !player.isOnGround &&
-        data.velocityYList.length >= 60 &&
-        bdsPrediction >= MAX_BDS_PREDICTION &&
-        !isRiding(player)
-    ) {
+    if (pistonNotPushed && playerStarted && isPlayerNotCreative && !player.isOnGround && data.velocityYList.length >= 60 && bdsPrediction >= MAX_BDS_PREDICTION && !isRiding(player)) {
         const { highestRepeatedVelocity, highestRepeatedAmount } = repeatChecks(data.velocityYList);
 
-        if (
-            highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT &&
-            highestRepeatedVelocity > MAX_VELOCITY_Y &&
-            minAmount <= -MAX_VELOCITY_Y &&
-            maxAmount < HIGH_VELOCITY_Y
-        ) {
+        if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y && minAmount <= -MAX_VELOCITY_Y && maxAmount < HIGH_VELOCITY_Y) {
             player.teleport(data.lastOnGroundLocation);
             player.flag("Fly", "C", "Movement", { hrA: highestRepeatedAmount, hrV: highestRepeatedVelocity, minAmount, maxAmount });
         }

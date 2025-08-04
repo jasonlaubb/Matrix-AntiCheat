@@ -311,7 +311,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
     const protectionLevel = getProtectionLevel(armor);
     let expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
     const resistance = target.getEffect("minecraft:resistance")?.amplifier;
-    if (resistance) expectedDamage *= (1 - (resistance + 1) * 0.2);
+    if (resistance) expectedDamage *= 1 - (resistance + 1) * 0.2;
     return expectedDamage;
 }
 function getProtectionLevel(component: EntityEquippableComponent) {

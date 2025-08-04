@@ -2,14 +2,14 @@ import { EntityDamageCause, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Pla
 import { get } from "../util/database";
 import { banAttack } from "../util/util";
 
-function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
+function onEntityHit({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     if (!(player instanceof Player) || player.isOp()) return;
     // Delay 1 tick
     system.run(() => {
         player.autoclickerCpsCount ??= 0;
         player.autoclickerCpsCount++;
         if (player.autoclickerAttackDuration >= 3 && !player.getEffect("minecraft:weakness")) {
-            const avgCps = player.autoclickerCpsCount / player.autoclickerAttackDuration * 2;
+            const avgCps = (player.autoclickerCpsCount / player.autoclickerAttackDuration) * 2;
             if (avgCps > get("antiAutoClickerMaxCps")) {
                 banAttack(player, 40);
                 player.autoclickerAttackDuration = 0;
@@ -37,10 +37,10 @@ function onEntityHit ({ damagingEntity: player }: EntityHitEntityAfterEvent) {
         }
     });
 }
-function onEntityHurt ({ damageSource: { damagingEntity, damagingProjectile, cause } }: EntityHurtAfterEvent) {
+function onEntityHurt({ damageSource: { damagingEntity, damagingProjectile, cause } }: EntityHurtAfterEvent) {
     if (!damagingEntity || cause !== EntityDamageCause.entityAttack || damagingProjectile || !(damagingEntity instanceof Player) || damagingEntity.isOp()) return;
     const now = Date.now();
-    if (!damagingEntity.autoclickerAttackDuration || damagingEntity.autoclickerInitTimestamp && now - damagingEntity.autoclickerInitTimestamp > 12000) {
+    if (!damagingEntity.autoclickerAttackDuration || (damagingEntity.autoclickerInitTimestamp && now - damagingEntity.autoclickerInitTimestamp > 12000)) {
         damagingEntity.autoclickerAttackDuration = 0;
         damagingEntity.autoclickerCpsCount = 0;
         damagingEntity.autoclickerInitTimestamp = now;
@@ -56,5 +56,5 @@ export default {
     disable: () => {
         world.afterEvents.entityHitEntity.unsubscribe(onEntityHit);
         world.afterEvents.entityHurt.unsubscribe(onEntityHurt);
-    }
-}
+    },
+};

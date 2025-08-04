@@ -10,10 +10,7 @@ function onBlockBreak({ player, brokenBlockPermutation, itemStackBeforeBreak: to
     if (player.isOp() || brokenBlockPermutation.type.id === "minecraft:air" || brokenBlockPermutation.type.id === "minecraft:netherrack") return;
     player.breakData.brokenBlocks.push({ blockPermutation: brokenBlockPermutation, blockPosition: block.location });
     const usingTool = tool && isTool(tool);
-    if (
-        !(player.getEffect("minecraft:haste") && usingTool) ||
-        (usingTool && (tool.getComponent("enchantable")?.getEnchantment("minecraft:efficiency")?.level ?? 0) >= 2 && INSTA_BREAKABLE_SET.has(brokenBlockPermutation.type.id))
-    ) {
+    if (!(player.getEffect("minecraft:haste") && usingTool) || (usingTool && (tool.getComponent("enchantable")?.getEnchantment("minecraft:efficiency")?.level ?? 0) >= 2 && INSTA_BREAKABLE_SET.has(brokenBlockPermutation.type.id))) {
         player.breakData.brokenAmount++;
         if (Date.now() > player.breakData.startBreakingTime) player.breakData.flagInsteaBreak = true;
     }
@@ -143,5 +140,5 @@ export default {
         world.afterEvents.playerBreakBlock.unsubscribe(onBlockBreak);
         removeCheckInterval(tickEvent);
         world.afterEvents.entityHitBlock.unsubscribe(onPlayerHitBlock);
-    }
-}
+    },
+};
