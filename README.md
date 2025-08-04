@@ -38,6 +38,8 @@ We can detect following type of cheat:
 No anticheat is perfect, if you found any bypass you can report in our discord support server!
 
 We strongly suggest you to use `serverAuthWithRewind` instead of `serverAuth` in bds server to prevent 100% of movement cheaters.
+
+<img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/flag.png" width="80%">
 <h1>Other extra features</h1>
 Although we aim to provide a lite anticheat, we also provide some extra useful features to help you run your server.
 
@@ -48,10 +50,17 @@ You can enable those feature by slash command and change the related setting by 
 - Ore Alert
 - World border (With particle effect!)
 
+<img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/oreAlert.png" width="80%">
+<img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/worldBorder.png" width="80%">
+
 Some extra functional command
 - Invsee command which can view directly.
 - Ban, mute command.
 - Watch command (Not discoverable by player even esp, nametag cheater).
+
+<img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/watch.png" width="80%">
+<img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/banScreen.jpg" width="80%">
+
 <h1>Discord Support</h1>
 We provide a free support to our free anticheat. Join our discord server to get fast notification once updated or get help for the anticheat!
 
