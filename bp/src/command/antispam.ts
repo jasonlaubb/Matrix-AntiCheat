@@ -8,7 +8,7 @@ export default {
     execute: () => {
         const isEnabled = get("antiSpam");
         system.run(() => {
-            world.setDynamicProperty("database:worldBorder", !isEnabled);
+            world.setDynamicProperty("database:antiSpam", !isEnabled);
         });
         return { status: 0, message: `§7[§aMatrix§7] §fSuccessfully ${isEnabled ? "disabled" : "enabled"} anti spam feature. You can modify the pattern or other settings by slash command!` };
     },
