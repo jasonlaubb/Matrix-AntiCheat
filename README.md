@@ -35,6 +35,7 @@ We can detect following type of cheat:
 - Fucker (Breaker)
 - Extinguisher (Auto-break-fire)
 - AutoTool
+
 No anticheat is perfect, if you found any bypass you can report in our discord support server!
 
 We strongly suggest you to use `serverAuthWithRewind` instead of `serverAuth` in bds server to prevent 100% of movement cheaters.
