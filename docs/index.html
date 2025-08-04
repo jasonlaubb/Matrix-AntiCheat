@@ -201,17 +201,26 @@
       z-index: 3;
       position: relative;
     }
-    .sparkles {
-      position: absolute;
-      top: -18px;
-      right: -16px;
-      pointer-events: none;
-      user-select: none;
-      z-index: 2;
-      font-size: 1.6em;
-      opacity: 0.60;
-      animation: floating 2s infinite alternate;
+    .pack-icon {
+    position: absolute;
+    top: -18px;
+    right: -16px;
+    width: 2.2em;
+    height: 2.2em;
+    border-radius: 12px;
+    transform: rotate(-8deg);
+    animation: floatSide 2.4s infinite ease-in-out alternate;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
+/* Animation for gentle horizontal movement */
+@keyframes floatSide {
+  0% { transform: translateX(0) rotate(-8deg); }
+  100% { transform: translateX(6px) rotate(-4deg); }
+}
     @keyframes floating {
       0% { transform: translateY(0);}
       100% { transform: translateY(-13px);}
@@ -230,13 +239,13 @@
 </head>
 <body>
   <div class="container">
-    <span class="sparkles">🌟✨</span>
+    <img src="./resources/pack_icon.png" alt="Pack Icon" class="pack-icon">
     <div class="title">Matrix AntiCheat</div>
     <div class="subtitle">
       The Supreme Anti-Cheat Solution for Minecraft Bedrock.
     </div>
     <div class="buttons">
-      <a class="btn btn-curseforge" href="https://www.curseforge.com/minecraft-bedrock/addons/matrix-anti/download" target="_blank" rel="noopener">
+      <a class="btn btn-curseforge" href="https://www.curseforge.com/minecraft-bedrock/addons/matrix-anti/" target="_blank" rel="noopener">
         <img src="./resources/curseForgeIcon.png" alt="CurseForge Icon">
         Download (.mcpack)
       </a>
