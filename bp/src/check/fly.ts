@@ -125,7 +125,7 @@ function tick(player: Player) {
         const item = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Chest);
         if (!item || item.typeId !== "minecraft:elytra") {
             data.lastFlagTimestamp = now;
-            player.flag("Fly", "E", "Movement (GlideTag)");
+            player.flag("Fly", "D", "Movement (GlideTag)");
         }
     }
     data.lastVelocityY = velocityY;
