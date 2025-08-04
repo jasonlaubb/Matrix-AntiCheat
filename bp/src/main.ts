@@ -369,6 +369,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
         if (player.lastMessageRaw === event.message && now - player.lastMessage <= get("antiSpamRepeatDef")) {
             player.sendMessage("§7[§aMatrix§7] §fPlease don't spam message.");
             player.lastMessage = now;
+            player.lastMessageRaw = event.message;
             event.cancel = true;
             return;
         }
