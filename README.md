@@ -6,8 +6,10 @@
 <h1>Introduction</h1>
 <h1>What we offer</h1>
 <h1>Discord Support</h1>
-<p>
-    <a href="https://discord.gg/CqZGXeRKPJ" target="_blank" rel="nofollow">
-        <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/screaming-peach.gif" width="20%">
-    </a><p><--- Click this to join the support server</p>
-</p>
+We provide a free support to our free anticheat. Join our discord server to get fast notification once updated or get help for the anticheat!
+
+Click the below **screaming peach** to join the support server:
+
+<a href="https://discord.gg/CqZGXeRKPJ" target="_blank" rel="nofollow">
+    <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/screaming-peach.gif" width="20%">
+</a>
