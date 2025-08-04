@@ -223,4 +223,8 @@ export default {
         type: "number",
         value: 3,
     },
+    antiSpamMessageMaxLength: {
+        type: "number",
+        value: 72,
+    },
 };

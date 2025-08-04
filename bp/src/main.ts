@@ -348,7 +348,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
     const { x, y } = player.inputInfo.getMovementVector();
     if (x !== 0 || y !== 0) {
         event.cancel = true;
-        system.run(() => player.sendMessage("§7[§aMatrix§7] §fPlease do not chat while you're moving!"));
+        player.sendMessage("§7[§aMatrix§7] §fPlease do not chat while you're moving!");
         return;
     }
     // Trash code for anti spam
@@ -381,14 +381,17 @@ world.beforeEvents.chatSend.subscribe((event) => {
             return;
         }
         player.lastMessage = now;
+        if (event.message.length > get("antiSpamMessageMaxLength")) {
+            player.sendMessage("§7[§aMatrix§7] §fYour message is too long.");
+            event.cancel = true;
+            return;
+        }
     }
     if (get("chatRankEnable")) {
         const { message, sender: player } = event;
         const playerRank = getPlayerRank(player);
         const format = get("chatRankMessageFormat");
-        system.run(() => {
-            world.sendMessage(format.replace("{rank}", playerRank).replace("{player}", player.name).replace("{message}", message));
-        });
+        world.sendMessage(format.replace("{rank}", playerRank).replace("{player}", player.name).replace("{message}", message));
         event.cancel = true;
         return;
     }
