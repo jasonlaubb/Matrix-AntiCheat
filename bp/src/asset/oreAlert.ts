@@ -21,6 +21,7 @@ const targetID = [
     "minecraft:deepslate_lapis_ore",
 ];
 function blockBreak(event: PlayerBreakBlockAfterEvent) {
+    if (event.player.isOp()) return;
     const { x, y, z } = event.block.location;
     const id = event.brokenBlockPermutation.type.id;
     const now = Date.now();

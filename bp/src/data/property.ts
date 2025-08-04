@@ -203,4 +203,24 @@ export default {
         type: "number",
         value: 20,
     },
+    antiSpam: {
+        type: "boolean",
+        value: false,
+    },
+    antiSpamFastDef: {
+        type: "number",
+        value: 4000,
+    },
+    antiSpamTooFastFlagLimit: {
+        type: "number",
+        value: 2,
+    },
+    antiSpamRepeatDef: {
+        type: "number",
+        value: 15000,
+    },
+    antiSpamMaxRepeatedArgLength: {
+        type: "number",
+        value: 3,
+    },
 };

@@ -28,6 +28,10 @@ declare module "@minecraft/server" {
         // Detection handler data
         lastRiptide: number;
         lastKnockback: number;
+        // AntiSpam Data
+        lastMessage: number;
+        tooFastFlag: number;
+        lastMessageRaw: string;
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;

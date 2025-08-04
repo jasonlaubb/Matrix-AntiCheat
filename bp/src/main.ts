@@ -321,12 +321,40 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (movementModule) world.afterEvents.entityHurt.subscribe(knockback);
 });
 world.beforeEvents.chatSend.subscribe((event) => {
-    const { x, y } = event.sender.inputInfo.getMovementVector();
+    const player = event.sender;
+    const { x, y } = player.inputInfo.getMovementVector();
     if (x !== 0 || y !== 0) {
         event.cancel = true;
-        system.run(() => event.sender.sendMessage("§7[§aMatrix§7] §fPlease do not chat while you're moving!"));
+        system.run(() => player.sendMessage("§7[§aMatrix§7] §fPlease do not chat while you're moving!"));
         return;
     }
+    if (get("antiSpam")) {
+        player.lastMessage ??= 0;
+        player.tooFastFlag ??= 0;
+        const now = Date.now();
+        if (now - player.lastMessage <= get("antiSpamFastDef")) {
+            player.tooFastFlag++;
+            if (player.tooFastFlag > get("antiSpamTooFastFlagLimit")) {
+                player.sendMessage("§7[§aMatrix§7] §fSlow down your message.");
+                player.lastMessage = now;
+                event.cancel = true;
+                return;
+            }
+        }
+        if (player.lastMessageRaw === event.message && now - player.lastMessage <= get("antiSpamRepeatDef")) {
+            player.sendMessage("§7[§aMatrix§7] §fPlease don't spam message.");
+            player.lastMessage = now;
+            event.cancel = true;
+            return;
+        }
+        if (longestContinuousChar(event.message) > get("antiSpamMaxRepeatedArgLength")) {
+            player.sendMessage("§7[§aMatrix§7] §fPlease don't spam message!"); // ! means it is worser than . (idk)
+            player.lastMessage = now;
+            event.cancel = true;
+            return;
+        }
+
+    } else if (player.tooFastFlag > 0) player.tooFastFlag--;
     if (get("chatRankEnable")) {
         const { message, sender: player } = event;
         const playerRank = getPlayerRank(player);
@@ -338,6 +366,28 @@ world.beforeEvents.chatSend.subscribe((event) => {
         return;
     }
 });
+function longestContinuousChar(str: string) {
+    // Remove all whitespace
+    const cleaned = str.replaceAll(" ", '');
+
+    if (cleaned.length === 0) return 0;
+
+    let maxLen = 1;
+    let currentLen = 1;
+
+    for (let i = 1; i < cleaned.length; i++) {
+        if (cleaned[i] === cleaned[i - 1]) {
+            currentLen++;
+            if (currentLen > maxLen) {
+                maxLen = currentLen;
+            }
+        } else {
+          currentLen = 1;
+        }
+    }
+
+    return maxLen;
+}
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (!initialSpawn) return;
     checkPunish(player);
