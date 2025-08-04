@@ -1,5 +1,6 @@
 import {
     Dimension,
+    EquipmentSlot,
     GameMode,
     PistonActivateAfterEvent,
     Player,
@@ -118,6 +119,13 @@ function tick(player: Player) {
         ) {
             player.teleport(data.lastOnGroundLocation);
             player.flag("Fly", "C", "Movement", { hrA: highestRepeatedAmount, hrV: highestRepeatedVelocity, minAmount, maxAmount });
+        }
+    }
+    if (player.isGliding && now - data.lastFlagTimestamp > 500) {
+        const item = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Chest);
+        if (!item || item.typeId !== "minecraft:elytra") {
+            data.lastFlagTimestamp = now;
+            player.flag("Fly", "C", "Movement (GlideTag)");
         }
     }
     data.lastVelocityY = velocityY;
