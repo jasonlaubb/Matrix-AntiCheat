@@ -9,7 +9,7 @@
 export default {
     flagMessageTarget: {
         type: "string",
-        value: "all",
+        value: "all", // all, admin, exclude (send to all player exclude the cheater), tag (send to player with specfic tag)
     },
     notifyTag: {
         type: "string",
