@@ -55,7 +55,7 @@ Some extra functional command
 <h1>Discord Support</h1>
 We provide a free support to our free anticheat. Join our discord server to get fast notification once updated or get help for the anticheat!
 
-Click the below **screaming peach** to join the support server:
+Click the **screaming peach** to join the support server ->
 <a href="https://discord.gg/CqZGXeRKPJ" target="_blank" rel="nofollow">
     <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/screaming-peach.gif" width="20%">
 </a>
