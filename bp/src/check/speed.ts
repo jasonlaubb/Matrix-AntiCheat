@@ -13,9 +13,8 @@ import { pythag } from "../util/mathUtil";
 import { isRiding } from "../util/util";
 const VELOCITY_DELTA_THRESHOLD = 0.7;
 const FLAG_TIMESTAMP_THRESHOLD = 8000;
-const TYPE1_MAX_FLAG = 15;
-const TYPE2_MAX_FLAG = 10;
-const MAX_VELOCITY_EXAGGERATION = 1.5;
+const TYPE1_MAX_FLAG = 12;
+const TYPE2_MAX_FLAG = 2;
 
 function initPlayerData(player: Player) {
     player.speedData = {

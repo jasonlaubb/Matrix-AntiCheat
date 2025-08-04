@@ -15,7 +15,7 @@ const MIN_REQUIRED_REPEAT_AMOUNT = 6;
 const HIGH_VELOCITY_Y = 22;
 const MAX_BDS_PREDICTION = 20;
 const START_SKIP_CHECK = 6000;
-const TYPE1_MAX_FLAG = 15;
+const TYPE1_MAX_FLAG = 2;
 
 function initPlayerData(player: Player) {
     player.flyData = {
