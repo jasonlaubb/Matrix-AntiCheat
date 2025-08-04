@@ -1,7 +1,0 @@
-* [Getting Started](/misc/start.md)
-* [Download](/misc/download.md)
-* [FAQ](/misc/faq.md)
-* [Troubleshooting](/misc/Troubleshooting.md)
-* [Setup key](/misc/setupKey.md)
-* [Matrix Items](/misc/items.md)
-* [Setup in Aternos](/misc/aternos.md)
