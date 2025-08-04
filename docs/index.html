@@ -205,16 +205,26 @@
     position: absolute;
     top: -18px;
     right: -16px;
-    width: 2.2em;
-    height: 2.2em;
-    border-radius: 12px;
-    transform: rotate(-8deg);
-    animation: floatSide 2.4s infinite ease-in-out alternate;
-    pointer-events: none;
-    user-select: none;
-    z-index: 2;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+  width: 6.6em; /* 3x bigger than 2.2em */
+  height: 6.6em;
+  border-radius: 18px;
+  transform: rotate(-8deg);
+  animation: floatSide 2.4s infinite ease-in-out alternate;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #444;
+  text-align: center;
+  opacity: 0.8;
+  font-weight: 600;
+  font-family: 'Nunito', sans-serif;
+}
+
 
 /* Animation for gentle horizontal movement */
 @keyframes floatSide {
@@ -263,5 +273,9 @@
       </a>
     </div>
   </div>
+  <div class="footer">
+  Project open-sourced under the AGPL v3 license | Made by jasonlaubb
+</div>
+
 </body>
 </html>
