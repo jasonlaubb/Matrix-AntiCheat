@@ -352,7 +352,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
         return;
     }
     // Trash code for anti spam
-    if (get("antiSpam")) {
+    if (get("antiSpam") && !player.isOp()) {
         player.lastMessage ??= 0;
         player.tooFastFlag ??= 0;
         const now = Date.now();
