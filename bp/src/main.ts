@@ -47,6 +47,7 @@ import { knockback, riptide } from "./asset/eventHandler";
 import flaglog from "./command/flaglog";
 import chatrank from "./command/chatrank";
 import antispam from "./command/antispam";
+import antiafk from "./command/antiafk";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -152,6 +153,7 @@ system.beforeEvents.startup.subscribe((event) => {
         flaglog,
         chatrank,
         antispam,
+        antiafk,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
