@@ -81,7 +81,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
         flagTarget.forEach((player) => player.sendMessage(flagMessage));
     }
     const punishmentType = get("flagPunishmentType");
-    world.setDynamicProperty("flagrecord:" + Date.now(), `§7[${new Date(Date.now().toLocaleString())}] §f${this.name} §r§8| §f${id}/${type} §8| §f${punishmentType}`);
+    world.setDynamicProperty("flagrecord:" + Date.now(), `§7[${new Date(Date.now()).toISOString()}] §f${this.name} §r§8| §f${id}/${type} §8| §f${punishmentType}`);
     const record = world.getDynamicPropertyIds().filter((id) => id.startsWith("flagrecord:"))
     if (record.length > get("maxRecordAmount")) {
         const deleteId = record.sort()[0];
