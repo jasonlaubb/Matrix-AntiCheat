@@ -328,6 +328,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
         system.run(() => player.sendMessage("§7[§aMatrix§7] §fPlease do not chat while you're moving!"));
         return;
     }
+    // Trash code for anti spam
     if (get("antiSpam")) {
         player.lastMessage ??= 0;
         player.tooFastFlag ??= 0;
