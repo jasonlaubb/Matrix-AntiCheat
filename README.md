@@ -9,6 +9,5 @@
 <p>
     <a href="https://discord.gg/CqZGXeRKPJ" target="_blank" rel="nofollow">
         <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/screaming-peach.gif" width="20%">
-    </a>
-    <p><--- Click this to join the support server</p>
+    </a><p><--- Click this to join the support server</p>
 </p>
