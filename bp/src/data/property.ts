@@ -195,4 +195,12 @@ export default {
         type: "number",
         value: 600000,
     },
+    recordFlags: {
+        type: "boolean",
+        value: true,
+    },
+    maxRecordAmount: {
+        type: "number",
+        value: 20,
+    },
 };

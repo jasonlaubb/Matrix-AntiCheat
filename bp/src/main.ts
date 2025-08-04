@@ -60,8 +60,14 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
     if (flagTarget.length > 0) {
         flagTarget.forEach((player) => player.sendMessage(flagMessage));
     }
-    if (this.hasTag("matrix:ignore")) return;
     const punishmentType = get("flagPunishmentType");
+    world.setDynamicProperty("flagrecord:" + Date.now(), `§7[${new Date(Date.now().toLocaleString())}] §f${this.name} §r§8| §f${id}/${type} §8| §f${punishmentType}`);
+    const record = world.getDynamicPropertyIds().filter((id) => id.startsWith("flagrecord:"))
+    if (record.length > get("maxRecordAmount")) {
+        const deleteId = record.sort()[0];
+        world.setDynamicProperty(deleteId); // Delete the last record.
+    }
+    if (this.hasTag("matrix:ignore")) return;
     switch (punishmentType) {
         case "kick": {
             this.kick("Unfair advantage");
