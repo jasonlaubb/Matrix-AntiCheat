@@ -361,7 +361,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
                 event.cancel = true;
                 return;
             }
-        }
+        } else if (player.tooFastFlag > 0) player.tooFastFlag--;
         if (player.lastMessageRaw === event.message && now - player.lastMessage <= get("antiSpamRepeatDef")) {
             player.sendMessage("§7[§aMatrix§7] §fPlease don't spam message.");
             player.lastMessage = now;
@@ -376,7 +376,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
             return;
         }
 
-    } else if (player.tooFastFlag > 0) player.tooFastFlag--;
+    }
     if (get("chatRankEnable")) {
         const { message, sender: player } = event;
         const playerRank = getPlayerRank(player);
