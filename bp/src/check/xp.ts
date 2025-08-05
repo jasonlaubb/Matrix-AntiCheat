@@ -24,7 +24,7 @@ function onEntityRemove ({ removedEntity }: EntityRemoveBeforeEvent) {
 function tickEvent (player: Player) {
     const currentXp = player.getTotalXp();
     player.xpLastXpAmount ??= currentXp;
-    if (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid > 300)) {
+    if (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 300)) {
         player.addExperience(player.xpLastXpAmount - currentXp); // Remove the experience that is invalid
     } else player.xpLastXpAmount = currentXp;
 }
