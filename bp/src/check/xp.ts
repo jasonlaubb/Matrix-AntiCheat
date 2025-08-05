@@ -20,12 +20,10 @@ function onEntityRemove ({ removedEntity }: EntityRemoveBeforeEvent) {
     if (neareastPlayers.length === 0) return;
     const now = Date.now();
     neareastPlayers.forEach((player) => player.xpLastValid = now);
-    neareastPlayers[0].sendMessage("Ha!")
 }
 function tickEvent (player: Player) {
     const currentXp = player.getTotalXp();
     player.xpLastXpAmount ??= currentXp;
-    player.onScreenDisplay.setActionBar(currentXp.toString() + "|" + player.xpLastXpAmount);
     if (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 200)) {
         player.resetLevel();
         try {
