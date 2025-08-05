@@ -17,6 +17,7 @@ import entityFly from "../check/entityFly";
 import elytraFly from "../check/elytraFly";
 import autoclicker from "../check/autoclicker";
 import xp from "../check/xp";
+import freecam from "../check/freecam";
 export const detectionList = {
     killaura,
     autototem,
@@ -33,6 +34,7 @@ export const detectionList = {
     elytraFly,
     autoclicker,
     xp,
+    freecam,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
