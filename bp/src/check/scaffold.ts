@@ -17,7 +17,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     if (player.isOp() || player.isFlying || player.getGameMode() === GameMode.Creative || height < 1) return;
     if (face === Direction.Down && event.faceLocation.y - player.location.y > 1) {
         event.cancel = true;
-        system.run(() => player.flag("Scaffold", "G", "Player"));
+        system.run(() => player.flag("Scaffold", "G", "Block"));
     }
     if (height >= 2) return;
     const { x: pitch, y: yaw } = player.getRotation();
@@ -48,7 +48,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         event.cancel = true;
         player.scaffoldBackwardFlag++;
         if (player.scaffoldBackwardFlag >= 3) {
-            system.run(() => player.flag("Scaffold", "C", "Player", { angle: angle.toFixed(2), distance: distance.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "C", "Block", { angle: angle.toFixed(2), distance: distance.toFixed(2) }));
         }
     } else player.scaffoldBackwardFlag = 0;
     const now = Date.now();
@@ -56,7 +56,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldDownFlag++;
         if (player.scaffoldDownFlag >= 2) event.cancel = true;
         if (player.scaffoldDownFlag >= 3) {
-            system.run(() => player.flag("Scaffold", "D", "Player", { pitch: pitch.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "D", "Block", { pitch: pitch.toFixed(2) }));
         }
     } else player.scaffoldDownFlag = 0;
     const strightX = player.scaffoldLastPlaceLoc?.x === block.location.x;
@@ -73,7 +73,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldDiagFlag++;
         if (player.scaffoldDiagFlag >= 6) {
             event.cancel = true;
-            system.run(() => player.flag("Scaffold", "E", "Player", { diagCount: player.scaffoldDiagFlag }));
+            system.run(() => player.flag("Scaffold", "E", "Block", { diagCount: player.scaffoldDiagFlag }));
         }
     } else player.scaffoldDiagFlag = 0;
     player.scaffoldExtenderFlag ??= 0;
@@ -81,7 +81,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldExtenderFlag++;
         if (player.scaffoldExtenderFlag >= 3) {
             event.cancel = true;
-            system.run(() => player.flag("Scaffold", "F", "Player", { pitch: pitch.toFixed(2), distance: distance.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "F", "Block", { pitch: pitch.toFixed(2), distance: distance.toFixed(2) }));
         }
     } else player.scaffoldExtenderFlag = 0;
     if (!event.cancel) {
