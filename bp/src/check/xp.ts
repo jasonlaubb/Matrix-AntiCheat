@@ -27,7 +27,7 @@ function tickEvent (player: Player) {
     player.xpLastXpAmount ??= currentXp;
     player.onScreenDisplay.setActionBar(currentXp.toString() + "|" + player.xpLastXpAmount);
     if (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 300)) {
-        player.runCommand(`xp @s ${player.xpLastXpAmount - currentXp}`); // Remove the experience that is invalid
+        player.runCommand(`xp ${player.xpLastXpAmount - currentXp} @s`); // Remove the experience that is invalid
         player.sendMessage("Removed "  + (player.xpLastXpAmount - currentXp));
     } else player.xpLastXpAmount = currentXp;
 }
