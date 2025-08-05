@@ -21,11 +21,11 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         if (surroundBlock.length === 1) {
             const supportBlock = surroundBlock[0]!;
             if (supportBlock.location.y > block.location.y && supportBlock.location.y - player.location.y > 1) {
-                system.run(() => player.flag("Scaffold", "G", "Block (Downward)", { height, pitch: pitch.toFixed(2) }));
+                system.run(() => player.flag("Scaffold", "G", "Block (Downward)"));
             }
         } else if (surroundBlock.length === 0) {
             event.cancel = true;
-            system.run(() => player.flag("Scaffold", "H", "Block (Invalid)", { height, pitch: pitch.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "H", "Block (Invalid)"));
         }
     }
     if (height >= 2) return;
