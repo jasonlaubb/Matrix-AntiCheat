@@ -18,7 +18,7 @@ function tickEvent (player: Player) {
         if (now - player.freecamLastMoved > get("antiFreecamLockCameraOn")) {
             const riding = player.getComponent("riding")?.entityRidingOn?.typeId;
             if (!riding || riding === "minecraft:minecart" || isNonZero(player.getVelocity())) {
-                if (!player.freecamLastMoved && get("antiFreecamNotify")) player.sendMessage("§7[§aAnti Freecam§7] §fYour camera entered calibration state, move to unlock.");
+                if (!player.freecamCameraModified && get("antiFreecamNotify")) player.sendMessage("§7[§aAnti Freecam§7] §fYour camera entered calibration state, move to unlock.");
                 player.freecamCameraModified = true;
                 const rot = player.getRotation();
                 player.camera.setCamera("minecraft:free", {
