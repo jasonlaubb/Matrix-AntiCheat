@@ -154,6 +154,7 @@ function aimCheck(player: Player) {
             location: getFirstPerson(player.getHeadLocation(), player.getRotation()),
         })
     }
+    player.onScreenDisplay.setActionBar(JSON.stringify(player.inputInfo.getMovementVector()));
     if (player.getVelocity().x > 0 || player.getVelocity().y > 0 || player.getVelocity().z > 0) {
         player.camera.clear();
         player.freecamLastMoved = Date.now();
