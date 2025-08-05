@@ -1,4 +1,4 @@
-import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, system, Vector3, world } from "@minecraft/server";
+import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, system, Vector2, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP, banAttack } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -149,9 +149,9 @@ function aimCheck(player: Player) {
         }
     }
     if (!player.freecamLastMoved || Date.now() - player.freecamLastMoved > 1000) {
-        player.camera.setCamera("minecraft:first_person", {
+        player.camera.setCamera("minecraft:free", {
             rotation: player.getRotation(),
-            location: player.getHeadLocation(),
+            location: getFirstPerson(player.getHeadLocation(), player.getRotation()),
         })
     }
     if (player.getVelocity().x > 0 || player.getVelocity().y > 0 || player.getVelocity().z > 0) {
@@ -334,4 +334,18 @@ function getProtectionLevel(component: EntityEquippableComponent) {
         protectionLevel += enchant.getEnchantment("minecraft:protection")?.level ?? 0;
     });
     return protectionLevel;
+}
+function getFirstPerson(headPos: Vector3, rotation: Vector2) {
+    const yawDegrees = rotation.y;
+    const yawRadians = (yawDegrees * Math.PI) / 180;
+
+    // Calculate offset based on yaw only
+    const offsetX = -Math.sin(yawRadians) * 0.2;
+    const offsetZ = Math.cos(yawRadians) * 0.2;
+
+    return {
+        x: headPos.x + offsetX,
+        y: headPos.y,
+        z: headPos.z + offsetZ,
+    };
 }
