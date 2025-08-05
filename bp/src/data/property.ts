@@ -231,4 +231,16 @@ export default {
         type: "boolean",
         value: false,
     },
+    antiFreecamEnable: {
+        type: "boolean",
+        value: true,
+    },
+    antiFreecamLockCameraOn: {
+        type: "number",
+        value: 3000,
+    },
+    antiFreecamNotify: {
+        type: "boolean",
+        value: true,
+    },
 };

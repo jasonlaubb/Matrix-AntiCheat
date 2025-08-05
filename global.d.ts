@@ -83,6 +83,7 @@ declare module "@minecraft/server" {
         xpLastValid: number;
         xpLastXpAmount: number;
         freecamLastMoved: number;
+        freecamCameraModified: boolean;
     }
     interface Entity {
         // Detection data
