@@ -20,11 +20,14 @@ function onEntityRemove ({ removedEntity }: EntityRemoveBeforeEvent) {
     if (neareastPlayers.length === 0) return;
     const now = Date.now();
     neareastPlayers.forEach((player) => player.xpLastValid = now);
+    neareastPlayers[0].sendMessage("Ha!")
 }
 function tickEvent (player: Player) {
     const currentXp = player.getTotalXp();
     player.xpLastXpAmount ??= currentXp;
+    player.onScreenDisplay.setActionBar(currentXp.toString() + "|" + player.xpLastXpAmount);
     if (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 300)) {
-        player.addExperience(player.xpLastXpAmount - currentXp); // Remove the experience that is invalid
+        player.runCommand(`xp @s ${player.xpLastXpAmount - currentXp}`); // Remove the experience that is invalid
+        player.sendMessage("Removed "  + (player.xpLastXpAmount - currentXp));
     } else player.xpLastXpAmount = currentXp;
 }
