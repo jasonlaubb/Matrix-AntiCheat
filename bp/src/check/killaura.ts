@@ -149,10 +149,14 @@ function aimCheck(player: Player) {
         }
     }
     if (!player.freecamLastMoved || Date.now() - player.freecamLastMoved > 1000) {
-        player.freecamLastMoved = Date.now();
-        player.teleport({ x: player.location.x, y: player.location.y + 0.001, z: player.location.z });
+        player.camera.setCamera("minecraft:first_person", {
+            rotation: player.getRotation(),
+        })
     }
-    if (player.getVelocity().x > 0 || player.getVelocity().y > 0 || player.getVelocity().z > 0) player.freecamLastMoved = Date.now();
+    if (player.getVelocity().x > 0 || player.getVelocity().y > 0 || player.getVelocity().z > 0) {
+        player.camera.clear();
+        player.freecamLastMoved = Date.now();
+    }
     if (player.isFalling) player.killauraLastInAir = Date.now();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;
