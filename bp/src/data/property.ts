@@ -233,11 +233,11 @@ export default {
     },
     antiFreecamEnable: {
         type: "boolean",
-        value: true,
+        value: false,
     },
     antiFreecamLockCameraOn: {
         type: "number",
-        value: 3000,
+        value: 5000,
     },
     antiFreecamNotify: {
         type: "boolean",
