@@ -24,7 +24,7 @@ function onEntityRemove ({ removedEntity }: EntityRemoveBeforeEvent) {
 function tickEvent (player: Player) {
     const currentXp = player.getTotalXp();
     player.xpLastXpAmount ??= currentXp;
-    if (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 200)) {
+    if (currentXp - player.xpLastXpAmount > 15 || currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 200)) {
         player.resetLevel();
         try {
             player.addExperience(player.xpLastXpAmount);
