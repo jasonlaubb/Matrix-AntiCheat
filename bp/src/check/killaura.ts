@@ -148,7 +148,8 @@ function aimCheck(player: Player) {
             player.flag("Killaura", "H", "Combat (Aim)", { deltaY });
         }
     }
-    if (Date.now() - player.freecamLastMoved > 1000) {
+    if (!player.freecamLastMoved || Date.now() - player.freecamLastMoved > 1000) {
+        player.freecamLastMoved = Date.now();
         player.teleport({ x: player.location.x, y: player.location.y + 0.001, z: player.location.z });
     }
     if (player.getVelocity().x > 0 || player.getVelocity().y > 0 || player.getVelocity().z > 0) player.freecamLastMoved = Date.now();
