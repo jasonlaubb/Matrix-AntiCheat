@@ -38,10 +38,11 @@ function isNonZero ({ x, z }: Vector3) {
 function getFirstPerson(headPos: Vector3, rotation: Vector2) {
     const yawDegrees = rotation.y;
     const yawRadians = (yawDegrees * Math.PI) / 180;
-
+    const pitch = rotation.x;
+    const distanceBuffer = pitch > 5 ? 0.5 : 0.25;
     // Calculate offset based on yaw only
-    const offsetX = -Math.sin(yawRadians) * 0.25;
-    const offsetZ = Math.cos(yawRadians) * 0.25;
+    const offsetX = -Math.sin(yawRadians) * distanceBuffer;
+    const offsetZ = Math.cos(yawRadians) * distanceBuffer;
 
     return {
         x: headPos.x + offsetX,
