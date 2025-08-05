@@ -40,8 +40,8 @@ function getFirstPerson(headPos: Vector3, rotation: Vector2) {
     const yawRadians = (yawDegrees * Math.PI) / 180;
 
     // Calculate offset based on yaw only
-    const offsetX = -Math.sin(yawRadians) * 0.2;
-    const offsetZ = Math.cos(yawRadians) * 0.2;
+    const offsetX = -Math.sin(yawRadians) * 0.25;
+    const offsetZ = Math.cos(yawRadians) * 0.25;
 
     return {
         x: headPos.x + offsetX,
