@@ -148,6 +148,10 @@ function aimCheck(player: Player) {
             player.flag("Killaura", "H", "Combat (Aim)", { deltaY });
         }
     }
+    if (Date.now() - player.freecamLastMoved > 1000) {
+        player.teleport({ x: player.location.x, y: player.location.y + 0.001, z: player.location.z });
+    }
+    if (player.getVelocity().x > 0 || player.getVelocity().y > 0 || player.getVelocity().z > 0) player.freecamLastMoved = Date.now();
     if (player.isFalling) player.killauraLastInAir = Date.now();
     player.killauraLastYaw = rot.y;
     player.killauraLastDeltaY = deltaY;

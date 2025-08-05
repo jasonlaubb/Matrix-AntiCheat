@@ -82,6 +82,7 @@ declare module "@minecraft/server" {
         autoclickerCpsCount: number;
         xpLastValid: number;
         xpLastXpAmount: number;
+        freecamLastMoved: number;
     }
     interface Entity {
         // Detection data
