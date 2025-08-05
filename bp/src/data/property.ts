@@ -230,5 +230,5 @@ export default {
     antiXpEnable: {
         type: "boolean",
         value: false,
-    }
+    },
 };
