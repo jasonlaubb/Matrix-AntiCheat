@@ -26,9 +26,10 @@ function tickEvent (player: Player) {
     const currentXp = player.getTotalXp();
     player.xpLastXpAmount ??= currentXp;
     player.onScreenDisplay.setActionBar(currentXp.toString() + "|" + player.xpLastXpAmount);
-    if (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 300)) {
+    if (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 200)) {
         player.resetLevel();
-        player.addExperience(player.xpLastXpAmount);
-        player.sendMessage("Removed "  + (player.xpLastXpAmount - currentXp));
+        try {
+            player.addExperience(player.xpLastXpAmount);
+        } catch {}
     } else player.xpLastXpAmount = currentXp;
 }
