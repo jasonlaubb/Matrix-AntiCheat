@@ -15,16 +15,18 @@ function tickEvent (player: Player) {
     const now = Date.now();
     player.freecamLastMoved ??= now;
     player.onScreenDisplay.setActionBar(`${movementVector.x} && ${movementVector.y}`)
-    if (movementVector.x === 0 && movementVector.y === 0 && now - player.freecamLastMoved > get("antiFreecamLockCameraOn") && !player.isGliding && !player.isSleeping) {
-        const riding = player.getComponent("riding")?.entityRidingOn?.typeId;
-        if (!riding || riding === "minecraft:minecart" || isNonZero(player.getVelocity())) {
-            if (!player.freecamLastMoved && get("antiFreecamNotify")) player.sendMessage("§7[§aAnti Freecam§7] §fYour camera entered calibration state, move to unlock.");
-            player.freecamCameraModified = true;
-            const rot = player.getRotation();
-            player.camera.setCamera("minecraft:free", {
-                rotation: rot,
-                location: getFirstPerson(player.getHeadLocation(), rot),
-            }); // Forced to lock the camera
+    if (movementVector.x === 0 && movementVector.y === 0 && !player.isGliding && !player.isSleeping) {
+        if (now - player.freecamLastMoved > get("antiFreecamLockCameraOn")) {
+            const riding = player.getComponent("riding")?.entityRidingOn?.typeId;
+            if (!riding || riding === "minecraft:minecart" || isNonZero(player.getVelocity())) {
+                if (!player.freecamLastMoved && get("antiFreecamNotify")) player.sendMessage("§7[§aAnti Freecam§7] §fYour camera entered calibration state, move to unlock.");
+                player.freecamCameraModified = true;
+                const rot = player.getRotation();
+                player.camera.setCamera("minecraft:free", {
+                    rotation: rot,
+                    location: getFirstPerson(player.getHeadLocation(), rot),
+                }); // Forced to lock the camera
+            }
         }
     } else {
         player.freecamLastMoved = now;
