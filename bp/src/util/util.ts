@@ -1,4 +1,4 @@
-import { Block, Dimension, Entity, Player, Vector3 } from "@minecraft/server";
+import { Block, Dimension, Entity, LocationOutOfWorldBoundariesError, Player, Vector3 } from "@minecraft/server";
 import { min2 } from "./mathUtil";
 import { get } from "./database";
 
@@ -99,4 +99,12 @@ export function fastSurround(centerLocation: Vector3, dimension: Dimension): (Bl
 }
 export function isRiding(player: Player) {
     return !!player.getComponent("minecraft:riding")?.entityRidingOn;
+}
+export function getSurround(block: Block) {
+    try {
+        return [block.above(), block.below(), block.east(), block.west(), block.north(), block.south()];
+    } catch (error) {
+        if (error instanceof LocationOutOfWorldBoundariesError) return [];
+        throw error;
+    }
 }

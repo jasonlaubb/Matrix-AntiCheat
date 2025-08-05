@@ -1,5 +1,5 @@
 import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode, LocationOutOfWorldBoundariesError } from "@minecraft/server";
-import { locEqual } from "../util/util";
+import { getSurround, locEqual } from "../util/util";
 import { calculateRelativeViewAngle, distanceXZ } from "../util/mathUtil";
 export default {
     property: "antiScaffoldEnable",
@@ -14,7 +14,21 @@ export default {
 function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { block, player } = event;
     const height = player.location.y - block.location.y;
-    if (player.isOp() || player.isFlying || player.getGameMode() === GameMode.Creative || height < 1 || height >= 2) return;
+    if (player.isOp() || player.isFlying || player.getGameMode() === GameMode.Creative || height < 1) return;
+    const surroundBlock = getSurround(block)?.filter((block) => block && !block.isAir && !block.isLiquid);
+    // Only 1 surround block
+    if (surroundBlock) {
+        if (surroundBlock.length === 1) {
+            const supportBlock = surroundBlock[0]!;
+            if (supportBlock.location.y > block.location.y && supportBlock.location.y - player.location.y > 1) {
+                system.run(() => player.flag("Scaffold", "G", "Block (Downward)", { height, pitch: pitch.toFixed(2) }));
+            }
+        } else if (surroundBlock.length === 0) {
+            event.cancel = true;
+            system.run(() => player.flag("Scaffold", "H", "Block (Invalid)", { height, pitch: pitch.toFixed(2) }));
+        }
+    }
+    if (height >= 2) return;
     const { x: pitch, y: yaw } = player.getRotation();
     const isTouchInput = player.inputInfo.lastInputModeUsed === "Touch";
     const touchingBlock = getOnlyTouchBlock(block);

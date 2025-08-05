@@ -1,4 +1,5 @@
 import { Block, LocationOutOfWorldBoundariesError, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
+import { getSurround } from "../util/util";
 export default {
     property: "antiBreakerEnable",
     enable() {
@@ -26,14 +27,6 @@ function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWith
                 system.run(() => event.player.flag("Breaker", "B", "Block", { block: event.block.typeId }));
             }
         }
-    }
-}
-function getSurround(block: Block) {
-    try {
-        return [block.above(), block.below(), block.east(), block.west(), block.north(), block.south()];
-    } catch (error) {
-        if (error instanceof LocationOutOfWorldBoundariesError) return [];
-        throw error;
     }
 }
 function surroundSolidCount(block: Block) {
