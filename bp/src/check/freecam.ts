@@ -14,7 +14,6 @@ function tickEvent (player: Player) {
     const movementVector = player.inputInfo.getMovementVector();
     const now = Date.now();
     player.freecamLastMoved ??= now;
-    player.onScreenDisplay.setActionBar(`${movementVector.x} && ${movementVector.y}`)
     if (movementVector.x === 0 && movementVector.y === 0 && !player.isGliding && !player.isSleeping) {
         if (now - player.freecamLastMoved > get("antiFreecamLockCameraOn")) {
             const riding = player.getComponent("riding")?.entityRidingOn?.typeId;
