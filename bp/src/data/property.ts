@@ -227,4 +227,8 @@ export default {
         type: "number",
         value: 72,
     },
+    antiXpEnable: {
+        type: "boolean",
+        value: false,
+    }
 };

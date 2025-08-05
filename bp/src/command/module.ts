@@ -16,6 +16,7 @@ import instabreak from "../check/instabreak";
 import entityFly from "../check/entityFly";
 import elytraFly from "../check/elytraFly";
 import autoclicker from "../check/autoclicker";
+import xp from "../check/xp";
 export const detectionList = {
     killaura,
     autototem,
@@ -31,6 +32,7 @@ export const detectionList = {
     entityFly,
     elytraFly,
     autoclicker,
+    xp,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {

@@ -80,6 +80,8 @@ declare module "@minecraft/server" {
         autoclickerFlag: number;
         autoclickerLastFlag: number;
         autoclickerCpsCount: number;
+        xpLastValid: number;
+        xpLastXpAmount: number;
     }
     interface Entity {
         // Detection data
