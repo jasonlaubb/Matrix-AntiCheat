@@ -151,6 +151,7 @@ function aimCheck(player: Player) {
     if (!player.freecamLastMoved || Date.now() - player.freecamLastMoved > 1000) {
         player.camera.setCamera("minecraft:first_person", {
             rotation: player.getRotation(),
+            location: player.getHeadLocation(),
         })
     }
     if (player.getVelocity().x > 0 || player.getVelocity().y > 0 || player.getVelocity().z > 0) {
