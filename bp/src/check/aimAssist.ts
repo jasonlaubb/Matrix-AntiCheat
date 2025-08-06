@@ -46,7 +46,7 @@ function tickEvent(player: Player) {
         if (data.flagAmount.b >= 60) {
             player.flag("AimAssist", "B", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
         }
-    } else if (data.flagAmount.b >= 0.05) data.flagAmount.b -= 0.015;
+    } else if (data.flagAmount.b >= 0.06) data.flagAmount.b -= 0.015;
     if (deltaYaw > yawDifference && yawDifference > 0.0 && deltaPitch > 0 && deltaPitch < 0.02 && pitchDifference > deltaPitch * 2) {
         data.flagAmount.c++;
         if (data.flagAmount.c >= 2) {
