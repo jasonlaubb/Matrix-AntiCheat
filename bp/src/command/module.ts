@@ -1,3 +1,7 @@
+import { get } from "../util/database";
+import type property from "../data/property";
+import type { Command } from "../main";
+import { system, world } from "@minecraft/server";
 import killaura from "../check/killaura";
 import autototem from "../check/autototem";
 import chestaura from "../check/chestaura";
@@ -5,10 +9,6 @@ import zipline from "../check/zipline";
 import scaffold from "../check/scaffold";
 import extinguisher from "../check/extinguisher";
 import breaker from "../check/breaker";
-import { get } from "../util/database";
-import type property from "../data/property";
-import type { Command } from "../main";
-import { system, world } from "@minecraft/server";
 import autotool from "../check/autotool";
 import speed from "../check/speed";
 import fly from "../check/fly";
@@ -20,6 +20,7 @@ import xp from "../check/xp";
 import freecam from "../check/freecam";
 import shulkerBoxNesting from "../check/shulkerBoxNesting";
 import surround from "../check/surround";
+import fastThrow from "../check/fastThrow";
 export const detectionList = {
     killaura,
     autototem,
@@ -39,6 +40,7 @@ export const detectionList = {
     freecam,
     shulkerBoxNesting,
     surround,
+    fastThrow,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {

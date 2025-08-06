@@ -86,6 +86,9 @@ declare module "@minecraft/server" {
         freecamCameraModified: boolean;
         surroundLastPlaceObsidian: number;
         surroundNearbyFlag: number;
+        fastthrowLastThrow: number;
+        fastthrowFlag: number;
+        fastthrowLastFlag: number;
     }
     interface Entity {
         // Detection data

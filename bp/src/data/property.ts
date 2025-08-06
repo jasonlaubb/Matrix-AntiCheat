@@ -251,4 +251,12 @@ export default {
         type: "boolean",
         value: true,
     },
+    antiFastThrowEnable: {
+        type: "boolean",
+        value: true,
+    },
+    antiFastThrowMinInterval: {
+        type: "number",
+        value: 300,
+    }
 };
