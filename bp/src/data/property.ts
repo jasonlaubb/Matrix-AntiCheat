@@ -247,4 +247,8 @@ export default {
         type: "boolean",
         value: true,
     },
+    antiSurroundEnable: {
+        type: "boolean",
+        value: true,
+    },
 };

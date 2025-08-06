@@ -19,6 +19,7 @@ import autoclicker from "../check/autoclicker";
 import xp from "../check/xp";
 import freecam from "../check/freecam";
 import shulkerBoxNesting from "../check/shulkerBoxNesting";
+import surround from "../check/surround";
 export const detectionList = {
     killaura,
     autototem,
@@ -37,6 +38,7 @@ export const detectionList = {
     xp,
     freecam,
     shulkerBoxNesting,
+    surround,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
