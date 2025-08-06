@@ -258,5 +258,9 @@ export default {
     antiFastThrowMinInterval: {
         type: "number",
         value: 300,
-    }
+    },
+    antiAimAssistEnable: {
+        type: "boolean",
+        value: true,
+    },
 };

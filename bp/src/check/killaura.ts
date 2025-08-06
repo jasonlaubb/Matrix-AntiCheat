@@ -130,27 +130,15 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     }
 }
 function aimCheck(player: Player) {
-    const rot = player.getRotation();
-    player.killauraLastDeltaY ??= 0;
-    player.killauraLastYaw ??= rot.y;
-    const deltaY = fastAbs(rot.y - player.killauraLastYaw);
+    const pitch = player.getRotation().x;
     if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
-        if (rot.x.toFixed(5) === "0.00000") {
+        if (pitch.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
             banAttack(player, 100);
             player.flag("Killaura", "G", "Combat (Aim)");
         }
     }
-    if (rot.y < 180 && rot.y > -180 && isSuspiciousAimSnap(player, deltaY)) {
-        const isRiding = player.getComponent("riding")?.entityRidingOn;
-        if (!isRiding) {
-            banAttack(player, 100);
-            player.flag("Killaura", "H", "Combat (Aim)", { deltaY });
-        }
-    }
     if (player.isFalling) player.killauraLastInAir = Date.now();
-    player.killauraLastYaw = rot.y;
-    player.killauraLastDeltaY = deltaY;
 }
 
 function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: number = 0.5): boolean {
@@ -225,21 +213,6 @@ function hasClearPathBetweenEntities(attacker: Entity, target: Entity): boolean 
     }
 
     return false; // All paths obstructed
-}
-function isSuspiciousAimSnap(player: Player, deltaY: number): boolean {
-    const history = player.killauraDeltaYHistory ?? [];
-    history.push(deltaY);
-    if (history.length > 5) history.shift(); // keep last 5
-
-    player.killauraDeltaYHistory = history;
-
-    const recentAvg = history.slice(0, -1).reduce((a, b) => a + b, 0) / (history.length - 1);
-    const last = history[history.length - 1];
-
-    const isSpike = last > 160 && recentAvg < 20;
-    const isStableAfter = history.length === 5 && history[4] < 10;
-
-    return isSpike && isStableAfter;
 }
 function calculateExpectedBaseDamage(attacker: Player, target: Entity): number | undefined {
     const weaponBaseDamage: Record<string, number> = {

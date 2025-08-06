@@ -42,9 +42,6 @@ declare module "@minecraft/server" {
         killauraSmoothFlag: number;
         killauraXSpeed: number[];
         killauraLastAttack: number;
-        killauraLastYaw: number;
-        killauraLastDeltaY: number;
-        killauraDeltaYHistory: number[];
         killauraLastInAir: number;
         nofallLastFallState: boolean;
         nofallLastOnGroundLocation: Server.Vector3;
@@ -89,6 +86,7 @@ declare module "@minecraft/server" {
         fastthrowLastThrow: number;
         fastthrowFlag: number;
         fastthrowLastFlag: number;
+        aimAssistData: AimAssistData;
     }
     interface Entity {
         // Detection data
@@ -162,4 +160,10 @@ export interface ElytraFlyData {
     lastSpeedDeviation: number,
     triggeredType2: boolean,
     lastSpeedXZ: number;
+}
+export interface AimAssistData {
+    lastYaw: number;
+    lastPitch: number;
+    lastDeltaYaw: number;
+    lastDeltaPitch: number;
 }
