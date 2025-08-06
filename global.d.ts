@@ -166,6 +166,9 @@ export interface AimAssistData {
     lastPitch: number;
     lastDeltaYaw: number;
     lastDeltaPitch: number;
-    flagAmount: number;
-    lastFlagTimestamp: number;
+    flagAmount: {
+        a: number;
+        b: number;
+        c: number;
+    };
 }
