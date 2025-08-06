@@ -56,7 +56,6 @@ function tickEvent(player: Player) {
     if (yawDifference > 0 && fastAbs(Math.floor(yawDifference) - yawDifference) < 0.0000000001) {
         player.flag("AimAssist", "D", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
     }
-    player.onScreenDisplay.setActionBar(JSON.stringify(data.flagAmount));
     player.aimAssistData = {
         lastDeltaYaw: deltaYaw,
         lastDeltaPitch: deltaPitch,
