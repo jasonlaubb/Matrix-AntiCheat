@@ -11,6 +11,7 @@ export default {
 }
 function onItemUse (event: ItemUseBeforeEvent) {
     const { itemStack: item, source: player } = event;
+    if (player.isOp()) return;
     if (item.typeId === "minecraft:egg" || item.typeId === "minecraft:snowball") {
         const now = Date.now();
         player.fastthrowLastThrow ??= now;

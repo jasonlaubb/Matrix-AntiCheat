@@ -21,6 +21,7 @@ import freecam from "../check/freecam";
 import shulkerBoxNesting from "../check/shulkerBoxNesting";
 import surround from "../check/surround";
 import fastThrow from "../check/fastThrow";
+import aimAssist from "../check/aimAssist";
 export const detectionList = {
     killaura,
     autototem,
@@ -41,6 +42,7 @@ export const detectionList = {
     shulkerBoxNesting,
     surround,
     fastThrow,
+    aimAssist,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
