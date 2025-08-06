@@ -9,15 +9,17 @@ export default {
     },
     disable: () => {
         removeCheckInterval(tickEvent);
-    }
-}
-function tickEvent (player: Player) {
-    const data = player?.aimAssistData ?? {
-        lastYaw: 0,
-        lastPitch: 0,
-        lastDeltaYaw: 0,
-        lastDeltaPitch: 0,
-    } as AimAssistData;
+    },
+};
+function tickEvent(player: Player) {
+    const data =
+        player?.aimAssistData ??
+        ({
+            lastYaw: 0,
+            lastPitch: 0,
+            lastDeltaYaw: 0,
+            lastDeltaPitch: 0,
+        } as AimAssistData);
     const { x: pitch, y: yaw } = player.getRotation();
     const deltaYaw = fastAbs(yaw - data.lastYaw);
     const deltaPitch = fastAbs(pitch - data.lastPitch);

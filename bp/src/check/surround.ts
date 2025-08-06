@@ -8,8 +8,8 @@ export default {
     disable() {
         world.afterEvents.playerPlaceBlock.unsubscribe(blockPlace);
     },
-}
-function blockPlace ({ player, block }: PlayerPlaceBlockAfterEvent) {
+};
+function blockPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
     if (block.typeId === "minecraft:obsidian" && player.isOnGround && !player.isOp()) {
         const now = Date.now();
         const { x, y, z } = floorPos(player.location);
@@ -26,7 +26,7 @@ function blockPlace ({ player, block }: PlayerPlaceBlockAfterEvent) {
         player.surroundLastPlaceObsidian = now;
     }
 }
-function floorPos ({ x, y, z }: Vector3) {
+function floorPos({ x, y, z }: Vector3) {
     return {
         x: Math.floor(x),
         y: Math.floor(y),

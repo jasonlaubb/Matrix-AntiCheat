@@ -10,8 +10,8 @@ export default {
         world.beforeEvents.entityRemove.unsubscribe(onEntityRemove);
         removeCheckInterval(tickEvent);
     },
-}
-function onEntityRemove ({ removedEntity }: EntityRemoveBeforeEvent) {
+};
+function onEntityRemove({ removedEntity }: EntityRemoveBeforeEvent) {
     if (removedEntity.typeId !== "minecraft:xp_orb") return;
     const neareastPlayers = removedEntity.dimension.getPlayers({
         location: removedEntity.location,
@@ -19,12 +19,12 @@ function onEntityRemove ({ removedEntity }: EntityRemoveBeforeEvent) {
     });
     if (neareastPlayers.length === 0) return;
     const now = Date.now();
-    neareastPlayers.forEach((player) => player.xpLastValid = now);
+    neareastPlayers.forEach((player) => (player.xpLastValid = now));
 }
-function tickEvent (player: Player) {
+function tickEvent(player: Player) {
     const currentXp = player.getTotalXp();
     player.xpLastXpAmount ??= currentXp;
-    if (currentXp - player.xpLastXpAmount > 100 || currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 200)) {
+    if (currentXp - player.xpLastXpAmount > 100 || (currentXp > player.xpLastXpAmount && !(player.xpLastValid && Date.now() - player.xpLastValid < 200))) {
         player.resetLevel();
         try {
             player.addExperience(player.xpLastXpAmount);

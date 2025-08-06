@@ -9,8 +9,8 @@ export default {
     disable: () => {
         removeCheckInterval(tickEvent);
     },
-}
-function tickEvent (player: Player) {
+};
+function tickEvent(player: Player) {
     const movementVector = player.inputInfo.getMovementVector();
     const now = Date.now();
     player.freecamLastMoved ??= now;
@@ -35,8 +35,8 @@ function tickEvent (player: Player) {
         }
     }
 }
-function isNonZero ({ x, z }: Vector3) {
-    return x !== 0 || z !== 0
+function isNonZero({ x, z }: Vector3) {
+    return x !== 0 || z !== 0;
 }
 function getFirstPerson(headPos: Vector3, rotation: Vector2) {
     const yawDegrees = rotation.y;

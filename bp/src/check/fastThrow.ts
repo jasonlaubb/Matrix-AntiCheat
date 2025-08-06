@@ -1,4 +1,4 @@
-import { ItemUseBeforeEvent, system, world } from "@minecraft/server"
+import { ItemUseBeforeEvent, system, world } from "@minecraft/server";
 import { get } from "../util/database";
 export default {
     property: "antiFastThrowEnable",
@@ -8,8 +8,8 @@ export default {
     disable() {
         world.beforeEvents.itemUse.unsubscribe(onItemUse);
     },
-}
-function onItemUse (event: ItemUseBeforeEvent) {
+};
+function onItemUse(event: ItemUseBeforeEvent) {
     const { itemStack: item, source: player } = event;
     if (player.isOp()) return;
     if (item.typeId === "minecraft:egg" || item.typeId === "minecraft:snowball") {
@@ -28,5 +28,4 @@ function onItemUse (event: ItemUseBeforeEvent) {
             }
         } else player.fastthrowLastThrow = now;
     }
-
 }

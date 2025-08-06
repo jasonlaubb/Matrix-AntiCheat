@@ -11,44 +11,44 @@ export default {
         world.beforeEvents.playerInteractWithBlock.unsubscribe(blockInteract);
         world.afterEvents.playerPlaceBlock.unsubscribe(blockPlace);
     },
-}
-function blockBreak (event: PlayerBreakBlockBeforeEvent) {
+};
+function blockBreak(event: PlayerBreakBlockBeforeEvent) {
     const block = event.block;
     if (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("_shulker_box")) {
         const data = getShulkerBoxIndex(block);
         if (data && data.index.length > 0) {
             event.cancel = true;
             system.run(() => {
-                data.index.forEach(index => data.blockContainer.setItem(index)); // Remove the shulker box item
+                data.index.forEach((index) => data.blockContainer.setItem(index)); // Remove the shulker box item
                 const itemStack = block.getItemStack(1, true);
                 block.setType("minecraft:air");
                 if (itemStack) block.dimension.spawnItem(itemStack, block.center()); // Spawn the item
-            })
-        }
-    }
-}
-function blockInteract (event: PlayerInteractWithBlockBeforeEvent) {
-    const block = event.block;
-    if (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("_shulker_box")) {
-        const data = getShulkerBoxIndex(block);
-        if (data && data.index.length > 0) {
-            event.cancel = true;
-            system.run(() => {
-                data.index.forEach(index => data.blockContainer.setItem(index)); // Remove the shulker box item
             });
         }
     }
 }
-function blockPlace (event: PlayerPlaceBlockAfterEvent) {
+function blockInteract(event: PlayerInteractWithBlockBeforeEvent) {
     const block = event.block;
     if (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("_shulker_box")) {
         const data = getShulkerBoxIndex(block);
         if (data && data.index.length > 0) {
-            data.index.forEach(index => data.blockContainer.setItem(index)); // Remove the shulker box item
+            event.cancel = true;
+            system.run(() => {
+                data.index.forEach((index) => data.blockContainer.setItem(index)); // Remove the shulker box item
+            });
         }
     }
 }
-function getShulkerBoxIndex (block: Block) {
+function blockPlace(event: PlayerPlaceBlockAfterEvent) {
+    const block = event.block;
+    if (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("_shulker_box")) {
+        const data = getShulkerBoxIndex(block);
+        if (data && data.index.length > 0) {
+            data.index.forEach((index) => data.blockContainer.setItem(index)); // Remove the shulker box item
+        }
+    }
+}
+function getShulkerBoxIndex(block: Block) {
     const blockContainer = block.getComponent("inventory")?.container;
     if (!blockContainer) return;
     let shulkerBoxIndex: number[] = [];
