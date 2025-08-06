@@ -37,13 +37,13 @@ function tickEvent(player: Player) {
      */
     if (deltaYaw > yawDifference && yawDifference > 0.3 && deltaPitch > 0 && deltaPitch <= pitchDifference && pitchDifference < 0.1) {
         data.flagAmount.a++;
-        if (data.flagAmount.a >= 3) {
+        if (data.flagAmount.a >= 2) {
             player.flag("AimAssist", "A", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
         }
     } else if (data.flagAmount.a >= 0.01) data.flagAmount.a -= 0.01;
     if (deltaYaw > yawDifference && yawDifference > 0 && yawDifference < 0.1 && deltaPitch > 0.08) {
         data.flagAmount.b++;
-        if (data.flagAmount.b >= 5) {
+        if (data.flagAmount.b >= 3) {
             player.flag("AimAssist", "B", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
         }
     } else if (data.flagAmount.b >= 0.015) data.flagAmount.b -= 0.015;
