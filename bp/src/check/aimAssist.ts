@@ -19,20 +19,32 @@ function tickEvent(player: Player) {
             lastPitch: 0,
             lastDeltaYaw: 0,
             lastDeltaPitch: 0,
+            lastFlagTimestamp: 0,
+            flagAmount: 0,
         } as AimAssistData);
     const { x: pitch, y: yaw } = player.getRotation();
     const deltaYaw = fastAbs(yaw - data.lastYaw);
     const deltaPitch = fastAbs(pitch - data.lastPitch);
     const yawDifference = data.lastDeltaYaw;
     const pitchDifference = data.lastDeltaPitch;
+    const now = Date.now();
+    if (data.flagAmount > 0 && now - data.lastFlagTimestamp > 3000) {
+        data.flagAmount = 0;
+    }
     /**
         AimAssist A-D detection comes from Azure-Anticheat
         @links https://github.com/AimbotPvP/azure-anticheat/blob/master/src/main/java/us/skidrevenant/azure/check/checks/combat/aimassist/AimAssistA.java
      */
     if (deltaYaw > yawDifference && yawDifference > 0.3 && deltaPitch > 0 && deltaPitch <= pitchDifference && pitchDifference < 0.1) {
-        player.flag("AimAssist", "A", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
+        data.flagAmount++;
+        data.lastFlagTimestamp = now;
+        if (data.flagAmount >= 3) {
+            player.flag("AimAssist", "A", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
+        }
     }
     if (deltaYaw > yawDifference && yawDifference > 0 && yawDifference < 0.1 && deltaPitch > 0.08) {
+        data.flagAmount += 0.5;
+        data.lastFlagTimestamp = now;
         player.flag("AimAssist", "B", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
     }
     if (deltaYaw > yawDifference && yawDifference > 0.0 && deltaPitch > 0 && deltaPitch < 0.02 && pitchDifference > deltaPitch * 2) {
@@ -46,5 +58,7 @@ function tickEvent(player: Player) {
         lastDeltaPitch: deltaPitch,
         lastYaw: yaw,
         lastPitch: pitch,
+        flagAmount: data.flagAmount,
+        lastFlagTimestamp: data.lastFlagTimestamp,
     };
 }
