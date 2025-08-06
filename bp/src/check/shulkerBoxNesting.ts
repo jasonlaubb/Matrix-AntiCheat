@@ -1,4 +1,4 @@
-import { Block, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerPlaceBlockAfterEvent, PlayerPlaceBlockBeforeEvent, system, world } from "@minecraft/server";
+import { Block, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerPlaceBlockAfterEvent, system, world } from "@minecraft/server";
 export default {
     property: "antiShulkerBoxNesting",
     enable: () => {
