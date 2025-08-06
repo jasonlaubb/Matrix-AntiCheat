@@ -18,6 +18,7 @@ import elytraFly from "../check/elytraFly";
 import autoclicker from "../check/autoclicker";
 import xp from "../check/xp";
 import freecam from "../check/freecam";
+import shulkerBoxNesting from "../check/shu"
 export const detectionList = {
     killaura,
     autototem,

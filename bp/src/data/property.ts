@@ -243,4 +243,8 @@ export default {
         type: "boolean",
         value: true,
     },
+    antiShulkerBoxNesting: {
+        type: "boolean",
+        value: true,
+    },
 };
