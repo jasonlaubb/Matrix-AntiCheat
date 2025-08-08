@@ -71,9 +71,8 @@ export default {
         const id = system.runInterval(() => {
             if (!player || !player.isValid) return system.clearRun(id);
             const targetLeft = !targetPlayer || !targetPlayer.isValid;
-            const dimensionChange = targetPlayer.dimension.id !== player.dimension.id;
-            const jumpEscape = player.isJumping;
-            if (targetLeft || dimensionChange || jumpEscape || !player.isWatching) {
+            const dimensionChange = !targetLeft && targetPlayer.dimension.id !== player.dimension.id;
+            if (targetLeft || dimensionChange || !player.isWatching) {
                 system.clearRun(id);
                 delete player.isWatching;
                 delete player.watchPlayerPos;

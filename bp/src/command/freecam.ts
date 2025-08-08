@@ -44,6 +44,7 @@ export const freecam = {
                 y: cameraPos.y + y,
                 z: cameraPos.z + z
             }
+            player.onScreenDisplay.setActionBar("§gType §e/freecam §gto exit freecam mode.");
             player.camera.setCamera("minecraft:free", {
                 rotation: rot,
                 location: player.freecamCameraPosition,
