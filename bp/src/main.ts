@@ -452,4 +452,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         const format = get("chatRankNameTagFormat");
         player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
     }
+    if (world.getDynamicProperty("automute") && !player.isOp()) {
+        player.runCommand("ability @s mute true");
+    }
 });
