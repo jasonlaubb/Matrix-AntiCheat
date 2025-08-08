@@ -364,7 +364,7 @@ world.afterEvents.worldLoad.subscribe(() => {
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const player = event.sender;
-    if (world.getDynamicProperty("automute") && !player?.chatEntered) {
+    if (world.getDynamicProperty("automute") && !player?.chatEntered && !player.isOp()) {
         event.cancel = true;
         return;
     }
