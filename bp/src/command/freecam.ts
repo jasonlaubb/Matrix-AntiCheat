@@ -58,8 +58,9 @@ export const freecamtp = {
     requireOp: true,
     execute: (player) => {
         if (!player?.freecamCameraPosition) return { status: 1, message: "§7[§aMatrix§7] §fYou are not in freecam mode." };
+        const cameraPos = player.freecamCameraPosition;
         system.run(() => {
-            if (player.freecamCameraPosition) player.teleport(player.freecamCameraPosition);
+            player.teleport(cameraPos);
             setMovement(player, true);
             player.camera.clear();
         });
