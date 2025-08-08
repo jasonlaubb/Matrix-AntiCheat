@@ -19,8 +19,10 @@ export const freecam = {
                 return { status: 0, message: "§7[§aMatrix§7] §fCamera teleported to target's location" };
             }
             delete player.freecamCameraPosition;
-            system.run(() => player.camera.clear());
-            setMovement(player, true);
+            system.run(() => {
+                player.camera.clear();
+                setMovement(player, true);
+            });
             return { status: 0, message: "§7[§aMatrix§7] §fEscaped from freecam mode." };
         }
         target ? player.freecamCameraPosition = target.location :
