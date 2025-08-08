@@ -51,7 +51,7 @@ import antiafk from "./command/antiafk";
 import { freecam, freecamspeed, freecamtp } from "./command/freecam";
 import lockdown from "./command/lockdown";
 import { banitem, banitemclear, banitemlist, registerItemBanEvent, unbanitem } from "./command/banItem";
-import { automute } from "./command/automute";
+import { automute, enterchat } from "./command/automute";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -168,6 +168,7 @@ system.beforeEvents.startup.subscribe((event) => {
         banitemclear,
         unbanitem,
         automute,
+        enterchat,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
