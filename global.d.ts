@@ -101,6 +101,9 @@ declare module "@minecraft/server" {
         chestauraIsTracking: boolean;
         previousOpen: string;
     }
+    interface World {
+        lockdown?: boolean;
+    }
 }
 interface Console {
     log: (data: any) => void;

@@ -19,14 +19,6 @@
  */
 import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
 import info from "./command/info";
-import { detect, detectionlist, detectionList, initModules } from "./command/module";
-import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
-import { rankadd, rankclear, ranklist, rankremove, rankset } from "./command/rank";
-import watch, { cameraTypes } from "./command/watch";
-import antixrayenable from "./command/antixrayenable";
-import { banCmd, banOffline, banlist, unban } from "./command/ban";
-import worldBorder from "./command/worldBorder";
-import invsee from "./command/invsee";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
@@ -44,11 +36,20 @@ import { endLock, netherLock } from "./command/dimensionLock";
 import { endNetherLockOn } from "./asset/endNetherLock";
 import { mute, unmute } from "./command/mute";
 import { knockback, riptide } from "./asset/eventHandler";
+import { detect, detectionlist, detectionList, initModules } from "./command/module";
+import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
+import { rankadd, rankclear, ranklist, rankremove, rankset } from "./command/rank";
+import watch, { watchtp, cameraTypes } from "./command/watch";
+import antixrayenable from "./command/antixrayenable";
+import { banCmd, banOffline, banlist, unban } from "./command/ban";
+import worldBorder from "./command/worldBorder";
+import invsee from "./command/invsee";
 import flaglog from "./command/flaglog";
 import chatrank from "./command/chatrank";
 import antispam from "./command/antispam";
 import antiafk from "./command/antiafk";
 import { freecam, freecamspeed, freecamtp } from "./command/freecam";
+import lockdown from "./command/lockdown";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -139,6 +140,7 @@ system.beforeEvents.startup.subscribe((event) => {
         rankremove,
         rankset,
         watch,
+        watchtp,
         antixrayenable,
         banCmd,
         banOffline,
@@ -158,6 +160,7 @@ system.beforeEvents.startup.subscribe((event) => {
         freecam,
         freecamspeed,
         freecamtp,
+        lockdown,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
