@@ -103,6 +103,7 @@ declare module "@minecraft/server" {
     }
     interface World {
         lockdown?: boolean;
+        banItemEventRegistered?: boolean;
     }
 }
 interface Console {

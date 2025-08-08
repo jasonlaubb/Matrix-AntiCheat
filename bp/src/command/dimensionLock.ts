@@ -9,6 +9,7 @@ export const endLock = {
     execute: () => {
         const isEnabled = get("endLock");
         const isEnabled2 = get("netherLock");
+        world.setDynamicProperty("database:endLock", !isEnabled);
         system.run(() => {
             if (isEnabled2) return;
             if (isEnabled) {
@@ -17,7 +18,6 @@ export const endLock = {
                 checkNetherEnd();
                 endNetherLockOn();
             }
-            world.setDynamicProperty("database:endLock", !isEnabled);
         });
         return { status: 0, message: `§7[§aMatrix§7] §fSuccessfully ${isEnabled ? "disabled" : "enabled"} end lock.` };
     },
@@ -29,6 +29,7 @@ export const netherLock = {
     execute: () => {
         const isEnabled = get("netherLock");
         const isEnabled2 = get("endLock");
+        world.setDynamicProperty("database:netherLock", !isEnabled);
         system.run(() => {
             if (isEnabled2) return;
             if (isEnabled) {
@@ -37,7 +38,6 @@ export const netherLock = {
                 checkNetherEnd();
                 endNetherLockOn();
             }
-            world.setDynamicProperty("database:netherLock", !isEnabled);
         });
         return { status: 0, message: `§7[§aMatrix§7] §fSuccessfully ${isEnabled ? "disabled" : "enabled"} nether lock.` };
     },

@@ -50,6 +50,7 @@ import antispam from "./command/antispam";
 import antiafk from "./command/antiafk";
 import { freecam, freecamspeed, freecamtp } from "./command/freecam";
 import lockdown from "./command/lockdown";
+import { banitem, banitemclear, banitemlist, registerItemBanEvent, unbanitem } from "./command/banItem";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -109,7 +110,7 @@ Player.prototype.kick = function (reason: string) {
 };
 interface Option {
     name: string;
-    type: "string" | "integer" | "float" | "boolean" | "enum" | "player" | "playerTarget" | "normalPlayerTarget";
+    type: "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
     max?: number;
     min?: number;
 }
@@ -161,6 +162,10 @@ system.beforeEvents.startup.subscribe((event) => {
         freecamspeed,
         freecamtp,
         lockdown,
+        banitem,
+        banitemlist,
+        banitemclear,
+        unbanitem,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
@@ -178,6 +183,8 @@ system.beforeEvents.startup.subscribe((event) => {
             case "playerTarget":
             case "player":
                 return CustomCommandParamType.PlayerSelector;
+            case "item":
+                return CustomCommandParamType.ItemType;
             default:
                 return CustomCommandParamType.String;
         }
@@ -341,9 +348,8 @@ system.beforeEvents.startup.subscribe((event) => {
         },
     });
 });
-
+system.runInterval(tick);
 world.afterEvents.worldLoad.subscribe(() => {
-    system.runInterval(tick);
     initModules();
     if (get("worldBorder")) worldBorderOn();
     if (get("oreAlert")) oreAlertOn();
@@ -351,6 +357,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     const movementModule = get("antiSpeedEnable") || get("antiFlyEnable");
     if (movementModule || get("antiKillauraEnable")) world.afterEvents.itemReleaseUse.subscribe(riptide);
     if (movementModule) world.afterEvents.entityHurt.subscribe(knockback);
+    if (world.getDynamicPropertyIds().find((id) => id.startsWith("banitem:"))) registerItemBanEvent();
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const player = event.sender;
@@ -429,6 +436,10 @@ function longestContinuousChar(str: string) {
 }
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (!initialSpawn) return;
+    if (world?.lockdown && !player.isOp()) {
+        player.kick("Server is locked down by operator, please try again later");
+        return;
+    }
     checkPunish(player);
     if (get("chatRankDisplayOnNameTag")) {
         const playerRank = getPlayerRank(player);

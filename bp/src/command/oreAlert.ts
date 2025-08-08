@@ -8,11 +8,11 @@ export default {
     requireOp: true,
     execute: () => {
         const isEnabled = get("oreAlert");
+        world.setDynamicProperty("database:oreAlert", !isEnabled);
         system.run(() => {
             if (isEnabled) {
                 oreAlertOff();
             } else oreAlertOn();
-            world.setDynamicProperty("database:oreAlert", !isEnabled);
         });
         return { status: 0, message: "§7[§aMatrix§7] §fSuccesfully " + (isEnabled ? "disabled" : "enabled") + " ore alert." };
     },
