@@ -19,7 +19,8 @@ export const freecam = {
                 return { status: 0, message: "§7[§aMatrix§7] §fCamera teleported to target's location" };
             }
             delete player.freecamCameraPosition;
-            player.camera.clear();
+            system.run(() => player.camera.clear());
+            setMovement(player, true);
             return { status: 0, message: "§7[§aMatrix§7] §fEscaped from freecam mode." };
         }
         target ? player.freecamCameraPosition = target.location :
@@ -91,7 +92,5 @@ export const freecamspeed = {
     }
 } as Command;
 function setMovement (player: Player, value: boolean) {
-    player.inputPermissions.setPermissionCategory(InputPermissionCategory.Jump, value);
-    player.inputPermissions.setPermissionCategory(InputPermissionCategory.Sneak, value);
-    player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, value);
+    player.inputPermissions.setPermissionCategory(InputPermissionCategory.LateralMovement, value);
 }

@@ -124,14 +124,15 @@ export function minDifference(arr: number[]) {
 export function getXZVectorSpeed(yaw: number, movementVector: Vector2, speed: number): VectorXZ {
     // Convert yaw from degrees to radians
     const rad = (yaw * Math.PI) / 180;
-
-    // Calculate forward and strafe directions
     const sin = Math.sin(rad);
     const cos = Math.cos(rad);
 
-    // Apply movement vector
-    const x = (movementVector.y * sin - movementVector.x * cos) * speed;
-    const z = (movementVector.y * cos + movementVector.x * sin) * speed;
+    // MC convention: movementVector.x = strafe (right), movementVector.y = forward
+    const forward = movementVector.y;
+    const strafe = movementVector.x;
+
+    const x = (-sin * forward + cos * strafe) * speed;
+    const z = ( cos * forward + sin * strafe) * speed;
 
     return { x, z };
 }
