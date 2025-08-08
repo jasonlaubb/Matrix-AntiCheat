@@ -1,4 +1,4 @@
-import { InputButton, InputPermissionCategory, Player, system } from "@minecraft/server";
+import { InputPermissionCategory, Player, system } from "@minecraft/server";
 import type { Command } from "../main";
 import { getXZVectorSpeed } from "../util/mathUtil";
 const BPT = 0.2;
@@ -37,8 +37,8 @@ export const freecam = {
             const movementSpeed = speed * BPT;
             const { x, z } = getXZVectorSpeed(rot.y, inputInfo.getMovementVector(), movementSpeed);
             let y = 0;
-            if (inputInfo.getButtonState(InputButton.Jump)) y += movementSpeed;
-            if (inputInfo.getButtonState(InputButton.Sneak)) y -= movementSpeed;
+            if (player.isJumping) y += movementSpeed;
+            if (player.isSneaking) y -= movementSpeed;
             player.freecamCameraPosition = {
                 x: cameraPos.x + x,
                 y: cameraPos.y + y,
