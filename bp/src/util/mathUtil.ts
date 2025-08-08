@@ -1,4 +1,4 @@
-import type { Vector3 } from "@minecraft/server";
+import type { Vector2, Vector3, VectorXZ } from "@minecraft/server";
 
 export function max2(a: number, b: number): number {
     return a > b ? a : b;
@@ -121,7 +121,17 @@ export function minDifference(arr: number[]) {
 
     return minDiff;
 }
-export function getVariance(data: number[]): number {
-    const mean = data.reduce((a, b) => a + b, 0) / data.length;
-    return data.reduce((a, b) => a + (b - mean) ** 2, 0) / data.length;
+export function getXZVectorSpeed(yaw: number, movementVector: Vector2, speed: number): VectorXZ {
+    // Convert yaw from degrees to radians
+    const rad = (yaw * Math.PI) / 180;
+
+    // Calculate forward and strafe directions
+    const sin = Math.sin(rad);
+    const cos = Math.cos(rad);
+
+    // Apply movement vector
+    const x = (movementVector.y * sin - movementVector.x * cos) * speed;
+    const z = (movementVector.y * cos + movementVector.x * sin) * speed;
+
+    return { x, z };
 }

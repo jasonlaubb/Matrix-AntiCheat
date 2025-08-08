@@ -19,6 +19,8 @@ declare module "@minecraft/server" {
         watchPlayerPos?: Vector3;
         watchBeforeGM?: GameMode;
         cameraType?: "down" | "head" | "behind";
+        // Freecam command
+        freecamCameraPosition?: Server.Vector3;
         // Ore Alert
         diamondFoundAmount: number;
         lastDiamondOresFound: number;
