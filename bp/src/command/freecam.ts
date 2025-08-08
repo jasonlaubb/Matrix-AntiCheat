@@ -1,7 +1,7 @@
 import { InputPermissionCategory, Player, system } from "@minecraft/server";
 import type { Command } from "../main";
 import { getXZVectorSpeed } from "../util/mathUtil";
-const BPT = 0.2;
+const BPT = 0.4;
 export const freecam = {
     name: "freecam",
     description: "Move your camera around freely",
