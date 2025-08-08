@@ -453,6 +453,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
     }
     if (world.getDynamicProperty("automute") && !player.isOp()) {
+        player.sendMessage("§7[§aAutoMute§7] §fUse §e/enterchat §fto unmute yourself.");
         player.runCommand("ability @s mute true");
     }
 });
