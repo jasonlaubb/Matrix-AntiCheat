@@ -48,6 +48,7 @@ import flaglog from "./command/flaglog";
 import chatrank from "./command/chatrank";
 import antispam from "./command/antispam";
 import antiafk from "./command/antiafk";
+import { freecam, freecamspeed, freecamtp } from "./command/freecam";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -154,6 +155,9 @@ system.beforeEvents.startup.subscribe((event) => {
         chatrank,
         antispam,
         antiafk,
+        freecam,
+        freecamspeed,
+        freecamtp,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
