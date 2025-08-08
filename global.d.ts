@@ -34,6 +34,8 @@ declare module "@minecraft/server" {
         lastMessage: number;
         tooFastFlag: number;
         lastMessageRaw: string;
+        // AutoMute Data
+        chatEntered: boolean;
         // Detection data
         killauraFlag: number;
         killauraLastFlag: number;

@@ -1,4 +1,4 @@
-import { Block, Dimension, Entity, LocationOutOfWorldBoundariesError, Player, Vector3 } from "@minecraft/server";
+import { Block, Dimension, Entity, ItemStack, LocationOutOfWorldBoundariesError, Player, Vector3 } from "@minecraft/server";
 import { min2 } from "./mathUtil";
 import { get } from "./database";
 
@@ -106,5 +106,13 @@ export function getSurround(block: Block) {
     } catch (error) {
         if (error instanceof LocationOutOfWorldBoundariesError) return [];
         throw error;
+    }
+}
+export function hasEducationalFeature() {
+    try {
+        new ItemStack("minecraft:chemistry_table");
+        return true;
+    } catch {
+        return false;
     }
 }

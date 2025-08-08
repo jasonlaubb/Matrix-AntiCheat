@@ -51,6 +51,7 @@ import antiafk from "./command/antiafk";
 import { freecam, freecamspeed, freecamtp } from "./command/freecam";
 import lockdown from "./command/lockdown";
 import { banitem, banitemclear, banitemlist, registerItemBanEvent, unbanitem } from "./command/banItem";
+import { automute } from "./command/automute";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 2;
@@ -166,6 +167,7 @@ system.beforeEvents.startup.subscribe((event) => {
         banitemlist,
         banitemclear,
         unbanitem,
+        automute,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
@@ -361,6 +363,10 @@ world.afterEvents.worldLoad.subscribe(() => {
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const player = event.sender;
+    if (world.getDynamicProperty("automute") && !player?.chatEntered) {
+        event.cancel = true;
+        return;
+    }
     const { x, y } = player.inputInfo.getMovementVector();
     if (x !== 0 || y !== 0) {
         event.cancel = true;

@@ -1,17 +1,8 @@
-import { ItemStack, system } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { timeUnits } from "./ban";
 import type { Command } from "../main";
-import { parseTime } from "../util/util";
+import { parseTime, hasEducationalFeature } from "../util/util";
 import { checkPunish } from "../util/punishment";
-
-function hasEducationalFeature() {
-    try {
-        new ItemStack("minecraft:chemistry_table");
-        return true;
-    } catch {
-        return false;
-    }
-}
 
 export const mute = {
     name: "mute",
@@ -34,12 +25,13 @@ export const mute = {
             type: "enum",
         },
     ],
-    execute: (player, [target, duration, timeUnit]) => {
+    execute: (_player, [target, duration, timeUnit]) => {
         if (!hasEducationalFeature()) return { status: 1, message: "§7[§aMatrix§7] §fEducation edition required! " };
+        if (target.getDynamicProperty("muteData:" + target.id)) return { status: 1, message: "§7[§aMatrix§7] §fPlayer has been muted already." }; 
         if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §fYou need to type time unit if you want to set a duration." };
         if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
         system.run(() => {
-            target.setDynamicProperty("muteData:" + player.id, duration ? Date.now() + parseTime(timeUnit, duration) : -1);
+            target.setDynamicProperty("muteData:" + target.id, duration ? Date.now() + parseTime(timeUnit, duration) : -1);
             checkPunish(target);
         });
         return { status: 0, message: "§7[§aMatrix§7] §fMuted player: " + target.name };
@@ -55,11 +47,12 @@ export const unmute = {
             type: "playerTarget",
         },
     ],
-    execute: (player, [target]) => {
+    execute: (_player, [target]) => {
         if (!hasEducationalFeature()) return { status: 1, message: "§7[§aMatrix§7] §fEducation edition required! " };
+        if (!target.getDynamicProperty("muteData:" + target.id)) return { status: 1, message: "§7[§aMatrix§7] §fPlayer has not been muted." }; 
         system.run(() => {
-            target.setDynamicProperty("muteData:" + player.id);
-            player.runCommand("ability @s mute true");
+            target.setDynamicProperty("muteData:" + target.id);
+            target.runCommand("ability @s mute false");
         });
         return { status: 0, message: "§7[§aMatrix§7] §fMuted player: " + target.name };
     },
