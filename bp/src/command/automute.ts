@@ -19,8 +19,8 @@ export const enterchat = {
     execute: (player) => {
         const isEnabled = world.getDynamicProperty("automute");
         if (!isEnabled) return { status: 1, message: "§7[§aMatrix§7] §fAutomute is not enabled." };
-        if (player.getDynamicProperty("muteData:" + player.id)) return { status: 1, message: "§7[§aMatrix§7] §fYou are muted and cannot enter the chat." };
         if (player?.chatEntered) return { status: 1, message: "§7[§aMatrix§7] §fYou have already entered the chat." };
+        if (player.getDynamicProperty("muteData:" + player.id)) return { status: 1, message: "§7[§aMatrix§7] §fYou are muted and cannot enter the chat." };
         player.chatEntered = true;
         system.run(() => player.chatEntered = true);
         return { status: 0, message: "§7[§aMatrix§7] §fYou have entered the chat." };
