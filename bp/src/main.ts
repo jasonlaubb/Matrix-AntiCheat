@@ -295,7 +295,7 @@ system.beforeEvents.startup.subscribe((event) => {
                             break;
                         }
                         case "item": {
-                            args[i] = args[i].id;
+                            args[i] = input.id;
                         }
                     }
                 }
