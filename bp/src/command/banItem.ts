@@ -110,7 +110,7 @@ export function registerItemBanEvent () {
 }
 function simplifyId (id: string) {
     let simplified = id.split(":").slice(1).join(":").replace("_", " ");
-    simplified = simplified.slice(1) + simplified.charAt(0).toUpperCase();
+    simplified = simplified.charAt(0).toUpperCase() + simplified.slice(1);
     for (let i = 1; i < simplified.length; i++) {
         if (simplified[i] === " ") {
             simplified = simplified.slice(0, i + 1) + simplified.charAt(i + 1).toUpperCase() + simplified.slice(i + 2);
