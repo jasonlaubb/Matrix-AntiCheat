@@ -103,7 +103,7 @@ export function registerItemBanEvent () {
                 }
             }
             if (bannedList.length > 0) {
-                player.sendMessage(`§7[§aMatrix§7] §fBanned items has been removed from your inventory:\n` + bannedList.map(({ id, reason }) => `§g${simplifyId(id)}: §e${reason}§r`).join("\n"));
+                player.sendMessage(`§7[§aMatrix§7] §fBanned item(s) has been removed from your inventory:\n` + bannedList.map(({ id, reason }) => `§g${simplifyId(id)}: §e${reason}§r`).join("\n"));
             }
         });
     }, 20);
