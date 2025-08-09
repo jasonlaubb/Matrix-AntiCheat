@@ -72,7 +72,6 @@ export const banitemclear = {
             }
         }
         if (cleared === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo items were banned." };
-        if (!world?.banItemEventRegistered) registerItemBanEvent();
         return { status: 0, message: `§7[§aMatrix§7] §fCleared ${cleared} banned items.` };
     }
 } as Command;
@@ -104,8 +103,17 @@ export function registerItemBanEvent () {
                 }
             }
             if (bannedList.length > 0) {
-                player.sendMessage(`§7[§aMatrix§7] §fBanned items has been removed from your inventory:\n` + bannedList.map(({ id, reason}) => `§g${id}: §e${reason}§r`).join("\n"));
+                player.sendMessage(`§7[§aMatrix§7] §fBanned items has been removed from your inventory:\n` + bannedList.map(({ id, reason }) => `§g${simplifyId(id)}: §e${reason}§r`).join("\n"));
             }
         });
     }, 20);
+}
+function simplifyId (id: string) {
+    let simplified = id.replace(/([a-z0-9]):([a-z0-9_])/i, "$2").replace("_", " ");
+    simplified = simplified.slice(1) + simplified.charAt(0).toUpperCase();
+    for (let i = 1; i < simplified.length; i++) {
+        if (simplified[i] === " ") {
+            simplified = simplified.slice(0, i + 1) + simplified.charAt(i + 1).toUpperCase() + simplified.slice(i + 2);
+        }
+    }
 }
