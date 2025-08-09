@@ -364,8 +364,8 @@ world.afterEvents.worldLoad.subscribe(() => {
     const allPlayers = world.getAllPlayers();
     if (allPlayers.length > 0) {
         try {
-            allPlayers[0].runCommand("give @s element_0 1");
-            allPlayers[0].runCommand("clear @s element_0 0 1");
+            allPlayers[0].runCommand("give @s element_0 1 1");
+            allPlayers[0].runCommand("clear @s element_0 1 1");
             world.educationalFeaturesEnabled = true;
         } catch {
             world.educationalFeaturesEnabled = false;
