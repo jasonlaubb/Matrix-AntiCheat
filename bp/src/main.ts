@@ -361,6 +361,16 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (movementModule || get("antiKillauraEnable")) world.afterEvents.itemReleaseUse.subscribe(riptide);
     if (movementModule) world.afterEvents.entityHurt.subscribe(knockback);
     if (world.getDynamicPropertyIds().find((id) => id.startsWith("banitem:"))) registerItemBanEvent();
+    const allPlayers = world.getAllPlayers();
+    if (allPlayers.length > 0) {
+        try {
+            allPlayers[0].runCommand("give @s element_0 1");
+            allPlayers[0].runCommand("clear @s element_0 0 1");
+            world.educationalFeaturesEnabled = true;
+        } catch {
+            world.educationalFeaturesEnabled = false;
+        }
+    }
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const player = event.sender;
@@ -456,5 +466,14 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (world.getDynamicProperty("automute") && !player.isOp()) {
         player.sendMessage("§7[§aAutoMute§7] §fUse §e/enterchat §fto unmute yourself.");
         player.runCommand("ability @s mute true");
+    }
+    if (world?.educationalFeaturesEnabled === undefined) {
+        try {
+            player.runCommand("give @s element_0 1");
+            player.runCommand("clear @s element_0 0 1");
+            world.educationalFeaturesEnabled = true;
+        } catch {
+            world.educationalFeaturesEnabled = false;
+        }
     }
 });
