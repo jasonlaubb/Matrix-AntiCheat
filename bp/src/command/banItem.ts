@@ -51,7 +51,7 @@ export const banitemlist = {
         for (const id of bannedItems) {
             if (id.startsWith("banitem:")) banned.push(id.slice(8));
         }
-        if (banned.length === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo items are banned." };
+        if (banned.length === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo item is banned." };
         return {
             status: 0,
             message: "§7[§aMatrix§7] §fBanned items:\n" + banned.map(item => `§e${item}§f - ${world.getDynamicProperty("banitem:" + item)}`).join("\n"),
@@ -72,7 +72,7 @@ export const banitemclear = {
             }
         }
         if (cleared === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo items were banned." };
-        return { status: 0, message: `§7[§aMatrix§7] §fCleared ${cleared} banned items.` };
+        return { status: 0, message: `§7[§aMatrix§7] §fCleared ${cleared} banned item(s).` };
     }
 } as Command;
 export function registerItemBanEvent () {
