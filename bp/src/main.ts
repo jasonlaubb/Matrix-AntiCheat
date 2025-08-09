@@ -292,6 +292,10 @@ system.beforeEvents.startup.subscribe((event) => {
                                     message: `§7[§aMatrix§7] §fParameter ${param.name} is too long. Max length: ${param.max}`,
                                 };
                             }
+                            break;
+                        }
+                        case "item": {
+                            args[i] = args[i].id;
                         }
                     }
                 }
