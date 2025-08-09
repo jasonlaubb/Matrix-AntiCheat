@@ -116,4 +116,5 @@ function simplifyId (id: string) {
             simplified = simplified.slice(0, i + 1) + simplified.charAt(i + 1).toUpperCase() + simplified.slice(i + 2);
         }
     }
+    return simplified;
 }
