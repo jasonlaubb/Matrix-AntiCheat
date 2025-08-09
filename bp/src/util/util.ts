@@ -109,10 +109,5 @@ export function getSurround(block: Block) {
     }
 }
 export function hasEducationalFeature() {
-    try {
-        world.getAllPlayers()[0].runCommand("clear @s element_0	0 0");
-        return true;
-    } catch {
-        return false;
-    }
+    return world.educationalFeaturesEnabled ?? false;
 }
