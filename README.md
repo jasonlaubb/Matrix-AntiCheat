@@ -35,6 +35,10 @@ We can detect following type of cheat:
 - Fucker (Breaker)
 - Extinguisher (Auto-break-fire)
 - AutoTool
+- Surround
+- Shulker box nesting
+- Aim Assist
+- Fast Throw
 
 No anticheat is perfect, if you found any bypass you can report in our discord support server!
 
@@ -45,12 +49,14 @@ We strongly suggest you to use `serverAuthWithRewind` instead of `serverAuth` in
 Although we aim to provide a lite anticheat, we also provide some extra useful features to help you run your server.
 
 You can enable those feature by slash command and change the related setting by `/setnumber`, `/setstring` and `/setboolean` commands.
-- ChatRank
+- Chat Rank
 - AntiSpam
 - Dimension Lock (You can choose both, end or nether)
 - Ore Alert
 - World border (With particle effect!)
-
+- Auto Mute (Anti ARAS bot)
+- Custom item banning
+- Lock down
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/oreAlert.png" width="80%">
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/worldBorder.png" width="80%">
 
@@ -58,7 +64,7 @@ Some extra functional command
 - Invsee command which can view directly.
 - Ban, mute command.
 - Watch command (Not discoverable by player even esp, nametag cheater).
-
+- Freecam command (Observe player and move the camera freely without being discovered).
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/watch.png" width="80%">
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/banScreen.jpg" width="80%">
 
