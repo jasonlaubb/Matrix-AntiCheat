@@ -109,7 +109,7 @@ export function registerItemBanEvent () {
     }, 20);
 }
 function simplifyId (id: string) {
-    let simplified = id.replace(/([a-z0-9]):([a-z0-9_])/i, "$2").replace("_", " ");
+    let simplified = id.split(":").slice(1).join(":").replace("_", " ");
     simplified = simplified.slice(1) + simplified.charAt(0).toUpperCase();
     for (let i = 1; i < simplified.length; i++) {
         if (simplified[i] === " ") {
