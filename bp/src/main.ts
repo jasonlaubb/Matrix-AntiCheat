@@ -329,7 +329,7 @@ system.beforeEvents.startup.subscribe((event) => {
         {
             name: "matrix:commandlist",
             description: "Show all the slash commands of Matrix anticheat",
-            permissionLevel: 2,
+            permissionLevel: 1,
             cheatsRequired: false,
         },
         (origin) => {
