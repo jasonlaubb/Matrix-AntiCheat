@@ -22,6 +22,7 @@ import shulkerBoxNesting from "../check/shulkerBoxNesting";
 import surround from "../check/surround";
 import fastThrow from "../check/fastThrow";
 import aimAssist from "../check/aimAssist";
+import namespoof from "../check/namespoof";
 export const detectionList = {
     killaura,
     autototem,
@@ -43,6 +44,7 @@ export const detectionList = {
     surround,
     fastThrow,
     aimAssist,
+    namespoof,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {

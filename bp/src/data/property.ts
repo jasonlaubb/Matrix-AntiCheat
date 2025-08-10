@@ -263,4 +263,12 @@ export default {
         type: "boolean",
         value: true,
     },
+    antiNamespoofEnable: {
+        type: "boolean",
+        value: true,
+    },
+    antiNamespoofASCIIOnly: {
+        type: "boolean",
+        value: true, // Enable to allow only ASCII characters in names, can false.
+    },
 };
