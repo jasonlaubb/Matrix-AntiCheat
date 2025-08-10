@@ -54,7 +54,7 @@ import { banitem, banitemclear, banitemlist, registerItemBanEvent, unbanitem } f
 import { automute, enterchat } from "./command/automute";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
-    return this.commandPermissionLevel >= 2;
+    return this.commandPermissionLevel >= 1;
 };
 Player.prototype.flag = function (id: string, type: string, category: string, data?: { [key: string]: string | number }) {
     const flagMessage = `§7[§aMatrix§7] §e${this.name}§r§f has been detected for unfair adventage §7<${category}> §c[${id}/${type}]${data ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
@@ -205,7 +205,7 @@ system.beforeEvents.startup.subscribe((event) => {
             {
                 name: "matrix:" + name,
                 description,
-                permissionLevel: requireOp ? 2 : 0,
+                permissionLevel: requireOp ? 1 : 0,
                 optionalParameters: optionalParameters?.map(({ name, type }) => {
                     return {
                         name: type === "enum" ? "matrix:" + name : name,
