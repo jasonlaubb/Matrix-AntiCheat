@@ -1,7 +1,7 @@
 import { PlayerSpawnAfterEvent, world, system } from "@minecraft/server";
 import { get } from "../util/database";
 export default {
-    property: "antiNamespoof",
+    property: "antiNamespoofEnable",
     enable: () => {
         world.afterEvents.playerSpawn.subscribe(onPlayerJoin);
     },
