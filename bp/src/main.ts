@@ -17,7 +17,7 @@
 扁　　　扁　　　　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　扁扁扁　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　　　　　　扁扁　　　扁　　　扁扁扁扁　　　　　　　　扁
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
-import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
+import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot, PlayerPermissionLevel } from "@minecraft/server";
 import info from "./command/info";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
@@ -54,7 +54,7 @@ import { banitem, banitemclear, banitemlist, registerItemBanEvent, unbanitem } f
 import { automute, enterchat } from "./command/automute";
 // §7[§aMatrix§7] §f
 Player.prototype.isOp = function () {
-    return this.commandPermissionLevel >= 1;
+    return this.commandPermissionLevel >= 1 || this.playerPermissionLevel === PlayerPermissionLevel.Operator;
 };
 Player.prototype.flag = function (id: string, type: string, category: string, data?: { [key: string]: string | number }) {
     const flagMessage = `§7[§aMatrix§7] §e${this.name}§r§f has been detected for unfair adventage §7<${category}> §c[${id}/${type}]${data ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
