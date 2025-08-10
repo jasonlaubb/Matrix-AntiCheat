@@ -132,7 +132,7 @@ export function getXZVectorSpeed(yaw: number, movementVector: Vector2, speed: nu
     const strafe = movementVector.x;
 
     const x = (-sin * forward + cos * strafe) * speed;
-    const z = ( cos * forward + sin * strafe) * speed;
+    const z = (cos * forward + sin * strafe) * speed;
 
     return { x, z };
 }

@@ -10,7 +10,7 @@ export const freecam = {
         {
             name: "player",
             type: "player",
-        }
+        },
     ],
     execute: (player, [target]) => {
         if (player?.freecamCameraPosition) {
@@ -25,12 +25,11 @@ export const freecam = {
             });
             return { status: 0, message: "§7[§aMatrix§7] §fEscaped from freecam mode." };
         }
-        target ? player.freecamCameraPosition = target.location :
-            player.freecamCameraPosition = player.location;
+        target ? (player.freecamCameraPosition = target.location) : (player.freecamCameraPosition = player.location);
         system.run(() => setMovement(player, false));
         const event = system.runInterval(() => {
             if (!player || !player.isValid || !player?.freecamCameraPosition) return system.clearRun(event);
-            const speed = player.getDynamicProperty("freecamSpeed") as number ?? 1;
+            const speed = (player.getDynamicProperty("freecamSpeed") as number) ?? 1;
             const cameraPos = player.freecamCameraPosition;
             const rot = player.getRotation();
             const inputInfo = player.inputInfo;
@@ -42,8 +41,8 @@ export const freecam = {
             player.freecamCameraPosition = {
                 x: cameraPos.x + x,
                 y: cameraPos.y + y,
-                z: cameraPos.z + z
-            }
+                z: cameraPos.z + z,
+            };
             player.onScreenDisplay.setActionBar("§gType §e/freecam §gto exit freecam mode.");
             player.camera.setCamera("minecraft:free", {
                 rotation: rot,
@@ -51,7 +50,7 @@ export const freecam = {
             });
         });
         return { status: 0, message: "§7[§aMatrix§7] §fFreecam mode activated. Use WASD to move, Space to go up, and Shift to go down." };
-    }
+    },
 } as Command;
 export const freecamtp = {
     name: "freecamtp",
@@ -67,7 +66,7 @@ export const freecamtp = {
         });
         delete player.freecamCameraPosition;
         return { status: 0, message: "§7[§aMatrix§7] §fTeleported to freecam position." };
-    }
+    },
 } as Command;
 export const freecamspeed = {
     name: "freecamspeed",
@@ -78,7 +77,7 @@ export const freecamspeed = {
             name: "speed",
             min: 1,
             max: 8,
-        }
+        },
     ],
     requireOp: true,
     execute: (player, [speed]) => {
@@ -93,8 +92,8 @@ export const freecamspeed = {
             player.setDynamicProperty("freecamSpeed", speed);
             return { status: 0, message: `§7[§aMatrix§7] §fFreecam speed set to §e${speed}x§f sucessfully.` };
         }
-    }
+    },
 } as Command;
-function setMovement (player: Player, value: boolean) {
+function setMovement(player: Player, value: boolean) {
     player.inputPermissions.setPermissionCategory(InputPermissionCategory.LateralMovement, value);
 }

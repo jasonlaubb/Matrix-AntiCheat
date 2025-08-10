@@ -27,7 +27,7 @@ export const mute = {
     ],
     execute: (_player, [target, duration, timeUnit]) => {
         if (!hasEducationalFeature()) return { status: 1, message: "§7[§aMatrix§7] §fEducation edition required! " };
-        if (target.getDynamicProperty("muteData:" + target.id)) return { status: 1, message: "§7[§aMatrix§7] §fPlayer has been muted already." }; 
+        if (target.getDynamicProperty("muteData:" + target.id)) return { status: 1, message: "§7[§aMatrix§7] §fPlayer has been muted already." };
         if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §fYou need to type time unit if you want to set a duration." };
         if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
         system.run(() => {
@@ -49,7 +49,7 @@ export const unmute = {
     ],
     execute: (_player, [target]) => {
         if (!hasEducationalFeature()) return { status: 1, message: "§7[§aMatrix§7] §fEducation edition required! " };
-        if (!target.getDynamicProperty("muteData:" + target.id)) return { status: 1, message: "§7[§aMatrix§7] §fPlayer has not been muted." }; 
+        if (!target.getDynamicProperty("muteData:" + target.id)) return { status: 1, message: "§7[§aMatrix§7] §fPlayer has not been muted." };
         system.run(() => {
             target.setDynamicProperty("muteData:" + target.id);
             target.runCommand("ability @s mute false");

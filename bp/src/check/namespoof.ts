@@ -8,7 +8,7 @@ export default {
     disable: () => {
         world.afterEvents.playerSpawn.unsubscribe(onPlayerJoin);
     },
-}
+};
 function onPlayerJoin({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn || player.isOp()) return;
     const name = player.name;

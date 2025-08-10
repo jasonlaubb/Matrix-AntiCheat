@@ -14,7 +14,7 @@ export const banitem = {
         {
             name: "reason",
             type: "string",
-        }
+        },
     ],
     execute: (_player, [item, reason]) => {
         const isItemBanned = world.getDynamicProperty("banitem:" + item) as string;
@@ -22,7 +22,7 @@ export const banitem = {
         world.setDynamicProperty("banitem:" + item, reason ?? "No reason");
         if (!world?.banItemEventRegistered) registerItemBanEvent();
         return { status: 0, message: `§7[§aMatrix§7] §fItem §e${item}§f has been banned successfully.` };
-    }
+    },
 } as Command;
 export const unbanitem = {
     name: "unbanitem",
@@ -39,7 +39,7 @@ export const unbanitem = {
         if (!isItemBanned) return { status: 1, message: `§7[§aMatrix§7] §fItem §e${item}§f has not been banned yet.` };
         world.setDynamicProperty("banitem:" + item);
         return { status: 0, message: `§7[§aMatrix§7] §fItem §e${item}§f has been unbanned successfully.` };
-    }
+    },
 } as Command;
 export const banitemlist = {
     name: "banitemlist",
@@ -54,9 +54,9 @@ export const banitemlist = {
         if (banned.length === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo item is banned." };
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §fBanned items:\n" + banned.map(item => `§e${item}§f - ${world.getDynamicProperty("banitem:" + item)}`).join("\n"),
+            message: "§7[§aMatrix§7] §fBanned items:\n" + banned.map((item) => `§e${item}§f - ${world.getDynamicProperty("banitem:" + item)}`).join("\n"),
         };
-    }
+    },
 } as Command;
 export const banitemclear = {
     name: "banitemclear",
@@ -73,30 +73,33 @@ export const banitemclear = {
         }
         if (cleared === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo items were banned." };
         return { status: 0, message: `§7[§aMatrix§7] §fCleared ${cleared} banned item(s).` };
-    }
+    },
 } as Command;
-export function registerItemBanEvent () {
+export function registerItemBanEvent() {
     world.banItemEventRegistered = true;
     const event = system.runInterval(() => {
-        const bannedItems = world.getDynamicPropertyIds().filter(id => id.startsWith("banitem:")).map(id => {
-            return {
-                id: id.slice(8),
-                reason: world.getDynamicProperty(id) as string,
-            }
-        });
+        const bannedItems = world
+            .getDynamicPropertyIds()
+            .filter((id) => id.startsWith("banitem:"))
+            .map((id) => {
+                return {
+                    id: id.slice(8),
+                    reason: world.getDynamicProperty(id) as string,
+                };
+            });
         if (bannedItems.length === 0) {
             delete world.banItemEventRegistered;
             return system.clearRun(event);
         }
         const allPlayers = world.getAllPlayers();
-        allPlayers.forEach(player => {
+        allPlayers.forEach((player) => {
             if (player.isOp()) return;
             const inventory = player.getComponent("inventory")!.container;
-            let bannedList: { id: string, reason: string }[] = [];
+            let bannedList: { id: string; reason: string }[] = [];
             for (let i = 0; i < 36; i++) {
                 const item = inventory.getItem(i);
                 if (!item) continue;
-                const bannedItem = bannedItems.find(b => b.id === item.typeId);
+                const bannedItem = bannedItems.find((b) => b.id === item.typeId);
                 if (bannedItem && !bannedList.includes(bannedItem)) {
                     bannedList.push(bannedItem);
                     inventory.setItem(i);
@@ -108,7 +111,7 @@ export function registerItemBanEvent () {
         });
     }, 20);
 }
-function simplifyId (id: string) {
+function simplifyId(id: string) {
     let simplified = id.split(":").slice(1).join(":").replace("_", " ");
     simplified = simplified.charAt(0).toUpperCase() + simplified.slice(1);
     for (let i = 1; i < simplified.length; i++) {
