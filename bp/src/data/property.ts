@@ -271,4 +271,8 @@ export default {
         type: "boolean",
         value: true, // Enable to allow only ASCII characters in names, can false.
     },
+    antiBlockReachEnable: {
+        type: "boolean",
+        value: true,
+    },
 };
