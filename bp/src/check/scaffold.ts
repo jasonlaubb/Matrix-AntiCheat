@@ -1,6 +1,6 @@
 import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode, Direction, Player, Vector3 } from "@minecraft/server";
 import { locEqual } from "../util/util";
-import { calculateRelativeViewAngle, distanceXZ, min2 } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distanceXZ, max2, min2 } from "../util/mathUtil";
 import type { Axis } from "../../../global";
 export default {
     property: "antiScaffoldEnable",
@@ -174,7 +174,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
         // Otherwise, on slow or non-diagonal steps, decay the streak slightly instead of hard reset
         // to reduce bursty false positives from lag spikes.
         if (!fastPlacement || !isDiagonalStep) {
-            player.scaffoldDiagFlag = Math.max(0, player.scaffoldDiagFlag - 1);
+            player.scaffoldDiagFlag = max2(0, player.scaffoldDiagFlag - 1);
         }
     }
 
