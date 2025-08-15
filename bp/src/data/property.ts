@@ -175,6 +175,10 @@ export default {
         type: "string",
         value: "minecraft:blue_flame_particle",
     },
+    worldBorderNether1to8ratio: {
+        type: "boolean",
+        value: false, // If set to true, the world border size will be adjusted -> nether 1:8 overworld
+    },
     oreAlert: {
         type: "boolean",
         value: false,

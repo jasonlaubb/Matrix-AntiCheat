@@ -28,17 +28,20 @@ function tickEvent() {
     const wallHeight: number = get("worldBorderEffectHeight");
     const yOffset: number = get("worldBorderYOffset");
     const particleId: string = get("worldBorderParticle");
+    const enchancedRatio: boolean = get("worldBorderNether1to8ratio");
     if (size < 10) return;
     for (const player of players) {
         const { x: x1, y: y1, z: z1 } = player.location;
         const baseY = Math.floor(y1) - yOffset;
         const { x: x2, z: z2 } = spawnLoc;
-
+        const isNether = enchancedRatio && player.dimension.id === "minecraft:nether";
         const xDiff = fastAbs(Math.floor(x1) - x2);
         const zDiff = fastAbs(Math.floor(z1) - z2);
+        const adjustedXDiff = isNether ? xDiff * 8 : xDiff;
+        const adjustedZDiff = isNether ? zDiff * 8 : zDiff;
         if (!player.isOp()) {
-            const outOfBoundsX = xDiff > size;
-            const outOfBoundsZ = zDiff > size;
+            const outOfBoundsX = adjustedXDiff > size;
+            const outOfBoundsZ = adjustedZDiff > size;
 
             player.lastSafeLocation ??= spawnLoc;
             player.lastDimension ??= "minecraft:overworld";
@@ -62,8 +65,8 @@ function tickEvent() {
         }
 
         if (steps === 10 && addEffect) {
-            const xDist = fastAbs(size - xDiff);
-            const zDist = fastAbs(size - zDiff);
+            const xDist = fastAbs(size - adjustedXDiff);
+            const zDist = fastAbs(size - adjustedZDiff);
             const nearX = xDist <= 12;
             const nearZ = zDist <= 12;
 
