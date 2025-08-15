@@ -30,9 +30,8 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const isScaffold = player.scaffoldLastPlaceLoc && isScaffolding(face, block.location, player.scaffoldLastPlaceLoc);
     if (checkDiagScaffold(now, player, block, isScaffold)) event.cancel = true;
     if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0) {
-        /*
         event.cancel = true;
-        system.run(() => player.flag("Scaffold", "B", "Block (Perfect)")); // detect horion client*/
+        system.run(() => player.flag("Scaffold", "B", "Block (Perfect)")); // detect horion scaffold
     }
     player.scaffoldNoRotationFlag ??= 0;
     const onlyTouchedBlock = isScaffold && getOnlyTouchBlock(event.block);
