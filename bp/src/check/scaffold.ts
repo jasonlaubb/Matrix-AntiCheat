@@ -184,8 +184,8 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
             player.scaffoldDiagFlag = max2(0, player.scaffoldDiagFlag - 1);
         }
     }
-
-    if (!isNormalScaffold) {
+    const blockBelow = block.location.y !== 64 && block.below()
+    if (!(blockBelow && (blockBelow.isAir || blockBelow.isLiquid)) && !isNormalScaffold) {
         player.scaffoldDiagFlag = 0; // Not a bridge action
     }
 
