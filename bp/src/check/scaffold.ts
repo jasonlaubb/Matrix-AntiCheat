@@ -72,123 +72,135 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldLastPlace = now;
     }
 }
-function checkDiagScaffold (now: number, player: Player, block: Block, isNormalScaffold: boolean) {
-const lastLoc = player.scaffoldLastPlaceLoc;
-const curLoc = block.location;
-// Initialize mutable state once
-player.scaffoldStraightCount ??= 0;
-player.scaffoldStrightXZ ??= undefined; // keep your existing prop name
-player.scaffoldDiagFlag ??= 0;                            // reuse existing counter
-player.scaffoldAxisGrace ??= 0;                  // new: grace steps after axis change
-player.scaffoldStraightRecent ??= 0;             // new: recent straight placements count (for resets)
+function checkDiagScaffold(now: number, player: Player, block: Block, isNormalScaffold: boolean) {
+    const lastLoc = player.scaffoldLastPlaceLoc;
+    const curLoc = block.location;
 
-// Compute deltas (guard for missing lastLoc)
-const hasLast = !!lastLoc;
-const dx = hasLast ? Math.abs(curLoc.x - lastLoc.x) : 0;
-const dz = hasLast ? Math.abs(curLoc.z - lastLoc.z) : 0;
-const sameY = hasLast ? curLoc.y === lastLoc.y : false;
+    // Initialize mutable state once
+    player.scaffoldStraightCount ??= 0;
+    player.scaffoldStrightXZ ??= undefined; // keep your existing prop name
+    player.scaffoldDiagFlag ??= 0; // reuse existing counter
+    player.scaffoldAxisGrace ??= 0; // grace steps after axis change
+    player.scaffoldStraightRecent ??= 0; // recent straight placements count (for resets)
+    // New: baseline bridge Y tracking
+    player.scaffoldBridgeY ??= curLoc.y;
 
-// Movement classification on grid
-const isAxisAlignedStep = sameY && hasLast && ((dx === 1 && dz === 0) || (dx === 0 && dz === 1));
-const isDiagonalStep    = sameY && hasLast && (dx === 1 && dz === 1);
+    // Compute deltas (guard for missing lastLoc)
+    const hasLast = !!lastLoc;
+    const dx = hasLast ? Math.abs(curLoc.x - lastLoc.x) : 0;
+    const dz = hasLast ? Math.abs(curLoc.z - lastLoc.z) : 0;
+    const sameY = hasLast ? curLoc.y === lastLoc.y : false;
 
-// Original “straight” checks relative to last block
-const strightX = hasLast && lastLoc.x === curLoc.x;
-const strightZ = hasLast && lastLoc.z === curLoc.z;
-const exactlyOneStraight = strightX !== strightZ;
-
-// Only consider fast sequences
-const fastPlacement = player.scaffoldLastPlace && (now - player.scaffoldLastPlace) <= 500;
-
-// 1) Axis tracking and straight-count handling (no default axis unless unambiguous)
-if (hasLast && sameY) {
-  // Establish axis only if exactly one of X/Z is straight
-  if (player.scaffoldStrightXZ === undefined) {
-    if (exactlyOneStraight) {
-      player.scaffoldStrightXZ = (strightX ? "x" : "z") as Axis;
-      player.scaffoldStraightCount = 1;
-    } else {
-      // ambiguous (diagonal or none): keep axis undefined, don’t increment
-      player.scaffoldStraightCount = 0;
+    // If player places higher than the current bridge baseline, end the streak immediately
+    if (curLoc.y !== player.scaffoldBridgeY) {
+        // Hard reset streak/counters and start a new baseline at the higher level
+        player.scaffoldDiagFlag = 0;
+        player.scaffoldStraightCount = 0;
+        player.scaffoldStraightRecent = 0;
+        player.scaffoldAxisGrace = 0;
+        player.scaffoldStrightXZ = undefined;
+        player.scaffoldBridgeY = curLoc.y;
+        return false; // do not process this placement for diagonal detection
     }
-  } else {
-    // If continuing along the current axis, increment
-    const continuingOnAxis =
-      (strightX && player.scaffoldStrightXZ === "x") ||
-      (strightZ && player.scaffoldStrightXZ === "z");
 
-    if (continuingOnAxis) {
-      player.scaffoldStraightCount++;
-    } else if (exactlyOneStraight) {
-      // Axis turn (x <-> z): set a short grace window and start new straight streak
-      if (
-        (strightX && player.scaffoldStrightXZ !== "x") ||
-        (strightZ && player.scaffoldStrightXZ !== "z")
-      ) {
-        (player as any).scaffoldAxisGrace = 2; // grace for 2 placements after a turn
-      }
-      player.scaffoldStrightXZ = (strightX ? "x" : "z") as Axis;
-      player.scaffoldStraightCount = 1;
+    // Movement classification on grid
+    const isAxisAlignedStep = sameY && hasLast && ((dx === 1 && dz === 0) || (dx === 0 && dz === 1));
+    const isDiagonalStep = sameY && hasLast && dx === 1 && dz === 1;
+
+    // Original “straight” checks relative to last block
+    const strightX = hasLast && lastLoc.x === curLoc.x;
+    const strightZ = hasLast && lastLoc.z === curLoc.z;
+    const exactlyOneStraight = strightX !== strightZ;
+
+    // Only consider fast sequences
+    const fastPlacement = player.scaffoldLastPlace && now - player.scaffoldLastPlace <= 500;
+
+    // 1) Axis tracking and straight-count handling (no default axis unless unambiguous)
+    if (hasLast && sameY) {
+        // Establish axis only if exactly one of X/Z is straight
+        if (player.scaffoldStrightXZ === undefined) {
+            if (exactlyOneStraight) {
+                player.scaffoldStrightXZ = (strightX ? "x" : "z") as Axis;
+                player.scaffoldStraightCount = 1;
+            } else {
+                // ambiguous (diagonal or none): keep axis undefined, don’t increment
+                player.scaffoldStraightCount = 0;
+            }
+        } else {
+            // If continuing along the current axis, increment
+            const continuingOnAxis = (strightX && player.scaffoldStrightXZ === "x") || (strightZ && player.scaffoldStrightXZ === "z");
+
+            if (continuingOnAxis) {
+                player.scaffoldStraightCount++;
+            } else if (exactlyOneStraight) {
+                // Axis turn (x <-> z): set a short grace window and start new straight streak
+                if ((strightX && player.scaffoldStrightXZ !== "x") || (strightZ && player.scaffoldStrightXZ !== "z")) {
+                    player.scaffoldAxisGrace = 2; // grace for 2 placements after a turn
+                }
+                player.scaffoldStrightXZ = (strightX ? "x" : "z") as Axis;
+                player.scaffoldStraightCount = 1;
+            } else {
+                // Diagonal or ambiguous step: do not increment straight streak
+                player.scaffoldStraightCount = 0;
+            }
+        }
     } else {
-      // Diagonal or ambiguous step: do not increment straight streak
-      player.scaffoldStraightCount = 0;
+        // Different Y or no last loc: reset straight streak, keep axis undefined until we can infer it
+        player.scaffoldStraightCount = 0;
+        if (!hasLast) player.scaffoldStrightXZ = undefined;
     }
-  }
-} else {
-  // Different Y or no last loc: reset straight streak, keep axis undefined until we can infer it
-  player.scaffoldStraightCount = 0;
-  if (!hasLast) player.scaffoldStrightXZ = undefined;
-}
 
-// 2) Grace window countdown
-if (player.scaffoldAxisGrace > 0) {
-  player.scaffoldAxisGrace--;
-}
+    // 2) Grace window countdown
+    if (player.scaffoldAxisGrace > 0) {
+        player.scaffoldAxisGrace--;
+    }
 
-// 3) Track recent straight placements to allow quick resets of diagonal streaks after corners
-if (isAxisAlignedStep) {
-  player.scaffoldStraightRecent = min2(2, (player as any).scaffoldStraightRecent + 1);
-} else {
-  player.scaffoldStraightRecent = 0;
-}
+    // 3) Track recent straight placements to allow quick resets of diagonal streaks after corners
+    if (isAxisAlignedStep) {
+        player.scaffoldStraightRecent = min2(2, player.scaffoldStraightRecent + 1);
+    } else {
+        player.scaffoldStraightRecent = 0;
+    }
 
-// 4) Diagonal streak detection: only count true 1-1 diagonals, at same Y, within speed window,
-//    and not during axis-change grace. This avoids punishing corners and off-axis starts.
-if (fastPlacement && isDiagonalStep && (player as any).scaffoldAxisGrace === 0) {
-  player.scaffoldDiagFlag++;
-} else {
-  // If we see at least two axis-aligned steps recently, clear the diagonal streak to forgive corners
-  if (player.scaffoldStraightRecent >= 2) {
-    player.scaffoldDiagFlag = 0;
-  }
-  // Otherwise, on slow or non-diagonal steps, decay the streak slightly instead of hard reset
-  // to reduce bursty false positives from lag spikes.
-  if (!fastPlacement || !isDiagonalStep) {
-    player.scaffoldDiagFlag = Math.max(0, player.scaffoldDiagFlag - 1);
-  }
+    // 4) Diagonal streak detection: only count true 1-1 diagonals, at same Y, within speed window,
+    //    and not during axis-change grace. This avoids punishing corners and off-axis starts.
+    if (fastPlacement && isDiagonalStep && player.scaffoldAxisGrace === 0) {
+        player.scaffoldDiagFlag++;
+    } else {
+        // If we see at least two axis-aligned steps recently, clear the diagonal streak to forgive corners
+        if (player.scaffoldStraightRecent >= 2) {
+            player.scaffoldDiagFlag = 0;
+        }
+        // Otherwise, on slow or non-diagonal steps, decay the streak slightly instead of hard reset
+        // to reduce bursty false positives from lag spikes.
+        if (!fastPlacement || !isDiagonalStep) {
+            player.scaffoldDiagFlag = Math.max(0, player.scaffoldDiagFlag - 1);
+        }
+    }
+
+    if (!isNormalScaffold) {
+        player.scaffoldDiagFlag = 0; // Not a bridge action
+    }
+
+    // 5) Threshold to flag: require a longer sustained diagonal streak
+    const DIAG_THRESHOLD = 6;
+    if (player.scaffoldDiagFlag >= DIAG_THRESHOLD) {
+        system.run(() =>
+            player.flag("Scaffold", "E", "Block", {
+                diagCount: player.scaffoldDiagFlag,
+                dx,
+                dz,
+                straightCount: player.scaffoldStraightCount,
+            })
+        );
+        return true;
+    }
+    return false;
 }
-if (!isNormalScaffold) {
-    player.scaffoldDiagFlag = 0; // Just not a bridge action bro
-}
-// 5) Threshold to flag: require a longer sustained diagonal streak
-const DIAG_THRESHOLD = 8; // was 6; higher to reduce false positives
-if (player.scaffoldDiagFlag >= DIAG_THRESHOLD) {
-  system.run(() =>
-    player.flag("Scaffold", "E", "Block", {
-      diagCount: player.scaffoldDiagFlag,
-      dx,
-      dz,
-      straightCount: player.scaffoldStraightCount,
-    })
-  );
-  return true;
-}
-return false;
-}
-function center ({ x, y, z }: Vector3): Vector3 {
+function center({ x, y, z }: Vector3): Vector3 {
     return {
         x: x + 0.5,
         y: y + 0.5,
-        z: z + 0.5
-    }
+        z: z + 0.5,
+    };
 }

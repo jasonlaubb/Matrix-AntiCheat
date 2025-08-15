@@ -66,6 +66,7 @@ declare module "@minecraft/server" {
         scaffoldStraightRecent: number;
         scaffoldDiagTimes: number[];
         scaffoldAllTimes: number[];
+        scaffoldBridgeY: number;
         scaffoldStraightCount: number;
         scaffoldDiagFlag: number;
         scaffoldExtenderFlag: number;
