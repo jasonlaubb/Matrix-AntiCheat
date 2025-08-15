@@ -25,7 +25,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const centerLoc = block.center(),
         angle = calculateRelativeViewAngle(player.location, centerLoc, yaw),
         distance = distanceXZ(player.location, centerLoc);
-    const isNormalScaffold = locEqual(faceLocation, event.player.scaffoldLastPlaceLoc);
+    const isNormalScaffold = event.player.scaffoldLastPlaceLoc && locEqual(faceLocation, event.player.scaffoldLastPlaceLoc);
     const now = Date.now();
     if (checkDiagScaffold(now, player, block, isNormalScaffold)) event.cancel = true;
     player.scaffoldNoRotationFlag ??= 0;
