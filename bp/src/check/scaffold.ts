@@ -185,19 +185,11 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
     if (!(blockBelow && (blockBelow.isAir || blockBelow.isLiquid)) && !isNormalScaffold) {
         player.scaffoldDiagFlag = 0; // Not a bridge action
     }
-
-    player.sendMessage(JSON.stringify({
-                diagCount: player.scaffoldDiagFlag,
-                dx,
-                dz,
-                straightCount: player.scaffoldStraightCount,
-            }));
-
     // 5) Threshold to flag: require a longer sustained diagonal streak
-    const DIAG_THRESHOLD = 5;
+    const DIAG_THRESHOLD = 4;
     if (player.scaffoldDiagFlag >= DIAG_THRESHOLD) {
         system.run(() =>
-            player.flag("Scaffold", "A", "Block", {
+            player.flag("Scaffold", "A (Incline)", "Block", {
                 diagCount: player.scaffoldDiagFlag,
                 dx,
                 dz,
