@@ -14,9 +14,8 @@ export default {
 function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { block, player, face, faceLocation } = event;
     const height = player.location.y - block.location.y;
-    event.player.sendMessage("Height is " + height);
     if (player.isOp() || player.isFlying || player.getGameMode() === GameMode.Creative || height < 0.5) return;
-    if (face === Direction.Down && player.location.y - event.faceLocation.y >= 1) {
+    if (face === Direction.Down && player.location.y > event.block.y) {
         event.cancel = true;
         system.run(() => player.flag("Scaffold", "H", "Block"));
     }
