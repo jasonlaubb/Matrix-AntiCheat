@@ -14,9 +14,11 @@ function blockPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
         const now = Date.now();
         const { x, y, z } = floorPos(player.location);
         const { x: x2, y: y2, z: z2 } = block.location;
+        player.sendMessage("Obob! " + player.surroundNearbyFlag);
         if (y === y2 && fastAbs(x - x2) <= 1 && fastAbs(z - z2) <= 1) {
             const interval = now - player.surroundLastPlaceObsidian;
             if (interval < 100) {
+                player.surroundNearbyFlag ??= 0;
                 player.surroundNearbyFlag++;
                 if (player.surroundNearbyFlag >= 3) {
                     player.flag("Surround", "A", "Block", { interval });
