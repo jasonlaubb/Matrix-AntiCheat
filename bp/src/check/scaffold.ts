@@ -28,8 +28,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         distance = distanceXZ(player.location, centerLoc);
     const now = Date.now();
     const isScaffold = player.scaffoldLastPlaceLoc && isScaffolding(face, block.location, player.scaffoldLastPlaceLoc);
-    if (checkDiagScaffold(now, player, block, true)) event.cancel = true;
-    event.player.sendMessage(JSON.stringify(faceLocation));
+    if (checkDiagScaffold(now, player, block, isScaffold)) event.cancel = true;
     if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0) {
         event.cancel = true;
         system.run(() => player.flag("Scaffold", "B", "Block (Perfect)")); // 100% detect horion client
@@ -186,7 +185,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
     }
 
     if (!isNormalScaffold) {
-        //player.scaffoldDiagFlag = 0; // Not a bridge action
+        player.scaffoldDiagFlag = 0; // Not a bridge action
     }
 
     // 5) Threshold to flag: require a longer sustained diagonal streak
