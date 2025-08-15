@@ -112,7 +112,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
 
     // Movement classification on grid
     const isAxisAlignedStep = sameY && hasLast && ((dx === 1 && dz === 0) || (dx === 0 && dz === 1));
-    const isDiagonalStep = sameY && hasLast && dx === 1 && dz === 1;
+    const isDiagonalStep = !sameY || hasLast && dx === 1 && dz === 1;
 
     // Original “straight” checks relative to last block
     const strightX = hasLast && lastLoc.x === curLoc.x;
@@ -168,9 +168,6 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
     } else {
         player.scaffoldStraightRecent = 0;
     }
-
-    // 4) Diagonal streak detection: only count true 1-1 diagonals, at same Y, within speed window,
-    //    and not during axis-change grace. This avoids punishing corners and off-axis starts.
     if (fastPlacement && isDiagonalStep && player.scaffoldAxisGrace === 0) {
         player.scaffoldDiagFlag++;
     } else {
@@ -180,7 +177,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
         }
         // Otherwise, on slow or non-diagonal steps, decay the streak slightly instead of hard reset
         // to reduce bursty false positives from lag spikes.
-        if (!fastPlacement || !isDiagonalStep) {
+        if (!fastPlacement) {
             player.scaffoldDiagFlag = max2(0, player.scaffoldDiagFlag - 1);
         }
     }
@@ -197,7 +194,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
             }));
 
     // 5) Threshold to flag: require a longer sustained diagonal streak
-    const DIAG_THRESHOLD = 8;
+    const DIAG_THRESHOLD = 5;
     if (player.scaffoldDiagFlag >= DIAG_THRESHOLD) {
         system.run(() =>
             player.flag("Scaffold", "A", "Block", {
