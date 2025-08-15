@@ -30,8 +30,9 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const isScaffold = player.scaffoldLastPlaceLoc && isScaffolding(face, block.location, player.scaffoldLastPlaceLoc);
     if (checkDiagScaffold(now, player, block, isScaffold)) event.cancel = true;
     if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0) {
+        /*
         event.cancel = true;
-        system.run(() => player.flag("Scaffold", "B", "Block (Perfect)")); // 100% detect horion client
+        system.run(() => player.flag("Scaffold", "B", "Block (Perfect)")); // detect horion client*/
     }
     player.scaffoldNoRotationFlag ??= 0;
     const onlyTouchedBlock = isScaffold && getOnlyTouchBlock(event.block);
@@ -174,7 +175,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
         player.scaffoldDiagFlag++;
     } else {
         // If we see at least two axis-aligned steps recently, clear the diagonal streak to forgive corners
-        if (player.scaffoldStraightRecent >= 2) {
+        if (player.scaffoldStraightRecent >= 4) {
             player.scaffoldDiagFlag = 0;
         }
         // Otherwise, on slow or non-diagonal steps, decay the streak slightly instead of hard reset
@@ -188,8 +189,15 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
         player.scaffoldDiagFlag = 0; // Not a bridge action
     }
 
+    player.sendMessage(JSON.stringify({
+                diagCount: player.scaffoldDiagFlag,
+                dx,
+                dz,
+                straightCount: player.scaffoldStraightCount,
+            }));
+
     // 5) Threshold to flag: require a longer sustained diagonal streak
-    const DIAG_THRESHOLD = 6;
+    const DIAG_THRESHOLD = 8;
     if (player.scaffoldDiagFlag >= DIAG_THRESHOLD) {
         system.run(() =>
             player.flag("Scaffold", "A", "Block", {
