@@ -26,12 +26,14 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         angle = calculateRelativeViewAngle(player.location, centerLoc, yaw),
         distance = distanceXZ(player.location, centerLoc);
     const isNormalScaffold = locEqual(faceLocation, event.player.scaffoldLastPlaceLoc);
+    const now = Date.now();
+    if (checkDiagScaffold(now, player, block, isNormalScaffold)) event.cancel = true;
     player.scaffoldNoRotationFlag ??= 0;
     if (player.scaffoldLastPlaceLoc && pitch < (isTouchInput ? 45 : 30) && isNormalScaffold && (distance <= 2.5 || distanceXZ(center(faceLocation), event.player.location) <= distance)) {
         player.scaffoldNoRotationFlag++;
         if (player.scaffoldNoRotationFlag >= 3) {
             event.cancel = true;
-            system.run(() => player.flag("Scaffold", "A", "Block", { height, pitch: pitch.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "B", "Block", { height, pitch: pitch.toFixed(2) }));
         }
     } else player.scaffoldNoRotationFlag = 0;
     player.scaffoldIntPitch ??= 0;
@@ -39,7 +41,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldIntPitch++;
         event.cancel = true;
         if (player.scaffoldIntPitch >= 3) {
-            system.run(() => player.flag("Scaffold", "B", "Block", { pitch }));
+            system.run(() => player.flag("Scaffold", "C", "Block", { pitch }));
         }
     } else player.scaffoldIntPitch = 0;
     player.scaffoldBackwardFlag ??= 0;
@@ -47,18 +49,16 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         event.cancel = true;
         player.scaffoldBackwardFlag++;
         if (player.scaffoldBackwardFlag >= 3) {
-            system.run(() => player.flag("Scaffold", "C", "Block", { angle: angle.toFixed(2), distance: distance.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "D", "Block", { angle: angle.toFixed(2), distance: distance.toFixed(2) }));
         }
     } else player.scaffoldBackwardFlag = 0;
-    const now = Date.now();
     if (pitch > 85 && player.inputInfo.getMovementVector().y > 0 && player.scaffoldLastPlace && now - player.scaffoldLastPlace < 400) {
         player.scaffoldDownFlag++;
         if (player.scaffoldDownFlag >= 2) event.cancel = true;
         if (player.scaffoldDownFlag >= 3) {
-            system.run(() => player.flag("Scaffold", "D", "Block", { pitch: pitch.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "E", "Block", { pitch: pitch.toFixed(2) }));
         }
     } else player.scaffoldDownFlag = 0;
-    if (checkDiagScaffold(now, player, block, isNormalScaffold)) event.cancel = true;
     player.scaffoldExtenderFlag ??= 0;
     if (!isTouchInput && pitch > 45 && distance > 2) {
         player.scaffoldExtenderFlag++;
@@ -186,7 +186,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
     const DIAG_THRESHOLD = 6;
     if (player.scaffoldDiagFlag >= DIAG_THRESHOLD) {
         system.run(() =>
-            player.flag("Scaffold", "E", "Block", {
+            player.flag("Scaffold", "A", "Block", {
                 diagCount: player.scaffoldDiagFlag,
                 dx,
                 dz,
