@@ -61,7 +61,11 @@ declare module "@minecraft/server" {
         scaffoldIntPitch: number;
         scaffoldBackwardFlag: number;
         scaffoldDownFlag: number;
-        scaffoldStrightXZ: "x" | "z";
+        scaffoldStrightXZ: Axis;
+        scaffoldAxisGrace: number;
+        scaffoldStraightRecent: number;
+        scaffoldDiagTimes: number[];
+        scaffoldAllTimes: number[];
         scaffoldStraightCount: number;
         scaffoldDiagFlag: number;
         scaffoldExtenderFlag: number;
@@ -181,3 +185,4 @@ export interface AimAssistData {
         c: number;
     };
 }
+export type Axis = "x" | "z" | undefined;

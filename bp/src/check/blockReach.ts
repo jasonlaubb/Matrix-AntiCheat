@@ -11,9 +11,9 @@ export default {
         world.beforeEvents.playerInteractWithBlock.unsubscribe(blockEvent);
         world.beforeEvents.playerBreakBlock.unsubscribe(blockEvent);
         world.beforeEvents.playerPlaceBlock.unsubscribe(blockEvent);
-    }
-}
-function blockEvent (event: PlayerInteractWithBlockBeforeEvent | PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent) {
+    },
+};
+function blockEvent(event: PlayerInteractWithBlockBeforeEvent | PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent) {
     const { player, block } = event;
     if (player.isOp() || player.getGameMode() === GameMode.Creative) return;
     const pos = block.center();
