@@ -1,4 +1,4 @@
-import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode, Direction, Player, Vector3 } from "@minecraft/server";
+import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode, Direction, Player, Vector3, LocationOutOfWorldBoundariesError } from "@minecraft/server";
 import { locEqual } from "../util/util";
 import { calculateRelativeViewAngle, distanceXZ, max2, min2 } from "../util/mathUtil";
 import type { Axis } from "../../../global";
@@ -14,10 +14,11 @@ export default {
 function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { block, player, face, faceLocation } = event;
     const height = player.location.y - block.location.y;
-    if (player.isOp() || player.isFlying || player.getGameMode() === GameMode.Creative || height < 1) return;
+    event.player.sendMessage("Height is " + height);
+    if (player.isOp() || player.isFlying || player.getGameMode() === GameMode.Creative || height < 0.5) return;
     if (face === Direction.Down && player.location.y - event.faceLocation.y >= 1) {
         event.cancel = true;
-        system.run(() => player.flag("Scaffold", "G", "Block"));
+        system.run(() => player.flag("Scaffold", "H", "Block"));
     }
     if (height >= 2) return;
     const { x: pitch, y: yaw } = player.getRotation();
@@ -25,15 +26,21 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const centerLoc = block.center(),
         angle = calculateRelativeViewAngle(player.location, centerLoc, yaw),
         distance = distanceXZ(player.location, centerLoc);
-    const isNormalScaffold = event.player.scaffoldLastPlaceLoc && locEqual(faceLocation, event.player.scaffoldLastPlaceLoc);
     const now = Date.now();
-    if (checkDiagScaffold(now, player, block, isNormalScaffold)) event.cancel = true;
+    const isScaffold = player.scaffoldLastPlaceLoc && isScaffolding(face, block.location, player.scaffoldLastPlaceLoc);
+    if (checkDiagScaffold(now, player, block, true)) event.cancel = true;
+    event.player.sendMessage(JSON.stringify(faceLocation));
+    if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0) {
+        event.cancel = true;
+        system.run(() => player.flag("Scaffold", "B", "Block (Perfect)")); // 100% detect horion client
+    }
     player.scaffoldNoRotationFlag ??= 0;
-    if (player.scaffoldLastPlaceLoc && pitch < (isTouchInput ? 45 : 30) && isNormalScaffold && (distance <= 2.5 || distanceXZ(center(faceLocation), event.player.location) <= distance)) {
+    const onlyTouchedBlock = isScaffold && getOnlyTouchBlock(event.block);
+    if (isScaffold && pitch < (isTouchInput ? 45 : 30) && (distance <= 2.5 || onlyTouchedBlock && distanceXZ(center(onlyTouchedBlock), event.player.location) <= distance)) {
         player.scaffoldNoRotationFlag++;
         if (player.scaffoldNoRotationFlag >= 3) {
             event.cancel = true;
-            system.run(() => player.flag("Scaffold", "B", "Block", { height, pitch: pitch.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "C", "Block", { height, pitch: pitch.toFixed(2) }));
         }
     } else player.scaffoldNoRotationFlag = 0;
     player.scaffoldIntPitch ??= 0;
@@ -41,7 +48,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldIntPitch++;
         event.cancel = true;
         if (player.scaffoldIntPitch >= 3) {
-            system.run(() => player.flag("Scaffold", "C", "Block", { pitch }));
+            system.run(() => player.flag("Scaffold", "D", "Block", { pitch }));
         }
     } else player.scaffoldIntPitch = 0;
     player.scaffoldBackwardFlag ??= 0;
@@ -49,14 +56,14 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         event.cancel = true;
         player.scaffoldBackwardFlag++;
         if (player.scaffoldBackwardFlag >= 3) {
-            system.run(() => player.flag("Scaffold", "D", "Block", { angle: angle.toFixed(2), distance: distance.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "E", "Block", { angle: angle.toFixed(2), distance: distance.toFixed(2) }));
         }
     } else player.scaffoldBackwardFlag = 0;
     if (pitch > 85 && player.inputInfo.getMovementVector().y > 0 && player.scaffoldLastPlace && now - player.scaffoldLastPlace < 400) {
         player.scaffoldDownFlag++;
         if (player.scaffoldDownFlag >= 2) event.cancel = true;
         if (player.scaffoldDownFlag >= 3) {
-            system.run(() => player.flag("Scaffold", "E", "Block", { pitch: pitch.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "F", "Block", { pitch: pitch.toFixed(2) }));
         }
     } else player.scaffoldDownFlag = 0;
     player.scaffoldExtenderFlag ??= 0;
@@ -64,7 +71,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         player.scaffoldExtenderFlag++;
         if (player.scaffoldExtenderFlag >= 3) {
             event.cancel = true;
-            system.run(() => player.flag("Scaffold", "F", "Block", { pitch: pitch.toFixed(2), distance: distance.toFixed(2) }));
+            system.run(() => player.flag("Scaffold", "G", "Block", { pitch: pitch.toFixed(2), distance: distance.toFixed(2) }));
         }
     } else player.scaffoldExtenderFlag = 0;
     if (!event.cancel) {
@@ -179,7 +186,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
     }
 
     if (!isNormalScaffold) {
-        player.scaffoldDiagFlag = 0; // Not a bridge action
+        //player.scaffoldDiagFlag = 0; // Not a bridge action
     }
 
     // 5) Threshold to flag: require a longer sustained diagonal streak
@@ -203,4 +210,32 @@ function center({ x, y, z }: Vector3): Vector3 {
         y: y + 0.5,
         z: z + 0.5,
     };
+}
+function isScaffolding(face: Direction, newPlace: Vector3, lastPlace: Vector3) {
+    const sameY = newPlace.y === lastPlace.y;
+    const sameXZ = newPlace.x === lastPlace.x && newPlace.z === lastPlace.z;
+    switch (face) {
+        case Direction.Up: return sameXZ && newPlace.y > lastPlace.y;
+        case Direction.Down: return sameXZ && newPlace.y < lastPlace.z;
+        case Direction.North: return sameY && newPlace.z < lastPlace.z;
+        case Direction.South: return sameY && newPlace.z > lastPlace.z;
+        case Direction.West: return sameY && newPlace.x < lastPlace.z;
+        case Direction.East: return sameY && newPlace.x > lastPlace.z;
+    }
+}
+function getOnlyTouchBlock(block: Block) {
+    try {
+        const blocks = [block.below(), block.above(), block.north(), block.south(), block.west(), block.east()];
+        let touchingBlock: Block | undefined;
+        for (const b of blocks) {
+            if (b && b.isValid && !b.isAir) {
+                if (touchingBlock && !locEqual(touchingBlock.location, b.location)) return undefined;
+                touchingBlock = b;
+            }
+        }
+        return touchingBlock;
+    } catch (error) {
+        if (error instanceof LocationOutOfWorldBoundariesError) return undefined;
+        throw error;
+    }
 }
