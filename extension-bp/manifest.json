@@ -1,0 +1,35 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "Matrix Anticheat Extension",
+        "description": "§7§¶Allow admin to use vanish and tempkick command.\n§cPlayer.json required",
+        "uuid": "0c4bdb76-5fb8-49ad-8d8f-1fa523cea6fc",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 21, 100]
+    },
+    "metadata": {
+        "authors": ["jasonlaubb"],
+        "license": "AGPLv3",
+        "url": "https://github.com/jasonlaubb/Matrix-AntiCheat"
+    },
+    "modules": [
+        {
+            "type": "data",
+            "uuid": "41369a3a-54f8-4459-aeb2-6f1e8b00c497",
+            "version": [1, 0, 0]
+        },
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "19a87cbf-49f0-4858-9671-461bdb000e90",
+            "version": [1, 0, 0],
+            "entry": "scripts/main.js"
+        }
+    ],
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "2.1.0"
+        }
+    ]
+}
