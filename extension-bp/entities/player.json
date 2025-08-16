@@ -74,6 +74,12 @@
                     "width": 0
                 }
             },
+            "matrix:unvanish": {
+                "minecraft:collision_box": {
+                    "width": 0.6,
+                    "height": 1.8
+                }
+            },
             "matrix:tempkick": {
                 "minecraft:explode": {
                     "fuse_length": 0,
@@ -259,11 +265,21 @@
                         "matrix:vanish"
                     ]
                 },
+                "remove": {
+                    "component_groups": [
+                        "matrix:unvanish"
+                    ]
+                },
                 "queue_command": {
                     "command": "effect @s invisibility infinite 0 true"
                 }
             },
             "matrix:unvanish": {
+                "add": {
+                    "component_groups": [
+                        "matrix:unvanish"
+                    ]
+                },
                 "remove": {
                     "component_groups": [
                         "matrix:vanish"
