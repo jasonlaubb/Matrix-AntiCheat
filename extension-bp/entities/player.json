@@ -273,7 +273,7 @@
                     "command": "effect @s clear invisibility"
                 }
             },
-            "minecraft:tempkick": {
+            "matrix:tempkick": {
                 "add": {
                     "component_groups": [
                         "matrix:tempkick"

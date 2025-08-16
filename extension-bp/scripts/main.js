@@ -32,7 +32,7 @@ system.beforeEvents.startup.subscribe((event) => {
                 type: CustomCommandParamType.PlayerSelector
             }
         ]
-    }, (origin, [players]) => {
+    }, (origin, players) => {
         if (!origin?.sourceEntity || !(origin.sourceEntity instanceof Player)) return { status: 1 };
         if (players.length === 0) return { status: 1, message: "§7[§aMatrix§7] §fYou should select more than 1 player." };
         if (players.some(({ commandPermissionLevel, playerPermissionLevel }) => commandPermissionLevel >= 1 || playerPermissionLevel === PlayerPermissionLevel.Operator)) return { status: 1, message: "You can't disconnect an operator!" };
