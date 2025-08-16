@@ -34,7 +34,6 @@ system.beforeEvents.startup.subscribe((event) => {
         ]
     }, (origin, players) => {
         if (!origin?.sourceEntity || !(origin.sourceEntity instanceof Player)) return { status: 1 };
-        if (players instanceof Player) players = [players];
         if (players.length === 0) return { status: 1, message: "§7[§aMatrix§7] §fYou should select at least a player." };
         if (players.some(({ commandPermissionLevel, playerPermissionLevel }) => commandPermissionLevel >= 1 || playerPermissionLevel === PlayerPermissionLevel.Operator)) return { status: 1, message: "§7[§aMatrix§7] §fYou can't disconnect an operator!" };
         system.run(() => players.forEach((player) => player?.triggerEvent("matrix:tempkick")));
