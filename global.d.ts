@@ -96,6 +96,7 @@ declare module "@minecraft/server" {
         fastthrowFlag: number;
         fastthrowLastFlag: number;
         aimAssistData: AimAssistData;
+		breakerLastBreak: number;
     }
     interface Entity {
         // Detection data
