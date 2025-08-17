@@ -42,7 +42,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         }
     } else player.scaffoldNoRotationFlag = 0;
     player.scaffoldIntPitch ??= 0;
-    if (pitch % 1 === 0) {
+    if (pitch % 1 === 0 || yaw !== 0 && yaw % 1 === 0) {
         player.scaffoldIntPitch++;
         event.cancel = true;
         if (player.scaffoldIntPitch >= 3) {
