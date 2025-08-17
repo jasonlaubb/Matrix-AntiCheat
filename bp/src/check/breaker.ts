@@ -13,6 +13,9 @@ export default {
 };
 function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWithBlockBeforeEvent) {
     if (event.block.isAir || event.player.isOp()) return;
+    const now = Date.now();
+    // To prevent false positive, stop checking breaker when player has jusr broken block
+    if (!event.player.breakerLastBreak || now - event.player.breakerLastBreak > 100)
     if (event.block.typeId !== "minecraft:bed") {
         const surround = getSurround(event.block);
         if (surround.every((block) => block && (block.isSolid || isGlassBlock(block.typeId)))) {
@@ -28,6 +31,7 @@ function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWith
             }
         }
     }
+    if (!event.cancel && event instanceof PlayerBreakBlockBeforeEvent) event.player.breakerLastBreak = Date.now();
 }
 function surroundSolidCount(block: Block) {
     return getSurround(block).filter((b) => b && (b.isSolid || isGlassBlock(b.typeId))).length;
