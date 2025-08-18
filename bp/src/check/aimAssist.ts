@@ -24,6 +24,7 @@ function tickEvent(player: Player) {
                 a: 0,
                 b: 0,
                 c: 0,
+                d: 0
             },
         } as AimAssistData);
     const { x: pitch, y: yaw } = player.getRotation();
@@ -54,8 +55,9 @@ function tickEvent(player: Player) {
         }
     } else if (data.flagAmount.c >= 0.01) data.flagAmount.c -= 0.01;
     if (yawDifference > 0 && fastAbs(Math.floor(yawDifference) - yawDifference) < 0.0000000001) {
-        player.flag("AimAssist", "D", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
-    }
+        data.flagAmount.d++;
+        if (data.flagAmount.d >= 2) player.flag("AimAssist", "D", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
+    } else if (data.flagAmount.d >= 0.00625) data.flagAmount.d -= 0.00625;
     player.aimAssistData = {
         lastDeltaYaw: deltaYaw,
         lastDeltaPitch: deltaPitch,

@@ -194,6 +194,7 @@ export interface AimAssistData {
         a: number;
         b: number;
         c: number;
+        d: number;
     };
 }
 export type Axis = "x" | "z" | undefined;
