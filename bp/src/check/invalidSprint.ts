@@ -16,7 +16,7 @@ function tickEvent (player: Player) {
     if (!player.isSprinting || player.isFlying) return;
     const now = Date.now();
     if (player.getEffect("minecraft:blindness") && player.invalidSprintBlindAt && now - player.invalidSprintBlindAt > 500) {
-        player.flag("InvalidSprint", "A", "Movement", { blindAt: now - player.invalidSprintBlindAt });
+        player.flag("InvalidSprint", "A", "Movement", { blindDuration: now - player.invalidSprintBlindAt });
     }
     if (player.isSneaking) player.flag("InvalidSprint", "B", "Movement", { delay: now - player.invalidSprintBlindAt });
     const hunger = player.getComponent("player.hunger");
@@ -28,9 +28,9 @@ function tickEvent (player: Player) {
         const heldItem = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Mainhand);
         if (heldItem && heldItem.typeId.startsWith("minecraft:")) {
             if (["minecraft:bow", "minecraft:cross_bow"].includes(heldItem.typeId)) {
-                player.flag("InvalidSprint", "E", "Movement", { useAt: now - player.itemStartUse });
+                player.flag("InvalidSprint", "E", "Movement", { useDuration: now - player.itemStartUse });
             } else if (["minecraft:milk_bucket", "minecraft:potion"].includes(heldItem.typeId) || heldItem.getComponent("food")) {
-                if (now - player.itemStartUse < 1400) player.flag("InvalidSprint", "F", "Movement", { useAt: now - player.itemStartUse });
+                if (now - player.itemStartUse < 1400) player.flag("InvalidSprint", "F", "Movement", { useDuration: now - player.itemStartUse });
             }
         }
     }
