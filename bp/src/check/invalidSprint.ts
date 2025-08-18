@@ -29,7 +29,9 @@ function tickEvent(player: Player) {
         const heldItem = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Mainhand);
         if (heldItem && heldItem.typeId.startsWith("minecraft:")) {
             if (["minecraft:bow", "minecraft:cross_bow"].includes(heldItem.typeId)) {
-                player.flag("InvalidSprint", "E", "Movement", { useDuration });
+                system.runTimeout(() => {
+                    if (!player.invalidSprintStopUseAt || now - player.invalidSprintStopUseAt >= 200) player.flag("InvalidSprint", "F", "Movement", { useDuration });
+                }, 4);
             } else if (["minecraft:milk_bucket", "minecraft:potion"].includes(heldItem.typeId) || heldItem.getComponent("food")) {
                 if (useDuration < 1400) {
                     system.runTimeout(() => {
