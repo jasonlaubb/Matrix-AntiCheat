@@ -121,7 +121,7 @@ system.beforeEvents.startup.subscribe((event) => {
         echestwipe,
         invcopy,
         flagMessageTarget,
-        setPunishment
+        setPunishment,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {

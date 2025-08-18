@@ -8,23 +8,23 @@ export default {
     parameters: [
         {
             name: "punishmentType",
-            type: "enum"
-        }
+            type: "enum",
+        },
     ],
     optionalParameters: [
         {
             name: "banDurationInMs",
             type: "integer",
-            min: 1000
-        }
+            min: 1000,
+        },
     ],
     execute: (_player, [newPunishmentType, banDuration]) => {
         if (!punishmentType.includes(newPunishmentType)) return { status: 1, message: "§7[§aMatrix§7] §fUnknown punishment type: " + newPunishmentType };
         world.setDynamicProperty("database:flagPunishmentType", newPunishmentType);
         if (banDuration) {
-            world.setDynamicProperty("database:flagBanDuration", newPunishmentType);
-            return { status: 0, message: `§7[§aMatrix§7] §fChanged flag punishment type to §e${newPunishmentType}§f and set ban duration to §e${banDuration}ms` }
+            world.setDynamicProperty("database:flagBanDuration", banDuration);
+            return { status: 0, message: `§7[§aMatrix§7] §fChanged flag punishment type to §e${newPunishmentType}§f and set ban duration to §e${banDuration}ms` };
         }
-        return { status: 0, message: "§7[§aMatrix§7] §fChanged flag punishment type to §e" + punishmentType }
-    }
+        return { status: 0, message: "§7[§aMatrix§7] §fChanged flag punishment type to §e" + punishmentType };
+    },
 } as Command;

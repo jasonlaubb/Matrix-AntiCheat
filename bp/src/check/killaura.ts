@@ -84,7 +84,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                         attackDistance: attackDistance.toFixed(2),
                         reachDistance: reachDistance.toFixed(2),
                     });
-                    recoverDamage = true
+                    recoverDamage = true;
                 }
             }
         }
@@ -93,7 +93,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.killauraFlag++;
             attacker.killauraLastFlag = now;
             if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
-            recoverDamage = true
+            recoverDamage = true;
         }
         if (distanceH > 2.5) {
             const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
@@ -101,7 +101,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 attacker.killauraFlag++;
                 attacker.killauraLastFlag = now;
                 if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat (HitBox)", { angle });
-                recoverDamage = true
+                recoverDamage = true;
             }
         }
         if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {

@@ -24,7 +24,7 @@ function tickEvent(player: Player) {
                 a: 0,
                 b: 0,
                 c: 0,
-                d: 0
+                d: 0,
             },
         } as AimAssistData);
     const { x: pitch, y: yaw } = player.getRotation();

@@ -70,7 +70,7 @@ Player.prototype.kick = function (reason: string) {
 };
 Player.prototype.isSafeDevice = function () {
     return this.inputInfo.lastInputModeUsed === InputMode.Gamepad && this.clientSystemInfo.platformType === PlatformType.Console;
-}
+};
 // Intitalize some property for tick event
 Player.prototype.killauraLastAttack = 0;
 Player.prototype.lastKnockback = 0;
