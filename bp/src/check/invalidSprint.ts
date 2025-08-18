@@ -18,7 +18,7 @@ function tickEvent (player: Player) {
     if (player.getEffect("minecraft:blindness") && player.invalidSprintBlindAt && now - player.invalidSprintBlindAt > 500) {
         player.flag("InvalidSprint", "A", "Movement", { blindDuration: now - player.invalidSprintBlindAt });
     }
-    if (player.isSneaking) player.flag("InvalidSprint", "B", "Movement", { delay: now - player.invalidSprintBlindAt });
+    if (player.isSneaking) player.flag("InvalidSprint", "B", "Movement");
     const hunger = player.getComponent("player.hunger");
     // According to wiki, player cannot sprint when hunger value reached 6
     if (hunger && hunger.currentValue <= 6) {
