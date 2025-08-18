@@ -33,7 +33,7 @@ function tickEvent(player: Player) {
             } else if (["minecraft:milk_bucket", "minecraft:potion"].includes(heldItem.typeId) || heldItem.getComponent("food")) {
                 if (useDuration < 1400) {
                     system.runTimeout(() => {
-                        if (!player.invalidSprintStopUseAt && now - player.invalidSprintStopUseAt >= 200) player.flag("InvalidSprint", "F", "Movement", { useDuration });
+                        if (!player.invalidSprintStopUseAt || now - player.invalidSprintStopUseAt >= 200) player.flag("InvalidSprint", "F", "Movement", { useDuration });
                     }, 4);
                 }
             }
