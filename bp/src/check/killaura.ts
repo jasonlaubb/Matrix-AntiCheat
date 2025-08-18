@@ -43,7 +43,7 @@ function recordHeadPosition(player: Player) {
     });
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
-    if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
+    if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue || attacker.isSafeDevice()) return;
     const now = Date.now();
     attacker.killauraFlag ??= 0;
     attacker.killauraLastFlag ??= 0;
@@ -95,7 +95,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         }
         if (distanceH > 3.5) {
             const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
-            if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" ? 160 : 50)) {
+            if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" && !attacker.inputInfo.touchOnlyAffectsHotbar ? 160 : 50)) {
                 attacker.killauraFlag++;
                 attacker.killauraLastFlag = now;
                 if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat (HitBox)", { angle });
