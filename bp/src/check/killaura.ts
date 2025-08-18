@@ -43,7 +43,7 @@ function recordHeadPosition(player: Player) {
     });
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
-    if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue || attacker.isSafeDevice()) return;
+    if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
     const now = Date.now();
     attacker.killauraFlag ??= 0;
     attacker.killauraLastFlag ??= 0;
@@ -58,11 +58,12 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         attacker.killauraHitList = [];
         addHP(hurtEntity, damage);
     }
-    hurtEntity.antiReachRecordTime = now + 12000;
-    attacker.antiReachRecordTime = now + 12000;
     if (attacker.killauraFlag > 0 && now - attacker.killauraLastFlag > 12000) {
         attacker.killauraFlag = 0;
     }
+    if (attacker.isSafeDevice()) return; // No gonna finish other checks if player is safe device
+    hurtEntity.antiReachRecordTime = now + 12000;
+    attacker.antiReachRecordTime = now + 12000;
     if (!attacker?.killauraHeadRecording) recordHeadPosition(attacker);
     if (!hurtEntity?.antiReachRecording) recordPosition(hurtEntity);
     const { x: pitch, y: yaw } = attacker.getRotation();
