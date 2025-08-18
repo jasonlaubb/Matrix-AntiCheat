@@ -56,6 +56,7 @@ import { banitem, banitemclear, banitemlist, registerItemBanEvent, unbanitem } f
 import { automute, enterchat } from "./command/automute";
 import echestwipe from "./command/echestwipe";
 import invcopy from "./command/invcopy";
+import flagMessageTarget from "./command/flagMessageTarget";
 interface Option {
     name: string;
     type: "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
@@ -118,6 +119,7 @@ system.beforeEvents.startup.subscribe((event) => {
         enterchat,
         echestwipe,
         invcopy,
+        flagMessageTarget
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {

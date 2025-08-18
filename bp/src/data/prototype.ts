@@ -1,4 +1,4 @@
-import { Player, world, PlayerPermissionLevel } from "@minecraft/server";
+import { Player, world, PlayerPermissionLevel, InputMode, PlatformType } from "@minecraft/server";
 import { get } from "../util/database";
 import { ban, checkPunish } from "../util/punishment";
 export const messageTarget = ["any", "all", "operator", "admin", "exclude", "bypass", "tag"];
