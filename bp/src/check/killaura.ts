@@ -29,17 +29,17 @@ function recordPosition(entity: Entity) {
 function bottomLocation({ x, y, z }: Vector3) {
     return { x, y: y + 0.5, z };
 }
-function recordHeadPosition(entity: Entity) {
-    entity.antiReachRecords = [];
-    entity.antiReachRecording = true;
+function recordHeadPosition(player: Player) {
+    player.killauraHeadData = [];
+    player.killauraHeadRecording = true;
     const id = system.runInterval(() => {
-        if (!entity?.isValid || !entity.antiReachRecordTime || entity.antiReachRecordTime < Date.now()) {
-            delete entity.antiReachRecording;
+        if (!player.isValid || !player.antiReachRecordTime || player.antiReachRecordTime < Date.now()) {
+            delete player.killauraHeadRecording;
             system.clearRun(id);
             return;
         }
-        entity.antiReachRecords!.unshift(entity.getHeadLocation());
-        if (entity.antiReachRecords!.length > 10) entity.antiReachRecords!.pop();
+        player.killauraHeadData.unshift(player.getHeadLocation());
+        if (player.killauraHeadData.length > 10) player.killauraHeadData.pop();
     });
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
@@ -63,7 +63,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (attacker.killauraFlag > 0 && now - attacker.killauraLastFlag > 12000) {
         attacker.killauraFlag = 0;
     }
-    if (!attacker?.antiReachRecording) {
+    if (!attacker?.killauraHeadRecording) {
         recordHeadPosition(attacker);
     }
     if (!hurtEntity?.antiReachRecording) recordPosition(hurtEntity);
