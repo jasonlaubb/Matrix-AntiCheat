@@ -63,9 +63,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (attacker.killauraFlag > 0 && now - attacker.killauraLastFlag > 12000) {
         attacker.killauraFlag = 0;
     }
-    if (!attacker?.killauraHeadRecording) {
-        recordHeadPosition(attacker);
-    }
+    if (!attacker?.killauraHeadRecording) recordHeadPosition(attacker);
     if (!hurtEntity?.antiReachRecording) recordPosition(hurtEntity);
     const { x: pitch, y: yaw } = attacker.getRotation();
     const absPitch = fastAbs(pitch);
@@ -73,12 +71,13 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     const isPlayer = hurtEntity instanceof Player;
     if (isPlayer || hurtEntity.typeId.includes("villager")) {
         const height = attacker.location.y - hurtEntity.location.y;
-        if (attacker?.antiReachRecords && attacker.antiReachRecords.length >= 20 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 10) {
+        if (attacker?.killauraHeadData && attacker.killauraHeadData.length >= 20 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 20) {
             const attackerRecords = attacker.killauraHeadData;
             const hurtEntityRecords = hurtEntity.antiReachRecords;
-            if (attackDistance >= 4) {
+            if (attackDistance > 2) {
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                if (reachDistance > (absPitch < 50 && height >= 2 ? 5 : 4.5)) {
+                attacker.sendMessage(reachDistance.toFixed(7) + "/" + (absPitch < 50 && height >= 1.5 ? 4.5 : 4.2));
+                if (reachDistance > (absPitch < 50 && fastAbs(height) >= 2 ? 5 : 4.5)) {
                     attacker.killauraFlag++;
                     attacker.killauraLastFlag = now;
                     if (attacker.killauraFlag >= 3)
