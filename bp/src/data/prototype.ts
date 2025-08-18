@@ -2,6 +2,7 @@ import { Player, world, PlayerPermissionLevel, InputMode, PlatformType } from "@
 import { get } from "../util/database";
 import { ban, checkPunish } from "../util/punishment";
 export const messageTarget = ["any", "all", "operator", "admin", "exclude", "bypass", "tag"];
+export const punishmentType = ["none", "tempkick", "kick", "ban"];
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 1 || this.playerPermissionLevel === PlayerPermissionLevel.Operator;
 };
@@ -43,7 +44,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
         const deleteId = record.sort()[0];
         world.setDynamicProperty(deleteId); // Delete the last record.
     }
-    if (this.hasTag("matrix:ignore")) return;
+    if (get("enablePunishmentIgnoreTag") && this.hasTag("matrix:ignore")) return;
     switch (punishmentType) {
         case "kick": {
             this.kick("Unfair advantage");
