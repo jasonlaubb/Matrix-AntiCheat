@@ -6,8 +6,8 @@ export default {
     parameters: [
         {
             name: "player",
-            type: "player"
-        }
+            type: "player",
+        },
     ],
     requireOp: true,
     execute: (_player, [target]) => {
@@ -17,5 +17,5 @@ export default {
             }
         });
         return { status: 0, message: `§7[§aMatrix§7] §fWipe all items in ${target.name}'s enderchest` };
-    }
+    },
 } as Command;

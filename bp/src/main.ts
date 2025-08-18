@@ -116,7 +116,7 @@ system.beforeEvents.startup.subscribe((event) => {
         automute,
         enterchat,
         echestwipe,
-        invcopy
+        invcopy,
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {

@@ -281,6 +281,6 @@ export default {
     },
     antiInvalidSprintEnable: {
         type: "boolean",
-        value: true
-    }
+        value: true,
+    },
 };

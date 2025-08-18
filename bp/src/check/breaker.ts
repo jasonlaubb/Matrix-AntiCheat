@@ -16,21 +16,21 @@ function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWith
     const now = Date.now();
     // To prevent false positive, stop checking breaker when player has jusr broken block
     if (!event.player.breakerLastBreak || now - event.player.breakerLastBreak > 100)
-    if (event.block.typeId !== "minecraft:bed") {
-        const surround = getSurround(event.block);
-        if (surround.every((block) => block && (block.isSolid || isGlassBlock(block.typeId)))) {
-            event.cancel = true;
-            system.run(() => event.player.flag("Breaker", "A", "Block", { block: event.block.typeId }));
-        }
-    } else {
-        const bedSide = getBedSide(event.block);
-        if (bedSide) {
-            if (surroundSolidCount(event.block) >= 5 && surroundSolidCount(bedSide) >= 5) {
+        if (event.block.typeId !== "minecraft:bed") {
+            const surround = getSurround(event.block);
+            if (surround.every((block) => block && (block.isSolid || isGlassBlock(block.typeId)))) {
                 event.cancel = true;
-                system.run(() => event.player.flag("Breaker", "B", "Block", { block: event.block.typeId }));
+                system.run(() => event.player.flag("Breaker", "A", "Block", { block: event.block.typeId }));
+            }
+        } else {
+            const bedSide = getBedSide(event.block);
+            if (bedSide) {
+                if (surroundSolidCount(event.block) >= 5 && surroundSolidCount(bedSide) >= 5) {
+                    event.cancel = true;
+                    system.run(() => event.player.flag("Breaker", "B", "Block", { block: event.block.typeId }));
+                }
             }
         }
-    }
     if (!event.cancel && event instanceof PlayerBreakBlockBeforeEvent) event.player.breakerLastBreak = Date.now();
 }
 function surroundSolidCount(block: Block) {

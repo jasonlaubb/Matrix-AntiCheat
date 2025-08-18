@@ -48,7 +48,7 @@ export const detectionList = {
     aimAssist,
     namespoof,
     blockReach,
-    invalidSprint
+    invalidSprint,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {

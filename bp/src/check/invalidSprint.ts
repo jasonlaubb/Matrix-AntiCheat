@@ -1,5 +1,5 @@
 import { EffectAddBeforeEvent, EquipmentSlot, Player, world } from "@minecraft/server";
-import { addCheckInterval, removeCheckInterval } from "../util/tick"
+import { addCheckInterval, removeCheckInterval } from "../util/tick";
 
 export default {
     property: "antiInvalidSprintEnable",
@@ -10,9 +10,9 @@ export default {
     disable: () => {
         removeCheckInterval(tickEvent);
         world.beforeEvents.effectAdd.unsubscribe(effectAdd);
-    }
-}
-function tickEvent (player: Player) {
+    },
+};
+function tickEvent(player: Player) {
     if (!player.isSprinting || player.isFlying) return;
     const now = Date.now();
     if (player.getEffect("minecraft:blindness") && player.invalidSprintBlindAt && now - player.invalidSprintBlindAt > 500) {
@@ -22,7 +22,7 @@ function tickEvent (player: Player) {
     const hunger = player.getComponent("player.hunger");
     // According to wiki, player cannot sprint when hunger value reached 6
     if (hunger && hunger.currentValue <= 6) {
-        player.flag("InvalidSprint", "C", "Movement", { delay: now - player.invalidSprintBlindAt });
+        player.flag("InvalidSprint", "C", "Movement");
     }
     if (player.itemStartUse && now - player.itemStartUse > 200) {
         const heldItem = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Mainhand);
@@ -35,7 +35,7 @@ function tickEvent (player: Player) {
         }
     }
 }
-function effectAdd ({ entity, effectType }: EffectAddBeforeEvent) {
+function effectAdd({ entity, effectType }: EffectAddBeforeEvent) {
     if (effectType !== "minecraft:blindness" || !(entity instanceof Player) || entity.getEffect("minecraft:blindness")) return;
     entity.invalidSprintBlindAt = Date.now();
 }

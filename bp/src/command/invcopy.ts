@@ -7,8 +7,8 @@ export default {
     parameters: [
         {
             name: "player",
-            type: "normalPlayerTarget"
-        }
+            type: "normalPlayerTarget",
+        },
     ],
     requireOp: true,
     execute: (player, [target]) => {
@@ -21,10 +21,8 @@ export default {
             }
             const fromEquip = targetPlayer.getComponent("equippable")!;
             const toEquip = player.getComponent("equippable")!;
-            [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand].forEach((slot) => 
-                toEquip.setEquipment(slot, fromEquip.getEquipment(slot))
-            );
+            [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand].forEach((slot) => toEquip.setEquipment(slot, fromEquip.getEquipment(slot)));
         });
-        return { status: 0, message: `§7[§aMatrix§7] §fCopied ${target.name}'s inventory` }
-    }
-} as Command
+        return { status: 0, message: `§7[§aMatrix§7] §fCopied ${target.name}'s inventory` };
+    },
+} as Command;

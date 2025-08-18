@@ -34,7 +34,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     }
     player.scaffoldNoRotationFlag ??= 0;
     const onlyTouchedBlock = isScaffold && getOnlyTouchBlock(event.block);
-    if (isScaffold && pitch < (isTouchInput ? 45 : 30) && (distance <= 2.5 || onlyTouchedBlock && distanceXZ(center(onlyTouchedBlock), event.player.location) <= distance)) {
+    if (isScaffold && pitch < (isTouchInput ? 45 : 30) && (distance <= 2.5 || (onlyTouchedBlock && distanceXZ(center(onlyTouchedBlock), event.player.location) <= distance))) {
         player.scaffoldNoRotationFlag++;
         if (player.scaffoldNoRotationFlag >= 3) {
             event.cancel = true;
@@ -42,7 +42,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         }
     } else player.scaffoldNoRotationFlag = 0;
     player.scaffoldIntPitch ??= 0;
-    if (pitch % 1 === 0 || yaw !== 0 && yaw % 1 === 0) {
+    if (pitch % 1 === 0 || (yaw !== 0 && yaw % 1 === 0)) {
         player.scaffoldIntPitch++;
         event.cancel = true;
         if (player.scaffoldIntPitch >= 3) {
@@ -73,7 +73,17 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         }
     } else player.scaffoldExtenderFlag = 0;
     // Refenced Scythe Anticheat Scaffold/A at main.js
-    if (isScaffold && Math.floor(height) === 1 && !block.typeId.includes("fence") && !block.typeId.includes("wall") && !player.isFlying && player.isFalling && player.getVelocity().y < 1 && !block.typeId.endsWith("_shulker_box") && !player.getEffect("jump_boost")) {
+    if (
+        isScaffold &&
+        Math.floor(height) === 1 &&
+        !block.typeId.includes("fence") &&
+        !block.typeId.includes("wall") &&
+        !player.isFlying &&
+        player.isFalling &&
+        player.getVelocity().y < 1 &&
+        !block.typeId.endsWith("_shulker_box") &&
+        !player.getEffect("jump_boost")
+    ) {
         const offset = fastAbs(player.location.y % 1);
         if (offset > 0.35) {
             event.cancel = true;
@@ -118,7 +128,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
 
     // Movement classification on grid
     const isAxisAlignedStep = sameY && hasLast && ((dx === 1 && dz === 0) || (dx === 0 && dz === 1));
-    const isDiagonalStep = !sameY || hasLast && dx === 1 && dz === 1;
+    const isDiagonalStep = !sameY || (hasLast && dx === 1 && dz === 1);
 
     // Original “straight” checks relative to last block
     const strightX = hasLast && lastLoc.x === curLoc.x;
@@ -187,7 +197,7 @@ function checkDiagScaffold(now: number, player: Player, block: Block, isNormalSc
             player.scaffoldDiagFlag = max2(0, player.scaffoldDiagFlag - 1);
         }
     }
-    const blockBelow = block.location.y !== 64 && block.below()
+    const blockBelow = block.location.y !== 64 && block.below();
     if (!(blockBelow && (blockBelow.isAir || blockBelow.isLiquid)) && !isNormalScaffold) {
         player.scaffoldDiagFlag = 0; // Not a bridge action
     }
@@ -217,12 +227,18 @@ function isScaffolding(face: Direction, newPlace: Vector3, lastPlace: Vector3) {
     const sameY = newPlace.y === lastPlace.y;
     const sameXZ = newPlace.x === lastPlace.x && newPlace.z === lastPlace.z;
     switch (face) {
-        case Direction.Up: return sameXZ && newPlace.y > lastPlace.y;
-        case Direction.Down: return sameXZ && newPlace.y < lastPlace.z;
-        case Direction.North: return sameY && newPlace.z < lastPlace.z;
-        case Direction.South: return sameY && newPlace.z > lastPlace.z;
-        case Direction.West: return sameY && newPlace.x < lastPlace.z;
-        case Direction.East: return sameY && newPlace.x > lastPlace.z;
+        case Direction.Up:
+            return sameXZ && newPlace.y > lastPlace.y;
+        case Direction.Down:
+            return sameXZ && newPlace.y < lastPlace.z;
+        case Direction.North:
+            return sameY && newPlace.z < lastPlace.z;
+        case Direction.South:
+            return sameY && newPlace.z > lastPlace.z;
+        case Direction.West:
+            return sameY && newPlace.x < lastPlace.z;
+        case Direction.East:
+            return sameY && newPlace.x > lastPlace.z;
     }
 }
 function getOnlyTouchBlock(block: Block) {
