@@ -77,7 +77,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             if (attackDistance > 2) {
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
                 //attacker.sendMessage(reachDistance.toFixed(7) + "/" + (absPitch < 50 && height >= 1.5 ? 4.6 : 3.6));
-                if (reachDistance > (absPitch < 50 && fastAbs(height) >= 2 ? 5 : 4.5)) {
+                if (reachDistance > (absPitch < 50 && fastAbs(height) >= 2 ? 4.6 : 3.6)) {
                     attacker.flag("Killaura", "B", "Combat (Reach)", {
                         attackDistance: attackDistance.toFixed(2),
                         reachDistance: reachDistance.toFixed(2),
