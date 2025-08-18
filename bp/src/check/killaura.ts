@@ -23,7 +23,7 @@ function recordPosition(entity: Entity) {
             return;
         }
         entity.antiReachRecords!.unshift(bottomLocation(entity.location));
-        if (entity.antiReachRecords!.length > 10) entity.antiReachRecords!.pop();
+        if (entity.antiReachRecords!.length > 20) entity.antiReachRecords!.pop();
     });
 }
 function bottomLocation({ x, y, z }: Vector3) {
@@ -39,7 +39,7 @@ function recordHeadPosition(player: Player) {
             return;
         }
         player.killauraHeadData.unshift(player.getHeadLocation());
-        if (player.killauraHeadData.length > 10) player.killauraHeadData.pop();
+        if (player.killauraHeadData.length > 20) player.killauraHeadData.pop();
     });
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
@@ -73,25 +73,21 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     const isPlayer = hurtEntity instanceof Player;
     if (isPlayer || hurtEntity.typeId.includes("villager")) {
         const height = attacker.location.y - hurtEntity.location.y;
-        if (attacker?.antiReachRecords && attacker.antiReachRecords.length >= 10 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 10) {
-            const attackerRecords = attacker.antiReachRecords;
+        if (attacker?.antiReachRecords && attacker.antiReachRecords.length >= 20 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 10) {
+            const attackerRecords = attacker.killauraHeadData;
             const hurtEntityRecords = hurtEntity.antiReachRecords;
-            if (attackDistance >= 4.5) {
-                system.runTimeout(() => {
-                    const newRec1 = attackerRecords.concat(attacker.antiReachRecords!);
-                    const newRec2 = hurtEntityRecords.concat(hurtEntity.antiReachRecords!);
-                    const reachDistance = lineDistance(newRec1, newRec2);
-                    if (reachDistance > (absPitch < 50 && height >= 2 ? 5.3 : 4.57)) {
-                        attacker.killauraFlag++;
-                        attacker.killauraLastFlag = now;
-                        if (attacker.killauraFlag >= 3)
-                            attacker.flag("Killaura", "B", "Combat (Reach)", {
-                                attackDistance: attackDistance.toFixed(2),
-                                reachDistance: reachDistance.toFixed(2),
-                            });
-                        addHP(hurtEntity, damage);
-                    }
-                }, 10);
+            if (attackDistance >= 4) {
+                const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
+                if (reachDistance > (absPitch < 50 && height >= 2 ? 5.3 : 4.57)) {
+                    attacker.killauraFlag++;
+                    attacker.killauraLastFlag = now;
+                    if (attacker.killauraFlag >= 3)
+                        attacker.flag("Killaura", "B", "Combat (Reach)", {
+                            attackDistance: attackDistance.toFixed(2),
+                            reachDistance: reachDistance.toFixed(2),
+                        });
+                    addHP(hurtEntity, damage);
+                }
             }
         }
         const distanceH = distanceXZ(attacker.location, hurtEntity.location);
