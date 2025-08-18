@@ -53,6 +53,7 @@ import { freecam, freecamspeed, freecamtp } from "./command/freecam";
 import lockdown from "./command/lockdown";
 import { banitem, banitemclear, banitemlist, registerItemBanEvent, unbanitem } from "./command/banItem";
 import { automute, enterchat } from "./command/automute";
+import echestwipe from "./command/echestwipe";
 interface Option {
     name: string;
     type: "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
@@ -113,6 +114,7 @@ system.beforeEvents.startup.subscribe((event) => {
         unbanitem,
         automute,
         enterchat,
+        echestwipe
     ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
