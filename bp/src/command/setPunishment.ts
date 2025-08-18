@@ -4,6 +4,7 @@ import { world } from "@minecraft/server";
 export default {
     name: "setpunishment",
     description: "Change punishment on flag",
+    requireOp: true,
     parameters: [
         {
             name: "punishmentType",

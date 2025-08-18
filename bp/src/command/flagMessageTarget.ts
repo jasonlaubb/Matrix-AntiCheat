@@ -4,6 +4,7 @@ import { world } from "@minecraft/server";
 export default {
     name: "flagmsgtarget",
     description: "Change the flag message's target",
+    requireOp: true,
     parameters: [
         {
             name: "messageTarget",
