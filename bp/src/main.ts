@@ -27,7 +27,7 @@ import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
 import { timeUnits } from "./command/ban";
-import { messageTarget } from "./data/prototype";
+import { messageTarget, punishmentType } from "./data/prototype";
 import "./asset/antiXray";
 import "./command/invsee";
 import "./data/prototype";
@@ -154,6 +154,7 @@ system.beforeEvents.startup.subscribe((event) => {
     event.customCommandRegistry.registerEnum("matrix:viewType", cameraTypes);
     event.customCommandRegistry.registerEnum("matrix:timeUnit", timeUnits);
     event.customCommandRegistry.registerEnum("matrix:messageTarget", messageTarget);
+    event.customCommandRegistry.registerEnum("matrix:punishmentType", punishmentType);
     commands.forEach(({ name, description, requireOp, optionalParameters, parameters, execute }) => {
         event.customCommandRegistry.registerCommand(
             {
