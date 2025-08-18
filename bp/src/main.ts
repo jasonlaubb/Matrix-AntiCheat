@@ -17,18 +17,19 @@
 扁　　　扁　　　　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　扁扁扁　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　　　　　　扁扁　　　扁　　　扁扁扁扁　　　　　　　　扁
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
-import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot, PlayerPermissionLevel } from "@minecraft/server";
+import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
 import info from "./command/info";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import property from "./data/property";
 import { classifyProperty, getPropertyType } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
-import { ban, checkPunish } from "./util/punishment";
+import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
 import { timeUnits } from "./command/ban";
 import "./asset/antiXray";
 import "./command/invsee";
+import "./data/prototype";
 import { worldBorderOn } from "./asset/worldBorder";
 import oreAlert from "./command/oreAlert";
 import { oreAlertOn } from "./asset/oreAlert";
@@ -52,63 +53,6 @@ import { freecam, freecamspeed, freecamtp } from "./command/freecam";
 import lockdown from "./command/lockdown";
 import { banitem, banitemclear, banitemlist, registerItemBanEvent, unbanitem } from "./command/banItem";
 import { automute, enterchat } from "./command/automute";
-// §7[§aMatrix§7] §f
-Player.prototype.isOp = function () {
-    return this.commandPermissionLevel >= 1 || this.playerPermissionLevel === PlayerPermissionLevel.Operator;
-};
-Player.prototype.flag = function (id: string, type: string, category: string, data?: { [key: string]: string | number }) {
-    const flagMessage = `§7[§aMatrix§7] §e${this.name}§r§f has been detected for unfair adventage §7<${category}> §c[${id}/${type}]${data ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
-    const flagType = get("flagMessageTarget");
-    let flagTarget: Player[] = [];
-    switch (flagType) {
-        case "any":
-        case "all": {
-            flagTarget = world.getAllPlayers();
-            break;
-        }
-        case "operator":
-        case "admin": {
-            flagTarget = world.getAllPlayers().filter((player) => player.isOp());
-            break;
-        }
-        case "exclude":
-        case "bypass": {
-            flagTarget = world.getPlayers({
-                excludeNames: [this.name],
-            });
-            break;
-        }
-        case "tag": {
-            const notifyTag = get("notifyTag");
-            flagTarget = world.getPlayers({ tags: [notifyTag] });
-            break;
-        }
-    }
-    if (flagTarget.length > 0) {
-        flagTarget.forEach((player) => player.sendMessage(flagMessage));
-    }
-    const punishmentType = get("flagPunishmentType");
-    world.setDynamicProperty("flagrecord:" + Date.now(), `§7[${new Date(Date.now()).toUTCString()}] §f${this.name} §r§8| §f${id}/${type} §8| §f${punishmentType}`);
-    const record = world.getDynamicPropertyIds().filter((id) => id.startsWith("flagrecord:"));
-    if (record.length > get("maxRecordAmount")) {
-        const deleteId = record.sort()[0];
-        world.setDynamicProperty(deleteId); // Delete the last record.
-    }
-    if (this.hasTag("matrix:ignore")) return;
-    switch (punishmentType) {
-        case "kick": {
-            this.kick("Unfair advantage");
-            break;
-        }
-        case "ban": {
-            ban(this, "Unfair advantage", "Matrix AntiCheat", Date.now() + get("flagBanDuration"));
-            checkPunish(this);
-        }
-    }
-};
-Player.prototype.kick = function (reason: string) {
-    this.runCommand(`kick @s ${reason}`);
-};
 interface Option {
     name: string;
     type: "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";

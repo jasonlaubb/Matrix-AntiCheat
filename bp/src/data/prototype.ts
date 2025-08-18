@@ -1,0 +1,68 @@
+import { Player, world, PlayerPermissionLevel } from "@minecraft/server";
+import { get } from "../util/database";
+import { ban, checkPunish } from "../util/punishment";
+Player.prototype.isOp = function () {
+    return this.commandPermissionLevel >= 1 || this.playerPermissionLevel === PlayerPermissionLevel.Operator;
+};
+Player.prototype.flag = function (id: string, type: string, category: string, data?: { [key: string]: string | number }) {
+    const flagMessage = `§7[§aMatrix§7] §e${this.name}§r§f has been detected for unfair adventage §7<${category}> §c[${id}/${type}]${data ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
+    const flagType = get("flagMessageTarget");
+    let flagTarget: Player[] = [];
+    switch (flagType) {
+        case "any":
+        case "all": {
+            flagTarget = world.getAllPlayers();
+            break;
+        }
+        case "operator":
+        case "admin": {
+            flagTarget = world.getAllPlayers().filter((player) => player.isOp());
+            break;
+        }
+        case "exclude":
+        case "bypass": {
+            flagTarget = world.getPlayers({
+                excludeNames: [this.name],
+            });
+            break;
+        }
+        case "tag": {
+            const notifyTag = get("notifyTag");
+            flagTarget = world.getPlayers({ tags: [notifyTag] });
+            break;
+        }
+    }
+    if (flagTarget.length > 0) {
+        flagTarget.forEach((player) => player.sendMessage(flagMessage));
+    }
+    const punishmentType = get("flagPunishmentType");
+    world.setDynamicProperty("flagrecord:" + Date.now(), `§7[${new Date(Date.now()).toUTCString()}] §f${this.name} §r§8| §f${id}/${type} §8| §f${punishmentType}`);
+    const record = world.getDynamicPropertyIds().filter((id) => id.startsWith("flagrecord:"));
+    if (record.length > get("maxRecordAmount")) {
+        const deleteId = record.sort()[0];
+        world.setDynamicProperty(deleteId); // Delete the last record.
+    }
+    if (this.hasTag("matrix:ignore")) return;
+    switch (punishmentType) {
+        case "kick": {
+            this.kick("Unfair advantage");
+            break;
+        }
+        case "ban": {
+            ban(this, "Unfair advantage", "Matrix AntiCheat", Date.now() + get("flagBanDuration"));
+            checkPunish(this);
+            break;
+        }
+        case "tempkick": {
+            try {
+                this.triggerEvent("matrix:tempkick");
+            } catch {
+                console.warn("Extension is not enabled, failed to tempkick");
+                this.kick("Unfair advantage");
+            }
+        }
+    }
+};
+Player.prototype.kick = function (reason: string) {
+    this.runCommand(`kick @s ${reason}`);
+};
