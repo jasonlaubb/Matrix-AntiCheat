@@ -36,7 +36,7 @@ import { oreAlertOn } from "./asset/oreAlert";
 import { endLock, netherLock } from "./command/dimensionLock";
 import { endNetherLockOn } from "./asset/endNetherLock";
 import { mute, unmute } from "./command/mute";
-import { knockback, riptide } from "./asset/eventHandler";
+import { itemStartUse, itemStopUse, knockback, riptide } from "./asset/eventHandler";
 import { detect, detectionlist, detectionList, initModules } from "./command/module";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
 import { rankadd, rankclear, ranklist, rankremove, rankset } from "./command/rank";
@@ -306,7 +306,12 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (get("oreAlert")) oreAlertOn();
     if (get("endLock") || get("netherLock")) endNetherLockOn();
     const movementModule = get("antiSpeedEnable") || get("antiFlyEnable");
-    if (movementModule || get("antiKillauraEnable")) world.afterEvents.itemReleaseUse.subscribe(riptide);
+    const killauraModule = get("antiKillauraEnable");
+    if (movementModule || killauraModule) world.afterEvents.itemReleaseUse.subscribe(riptide);
+    if (killauraModule || get("antiInvalidSprintEnable")) {
+        world.afterEvents.itemStartUse.subscribe(itemStartUse);
+        world.afterEvents.itemStopUse.subscribe(itemStopUse);
+    }
     if (movementModule) world.afterEvents.entityHurt.subscribe(knockback);
     if (world.getDynamicPropertyIds().find((id) => id.startsWith("banitem:"))) registerItemBanEvent();
     const allPlayers = world.getAllPlayers();

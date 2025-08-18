@@ -279,4 +279,8 @@ export default {
         type: "boolean",
         value: true,
     },
+    antiInvalidSprintEnable: {
+        type: "boolean",
+        value: true
+    }
 };

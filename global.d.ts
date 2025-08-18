@@ -30,6 +30,7 @@ declare module "@minecraft/server" {
         // Detection handler data
         lastRiptide: number;
         lastKnockback: number;
+        itemStartUse?: number;
         // AntiSpam Data
         lastMessage: number;
         tooFastFlag: number;
@@ -47,7 +48,6 @@ declare module "@minecraft/server" {
         killauraXSpeed: number[];
         killauraLastAttack: number;
         killauraLastInAir: number;
-        killauraItemStartUse?: number
         nofallLastFallState: boolean;
         nofallLastOnGroundLocation: Server.Vector3;
         autototemLastItem: [boolean, boolean];
@@ -98,6 +98,7 @@ declare module "@minecraft/server" {
         fastthrowLastFlag: number;
         aimAssistData: AimAssistData;
 		breakerLastBreak: number;
+        invalidSprintBlindAt: number;
     }
     interface Entity {
         // Detection data

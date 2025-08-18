@@ -1,4 +1,4 @@
-import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, ItemStartUseAfterEvent, ItemStopUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
+import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP, banAttack } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -6,14 +6,10 @@ export default {
     property: "antiKillauraEnable",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
-        world.afterEvents.itemStartUse.subscribe(itemStartUse);
-        world.afterEvents.itemStopUse.subscribe(itemStopUse);
         addCheckInterval(aimCheck);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
-        world.afterEvents.itemStartUse.unsubscribe(itemStartUse);
-        world.afterEvents.itemStopUse.unsubscribe(itemStopUse);
         removeCheckInterval(aimCheck);
     },
 };
@@ -132,7 +128,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
-    if (attacker.killauraItemStartUse && now - attacker.killauraItemStartUse > 150) {
+    if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500) {
         attacker.flag("Killaura", "J", "Combat");
     }
     if (attacker.isSleeping) attacker.flag("Killaura", "K", "Combat");
@@ -306,11 +302,4 @@ function getProtectionLevel(component: EntityEquippableComponent) {
         protectionLevel += enchant.getEnchantment("minecraft:protection")?.level ?? 0;
     });
     return protectionLevel;
-}
-function itemStartUse({ source, itemStack }: ItemStartUseAfterEvent) {
-    if (itemStack.typeId === "minecraft:fishing_rod") return;
-    source.killauraItemStartUse = Date.now();
-}
-function itemStopUse({ source }: ItemStopUseAfterEvent) {
-    delete source.killauraItemStartUse;
 }
