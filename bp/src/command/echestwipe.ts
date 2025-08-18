@@ -16,6 +16,6 @@ export default {
                 target.runCommand(`replaceitem entity @s slot.enderchest ${i} air`);
             }
         });
-        return { status: 0, message: `§7[§aMatrix§7] §fWipe all items in ${target.name}'s enderchest` };
+        return { status: 0, message: `§7[§aMatrix§7] §fWiped all items in ${target.name}'s enderchest` };
     },
 } as Command;
