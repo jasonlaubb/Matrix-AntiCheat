@@ -9,12 +9,13 @@ export default {
             type: "player"
         }
     ],
+    requireOp: true,
     execute: (_player, [target]) => {
         system.run(() => {
             for (let i = 0; i < 27; i++) {
                 target.runCommand(`replaceitem entity @s slot.enderchest ${i} air`);
             }
         });
-        return { status: 0, message: `§7[§aMatrix§7] §fWipe all items in ${target}'s enderchest` };
+        return { status: 0, message: `§7[§aMatrix§7] §fWipe all items in ${target.name}'s enderchest` };
     }
 } as Command;
