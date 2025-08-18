@@ -18,10 +18,10 @@ function onItemUse(event: ItemUseBeforeEvent) {
         if (now - player.fastthrowLastThrow < get("antiFastThrowMinInterval")) {
             event.cancel = true;
             player.fastthrowFlag ??= 0;
-            player.fastthrowLastFlag ??= now;
-            if (now - player.fastthrowLastFlag > 5000) {
+            if (player.fastthrowLastFlag && now - player.fastthrowLastFlag > 5000) {
                 player.fastthrowFlag = 0;
             }
+            player.fastthrowLastFlag = now;
             player.fastthrowFlag++;
             if (player.fastthrowFlag >= 3) {
                 system.run(() => player.flag("FastThrow", "A", "Player", { interval: now - player.fastthrowLastThrow }));

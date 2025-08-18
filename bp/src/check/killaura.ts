@@ -81,7 +81,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                     const newRec1 = attackerRecords.concat(attacker.antiReachRecords!);
                     const newRec2 = hurtEntityRecords.concat(hurtEntity.antiReachRecords!);
                     const reachDistance = lineDistance(newRec1, newRec2);
-                    if (reachDistance > (absPitch < 50 && height >= 2 ? 5 : 4.5)) {
+                    if (reachDistance > (absPitch < 50 && height >= 2 ? 5.3 : 4.57)) {
                         attacker.killauraFlag++;
                         attacker.killauraLastFlag = now;
                         if (attacker.killauraFlag >= 3)
