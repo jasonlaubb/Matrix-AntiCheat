@@ -8,6 +8,10 @@ declare module "@minecraft/server" {
         isOp: () => boolean;
         flag: (id: string, type: string, category: string, data?: { [key: string]: string | number }) => void;
         kick: (reason: string) => void;
+	    /**
+	     * Checks if player is safe device like Xbox and PS4
+	     */
+		isSafeDevice: () => boolean;
         // Xray data
         lastNoTntMsg: number;
         // WorldBorder data
