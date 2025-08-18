@@ -70,6 +70,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     const absPitch = fastAbs(pitch);
     const attackDistance = distance(attacker.location, hurtEntity.location);
     const isPlayer = hurtEntity instanceof Player;
+    let recoverDamage = false;
     if (isPlayer || hurtEntity.typeId.includes("villager")) {
         const height = attacker.location.y - hurtEntity.location.y;
         if (attacker?.killauraHeadData && attacker.killauraHeadData.length >= 20 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 20) {
@@ -83,7 +84,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                         attackDistance: attackDistance.toFixed(2),
                         reachDistance: reachDistance.toFixed(2),
                     });
-                    addHP(hurtEntity, damage);
+                    recoverDamage = true
                 }
             }
         }
@@ -92,7 +93,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.killauraFlag++;
             attacker.killauraLastFlag = now;
             if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
-            addHP(hurtEntity, damage);
+            recoverDamage = true
         }
         if (distanceH > 2.5) {
             const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
@@ -100,18 +101,18 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 attacker.killauraFlag++;
                 attacker.killauraLastFlag = now;
                 if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat (HitBox)", { angle });
-                addHP(hurtEntity, damage);
+                recoverDamage = true
             }
         }
         if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {
-            addHP(hurtEntity, damage);
+            recoverDamage = true;
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
     if (damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
-            addHP(hurtEntity, damage);
+            recoverDamage = true;
             attacker.flag("Killaura", "I", "Combat (Criticals)");
         }
     }
@@ -119,13 +120,21 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw });
-        addHP(hurtEntity, damage);
+        recoverDamage = true;
     }
     if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500) {
         attacker.flag("Killaura", "J", "Combat");
+        recoverDamage = true;
     }
-    if (attacker.isSleeping) attacker.flag("Killaura", "K", "Combat");
-    if (attacker.id === hurtEntity.id) attacker.flag("Killaura", "L", "Combat");
+    if (attacker.isSleeping) {
+        attacker.flag("Killaura", "K", "Combat");
+        recoverDamage = true;
+    }
+    if (attacker.id === hurtEntity.id) {
+        attacker.flag("Killaura", "L", "Combat");
+        recoverDamage = true;
+    }
+    if (recoverDamage) addHP(hurtEntity, damage);
 }
 function aimCheck(player: Player) {
     const pitch = player.getRotation().x;

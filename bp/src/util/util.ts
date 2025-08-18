@@ -3,9 +3,9 @@ import { min2 } from "./mathUtil";
 import { get } from "./database";
 
 export function addHP(entity: Entity, hp: number): void {
-    if (!entity || !entity.isValid) return;
-    const health = entity.getComponent("health")!;
-    health.setCurrentValue(min2(health.currentValue + hp, health.effectiveMax));
+    if (!entity.isValid) return;
+    const health = entity.getComponent("health");
+    if (health) health.setCurrentValue(min2(health.currentValue + hp, health.effectiveMax));
 }
 export function banAttack(player: Player, duration: number) {
     player.addEffect("minecraft:weakness", duration, { amplifier: 150, showParticles: false });
