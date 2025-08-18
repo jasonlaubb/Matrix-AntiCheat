@@ -67,6 +67,9 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
 Player.prototype.kick = function (reason: string) {
     this.runCommand(`kick @s ${reason}`);
 };
+Player.prototype.isSafeDevice = function () {
+    return this.inputInfo.lastInputModeUsed === InputMode.Gamepad && this.clientSystemInfo.platformType === PlatformType.Console;
+}
 // Intitalize some property for tick event
 Player.prototype.killauraLastAttack = 0;
 Player.prototype.lastKnockback = 0;
