@@ -66,3 +66,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
 Player.prototype.kick = function (reason: string) {
     this.runCommand(`kick @s ${reason}`);
 };
+// Intitalize some property for tick event
+Player.prototype.killauraLastAttack = 0;
+Player.prototype.lastKnockback = 0;
+Player.prototype.lastRiptide = 0;

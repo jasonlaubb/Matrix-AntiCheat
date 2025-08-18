@@ -1,4 +1,4 @@
-import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, system, Vector3, world } from "@minecraft/server";
+import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, ItemStartUseAfterEvent, ItemStopUseAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP, banAttack } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -6,10 +6,14 @@ export default {
     property: "antiKillauraEnable",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
+        world.afterEvents.itemStartUse.subscribe(itemStartUse);
+        world.afterEvents.itemStopUse.subscribe(itemStopUse);
         addCheckInterval(aimCheck);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
+        world.afterEvents.itemStartUse.unsubscribe(itemStartUse);
+        world.afterEvents.itemStopUse.unsubscribe(itemStopUse);
         removeCheckInterval(aimCheck);
     },
 };
@@ -49,7 +53,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     attacker.killauraLastFlag ??= 0;
     attacker.killauraHitList ??= [];
     attacker.killauraLastAttack = now;
-    if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && !(attacker.lastRiptide && now - attacker.lastRiptide < 3000)) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
+    if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && now - attacker.lastRiptide > 3000) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
     attacker.killauraHitList = attacker.killauraHitList.filter(({ time }) => now - time <= 100);
     if (attacker.killauraHitList.length >= 2) {
         attacker.killauraFlag++;
@@ -128,10 +132,15 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw });
         addHP(hurtEntity, damage);
     }
+    if (attacker.killauraItemStartUse && now - attacker.killauraItemStartUse > 150) {
+        attacker.flag("Killaura", "J", "Combat");
+    }
+    if (attacker.isSleeping) attacker.flag("Killaura", "K", "Combat");
+    if (attacker.id === hurtEntity.id) attacker.flag("Killaura", "L", "Combat");
 }
 function aimCheck(player: Player) {
     const pitch = player.getRotation().x;
-    if (player.killauraLastAttack && Date.now() - player.killauraLastAttack < 800) {
+    if (Date.now() - player.killauraLastAttack < 800) {
         if (pitch.toFixed(5) === "0.00000") {
             player.killauraLastAttack = 0;
             banAttack(player, 100);
@@ -297,4 +306,11 @@ function getProtectionLevel(component: EntityEquippableComponent) {
         protectionLevel += enchant.getEnchantment("minecraft:protection")?.level ?? 0;
     });
     return protectionLevel;
+}
+function itemStartUse({ source, itemStack }: ItemStartUseAfterEvent) {
+    if (itemStack.typeId === "minecraft:fishing_rod") return;
+    source.killauraItemStartUse = Date.now();
+}
+function itemStopUse({ source }: ItemStopUseAfterEvent) {
+    delete source.killauraItemStartUse;
 }

@@ -39,8 +39,8 @@ function tick(player: Player) {
     } else if (
         playerStarted &&
         pistonNotPushed &&
-        now - (player.lastKnockback ?? 0) > 2000 &&
-        now - (player.lastRiptide ?? 0) > 5000 &&
+        now - player.lastKnockback > 2000 &&
+        now - player.lastRiptide > 5000 &&
         (previousVelY < 0 || (previousVelY < 0 && velocityY === 0) || (velocityY > 0 && previousVelY / velocityY > 4 && previousVelY > 2.5 && fastAbs((player.flyData.lastVelocityY ?? 0) - velocityY) < 0.5)) &&
         !isRiding(player) &&
         !player.isFlying &&

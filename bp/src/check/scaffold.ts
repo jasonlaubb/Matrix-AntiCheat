@@ -1,6 +1,6 @@
 import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode, Direction, Player, Vector3, LocationOutOfWorldBoundariesError } from "@minecraft/server";
 import { locEqual } from "../util/util";
-import { calculateRelativeViewAngle, distanceXZ, max2, min2 } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distanceXZ, fastAbs, max2, min2 } from "../util/mathUtil";
 import type { Axis } from "../../../global";
 export default {
     property: "antiScaffoldEnable",
@@ -72,6 +72,14 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "G", "Block", { pitch: pitch.toFixed(2), distance: distance.toFixed(2) }));
         }
     } else player.scaffoldExtenderFlag = 0;
+    // Refenced Scythe Anticheat Scaffold/A at main.js
+    if (isScaffold && Math.floor(height) === 1 && !block.typeId.includes("fence") && !block.typeId.includes("wall") && !player.isFlying && player.isFalling && player.getVelocity().y < 1 && !block.typeId.endsWith("_shulker_box") && !player.getEffect("jump_boost")) {
+        const offset = fastAbs(player.location.y % 1);
+        if (offset > 0.35) {
+            event.cancel = true;
+            system.run(() => player.flag("Scaffold", "I", "Block (Tower)", { offset }));
+        }
+    }
     if (!event.cancel) {
         player.scaffoldLastPlaceLoc = block.location;
         player.scaffoldLastPlace = now;
