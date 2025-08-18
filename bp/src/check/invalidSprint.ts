@@ -1,4 +1,4 @@
-import { EffectAddBeforeEvent, EquipmentSlot, Player, world } from "@minecraft/server";
+import { EffectAddBeforeEvent, EquipmentSlot, Player, system, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 
 export default {
@@ -24,13 +24,18 @@ function tickEvent(player: Player) {
     if (hunger && hunger.currentValue <= 6) {
         player.flag("InvalidSprint", "C", "Movement");
     }
-    if (player.itemStartUse && now - player.itemStartUse > 200) {
+    const useDuration = player.itemStartUse && now - player.itemStartUse;
+    if (useDuration) {
         const heldItem = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Mainhand);
         if (heldItem && heldItem.typeId.startsWith("minecraft:")) {
             if (["minecraft:bow", "minecraft:cross_bow"].includes(heldItem.typeId)) {
-                player.flag("InvalidSprint", "E", "Movement", { useDuration: now - player.itemStartUse });
+                player.flag("InvalidSprint", "E", "Movement", { useDuration });
             } else if (["minecraft:milk_bucket", "minecraft:potion"].includes(heldItem.typeId) || heldItem.getComponent("food")) {
-                if (now - player.itemStartUse < 1400) player.flag("InvalidSprint", "F", "Movement", { useDuration: now - player.itemStartUse });
+                if (useDuration < 1400) {
+                    system.runTimeout(() => {
+                        if (!player.invalidSprintStopUseAt && now - player.invalidSprintStopUseAt >= 200) player.flag("InvalidSprint", "F", "Movement", { useDuration });
+                    }, 4);
+                }
             }
         }
     }

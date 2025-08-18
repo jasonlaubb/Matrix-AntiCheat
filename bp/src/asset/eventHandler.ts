@@ -15,5 +15,6 @@ export function itemStartUse({ source, itemStack }: ItemStartUseAfterEvent) {
     source.itemStartUse = Date.now();
 }
 export function itemStopUse({ source }: ItemStopUseAfterEvent) {
+    source.invalidSprintStopUseAt = Date.now();
     delete source.itemStartUse;
 }

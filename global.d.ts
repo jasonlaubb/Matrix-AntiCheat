@@ -99,6 +99,7 @@ declare module "@minecraft/server" {
         aimAssistData: AimAssistData;
 		breakerLastBreak: number;
         invalidSprintBlindAt: number;
+        invalidSprintStopUseAt: number;
     }
     interface Entity {
         // Detection data
