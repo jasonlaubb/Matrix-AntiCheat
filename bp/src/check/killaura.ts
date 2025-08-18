@@ -76,15 +76,12 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             const hurtEntityRecords = hurtEntity.antiReachRecords;
             if (attackDistance > 2) {
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                attacker.sendMessage(reachDistance.toFixed(7) + "/" + (absPitch < 50 && height >= 1.5 ? 4.5 : 4.2));
+                //attacker.sendMessage(reachDistance.toFixed(7) + "/" + (absPitch < 50 && height >= 1.5 ? 4.6 : 3.6));
                 if (reachDistance > (absPitch < 50 && fastAbs(height) >= 2 ? 5 : 4.5)) {
-                    attacker.killauraFlag++;
-                    attacker.killauraLastFlag = now;
-                    if (attacker.killauraFlag >= 3)
-                        attacker.flag("Killaura", "B", "Combat (Reach)", {
-                            attackDistance: attackDistance.toFixed(2),
-                            reachDistance: reachDistance.toFixed(2),
-                        });
+                    attacker.flag("Killaura", "B", "Combat (Reach)", {
+                        attackDistance: attackDistance.toFixed(2),
+                        reachDistance: reachDistance.toFixed(2),
+                    });
                     addHP(hurtEntity, damage);
                 }
             }
@@ -93,7 +90,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (distanceH > 3 && fastAbs(pitch) > 60) {
             attacker.killauraFlag++;
             attacker.killauraLastFlag = now;
-            if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
+            if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
             addHP(hurtEntity, damage);
         }
         if (distanceH > 3.5) {
