@@ -39,7 +39,7 @@ We can detect following type of cheat:
 - Shulker box nesting
 - Aim Assist
 - Fast Throw
-
+- Auto Sprint (InvalidSprint)
 No anticheat is perfect, if you found any bypass you can report in our discord support server!
 
 We strongly suggest you to use `serverAuthWithRewind` instead of `serverAuth` in bds server to prevent 100% of movement cheaters.
@@ -65,6 +65,8 @@ Some extra functional command
 - Ban, mute command.
 - Watch command (Not discoverable by player even esp, nametag cheater).
 - Freecam command (Observe player and move the camera freely without being discovered).
+- Inventory copying
+- Enderchest wipe
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/watch.png" width="80%">
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/banScreen.jpg" width="80%">
 
@@ -72,6 +74,10 @@ Some extra functional command
 We provide a free support to our free anticheat. Join our discord server to get fast notification once updated or get help for the anticheat!
 
 Our official website: https://jasonlaubb.github.io/Matrix-AntiCheat/
+
+You can download extension in our discord!
+
+With new slash command: `/vanish` and `/tempkick`
 
 Click the **screaming peach** to join the support server ->
 <a href="https://discord.gg/CqZGXeRKPJ" target="_blank" rel="nofollow">
