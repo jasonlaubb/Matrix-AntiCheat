@@ -1,6 +1,7 @@
 import { Player, world, PlayerPermissionLevel } from "@minecraft/server";
 import { get } from "../util/database";
 import { ban, checkPunish } from "../util/punishment";
+export const messageTarget = ["any", "all", "operator", "admin", "exclude", "bypass", "tag"];
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 1 || this.playerPermissionLevel === PlayerPermissionLevel.Operator;
 };
