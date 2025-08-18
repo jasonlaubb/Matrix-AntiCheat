@@ -94,7 +94,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
             addHP(hurtEntity, damage);
         }
-        if (distanceH > 3.5) {
+        if (distanceH > 2.5) {
             const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
             if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" && !attacker.inputInfo.touchOnlyAffectsHotbar ? 160 : 50)) {
                 attacker.killauraFlag++;
