@@ -130,7 +130,7 @@ interface Console {
     error: (data: any) => void;
 }
 declare global {
-	var console: Console;
+	const console: Console;
 }
 interface SpeedData {
     lastAttackTimestamp: number,
