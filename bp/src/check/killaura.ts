@@ -281,7 +281,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
     const weakness = attacker.getEffect("minecraft:weakness")?.amplifier;
     if (weakness) {
         const level = weakness + 1;
-        baseDamage = min2(0, 0.8 ** level * baseDamage + (0.8 ** level - 1) / 0.4);
+        baseDamage = max2(0, 0.8 ** level * baseDamage + (0.8 ** level - 1) / 0.4);
     }
     // 🔍 Check for Sharpness enchantment
     const enchantments = weapon?.getComponent("enchantable");
