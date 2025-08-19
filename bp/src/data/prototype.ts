@@ -61,7 +61,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
                 this.triggerEvent("matrix:tempkick");
             } catch {
                 console.warn("Extension is not enabled, failed to tempkick");
-                this.kick("Unfair advantage");
+                this.kick(disconnectReason);
             }
         }
     }
