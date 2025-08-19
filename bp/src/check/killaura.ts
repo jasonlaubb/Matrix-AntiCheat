@@ -1,5 +1,5 @@
 import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, min2, max2 } from "../util/mathUtil";
 import { addHP, banAttack } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
@@ -111,6 +111,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     }
     if (damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
+        world.sendMessage("Expected Damage: " + expectedDamage + " vs " + damage);
         if (expectedDamage && damage > expectedDamage * 1.4) {
             recoverDamage = true;
             attacker.flag("Killaura", "I", "Combat (Criticals)");
@@ -275,7 +276,12 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
     const strength = attacker.getEffect("minecraft:strength")?.amplifier;
     if (strength) {
         const level = strength + 1;
-        baseDamage *= 1.3 ** level + (1.3 ** level - 1) / 0.3;
+        baseDamage = 1.3 ** level * baseDamage + (1.3 ** level - 1) / 0.3;
+    }
+    const weakness = attacker.getEffect("minecraft:weakness")?.amplifier;
+    if (weakness) {
+        const level = weakness + 1;
+        baseDamage = min2(0, 0.8 ** level * baseDamage + (0.8 ** level - 1) / 0.4);
     }
     // 🔍 Check for Sharpness enchantment
     const enchantments = weapon?.getComponent("enchantable");
@@ -287,9 +293,9 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
     }
 
     const armor = target.getComponent("equippable")!;
-    const totalReduction = armor ? armor.totalArmor * 0.04 : 0;
+    const totalReduction = armor ? min2(1, 1 - min2(0.8, max2(0.008 * armor.totalArmor, 0.04 * armor.totalArmor - baseDamage / (50 + 6.25 * armor.totalToughness)))) : 1;
     const protectionLevel = getProtectionLevel(armor);
-    let expectedDamage = baseDamage * (1 - totalReduction) * (1 - 0.04 * protectionLevel);
+    let expectedDamage = baseDamage * totalReduction * (1 - 0.04 * protectionLevel);
     const resistance = target.getEffect("minecraft:resistance")?.amplifier;
     if (resistance) expectedDamage *= 1 - (resistance + 1) * 0.2;
     return expectedDamage;
