@@ -47,6 +47,10 @@ export default {
         type: "number",
         value: 604800000,
     },
+    specificReasonOnPunishment: {
+        type: "boolean",
+        value: false, // If set to true, more detailed infomration is given to the disconnected player (unfair advantage)
+    },
     enablePunishmentIgnoreTag: {
         type: "boolean",
         value: false,

@@ -45,13 +45,14 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
         world.setDynamicProperty(deleteId); // Delete the last record.
     }
     if (get("enablePunishmentIgnoreTag") && this.hasTag("matrix:ignore")) return;
+    const disconnectReason = get("specificReasonOnPunishment") ? `Unfair Advantage [${id}/${type}]` : "Unfair Advantage";
     switch (punishmentType) {
         case "kick": {
-            this.kick(`Unfair advantage [${id}/${type}]`);
+            this.kick(disconnectReason);
             break;
         }
         case "ban": {
-            ban(this, `Unfair advantage [${id}/${type}]`, "Matrix AntiCheat", Date.now() + get("flagBanDuration"));
+            ban(this, disconnectReason, "Matrix AntiCheat", Date.now() + get("flagBanDuration"));
             checkPunish(this);
             break;
         }
