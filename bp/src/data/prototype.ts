@@ -47,11 +47,11 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
     if (get("enablePunishmentIgnoreTag") && this.hasTag("matrix:ignore")) return;
     switch (punishmentType) {
         case "kick": {
-            this.kick("Unfair advantage");
+            this.kick(`Unfair advantage [${id}/${type}]`);
             break;
         }
         case "ban": {
-            ban(this, "Unfair advantage", "Matrix AntiCheat", Date.now() + get("flagBanDuration"));
+            ban(this, `Unfair advantage [${id}/${type}]`, "Matrix AntiCheat", Date.now() + get("flagBanDuration"));
             checkPunish(this);
             break;
         }
