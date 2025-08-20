@@ -78,7 +78,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             const hurtEntityRecords = hurtEntity.antiReachRecords;
             if (attackDistance > 2) {
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                //attacker.sendMessage(reachDistance.toFixed(7) + "/" + (absPitch < 50 && height >= 1.5 ? 4.6 : 3.6));
                 if (reachDistance > (absPitch < 50 && fastAbs(height) >= 2 ? 4.6 : 3.6)) {
                     attacker.flag("Killaura", "B", "Combat (Reach)", {
                         attackDistance: attackDistance.toFixed(2),
@@ -111,7 +110,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     }
     if (damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
-        world.sendMessage("Expected Damage: " + expectedDamage + " vs " + damage);
         if (expectedDamage && damage > expectedDamage * 1.4) {
             recoverDamage = true;
             attacker.flag("Killaura", "I", "Combat (Criticals)");
