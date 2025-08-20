@@ -40,6 +40,8 @@ We can detect following type of cheat:
 - Aim Assist
 - Fast Throw
 - Auto Sprint (InvalidSprint)
+- Xp Hack
+
 No anticheat is perfect, if you found any bypass you can report in our discord support server!
 
 We strongly suggest you to use `serverAuthWithRewind` instead of `serverAuth` in bds server to prevent 100% of movement cheaters.
@@ -67,6 +69,7 @@ Some extra functional command
 - Freecam command (Observe player and move the camera freely without being discovered).
 - Inventory copying
 - Enderchest wipe
+
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/watch.png" width="80%">
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/banScreen.jpg" width="80%">
 
