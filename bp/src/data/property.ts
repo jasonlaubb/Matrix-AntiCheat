@@ -59,6 +59,10 @@ export default {
         type: "boolean",
         value: true,
     },
+    antiKillauraCriticalCheck: {
+        type: "boolean",
+        value: true,
+    },
     antiAutototemEnable: {
         type: "boolean",
         value: true,

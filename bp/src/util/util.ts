@@ -111,3 +111,6 @@ export function getSurround(block: Block) {
 export function hasEducationalFeature() {
     return world.educationalFeaturesEnabled ?? false;
 }
+export function isFamily(entity: Entity, family: string) {
+    return entity.runCommand(`testfor @s[family=${family}]`).successCount > 0;
+}

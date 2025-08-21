@@ -1,7 +1,8 @@
 import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, min2, max2 } from "../util/mathUtil";
-import { addHP, banAttack } from "../util/util";
+import { addHP, banAttack, isFamily } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
+import { get } from "../util/database";
 export default {
     property: "antiKillauraEnable",
     enable: () => {
@@ -108,7 +109,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
-    if (damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
+    if (damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200) && get("antiKillauraCriticalCheck")) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
             recoverDamage = true;
@@ -281,15 +282,22 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         const level = weakness + 1;
         baseDamage = max2(0, 0.8 ** level * baseDamage + (0.8 ** level - 1) / 0.4);
     }
-    // 🔍 Check for Sharpness enchantment
     const enchantments = weapon?.getComponent("enchantable");
     const sharpnessLevel = enchantments?.getEnchantment("minecraft:sharpness")?.level ?? 0;
-
     if (sharpnessLevel > 0) {
         const extraDamage = 1.25 * sharpnessLevel;
-        baseDamage += extraDamage;
+        baseDamage = Math.floor(baseDamage + extraDamage); // Floor down the damage
     }
-
+    const smiteLevel = enchantments?.getEnchantment("minecraft:smite")?.level ?? 0;
+    if (smiteLevel && isFamily(target, "undead")) {
+        const extraDamage = 2.5 * smiteLevel;
+        baseDamage = Math.floor(baseDamage + extraDamage);
+    }
+    const baneOfArthropodsLevel = enchantments?.getEnchantment("minecraft:bane_of_arthropods")?.level ?? 0;
+    if (baneOfArthropodsLevel > 0 && isFamily(target, "arthropod")) {
+        const extraDamage = 2.5 * baneOfArthropodsLevel;
+        baseDamage = Math.floor(baseDamage + extraDamage);
+    }
     const armor = target.getComponent("equippable")!;
     const totalReduction = armor ? min2(1, 1 - min2(0.8, max2(0.008 * armor.totalArmor, 0.04 * armor.totalArmor - baseDamage / (50 + 6.25 * armor.totalToughness)))) : 1;
     const protectionLevel = getProtectionLevel(armor);

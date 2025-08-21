@@ -16,7 +16,7 @@ function blockEvent(event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeE
     if (player.isOp() || player.getGameMode() === GameMode.Creative) return;
     const pos = block.center();
     const reach = distance(pos, player.location);
-    const reachLimit = player.isFalling && player.location.y < block.location.y ? 5 : 6;
+    const reachLimit = player.isFalling && player.location.y < block.location.y ? 6 : 7;
     if (reach > reachLimit) {
         event.cancel = true;
         system.run(() => player.flag("BlockReach", "A", "World", { reach }));
