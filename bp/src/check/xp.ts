@@ -15,7 +15,7 @@ function onEntityRemove({ removedEntity }: EntityRemoveBeforeEvent) {
     if (removedEntity.typeId !== "minecraft:xp_orb") return;
     const neareastPlayers = removedEntity.dimension.getPlayers({
         location: removedEntity.location,
-        maxDistance: 3.5,
+        maxDistance: 1.5,
     });
     if (neareastPlayers.length === 0) return;
     const now = Date.now();
