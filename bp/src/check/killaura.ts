@@ -226,6 +226,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         // Swords
         "minecraft:wooden_sword": 4,
         "minecraft:stone_sword": 5,
+        "minecraft:copper_sword": 6,
         "minecraft:iron_sword": 6,
         "minecraft:golden_sword": 4,
         "minecraft:diamond_sword": 7,
@@ -234,6 +235,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         // Axes
         "minecraft:wooden_axe": 3,
         "minecraft:stone_axe": 4,
+        "minecraft:copper_axe": 5,
         "minecraft:iron_axe": 5,
         "minecraft:golden_axe": 3,
         "minecraft:diamond_axe": 6,
@@ -243,6 +245,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         "minecraft:wooden_pickaxe": 2,
         "minecraft:stone_pickaxe": 3,
         "minecraft:iron_pickaxe": 4,
+        "minecraft:copper_pickaxe": 4,
         "minecraft:golden_pickaxe": 2,
         "minecraft:diamond_pickaxe": 5,
         "minecraft:netherite_pickaxe": 6,
@@ -250,6 +253,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         // Shovels
         "minecraft:wooden_shovel": 1,
         "minecraft:stone_shovel": 2,
+        "minecraft:copper_shovel": 3,
         "minecraft:iron_shovel": 3,
         "minecraft:golden_shovel": 1,
         "minecraft:diamond_shovel": 4,
@@ -259,6 +263,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         "minecraft:wooden_hoe": 1,
         "minecraft:stone_hoe": 1,
         "minecraft:iron_hoe": 1,
+        "minecraft:copper_hoe": 1,
         "minecraft:golden_hoe": 1,
         "minecraft:diamond_hoe": 1,
         "minecraft:netherite_hoe": 1,
