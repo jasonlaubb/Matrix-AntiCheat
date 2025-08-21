@@ -76,3 +76,4 @@ Player.prototype.isSafeDevice = function () {
 Player.prototype.killauraLastAttack = 0;
 Player.prototype.lastKnockback = 0;
 Player.prototype.lastRiptide = 0;
+Player.prototype.xpLastValid = 0;
