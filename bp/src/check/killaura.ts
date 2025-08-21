@@ -267,8 +267,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         "minecraft:air": 0,
     };
 
-    const inventory = attacker.getComponent("inventory")?.container;
-    const weapon = inventory?.getItem(attacker.selectedSlotIndex);
+    const weapon = attacker.getComponent("equippable")?.getEquipment(EquipmentSlot.Mainhand);
     const weaponId = weapon?.typeId ?? "minecraft:air";
     if (!weaponId.startsWith("minecraft:") || weaponId === "minecraft:mace") return undefined;
     let baseDamage = (weaponBaseDamage[weaponId] ?? 0) + 1;
