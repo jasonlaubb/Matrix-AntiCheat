@@ -268,6 +268,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         "minecraft:diamond_hoe": 1,
         "minecraft:netherite_hoe": 1,
 
+        "minecraft:trident": 8,
         // Fist
         "minecraft:air": 0,
     };
