@@ -73,6 +73,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
         }
     } else player.scaffoldExtenderFlag = 0;
     // Refenced Scythe Anticheat Scaffold/A at main.js
+    player.scaffoldTowerFlag ??= 0;
     if (
         isScaffold &&
         Math.floor(height) === 1 &&
