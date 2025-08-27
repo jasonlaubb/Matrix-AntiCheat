@@ -109,7 +109,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
-    if (damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200) && get("antiKillauraCriticalCheck")) {
+    if (get("antiKillauraCriticalCheck") && damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
             recoverDamage = true;

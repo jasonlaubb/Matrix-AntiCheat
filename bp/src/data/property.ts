@@ -61,7 +61,7 @@ export default {
     },
     antiKillauraCriticalCheck: {
         type: "boolean",
-        value: true,
+        value: false,
     },
     antiAutototemEnable: {
         type: "boolean",
@@ -93,7 +93,7 @@ export default {
     },
     antiAutoToolIgnoreKeyboardInput: {
         type: "boolean",
-        value: false, // Enable to prevent decimal cases falses by clicking both hotbar button & left-click for multiple times.
+        value: true, // Enable to prevent decimal cases falses by clicking both hotbar button & left-click for multiple times.
     },
     antiSpeedEnable: {
         type: "boolean",
@@ -285,7 +285,7 @@ export default {
     },
     antiBlockReachEnable: {
         type: "boolean",
-        value: true,
+        value: false,
     },
     antiInvalidSprintEnable: {
         type: "boolean",
