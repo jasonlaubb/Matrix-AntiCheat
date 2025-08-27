@@ -22,7 +22,9 @@ function tickEvent(player: Player) {
     const hunger = player.getComponent("player.hunger");
     // According to wiki, player cannot sprint when hunger value reached 6
     if (hunger && hunger.currentValue <= 6) {
-        player.flag("InvalidSprint", "C", "Movement");
+        system.runTimeout(() => {
+            if (player.isValid && player.isSprinting && hunger && hunger.currentValue <= 6) player.flag("InvalidSprint", "C", "Movement");
+        }, 10);
     }
     const useDuration = player.itemStartUse && now - player.itemStartUse;
     if (useDuration) {
