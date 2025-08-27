@@ -86,10 +86,13 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     ) {
         const offset = fastAbs(player.location.y % 1);
         if (offset > 0.35) {
-            event.cancel = true;
-            system.run(() => player.flag("Scaffold", "I", "Block (Tower)", { offset }));
+            player.scaffoldTowerFlag++;
+            if (player.scaffoldTowerFlag >= 2) {
+                event.cancel = true;
+                system.run(() => player.flag("Scaffold", "I", "Block (Tower)", { offset }));
+            }
         }
-    }
+    } else player.scaffoldTowerFlag = 0;
     if (!event.cancel) {
         player.scaffoldLastPlaceLoc = block.location;
         player.scaffoldLastPlace = now;

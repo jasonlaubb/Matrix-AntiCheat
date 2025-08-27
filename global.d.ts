@@ -76,6 +76,7 @@ declare module "@minecraft/server" {
         scaffoldStraightCount: number;
         scaffoldDiagFlag: number;
         scaffoldExtenderFlag: number;
+        scaffoldTowerFlag: number;
         autotoolLastSwitch: number;
         autotoolLastIndex: number;
         autotoolSafeIndex: number;
