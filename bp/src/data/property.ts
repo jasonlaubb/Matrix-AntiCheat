@@ -273,7 +273,7 @@ export default {
     },
     antiAimAssistEnable: {
         type: "boolean",
-        value: true,
+        value: false,
     },
     antiNamespoofEnable: {
         type: "boolean",
