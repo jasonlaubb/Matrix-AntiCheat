@@ -34,9 +34,9 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     }
     player.scaffoldNoRotationFlag ??= 0;
     const onlyTouchedBlock = isScaffold && getOnlyTouchBlock(event.block);
-    if (isScaffold && pitch < (isTouchInput ? 45 : 30) && (distance <= 2.5 || (onlyTouchedBlock && distanceXZ(center(onlyTouchedBlock), event.player.location) <= distance))) {
+    if (isScaffold && pitch < (isTouchInput ? 50 : 30) && (distance <= 2.5 || (onlyTouchedBlock && distanceXZ(center(onlyTouchedBlock), event.player.location) <= distance))) {
         player.scaffoldNoRotationFlag++;
-        if (player.scaffoldNoRotationFlag >= 3) {
+        if (player.scaffoldNoRotationFlag >= 6) {
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "C", "Block", { height, pitch: pitch.toFixed(2) }));
         }
