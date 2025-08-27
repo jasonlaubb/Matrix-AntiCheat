@@ -21,7 +21,6 @@ declare module "@minecraft/server" {
         isWatching?: boolean;
         watchTargetPos?: Vector3;
         watchPlayerPos?: Vector3;
-        watchBeforeGM?: GameMode;
         cameraType?: "down" | "head" | "behind";
         // Freecam command
         freecamCameraPosition?: Server.Vector3;

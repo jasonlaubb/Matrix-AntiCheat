@@ -1,4 +1,4 @@
-import { GameMode, InputPermissionCategory, Player, system, Vector2, Vector3 } from "@minecraft/server";
+import { InputPermissionCategory, Player, system, Vector2, Vector3 } from "@minecraft/server";
 import type { Command } from "../main";
 export const cameraTypes = ["down", "head", "behind"];
 export const watchtp = {
@@ -6,14 +6,12 @@ export const watchtp = {
     description: "Teleport to the camera (watch mode) position.",
     requireOp: true,
     execute: (player) => {
-        if (!player?.isWatching || !player.watchTargetPos || !player.watchBeforeGM) return { status: 1, message: "§7[§aMatrix§7] §fYou're not watching anyone." };
+        if (!player?.isWatching || !player.watchTargetPos) return { status: 1, message: "§7[§aMatrix§7] §fYou're not watching anyone." };
         system.run(() => {
             delete player.isWatching;
             delete player.watchPlayerPos;
             delete player.watchTargetPos;
             player.camera.clear();
-            player.setGameMode(player.watchBeforeGM!);
-            delete player.watchBeforeGM;
             player.removeEffect("night_vision");
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
@@ -57,11 +55,8 @@ export default {
         }
         const targetPlayer = target as Player;
         if (targetPlayer.dimension.id !== player.dimension.id) return { status: 1, message: "§7[§aMatrix§7] §fYou need to locate in same dimension with watch target." };
-        const currentGameMode = player.getGameMode();
-        player.watchBeforeGM = currentGameMode;
         player.isWatching = true;
         system.run(() => {
-            player.setGameMode(GameMode.Spectator);
             player.addEffect("night_vision", 20000000, {
                 showParticles: false,
             });
@@ -78,7 +73,6 @@ export default {
                 delete player.watchPlayerPos;
                 delete player.watchTargetPos;
                 player.camera.clear();
-                player.setGameMode(currentGameMode);
                 player.removeEffect("night_vision");
                 player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
                 player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
