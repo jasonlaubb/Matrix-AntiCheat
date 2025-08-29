@@ -63,11 +63,12 @@ function interact(event: PlayerInteractWithBlockBeforeEvent) {
                 }
             });
         }).then((average) => {
-            delete checkingBlocks[blockId];
             if (average === null) return;
             if (average < 130) {
                 event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
             }
+        }).finally(() => {
+            delete checkingBlocks[blockId];
         });
     }
 }
