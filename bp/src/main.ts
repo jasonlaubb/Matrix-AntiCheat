@@ -38,7 +38,7 @@ import { endLock, netherLock } from "./command/dimensionLock";
 import { endNetherLockOn } from "./asset/endNetherLock";
 import { mute, unmute } from "./command/mute";
 import { entityDie, entityRemove, itemStartUse, itemStopUse, knockback, riptide } from "./asset/eventHandler";
-import { detect, detectionlist, detectionList, initModules } from "./command/module";
+import { detection, detectionlist, detectionList, initModules } from "./command/detection";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "./command/set";
 import { rankadd, rankclear, ranklist, rankremove, rankset } from "./command/rank";
 import watch, { watchtp, cameraTypes } from "./command/watch";
@@ -83,7 +83,7 @@ system.beforeEvents.startup.subscribe((event) => {
         resetConfig,
         clearProperty,
         getProperty,
-        detect,
+        detection,
         detectionlist,
         rankadd,
         rankclear,
