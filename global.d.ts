@@ -113,11 +113,6 @@ declare module "@minecraft/server" {
         antiReachRecords: Server.Vector3[];
         antiReachRecording?: boolean;
     }
-    interface Block {
-        // Detection data
-        chestauraIsTracking: boolean;
-        previousOpen: string;
-    }
     interface World {
         lockdown?: boolean;
         banItemEventRegistered?: boolean;

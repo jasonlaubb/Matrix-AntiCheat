@@ -1,4 +1,4 @@
-import { Container, InvalidContainerError, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
+import { Block, Container, InvalidContainerError, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distanceXZ } from "../util/mathUtil";
 export default {
     enable() {
@@ -9,9 +9,13 @@ export default {
     },
     property: "antiChestauraEnable",
 };
+let checkingBlocks = {} as { [key: string]: string };
+function stringId (block: Block) {
+    return Object.values(block.location).join(",");
+}
 function interact(event: PlayerInteractWithBlockBeforeEvent) {
     const inventory = event.block.getComponent("inventory");
-    if (!inventory || event.player.isOp() || distanceXZ(event.player.location, event.block.location) < 2) return;
+    if (!inventory || (inventory.container?.size ?? 0) < 27 || event.player.isOp() || distanceXZ(event.player.location, event.block.location) < 2) return;
     const angle = calculateRelativeViewAngle(event.player.location, event.block.center(), event.player.getRotation().y);
     if (angle > (event.player.inputInfo.lastInputModeUsed === "Touch" ? 120 : 30)) {
         event.cancel = true;
@@ -20,17 +24,21 @@ function interact(event: PlayerInteractWithBlockBeforeEvent) {
     }
     const container = inventory.container!;
     const containerFirstItem = container.firstItem();
-    event.block.previousOpen = event.player.id;
-    if (containerFirstItem !== undefined && !event.block.chestauraIsTracking) {
+    const blockId = stringId(event.block);
+    if (checkingBlocks[blockId]) {
+        checkingBlocks[blockId] = event.player.id;
+        return;
+    }
+    if (containerFirstItem !== undefined) {
         const stackAmount = stackInventoryItem(container);
         const now = Date.now();
         event.player.chestauraLastLostIndex = containerFirstItem;
+        checkingBlocks[blockId] = event.player.id;
         const maxTime = stackAmount * 200;
         new Promise<number | null>((res) => {
-            event.block.chestauraIsTracking = true;
             const id = system.runInterval(() => {
                 try {
-                    if (!event.player?.isValid && event.block.previousOpen !== event.player.id) {
+                    if (!event.player?.isValid && checkingBlocks[blockId] !== event.player.id) {
                         system.clearRun(id);
                         res(null);
                         return;
@@ -55,8 +63,9 @@ function interact(event: PlayerInteractWithBlockBeforeEvent) {
                 }
             });
         }).then((average) => {
+            delete checkingBlocks[blockId];
             if (average === null) return;
-            if (average < 150) {
+            if (average < 130) {
                 event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
             }
         });
