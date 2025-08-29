@@ -38,7 +38,7 @@ function interact(event: PlayerInteractWithBlockBeforeEvent) {
         new Promise<number | null>((res) => {
             const id = system.runInterval(() => {
                 try {
-                    if (!event.player?.isValid && checkingBlocks[blockId] !== event.player.id || !event.block.isValid ||event.block.isAir) {
+                    if (!event.player?.isValid && checkingBlocks[blockId] !== event.player.id || !event.block.isValid || event.block.isAir) {
                         system.clearRun(id);
                         res(null);
                         return;
