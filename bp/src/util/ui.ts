@@ -1,6 +1,6 @@
 import { Player, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import { detectionList } from "../command/module";
+import { detectionList } from "../command/detection";
 import { get } from "./database";
 import property from "../data/property";
 import { getPropertyType } from "./propertyClassifier";

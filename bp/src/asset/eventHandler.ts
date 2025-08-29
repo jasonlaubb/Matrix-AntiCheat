@@ -26,7 +26,7 @@ export function itemStopUse({ source }: ItemStopUseAfterEvent) {
     source.invalidSprintStopUseAt = Date.now();
     delete source.itemStartUse;
 }
-export function entityRemove ({ removedEntity }: EntityRemoveBeforeEvent) {
+export function entityRemove({ removedEntity }: EntityRemoveBeforeEvent) {
     if (removedEntity.typeId !== "minecraft:wind_charge_projectile") return;
     const affectedPlayers = removedEntity.dimension.getEntities({
         location: removedEntity.location,
@@ -34,9 +34,9 @@ export function entityRemove ({ removedEntity }: EntityRemoveBeforeEvent) {
         type: "minecraft:player",
     }) as Player[];
     const now = Date.now();
-    affectedPlayers.forEach((player) => player.lastKnockback = now);
+    affectedPlayers.forEach((player) => (player.lastKnockback = now));
 }
-export function entityDie ({ deadEntity }: EntityDieAfterEvent) {
+export function entityDie({ deadEntity }: EntityDieAfterEvent) {
     if (!deadEntity.getEffect("wind_charged")) return;
     const affectedPlayers = deadEntity.dimension.getEntities({
         location: deadEntity.location,
@@ -44,5 +44,5 @@ export function entityDie ({ deadEntity }: EntityDieAfterEvent) {
         type: "minecraft:player",
     }) as Player[];
     const now = Date.now();
-    affectedPlayers.forEach((player) => player.lastKnockback = now);
+    affectedPlayers.forEach((player) => (player.lastKnockback = now));
 }

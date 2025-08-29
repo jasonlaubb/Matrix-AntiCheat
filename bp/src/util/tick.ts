@@ -1,10 +1,10 @@
 import { Player, world } from "@minecraft/server";
 import { get } from "./database";
 import { getPlayerRank } from "./util";
-type PlayerIntervalList = ({ id: string, callback: (player: Player) => any })[]
+type PlayerIntervalList = { id: string; callback: (player: Player) => any }[];
 const loopForEach: PlayerIntervalList = [];
 const loopForCheck: PlayerIntervalList = [];
-const loop: ({ id: string, callback: () => any }) [] = [];
+const loop: { id: string; callback: () => any }[] = [];
 
 export function tick() {
     const players = world.getAllPlayers();

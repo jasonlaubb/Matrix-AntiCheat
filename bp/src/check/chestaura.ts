@@ -10,7 +10,7 @@ export default {
     property: "antiChestauraEnable",
 };
 let checkingBlocks = {} as { [key: string]: string };
-function stringId (block: Block) {
+function stringId(block: Block) {
     return Object.values(block.location).join(",");
 }
 function interact(event: PlayerInteractWithBlockBeforeEvent) {
@@ -62,14 +62,16 @@ function interact(event: PlayerInteractWithBlockBeforeEvent) {
                     throw error;
                 }
             });
-        }).then((average) => {
-            if (average === null) return;
-            if (average < 120) {
-                event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
-            }
-        }).finally(() => {
-            delete checkingBlocks[blockId];
-        });
+        })
+            .then((average) => {
+                if (average === null) return;
+                if (average < 120) {
+                    event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
+                }
+            })
+            .finally(() => {
+                delete checkingBlocks[blockId];
+            });
     }
 }
 
