@@ -133,12 +133,12 @@ export default {
     property: "antiInstabreakEnable",
     enable: () => {
         world.afterEvents.playerBreakBlock.subscribe(onBlockBreak);
-        addCheckInterval(tickEvent);
+        addCheckInterval("instabreak", tickEvent);
         world.afterEvents.entityHitBlock.subscribe(onPlayerHitBlock);
     },
     disable: () => {
         world.afterEvents.playerBreakBlock.unsubscribe(onBlockBreak);
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("instabreak");
         world.afterEvents.entityHitBlock.unsubscribe(onPlayerHitBlock);
     },
 };
