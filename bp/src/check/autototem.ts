@@ -2,10 +2,10 @@ import { EquipmentSlot, Player } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
     enable() {
-        addCheckInterval(tickEvent);
+        addCheckInterval("autototem", tickEvent);
     },
     disable() {
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("autototem");
     },
     property: "antiAutototemEnable",
 };

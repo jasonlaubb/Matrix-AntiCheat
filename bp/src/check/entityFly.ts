@@ -95,9 +95,9 @@ function fastBelow(centerLocation: Vector3, dimension: Dimension): (Block | unde
 export default {
     property: "antiEntityFlyEnable",
     enable: () => {
-        addCheckInterval(tickEvent);
+        addCheckInterval("entityFly", tickEvent);
     },
     disable: () => {
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("entityFly");
     },
 };

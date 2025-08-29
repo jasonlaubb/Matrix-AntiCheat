@@ -7,11 +7,11 @@ export default {
     property: "antiKillauraEnable",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
-        addCheckInterval(aimCheck);
+        addCheckInterval("killaura", aimCheck);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
-        removeCheckInterval(aimCheck);
+        removeCheckInterval("killaura");
     },
 };
 function recordPosition(entity: Entity) {

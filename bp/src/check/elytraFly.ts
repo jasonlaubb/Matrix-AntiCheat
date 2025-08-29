@@ -64,11 +64,11 @@ function dropElytra(player: Player) {
 export default {
     property: "antiElytraFlyEnable",
     enable: () => {
-        addCheckInterval(tickEvent);
+        addCheckInterval("elytraFly", tickEvent);
         world.afterEvents.itemUse.subscribe(onItemUse);
     },
     disable: () => {
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("elytraFly");
         world.afterEvents.itemUse.unsubscribe(onItemUse);
     },
 };

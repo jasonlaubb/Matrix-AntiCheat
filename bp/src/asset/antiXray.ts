@@ -333,7 +333,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
         }
     });
 });
-addInterval(() => {
+addInterval("xray", () => {
     if (get("banXrayHandler")) return;
     const silverfish = [
         ...world.getDimension("minecraft:overworld").getEntities({

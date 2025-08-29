@@ -4,11 +4,11 @@ import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
     property: "antiInvalidSprintEnable",
     enable: () => {
-        addCheckInterval(tickEvent);
+        addCheckInterval("invalidSprint", tickEvent);
         world.beforeEvents.effectAdd.subscribe(effectAdd);
     },
     disable: () => {
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("invalidSprint");
         world.beforeEvents.effectAdd.unsubscribe(effectAdd);
     },
 };

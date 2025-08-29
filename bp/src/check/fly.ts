@@ -33,7 +33,8 @@ function tick(player: Player) {
     const isPlayerNotCreative = player.getGameMode() !== GameMode.Creative;
     const pistonNotPushed = now - (player.flyLastPistonPush ?? 0) > 4000;
     const previousVelY = data.velocityYList[1];
-
+    const jumpBoost = player.getEffect("jump_boost")?.amplifier ?? -1;
+    const levitationWithInAllowRange = (player.getEffect("levitation")?.amplifier ?? -1) < 13;
     if (player.isOnGround && velocityY === 0) {
         data.lastOnGroundLocation = player.location;
     } else if (
@@ -41,12 +42,14 @@ function tick(player: Player) {
         pistonNotPushed &&
         now - player.lastKnockback > 2000 &&
         now - player.lastRiptide > 5000 &&
+        jumpBoost < 2 &&
         (previousVelY < 0 || (previousVelY < 0 && velocityY === 0) || (velocityY > 0 && previousVelY / velocityY > 4 && previousVelY > 2.5 && fastAbs((player.flyData.lastVelocityY ?? 0) - velocityY) < 0.5)) &&
         !isRiding(player) &&
         !player.isFlying &&
         !player.isGliding &&
         !player.isInWater &&
         isPlayerNotCreative &&
+        levitationWithInAllowRange &&
         !data.velocityYList.some((yV) => yV === HIGH_VELOCITY_Y)
     ) {
         if (velocityY > MAX_VELOCITY_Y) {
@@ -65,19 +68,20 @@ function tick(player: Player) {
         data.flagAmount -= 0.05;
     }
 
-    if (pistonNotPushed && playerStarted && velocityY > HIGH_VELOCITY_Y && now - (player.lastKnockback ?? 0) > 2000 && !player.isGliding) {
+    if (pistonNotPushed && playerStarted && velocityY > HIGH_VELOCITY_Y && now - (player.lastKnockback ?? 0) > 2000 && !player.isGliding && jumpBoost <= 205) {
         player.teleport(data.lastOnGroundLocation);
         player.flag("Fly", "B", "Movement", { velocityY });
     }
-
-    data.velocityYList.unshift(player.isFlying ? HIGH_VELOCITY_Y : velocityY);
-    data.velocityYList.pop();
+    if (levitationWithInAllowRange) {
+        data.velocityYList.unshift(player.isFlying ? HIGH_VELOCITY_Y : velocityY);
+        data.velocityYList.pop();
+    }
 
     const minAmount = Math.min(...data.velocityYList);
     const maxAmount = Math.max(...data.velocityYList);
     const bdsPrediction = calculateBdsPrediction(data.velocityYList);
 
-    if (pistonNotPushed && playerStarted && isPlayerNotCreative && !player.isOnGround && data.velocityYList.length >= 60 && bdsPrediction >= MAX_BDS_PREDICTION && !isRiding(player)) {
+    if (levitationWithInAllowRange && pistonNotPushed && playerStarted && isPlayerNotCreative && !player.isOnGround && data.velocityYList.length >= 60 && bdsPrediction >= MAX_BDS_PREDICTION && !isRiding(player)) {
         const { highestRepeatedVelocity, highestRepeatedAmount } = repeatChecks(data.velocityYList);
 
         if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y && minAmount <= -MAX_VELOCITY_Y && maxAmount < HIGH_VELOCITY_Y) {
@@ -146,11 +150,11 @@ function isSurroundedByAir(centerLocation: Vector3, dimension: Dimension): boole
 export default {
     property: "antiFlyEnable",
     enable: () => {
-        addCheckInterval(tick);
+        addCheckInterval("fly", tick);
         world.afterEvents.pistonActivate.subscribe(onPistonPush);
     },
     disable: () => {
-        removeCheckInterval(tick);
+        removeCheckInterval("fly");
         world.afterEvents.pistonActivate.unsubscribe(onPistonPush);
     },
 };

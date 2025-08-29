@@ -4,11 +4,11 @@ export default {
     property: "antiXpEnable",
     enable: () => {
         world.beforeEvents.entityRemove.subscribe(onEntityRemove);
-        addCheckInterval(tickEvent);
+        addCheckInterval("xp", tickEvent);
     },
     disable: () => {
         world.beforeEvents.entityRemove.unsubscribe(onEntityRemove);
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("xp");
     },
 };
 function onEntityRemove({ removedEntity }: EntityRemoveBeforeEvent) {

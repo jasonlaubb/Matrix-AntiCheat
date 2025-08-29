@@ -4,14 +4,14 @@ import { get } from "../util/database";
 import { fastAbs } from "../util/mathUtil";
 
 export function worldBorderOn() {
-    addInterval(tickEvent);
+    addInterval("worldborder", tickEvent);
     world.beforeEvents.playerBreakBlock.subscribe(blockChange);
     world.beforeEvents.playerPlaceBlock.subscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.subscribe(blockChange);
 }
 
 export function worldBorderOff() {
-    removeInterval(tickEvent);
+    removeInterval("worldborder");
     world.beforeEvents.playerBreakBlock.unsubscribe(blockChange);
     world.beforeEvents.playerPlaceBlock.unsubscribe(blockChange);
     world.beforeEvents.playerInteractWithBlock.unsubscribe(blockChange);

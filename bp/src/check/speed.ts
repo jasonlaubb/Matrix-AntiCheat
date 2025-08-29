@@ -168,11 +168,11 @@ export default {
     enable: () => {
         world.afterEvents.entityHitEntity.subscribe(onPlayerAttack);
         world.afterEvents.itemUse.subscribe(itemUse);
-        addCheckInterval(tick);
+        addCheckInterval("speed", tick);
     },
     disable: () => {
         world.afterEvents.entityHitEntity.unsubscribe(onPlayerAttack);
         world.afterEvents.itemUse.unsubscribe(itemUse);
-        removeCheckInterval(tick);
+        removeCheckInterval("speed");
     },
 };

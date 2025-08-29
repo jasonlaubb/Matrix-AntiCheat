@@ -5,11 +5,11 @@ export default {
     property: "antiAutotoolEnable",
     enable: () => {
         world.afterEvents.entityHitBlock.subscribe(hitBlock);
-        addCheckInterval(tickEvent);
+        addCheckInterval("autotool", tickEvent);
     },
     disable: () => {
         world.afterEvents.entityHitBlock.unsubscribe(hitBlock);
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("autotool");
     },
 };
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {

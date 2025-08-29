@@ -1,10 +1,10 @@
 import { Player } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export function antiAfkOn() {
-    addCheckInterval(tickEvent);
+    addCheckInterval("afk", tickEvent);
 }
 export function antiAfkOff() {
-    removeCheckInterval(tickEvent);
+    removeCheckInterval("afk");
 }
 function tickEvent(player: Player) {
     const now = Date.now();

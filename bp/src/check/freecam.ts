@@ -4,10 +4,10 @@ import { addCheckInterval, removeCheckInterval } from "../util/tick";
 export default {
     property: "antiFreecamEnable",
     enable: () => {
-        addCheckInterval(tickEvent);
+        addCheckInterval("freecam", tickEvent);
     },
     disable: () => {
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("freecam");
     },
 };
 function tickEvent(player: Player) {

@@ -5,10 +5,10 @@ import { fastAbs } from "../util/mathUtil";
 export default {
     property: "antiAimAssistEnable",
     enable: () => {
-        addCheckInterval(tickEvent);
+        addCheckInterval("aim", tickEvent);
     },
     disable: () => {
-        removeCheckInterval(tickEvent);
+        removeCheckInterval("aim");
     },
 };
 function tickEvent(player: Player) {
