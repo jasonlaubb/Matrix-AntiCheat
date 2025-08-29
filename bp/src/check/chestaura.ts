@@ -64,7 +64,7 @@ function interact(event: PlayerInteractWithBlockBeforeEvent) {
             });
         }).then((average) => {
             if (average === null) return;
-            if (average < 130) {
+            if (average < 120) {
                 event.player.flag("ChestAura", "B", "Player (ChestStealer)", { average: average.toFixed(2), stackAmount });
             }
         }).finally(() => {
