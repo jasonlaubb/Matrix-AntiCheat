@@ -40,6 +40,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     }
     const input = player.inputInfo;
     const hasCrosshair = input.lastInputModeUsed !== InputMode.Touch || input.touchOnlyAffectsHotbar; // Touch input is difficult to make an actual aim check, so we ignore them for some of the check
+    data.startSafeBridgePitch ??= pitch;
     if (!safeBridge) {
         data.startSafeBridgeDirection = face;
         data.startSafeBridgePitch = pitch;
