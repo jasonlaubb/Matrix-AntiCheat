@@ -179,10 +179,11 @@ system.beforeEvents.startup.subscribe((event) => {
                 const player = origin.sourceEntity;
                 if (!player || !(player instanceof Player) || (requireOp && !player.isOp())) {
                     return {
-                        status: 1,
-                        message: "Executor is not a player or command permission is invalid",
+                            status: 1,
+                            message: "Executor is not a player or command permission is invalid",
                     };
                 }
+                const feedback = world.gameRules.sendCommandFeedback;
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
                     const param = parameters?.[i] ?? optionalParameters![i - (parameters?.length ?? 0)];
@@ -193,79 +194,87 @@ system.beforeEvents.startup.subscribe((event) => {
                             const tooLarge = param?.max && input > param.max;
                             const tooSmall = param?.min && input < param.min;
                             if (tooLarge || tooSmall) {
-                                if (param?.max && param.min)
-                                    return {
-                                        status: 1,
-                                        message: `§7[§aMatrix§7] §fParameter ${param.name} is out of range. Range: ${param.min} - ${param.max}`,
-                                    };
-                                if (tooLarge)
-                                    return {
-                                        status: 1,
-                                        message: `§7[§aMatrix§7] §fParameter ${param.name} is too large. Max value: ${param.max}`,
-                                    };
-                                if (tooSmall)
-                                    return {
-                                        status: 1,
-                                        message: `§7[§aMatrix§7] §fParameter ${param.name} is too small. Min value: ${param.min}`,
-                                    };
+                                let message = "";
+                                if (param?.max && param.min) {
+                                    message = `§7[§aMatrix§7] §fParameter ${param.name} is out of range. Range: ${param.min} - ${param.max}`;
+                                } else if (tooLarge) {
+                                    message = `§7[§aMatrix§7] §fParameter ${param.name} is too large. Max value: ${param.max}`;
+                                } else if (tooSmall) {
+                                    message = `§7[§aMatrix§7] §fParameter ${param.name} is too small. Min value: ${param.min}`;
+                                }
+
+                                if (feedback) {
+                                    return { status: 1, message };
+                                } else {
+                                    player.sendMessage(message);
+                                    return { status: 1 };
+                                }
                             }
                             break;
                         }
+
                         case "player":
                         case "playerTarget":
                         case "normalPlayerTarget": {
-                            if (input.length === 0)
-                                return {
-                                    status: 1,
-                                    message: "§7[§aMatrix§7] §fNo match target",
-                                };
-                            if (input.length > 1)
-                                return {
-                                    status: 1,
-                                    message: "§7[§aMatrix§7] §fMultiple targets found. Command failed.",
-                                };
-                            if (param.type !== "player") {
-                                if (input[0].id === player.id)
-                                    return {
-                                        status: 1,
-                                        message: "§7[§aMatrix§7] §fYou cannot target yourself with this command.",
-                                    };
-                                if (param.type === "playerTarget" && input[0].commandPermissionLevel >= player.commandPermissionLevel) {
-                                    return {
-                                        status: 1,
-                                        message: "§7[§aMatrix§7] §fYou cannot target a player with higher or equal command permission level.",
-                                    };
+                            let message;
+                            if (input.length === 0) {
+                                message = "§7[§aMatrix§7] §fNo match target";
+                            } else if (input.length > 1) {
+                                message = "§7[§aMatrix§7] §fMultiple targets found. Command failed.";
+                            } else if (param.type !== "player") {
+                                if (input[0].id === player.id) {
+                                    message = "§7[§aMatrix§7] §fYou cannot target yourself with this command.";
+                                } else if (param.type === "playerTarget" && input[0].commandPermissionLevel >= player.commandPermissionLevel) {
+                                    message = "§7[§aMatrix§7] §fYou cannot target a player with higher or equal command permission level.";
                                 }
                             }
+
+                            if (message) {
+                                if (feedback) {
+                                    return { status: 1, message };
+                                } else {
+                                    player.sendMessage(message);
+                                    return { status: 1 };
+                                }
+                            }
+
                             args[i] = input[0];
                             break;
                         }
+
                         case "string": {
                             if (param?.max && input.length > param.max) {
-                                return {
-                                    status: 1,
-                                    message: `§7[§aMatrix§7] §fParameter ${param.name} is too long. Max length: ${param.max}`,
-                                };
+                                const message = `§7[§aMatrix§7] §fParameter ${param.name} is too long. Max length: ${param.max}`;
+                                if (feedback) {
+                                    return { status: 1, message };
+                                } else {
+                                    player.sendMessage(message);
+                                    return { status: 1 };
+                                }
                             }
                             break;
                         }
+
                         case "item": {
                             args[i] = input.id;
+                            break;
                         }
                     }
                 }
                 try {
                     const commandRes = execute(player, args);
-                    if (world.gameRules.sendCommandFeedback) {
+                    if (feedback) {
                         return commandRes;
                     }
                     if (commandRes.message) player.sendMessage(commandRes.message);
-                    return { status: commandRes.status }
+                    return { status: commandRes.status };
                 } catch (error) {
-                    return {
+                    if (feedback) return {
                         status: 1,
                         message: `§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`,
                     };
+                    player.sendMessage(`§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`);
+                    return { status: 1 }
                 }
             }
         );

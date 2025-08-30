@@ -44,7 +44,7 @@ function tickEvent(player: Player) {
         }
     }
 }
-function noSwiftSneak (player: Player) {
+function noSwiftSneak(player: Player) {
     return !player.getComponent("equippable")?.getEquipment(EquipmentSlot.Legs)?.getComponent("enchantable")?.hasEnchantment("swift_sneak");
 }
 function effectAdd({ entity, effectType }: EffectAddBeforeEvent) {
