@@ -297,7 +297,8 @@ system.beforeEvents.startup.subscribe((event) => {
             if (!player || !(player instanceof Player)) {
                 return { status: 1, message: "Executor is not a player" };
             }
-            return { status: 0, message: helpMessage };
+            player.sendMessage(helpMessage);
+            return { status: 0 };
         }
     );
     event.itemComponentRegistry.registerCustomComponent("matrix:execute_ui", {
