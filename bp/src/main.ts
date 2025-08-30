@@ -17,7 +17,7 @@
 扁　　　扁　　　　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　扁扁扁　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　　　　　　扁扁　　　扁　　　扁扁扁扁　　　　　　　　扁
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
-import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot, GameRule } from "@minecraft/server";
+import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
 import info from "./command/info";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
