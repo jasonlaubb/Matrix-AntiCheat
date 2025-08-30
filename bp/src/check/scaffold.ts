@@ -11,6 +11,7 @@ export default {
         world.beforeEvents.playerPlaceBlock.unsubscribe(blockPlace);
     },
 };
+let v = 0;
 function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { block, player, face, faceLocation } = event;
     const height = player.location.y - block.location.y;
@@ -28,10 +29,9 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const now = Date.now();
     const isScaffold = player.scaffoldLastPlaceLoc && isScaffolding(face, block.location, player.scaffoldLastPlaceLoc);
     if (checkDiagScaffold(now, player, block, isScaffold)) event.cancel = true;
-    if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0 && height <= 1.05 && !player.isJumping) {
-        event.cancel = true;
-        system.run(() => player.flag("Scaffold", "B", "Block (Perfect)")); // detect horion scaffold
-    }
+    if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0 && face === player.scaffoldLastDirection) {
+        player.onScreenDisplay.setActionBar("v = " + ++v);
+    } else v = 0;
     player.scaffoldNoRotationFlag ??= 0;
     const onlyTouchedBlock = isScaffold && getOnlyTouchBlock(event.block);
     if (isScaffold && pitch < (isTouchInput ? 30 : 35) && (distance <= 2.5 || (onlyTouchedBlock && distanceXZ(center(onlyTouchedBlock), event.player.location) <= distance))) {
@@ -97,6 +97,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     if (!event.cancel) {
         player.scaffoldLastPlaceLoc = block.location;
         player.scaffoldLastPlace = now;
+        player.scaffoldLastDirection = face;
     }
 }
 function checkDiagScaffold(now: number, player: Player, block: Block, isNormalScaffold: boolean) {

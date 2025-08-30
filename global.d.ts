@@ -80,6 +80,7 @@ declare module "@minecraft/server" {
         scaffoldDiagFlag: number;
         scaffoldExtenderFlag: number;
         scaffoldTowerFlag: number;
+        scaffoldLastDirection: Direction;
         autotoolLastSwitch: number;
         autotoolLastIndex: number;
         autotoolSafeIndex: number;
