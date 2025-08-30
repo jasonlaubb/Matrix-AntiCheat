@@ -30,7 +30,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const isScaffold = player.scaffoldLastPlaceLoc && isScaffolding(face, block.location, player.scaffoldLastPlaceLoc);
     if (checkDiagScaffold(now, player, block, isScaffold)) event.cancel = true;
     if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0 && face === player.scaffoldLastDirection) {
-        player.onScreenDisplay.setActionBar("v = " + ++v);
+        system.run(() => player.onScreenDisplay.setActionBar("v = " + ++v));
     } else v = 0;
     player.scaffoldNoRotationFlag ??= 0;
     const onlyTouchedBlock = isScaffold && getOnlyTouchBlock(event.block);
