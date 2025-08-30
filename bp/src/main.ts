@@ -17,7 +17,7 @@
 扁　　　扁　　　　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　扁扁扁　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　　　　　　扁扁　　　扁　　　扁扁扁扁　　　　　　　　扁
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
-import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
+import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot, GameRule } from "@minecraft/server";
 import info from "./command/info";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
@@ -255,7 +255,12 @@ system.beforeEvents.startup.subscribe((event) => {
                     }
                 }
                 try {
-                    return execute(player, args);
+                    const commandRes = execute(player, args);
+                    if (world.gameRules.sendCommandFeedback) {
+                        return commandRes;
+                    }
+                    if (commandRes.message) player.sendMessage(commandRes.message);
+                    return { status: commandRes.status }
                 } catch (error) {
                     return {
                         status: 1,
