@@ -179,8 +179,8 @@ system.beforeEvents.startup.subscribe((event) => {
                 const player = origin.sourceEntity;
                 if (!player || !(player instanceof Player) || (requireOp && !player.isOp())) {
                     return {
-                            status: 1,
-                            message: "Executor is not a player or command permission is invalid",
+                        status: 1,
+                        message: "Executor is not a player or command permission is invalid",
                     };
                 }
                 const feedback = world.gameRules.sendCommandFeedback;
@@ -269,12 +269,15 @@ system.beforeEvents.startup.subscribe((event) => {
                     if (commandRes.message) player.sendMessage(commandRes.message);
                     return { status: commandRes.status };
                 } catch (error) {
-                    if (feedback) return {
-                        status: 1,
-                        message: `§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`,
-                    };
-                    player.sendMessage(`§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`);
-                    return { status: 1 }
+                    if (feedback)
+                        return {
+                            status: 1,
+                            message: `§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`,
+                        };
+                    player.sendMessage(
+                        `§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`
+                    );
+                    return { status: 1 };
                 }
             }
         );
