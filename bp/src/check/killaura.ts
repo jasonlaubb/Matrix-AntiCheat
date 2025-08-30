@@ -1,4 +1,4 @@
-import { Entity, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, system, Vector3, world } from "@minecraft/server";
+import { Entity, EntityDieAfterEvent, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, PlayerSpawnAfterEvent, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, min2, max2 } from "../util/mathUtil";
 import { addHP, banAttack, isFamily } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -7,10 +7,14 @@ export default {
     property: "antiKillauraEnable",
     enable: () => {
         world.afterEvents.entityHurt.subscribe(entityHurt);
+        world.afterEvents.entityDie.subscribe(entityDie);
+        world.afterEvents.playerSpawn.subscribe(playerSpawn);
         addCheckInterval("killaura", aimCheck);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
+        world.afterEvents.entityDie.unsubscribe(entityDie);
+        world.afterEvents.playerSpawn.unsubscribe(playerSpawn);
         removeCheckInterval("killaura");
     },
 };
@@ -42,6 +46,15 @@ function recordHeadPosition(player: Player) {
         player.killauraHeadData.unshift(player.getHeadLocation());
         if (player.killauraHeadData.length > 20) player.killauraHeadData.pop();
     });
+}
+function entityDie({ deadEntity }: EntityDieAfterEvent) {
+    if (!(deadEntity instanceof Player)) return;
+    deadEntity.killauraLastReset = Date.now();
+    deadEntity.killauraHasChangedPitch = false;
+}
+function playerSpawn({ player }: PlayerSpawnAfterEvent) {
+    player.killauraLastReset = Date.now();
+    player.killauraHasChangedPitch = false;
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
     if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
@@ -104,7 +117,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 recoverDamage = true;
             }
         }
-        if (!hasClearPathBetweenEntities(attacker, hurtEntity)) {
+        if ((hurtEntity.getComponent("health")?.currentValue ?? 20) > 0 && !hasClearPathBetweenEntities(attacker, hurtEntity)) {
             recoverDamage = true;
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
@@ -138,12 +151,19 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
 }
 function aimCheck(player: Player) {
     const pitch = player.getRotation().x;
-    if (Date.now() - player.killauraLastAttack < 800) {
-        if (pitch.toFixed(5) === "0.00000") {
-            player.killauraLastAttack = 0;
-            banAttack(player, 100);
-            player.flag("Killaura", "G", "Combat (Aim)");
-        }
+    const now = Date.now();
+    const { x, y, z } = player.getVelocity();
+    if (x === 0 && z === 0 && fastAbs(y) < 1) {
+        player.killauraLastReset = now;
+        player.killauraHasChangedPitch = false;
+    }
+    if (player.killauraHasChangedPitch && now - player.killauraLastAttack < 800 && pitch % 1 === 0) {
+        player.killauraLastAttack = 0;
+        banAttack(player, 100);
+        player.flag("Killaura", "G", "Combat", { pitch });
+    }
+    if (!player.killauraHasChangedPitch && now - player.killauraLastReset > 1500 && pitch !== 0) { // Wait 1.5 seconds before getting
+        player.killauraHasChangedPitch = true;
     }
     if (player.isFalling) player.killauraLastInAir = Date.now();
 }

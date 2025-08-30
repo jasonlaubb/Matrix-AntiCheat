@@ -74,6 +74,7 @@ Player.prototype.isSafeDevice = function () {
 };
 // Intitalize some property for tick event
 Player.prototype.killauraLastAttack = 0;
+Player.prototype.killauraLastReset = 0;
 Player.prototype.lastKnockback = 0;
 Player.prototype.lastRiptide = 0;
 Player.prototype.xpLastValid = 0;

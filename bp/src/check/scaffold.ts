@@ -1,4 +1,4 @@
-import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode, Direction, Player, Vector3, LocationOutOfWorldBoundariesError } from "@minecraft/server";
+import { PlayerPlaceBlockBeforeEvent, world, Block, system, GameMode, Direction, Player, Vector3, LocationOutOfWorldBoundariesError, HudElementsCount } from "@minecraft/server";
 import { locEqual } from "../util/util";
 import { calculateRelativeViewAngle, distanceXZ, fastAbs, max2, min2 } from "../util/mathUtil";
 import type { Axis } from "../../../global";
@@ -28,7 +28,7 @@ function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const now = Date.now();
     const isScaffold = player.scaffoldLastPlaceLoc && isScaffolding(face, block.location, player.scaffoldLastPlaceLoc);
     if (checkDiagScaffold(now, player, block, isScaffold)) event.cancel = true;
-    if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0) {
+    if (faceLocation.x === 0 && faceLocation.y === 0 && faceLocation.z === 0 && height <= 1.05 && player.isOnGround) {
         event.cancel = true;
         system.run(() => player.flag("Scaffold", "B", "Block (Perfect)")); // detect horion scaffold
     }
