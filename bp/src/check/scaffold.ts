@@ -69,7 +69,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "F", "Block", { pitch }));
         }
-        // Check for tower...
+        // Check for tower (quickly building up)
         if (face === Direction.Up && data.lastPlacePos && data.lastPlacePos.x === block.location.x && data.lastPlacePos.z === block.location.z && block.location.y - data.lastPlacePos.y === 1 && height < 1.3 && interval < 350 && player.isJumping) {
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "G", "Block", { height, interval }));
