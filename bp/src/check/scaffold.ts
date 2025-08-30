@@ -24,7 +24,9 @@ function onblockPlace (event: PlayerPlaceBlockBeforeEvent) {
         data.quickPlaceAmount = 0;
         data.turnAmount = 0;
     }
+    const forwardScaffold = isForwardScaffold(getBlockFaceXZ(block, face), player.location, face);
     player.sendMessage(String(data.turnAmount / data.quickPlaceAmount) + " | " + pitch + "|" + interval + " | " + isSafeBridge(faceLocation));
+    player.sendMessage("** " + forwardScaffold)
     const safeBridge = isSafeBridge(faceLocation); // A method to bridge with only hold instead of fast click
     if (data.quickPlaceAmount > 8) {
         const steeringRate = data.turnAmount / data.quickPlaceAmount;
@@ -33,21 +35,22 @@ function onblockPlace (event: PlayerPlaceBlockBeforeEvent) {
         }
     }
     const input = player.inputInfo;
-    const hasCrosshair = input.lastInputModeUsed !== InputMode.Touch || input.touchOnlyAffectsHotbar;
-    if (safeBridge) {
+    const hasCrosshair = input.lastInputModeUsed !== InputMode.Touch || input.touchOnlyAffectsHotbar ;
+    if (!safeBridge) {
         data.startSafeBridgeDirection = face;
         data.startSafeBridgePitch = pitch;
         if (hasCrosshair && pitch < 17) {
             system.run(() => player.flag("Scaffold", "B", "Block", { deltaPitch: fastAbs(data.startSafeBridgePitch - pitch) }));
         }
-    } else if (data.startSafeBridgeDirection !== face || fastAbs(data.startSafeBridgePitch - pitch) > 20) {
+    } else if (!hasCrosshair || data.startSafeBridgeDirection !== face || fastAbs(data.startSafeBridgePitch - pitch) > 20) {
         system.run(() => player.flag("Scaffold", "C", "Block", { deltaPitch: fastAbs(data.startSafeBridgePitch - pitch) }));
     }
-    if (hasCrosshair && pitch < 49 && !safeBridge && isForwardScaffold(getBlockFaceXZ(block, face), player.location, face)) {
+    if (pitch < (hasCrosshair ? 44 : 30) && !safeBridge && forwardScaffold) {
         system.run(() => player.flag("Scaffold", "D", "Block", { pitch }));
     }
     data.lastPlace = now;
     data.lastPitch = pitch;
+    data.lastPlaceDirection = face;
     player.scaffoldData = data;
 }
 function isSafeBridge ({ x, y, z }: Vector3) {
