@@ -136,6 +136,7 @@ interface SpeedData {
 }
 interface ScaffoldData {
     lastPlaceDirection: Server.Direction;
+    lastPlacePos: Server.Vector3;
     lastPlace: number;
     quickPlaceAmount: number;
     turnAmount: number;

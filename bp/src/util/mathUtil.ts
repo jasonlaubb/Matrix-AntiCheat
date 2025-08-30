@@ -23,7 +23,7 @@ export function distance(a: Vector3, b: Vector3): number {
         dz = a.z - b.z;
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
-export function distanceXZ(a: Vector3, b: Vector3): number {
+export function distanceXZ(a: VectorXZ, b: VectorXZ): number {
     const dx = a.x - b.x,
         dz = a.z - b.z;
     return Math.sqrt(dx * dx + dz * dz);
