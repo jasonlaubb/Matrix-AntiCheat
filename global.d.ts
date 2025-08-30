@@ -64,23 +64,6 @@ declare module "@minecraft/server" {
         ziplineLastPlace: number;
         ziplineFlag: number;
         ziplineLastLoc: Server.Vector3;
-        scaffoldLastPlace: number;
-        scaffoldLastPlaceLoc: Server.Vector3;
-        scaffoldNoRotationFlag: number;
-        scaffoldIntPitch: number;
-        scaffoldBackwardFlag: number;
-        scaffoldDownFlag: number;
-        scaffoldStrightXZ: Axis;
-        scaffoldAxisGrace: number;
-        scaffoldStraightRecent: number;
-        scaffoldDiagTimes: number[];
-        scaffoldAllTimes: number[];
-        scaffoldBridgeY: number;
-        scaffoldStraightCount: number;
-        scaffoldDiagFlag: number;
-        scaffoldExtenderFlag: number;
-        scaffoldTowerFlag: number;
-        scaffoldLastDirection: Direction;
         autotoolLastSwitch: number;
         autotoolLastIndex: number;
         autotoolSafeIndex: number;
@@ -110,6 +93,7 @@ declare module "@minecraft/server" {
 		breakerLastBreak: number;
         invalidSprintBlindAt: number;
         invalidSprintStopUseAt: number;
+        scaffoldData: ScaffoldData;
     }
     interface Entity {
         // Detection data
@@ -149,6 +133,12 @@ interface SpeedData {
     lastLocation: Server.Vector3;
     lastVelocity: Server.VectorXZ;
     lastSpeedXZ: number;
+}
+interface ScaffoldData {
+    lastPlaceDirection: Server.Direction;
+    lastPlace: number;
+    quickPlaceAmount: number;
+    turnAmount: number;
 }
 interface FlyData {
     lastOnGroundLocation: Server.Vector3,
