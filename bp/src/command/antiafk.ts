@@ -10,6 +10,6 @@ export default {
         system.run(() => {
             world.setDynamicProperty("database:antiAfk", !isEnabled);
         });
-        return { status: 0, message: `§7[§aMatrix§7] §fSuccessfully ${isEnabled ? "disabled" : "enabled"} anti AFK feature. You can modify the pattern or other settings by slash command!` };
+        return { status: 0, message: `§7[§aMatrix§7] §fSuccessfully ${isEnabled ? "disabled" : "enabled"} anti AFK feature.` };
     },
 } as Command;
