@@ -15,7 +15,7 @@ function onblockPlace (event: PlayerPlaceBlockBeforeEvent) {
     const { x: pitch, y: yaw }= player.getRotation();
     const data: typeof player.scaffoldData = player.scaffoldData ?? {};
     const now = Date.now();
-    const isScaffold = height >= 0.98 && height < 2;
+    const isScaffold = height >= 0.98 && height < 2.3;
     const interval = data.lastPlace ? now - data.lastPlace : 3000;
     if (interval < 350) {
         data.quickPlaceAmount++;
@@ -60,7 +60,7 @@ function onblockPlace (event: PlayerPlaceBlockBeforeEvent) {
     if (fastAbs(pitch) > 89.91 || pitch % 1 === 0 || yaw % 1 === 0) {
         system.run(() => player.flag("Scaffold", "F", "Block", { pitch }));
     }
-    if (data.lastPlacePos && data.lastPlacePos.x === block.location.x && data.lastPlacePos.z === block.location.z && block.location.y - data.lastPlacePos.y === 1 && height < 1.3 && interval < 400 && player.isJumping) {
+    if (data.lastPlacePos && data.lastPlacePos.x === block.location.x && data.lastPlacePos.z === block.location.z && block.location.y - data.lastPlacePos.y === 1 && height < 1.3 && interval < 350 && player.isJumping) {
         system.run(() => player.flag("Scaffold", "G", "Block", { height, interval }));
     }
     }
