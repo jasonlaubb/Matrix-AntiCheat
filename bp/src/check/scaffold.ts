@@ -33,7 +33,8 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const safeBridge = isSafeBridge(faceLocation); // A method to bridge with only hold instead of fast click
     if (data.quickPlaceAmount > 8) {
         const steeringRate = data.turnAmount / data.quickPlaceAmount; // Checks for unnatural turn while fast bridging
-        if (steeringRate > 0.4 || (steeringRate > 0.25 && safeBridge)) { // For safe bridge, it is not possible to turn, so we taka a lower value
+        if (steeringRate > 0.4 || (steeringRate > 0.25 && safeBridge)) {
+            // For safe bridge, it is not possible to turn, so we taka a lower value
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "A", "Block", { steeringRate }));
         }
@@ -44,11 +45,12 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     if (!safeBridge) {
         data.startSafeBridgeDirection = face;
         data.startSafeBridgePitch = pitch;
-        if (isScaffold && hasCrosshair && pitch < 17 && data.quickPlaceAmount >= 3) { // If not a safe bridge, player can only place in a low pitch
+        if (isScaffold && hasCrosshair && pitch < 17 && data.quickPlaceAmount >= 3) {
+            // If not a safe bridge, player can only place in a low pitch
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "B", "Block", { pitch }));
         }
-    // Safe bridge cannot work if pitch change too much or make a turn, also touch input cannot use fast bridge (as hold = break)
+        // Safe bridge cannot work if pitch change too much or make a turn, also touch input cannot use fast bridge (as hold = break)
     } else if (!hasCrosshair || data.startSafeBridgeDirection !== face || fastAbs(data.startSafeBridgePitch - pitch) > 20) {
         system.run(() => player.flag("Scaffold", "C", "Block", { deltaPitch: fastAbs(data.startSafeBridgePitch - pitch) }));
     }
@@ -56,16 +58,19 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const extender = getExtender(face, player.location, blockFacePos);
     if (isScaffold) {
         if (isClickScaffold) {
-            if (pitch < (hasCrosshair ? 44 : 30) && data.quickPlaceAmount >= 3) { // Check if a player looking too high :doge:
+            if (pitch < (hasCrosshair ? 44 : 30) && data.quickPlaceAmount >= 3) {
+                // Check if a player looking too high :doge:
                 event.cancel = true;
                 system.run(() => player.flag("Scaffold", "D", "Block", { pitch })); // Ignore touch as it is not possible to check for looking down for touch input
             }
-            if ((pitch > 60 && extender >= 2) || extender >= 2.5) { // Check for high extender bridge or looking too down with mid-high extender
+            if ((pitch > 60 && extender >= 2) || extender >= 2.5) {
+                // Check for high extender bridge or looking too down with mid-high extender
                 event.cancel = true;
                 system.run(() => player.flag("Scaffold", "E", "Block", { pitch, extender }));
             }
         }
-        if (fastAbs(pitch) > 89.91 || pitch % 1 === 0 || yaw % 1 === 0) { // Check for flat pitch or yaw. Also impossible high-abs pitch while placing...
+        if (fastAbs(pitch) > 89.91 || pitch % 1 === 0 || yaw % 1 === 0) {
+            // Check for flat pitch or yaw. Also impossible high-abs pitch while placing...
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "F", "Block", { pitch }));
         }
