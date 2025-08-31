@@ -17,15 +17,15 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { x: pitch, y: yaw } = player.getRotation();
     const data: typeof player.scaffoldData = player.scaffoldData ?? {};
     const now = Date.now();
-    const isScaffold = height >= 0.98 && height < 2.5;
-    const isSpeedBridge = data.lastPlace ? now - data.lastPlace < 350 : face;
-    const blockFacePos = getBlockFaceXZ(block, face);
+    const isScaffold = height >= 0.98 && height < 2.5; // In a height that is possible to use scaffold hack
+    const isSpeedBridge = data.lastPlace ? now - data.lastPlace < 350 : face; // Place in a short period
+    const blockFacePos = getBlockFaceXZ(block, face); // To get the actual extender instead of getting the extender from center pos which is not accurate
     const extender = getExtender(face, player.location, blockFacePos);
     // Extender > 2 is used to prevent 0 extender bypass
     if (isSpeedBridge && isScaffold && !(data.lastForwardScaffold && now - data.lastForwardScaffold > 2000 && extender > 2)) {
         data.quickPlaceAmount++;
         if (data.lastPlaceDirection !== face) {
-            data.turnAmount++;
+            data.turnAmount++; // Direction change then add turn amount
         }
     } else {
         data.quickPlaceAmount = 0;
