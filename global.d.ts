@@ -143,6 +143,7 @@ interface ScaffoldData {
     lastPitch: number;
     startSafeBridgeDirection: Server.Direction;
     startSafeBridgePitch: number;
+	lastForwardScaffold: number;
 }
 interface FlyData {
     lastOnGroundLocation: Server.Vector3,
