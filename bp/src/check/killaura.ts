@@ -162,8 +162,8 @@ function aimCheck(player: Player) {
         banAttack(player, 100);
         player.flag("Killaura", "G", "Combat", { pitch });
     }
+    // Wait 1.5s before checck for changed pitch
     if (!player.killauraHasChangedPitch && now - player.killauraLastReset > 1500 && pitch !== 0) {
-        // Wait 1.5 seconds before getting
         player.killauraHasChangedPitch = true;
     }
     if (player.isFalling) player.killauraLastInAir = Date.now();
