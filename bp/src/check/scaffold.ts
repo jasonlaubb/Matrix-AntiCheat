@@ -22,6 +22,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const blockFacePos = getBlockFaceXZ(block, face); // To get the actual extender instead of getting the extender from center pos which is not accurate
     const extender = getExtender(face, player.location, blockFacePos);
     const safeBridge = isSafeBridge(faceLocation); // A method to bridge with only hold instead of fast click
+    const bugBridgeUp = data.lastPlacePos.y === block.location.y && Direction.Up && data.lastPlaceDirection !== Direction.Up;
     if (block.location.y === data.lastPlacePos.y && isBlockTouched(block.location, data.lastPlacePos) && (!safeBridge && face !== Direction.Up || safeBridge)) {
         const blockBelow = below(block);
         const notVoidScaffold = blockBelow && !blockBelow.isLiquid && !blockBelow.isAir;
@@ -32,7 +33,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     // Extender > 2 is used to prevent 0 extender bypass
     if (isSpeedBridge && isScaffold && !(data.lastForwardScaffold && now - data.lastForwardScaffold > 2000 && extender > 2)) {
         data.quickPlaceAmount++;
-        if (data.lastPlaceDirection !== face && !(face === Direction.Up)) {
+        if (data.lastPlaceDirection !== face && !bugBridgeUp) {
             data.turnAmount++; // Direction change then add turn amount
         }
     } else {
