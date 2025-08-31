@@ -102,6 +102,7 @@ function getExtender(face: Direction, { x: x1, z: z1 }: VectorXZ, { x: x2, z: z2
 function isSafeBridge({ x, y, z }: Vector3) {
     return x === 0 && y === 0 && z === 0;
 }
+// For normal building backward or from other direction, anti scaffold will ignore them
 function isForwardScaffold(facePos: VectorXZ, playerPos: Vector3, faceDirection: Direction) {
     const dx = playerPos.x - facePos.x;
     const dz = playerPos.z - facePos.z;
