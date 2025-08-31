@@ -112,6 +112,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
             recoverDamage = true;
         }
+        // To prevent false positive, only check if the attack is formed horizontally
         if (distanceH > 2.5) {
             const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
             // Hit entity out of view
