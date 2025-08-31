@@ -19,7 +19,9 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const now = Date.now();
     const isScaffold = height >= 0.98 && height < 2.5;
     const interval = data.lastPlace ? now - data.lastPlace : 3000;
-    if (interval < 350 && isScaffold) {
+    const extender = getExtender(face, player.location, blockFacePos);
+    // Extender > 2 is used to prevent 0 extender bypass
+    if (interval < 350 && isScaffold && !(data.lastForwardScaffold && now - data.lastForwardScaffold > 2000 && extender > 2)) {
         data.quickPlaceAmount++;
         if (data.lastPlaceDirection !== face) {
             data.turnAmount++;
@@ -30,8 +32,9 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     }
     const blockFacePos = getBlockFaceXZ(block, face);
     const forwardScaffold = isForwardScaffold(blockFacePos, player.location, face);
+    if (forwardScaffold) data.lastForwardScaffold = now;
     const safeBridge = isSafeBridge(faceLocation); // A method to bridge with only hold instead of fast click
-    if (data.quickPlaceAmount > 8) {
+    if (data.quickPlaceAmount > 7) {
         const steeringRate = data.turnAmount / data.quickPlaceAmount; // Checks for unnatural turn while fast bridging
         if (steeringRate > 0.4 || (steeringRate > 0.25 && safeBridge)) {
             // For safe bridge, it is not possible to turn, so we taka a lower value
@@ -55,7 +58,6 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
         system.run(() => player.flag("Scaffold", "C", "Block", { deltaPitch: fastAbs(data.startSafeBridgePitch - pitch) }));
     }
     const isClickScaffold = !safeBridge && forwardScaffold; // Check if the scaffold is a forward bridge that by 1-click (not by hold)
-    const extender = getExtender(face, player.location, blockFacePos);
     if (isScaffold) {
         if (isClickScaffold) {
             if (pitch < (hasCrosshair ? 44 : 30) && data.quickPlaceAmount >= 3) {
