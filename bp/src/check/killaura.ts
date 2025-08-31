@@ -139,7 +139,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (isAlive(attacker) && (yaw % 1 === 0 || pitch % 1 === 0)) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
-        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw });
+        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw, pitch });
         recoverDamage = true;
     }
     if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500) {
@@ -196,10 +196,10 @@ function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: nu
         const blockY = Math.floor(y);
         const blockZ = Math.floor(z);
 
-        let block: Block | undefined; 
+        let block: Block | undefined;
         try {
             block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
-        } catch { } // Prevnet out of boundary
+        } catch {} // Prevnet out of boundary
         if (block && (block.isSolid || (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass")))) {
             return true;
         }
