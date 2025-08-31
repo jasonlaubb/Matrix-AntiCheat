@@ -12,7 +12,7 @@ export default {
 function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { player, face, faceLocation, block } = event;
     const gamemode = player.getGameMode();
-    if ([GameMode.Creative, GameMode.Spectator].includes(gamemode) || player.isFlying) return;
+    if (player.isOp() || [GameMode.Creative, GameMode.Spectator].includes(gamemode) || player.isFlying) return;
     const height = player.location.y - block.location.y;
     const { x: pitch, y: yaw } = player.getRotation();
     const data: typeof player.scaffoldData = player.scaffoldData ?? {};
