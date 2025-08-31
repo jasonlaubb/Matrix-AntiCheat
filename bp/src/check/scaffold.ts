@@ -19,7 +19,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const now = Date.now();
     const isScaffold = height >= 0.98 && height < 2.3;
     const interval = data.lastPlace ? now - data.lastPlace : 3000;
-    if (interval < 350) {
+    if (interval < 350 && isScaffold) {
         data.quickPlaceAmount++;
         if (data.lastPlaceDirection !== face) {
             data.turnAmount++;
@@ -69,16 +69,16 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
                 system.run(() => player.flag("Scaffold", "E", "Block", { pitch, extender }));
             }
         }
-        if (fastAbs(pitch) > 89.91 || pitch % 1 === 0 || yaw % 1 === 0) {
-            // Check for flat pitch or yaw. Also impossible high-abs pitch while placing...
-            event.cancel = true;
-            system.run(() => player.flag("Scaffold", "F", "Block", { pitch }));
-        }
         // Check for tower (quickly building up)
         if (face === Direction.Up && data.lastPlacePos && data.lastPlacePos.x === block.location.x && data.lastPlacePos.z === block.location.z && block.location.y - data.lastPlacePos.y === 1 && height < 1.3 && interval < 350 && player.isJumping) {
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "G", "Block", { height, interval }));
         }
+    }
+    if (fastAbs(pitch) > 89.91 || pitch % 1 === 0 && pitch !== 0 || yaw % 1 === 0 && yaw !== 0) {
+        // Check for flat pitch or yaw. Also impossible high-abs pitch while placing...
+        event.cancel = true;
+        system.run(() => player.flag("Scaffold", "F", "Block", { pitch }));
     }
     if (!event.cancel) {
         data.lastPlace = now;
