@@ -19,7 +19,7 @@ function tickEvent(player: Player) {
             if (player.autototemLastItem[1]) {
                 offhand.setItem();
                 player.getComponent("inventory")!.container!.addItem(hasItem);
-                player.flag("AutoTotem", "A", "Player", { item: hasItem.typeId }); // Wear totem in a tick
+                player.flag("AutoTotem", "A", "Player", { item: hasItem.typeId }); // Lost and wear totem in 3 tick
             } else {
                 const { x, y } = player.inputInfo.getMovementVector();
                 if (x !== 0 || y !== 0) {
