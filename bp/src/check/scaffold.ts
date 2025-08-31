@@ -23,7 +23,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const extender = getExtender(face, player.location, blockFacePos);
     const safeBridge = isSafeBridge(faceLocation); // A method to bridge with only hold instead of fast click
     const horizontalBridge = data.lastPlacePos?.y === block.location.y;
-    const upScaffold = face === Direction.Up && block.location.y > data.lastPlacePos.y
+    const upScaffold = face === Direction.Up && data.lastPlacePos?.y && block.location.y > data.lastPlacePos.y
     if (horizontalBridge && isBlockTouched(block.location, data.lastPlacePos) && isScaffold) {
         const blockBelow = below(block);
         const notVoidScaffold = blockBelow && !blockBelow.isLiquid && !blockBelow.isAir;
@@ -51,7 +51,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "A", "Block", { steeringRate }));
         }
     }
-    player.sendMessage(`void: ${data.voidSafeBridge}`)
+    player.sendMessage(`void: ${data.voidSafeBridge} | face: ${face} : upScaffold: ${upScaffold}`)
     const input = player.inputInfo;
     const hasCrosshair = input.lastInputModeUsed !== InputMode.Touch || input.touchOnlyAffectsHotbar; // Touch input is difficult to make an actual aim check, so we ignore them for some of the check
     data.startSafeBridgePitch ??= pitch;
@@ -67,7 +67,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     } else {
         const pitchDelta = fastAbs(data.startSafeBridgePitch - pitch);
         // Jump bridge is looking down with low extender, we can ignore them
-        if (pitchDelta > 15 && !(extender < 1.7 && pitch > 80) || !hasCrosshair || data.startSafeBridgeDirection !== face && (face !== Direction.Up || upScaffold)) {
+        if (pitchDelta > 45 && !(extender < 1.7 && pitch > 80) || !hasCrosshair || data.startSafeBridgeDirection !== face && (face !== Direction.Up || upScaffold)) {
             system.run(() => player.flag("Scaffold", "C", "Block", { pitchDelta, lastDir: data.startSafeBridgeDirection, face }));
         }
     }
