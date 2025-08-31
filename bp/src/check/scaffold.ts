@@ -51,7 +51,6 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "A", "Block", { steeringRate }));
         }
     }
-    player.sendMessage(`void: ${data.voidSafeBridge} | face: ${face} : upScaffold: ${upScaffold}`)
     const input = player.inputInfo;
     const hasCrosshair = input.lastInputModeUsed !== InputMode.Touch || input.touchOnlyAffectsHotbar; // Touch input is difficult to make an actual aim check, so we ignore them for some of the check
     data.startSafeBridgePitch ??= pitch;
