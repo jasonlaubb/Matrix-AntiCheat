@@ -123,7 +123,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 recoverDamage = true;
             }
         }
-        if ((hurtEntity.getComponent("health")?.currentValue ?? 20) > 0 && !hasClearPathBetweenEntities(attacker, hurtEntity)) {
+        if ((hurtEntity.getComponent("health")?.currentValue ?? 20) > 0 && !hurtEntity.isSwimming && !attacker.isSwimming && !hurtEntity.isSleeping && !hasClearPathBetweenEntities(attacker, hurtEntity)) {
             recoverDamage = true;
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
@@ -177,7 +177,6 @@ function aimCheck(player: Player) {
     }
     if (player.isFalling) player.killauraLastInAir = Date.now();
 }
-
 function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: number = 0.5): boolean {
     const dx = end.x - start.x;
     const dy = end.y - start.y;
