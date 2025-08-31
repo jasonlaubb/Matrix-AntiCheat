@@ -22,8 +22,9 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const blockFacePos = getBlockFaceXZ(block, face); // To get the actual extender instead of getting the extender from center pos which is not accurate
     const extender = getExtender(face, player.location, blockFacePos);
     const safeBridge = isSafeBridge(faceLocation); // A method to bridge with only hold instead of fast click
-    const bugBridgeUp = data.lastPlacePos.y === block.location.y && Direction.Up && data.lastPlaceDirection !== Direction.Up;
-    if (block.location.y === data.lastPlacePos.y && isBlockTouched(block.location, data.lastPlacePos) && (!safeBridge && face !== Direction.Up || safeBridge)) {
+    const horizontalBridge = data.lastPlacePos?.y === block.location.y;
+    const bugBridgeUp = safeBridge && horizontalBridge && Direction.Up && data.lastPlaceDirection !== Direction.Up;
+    if (horizontalBridge && isBlockTouched(block.location, data.lastPlacePos) && (!safeBridge && face !== Direction.Up || safeBridge)) {
         const blockBelow = below(block);
         const notVoidScaffold = blockBelow && !blockBelow.isLiquid && !blockBelow.isAir;
         if (notVoidScaffold) {
@@ -66,7 +67,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     } else {
         const pitchDelta = fastAbs(data.startSafeBridgePitch - pitch);
         // Jump bridge is looking down with low extender, we can ignore them
-        if (pitchDelta > 15 && !(extender < 1.7 && pitch > 80) || !hasCrosshair || data.startSafeBridgeDirection !== face) {
+        if (pitchDelta > 15 && !(extender < 1.7 && pitch > 80) || !hasCrosshair || data.startSafeBridgeDirection !== face && !bugBridgeUp) {
             system.run(() => player.flag("Scaffold", "C", "Block", { pitchDelta, lastDir: data.startSafeBridgeDirection, face }));
         }
     }
