@@ -54,8 +54,11 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "B", "Block", { pitch }));
         }
         // Safe bridge cannot work if pitch change too much or make a turn, also touch input cannot use fast bridge (as hold = break)
-    } else if (!hasCrosshair || data.startSafeBridgeDirection !== face || fastAbs(data.startSafeBridgePitch - pitch) > 20) {
-        system.run(() => player.flag("Scaffold", "C", "Block", { deltaPitch: fastAbs(data.startSafeBridgePitch - pitch) }));
+    } else {
+        const pitchDelta = fastAbs(data.startSafeBridgePitch - pitch);
+        if (pitchDelta > 15 && !(extender < 1.7 && pitch > 75) || !hasCrosshair || data.startSafeBridgeDirection !== face) {
+            system.run(() => player.flag("Scaffold", "C", "Block", { deltaPitch: fastAbs(data.startSafeBridgePitch - pitch) }));
+        }
     }
     const isClickScaffold = !safeBridge && forwardScaffold; // Check if the scaffold is a forward bridge that by 1-click (not by hold)
     if (isScaffold) {
