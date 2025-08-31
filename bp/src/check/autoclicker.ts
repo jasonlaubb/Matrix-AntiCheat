@@ -44,8 +44,8 @@ function onEntityHurt({ damageSource: { damagingEntity, damagingProjectile, caus
         damagingEntity.autoclickerAttackDuration = 0;
         damagingEntity.autoclickerCpsCount = 0;
         damagingEntity.autoclickerInitTimestamp = now;
-        damagingEntity.autoclickerLastAttack = system.currentTick;
     }
+    damagingEntity.autoclickerLastAttack = system.currentTick;
     damagingEntity.autoclickerAttackDuration++;
 }
 export default {
