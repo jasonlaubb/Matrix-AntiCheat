@@ -50,6 +50,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "A", "Block", { steeringRate }));
         }
     }
+    player.sendMessage(`no-up: ${bugBridgeUp} | void: ${data.voidSafeBridge}`)
     const input = player.inputInfo;
     const hasCrosshair = input.lastInputModeUsed !== InputMode.Touch || input.touchOnlyAffectsHotbar; // Touch input is difficult to make an actual aim check, so we ignore them for some of the check
     data.startSafeBridgePitch ??= pitch;
@@ -69,7 +70,6 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "C", "Block", { pitchDelta, lastDir: data.startSafeBridgeDirection, face }));
         }
     }
-    player.sendMessage(face);
     const isClickScaffold = !safeBridge && forwardScaffold; // Check if the scaffold is a forward bridge that by 1-click (not by hold)
     if (isScaffold) {
         if (isClickScaffold && data.voidSafeBridge) {
