@@ -56,6 +56,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
         // Safe bridge cannot work if pitch change too much or make a turn, also touch input cannot use fast bridge (as hold = break)
     } else {
         const pitchDelta = fastAbs(data.startSafeBridgePitch - pitch);
+        // Jump bridge is looking down with low extender, we can ignore them
         if (pitchDelta > 15 && !(extender < 1.7 && pitch > 75) || !hasCrosshair || data.startSafeBridgeDirection !== face) {
             system.run(() => player.flag("Scaffold", "C", "Block", { deltaPitch: fastAbs(data.startSafeBridgePitch - pitch) }));
         }
