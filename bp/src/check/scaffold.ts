@@ -86,7 +86,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
         }
         // Check for tower (quickly building up)
         const lastHeight = player.location.y - data.lastPlacePos?.y;
-        if (face === Direction.Up && data.lastPlacePos && data.lastPlacePos.x === block.location.x && data.lastPlacePos.z === block.location.z && block.location.y - data.lastPlacePos.y === 1 && height >= 0.98 && height < 1.5 && lastHeight >= 0.98 && lastHeight < 1.5 && isSpeedBridge && player.isJumping) {
+        if (!player.isInWater && face === Direction.Up && data.lastPlacePos && data.lastPlacePos.x === block.location.x && data.lastPlacePos.z === block.location.z && block.location.y - data.lastPlacePos.y === 1 && height >= 0.98 && height < 1.5 && lastHeight >= 0.98 && lastHeight < 1.5 && isSpeedBridge && player.isJumping) {
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "G", "Block", { height }));
         }
