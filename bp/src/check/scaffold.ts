@@ -62,7 +62,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             event.cancel = true;
             system.run(() => player.flag("Scaffold", "B", "Block", { pitch }));
         }
-        // Safe bridge cannot work if pitch change too much or make a turn, also touch input cannot use fast bridge (as hold = break)
+        // Safe bridge cannot work if pitch change too much or make a turn
     } else if (hasCrosshair && pitch < 0 || data.startSafeBridgeDirection !== face && (face !== Direction.Up || upScaffold)) {
         event.cancel = true;
         system.run(() => player.flag("Scaffold", "C", "Block", { pitch, lastDir: data.startSafeBridgeDirection, face }));
