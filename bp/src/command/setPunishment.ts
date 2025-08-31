@@ -25,6 +25,6 @@ export default {
             world.setDynamicProperty("database:flagBanDuration", banDuration);
             return { status: 0, message: `§7[§aMatrix§7] §fChanged flag punishment type to §e${newPunishmentType}§f and set ban duration to §e${banDuration}ms` };
         }
-        return { status: 0, message: "§7[§aMatrix§7] §fChanged flag punishment type to §e" + punishmentType };
+        return { status: 0, message: "§7[§aMatrix§7] §fChanged flag punishment type to §e" + newPunishmentType };
     },
 } as Command;
