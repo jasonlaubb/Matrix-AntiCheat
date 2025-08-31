@@ -229,7 +229,7 @@ function getCollisionPoints(entity: Entity): Vector3[] {
         });
         points.push({
             x: loc.x + offset.x,
-            y: loc.y + 1,
+            y: loc.y + 0.9,
             z: loc.z + offset.z,
         });
         points.push({
