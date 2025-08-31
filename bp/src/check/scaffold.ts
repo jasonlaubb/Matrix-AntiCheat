@@ -17,7 +17,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { x: pitch, y: yaw } = player.getRotation();
     const data: typeof player.scaffoldData = player.scaffoldData ?? {};
     const now = Date.now();
-    const isScaffold = height >= 0.98 && height < 2.3;
+    const isScaffold = height >= 0.98 && height < 2.5;
     const interval = data.lastPlace ? now - data.lastPlace : 3000;
     if (interval < 350 && isScaffold) {
         data.quickPlaceAmount++;
