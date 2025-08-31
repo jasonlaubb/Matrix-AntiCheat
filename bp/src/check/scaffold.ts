@@ -63,22 +63,19 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "B", "Block", { pitch }));
         }
         // Safe bridge cannot work if pitch change too much or make a turn, also touch input cannot use fast bridge (as hold = break)
-    } else {
-        const pitchDelta = fastAbs(data.startSafeBridgePitch - pitch);
-        // Jump bridge is looking down with low extender, we can ignore them
-        if (pitchDelta > 50 && !(extender < 1.7 && pitch > 80) || data.startSafeBridgeDirection !== face && (face !== Direction.Up || upScaffold)) {
-            system.run(() => player.flag("Scaffold", "C", "Block", { pitchDelta, lastDir: data.startSafeBridgeDirection, face }));
-        }
+    } else if (hasCrosshair && pitch < 0 || data.startSafeBridgeDirection !== face && (face !== Direction.Up || upScaffold)) {
+        event.cancel = true;
+        system.run(() => player.flag("Scaffold", "C", "Block", { pitch, lastDir: data.startSafeBridgeDirection, face }));
     }
-    const isClickScaffold = !safeBridge && forwardScaffold; // Check if the scaffold is a forward bridge that by 1-click (not by hold)
     if (isScaffold) {
-        if (isClickScaffold && data.voidSafeBridge) {
+        // Check if the scaffold is a forward bridge that by 1-click (not by hold)
+        if (!safeBridge && forwardScaffold && data.voidSafeBridge) {
             if (pitch < (hasCrosshair ? 44 : 30) && data.quickPlaceAmount >= 3) {
                 // Check if a player looking too high :doge:
                 event.cancel = true;
                 system.run(() => player.flag("Scaffold", "D", "Block", { pitch })); // Ignore touch as it is not possible to check for looking down for touch input
             }
-            if ((pitch > 60 && extender >= 2) || extender >= 2.5) {
+            if (data.lastHorizontalBridge && horizontalBridge && ((pitch > 60 && extender >= 2) || extender >= 2.5)) {
                 // Check for high extender bridge or looking too down with mid-high extender
                 event.cancel = true;
                 system.run(() => player.flag("Scaffold", "E", "Block", { pitch, extender }));
@@ -101,6 +98,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
         data.lastPitch = pitch;
         data.lastPlaceDirection = face;
         data.lastPlacePos = block.location;
+        data.lastHorizontalBridge = horizontalBridge;
     }
     player.scaffoldData = data;
 }

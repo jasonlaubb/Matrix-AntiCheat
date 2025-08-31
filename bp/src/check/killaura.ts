@@ -1,4 +1,4 @@
-import { Entity, EntityDieAfterEvent, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, PlayerSpawnAfterEvent, system, Vector3, world } from "@minecraft/server";
+import { Block, Entity, EntityDieAfterEvent, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, PlayerSpawnAfterEvent, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, min2, max2 } from "../util/mathUtil";
 import { addHP, banAttack, isFamily } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -197,7 +197,10 @@ function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: nu
         const blockY = Math.floor(y);
         const blockZ = Math.floor(z);
 
-        const block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
+        let block: Block | undefined; 
+        try {
+            block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
+        } catch { } // Prevnet out of boundary
         if (block && (block.isSolid || (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass")))) {
             return true;
         }
@@ -206,8 +209,6 @@ function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: nu
 }
 function getCollisionPoints(entity: Entity): Vector3[] {
     const loc = entity.location;
-    const head = entity.getHeadLocation();
-
     const offsets = [
         { x: 0, z: 0 }, // center
         { x: 0.3, z: 0 },
@@ -221,18 +222,14 @@ function getCollisionPoints(entity: Entity): Vector3[] {
     ];
 
     const points: Vector3[] = [];
-
     for (const offset of offsets) {
-        points.push({
+        for (let y = 0; y <= 2; y++) {
+            points.push({
             x: loc.x + offset.x,
-            y: loc.y + 1.0, // shoulder height
+            y: loc.y + y, // head
             z: loc.z + offset.z,
-        });
-        points.push({
-            x: head.x + offset.x,
-            y: head.y,
-            z: head.z + offset.z,
-        });
+            });
+        }
     }
 
     return points;
