@@ -143,7 +143,6 @@ interface ScaffoldData {
     turnAmount: number;
     lastPitch: number;
     startSafeBridgeDirection: Server.Direction;
-    startSafeBridgePitch: number;
 	lastForwardScaffold: number;
     voidSafeBridge: boolean;
     lastHorizontalBridge: boolean;
