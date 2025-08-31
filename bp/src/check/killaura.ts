@@ -65,9 +65,11 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     attacker.killauraLastAttack = now;
     if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && now - attacker.lastRiptide > 3000) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
     attacker.killauraHitList = attacker.killauraHitList.filter(({ time }) => now - time <= 100);
+    // Hit more than 1 entity in a tick
     if (attacker.killauraHitList.length >= 2) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
+        // Only flag when player trigger this check twice in 12s to prevent spike lag false positive
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "A", "Combat (Multi-aura)");
         attacker.killauraHitList = [];
         addHP(hurtEntity, damage);
@@ -91,6 +93,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             const attackerRecords = attacker.killauraHeadData;
             const hurtEntityRecords = hurtEntity.antiReachRecords;
             if (attackDistance > 2) {
+                // reachDistance, the min distance between the attacker and hurtEntity (it can be distance between current-pos and 1s-before pos)
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
                 if (reachDistance > (absPitch < 50 && fastAbs(height) >= 2 ? 4.6 : 3.6)) {
                     attacker.flag("Killaura", "B", "Combat (Reach)", {
@@ -102,6 +105,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             }
         }
         const distanceH = distanceXZ(attacker.location, hurtEntity.location);
+        // Looking down or up while hitting an entity horizontally
         if (distanceH > 3 && fastAbs(pitch) > 60) {
             attacker.killauraFlag++;
             attacker.killauraLastFlag = now;
@@ -110,6 +114,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         }
         if (distanceH > 2.5) {
             const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
+            // Hit entity out of view
             if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" && !attacker.inputInfo.touchOnlyAffectsHotbar ? 160 : 50)) {
                 attacker.killauraFlag++;
                 attacker.killauraLastFlag = now;
