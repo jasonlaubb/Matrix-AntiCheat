@@ -222,13 +222,21 @@ function getCollisionPoints(entity: Entity): Vector3[] {
 
     const points: Vector3[] = [];
     for (const offset of offsets) {
-        for (let y = 0; y <= 2; y++) {
-            points.push({
+        points.push({
             x: loc.x + offset.x,
-            y: loc.y + y, // head
+            y: loc.y,
             z: loc.z + offset.z,
-            });
-        }
+        });
+        points.push({
+            x: loc.x + offset.x,
+            y: loc.y + 1,
+            z: loc.z + offset.z,
+        });
+        points.push({
+            x: loc.x + offset.x,
+            y: loc.y + 1.8,
+            z: loc.z + offset.z,
+        });
     }
 
     return points;
