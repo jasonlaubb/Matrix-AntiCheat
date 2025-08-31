@@ -23,8 +23,8 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const extender = getExtender(face, player.location, blockFacePos);
     const safeBridge = isSafeBridge(faceLocation); // A method to bridge with only hold instead of fast click
     const horizontalBridge = data.lastPlacePos?.y === block.location.y;
-    const bugBridgeUp = safeBridge && horizontalBridge && Direction.Up && data.lastPlaceDirection !== Direction.Up;
-    if (horizontalBridge && isBlockTouched(block.location, data.lastPlacePos) && (!safeBridge && face !== Direction.Up || safeBridge)) {
+    const upScaffold = face === Direction.Up && block.location.y > data.lastPlacePos.y
+    if (horizontalBridge && isBlockTouched(block.location, data.lastPlacePos) && isScaffold) {
         const blockBelow = below(block);
         const notVoidScaffold = blockBelow && !blockBelow.isLiquid && !blockBelow.isAir;
         if (notVoidScaffold) {
@@ -34,7 +34,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     // Extender > 2 is used to prevent 0 extender bypass
     if (isSpeedBridge && isScaffold && !(data.lastForwardScaffold && now - data.lastForwardScaffold > 2000 && extender > 2)) {
         data.quickPlaceAmount++;
-        if (data.lastPlaceDirection !== face && !bugBridgeUp) {
+        if (data.lastPlaceDirection !== face && (face !== Direction.Up || upScaffold)) {
             data.turnAmount++; // Direction change then add turn amount
         }
     } else {
@@ -51,7 +51,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "A", "Block", { steeringRate }));
         }
     }
-    player.sendMessage(`no-up: ${bugBridgeUp} | void: ${data.voidSafeBridge}`)
+    player.sendMessage(`void: ${data.voidSafeBridge}`)
     const input = player.inputInfo;
     const hasCrosshair = input.lastInputModeUsed !== InputMode.Touch || input.touchOnlyAffectsHotbar; // Touch input is difficult to make an actual aim check, so we ignore them for some of the check
     data.startSafeBridgePitch ??= pitch;
@@ -67,7 +67,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     } else {
         const pitchDelta = fastAbs(data.startSafeBridgePitch - pitch);
         // Jump bridge is looking down with low extender, we can ignore them
-        if (pitchDelta > 15 && !(extender < 1.7 && pitch > 80) || !hasCrosshair || data.startSafeBridgeDirection !== face && !bugBridgeUp) {
+        if (pitchDelta > 15 && !(extender < 1.7 && pitch > 80) || !hasCrosshair || data.startSafeBridgeDirection !== face && (face !== Direction.Up || upScaffold)) {
             system.run(() => player.flag("Scaffold", "C", "Block", { pitchDelta, lastDir: data.startSafeBridgeDirection, face }));
         }
     }
