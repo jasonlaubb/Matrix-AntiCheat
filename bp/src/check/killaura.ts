@@ -127,6 +127,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
+    // Unused check
     if (get("antiKillauraCriticalCheck") && damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
         const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
         if (expectedDamage && damage > expectedDamage * 1.4) {
@@ -134,7 +135,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "I", "Combat (Criticals)");
         }
     }
-    if (yaw % 45 === 0) {
+    if (yaw % 1 === 0) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw });
@@ -144,15 +145,17 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         attacker.flag("Killaura", "J", "Combat");
         recoverDamage = true;
     }
+    // Hitting entity while they were sleeping lol
     if (attacker.isSleeping) {
         attacker.flag("Killaura", "K", "Combat");
         recoverDamage = true;
     }
+    // Some bad* client can do this (even horion doesn't do)
     if (attacker.id === hurtEntity.id) {
         attacker.flag("Killaura", "L", "Combat");
         recoverDamage = true;
     }
-    if (recoverDamage) addHP(hurtEntity, damage);
+    if (recoverDamage) addHP(hurtEntity, damage); // Recover the hp
 }
 function aimCheck(player: Player) {
     const pitch = player.getRotation().x;
