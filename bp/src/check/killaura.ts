@@ -1,6 +1,6 @@
 import { Block, Entity, EntityDieAfterEvent, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, PlayerSpawnAfterEvent, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, min2, max2 } from "../util/mathUtil";
-import { addHP, banAttack, isFamily } from "../util/util";
+import { addHP, banAttack, isAlive, isFamily } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { get } from "../util/database";
 export default {
@@ -123,7 +123,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 recoverDamage = true;
             }
         }
-        if ((hurtEntity.getComponent("health")?.currentValue ?? 20) > 0 && !hurtEntity.isSwimming && !attacker.isSwimming && !hurtEntity.isSleeping && !hasClearPathBetweenEntities(attacker, hurtEntity)) {
+        if (isAlive(hurtEntity) && !hurtEntity.isSwimming && !attacker.isSwimming && !hurtEntity.isSleeping && !hasClearPathBetweenEntities(attacker, hurtEntity)) {
             recoverDamage = true;
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
@@ -136,7 +136,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "I", "Combat (Criticals)");
         }
     }
-    if (yaw % 1 === 0) {
+    if (isAlive(attacker) && (yaw % 1 === 0 || pitch % 1 === 0)) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
         if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw });
