@@ -80,6 +80,7 @@ declare module "@minecraft/server" {
         autoclickerFlag: number;
         autoclickerLastFlag: number;
         autoclickerCpsCount: number;
+        autoclickerLastAttack: number;
         xpLastValid: number;
         xpLastXpAmount: number;
         freecamLastMoved: number;

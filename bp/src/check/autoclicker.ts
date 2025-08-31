@@ -7,7 +7,7 @@ function onEntityHit({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     // Delay 1 tick
     system.run(() => {
         player.autoclickerCpsCount ??= 0;
-        player.autoclickerCpsCount++;
+        if (player.autoclickerLastAttack && system.currentTick - player.autoclickerLastAttack <= 11) player.autoclickerCpsCount++; // If we do not get hurt packet, then we do not add the cps
         if (player.autoclickerAttackDuration >= 3 && !player.getEffect("minecraft:weakness")) {
             const avgCps = (player.autoclickerCpsCount / player.autoclickerAttackDuration) * 2;
             if (avgCps > get("antiAutoClickerMaxCps")) {
@@ -44,6 +44,7 @@ function onEntityHurt({ damageSource: { damagingEntity, damagingProjectile, caus
         damagingEntity.autoclickerAttackDuration = 0;
         damagingEntity.autoclickerCpsCount = 0;
         damagingEntity.autoclickerInitTimestamp = now;
+        damagingEntity.autoclickerLastAttack = system.currentTick;
     }
     damagingEntity.autoclickerAttackDuration++;
 }
