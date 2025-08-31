@@ -115,5 +115,5 @@ export function isFamily(entity: Entity, family: string) {
     return entity.runCommand(`testfor @s[family=${family}]`).successCount > 0;
 }
 export function isAlive (entity: Entity) {
-    return (entity.getComponent("health")?.currentValue ?? 20) <= 0;
+    return (entity.getComponent("health")?.currentValue ?? 20) > 0;
 }
