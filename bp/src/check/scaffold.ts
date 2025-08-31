@@ -57,7 +57,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
     } else {
         const pitchDelta = fastAbs(data.startSafeBridgePitch - pitch);
         // Jump bridge is looking down with low extender, we can ignore them
-        if (pitchDelta > 15 && !(extender < 1.7 && pitch > 75) || !hasCrosshair || data.startSafeBridgeDirection !== face) {
+        if (pitchDelta > 15 && !(extender < 1.7 && pitch > 80) || !hasCrosshair || data.startSafeBridgeDirection !== face) {
             system.run(() => player.flag("Scaffold", "C", "Block", { deltaPitch: fastAbs(data.startSafeBridgePitch - pitch) }));
         }
     }
