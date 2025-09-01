@@ -5,6 +5,7 @@ export default {
     property: "antiAutotoolEnable",
     enable: () => {
         world.afterEvents.entityHitBlock.subscribe(hitBlock);
+        world.before
         addCheckInterval("autotool", tickEvent);
     },
     disable: () => {
@@ -14,12 +15,27 @@ export default {
 };
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player)) return;
-    const interval = system.currentTick - player.autotoolLastSwitch;
+    const currentTick = system.currentTick;
+    system.runTimeout(() => {
+    const interval = currentTick - player.autotoolLastSwitch;
     // Switch tool with low interval
     if (interval <= 1) {
         if (!get("antiAutoToolIgnoreKeyboardInput") || player.inputInfo.lastInputModeUsed !== InputMode.KeyboardAndMouse) {
-            player.flag("AutoTool", "A", "Player", { interval });
+            player.autotoolFlagged = true;
         }
+    } else player.autotoolFlagged = false;
+    }, 1);
+}
+function blockBreak({ player }: PlayerBreakBlockBeforeEvent) {
+    if (player.autotoolFlagged) {
+        event.cancel = true;
+        player.autotoolFlagged = false;
+        const now = Date.now();
+        player.autotoolLastFlag ??= 0;
+        if (now - player.autotoolLastFlag < 300000)
+        system.run(() => 
+            player.flag("AutoTool", "A", "Player", { interval }));
+        player.autotoolLastFlag = now;
     }
 }
 function tickEvent(player: Player) {
