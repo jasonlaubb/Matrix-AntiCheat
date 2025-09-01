@@ -106,7 +106,7 @@ system.beforeEvents.startup.subscribe((event) => {
                         message: "Executor is not a player or command permission is invalid",
                     };
                 }
-                const feedback = player?.lastRunUICommand || world.gameRules.sendCommandFeedback;
+                const feedback = !player?.lastRunUICommand && world.gameRules.sendCommandFeedback;
                 if (player.lastRunUICommand) delete player.lastRunUICommand;
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
