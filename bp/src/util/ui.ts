@@ -10,6 +10,7 @@ export function openGeneralUI(player: Player) {
         .title("General Settings")
         .button("Enable/Disable detection")
         .button("Change configuration")
+        .button("Action")
         //@ts-expect-error
         .show(player)
         .then((res) => {
