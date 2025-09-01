@@ -8,5 +8,5 @@ export default {
     execute: (player) => {
         system.run(() => openGeneralUI(player));
         return { status: 0 };
-    }
+    },
 } as Command;

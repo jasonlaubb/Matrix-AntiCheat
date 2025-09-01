@@ -2,7 +2,11 @@
     "format_version": "1.21.10",
     "minecraft:item": {
         "description": {
-            "identifier": "matrix:offhand_label"
+            "identifier": "matrix:offhand_label",
+            "menu_category": {
+                "category": "none",
+                "is_hidden_in_commands": true
+            }
         },
         "components": {
             "minecraft:display_name": {

@@ -115,8 +115,7 @@ export function openGeneralUI(player: Player) {
                 }
                 case 2: {
                     const commandList = commands.sort((a, b) => a.name.localeCompare(b.name));
-                    const ui = new ActionFormData()
-                        .title("Action");
+                    const ui = new ActionFormData().title("Action");
                     commandList.forEach(({ name }) => ui.button(`§9${upperCaseFirstChar(name)}`));
                     ui
                         //@ts-expect-error
@@ -135,9 +134,7 @@ export function openGeneralUI(player: Player) {
                                 return;
                             }
                             const players = world.getAllPlayers().map(({ name }) => name);
-                            const ui = new ModalFormData()
-                                .title("Action's option | " + upperCaseFirstChar(selectedCommand.name))
-                                .submitButton("Execute");
+                            const ui = new ModalFormData().title("Action's option | " + upperCaseFirstChar(selectedCommand.name)).submitButton("Execute");
                             selectedCommand.parameters?.forEach(({ name, type, max, min }) => {
                                 addOption(ui, name, type, players, [min, max]);
                             });
@@ -162,7 +159,7 @@ export function openGeneralUI(player: Player) {
                                                     breaks = true;
                                                     break;
                                                 }
-                                                input.push(["true", "false"][isRequired ? value as number : (value as number) - 1]);
+                                                input.push(["true", "false"][isRequired ? (value as number) : (value as number) - 1]);
                                                 break;
                                             }
                                             case "enum": {
@@ -170,7 +167,7 @@ export function openGeneralUI(player: Player) {
                                                     breaks = true;
                                                     break;
                                                 }
-                                                input.push(enumRegistry[option.name][isRequired ? value as number : (value as number) - 1]);
+                                                input.push(enumRegistry[option.name][isRequired ? (value as number) : (value as number) - 1]);
                                                 break;
                                             }
                                             case "float":
@@ -181,7 +178,7 @@ export function openGeneralUI(player: Player) {
                                                     breaks = true;
                                                     break;
                                                 }
-                                                input.push((value as string).includes(" ") ? `"${value}"` : value as string);
+                                                input.push((value as string).includes(" ") ? `"${value}"` : (value as string));
                                                 break;
                                             }
                                             case "player":
@@ -191,7 +188,7 @@ export function openGeneralUI(player: Player) {
                                                     breaks = true;
                                                     break;
                                                 }
-                                                const targetPlayerName = players[isRequired ? value as number : (value as number) - 1];
+                                                const targetPlayerName = players[isRequired ? (value as number) : (value as number) - 1];
                                                 input.push(targetPlayerName.includes(" ") ? `"${targetPlayerName}"` : targetPlayerName);
                                                 break;
                                             }
@@ -205,14 +202,14 @@ export function openGeneralUI(player: Player) {
                                         const { name, message } = error as Error;
                                         player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
                                     }
-                                })
-                        })
+                                });
+                        });
                 }
             }
         });
 }
-function addOption (ui: ModalFormData, name: string, type: OptionType, players: string[], range: [undefined | number, undefined | number] = [undefined, undefined], optional = false) {
-    const label = optional ? name : name + " (Optional)"
+function addOption(ui: ModalFormData, name: string, type: OptionType, players: string[], range: [undefined | number, undefined | number] = [undefined, undefined], optional = false) {
+    const label = optional ? name : name + " (Optional)";
     switch (type) {
         case "boolean": {
             if (optional) {
@@ -261,6 +258,6 @@ function addOption (ui: ModalFormData, name: string, type: OptionType, players: 
         }
     }
 }
-function upperCaseFirstChar (str: string) {
+function upperCaseFirstChar(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
-} 
+}

@@ -2,7 +2,10 @@
     "format_version": "1.21.10",
     "minecraft:item": {
         "description": {
-            "identifier": "matrix:ui_tool"
+            "identifier": "matrix:ui_tool",
+            "menu_category": {
+                "category": "items"
+            }
         },
         "components": {
             "minecraft:display_name": {

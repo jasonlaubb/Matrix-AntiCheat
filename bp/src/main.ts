@@ -127,15 +127,15 @@ export const commands = [
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {
-    "stringProperty": stringValue,
-    "numberProperty": numberValue,
-    "booleanProperty": booleanValue,
-    "property": Object.keys(property),
-    "detectionName": Object.keys(detectionList),
-    "viewType": cameraTypes,
-    "timeUnit": timeUnits,
-    "messageTarget": messageTarget,
-    "punishmentType": punishmentType
+    stringProperty: stringValue,
+    numberProperty: numberValue,
+    booleanProperty: booleanValue,
+    property: Object.keys(property),
+    detectionName: Object.keys(detectionList),
+    viewType: cameraTypes,
+    timeUnit: timeUnits,
+    messageTarget: messageTarget,
+    punishmentType: punishmentType,
 };
 system.beforeEvents.startup.subscribe((event) => {
     function convertType(type: string): CustomCommandParamType {

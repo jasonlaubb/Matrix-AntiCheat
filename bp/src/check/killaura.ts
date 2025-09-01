@@ -123,7 +123,14 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 recoverDamage = true;
             }
         }
-        if (isAlive(hurtEntity) && !hurtEntity.isSwimming && !attacker.isSwimming && !hurtEntity.isSleeping && !hasClearPathBetweenEntities(attacker.location, hurtEntity.location) && !hasClearPathBetweenEntities(getTickPos(attacker), getTickPos(hurtEntity))) {
+        if (
+            isAlive(hurtEntity) &&
+            !hurtEntity.isSwimming &&
+            !attacker.isSwimming &&
+            !hurtEntity.isSleeping &&
+            !hasClearPathBetweenEntities(attacker.location, hurtEntity.location) &&
+            !hasClearPathBetweenEntities(getTickPos(attacker), getTickPos(hurtEntity))
+        ) {
             recoverDamage = true;
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
@@ -158,13 +165,13 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     }
     if (recoverDamage) addHP(hurtEntity, damage); // Recover the hp
 }
-function getTickPos (entity: Entity) {
+function getTickPos(entity: Entity) {
     const { x, y, z } = entity.location;
     const v = entity.getVelocity();
     return {
         x: x - v.x,
         y: y - v.y,
-        z: z - v.z
+        z: z - v.z,
     };
 }
 function aimCheck(player: Player) {
