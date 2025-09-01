@@ -132,7 +132,7 @@ export function openGeneralUI(player: Player) {
                                 } catch (error) {
                                     const { name, message } = error as Error;
                                     if (error instanceof CommandError) {
-                                        player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":")}`);
+                                        player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
                                     } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`)
                                 }
                                 return;
@@ -205,8 +205,8 @@ export function openGeneralUI(player: Player) {
                                     } catch (error) {
                                         const { name, message } = error as Error;
                                         if (error instanceof CommandError) {
-                                            player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":")}`);
-                                        } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`)
+                                        player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
+                                    } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`)
                                     }
                                 });
                         });
