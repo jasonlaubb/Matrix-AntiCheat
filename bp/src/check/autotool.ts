@@ -19,7 +19,7 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     system.runTimeout(() => {
     const interval = currentTick - player.autotoolLastSwitch;
     // Switch tool with low interval
-    if (interval <= 1) {
+    if (interval <= 2) {
         if (!get("antiAutoToolIgnoreKeyboardInput") || player.inputInfo.lastInputModeUsed !== InputMode.KeyboardAndMouse) {
             player.autotoolFlagged = true;
         }
