@@ -123,7 +123,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 recoverDamage = true;
             }
         }
-        if (isAlive(hurtEntity) && !hurtEntity.isSwimming && !attacker.isSwimming && !hurtEntity.isSleeping && !hasClearPathBetweenEntities(attacker, hurtEntity)) {
+        if (isAlive(hurtEntity) && !hurtEntity.isSwimming && !attacker.isSwimming && !hurtEntity.isSleeping && !hasClearPathBetweenEntities(attacker.location, hurtEntity.location) && !hasClearPathBetweenEntities(getTickPos(attacker), getTickPos(hurtEntity))) {
             recoverDamage = true;
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
@@ -157,6 +157,15 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         recoverDamage = true;
     }
     if (recoverDamage) addHP(hurtEntity, damage); // Recover the hp
+}
+function getTickPos (entity: Entity) {
+    const { x, y, z } = entity.location;
+    const v = entity.getVelocity();
+    return {
+        x: x - v.x,
+        y: y - v.y,
+        z: z - v.z
+    };
 }
 function aimCheck(player: Player) {
     const pitch = player.getRotation().x;
@@ -206,8 +215,7 @@ function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: nu
     }
     return false;
 }
-function getCollisionPoints(entity: Entity): Vector3[] {
-    const loc = entity.location;
+function getCollisionPoints(loc: Vector3): Vector3[] {
     const offsets = [
         { x: 0, z: 0 }, // center
         { x: 0.3, z: 0 },
@@ -241,7 +249,7 @@ function getCollisionPoints(entity: Entity): Vector3[] {
 
     return points;
 }
-function hasClearPathBetweenEntities(attacker: Entity, target: Entity): boolean {
+function hasClearPathBetweenEntities(attacker: Vector3, target: Vector3): boolean {
     const attackerPoints = getCollisionPoints(attacker);
     const targetPoints = getCollisionPoints(target);
 
