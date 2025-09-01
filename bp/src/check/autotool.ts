@@ -31,8 +31,7 @@ function blockBreak(event: PlayerBreakBlockBeforeEvent) {
         const now = Date.now();
         player.autotoolLastFlag ??= 0;
         const flagInterval = now - player.autotoolLastFlag;
-        if (flagInterval < 300000)
-        system.run(() => player.flag("AutoTool", "A", "Player", { flagInterval }));
+        if (flagInterval < 300000) system.run(() => player.flag("AutoTool", "A", "Player", { flagInterval }));
         player.autotoolLastFlag = now;
     }
 }
