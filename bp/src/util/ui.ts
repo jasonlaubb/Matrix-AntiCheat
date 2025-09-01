@@ -1,4 +1,4 @@
-import { Player, world } from "@minecraft/server";
+import { CommandError, Player, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { detectionList } from "../command/detection";
 import { get } from "./database";
@@ -131,7 +131,9 @@ export function openGeneralUI(player: Player) {
                                     player.runCommand(selectedCommand.name.toLowerCase());
                                 } catch (error) {
                                     const { name, message } = error as Error;
-                                    player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
+                                    if (error instanceof CommandError) {
+                                        player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":")}`);
+                                    } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`)
                                 }
                                 return;
                             }
@@ -201,8 +203,10 @@ export function openGeneralUI(player: Player) {
                                     try {
                                         player.runCommand(command);
                                     } catch (error) {
-                                        const { message } = error as Error;
-                                        player.sendMessage(`§7[§aMatrix§7] §f${message}`);
+                                        const { name, message } = error as Error;
+                                        if (error instanceof CommandError) {
+                                            player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":")}`);
+                                        } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`)
                                     }
                                 });
                         });
