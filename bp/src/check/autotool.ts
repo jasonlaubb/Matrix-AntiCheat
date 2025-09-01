@@ -11,7 +11,7 @@ export default {
     },
     disable: () => {
         world.afterEvents.entityHitBlock.unsubscribe(hitBlock);
-        world.beforeEvents.playerBreakBlock.subscribe(blockBreak);
+        world.beforeEvents.playerBreakBlock.unsubscribe(blockBreak);
         removeCheckInterval("autotool");
     },
 };
@@ -19,13 +19,8 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player) || !get("antiAutoToolIgnoreKeyboardInput") || player.inputInfo.lastInputModeUsed !== InputMode.KeyboardAndMouse) return;
     const currentTick = system.currentTick;
     system.runTimeout(() => {
-    const interval = fastAbs(currentTick - player.autotoolLastSwitch);
-    // Switch tool with low interval
-    if (interval <= 2) {
-        if (!get("antiAutoToolIgnoreKeyboardInput") || player.inputInfo.lastInputModeUsed !== InputMode.KeyboardAndMouse) {
-            player.autotoolFlagged = true;
-        }
-    } else player.autotoolFlagged = false;
+        // Switch tool with low interval
+        player.autotoolFlagged = fastAbs(currentTick - player.autotoolLastSwitch) <= 2;
     }, 1);
 }
 function blockBreak(event: PlayerBreakBlockBeforeEvent) {
