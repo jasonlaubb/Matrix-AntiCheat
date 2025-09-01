@@ -201,8 +201,8 @@ export function openGeneralUI(player: Player) {
                                     try {
                                         player.runCommand(command);
                                     } catch (error) {
-                                        const { name, message } = error as Error;
-                                        player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
+                                        const { message } = error as Error;
+                                        player.sendMessage(`§7[§aMatrix§7] §f${message}`);
                                     }
                                 });
                         });
