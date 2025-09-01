@@ -58,6 +58,7 @@ import echestwipe from "./command/echestwipe";
 import invcopy from "./command/invcopy";
 import flagMessageTarget from "./command/flagMessageTarget";
 import setPunishment from "./command/setPunishment";
+import ui from "./command/ui";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -122,6 +123,7 @@ export const commands = [
     invcopy,
     flagMessageTarget,
     setPunishment,
+    ui,
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {
