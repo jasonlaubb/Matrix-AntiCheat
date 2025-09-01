@@ -211,7 +211,7 @@ export function openGeneralUI(player: Player) {
         });
 }
 function addOption(ui: ModalFormData, name: string, type: OptionType, players: string[], range: [undefined | number, undefined | number] = [undefined, undefined], optional = false) {
-    const label = optional ? name : name + " (Optional)";
+    const label = optional ? name + " (Optional)" : name;
     switch (type) {
         case "boolean": {
             if (optional) {
