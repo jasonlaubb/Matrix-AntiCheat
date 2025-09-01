@@ -69,6 +69,7 @@ declare module "@minecraft/server" {
         autotoolSafeIndex: number;
         autotoolFlag: number;
         autotoolLastFlag: number;
+        autotoolFlagged: boolean;
         speedData: SpeedData;
         flyData: FlyData;
         flyLastPistonPush: number,

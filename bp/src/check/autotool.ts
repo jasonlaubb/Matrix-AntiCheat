@@ -1,23 +1,25 @@
-import { EntityHitBlockAfterEvent, InputMode, Player, system, world } from "@minecraft/server";
+import { EntityHitBlockAfterEvent, InputMode, Player, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { get } from "../util/database";
+import { fastAbs } from "../util/mathUtil";
 export default {
     property: "antiAutotoolEnable",
     enable: () => {
         world.afterEvents.entityHitBlock.subscribe(hitBlock);
-        world.before
+        world.beforeEvents.playerBreakBlock.subscribe(blockBreak);
         addCheckInterval("autotool", tickEvent);
     },
     disable: () => {
         world.afterEvents.entityHitBlock.unsubscribe(hitBlock);
+        world.beforeEvents.playerBreakBlock.subscribe(blockBreak);
         removeCheckInterval("autotool");
     },
 };
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
-    if (!(player instanceof Player)) return;
+    if (!(player instanceof Player) || !get("antiAutoToolIgnoreKeyboardInput") || player.inputInfo.lastInputModeUsed !== InputMode.KeyboardAndMouse) return;
     const currentTick = system.currentTick;
     system.runTimeout(() => {
-    const interval = currentTick - player.autotoolLastSwitch;
+    const interval = fastAbs(currentTick - player.autotoolLastSwitch);
     // Switch tool with low interval
     if (interval <= 2) {
         if (!get("antiAutoToolIgnoreKeyboardInput") || player.inputInfo.lastInputModeUsed !== InputMode.KeyboardAndMouse) {
@@ -26,15 +28,16 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     } else player.autotoolFlagged = false;
     }, 1);
 }
-function blockBreak({ player }: PlayerBreakBlockBeforeEvent) {
+function blockBreak(event: PlayerBreakBlockBeforeEvent) {
+    const player = event.player;
     if (player.autotoolFlagged) {
         event.cancel = true;
         player.autotoolFlagged = false;
         const now = Date.now();
         player.autotoolLastFlag ??= 0;
-        if (now - player.autotoolLastFlag < 300000)
-        system.run(() => 
-            player.flag("AutoTool", "A", "Player", { interval }));
+        const flagInterval = now - player.autotoolLastFlag;
+        if (flagInterval < 300000)
+        system.run(() => player.flag("AutoTool", "A", "Player", { flagInterval }));
         player.autotoolLastFlag = now;
     }
 }
