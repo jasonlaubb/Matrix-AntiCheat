@@ -58,9 +58,10 @@ import echestwipe from "./command/echestwipe";
 import invcopy from "./command/invcopy";
 import flagMessageTarget from "./command/flagMessageTarget";
 import setPunishment from "./command/setPunishment";
+export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
-    type: "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
+    type: OptionType;
     max?: number;
     min?: number;
 }
@@ -74,55 +75,67 @@ export interface Command {
     execute: (player: Player, args: any[]) => CustomCommandResult;
 }
 classifyProperty();
+export const commands = [
+    info,
+    setBoolean,
+    setNumber,
+    setString,
+    resetConfig,
+    clearProperty,
+    getProperty,
+    detection,
+    detectionlist,
+    rankadd,
+    rankclear,
+    ranklist,
+    rankremove,
+    rankset,
+    watch,
+    watchtp,
+    antixrayenable,
+    banCmd,
+    banOffline,
+    banlist,
+    unban,
+    worldBorder,
+    invsee,
+    oreAlert,
+    endLock,
+    netherLock,
+    mute,
+    unmute,
+    flaglog,
+    chatrank,
+    antispam,
+    antiafk,
+    freecam,
+    freecamspeed,
+    freecamtp,
+    lockdown,
+    banitem,
+    banitemlist,
+    banitemclear,
+    unbanitem,
+    automute,
+    enterchat,
+    echestwipe,
+    invcopy,
+    flagMessageTarget,
+    setPunishment,
+] as Command[];
+const { stringValue, booleanValue, numberValue } = getPropertyType();
+export const enumRegistry: { [key: string]: string[] } = {
+    "stringProperty": stringValue,
+    "numberProperty": numberValue,
+    "booleanProperty": booleanValue,
+    "property": Object.keys(property),
+    "detectionName": Object.keys(detectionList),
+    "viewType": cameraTypes,
+    "timeUnit": timeUnits,
+    "messageTarget": messageTarget,
+    "punishmentType": punishmentType
+};
 system.beforeEvents.startup.subscribe((event) => {
-    const commands = [
-        info,
-        setBoolean,
-        setNumber,
-        setString,
-        resetConfig,
-        clearProperty,
-        getProperty,
-        detection,
-        detectionlist,
-        rankadd,
-        rankclear,
-        ranklist,
-        rankremove,
-        rankset,
-        watch,
-        watchtp,
-        antixrayenable,
-        banCmd,
-        banOffline,
-        banlist,
-        unban,
-        worldBorder,
-        invsee,
-        oreAlert,
-        endLock,
-        netherLock,
-        mute,
-        unmute,
-        flaglog,
-        chatrank,
-        antispam,
-        antiafk,
-        freecam,
-        freecamspeed,
-        freecamtp,
-        lockdown,
-        banitem,
-        banitemlist,
-        banitemclear,
-        unbanitem,
-        automute,
-        enterchat,
-        echestwipe,
-        invcopy,
-        flagMessageTarget,
-        setPunishment,
-    ] as Command[];
     function convertType(type: string): CustomCommandParamType {
         switch (type) {
             case "string":
@@ -145,16 +158,10 @@ system.beforeEvents.startup.subscribe((event) => {
                 return CustomCommandParamType.String;
         }
     }
-    const { stringValue, booleanValue, numberValue } = getPropertyType();
-    event.customCommandRegistry.registerEnum("matrix:stringProperty", stringValue);
-    event.customCommandRegistry.registerEnum("matrix:numberProperty", numberValue);
-    event.customCommandRegistry.registerEnum("matrix:booleanProperty", booleanValue);
-    event.customCommandRegistry.registerEnum("matrix:property", Object.keys(property));
-    event.customCommandRegistry.registerEnum("matrix:detectionName", Object.keys(detectionList));
-    event.customCommandRegistry.registerEnum("matrix:viewType", cameraTypes);
-    event.customCommandRegistry.registerEnum("matrix:timeUnit", timeUnits);
-    event.customCommandRegistry.registerEnum("matrix:messageTarget", messageTarget);
-    event.customCommandRegistry.registerEnum("matrix:punishmentType", punishmentType);
+    const enums = Object.entries(enumRegistry);
+    for (const [name, value] of enums) {
+        event.customCommandRegistry.registerEnum("matrix:" + name, value);
+    }
     commands.forEach(({ name, description, requireOp, optionalParameters, parameters, execute }) => {
         event.customCommandRegistry.registerCommand(
             {
@@ -183,7 +190,8 @@ system.beforeEvents.startup.subscribe((event) => {
                         message: "Executor is not a player or command permission is invalid",
                     };
                 }
-                const feedback = world.gameRules.sendCommandFeedback;
+                const feedback = player?.lastRunUICommand || world.gameRules.sendCommandFeedback;
+                if (player.lastRunUICommand) delete player.lastRunUICommand;
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
                     const param = parameters?.[i] ?? optionalParameters![i - (parameters?.length ?? 0)];

@@ -12,6 +12,8 @@ declare module "@minecraft/server" {
 	     * Checks if player is safe device like Xbox and PS4
 	     */
 		isSafeDevice: () => boolean;
+        // Command data
+        lastRunUICommand?: boolean;
         // Xray data
         lastNoTntMsg: number;
         // WorldBorder data
