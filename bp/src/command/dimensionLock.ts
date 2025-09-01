@@ -25,7 +25,7 @@ export const endLock = {
 export const netherLock = {
     name: "netherlock",
     requireOp: true,
-    description: "Lock the end (dimension)",
+    description: "Lock nether (dimension)",
     execute: () => {
         const isEnabled = get("netherLock");
         const isEnabled2 = get("endLock");
