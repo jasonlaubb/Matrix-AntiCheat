@@ -8,7 +8,7 @@ import { OptionType } from "../main";
 import { commands, enumRegistry } from "../data/commands";
 export function openGeneralUI(player: Player) {
     new ActionFormData()
-        .title("General Settings")
+        .title("Admin GUI")
         .button("Enable/Disable detection")
         .button("Change configuration")
         .button("Action")
