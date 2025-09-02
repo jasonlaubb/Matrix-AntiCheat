@@ -155,7 +155,6 @@ export function openGeneralUI(player: Player) {
                                     if (res.canceled) return;
                                     const formValues = res.formValues!.slice(1);
                                     const input: string[] = [];
-                                    console.log(formValues);
                                     for (let i = 0; i < formValues.length; i++) {
                                         const isRequired = selectedCommand.parameters?.[i];
                                         const option = isRequired ?? selectedCommand.optionalParameters?.[(selectedCommand.parameters?.length ?? 1) - 1 + i];
