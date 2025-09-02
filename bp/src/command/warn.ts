@@ -1,6 +1,6 @@
 import { world } from "@minecraft/server";
 import type { Command } from "../main";
-import { max2, min2 } from "../util/mathUtil";
+import { fastAbs, max2, min2 } from "../util/mathUtil";
 export const warn = {
     name: "warn",
     description: "Warn a player",
@@ -27,7 +27,7 @@ export const warn = {
             world.sendMessage(`§7[§aMatrix§7] §e${target.name} §fhas been warned by admin.`);
             return { status: 0, message: `§7[§aMatrix§7] §fWarned §e${target.name} §ffor §e${warnAmount} §ftime(s). He has §e${currentWarn}§f warn(s) now.` };
         }
-        return { status: 0, message: `§7[§aMatrix§7] §fRemoved ${warnAmount} warn(s) from ${target.name}. He has §e${currentWarn}§f warn(s) now.` };
+        return { status: 0, message: `§7[§aMatrix§7] §fRemoved ${fastAbs(warnAmount)} warn(s) from ${target.name}. He has §e${currentWarn}§f warn(s) now.` };
     },
 } as Command;
 export const warnof = {

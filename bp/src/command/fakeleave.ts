@@ -27,6 +27,6 @@ export default {
             ],
         });
         if (invisibility) system.run(() => player.addEffect("invisibility", 20000000, { showParticles: false }));
-        return { status: 0, message: "message sent!" };
+        return { status: 0, message: "§7[§aMatrix§7] §fMessage sent!" };
     },
 } as Command;
