@@ -128,7 +128,7 @@ export function openGeneralUI(player: Player) {
                             if ((selectedCommand.parameters?.length ?? 0) === 0 && (selectedCommand.parameters?.length ?? 0) === 0) {
                                 player.lastRunUICommand = true;
                                 try {
-                                    player.runCommand(selectedCommand.name.toLowerCase());
+                                    player.runCommand("matrix:" + selectedCommand.name.toLowerCase());
                                 } catch (error) {
                                     const { name, message } = error as Error;
                                     if (error instanceof CommandError) {
@@ -202,7 +202,7 @@ export function openGeneralUI(player: Player) {
                                     const command = selectedCommand.name.toLowerCase() + " " + input.join(" ");
                                     player.lastRunUICommand = true;
                                     try {
-                                        player.runCommand(command);
+                                        player.runCommand("matrix:" + command);
                                     } catch (error) {
                                         const { name, message } = error as Error;
                                         if (error instanceof CommandError) {
