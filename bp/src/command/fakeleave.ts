@@ -4,7 +4,7 @@ export default {
     name: "fakeleave",
     description: "Send a leave message of yourself (translated)",
     requireOp: true,
-    parameters: [
+    optionalParameters: [
         {
             name: "isRealm",
             type: "boolean"
