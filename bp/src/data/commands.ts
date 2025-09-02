@@ -4,7 +4,7 @@ import { detection, detectionList, detectionlist } from "../command/detection";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "../command/set";
 import { rankadd, rankclear, ranklist, rankremove, rankset } from "../command/rank";
 import watch, { cameraTypes, watchtp } from "../command/watch";
-import antixrayenable from "../command/antixrayenable";
+import antixray from "../command/antixray";
 import { banCmd, banOffline, banlist, timeUnits, unban } from "../command/ban";
 import worldBorder from "../command/worldBorder";
 import invsee from "../command/invsee";
@@ -45,7 +45,7 @@ export const commands = [
     rankset,
     watch,
     watchtp,
-    antixrayenable,
+    antixray,
     banCmd,
     banOffline,
     banlist,
