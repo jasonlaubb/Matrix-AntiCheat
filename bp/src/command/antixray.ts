@@ -13,8 +13,8 @@ export default {
             new MessageFormData()
                 .title("Are you sure?")
                 .body("Please read these before enabling anti xray\n1. §bPlacement of piston §fand e§bxplosion §fwill be §ccancelled §fin overworld and nether\n2. You §eshould not remove addon §fdirectly after enabling anti xray, this will cause ore distribution to be bugged.\n3. It might causes the server to §clag§f.\n4. You §ccannot fully reverse§f this action.\n5. Anti Xray only works on the ores below a Y value.")
-                .button1("§c§lYes")
-                .button2("§a§lNo")
+                .button1("§4§lYes")
+                .button2("§2§lNo")
                 //@ts-expect-error
                 .show(player)
                 .then((res) => {

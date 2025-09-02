@@ -21,7 +21,7 @@ export function openGeneralUI(player: Player) {
                     const ui = new ActionFormData().title("AntiCheat Settings");
                     const enableList = Object.entries(detectionList).map(([name, detection]) => {
                         const enabled = get(detection.property as keyof typeof property);
-                        ui.button(`${enabled ? "§a" : "§c"}${name}\n§8${enabled ? "Choose to disable" : "Choose to enable"}`);
+                        ui.button(`${enabled ? "§2" : "§4"}${name}\n§8${enabled ? "Choose to disable" : "Choose to enable"}`);
                         return enabled;
                     });
                     //@ts-expect-error

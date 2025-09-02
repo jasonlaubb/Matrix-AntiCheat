@@ -87,8 +87,8 @@ export const resetConfig = {
             new MessageFormData()
                 .title("Are you sure?")
                 .body("Are you sure to reset all the changed property in the config? This cannot be recovered.")
-                .button1("Yes")
-                .button2("No")
+                .button1("§4§lYes")
+                .button2("§2§lNo")
                 //@ts-expect-error
                 .show(player)
                 .then((res) => {
