@@ -2,6 +2,7 @@ import type { Command } from "../main";
 import { world, system } from "@minecraft/server";
 import { getPropertyType } from "../util/propertyClassifier";
 import property from "../data/property";
+import { MessageFormData } from "@minecraft/server-ui";
 export const setBoolean = {
     name: "setboolean",
     description: "Change a boolean value (true/false) of config",
@@ -75,30 +76,29 @@ export const resetConfig = {
     name: "resetconfig",
     description: "Reset all the changed properties (config) saved in dynamic properties",
     requireOp: true,
-    optionalParameters: [
-        {
-            name: "confirmation",
-            type: "string",
-        },
-    ],
-    execute: (player, [confirmation]) => {
-        if (confirmation !== player.name)
-            return {
-                status: 1,
-                message: "§7[§aMatrix§7] §fType your player name to continue, add quote if your name includes space.",
-            };
+    execute: (player) => {
         const matches = world.getDynamicPropertyIds().filter((id) => id.startsWith("database:"));
         if (matches.length === 0)
             return {
                 status: 1,
                 message: "§7[§aMatrix§7] §fYou have never changed any property...",
             };
-        system.run(() => matches.forEach((id) => world.setDynamicProperty(id)));
-        return {
-            status: 0,
-            message: "§7[§aMatrix§7] §fSucessfully reset the config.",
-        };
-    },
+        system.run(() => {
+            new MessageFormData()
+                .title("Are you sure?")
+                .body("Are you sure to reset all the changed property in the config? This cannot be recovered.")
+                .button1("Yes")
+                .button2("No")
+                //@ts-expect-error
+                .show(player)
+                .then((res) => {
+                    if (res.canceled || res.selection === 1) return;
+                    matches.forEach((id) => world.setDynamicProperty(id));
+                    player.sendMessage("§7[§aMatrix§7] §fSucessfully reset the config.");
+                });
+        });
+        return { status: 0 };
+    }
 } as Command;
 export const clearProperty = {
     name: "discard",

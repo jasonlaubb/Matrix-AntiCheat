@@ -67,3 +67,6 @@ export const warns = {
         return { status: 0, message: `§7[§aMatrix§7] §fYou have been warned for §e${data} §ftime(s).` }
     }
 } as Command;
+export const warnreset = {
+    name: "warnreset"
+}
