@@ -29,6 +29,8 @@ import property from "./property";
 import { messageTarget, punishmentType } from "./prototype";
 import commandList from "../command/commandList";
 import fakeleave from "../command/fakeleave";
+import { warn, warnclear, warnlist, warnof, warnreset, warns } from "../command/warn";
+import deviceinfo from "../command/deviceinfo";
 export const commands = [
     info,
     setBoolean,
@@ -78,7 +80,14 @@ export const commands = [
     setPunishment,
     ui,
     commandList,
-    fakeleave
+    fakeleave,
+    warn,
+    warnclear,
+    warnlist,
+    warnof,
+    warnreset,
+    warns,
+    deviceinfo
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {

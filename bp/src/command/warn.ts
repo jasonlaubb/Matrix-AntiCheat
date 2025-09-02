@@ -68,5 +68,49 @@ export const warns = {
     }
 } as Command;
 export const warnreset = {
-    name: "warnreset"
-}
+    name: "warnreset",
+    description: "Reset a player's warning",
+    parameters: [
+        {
+            name: "player",
+            type: "player"
+        }
+    ],
+    requireOp: true,
+    execute: (_player, [target]) => {
+        const data = world.getDynamicProperty("warn:" + target.name) as number;
+        if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${target.name} doesn't have any warn`};
+        world.setDynamicProperty("warn:" + target.name);
+        return { status: 0, message: `§7[§aMatrix§7] §fReset all warnings of ${target.name}` };
+    }
+} as Command;
+export const warnclear = {
+    name: "warnreset",
+    description: "Clear all warn records in the server",
+    requireOp: true,
+    execute: (_player) => {
+        let clearedAmount = 0;
+        world.getDynamicPropertyIds().forEach((id) => {
+            if (!id.startsWith("warn:")) return;
+            world.setDynamicProperty(id);
+            clearedAmount++;
+        })
+        if (clearedAmount) return { status: 1, message: `§7[§aMatrix§7] §fNo one is warned in the server.`};
+        return { status: 0, message: `§7[§aMatrix§7] §fCleared all warn records` };
+    }
+} as Command;
+export const warnlist = {
+    name: "warnlist",
+    description: "Show the warn records",
+    requireOp: true,
+    execute: (_player) => {
+        let warnRecord: string[] = [];
+        world.getDynamicPropertyIds().forEach((id) => {
+            if (!id.startsWith("warn:")) return;
+            const data = world.getDynamicProperty(id) as number;
+            warnRecord.push(`§g${id.slice(5)} §7- §e${data}`);
+        })
+        if (warnRecord.length === 0) return { status: 1, message: `§7[§aMatrix§7] §fNo one is warned in the server.`};
+        return { status: 0, message: `§7[§aMatrix§7] §fShowing ${warnRecord.length} warn record(s):\n${warnRecord.join("\n")}` };
+    }
+} as Command;

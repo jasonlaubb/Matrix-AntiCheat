@@ -4,7 +4,7 @@ import { detectionList } from "../command/detection";
 import { get } from "./database";
 import property from "../data/property";
 import { getPropertyType } from "./propertyClassifier";
-import { OptionType } from "../main";
+import type { OptionType } from "../main";
 import { commands, enumRegistry } from "../data/commands";
 export function openGeneralUI(player: Player) {
     new ActionFormData()
