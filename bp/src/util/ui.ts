@@ -155,9 +155,10 @@ export function openGeneralUI(player: Player) {
                                     if (res.canceled) return;
                                     const formValues = res.formValues!.slice(1);
                                     const input: string[] = [];
+                                    console.log(formValues);
                                     for (let i = 0; i < formValues.length; i++) {
                                         const isRequired = selectedCommand.parameters?.[i];
-                                        const option = isRequired ?? selectedCommand.optionalParameters?.[(selectedCommand.parameters?.length ?? 0) + i];
+                                        const option = isRequired ?? selectedCommand.optionalParameters?.[(selectedCommand.parameters?.length ?? 1) - 1 + i];
                                         let breaks = false;
                                         const value = formValues[i];
                                         switch (option?.type) {
@@ -195,7 +196,6 @@ export function openGeneralUI(player: Player) {
                                                     breaks = true;
                                                     break;
                                                 }
-                                                console.log(`${value} | ${i}`);
                                                 const targetPlayerName = players[isRequired ? (value as number) : (value as number) - 1];
                                                 input.push(targetPlayerName.includes(" ") ? `"${targetPlayerName}"` : targetPlayerName);
                                                 break;
