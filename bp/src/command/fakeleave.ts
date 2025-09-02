@@ -7,24 +7,26 @@ export default {
     optionalParameters: [
         {
             name: "isRealm",
-            type: "boolean"
+            type: "boolean",
         },
         {
             name: "invisibility",
-            type: "boolean"
-        }
+            type: "boolean",
+        },
     ],
     execute: (player, [isRealm, invisibility]) => {
-        world.sendMessage({ rawtext: [
-            {
-                text: "§e"
-            },
-            {
-                translate: isRealm ? "multiplayer.player.left.realms" : "multiplayer.player.left",
-                with: [player.name]
-            }
-        ] });
+        world.sendMessage({
+            rawtext: [
+                {
+                    text: "§e",
+                },
+                {
+                    translate: isRealm ? "multiplayer.player.left.realms" : "multiplayer.player.left",
+                    with: [player.name],
+                },
+            ],
+        });
         if (invisibility) system.run(() => player.addEffect("invisibility", 20000000, { showParticles: false }));
         return { status: 0, message: "message sent!" };
-    }
+    },
 } as Command;

@@ -21,5 +21,5 @@ export default {
     requireOp: true,
     execute: () => {
         return { status: 0, message: helpMessage };
-    }
+    },
 } as Command;

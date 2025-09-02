@@ -6,6 +6,6 @@ export default {
     requireOp: true,
     execute: (player) => {
         system.run(() => player.getComponent("inventory")!.container.addItem(new ItemStack("matrix:ui_tool")));
-        return { status: 0, message: "You have been given the ui tool. Holding the item and right-click (long-press on empty space for Pocket Edition) to open the gui." }
-    }
+        return { status: 0, message: "You have been given the ui tool. Holding the item and right-click (long-press on empty space for Pocket Edition) to open the gui." };
+    },
 } as Command;

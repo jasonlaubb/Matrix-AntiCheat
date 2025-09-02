@@ -87,7 +87,7 @@ export const commands = [
     warnof,
     warnreset,
     warns,
-    deviceinfo
+    deviceinfo,
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {

@@ -16,7 +16,7 @@ export default {
     },
 };
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
-    if (!(player instanceof Player) || get("antiAutoToolIgnoreKeyboardInput") && player.inputInfo.lastInputModeUsed === InputMode.KeyboardAndMouse) return;
+    if (!(player instanceof Player) || (get("antiAutoToolIgnoreKeyboardInput") && player.inputInfo.lastInputModeUsed === InputMode.KeyboardAndMouse)) return;
     const currentTick = system.currentTick;
     system.runTimeout(() => {
         // Switch tool with low interval

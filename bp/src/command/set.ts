@@ -98,7 +98,7 @@ export const resetConfig = {
                 });
         });
         return { status: 0 };
-    }
+    },
 } as Command;
 export const clearProperty = {
     name: "discard",

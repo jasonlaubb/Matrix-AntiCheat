@@ -8,7 +8,7 @@ export const warn = {
     parameters: [
         {
             name: "player",
-            type: "player"
+            type: "player",
         },
     ],
     optionalParameters: [
@@ -16,19 +16,19 @@ export const warn = {
             name: "amount",
             type: "integer",
             max: 32767,
-            min: -32767
-        }
+            min: -32767,
+        },
     ],
     execute: (player, [target, amount]) => {
         const warnAmount = amount ?? 1;
-        const currentWarn = min2(32767, max2(0, (world.getDynamicProperty("warn:" + target.name) as number ?? 0) + warnAmount));
+        const currentWarn = min2(32767, max2(0, ((world.getDynamicProperty("warn:" + target.name) as number) ?? 0) + warnAmount));
         world.setDynamicProperty("warn:" + player.name, currentWarn);
         if (warnAmount > 0) {
             world.sendMessage(`§7[§aMatrix§7] §e${target.name} §fhas been warned by admin.`);
             return { status: 0, message: `§7[§aMatrix§7] §fWarned §e${target.name} §ffor §e${warnAmount} §ftime(s). He has §e${currentWarn}§f warn(s) now.` };
         }
         return { status: 0, message: `§7[§aMatrix§7] §fRemoved ${warnAmount} warn(s) from ${target.name}. He has §e${currentWarn}§f warn(s) now.` };
-    }
+    },
 } as Command;
 export const warnof = {
     name: "warnof",
@@ -37,14 +37,14 @@ export const warnof = {
     parameters: [
         {
             name: "playerName",
-            type: "string"
-        }
+            type: "string",
+        },
     ],
     execute: (_player, [name]) => {
         const data = world.getDynamicProperty("warn:" + name) as number;
-        if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${name} doesn't have any warn`};
-        return { status: 0, message: `§7[§aMatrix§7] §e${name} §fhas total §e${data} §fwarn(s)`};
-    }
+        if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${name} doesn't have any warn` };
+        return { status: 0, message: `§7[§aMatrix§7] §e${name} §fhas total §e${data} §fwarn(s)` };
+    },
 } as Command;
 export const warns = {
     name: "warns",
@@ -52,20 +52,20 @@ export const warns = {
     parameters: [
         {
             name: "player",
-            type: "player"
-        }
+            type: "player",
+        },
     ],
     execute: (player, [target]) => {
         if (target) {
             if (!player.isOp()) return { status: 1, message: "§7[§aMatrix§7] §fYou don't have permission to view other player's warning" };
             const data = world.getDynamicProperty("warn:" + target.name) as number;
-            if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${target.name} doesn't have any warn`};
-            return { status: 0, message: `§7[§aMatrix§7] §e${target.name} §fhas total §e${data} §fwarn(s)`};
+            if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${target.name} doesn't have any warn` };
+            return { status: 0, message: `§7[§aMatrix§7] §e${target.name} §fhas total §e${data} §fwarn(s)` };
         }
         const data = world.getDynamicProperty("warn:" + player.name) as number;
-        if (data || data === 0) return { status: 1, message: `§7[§aMatrix§7] §fYou don't have any warning.`};
-        return { status: 0, message: `§7[§aMatrix§7] §fYou have been warned for §e${data} §ftime(s).` }
-    }
+        if (data || data === 0) return { status: 1, message: `§7[§aMatrix§7] §fYou don't have any warning.` };
+        return { status: 0, message: `§7[§aMatrix§7] §fYou have been warned for §e${data} §ftime(s).` };
+    },
 } as Command;
 export const warnreset = {
     name: "warnreset",
@@ -73,16 +73,16 @@ export const warnreset = {
     parameters: [
         {
             name: "player",
-            type: "player"
-        }
+            type: "player",
+        },
     ],
     requireOp: true,
     execute: (_player, [target]) => {
         const data = world.getDynamicProperty("warn:" + target.name) as number;
-        if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${target.name} doesn't have any warn`};
+        if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${target.name} doesn't have any warn` };
         world.setDynamicProperty("warn:" + target.name);
         return { status: 0, message: `§7[§aMatrix§7] §fReset all warnings of ${target.name}` };
-    }
+    },
 } as Command;
 export const warnclear = {
     name: "warnreset",
@@ -94,10 +94,10 @@ export const warnclear = {
             if (!id.startsWith("warn:")) return;
             world.setDynamicProperty(id);
             clearedAmount++;
-        })
-        if (clearedAmount) return { status: 1, message: `§7[§aMatrix§7] §fNo one is warned in the server.`};
+        });
+        if (clearedAmount) return { status: 1, message: `§7[§aMatrix§7] §fNo one is warned in the server.` };
         return { status: 0, message: `§7[§aMatrix§7] §fCleared all warn records` };
-    }
+    },
 } as Command;
 export const warnlist = {
     name: "warnlist",
@@ -109,8 +109,8 @@ export const warnlist = {
             if (!id.startsWith("warn:")) return;
             const data = world.getDynamicProperty(id) as number;
             warnRecord.push(`§g${id.slice(5)} §7- §e${data}`);
-        })
-        if (warnRecord.length === 0) return { status: 1, message: `§7[§aMatrix§7] §fNo one is warned in the server.`};
+        });
+        if (warnRecord.length === 0) return { status: 1, message: `§7[§aMatrix§7] §fNo one is warned in the server.` };
         return { status: 0, message: `§7[§aMatrix§7] §fShowing ${warnRecord.length} warn record(s):\n${warnRecord.join("\n")}` };
-    }
+    },
 } as Command;

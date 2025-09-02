@@ -133,15 +133,15 @@ export function openGeneralUI(player: Player) {
                                     const { name, message } = error as Error;
                                     if (error instanceof CommandError) {
                                         player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
-                                    } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`)
+                                    } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
                                 }
                                 return;
                             }
                             const players = world.getAllPlayers().map(({ name }) => name);
                             const ui = new ModalFormData()
-                            .title("Action's option | " + upperCaseFirstChar(selectedCommand.name))
-                            .submitButton("Execute")
-                            .label(selectedCommand.description);
+                                .title("Action's option | " + upperCaseFirstChar(selectedCommand.name))
+                                .submitButton("Execute")
+                                .label(selectedCommand.description);
                             selectedCommand.parameters?.forEach(({ name, type, max, min }) => {
                                 addOption(ui, name, type, players, [min, max]);
                             });
@@ -209,8 +209,8 @@ export function openGeneralUI(player: Player) {
                                     } catch (error) {
                                         const { name, message } = error as Error;
                                         if (error instanceof CommandError) {
-                                        player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
-                                    } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`)
+                                            player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
+                                        } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
                                     }
                                 });
                         });
