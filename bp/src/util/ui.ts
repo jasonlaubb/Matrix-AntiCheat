@@ -202,10 +202,10 @@ export function openGeneralUI(player: Player) {
                                         }
                                         if (breaks) break;
                                     }
-                                    const command = selectedCommand.name.toLowerCase() + " " + input.join(" ");
+                                    const command = "matrix:" + selectedCommand.name.toLowerCase() + " " + input.join(" ");
                                     player.lastRunUICommand = true;
                                     try {
-                                        player.runCommand("matrix:" + command);
+                                        player.runCommand(command);
                                     } catch (error) {
                                         const { name, message } = error as Error;
                                         if (error instanceof CommandError) {
