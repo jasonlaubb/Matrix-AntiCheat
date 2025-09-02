@@ -200,6 +200,7 @@ export function openGeneralUI(player: Player) {
                                         if (breaks) break;
                                     }
                                     const command = selectedCommand.name.toLowerCase() + " " + input.join(" ");
+                                    player.lastRunUICommand = true;
                                     try {
                                         player.runCommand(command);
                                     } catch (error) {
