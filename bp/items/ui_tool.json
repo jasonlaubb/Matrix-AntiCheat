@@ -4,14 +4,15 @@
         "description": {
             "identifier": "matrix:ui_tool",
             "menu_category": {
-                "category": "items"
+                "category": "none",
+                "is_hidden_in_commands": false
             }
         },
         "components": {
             "minecraft:display_name": {
-                "value": "§6§lMatrix UI Tool§r\n§7Right-click to open the UI"
+                "value": "§e§lMatrix Admin GUI\n§r§7(Right-click to open the UI)"
             },
-            "minecraft:icon": "apple",
+            "minecraft:icon": "compass_item",
             "minecraft:max_stack_size": 1,
             "minecraft:can_destroy_in_creative": false,
             "minecraft:custom_components": ["matrix:execute_ui"],
