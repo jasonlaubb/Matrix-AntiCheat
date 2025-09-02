@@ -49,7 +49,7 @@ export const warnof = {
 export const warns = {
     name: "warns",
     description: "View the amount of warning of a player",
-    parameters: [
+    optionalParameters: [
         {
             name: "player",
             type: "player",
