@@ -70,7 +70,7 @@ export const ranklist = {
             })
             .sort((a, b) => b.tier - a.tier || a.rank.localeCompare(b.rank));
         if (ranks.length === 0) return { status: 1, message: `§7[§aMatrix§7] §fPlayer ${target.name} has no ranks.` };
-        return { status: 0, message: `§7[§aMatrix§7] §fPlayer ${target.name} has ranks (sorted): ${ranks.map(({ rank, tier }) => `§r${rank} §r§7(${tier})§r` ).join(", ")}` };
+        return { status: 0, message: `§7[§aMatrix§7] §fPlayer ${target.name} has ranks (sorted): ${ranks.map(({ rank, tier }) => `§r${rank} §r§7(${tier})§r`).join(", ")}` };
     },
 } as Command;
 export const rankset = {

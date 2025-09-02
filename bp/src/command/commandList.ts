@@ -12,14 +12,14 @@ export default {
                 .map(({ name, description, optionalParameters, parameters }) => {
                     let text = `§f/${name}`;
                     parameters?.forEach(({ name, type }) => {
-                    text += ` <${name}: ${type.includes("player") ? "player" : type}>`;
-                });
-                optionalParameters?.forEach(({ name, type }) => {
-                    text += ` [${name}: ${type.includes("player") ? "player" : type}]`;
-                });
-                return text + `§a ~ §f${description}`;
-            })
-            .join("\n");
+                        text += ` <${name}: ${type.includes("player") ? "player" : type}>`;
+                    });
+                    optionalParameters?.forEach(({ name, type }) => {
+                        text += ` [${name}: ${type.includes("player") ? "player" : type}]`;
+                    });
+                    return text + `§a ~ §f${description}`;
+                })
+                .join("\n");
         return { status: 0, message: helpMessage };
     },
 } as Command;
