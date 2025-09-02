@@ -46,3 +46,24 @@ export const warnof = {
         return { status: 0, message: `§7[§aMatrix§7] §e${name} §fhas total §e${data} §fwarn(s)`};
     }
 } as Command;
+export const warns = {
+    name: "warns",
+    description: "View the amount of warning of a player",
+    parameters: [
+        {
+            name: "player",
+            type: "player"
+        }
+    ],
+    execute: (player, [target]) => {
+        if (target) {
+            if (!player.isOp()) return { status: 1, message: "§7[§aMatrix§7] §fYou don't have permission to view other player's warning" };
+            const data = world.getDynamicProperty("warn:" + target.name) as number;
+            if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${target.name} doesn't have any warn`};
+            return { status: 0, message: `§7[§aMatrix§7] §e${target.name} §fhas total §e${data} §fwarn(s)`};
+        }
+        const data = world.getDynamicProperty("warn:" + player.name) as number;
+        if (data || data === 0) return { status: 1, message: `§7[§aMatrix§7] §fYou don't have any warning.`};
+        return { status: 0, message: `§7[§aMatrix§7] §fYou have been warned for §e${data} §ftime(s).` }
+    }
+} as Command;
