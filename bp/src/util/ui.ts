@@ -125,7 +125,7 @@ export function openGeneralUI(player: Player) {
                         .then((res) => {
                             if (res.canceled) return;
                             const selectedCommand = commandList[res.selection!];
-                            if ((selectedCommand.parameters?.length ?? 0) === 0 && (selectedCommand.parameters?.length ?? 0) === 0) {
+                            if ((selectedCommand.parameters?.length ?? 0) === 0 && (selectedCommand.optionalParameters?.length ?? 0) === 0) {
                                 player.lastRunUICommand = true;
                                 try {
                                     player.runCommand("matrix:" + selectedCommand.name.toLowerCase());
@@ -153,7 +153,7 @@ export function openGeneralUI(player: Player) {
                                 .show(player)
                                 .then((res) => {
                                     if (res.canceled) return;
-                                    const formValues = res.formValues!;
+                                    const formValues = res.formValues!.slice(1);
                                     const input: string[] = [];
                                     for (let i = 0; i < formValues.length; i++) {
                                         const isRequired = selectedCommand.parameters?.[i];
@@ -195,6 +195,7 @@ export function openGeneralUI(player: Player) {
                                                     breaks = true;
                                                     break;
                                                 }
+                                                console.log(`${value} | ${i}`);
                                                 const targetPlayerName = players[isRequired ? (value as number) : (value as number) - 1];
                                                 input.push(targetPlayerName.includes(" ") ? `"${targetPlayerName}"` : targetPlayerName);
                                                 break;
