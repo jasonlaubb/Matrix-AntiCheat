@@ -5,7 +5,7 @@
             "identifier": "matrix:ui_tool",
             "menu_category": {
                 "category": "none",
-                "is_hidden_in_commands": false
+                "is_hidden_in_commands": true
             }
         },
         "components": {
