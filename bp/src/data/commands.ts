@@ -27,6 +27,7 @@ import { Command } from "../main";
 import { getPropertyType } from "../util/propertyClassifier";
 import property from "./property";
 import { messageTarget, punishmentType } from "./prototype";
+import commandList from "../command/commandList";
 export const commands = [
     info,
     setBoolean,
@@ -75,14 +76,15 @@ export const commands = [
     flagMessageTarget,
     setPunishment,
     ui,
+    commandList,
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {
-    stringProperty: stringValue,
-    numberProperty: numberValue,
-    booleanProperty: booleanValue,
-    property: Object.keys(property),
-    detectionName: Object.keys(detectionList),
+    stringProperty: stringValue.sort(),
+    numberProperty: numberValue.sort(),
+    booleanProperty: booleanValue.sort(),
+    property: Object.keys(property).sort(),
+    detectionName: Object.keys(detectionList).sort(),
     viewType: cameraTypes,
     timeUnit: timeUnits,
     messageTarget: messageTarget,

@@ -206,37 +206,6 @@ system.beforeEvents.startup.subscribe((event) => {
             }
         );
     });
-    const helpMessage =
-        "§7[§aMatrix§7] Showing all the slash commands of Matrix anticheat:\n" +
-        commands
-            .toSorted(({ name: a }, { name: b }) => a.localeCompare(b))
-            .map(({ name, description, optionalParameters, parameters }) => {
-                let text = `§f/${name}`;
-                parameters?.forEach(({ name, type }) => {
-                    text += ` <${name}: ${type.includes("player") ? "player" : type}>`;
-                });
-                optionalParameters?.forEach(({ name, type }) => {
-                    text += ` [${name}: ${type.includes("player") ? "player" : type}]`;
-                });
-                return text + `§a ~ §f${description}`;
-            })
-            .join("\n");
-    event.customCommandRegistry.registerCommand(
-        {
-            name: "matrix:commandlist",
-            description: "Show all the slash commands of Matrix anticheat",
-            permissionLevel: 1,
-            cheatsRequired: false,
-        },
-        (origin) => {
-            const player = origin.sourceEntity;
-            if (!player || !(player instanceof Player)) {
-                return { status: 1, message: "Executor is not a player" };
-            }
-            player.sendMessage(helpMessage);
-            return { status: 0 };
-        }
-    );
     event.itemComponentRegistry.registerCustomComponent("matrix:execute_ui", {
         onUse: ({ source }) => {
             if (source.isOp()) {
