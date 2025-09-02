@@ -85,7 +85,7 @@ export const warnreset = {
     },
 } as Command;
 export const warnclear = {
-    name: "warnreset",
+    name: "warnclear",
     description: "Clear all warn records in the server",
     requireOp: true,
     execute: (_player) => {
