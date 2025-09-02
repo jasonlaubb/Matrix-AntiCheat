@@ -28,6 +28,7 @@ import { getPropertyType } from "../util/propertyClassifier";
 import property from "./property";
 import { messageTarget, punishmentType } from "./prototype";
 import commandList from "../command/commandList";
+import fakeleave from "../command/fakeleave";
 export const commands = [
     info,
     setBoolean,
@@ -77,6 +78,7 @@ export const commands = [
     setPunishment,
     ui,
     commandList,
+    fakeleave
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {
