@@ -15,13 +15,14 @@ export default {
 }
 function tickEvent (player: Player): any {
     if (player.isOp() || player.getGameMode() === GameMode.Spectator || player.location.y < -64 || player.location.y > 320) return delete player.phaseData; // Ignore out of boundary
-    const block = player.dimension.getBlock(player.location);
+    const fixedPos = autoAbove(player.location);
+    const block = player.dimension.getBlock(fixedPos);
     if (!block) return delete player.phaseData;
     const data: PhaseData = player.phaseData ?? {
         lastNonSolidPos: block.location,
         lastBlockedPos: undefined,
         lastInSolidPos: undefined,
-        lastPos: player.location,
+        lastPos: fixedPos,
         lastReset: 0
     }
     const velocity = player.getVelocity();
@@ -35,16 +36,17 @@ function tickEvent (player: Player): any {
     const isNewSolid = locEqual(flooredNonSolidPos, block.location);
     if (!isBlocked) {
         if (now - data.lastReset >= 100 && !isNewSolid && !(data.lastBlockedPos && locEqual(flooredNonSolidPos, data.lastBlockedPos))) {
-            const phaseDistance = distance(data.lastNonSolidPos, player.location);
-            if (phaseDistance <= 16 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, player.location, player.dimension)) {
+            const phaseDistance = distance(data.lastNonSolidPos, fixedPos);
+            if (phaseDistance <= 16 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, fixedPos, player.dimension)) {
                 player.teleport(data.lastNonSolidPos);
                 record = false;
                 player.flag("Phase", "A", "Movement", { phaseDistance });
                 delete data.lastBlockedPos;
+                data.lastReset = now;
             }
         }
         if (record) {
-            data.lastNonSolidPos = player.location;
+            data.lastNonSolidPos = fixedPos;
             delete data.lastInSolidPos;
         }
     } else {
@@ -52,13 +54,14 @@ function tickEvent (player: Player): any {
             if (data.lastInSolidPos && !isNewSolid && !locEqual(data.lastInSolidPos, block.location)) {
                 player.teleport(data.lastNonSolidPos);
                 record = false;
-                player.flag("Phase", "B", "Movement");
+                player.flag("Phase", "B", "Movement (NoClip)");
+                data.lastReset = now;
             }
         }
         if (!isNewSolid) data.lastInSolidPos = block.location;
         data.lastBlockedPos = block.location;
     }
-    if (record) data.lastPos = player.location;
+    if (record) data.lastPos = fixedPos;
     player.phaseData = data;
 }
 function floorPos ({ x, y, z }: Vector3) {
@@ -66,4 +69,10 @@ function floorPos ({ x, y, z }: Vector3) {
 }
 function simpleDistance ({ x, y, z }: Vector3, { x: x1, y: y1, z: z1 }: Vector3) {
     return fastAbs(x - x1) + fastAbs(z - z1) + fastAbs(y - y1);
+}
+function autoAbove ({ x, y, z }: Vector3) {
+    if (fastAbs(y) % 1 > 0.99) {
+        return { x, y: Math.ceil(y), z };
+    }
+    return { x, y, z };
 }
