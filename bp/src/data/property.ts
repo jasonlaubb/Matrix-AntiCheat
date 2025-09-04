@@ -291,4 +291,8 @@ export default {
         type: "boolean",
         value: false,
     },
+    antiPhaseEnable: {
+        type: "boolean",
+        value: false
+    }
 };
