@@ -21,7 +21,8 @@ function onPlayerHitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) 
     }
 }
 function tickEvent(player: Player) {
-    if (player.breakData.brokenBlocks.length == 0) return;
+    player.breakData ??= DEFAULT_BREAK_DATA;
+    if (player.breakData.brokenBlocks.length === 0) return;
     if (player.breakData.brokenAmount > MAX_BREAK_IN_TICK || player.breakData.flagInsteaBreak) {
         // Recover the blocks
         system.runJob(recoverBlocks(player.breakData.brokenBlocks, player.dimension));
