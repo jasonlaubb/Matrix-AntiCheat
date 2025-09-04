@@ -19,7 +19,7 @@ function tickEvent (player: Player): any {
     if (!block) return delete player.phaseData;
     const data: PhaseData = player.phaseData ?? {
         lastNonSolidPos: block.location,
-        lastBlockedPos: block.location,
+        lastBlockedPos: undefined,
         lastPos: player.location,
         lastReset: 0
     }
@@ -31,11 +31,13 @@ function tickEvent (player: Player): any {
     const isBlocked = block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass");
     if (!isBlocked) {
         const flooredNonSolidPos = floorPos(data.lastNonSolidPos);
-        if (now - data.lastReset >= 300 && !locEqual(flooredNonSolidPos, block.location) && !locEqual(flooredNonSolidPos, data.lastBlockedPos)) {
+        if (now - data.lastReset >= 100 && !locEqual(flooredNonSolidPos, block.location) && !(data.lastBlockedPos && locEqual(flooredNonSolidPos, data.lastBlockedPos))) {
             const phaseDistance = distance(data.lastNonSolidPos, player.location);
-            if (phaseDistance < 10 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, player.location, player.dimension)) {
+            if (phaseDistance <= 16 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, player.location, player.dimension)) {
                 player.teleport(data.lastNonSolidPos);
+                player.flag("Phase", "A", "Movement", { phaseDistance })
                 data.lastReset = now;
+                delete data.lastBlockedPos;
             }
         }
         data.lastNonSolidPos = player.location;
