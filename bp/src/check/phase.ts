@@ -20,6 +20,7 @@ function tickEvent (player: Player): any {
     const data: PhaseData = player.phaseData ?? {
         lastNonSolidPos: block.location,
         lastBlockedPos: undefined,
+        lastInSolidPos: undefined,
         lastPos: player.location,
         lastReset: 0
     }
@@ -29,21 +30,35 @@ function tickEvent (player: Player): any {
         data.lastReset = now;
     }
     const isBlocked = block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass");
+    let record = true;
+    const flooredNonSolidPos = floorPos(data.lastNonSolidPos);
+    const isNewSolid = locEqual(flooredNonSolidPos, block.location);
     if (!isBlocked) {
-        const flooredNonSolidPos = floorPos(data.lastNonSolidPos);
-        if (now - data.lastReset >= 100 && !locEqual(flooredNonSolidPos, block.location) && !(data.lastBlockedPos && locEqual(flooredNonSolidPos, data.lastBlockedPos))) {
+        if (now - data.lastReset >= 100 && !isNewSolid && !(data.lastBlockedPos && locEqual(flooredNonSolidPos, data.lastBlockedPos))) {
             const phaseDistance = distance(data.lastNonSolidPos, player.location);
             if (phaseDistance <= 16 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, player.location, player.dimension)) {
                 player.teleport(data.lastNonSolidPos);
+                record = false;
                 player.flag("Phase", "A", "Movement", { phaseDistance });
                 delete data.lastBlockedPos;
             }
         }
-        data.lastNonSolidPos = player.location;
+        if (record) {
+            data.lastNonSolidPos = player.location;
+            delete data.lastInSolidPos;
+        }
     } else {
+        if (now - data.lastReset >= 100) {
+            if (data.lastInSolidPos && !isNewSolid && !locEqual(data.lastInSolidPos, block.location)) {
+                player.teleport(data.lastNonSolidPos);
+                record = false;
+                player.flag("Phase", "B", "Movement");
+            }
+        }
+        if (!isNewSolid) data.lastInSolidPos = block.location;
         data.lastBlockedPos = block.location;
     }
-    data.lastPos = player.location;
+    if (record) data.lastPos = player.location;
     player.phaseData = data;
 }
 function floorPos ({ x, y, z }: Vector3) {

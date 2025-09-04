@@ -161,6 +161,7 @@ interface FlyData {
 interface PhaseData {
     lastNonSolidPos: Server.Vector3;
     lastBlockedPos?: Server.Vector3;
+    lastInSolidPos?: Server.Vector3;
     lastPos: Server.Vector3;
     lastReset: number;
 }
