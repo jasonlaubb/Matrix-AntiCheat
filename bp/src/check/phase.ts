@@ -28,7 +28,7 @@ function tickEvent (player: Player): any {
     if (fastAbs(velocity.x) < 0.05 && fastAbs(velocity.z) < 0.05 && fastAbs(velocity.y) < 1 && simpleDistance(data.lastPos, player.location) > 0.3) {
         data.lastReset = now;
     }
-    const isBlocked = block.isSolid;
+    const isBlocked = block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass");
     if (!isBlocked) {
         const flooredNonSolidPos = floorPos(data.lastNonSolidPos);
         if (now - data.lastReset >= 300 && !locEqual(flooredNonSolidPos, block.location) && !locEqual(flooredNonSolidPos, data.lastBlockedPos)) {
