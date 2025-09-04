@@ -67,8 +67,6 @@ declare module "@minecraft/server" {
         ziplineFlag: number;
         ziplineLastLoc: Server.Vector3;
         autotoolLastSwitch: number;
-        autotoolLastIndex: number;
-        autotoolSafeIndex: number;
         autotoolFlag: number;
         autotoolLastFlag: number;
         autotoolFlagged: boolean;
@@ -98,6 +96,7 @@ declare module "@minecraft/server" {
         invalidSprintBlindAt: number;
         invalidSprintStopUseAt: number;
         scaffoldData: ScaffoldData;
+        phaseData?: PhaseData;
     }
     interface Entity {
         // Detection data
@@ -159,21 +158,27 @@ interface FlyData {
     hasStarted: number,
     lastVelocityY: number;
 }
-export interface InstabreakData {
+interface PhaseData {
+    lastNonSolidPos: Server.Vector3;
+    lastBlockedPos: Server.Vector3;
+    lastPos: Server.Vector3;
+    lastReset: number;
+}
+interface InstabreakData {
     brokenBlocks: BrokenBlockList;
     brokenAmount: number;
     startBreakingTime: number;
     flagInsteaBreak: boolean;
 }
-export type BrokenBlockList = { blockPermutation: Server.BlockPermutation; blockPosition: Server.Vector3 }[];
-export interface EntityFlyData {
+type BrokenBlockList = { blockPermutation: Server.BlockPermutation; blockPosition: Server.Vector3 }[];
+interface EntityFlyData {
     pastVelocityY: number[]
     lastNotRidingLocation: Server.Vector3,
     prefectCombo: number,
     superCombo: number,
     illegalFactorAmount: number,
 }
-export interface ElytraFlyData {
+interface ElytraFlyData {
     startGlideTime: number,
     startGlideSpeed: number,
     isSpeedDecreasing: boolean,
@@ -184,7 +189,7 @@ export interface ElytraFlyData {
     triggeredType2: boolean,
     lastSpeedXZ: number;
 }
-export interface AimAssistData {
+interface AimAssistData {
     lastYaw: number;
     lastPitch: number;
     lastDeltaYaw: number;
@@ -196,4 +201,4 @@ export interface AimAssistData {
         d: number;
     };
 }
-export type Axis = "x" | "z" | undefined;
+type Axis = "x" | "z" | undefined;

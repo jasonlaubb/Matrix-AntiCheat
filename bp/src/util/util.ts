@@ -117,3 +117,31 @@ export function isFamily(entity: Entity, family: string) {
 export function isAlive(entity: Entity) {
     return (entity.getComponent("health")?.currentValue ?? 20) > 0;
 }
+export function isObstructedBetweenLocations(start: Vector3, end: Vector3, dimension: Dimension, stepSize: number = 0.5): boolean {
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const dz = end.z - start.z;
+    const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+    const steps = Math.floor(distance / stepSize);
+    const stepX = dx / steps;
+    const stepY = dy / steps;
+    const stepZ = dz / steps;
+    for (let i = 0; i <= steps; i++) {
+        const x = start.x + stepX * i;
+        const y = start.y + stepY * i;
+        const z = start.z + stepZ * i;
+
+        const blockX = Math.floor(x);
+        const blockY = Math.floor(y);
+        const blockZ = Math.floor(z);
+
+        let block: Block | undefined;
+        try {
+            block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
+        } catch { } // Prevnet out of boundary
+        if (block && (block.isSolid || (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass")))) {
+            return true;
+        }
+    }
+    return false;
+}

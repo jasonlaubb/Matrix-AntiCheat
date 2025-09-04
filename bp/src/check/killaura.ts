@@ -1,6 +1,6 @@
-import { Block, Entity, EntityDieAfterEvent, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, PlayerSpawnAfterEvent, system, Vector3, world } from "@minecraft/server";
+import { Dimension, Entity, EntityDieAfterEvent, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, PlayerSpawnAfterEvent, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, min2, max2 } from "../util/mathUtil";
-import { addHP, banAttack, isAlive, isFamily } from "../util/util";
+import { addHP, banAttack, isAlive, isFamily, isObstructedBetweenLocations } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { get } from "../util/database";
 export default {
@@ -128,8 +128,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             !hurtEntity.isSwimming &&
             !attacker.isSwimming &&
             !hurtEntity.isSleeping &&
-            !hasClearPathBetweenEntities(attacker.location, hurtEntity.location) &&
-            !hasClearPathBetweenEntities(getTickPos(attacker), getTickPos(hurtEntity))
+            !hasClearPathBetweenEntities(attacker.dimension, attacker.location, hurtEntity.location) &&
+            !hasClearPathBetweenEntities(hurtEntity.dimension, getTickPos(attacker), getTickPos(hurtEntity))
         ) {
             recoverDamage = true;
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
@@ -193,35 +193,6 @@ function aimCheck(player: Player) {
     }
     if (player.isFalling) player.killauraLastInAir = Date.now();
 }
-function isObstructedBetweenLocations(start: Vector3, end: Vector3, stepSize: number = 0.5): boolean {
-    const dx = end.x - start.x;
-    const dy = end.y - start.y;
-    const dz = end.z - start.z;
-    const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-    const steps = Math.floor(distance / stepSize);
-    const stepX = dx / steps;
-    const stepY = dy / steps;
-    const stepZ = dz / steps;
-    const dimension = world.getDimension("overworld");
-    for (let i = 0; i <= steps; i++) {
-        const x = start.x + stepX * i;
-        const y = start.y + stepY * i;
-        const z = start.z + stepZ * i;
-
-        const blockX = Math.floor(x);
-        const blockY = Math.floor(y);
-        const blockZ = Math.floor(z);
-
-        let block: Block | undefined;
-        try {
-            block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
-        } catch {} // Prevnet out of boundary
-        if (block && (block.isSolid || (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass")))) {
-            return true;
-        }
-    }
-    return false;
-}
 function getCollisionPoints(loc: Vector3): Vector3[] {
     const offsets = [
         { x: 0, z: 0 }, // center
@@ -256,13 +227,13 @@ function getCollisionPoints(loc: Vector3): Vector3[] {
 
     return points;
 }
-function hasClearPathBetweenEntities(attacker: Vector3, target: Vector3): boolean {
+function hasClearPathBetweenEntities(dimension: Dimension, attacker: Vector3, target: Vector3): boolean {
     const attackerPoints = getCollisionPoints(attacker);
     const targetPoints = getCollisionPoints(target);
 
     for (const aPoint of attackerPoints) {
         for (const tPoint of targetPoints) {
-            if (!isObstructedBetweenLocations(aPoint, tPoint)) {
+            if (!isObstructedBetweenLocations(aPoint, tPoint, dimension)) {
                 return true; // At least one clear path
             }
         }

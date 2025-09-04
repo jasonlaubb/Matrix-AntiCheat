@@ -1,5 +1,4 @@
-import { EntityHitBlockAfterEvent, InputMode, Player, PlayerBreakBlockBeforeEvent, system, world } from "@minecraft/server";
-import { addCheckInterval, removeCheckInterval } from "../util/tick";
+import { EntityHitBlockAfterEvent, InputMode, Player, PlayerBreakBlockBeforeEvent, PlayerHotbarSelectedSlotChangeAfterEvent, system, world } from "@minecraft/server";
 import { get } from "../util/database";
 import { fastAbs } from "../util/mathUtil";
 export default {
@@ -7,12 +6,12 @@ export default {
     enable: () => {
         world.afterEvents.entityHitBlock.subscribe(hitBlock);
         world.beforeEvents.playerBreakBlock.subscribe(blockBreak);
-        addCheckInterval("autotool", tickEvent);
+        world.afterEvents.playerHotbarSelectedSlotChange.subscribe(hotBarEvent);
     },
     disable: () => {
         world.afterEvents.entityHitBlock.unsubscribe(hitBlock);
         world.beforeEvents.playerBreakBlock.unsubscribe(blockBreak);
-        removeCheckInterval("autotool");
+        world.afterEvents.playerHotbarSelectedSlotChange.unsubscribe(hotBarEvent);
     },
 };
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
@@ -35,11 +34,6 @@ function blockBreak(event: PlayerBreakBlockBeforeEvent) {
         player.autotoolLastFlag = now;
     }
 }
-function tickEvent(player: Player) {
-    player.autotoolLastIndex ??= 0;
-    if (player.autotoolLastIndex !== player.selectedSlotIndex) {
-        player.autotoolSafeIndex = player.autotoolLastIndex;
-        player.autotoolLastSwitch = system.currentTick;
-    }
-    player.autotoolLastIndex = player.selectedSlotIndex;
+function hotBarEvent({ player }: PlayerHotbarSelectedSlotChangeAfterEvent) {
+    player.autotoolLastSwitch = system.currentTick;
 }
