@@ -40,9 +40,8 @@ function tickEvent (player: Player): any {
             if (phaseDistance <= 16 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, fixedPos, player.dimension)) {
                 player.teleport(data.lastNonSolidPos);
                 record = false;
-                player.flag("Phase", "A", "Movement", { phaseDistance });
+                player.flag("Phase", "A", "Movement", { phaseDistance: phaseDistance.toFixed(2) });
                 delete data.lastBlockedPos;
-                data.lastReset = now;
             }
         }
         if (record) {
@@ -55,7 +54,6 @@ function tickEvent (player: Player): any {
                 player.teleport(data.lastNonSolidPos);
                 record = false;
                 player.flag("Phase", "B", "Movement (NoClip)");
-                data.lastReset = now;
             }
         }
         if (!isNewSolid) data.lastInSolidPos = block.location;
