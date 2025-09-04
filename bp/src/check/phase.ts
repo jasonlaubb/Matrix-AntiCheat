@@ -29,7 +29,7 @@ function tickEvent (player: Player): any {
     }
     const velocity = player.getVelocity();
     const now = Date.now();
-    if (fastAbs(velocity.x) < 0.05 && fastAbs(velocity.z) < 0.05 && fastAbs(velocity.y) < 1 && simpleDistance(data.lastPos, player.location) > 0.3) {
+    if (fastAbs(velocity.x) < 0.05 && fastAbs(velocity.z) < 0.05 && fastAbs(velocity.y) < 1 && simpleDistance(data.lastPos, player.location) >= 1) {
         data.lastReset = now;
         data.isResetDone = false;
         player.sendMessage("Reset detected")
