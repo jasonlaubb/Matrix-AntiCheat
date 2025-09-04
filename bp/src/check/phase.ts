@@ -32,9 +32,9 @@ function tickEvent (player: Player): any {
     if (!isBlocked) {
         const flooredNonSolidPos = floorPos(data.lastNonSolidPos);
         if (now - data.lastReset >= 300 && !locEqual(flooredNonSolidPos, block.location) && !locEqual(flooredNonSolidPos, data.lastBlockedPos)) {
-            const phaseDistance = distance(data.lastNonSolidPos, block.location);
-            if (phaseDistance < 10 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, block.location, player.dimension)) {
-                player.teleport(centerPos(data.lastNonSolidPos));
+            const phaseDistance = distance(data.lastNonSolidPos, player.location);
+            if (phaseDistance < 10 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, player.location, player.dimension)) {
+                player.teleport(data.lastNonSolidPos);
                 data.lastReset = now;
             }
         }
@@ -47,9 +47,6 @@ function tickEvent (player: Player): any {
 }
 function floorPos ({ x, y, z }: Vector3) {
     return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) }
-}
-function centerPos ({ x, y, z }: Vector3) {
-    return { x: Math.floor(x) + 0.5, y: Math.floor(y), z: Math.floor(z) + 0.5 };
 }
 function simpleDistance ({ x, y, z }: Vector3, { x: x1, y: y1, z: z1 }: Vector3) {
     return fastAbs(x - x1) + fastAbs(z - z1) + fastAbs(y - y1);
