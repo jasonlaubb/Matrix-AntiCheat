@@ -35,8 +35,7 @@ function tickEvent (player: Player): any {
             const phaseDistance = distance(data.lastNonSolidPos, player.location);
             if (phaseDistance <= 16 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, player.location, player.dimension)) {
                 player.teleport(data.lastNonSolidPos);
-                player.flag("Phase", "A", "Movement", { phaseDistance })
-                data.lastReset = now;
+                player.flag("Phase", "A", "Movement", { phaseDistance });
                 delete data.lastBlockedPos;
             }
         }
