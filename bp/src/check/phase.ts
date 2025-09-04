@@ -23,22 +23,26 @@ function tickEvent (player: Player): any {
         lastBlockedPos: undefined,
         lastInSolidPos: undefined,
         lastPos: fixedPos,
-        lastReset: 0
+        lastReset: 0,
+        lastFlag: 0
     }
     const velocity = player.getVelocity();
     const now = Date.now();
     if (fastAbs(velocity.x) < 0.05 && fastAbs(velocity.z) < 0.05 && fastAbs(velocity.y) < 1 && simpleDistance(data.lastPos, player.location) > 0.3) {
         data.lastReset = now;
+        player.sendMessage("Reset detected")
     }
     const isBlocked = block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass");
     let record = true;
     const flooredNonSolidPos = floorPos(data.lastNonSolidPos);
     const isNewSolid = locEqual(flooredNonSolidPos, block.location);
+    const bypass = now - data.lastReset < 500 && now - data.lastFlag > 500;
     if (!isBlocked) {
-        if (now - data.lastReset >= 100 && !isNewSolid && !(data.lastBlockedPos && locEqual(flooredNonSolidPos, data.lastBlockedPos))) {
+        if (!bypass && !isNewSolid && !(data.lastBlockedPos && locEqual(flooredNonSolidPos, data.lastBlockedPos))) {
             const phaseDistance = distance(data.lastNonSolidPos, fixedPos);
             if (phaseDistance <= 16 && phaseDistance >= 1 && isObstructedBetweenLocations(data.lastNonSolidPos, fixedPos, player.dimension)) {
                 player.teleport(data.lastNonSolidPos);
+                data.lastFlag = now;
                 record = false;
                 player.flag("Phase", "A", "Movement", { phaseDistance: phaseDistance.toFixed(2) });
                 delete data.lastBlockedPos;
@@ -49,12 +53,11 @@ function tickEvent (player: Player): any {
             delete data.lastInSolidPos;
         }
     } else {
-        if (now - data.lastReset >= 100) {
-            if (data.lastInSolidPos && !isNewSolid && !locEqual(data.lastInSolidPos, block.location)) {
-                player.teleport(data.lastNonSolidPos);
-                record = false;
-                player.flag("Phase", "B", "Movement (NoClip)");
-            }
+        if (!bypass && data.lastInSolidPos && !isNewSolid && !locEqual(data.lastInSolidPos, block.location)) {
+            player.teleport(data.lastNonSolidPos);
+            data.lastFlag = now;
+            record = false;
+            player.flag("Phase", "B", "Movement (NoClip)");
         }
         if (!isNewSolid) data.lastInSolidPos = block.location;
         data.lastBlockedPos = block.location;
