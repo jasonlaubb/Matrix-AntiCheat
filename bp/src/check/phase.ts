@@ -32,7 +32,6 @@ function tickEvent (player: Player): any {
     if (fastAbs(velocity.x) < 0.05 && fastAbs(velocity.z) < 0.05 && fastAbs(velocity.y) < 1 && simpleDistance(data.lastPos, player.location) >= 1) {
         data.lastReset = now;
         data.isResetDone = false;
-        player.sendMessage("Reset detected")
     }
     const isBlocked = block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass");
     let record = true;
