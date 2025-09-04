@@ -164,6 +164,7 @@ interface PhaseData {
     lastInSolidPos?: Server.Vector3;
     lastPos: Server.Vector3;
     lastReset: number;
+    isResetDone: boolean;
     lastFlag: number;
 }
 interface InstabreakData {
