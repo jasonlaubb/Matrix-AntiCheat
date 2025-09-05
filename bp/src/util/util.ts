@@ -1,11 +1,11 @@
-import { Block, Dimension, Entity, LocationOutOfWorldBoundariesError, Player, Vector3, world } from "@minecraft/server";
-import { min2 } from "./mathUtil";
+import { Block, Dimension, Direction, Entity, Player, Vector3, world } from "@minecraft/server";
 import { get } from "./database";
+import { deltaVector, floorVector, safeGetBlock, safeGetBlockNear } from "./vectorUtil";
 
 export function addHP(entity: Entity, hp: number): void {
     if (!entity.isValid) return;
     const health = entity.getComponent("health");
-    if (health) health.setCurrentValue(min2(health.currentValue + hp, health.effectiveMax));
+    if (health) health.setCurrentValue(Math.min(health.currentValue + hp, health.effectiveMax));
 }
 export function banAttack(player: Player, duration: number) {
     player.addEffect("minecraft:weakness", duration, { amplifier: 150, showParticles: false });
@@ -62,51 +62,37 @@ export function parseTime(timeUnit: string, value: number) {
 export function stringXyz(location: Vector3) {
     return Object.values(location).join(",");
 }
+const surroundOffsets: [number, number, number][] = [
+    // Layer below (-1)
+    [-1, -1, -1], [0, -1, -1], [1, -1, -1],
+    [-1, -1, 0],  [0, -1, 0],  [1, -1, 0],
+    [-1, -1, 1],  [0, -1, 1],  [1, -1, 1],
+    // Layer center (0)
+    [-1, 0, -1],  [0, 0, -1],  [1, 0, -1],
+    [-1, 0, 0],   [0, 0, 0],   [1, 0, 0],
+    [-1, 0, 1],   [0, 0, 1],   [1, 0, 1],
+    // Layer above (+1)
+    [-1, 1, -1],  [0, 1, -1],  [1, 1, -1],
+    [-1, 1, 0],   [0, 1, 0],   [1, 1, 0],
+    [-1, 1, 1],   [0, 1, 1],   [1, 1, 1],
+];
+
 export function fastSurround(centerLocation: Vector3, dimension: Dimension): (Block | undefined)[] | undefined {
-    try {
-        const block = dimension.getBlock(centerLocation);
-        // directions
-        const d = block!.below();
-        const u = block!.above();
-        const w = block!.west();
-        const e = block!.east();
-        const s = block!.south();
-        const n = block!.north();
-        const nw = n!.west();
-        const ne = n!.east();
-        const sw = s!.west();
-        const se = s!.east();
-        const uw = u!.west();
-        const ue = u!.east();
-        const us = u!.south();
-        const un = u!.north();
-        const dw = d!.west();
-        const de = d!.east();
-        const ds = d!.south();
-        const dn = d!.north();
-        const unw = un!.west();
-        const une = un!.east();
-        const usw = us!.west();
-        const use = us!.east();
-        const dsw = ds!.west();
-        const dse = ds!.east();
-        const dnw = dn!.west();
-        const dne = dn!.east();
-        return [d, u, w, e, s, n, nw, ne, sw, se, uw, ue, us, un, dw, de, ds, dn, unw, une, usw, use, dsw, dse, dnw, dne];
-    } catch {
-        return undefined;
-    }
+    return surroundOffsets
+        .map(([dx, dy, dz]) => {
+            const pos: Vector3 = {
+                x: centerLocation.x + dx,
+                y: centerLocation.y + dy,
+                z: centerLocation.z + dz,
+            };
+            return safeGetBlock(dimension, pos);
+        });
 }
 export function isRiding(player: Player) {
     return !!player.getComponent("minecraft:riding")?.entityRidingOn;
 }
 export function getSurround(block: Block) {
-    try {
-        return [block.above(), block.below(), block.east(), block.west(), block.north(), block.south()];
-    } catch (error) {
-        if (error instanceof LocationOutOfWorldBoundariesError) return [];
-        throw error;
-    }
+    return Object.values(Direction).map((direction) => safeGetBlockNear(block, direction)).concat(block);
 }
 export function hasEducationalFeature() {
     return world.educationalFeaturesEnabled ?? false;
@@ -127,18 +113,8 @@ export function isObstructedBetweenLocations(start: Vector3, end: Vector3, dimen
     const stepY = dy / steps;
     const stepZ = dz / steps;
     for (let i = 0; i <= steps; i++) {
-        const x = start.x + stepX * i;
-        const y = start.y + stepY * i;
-        const z = start.z + stepZ * i;
-
-        const blockX = Math.floor(x);
-        const blockY = Math.floor(y);
-        const blockZ = Math.floor(z);
-
-        let block: Block | undefined;
-        try {
-            block = dimension.getBlock({ x: blockX, y: blockY, z: blockZ });
-        } catch { } // Prevnet out of boundary
+        const blockLocation = floorVector(deltaVector(start, stepX * i, stepY * i, stepZ * i));
+        const block = safeGetBlock(dimension, blockLocation);
         if (block && (block.isSolid || (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass")))) {
             return true;
         }

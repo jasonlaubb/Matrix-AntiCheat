@@ -1,6 +1,5 @@
 import { Dimension, EquipmentSlot, GameMode, PistonActivateAfterEvent, Player, Vector3, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
-import { fastAbs } from "../util/mathUtil";
 import { fastSurround, isRiding } from "../util/util";
 
 const MAX_VELOCITY_Y = 0.7;
@@ -43,7 +42,7 @@ function tick(player: Player) {
         now - player.lastKnockback > 2000 &&
         now - player.lastRiptide > 5000 &&
         jumpBoost < 2 &&
-        (previousVelY < 0 || (previousVelY < 0 && velocityY === 0) || (velocityY > 0 && previousVelY / velocityY > 4 && previousVelY > 2.5 && fastAbs((player.flyData.lastVelocityY ?? 0) - velocityY) < 0.5)) &&
+        (previousVelY < 0 || (previousVelY < 0 && velocityY === 0) || (velocityY > 0 && previousVelY / velocityY > 4 && previousVelY > 2.5 && Math.abs((player.flyData.lastVelocityY ?? 0) - velocityY) < 0.5)) &&
         !isRiding(player) &&
         !player.isFlying &&
         !player.isGliding &&
@@ -64,7 +63,7 @@ function tick(player: Player) {
         }
     }
 
-    if (data.flagAmount >= 0.05 && ((now - data.lastFlagTimestamp > 6000 && player.isOnGround) || (surroundAir && fastAbs(velocityY) < MAX_VELOCITY_Y && now - data.lastFlagTimestamp > 1200))) {
+    if (data.flagAmount >= 0.05 && ((now - data.lastFlagTimestamp > 6000 && player.isOnGround) || (surroundAir && Math.abs(velocityY) < MAX_VELOCITY_Y && now - data.lastFlagTimestamp > 1200))) {
         data.flagAmount -= 0.05;
     }
 

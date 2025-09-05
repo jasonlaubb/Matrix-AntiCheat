@@ -1,21 +1,10 @@
 import type { Vector2, Vector3, VectorXZ } from "@minecraft/server";
-
-export function max2(a: number, b: number): number {
-    return a > b ? a : b;
-}
-export function min2(a: number, b: number): number {
-    return a < b ? a : b;
-}
 export function hypot(x: number, y: number, z: number) {
     return Math.sqrt(x * x + y * y + z * z);
 }
 export function pythag(x: number, y: number) {
     return Math.sqrt(x * x + y * y);
 }
-export function fastAbs(x: number): number {
-    return x < 0 ? -x : x;
-}
-
 // Simple distance function
 export function distance(a: Vector3, b: Vector3): number {
     const dx = a.x - b.x,
@@ -102,7 +91,7 @@ export function calculateRelativeViewAngle(pos1: Vector3, pos2: Vector3, rotatio
     const a = Math.atan2(pos2.z - pos1.z, pos2.x - pos1.x) * 57.29577951308232;
     const b = a - rotationY - 90;
     const c = b <= -180 ? b + 360 : b;
-    return fastAbs(c);
+    return Math.abs(c);
 }
 export function minDifference(arr: number[]) {
     if (arr.length < 2) return null; // Not enough numbers to compare

@@ -1,5 +1,5 @@
 import { Dimension, Entity, EntityDieAfterEvent, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, PlayerSpawnAfterEvent, system, Vector3, world } from "@minecraft/server";
-import { calculateRelativeViewAngle, distance, fastAbs, lineDistance, distanceXZ, min2, max2 } from "../util/mathUtil";
+import { calculateRelativeViewAngle, distance, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP, banAttack, isAlive, isFamily, isObstructedBetweenLocations } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { get } from "../util/database";
@@ -83,7 +83,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (!attacker?.killauraHeadRecording) recordHeadPosition(attacker);
     if (!hurtEntity?.antiReachRecording) recordPosition(hurtEntity);
     const { x: pitch, y: yaw } = attacker.getRotation();
-    const absPitch = fastAbs(pitch);
+    const absPitch = Math.abs(pitch);
     const attackDistance = distance(attacker.location, hurtEntity.location);
     const isPlayer = hurtEntity instanceof Player;
     let recoverDamage = false;
@@ -95,7 +95,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             if (attackDistance > 2) {
                 // reachDistance, the min distance between the attacker and hurtEntity (it can be distance between current-pos and 1s-before pos)
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                if (reachDistance > (absPitch < 50 && fastAbs(height) >= 2 ? 4.6 : 3.6)) {
+                if (reachDistance > (absPitch < 50 && Math.abs(height) >= 2 ? 4.6 : 3.6)) {
                     attacker.flag("Killaura", "B", "Combat (Reach)", {
                         attackDistance: attackDistance.toFixed(2),
                         reachDistance: reachDistance.toFixed(2),
@@ -106,7 +106,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         }
         const distanceH = distanceXZ(attacker.location, hurtEntity.location);
         // Looking down or up while hitting an entity horizontally
-        if (distanceH > 3 && fastAbs(pitch) > 60) {
+        if (distanceH > 3 && Math.abs(pitch) > 60) {
             attacker.killauraFlag++;
             attacker.killauraLastFlag = now;
             if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
@@ -178,7 +178,7 @@ function aimCheck(player: Player) {
     const pitch = player.getRotation().x;
     const now = Date.now();
     const { x, y, z } = player.getVelocity();
-    if (x === 0 && z === 0 && fastAbs(y) < 1) {
+    if (x === 0 && z === 0 && Math.abs(y) < 1) {
         player.killauraLastReset = now;
         player.killauraHasChangedPitch = false;
     }
@@ -305,7 +305,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
     const weakness = attacker.getEffect("minecraft:weakness")?.amplifier;
     if (weakness) {
         const level = weakness + 1;
-        baseDamage = max2(0, 0.8 ** level * baseDamage + (0.8 ** level - 1) / 0.4);
+        baseDamage = Math.max(0, 0.8 ** level * baseDamage + (0.8 ** level - 1) / 0.4);
     }
     const enchantments = weapon?.getComponent("enchantable");
     const sharpnessLevel = enchantments?.getEnchantment("minecraft:sharpness")?.level ?? 0;
@@ -324,7 +324,7 @@ function calculateExpectedBaseDamage(attacker: Player, target: Entity): number |
         baseDamage = Math.floor(baseDamage + extraDamage);
     }
     const armor = target.getComponent("equippable")!;
-    const totalReduction = armor ? min2(1, 1 - min2(0.8, max2(0.008 * armor.totalArmor, 0.04 * armor.totalArmor - baseDamage / (50 + 6.25 * armor.totalToughness)))) : 1;
+    const totalReduction = armor ? Math.min(1, 1 - Math.min(0.8, Math.max(0.008 * armor.totalArmor, 0.04 * armor.totalArmor - baseDamage / (50 + 6.25 * armor.totalToughness)))) : 1;
     const protectionLevel = getProtectionLevel(armor);
     let expectedDamage = baseDamage * totalReduction * (1 - 0.04 * protectionLevel);
     const resistance = target.getEffect("minecraft:resistance")?.amplifier;

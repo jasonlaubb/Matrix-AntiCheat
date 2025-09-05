@@ -1,6 +1,6 @@
 import { Block, Dimension, Player, Vector3 } from "@minecraft/server";
 import type { EntityFlyData } from "../../../global";
-import { fastAbs, pythag } from "../util/mathUtil";
+import { pythag } from "../util/mathUtil";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 const SPEED_THRESHOLD = 0.35;
 const LOWEST_Y_THRESHOLD = 0.25;
@@ -26,7 +26,7 @@ function tickEvent(player: Player) {
         data.lastNotRidingLocation = player.location;
         data.prefectCombo = 0;
     } else if (isRiding.typeId.startsWith("minecraft:") && player.isOnGround) {
-        if (!data.pastVelocityY.includes(0) && fastAbs(velocityY) > LOWEST_Y_THRESHOLD) {
+        if (!data.pastVelocityY.includes(0) && Math.abs(velocityY) > LOWEST_Y_THRESHOLD) {
             const repeated = checkRepetition(data.pastVelocityY);
             if (repeated > MIN_REPEAT_COUNT) {
                 player.teleport(data.lastNotRidingLocation);

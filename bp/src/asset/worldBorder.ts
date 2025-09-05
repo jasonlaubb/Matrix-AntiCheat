@@ -1,7 +1,6 @@
 import { LocationInUnloadedChunkError, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, PlayerPlaceBlockBeforeEvent, Vector3, world } from "@minecraft/server";
 import { addInterval, removeInterval } from "../util/tick";
 import { get } from "../util/database";
-import { fastAbs } from "../util/mathUtil";
 
 export function worldBorderOn() {
     addInterval("worldborder", tickEvent);
@@ -35,8 +34,8 @@ function tickEvent() {
         const baseY = Math.floor(y1) - yOffset;
         const { x: x2, z: z2 } = spawnLoc;
         const isNether = enchancedRatio && player.dimension.id === "minecraft:nether";
-        const xDiff = fastAbs(Math.floor(x1) - x2);
-        const zDiff = fastAbs(Math.floor(z1) - z2);
+        const xDiff = Math.abs(Math.floor(x1) - x2);
+        const zDiff = Math.abs(Math.floor(z1) - z2);
         const adjustedXDiff = isNether ? xDiff * 8 : xDiff;
         const adjustedZDiff = isNether ? zDiff * 8 : zDiff;
         if (!player.isOp()) {
@@ -47,8 +46,8 @@ function tickEvent() {
             player.lastDimension ??= "minecraft:overworld";
 
             if (outOfBoundsX || outOfBoundsZ) {
-                const safeX = fastAbs(x2 - player.lastSafeLocation.x) <= size;
-                const safeZ = fastAbs(z2 - player.lastSafeLocation.z) <= size;
+                const safeX = Math.abs(x2 - player.lastSafeLocation.x) <= size;
+                const safeZ = Math.abs(z2 - player.lastSafeLocation.z) <= size;
                 if (safeX && safeZ) {
                     player.teleport(middleLoc(player.lastSafeLocation), {
                         dimension: world.getDimension(player.lastDimension),
@@ -65,8 +64,8 @@ function tickEvent() {
         }
 
         if (steps === 10 && addEffect) {
-            const xDist = fastAbs(size - adjustedXDiff);
-            const zDist = fastAbs(size - adjustedZDiff);
+            const xDist = Math.abs(size - adjustedXDiff);
+            const zDist = Math.abs(size - adjustedZDiff);
             const nearX = xDist <= 12;
             const nearZ = zDist <= 12;
 
@@ -138,7 +137,7 @@ function blockChange(event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBefore
     const { x, z } = event.block.location;
     const { x: x2, z: z2 } = world.getDefaultSpawnLocation();
     const size = get("worldBorderSize") as number;
-    if (fastAbs(x - x2) > size || fastAbs(z - z2) > size) {
+    if (Math.abs(x - x2) > size || Math.abs(z - z2) > size) {
         event.cancel = true;
     }
 }

@@ -1,6 +1,5 @@
 import { world } from "@minecraft/server";
 import type { Command } from "../main";
-import { fastAbs, max2, min2 } from "../util/mathUtil";
 export const warn = {
     name: "warn",
     description: "Warn a player",
@@ -21,13 +20,13 @@ export const warn = {
     ],
     execute: (player, [target, amount]) => {
         const warnAmount = amount ?? 1;
-        const currentWarn = min2(32767, max2(0, ((world.getDynamicProperty("warn:" + target.name) as number) ?? 0) + warnAmount));
+        const currentWarn = Math.min(32767, Math.max(0, ((world.getDynamicProperty("warn:" + target.name) as number) ?? 0) + warnAmount));
         world.setDynamicProperty("warn:" + player.name, currentWarn);
         if (warnAmount > 0) {
             world.sendMessage(`§7[§aMatrix§7] §e${target.name} §fhas been warned by admin.`);
             return { status: 0, message: `§7[§aMatrix§7] §fWarned §e${target.name} §ffor §e${warnAmount} §ftime(s). He has §e${currentWarn}§f warn(s) now.` };
         }
-        return { status: 0, message: `§7[§aMatrix§7] §fRemoved ${fastAbs(warnAmount)} warn(s) from ${target.name}. He has §e${currentWarn}§f warn(s) now.` };
+        return { status: 0, message: `§7[§aMatrix§7] §fRemoved ${Math.abs(warnAmount)} warn(s) from ${target.name}. He has §e${currentWarn}§f warn(s) now.` };
     },
 } as Command;
 export const warnof = {

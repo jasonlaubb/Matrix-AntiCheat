@@ -1,6 +1,5 @@
 import { EntityHitBlockAfterEvent, InputMode, Player, PlayerBreakBlockBeforeEvent, PlayerHotbarSelectedSlotChangeAfterEvent, system, world } from "@minecraft/server";
 import { get } from "../util/database";
-import { fastAbs } from "../util/mathUtil";
 export default {
     property: "antiAutotoolEnable",
     enable: () => {
@@ -19,7 +18,7 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     const currentTick = system.currentTick;
     system.runTimeout(() => {
         // Switch tool with low interval
-        player.autotoolFlagged = fastAbs(currentTick - player.autotoolLastSwitch) <= 2;
+        player.autotoolFlagged = Math.abs(currentTick - player.autotoolLastSwitch) <= 2;
     }, 1);
 }
 function blockBreak(event: PlayerBreakBlockBeforeEvent) {

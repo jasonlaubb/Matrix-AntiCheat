@@ -1,5 +1,4 @@
 import { Block, Direction, GameMode, InputMode, PlayerPlaceBlockBeforeEvent, system, Vector3, VectorXZ, world } from "@minecraft/server";
-import { fastAbs } from "../util/mathUtil";
 export default {
     property: "antiScaffoldEnable",
     enable() {
@@ -99,7 +98,7 @@ function onblockPlace(event: PlayerPlaceBlockBeforeEvent) {
             system.run(() => player.flag("Scaffold", "G", "Block", { height }));
         }
     }
-    if (fastAbs(pitch) > 89.91 || (pitch % 1 === 0 && pitch !== 0) || (yaw % 1 === 0 && yaw !== 0)) {
+    if (Math.abs(pitch) > 89.91 || (pitch % 1 === 0 && pitch !== 0) || (yaw % 1 === 0 && yaw !== 0)) {
         // Check for flat pitch or yaw. Also impossible high-abs pitch while placing...
         event.cancel = true;
         system.run(() => player.flag("Scaffold", "F", "Block", { pitch }));
@@ -121,9 +120,9 @@ function getExtender(face: Direction, { x: x1, z: z1 }: VectorXZ, { x: x2, z: z2
     switch (face) {
         case Direction.East:
         case Direction.West:
-            return fastAbs(x1 - x2);
+            return Math.abs(x1 - x2);
         default:
-            return fastAbs(z1 - z2);
+            return Math.abs(z1 - z2);
     }
 }
 function isSafeBridge({ x, y, z }: Vector3) {
@@ -161,8 +160,8 @@ function getBlockFaceXZ(block: Block, blockFace: Direction): VectorXZ {
     return { x, z };
 }
 function isBlockTouched({ x, y, z }: Vector3, { x: x1, y: y1, z: z1 }: Vector3) {
-    const dx = fastAbs(x - x1);
-    const dz = fastAbs(z - z1);
-    const dy = fastAbs(y - y1);
+    const dx = Math.abs(x - x1);
+    const dz = Math.abs(z - z1);
+    const dy = Math.abs(y - y1);
     return dx + dz + dy === 1;
 }

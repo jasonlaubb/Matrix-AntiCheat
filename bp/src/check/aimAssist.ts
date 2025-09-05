@@ -1,7 +1,6 @@
 import { Player } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import type { AimAssistData } from "../../../global";
-import { fastAbs } from "../util/mathUtil";
 export default {
     property: "antiAimAssistEnable",
     enable: () => {
@@ -28,8 +27,8 @@ function tickEvent(player: Player) {
             },
         } as AimAssistData);
     const { x: pitch, y: yaw } = player.getRotation();
-    const deltaYaw = fastAbs(yaw - data.lastYaw);
-    const deltaPitch = fastAbs(pitch - data.lastPitch);
+    const deltaYaw = Math.abs(yaw - data.lastYaw);
+    const deltaPitch = Math.abs(pitch - data.lastPitch);
     const yawDifference = data.lastDeltaYaw;
     const pitchDifference = data.lastDeltaPitch;
     /**
@@ -54,7 +53,7 @@ function tickEvent(player: Player) {
             player.flag("AimAssist", "C", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
         }
     } else if (data.flagAmount.c >= 0.01) data.flagAmount.c -= 0.01;
-    if (yawDifference > 0 && fastAbs(Math.floor(yawDifference) - yawDifference) < 0.0000000001) {
+    if (yawDifference > 0 && Math.abs(Math.floor(yawDifference) - yawDifference) < 0.0000000001) {
         data.flagAmount.d++;
         if (data.flagAmount.d >= 2) player.flag("AimAssist", "D", "Combat", { deltaYaw, deltaPitch, yawDifference, pitchDifference });
     } else if (data.flagAmount.d >= 0.00625) data.flagAmount.d -= 0.00625;
