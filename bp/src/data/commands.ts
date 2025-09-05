@@ -32,6 +32,7 @@ import fakeleave from "../command/fakeleave";
 import { warn, warnclear, warnlist, warnof, warnreset, warns } from "../command/warn";
 import deviceinfo from "../command/deviceinfo";
 import itemui from "../command/itemui";
+import { gma, gmc, gms, gmsp } from "../command/gm";
 export const commands = [
     info,
     setBoolean,
@@ -90,6 +91,10 @@ export const commands = [
     warns,
     deviceinfo,
     itemui,
+    gma,
+    gmc,
+    gms,
+    gmsp
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {

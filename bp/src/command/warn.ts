@@ -78,7 +78,7 @@ export const warnreset = {
     requireOp: true,
     execute: (_player, [target]) => {
         const data = world.getDynamicProperty("warn:" + target.name) as number;
-        if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${target.name} doesn't have any warn` };
+        if (!data) return { status: 1, message: `§7[§aMatrix§7] §f${target.name} doesn't have any warn.` };
         world.setDynamicProperty("warn:" + target.name);
         return { status: 0, message: `§7[§aMatrix§7] §fReset all warnings of ${target.name}` };
     },
