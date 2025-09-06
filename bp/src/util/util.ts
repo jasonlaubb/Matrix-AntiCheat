@@ -1,4 +1,4 @@
-import { Block, Dimension, Direction, Entity, Player, Vector3, world } from "@minecraft/server";
+import { Block, Dimension, Direction, Entity, Player, PlayerInventoryType, Vector3, world } from "@minecraft/server";
 import { get } from "./database";
 import { deltaVector, floorVector, safeGetBlock, safeGetBlockNear } from "./vectorUtil";
 
@@ -120,4 +120,7 @@ export function isObstructedBetweenLocations(start: Vector3, end: Vector3, dimen
         }
     }
     return false;
+}
+export function getInventorySlot (inventoryType: PlayerInventoryType, slot: number) {
+    return inventoryType === PlayerInventoryType.Inventory ? slot + 9 : slot;
 }

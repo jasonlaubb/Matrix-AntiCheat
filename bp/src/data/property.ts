@@ -294,5 +294,25 @@ export default {
     antiPhaseEnable: {
         type: "boolean",
         value: false
+    },
+    antiIllegalItemEnable: {
+        type: "boolean",
+        value: false,
+    },
+    antiIllegalItemCheckImpossible: {
+        type: "boolean",
+        value: true, // Check items that are impossible to obtain in survival mode but possible in creative mode
+    },
+    antiIllegalItemBanSpawnEgg: {
+        type: "boolean",
+        value: true, // Delete spawn egg items when detected
+    },
+    antiIllegalItemCheckUnfair: {
+        type: "boolean",
+        value: true, // Check items that are considered "unfair" in survival mode, such as command block, structure block, barrier, etc.
+    },
+    antiIllegalItemBanEducational: {
+        type: "boolean",
+        value: true, // Ban items that are exclusive to Minecraft: Education Edition and not available in standard editions.
     }
 };

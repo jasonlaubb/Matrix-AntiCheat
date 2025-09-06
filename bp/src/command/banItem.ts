@@ -1,5 +1,6 @@
 import type { Command } from "../main";
 import { system, world } from "@minecraft/server";
+import { getInventorySlot } from "../util/util";
 export const banitem = {
     name: "banitem",
     description: "Ban an item from being given to players.",
@@ -76,8 +77,10 @@ export const banitemclear = {
     },
 } as Command;
 export function registerItemBanEvent() {
+    if (world.banItemEventRegistered) return;
     world.banItemEventRegistered = true;
-    const event = system.runInterval(() => {
+    const event = world.afterEvents.playerInventoryItemChange.subscribe(({ player, itemStack: item, slot, inventoryType }) => {
+        if (!item || player.isOp()) return;
         const bannedItems = world
             .getDynamicPropertyIds()
             .filter((id) => id.startsWith("banitem:"))
@@ -89,27 +92,16 @@ export function registerItemBanEvent() {
             });
         if (bannedItems.length === 0) {
             delete world.banItemEventRegistered;
-            return system.clearRun(event);
+            world.afterEvents.playerInventoryItemChange.unsubscribe(event);
+            return;
         }
-        const allPlayers = world.getAllPlayers();
-        allPlayers.forEach((player) => {
-            if (player.isOp()) return;
+        const bannedItem = bannedItems.find(({ id }) => id === item.typeId);
+        if (bannedItem) {
             const inventory = player.getComponent("inventory")!.container;
-            let bannedList: { id: string; reason: string }[] = [];
-            for (let i = 0; i < 36; i++) {
-                const item = inventory.getItem(i);
-                if (!item) continue;
-                const bannedItem = bannedItems.find((b) => b.id === item.typeId);
-                if (bannedItem && !bannedList.includes(bannedItem)) {
-                    bannedList.push(bannedItem);
-                    inventory.setItem(i);
-                }
-            }
-            if (bannedList.length > 0) {
-                player.sendMessage(`§7[§aMatrix§7] §fBanned item(s) has been removed from your inventory:\n` + bannedList.map(({ id, reason }) => `§g${simplifyId(id)}: §e${reason}§r`).join("\n"));
-            }
-        });
-    }, 20);
+            inventory.setItem(getInventorySlot(inventoryType, slot));
+            player.sendMessage(`§7[§aMatrix§7] §fBanned item §e${simplifyId(bannedItem.id)}§f has been removed from your inventory: §e${bannedItem.reason}§r`);
+        }
+    })
 }
 function simplifyId(id: string) {
     let simplified = id.split(":").slice(1).join(":").replace("_", " ");

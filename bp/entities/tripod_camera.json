@@ -1,0 +1,14 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "minecraft:tripod_camera",
+            "is_experimental": false,
+            "is_spawnable": false,
+            "is_summonable": false
+        },
+        "components": {
+            "minecraft:instant_despawn": {}
+        }
+    }
+}

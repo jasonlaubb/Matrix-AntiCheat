@@ -1,4 +1,4 @@
-import { Player, world, PlayerPermissionLevel, InputMode, PlatformType } from "@minecraft/server";
+import { Player, world, PlayerPermissionLevel, InputMode, PlatformType, system } from "@minecraft/server";
 import { get } from "../util/database";
 import { ban, checkPunish } from "../util/punishment";
 export const messageTarget = ["any", "all", "operator", "admin", "exclude", "bypass", "tag"];
@@ -45,26 +45,28 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
         world.setDynamicProperty(deleteId); // Delete the last record.
     }
     if (get("enablePunishmentIgnoreTag") && this.hasTag("matrix:ignore")) return;
-    const disconnectReason = get("specificReasonOnPunishment") ? `Unfair Advantage [${id}/${type}]` : "Unfair Advantage";
-    switch (punishmentType) {
-        case "kick": {
-            this.kick(disconnectReason);
-            break;
-        }
-        case "ban": {
-            ban(this, disconnectReason, "Matrix AntiCheat", Date.now() + get("flagBanDuration"));
-            checkPunish(this);
-            break;
-        }
-        case "tempkick": {
-            try {
-                this.triggerEvent("matrix:tempkick");
-            } catch {
-                console.warn("Extension is not enabled, failed to tempkick");
+    system.run(() => {
+        const disconnectReason = get("specificReasonOnPunishment") ? `Unfair Advantage [${id}/${type}]` : "Unfair Advantage";
+        switch (punishmentType) {
+            case "kick": {
                 this.kick(disconnectReason);
+                break;
+            }
+            case "ban": {
+                ban(this, disconnectReason, "Matrix AntiCheat", Date.now() + get("flagBanDuration"));
+                checkPunish(this);
+                break;
+            }
+            case "tempkick": {
+                try {
+                    this.triggerEvent("matrix:tempkick");
+                } catch {
+                    console.warn("Extension is not enabled, failed to tempkick");
+                    this.kick(disconnectReason);
+                }
             }
         }
-    }
+    });
 };
 Player.prototype.kick = function (reason: string) {
     this.runCommand(`kick @s ${reason}`);
