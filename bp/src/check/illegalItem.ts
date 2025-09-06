@@ -167,7 +167,7 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
         if (item.keepOnDeath) return { type: "G", info: { item: item.typeId } };
         if (item.lockMode !== ItemLockMode.none) return { type: "H", info: { itemLockMode: item.lockMode } };
         const lore = item.getLore();
-        if (lore.length > 0) return { type: "I", info: { lore: `${lore[0]}...` } };
+        if (lore.length > 0 && lore[0] !== "(+DATA)") return { type: "I", info: { lore: `${lore[0]}...` } };
     }
     if (!get("antiIllegalItemEnchantmentCheck")) return undefined;
     const enchantable = item.getComponent("enchantable");
