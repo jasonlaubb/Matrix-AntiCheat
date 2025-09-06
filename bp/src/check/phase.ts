@@ -1,22 +1,25 @@
-import { GameMode, Player, Vector3 } from "@minecraft/server";
+    import { GameMode, ItemUseAfterEvent, Player, Vector3, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import type { PhaseData } from "../../../global";
 import { isObstructedBetweenLocations, locEqual } from "../util/util";
 import { distance } from "../util/mathUtil";
+import { correctY, floorVector, safeGetBlock } from "../util/vectorUtil";
 
 export default {
     property: "antiPhaseEnable",
     enable: () => {
         addCheckInterval("phase", tickEvent);
+        world.afterEvents.itemUse.subscribe(itemUse);
     },
     disable: () => {
         removeCheckInterval("phase");
+        world.afterEvents.itemUse.unsubscribe(itemUse);
     }
 }
 function tickEvent (player: Player): any {
-    if (player.isOp() || player.getGameMode() === GameMode.Spectator || player.location.y < -64 || player.location.y > 320) return delete player.phaseData; // Ignore out of boundary
-    const fixedPos = autoAbove(player.location);
-    const block = player.dimension.getBlock(fixedPos);
+    if (player.getGameMode() === GameMode.Spectator) return delete player.phaseData; // Ignore out of boundary
+    const fixedPos = correctY(player.location);
+    const block = safeGetBlock(player.dimension, fixedPos);
     if (!block) return delete player.phaseData;
     const data: PhaseData = player.phaseData ?? {
         lastNonSolidPos: block.location,
@@ -25,17 +28,18 @@ function tickEvent (player: Player): any {
         lastPos: fixedPos,
         lastReset: 0,
         lastFlag: 0,
-        isResetDone: true
+        isResetDone: true,
+        lastThrowEnderpearl: 0
     }
     const velocity = player.getVelocity();
     const now = Date.now();
-    if (Math.abs(velocity.x) < 0.05 && Math.abs(velocity.z) < 0.05 && Math.abs(velocity.y) < 1 && simpleDistance(data.lastPos, player.location) >= 1) {
+    if (Math.abs(velocity.x) < 0.05 && Math.abs(velocity.z) < 0.05 && Math.abs(velocity.y) < 0.05 && simpleDistance(data.lastPos, player.location) >= 1) {
         data.lastReset = now;
         data.isResetDone = false;
     }
     const isBlocked = block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass");
     let record = true;
-    const flooredNonSolidPos = floorPos(data.lastNonSolidPos);
+    const flooredNonSolidPos = floorVector(data.lastNonSolidPos);
     const isNewSolid = locEqual(flooredNonSolidPos, block.location);
     const bypass = !data.isResetDone && now - data.lastFlag > 500;
     if (!isBlocked) {
@@ -67,15 +71,10 @@ function tickEvent (player: Player): any {
     if (record) data.lastPos = fixedPos;
     player.phaseData = data;
 }
-function floorPos ({ x, y, z }: Vector3) {
-    return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) }
-}
 function simpleDistance ({ x, y, z }: Vector3, { x: x1, y: y1, z: z1 }: Vector3) {
     return Math.abs(x - x1) + Math.abs(z - z1) + Math.abs(y - y1);
 }
-function autoAbove ({ x, y, z }: Vector3) {
-    if (Math.abs(y) % 1 > 0.99) {
-        return { x, y: Math.ceil(y), z };
-    }
-    return { x, y, z };
+function itemUse ({ itemStack, source }: ItemUseAfterEvent) {
+    if (!source.phaseData || itemStack.typeId !== "minecraft:ender_pearl") return;
+    source.phaseData.lastThrowEnderpearl = Date.now();
 }

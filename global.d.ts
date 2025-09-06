@@ -166,6 +166,7 @@ interface PhaseData {
     lastReset: number;
     isResetDone: boolean;
     lastFlag: number;
+    lastThrowEnderpearl: number;
 }
 interface InstabreakData {
     brokenBlocks: BrokenBlockList;
