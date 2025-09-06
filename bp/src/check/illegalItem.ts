@@ -128,7 +128,7 @@ function placeCheck ({ player, block }: PlayerPlaceBlockAfterEvent) {
     if (player.isOp() || !get("antiIllegalItemTriggerOnPlace")) return;
     const container = block.getComponent("inventory")?.container;
     if (!container || container.weight === 0) return;
-    if (get("antiIllegalItemBanPlaceWithData") && !block.typeId.endsWith("shulker_box") && container.weight > 0) {
+    if (get("antiIllegalItemBanPlaceWithData") && !block.typeId.endsWith("shulker_box")) {
         container.clearAll();
         player.flag("IllegalItem", "L", "Place", { block: block.typeId });
         return;
