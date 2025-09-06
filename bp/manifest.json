@@ -1,11 +1,11 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Matrix Anticheat V7.0.24",
+        "name": "Matrix Anticheat V7.0.25",
         "description": "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock Edition.\n§cBeta API required",
         "uuid": "4420fb30-1a77-4628-9c93-26680fbd38c4",
-        "version": [7, 0, 24],
-        "min_engine_version": [1, 21, 100]
+        "version": [7, 0, 25],
+        "min_engine_version": [1, 21, 110]
     },
     "metadata": {
         "authors": ["jasonlaubb"],
@@ -29,7 +29,7 @@
     "dependencies": [
         {
             "module_name": "@minecraft/server",
-            "version": "2.2.0-beta"
+            "version": "2.3.0-beta"
         },
         {
             "module_name": "@minecraft/server-ui",
