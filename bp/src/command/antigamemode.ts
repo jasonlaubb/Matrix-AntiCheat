@@ -1,9 +1,33 @@
 import { world } from "@minecraft/server";
 import type { Command } from "../main";
-export const antiGamemodeOption = ["adventure", "creative", "surivial", "spectator", "reset"];
+const GAMEMODES = ["adventure", "creative", "survival", "spectator"];
+export const antiGamemodeOption = [...GAMEMODES, "reset"];
 export const antiGameModeSetting = ["only", "and", "except", "toggle"];
+const gmKey: Record<typeof GAMEMODES[number], string> = {
+    adventure: "database:antiGma",
+    creative: "database:antiGmc",
+    survival: "database:antiGms",
+    spectator: "database:antiGmsp",
+};
+
+function setAllGamemodes(state: boolean) {
+    Object.values(gmKey).forEach(key => world.setDynamicProperty(key, state));
+}
+
+function setOnlyGamemode(gamemode: keyof typeof gmKey) {
+    Object.entries(gmKey).forEach(([gm, key]) => {
+        world.setDynamicProperty(key, gm === gamemode);
+    });
+}
+
+function setExceptGamemode(gamemode: keyof typeof gmKey) {
+    Object.entries(gmKey).forEach(([gm, key]) => {
+        world.setDynamicProperty(key, gm !== gamemode);
+    });
+}
+
 export default {
-    name: "antigamempde",
+    name: "antigamemode",
     description: "Adjust the settings of anti gamemode.",
     requireOp: true,
     parameters: [
@@ -18,137 +42,42 @@ export default {
             type: "enum",
         }
     ],
-    execute: (_player, [option, setting]) => {
-        switch (option) {
-            case "adventure": {
-                switch (setting) {
-                    case "only": {
-                        world.setDynamicProperties({
-                            "database:antiGma": true,
-                            "database:antiGmc": false,
-                            "database:antiGms": false,
-                            "database:antiGmsp": false
-                        });
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to only adventure mode." };
-                    }
-                    case "and": {
-                        world.setDynamicProperty("database:antiGma", true);
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to include adventure mode." };
-                    }
-                    case "except": {
-                        world.setDynamicProperties({
-                            "database:antiGma": false,
-                            "database:antiGmc": true,
-                            "database:antiGms": true,
-                            "database:antiGmsp": true
-                        });
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to except adventure mode." };
-                    }
-                    default: {
-                        const current = world.getDynamicProperty("database:antiGma") as boolean;
-                        world.setDynamicProperty("database:antiGma", !current);
-                        return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode adventure mode has been ${!current ? "enabled" : "disabled"}.` };
-                    }
-                }
-            }
-            case "creative": {
-                switch (setting) {
-                    case "only": {
-                        world.setDynamicProperties({
-                            "database:antiGma": false,
-                            "database:antiGmc": true,
-                            "database:antiGms": false,
-                            "database:antiGmsp": false
-                        });
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to only creative mode." };
-                    }
-                    case "and": {
-                        world.setDynamicProperty("database:antiGmc", true);
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to include creative mode." };
-                    }
-                    case "except": {
-                        world.setDynamicProperties({
-                            "database:antiGma": true,
-                            "database:antiGmc": false,
+    execute: (_player, [optionRaw, settingRaw]) => {
+        const option = optionRaw?.toLowerCase();
+        const setting = settingRaw?.toLowerCase();
 
-                            "database:antiGms": true,
-                            "database:antiGmsp": true
-                        });
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to except creative mode." };
-                    }
-                    default: {
-                        const current = world.getDynamicProperty("database:antiGmc") as boolean;
-                        world.setDynamicProperty("database:antiGmc", !current);
-                        return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode creative mode has been ${!current ? "enabled" : "disabled"}.` };
-                    }
-                }
-            }
-            case "surivial": {
-                switch (setting) {
-                    case "only": {
-                        world.setDynamicProperties({
-                            "database:antiGma": false,
-                            "database:antiGmc": false,
-                            "database:antiGms": true,
-                            "database:antiGmsp": false
-                        });
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to only surivial mode." };
-                    }
+        if (option === "reset") {
+            setAllGamemodes(false);
+            return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode settings have been reset (all modes allowed)." };
+        }
 
-                    case "and": {
-                        world.setDynamicProperty("database:antiGms", true);
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to include surivial mode." };
-                    }
-                    case "except": {
-                        world.setDynamicProperties({
-                            "database:antiGma": true,
-                            "database:antiGmc": true,
-                            "database:antiGms": false,
-                            "database:antiGmsp": true
-                        });
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to except surivial mode." };
-                    }
-                    default: {
-                        const current = world.getDynamicProperty("database:antiGms") as boolean;
-                        world.setDynamicProperty("database:antiGms", !current);
-                        return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode surivial mode has been ${!current ? "enabled" : "disabled"}.` };
-                    }
-                }
+        if (!GAMEMODES.includes(option as any)) {
+            return { status: 1, message: `§7[§aMatrix§7] §fInvalid option! Must be one of: ${antiGamemodeOption.join(", ")}` };
+        }
+        const gmProperty = gmKey[option as keyof typeof gmKey];
+
+        switch (setting) {
+            case "only":
+                setOnlyGamemode(option as keyof typeof gmKey);
+                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to only ${option} mode.` };
+
+            case "and":
+                world.setDynamicProperty(gmProperty, true);
+                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to include ${option} mode.` };
+
+            case "except":
+                setExceptGamemode(option as keyof typeof gmKey);
+                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to except ${option} mode.` };
+
+            case "toggle":
+            case undefined: {
+                const current = Boolean(world.getDynamicProperty(gmProperty));
+                world.setDynamicProperty(gmProperty, !current);
+                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode ${option} mode has been ${!current ? "enabled" : "disabled"}.` };
             }
-            case "spectator": {
-                switch (setting) {
-                    case "only": {
-                        world.setDynamicProperties({
-                            "database:antiGma": false,
-                            "database:antiGmc": false,
-                            "database:antiGms": false,
-                            "database:antiGmsp": true
-                        });
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to only spectator mode." };
-                    }
-                    case "and": {
-                        world.setDynamicProperty("database:antiGmsp", true);
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to include spectator mode." };
-                    }
-                    case "except": {
-                        world.setDynamicProperties({
-                            "database:antiGma": true,
-                            "database:antiGmc": true,
-                            "database:antiGms": true,
-                            "database:antiGmsp": false
-                        });
-                        return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode has been set to except spectator mode." };
-                    }
-                    default: {
-                        const current = world.getDynamicProperty("database:antiGmsp") as boolean;
-                        world.setDynamicProperty("database:antiGmsp", !current);
-                        return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode spectator mode has been ${!current ? "enabled" : "disabled"}.` };
-                    }
-                }
-            }
-            default: {
-                return { status: 1, message: `§7[§aMatrix§7] §fInvalid option! At least one of the following: ${antiGamemodeOption.join(", ")}` };
-            }
+
+            default:
+                return { status: 1, message: `§7[§aMatrix§7] §fInvalid setting! Must be one of: ${antiGameModeSetting.join(", ")}` };
         }
     }
 } as Command;
