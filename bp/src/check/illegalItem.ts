@@ -1,5 +1,4 @@
 import { EnchantmentLevelOutOfBoundsError, EnchantmentTypeNotCompatibleError, EnchantmentTypeUnknownIdError, EquipmentSlot, ItemLockMode, ItemStack, ItemTypes, Player, PlayerInventoryItemChangeAfterEvent, PlayerPlaceBlockAfterEvent, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
-import { getInventorySlot } from "../util/util";
 import { get } from "../util/database";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 // All vanila item stack (start with minecraft:)
@@ -63,13 +62,13 @@ const offHandItems = new Set([
     "minecraft:arrow",
     "minecraft:firework_rocket",
 ]);
-function inventoryChange ({ player, itemStack: item, inventoryType, slot }: PlayerInventoryItemChangeAfterEvent) {
+function inventoryChange ({ player, itemStack: item, slot }: PlayerInventoryItemChangeAfterEvent) {
     if (!item || player.isOp()) return;
     initVanillaItems();
     const illegal = itemCheck(item);
     if (illegal) {
         const inventory = player.getComponent("inventory")!.container;
-        inventory.setItem(getInventorySlot(inventoryType, slot));
+        inventory.setItem(slot);
         player.flag("IllegalItem", illegal.type, "Inventory", illegal.info);
     }
 }
