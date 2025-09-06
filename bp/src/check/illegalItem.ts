@@ -1,4 +1,4 @@
-import { ItemStack, ItemTypes, PlayerInventoryItemChangeAfterEvent } from "@minecraft/server";
+import { ItemStack, ItemTypes, PlayerInventoryItemChangeAfterEvent, world } from "@minecraft/server";
 import { getInventorySlot } from "../util/util";
 import { get } from "../util/database";
 // All vanila item stack (start with minecraft:)
@@ -80,4 +80,15 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
         return { type: "F", info: { item: item.typeId } };
     }
     return;
+}
+export default {
+    property: "antiIllegalItemEnable",
+    enable() {
+        world.afterEvents.playerInventoryItemChange.subscribe(inventoryChange, {
+            ignoreQuantityChange: true,
+        });
+    },
+    disable() {
+        world.afterEvents.playerInventoryItemChange.unsubscribe(inventoryChange);
+    }
 }
