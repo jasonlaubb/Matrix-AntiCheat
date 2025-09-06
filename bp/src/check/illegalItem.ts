@@ -113,7 +113,7 @@ function tickEvent (player: Player) {
         const currentSlot = values[index];
         if (currentSlot === EquipmentSlot.Mainhand) return; // Ignore mainhand
         if (currentSlot === EquipmentSlot.Offhand) {
-            if (slot && !offHandItems.has(item.typeId)) {
+            if (slot && item.typeId.startsWith("minecraft:") && !offHandItems.has(item.typeId)) {
                 slot.setItem();
                 triggedCheck = { type: "K", info: { item: item.typeId } };
                 return;
@@ -163,7 +163,12 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
         if (get("antiIllegalItemBanEducational") && (item.typeId.startsWith("minecraft:element") || educationalItems.has(item.typeId))) return { type: "E", info: { item: item.typeId } };
         if (item.typeId.startsWith("minecraft:") && !vanillaItems.has(item.typeId)) return { type: "F", info: { item: item.typeId } };
     }
-    if (item.keepOnDeath || item.lockMode !== ItemLockMode.none || item.getLore().length > 0) return { type: "G" };
+    if (get("antiIllegalItemComponentCheck")) {
+        if (item.keepOnDeath) return { type: "G", info: { item: item.typeId } };
+        if (item.lockMode !== ItemLockMode.none) return { type: "H", info: { itemLockMode: item.lockMode } };
+        const lore = item.getLore();
+        if (lore.length > 0) return { type: "I", info: { lore: `${lore[0]}...` } };
+    }
     if (!get("antiIllegalItemEnchantmentCheck")) return undefined;
     const enchantable = item.getComponent("enchantable");
     if (enchantable) {
@@ -174,15 +179,15 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
             return undefined; // Invalid item, ignore (Happen when other checks are disabled)
         }
         const stackEnchantable = itemStack.getComponent("enchantable");
-        if (!stackEnchantable) return { type: "H", info: { item: item.typeId } };
+        if (!stackEnchantable) return { type: "J", info: { item: item.typeId } };
         const enchantments = enchantable.getEnchantments();
         const set = new Set(enchantments);
-        if (set.size !== enchantments.length) return { type: "I", info: { item: item.typeId } };
+        if (set.size !== enchantments.length) return { type: "K", info: { item: item.typeId } };
         const useCustomLimit = get("antiIllegalItemUseCustomEnchantmentLimit");
         if (useCustomLimit) {
             const customLimit = get("antiIllegalItemCustomEnchantmentLimit");
             const illegalEnchantment = enchantments.find(({ level, type: { maxLevel } }) => level < 1 || level > Math.max(customLimit, maxLevel));
-            if (illegalEnchantment) return { type: "J", info: { item: item.typeId, case: "levelOutOfBounds", enchantment: illegalEnchantment.type.id, level: illegalEnchantment.level } };
+            if (illegalEnchantment) return { type: "L", info: { item: item.typeId, case: "levelOutOfBounds", enchantment: illegalEnchantment.type.id, level: illegalEnchantment.level } };
         }
         try {
             stackEnchantable.addEnchantments(enchantments)
@@ -196,7 +201,7 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
                 illegalCase = "unknownEnchantmentId";
             }
             if (!illegalCase) throw error; // Re-throw unknown error
-            if (illegalCase !== "ignore") return { type: "J", info: { item: item.typeId, case: illegalCase } };
+            if (illegalCase !== "ignore") return { type: "M", info: { item: item.typeId, case: illegalCase } };
         }
     }
     return undefined;
