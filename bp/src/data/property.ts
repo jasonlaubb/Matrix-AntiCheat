@@ -299,6 +299,10 @@ export default {
         type: "boolean",
         value: false,
     },
+    antiIllegalItemTriggerOnJoin: {
+        type: "boolean",
+        value: true, // Check player's inventory when they join. Not only when their inventory changes.
+    },
     antiIllegalItemCheckImpossible: {
         type: "boolean",
         value: true, // Check items that are impossible to obtain in survival mode but possible in creative mode
@@ -330,5 +334,9 @@ export default {
     antiIllegalItemCustomEnchantmentLimit: {
         type: "number",
         value: 10, // Custom enchantment limit, only works when antiIllegalItemUseCustomEnchantmentLimit is true
+    },
+    antiIllegalItemOffhandValidation: {
+        type: "boolean",
+        value: true, // Check if the item in offhand is valid (e.g. shield in offhand when using sword in mainhand)
     }
 };
