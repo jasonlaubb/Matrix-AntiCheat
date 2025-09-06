@@ -26,6 +26,7 @@ import namespoof from "../check/namespoof";
 import blockReach from "../check/blockReach";
 import invalidSprint from "../check/invalidSprint";
 import phase from "../check/phase";
+import illegalItem from "../check/illegalItem";
 export const detectionList = {
     killaura,
     autototem,
@@ -50,7 +51,8 @@ export const detectionList = {
     namespoof,
     blockReach,
     invalidSprint,
-    phase
+    phase,
+    illegalItem
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {
