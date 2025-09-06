@@ -67,7 +67,6 @@ function tick(player: Player) {
     if (!bypass) {
         const lastVelocity = data.lastVelocity ?? { x: 0, z: 0 };
         const velocityDelta = pythag(velocityX - lastVelocity.x, velocityZ - lastVelocity.z);
-
         if (velocityDelta > VELOCITY_DELTA_THRESHOLD) {
             if (now - data.lastFlagTimestamp > FLAG_TIMESTAMP_THRESHOLD) {
                 data.flagAmount = 0;
@@ -116,6 +115,7 @@ function tick(player: Player) {
         } else if (data.timerFlagAmount >= 0.1) {
             data.timerFlagAmount -= 0.1;
         }
+        player.onScreenDisplay.setActionBar(`${pythag(velocityX, velocityZ).toFixed(9)}`);
     }
 
     data.previousSpeed.push(distance);
