@@ -171,8 +171,6 @@ interface PhaseData {
 interface InstabreakData {
     brokenBlocks: BrokenBlockList;
     brokenAmount: number;
-    startBreakingTime: number;
-    flagInsteaBreak: boolean;
 }
 type BrokenBlockList = { blockPermutation: Server.BlockPermutation; blockPosition: Server.Vector3 }[];
 interface EntityFlyData {

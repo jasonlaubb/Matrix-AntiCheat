@@ -1,4 +1,4 @@
-import { Dimension, EntityHitBlockAfterEvent, ItemStack, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
+import { Dimension, ItemStack, Player, PlayerBreakBlockAfterEvent, system, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import type { BrokenBlockList, InstabreakData } from "../../../global";
 const MAX_BREAK_IN_TICK = 6;
@@ -12,21 +12,15 @@ function onBlockBreak({ player, brokenBlockPermutation, itemStackBeforeBreak: to
     const usingTool = tool && isTool(tool);
     if (!(player.getEffect("minecraft:haste") && usingTool) || (usingTool && (tool.getComponent("enchantable")?.getEnchantment("minecraft:efficiency")?.level ?? 0) >= 2 && INSTA_BREAKABLE_SET.has(brokenBlockPermutation.type.id))) {
         player.breakData.brokenAmount++;
-        if (Date.now() > player.breakData.startBreakingTime) player.breakData.flagInsteaBreak = true;
-    }
-}
-function onPlayerHitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
-    if (player instanceof Player && !player.isOp()) {
-        player.breakData.startBreakingTime = Date.now();
     }
 }
 function tickEvent(player: Player) {
     player.breakData ??= DEFAULT_BREAK_DATA;
     if (player.breakData.brokenBlocks.length === 0) return;
-    if (player.breakData.brokenAmount > MAX_BREAK_IN_TICK || player.breakData.flagInsteaBreak) {
+    if (player.breakData.brokenAmount > MAX_BREAK_IN_TICK) {
         // Recover the blocks
         system.runJob(recoverBlocks(player.breakData.brokenBlocks, player.dimension));
-        player.flag("Insteabreak", "A", "World", { type: player.breakData.flagInsteaBreak ? "instabreak" : "nuking", breakAmount: player.breakData.brokenAmount });
+        player.flag("Insteabreak", "A", "World", { breakAmount: player.breakData.brokenAmount });
     }
     player.breakData = DEFAULT_BREAK_DATA;
 }
@@ -126,20 +120,16 @@ const INSTA_BREAKABLE_SET = new Set([
 ]);
 const DEFAULT_BREAK_DATA = {
     brokenBlocks: [],
-    startBreakingTime: 0,
     brokenAmount: 0,
-    flagInsteaBreak: false,
 } as InstabreakData;
 export default {
     property: "antiInstabreakEnable",
     enable: () => {
         world.afterEvents.playerBreakBlock.subscribe(onBlockBreak);
         addCheckInterval("instabreak", tickEvent);
-        world.afterEvents.entityHitBlock.subscribe(onPlayerHitBlock);
     },
     disable: () => {
         world.afterEvents.playerBreakBlock.unsubscribe(onBlockBreak);
         removeCheckInterval("instabreak");
-        world.afterEvents.entityHitBlock.unsubscribe(onPlayerHitBlock);
     },
 };
