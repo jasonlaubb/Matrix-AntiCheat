@@ -115,7 +115,6 @@ function tick(player: Player) {
         } else if (data.timerFlagAmount >= 0.1) {
             data.timerFlagAmount -= 0.1;
         }
-        player.onScreenDisplay.setActionBar(`${pythag(velocityX, velocityZ).toFixed(9)}`);
     }
 
     data.previousSpeed.push(distance);
