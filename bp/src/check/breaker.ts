@@ -38,7 +38,7 @@ function surroundSolidCount(block: Block) {
 }
 function getBedSide(block: Block) {
     try {
-        return [block.east(), block.west(), block.north(), block.south()].find((b) => b && b.typeId === "minecraft:bed");
+        return getSurround(block).find((b) => b && b.typeId === "minecraft:bed");
     } catch (error) {
         if (error instanceof LocationOutOfWorldBoundariesError) return undefined;
         throw error;
