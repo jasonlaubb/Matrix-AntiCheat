@@ -3,8 +3,8 @@ import { getInventorySlot } from "../util/util";
 import { get } from "../util/database";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 // All vanila item stack (start with minecraft:)
-const vanillaItems: Set<string> = new Set(ItemTypes.getAll().map(({ id }) => id));
-const creativeOnlyItems: Set<string> = new Set([
+const vanillaItems = new Set(ItemTypes.getAll().map(({ id }) => id));
+const creativeOnlyItems = new Set([
     "minecraft:farmland",
     "minecraft:large_fern",
     "minecraft:tall_grass",
@@ -16,7 +16,7 @@ const creativeOnlyItems: Set<string> = new Set([
     "minecraft:frog_spawn",
     "minecraft:end_portal_frame"
 ]);
-const unfairItems: Set<string> = new Set([
+const unfairItems = new Set([
     "minecraft:command_block",
     "minecraft:chain_command_block",
     "minecraft:repeating_command_block",
@@ -30,7 +30,7 @@ const unfairItems: Set<string> = new Set([
     "minecraft:jigsaw",
     "minecraft:player_head"
 ]);
-const educationalItems: Set<string> = new Set([
+const educationalItems = new Set([
     "minecraft:board",
     "minecraft:chemistry_table",
     "minecraft:chemical_heat",
@@ -52,7 +52,7 @@ const educationalItems: Set<string> = new Set([
     "minecraft:compound",
     "minecraft:balloon"
 ]);
-const offHandItems: Set<string> = new Set([
+const offHandItems = new Set([
     "minecraft:shield",
     "minecraft:totem_of_undying",
     "minecraft:map",
@@ -91,7 +91,7 @@ function onPlayerJoin ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     }
 }
 function tickEvent (player: Player) {
-    if (system.currentTick % 20 !== 0) return; // Check every second
+    if (system.currentTick % 30 !== 0) return; // Check every second
     const equippable = player.getComponent("equippable")!;
     const values = Object.values(EquipmentSlot);
     const equipments = values.map((slot) => equippable.getEquipmentSlot(slot));
