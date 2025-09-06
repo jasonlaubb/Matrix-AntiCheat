@@ -313,6 +313,14 @@ export default {
     },
     antiIllegalItemBanEducational: {
         type: "boolean",
-        value: true, // Ban items that are exclusive to Minecraft: Education Edition and not available in standard editions.
+        value: false, // Ban items that are exclusive to Minecraft: Education Edition and not available in standard editions.
+    },
+    antiIllegalItemEnchantmentCheck: {
+        type: "boolean",
+        value: true, // Check for illegal enchantment combinations and levels.
+    },
+    antiIllegalItemComponentCheck: {
+        type: "boolean",
+        value: true, // Check for illegal item components that can modify item (including lore).
     }
 };

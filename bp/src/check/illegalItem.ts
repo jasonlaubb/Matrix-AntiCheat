@@ -1,4 +1,4 @@
-import { ItemStack, ItemTypes, PlayerInventoryItemChangeAfterEvent, world } from "@minecraft/server";
+import { EnchantmentLevelOutOfBoundsError, EnchantmentTypeNotCompatibleError, EnchantmentTypeUnknownIdError, ItemLockMode, ItemStack, ItemTypes, PlayerInventoryItemChangeAfterEvent, world } from "@minecraft/server";
 import { getInventorySlot } from "../util/util";
 import { get } from "../util/database";
 // All vanila item stack (start with minecraft:)
@@ -57,29 +57,45 @@ function inventoryChange ({ player, itemStack: item, inventoryType, slot }: Play
     if (illegal) {
         const inventory = player.getComponent("inventory")!.container;
         inventory.setItem(getInventorySlot(inventoryType, slot));
-        player.flag("IllegalItem", "A", "Item", illegal.info);
+        player.flag("IllegalItem", illegal.type, "Misc", illegal.info);
     }
 }
 function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key: string]: string | number }} {
     if (item.amount <= 0 || item.amount > item.maxAmount) {
         return { type: "A", info: { item: item.typeId, amount: item.amount } };
     }
-    if (get("antiIllegalItemBanSpawnEgg") && item.typeId.endsWith("spawn_egg")) {
-        return { type: "B", info: { item: item.typeId } };
+    if (item.typeId.startsWith("minecraft:")) {
+        if (get("antiIllegalItemBanSpawnEgg") && item.typeId.endsWith("spawn_egg")) return { type: "B", info: { item: item.typeId } };
+        if (get("antiIllegalItemCheckImpossible") && creativeOnlyItems.has(item.typeId)) return { type: "C", info: { item: item.typeId } };
+        if (get("antiIllegalItemCheckUnfair") && (item.typeId.startsWith("minecraft:light_block") || unfairItems.has(item.typeId))) return { type: "D", info: { item: item.typeId } };
+        if (get("antiIllegalItemBanEducational") && (item.typeId.startsWith("minecraft:element") || educationalItems.has(item.typeId))) return { type: "E", info: { item: item.typeId } };
+        if (item.typeId.startsWith("minecraft:") && !vanillaItems.has(item.typeId)) return { type: "F", info: { item: item.typeId } };
     }
-    if (get("antiIllegalItemCheckImpossible") && creativeOnlyItems.has(item.typeId)) {
-        return { type: "C", info: { item: item.typeId } };
+    if (item.keepOnDeath || item.lockMode !== ItemLockMode.none || item.getLore().length > 0) return { type: "G" };
+    const enchantable = item.getComponent("enchantable");
+    if (enchantable) {
+        const itemStack = new ItemStack(item.typeId, item.amount);
+        const stackEnchantable = itemStack.getComponent("enchantable");
+        if (!stackEnchantable) return { type: "H", info: { item: item.typeId } };
+        const enchantments = enchantable.getEnchantments();
+        const set = new Set(enchantments);
+        if (set.size !== enchantments.length) return { type: "I", info: { item: item.typeId } };
+        try {
+            stackEnchantable.addEnchantments(enchantments)
+        } catch (error) {
+            let illegalCase: string | undefined;
+            if (error instanceof EnchantmentLevelOutOfBoundsError) {
+                illegalCase = "levelOutOfBounds";
+            } else if (error instanceof EnchantmentTypeNotCompatibleError) {
+                illegalCase = "notCompatibleWithItem";
+            } else if (error instanceof EnchantmentTypeUnknownIdError) {
+                illegalCase = "unknownEnchantmentId";
+            }
+            if (!illegalCase) throw error; // Re-throw unknown error
+            return { type: "J", info: { item: item.typeId, case: illegalCase } };
+        }
     }
-    if (get("antiIllegalItemCheckUnfair") && (item.typeId.startsWith("minecraft:light_block") || unfairItems.has(item.typeId))) {
-        return { type: "D", info: { item: item.typeId } };
-    }
-    if (get("antiIllegalItemBanEducational") && (item.typeId.startsWith("minecraft:element") || educationalItems.has(item.typeId))) {
-        return { type: "E", info: { item: item.typeId } };
-    }
-    if (item.typeId.startsWith("minecraft:") && !vanillaItems.has(item.typeId)) {
-        return { type: "F", info: { item: item.typeId } };
-    }
-    return;
+    return undefined;
 }
 export default {
     property: "antiIllegalItemEnable",
