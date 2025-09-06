@@ -164,24 +164,26 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
         if (item.typeId.startsWith("minecraft:") && !vanillaItems.has(item.typeId)) return { type: "F", info: { item: item.typeId } };
     }
     if (get("antiIllegalItemComponentCheck")) {
-        if (item.keepOnDeath) return { type: "G", info: { item: item.typeId } };
+        if (item.keepOnDeath) return { type: "G", info: { item: item.typeId, keepOnDeath: "true" } };
         if (item.lockMode !== ItemLockMode.none) return { type: "H", info: { itemLockMode: item.lockMode } };
         const lore = item.getLore();
-        if (lore.length > 0 && lore[0] !== "(+DATA)") return { type: "I", info: { lore: `${lore[0]}...` } };
+        if (lore.length > 0 && !(lore.length === 1 && lore[0] === "(+DATA)")) return { type: "I", info: { lore: `${lore[0]}...` } };
     }
     if (!get("antiIllegalItemEnchantmentCheck")) return undefined;
     const enchantable = item.getComponent("enchantable");
+    world.sendMessage(`${!!enchantable}`)
     if (enchantable) {
         let itemStack: ItemStack;
         try {
             itemStack = new ItemStack(item.typeId, item.amount);
         } catch {
+            console.log("Failed to create item stack for enchantment check: " + item.typeId);
             return undefined; // Invalid item, ignore (Happen when other checks are disabled)
         }
         const stackEnchantable = itemStack.getComponent("enchantable");
         if (!stackEnchantable) return { type: "J", info: { item: item.typeId } };
         const enchantments = enchantable.getEnchantments();
-        const set = new Set(enchantments);
+        const set = new Set(enchantments.map(({ type: { id }}) => id));
         if (set.size !== enchantments.length) return { type: "K", info: { item: item.typeId } };
         const useCustomLimit = get("antiIllegalItemUseCustomEnchantmentLimit");
         if (useCustomLimit) {
