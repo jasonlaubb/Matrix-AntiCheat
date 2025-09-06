@@ -1,4 +1,4 @@
-import { Block, LocationOutOfWorldBoundariesError, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
+import { Block, PlayerBreakBlockBeforeEvent, PlayerInteractWithBlockBeforeEvent, system, world } from "@minecraft/server";
 import { getSurround } from "../util/util";
 export default {
     property: "antiBreakerEnable",
@@ -23,7 +23,7 @@ function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWith
                 system.run(() => event.player.flag("Breaker", "A", "Block", { block: event.block.typeId }));
             }
         } else {
-            const bedSide = getBedSide(event.block);
+            const bedSide = getSurround(event.block).find((b) => b && b.typeId === "minecraft:bed");
             if (bedSide) {
                 if (surroundSolidCount(event.block) >= 5 && surroundSolidCount(bedSide) >= 5) {
                     event.cancel = true;
@@ -35,14 +35,6 @@ function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWith
 }
 function surroundSolidCount(block: Block) {
     return getSurround(block).filter((b) => b && (b.isSolid || isGlassBlock(b.typeId))).length;
-}
-function getBedSide(block: Block) {
-    try {
-        return getSurround(block).find((b) => b && b.typeId === "minecraft:bed");
-    } catch (error) {
-        if (error instanceof LocationOutOfWorldBoundariesError) return undefined;
-        throw error;
-    }
 }
 function isGlassBlock(typeId: string) {
     return typeId.startsWith("minecraft:") && typeId.endsWith("glass");
