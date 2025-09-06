@@ -339,4 +339,12 @@ export default {
         type: "boolean",
         value: true, // Check if the item in offhand is valid (e.g. shield in offhand when using sword in mainhand),
     },
+    antiIllegalItemTriggerOnPlace: {
+        type: "boolean",
+        value: true, // Check the block contains illegal item
+    },
+    antiIllegalItemBanPlaceWithData: {
+        type: "boolean",
+        value: true, // Placed block with item data with be removed (except shulker box)
+    }
 };

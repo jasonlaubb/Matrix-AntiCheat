@@ -1,4 +1,4 @@
-import { EnchantmentLevelOutOfBoundsError, EnchantmentTypeNotCompatibleError, EnchantmentTypeUnknownIdError, EquipmentSlot, ItemLockMode, ItemStack, ItemTypes, Player, PlayerInventoryItemChangeAfterEvent, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
+import { EnchantmentLevelOutOfBoundsError, EnchantmentTypeNotCompatibleError, EnchantmentTypeUnknownIdError, EquipmentSlot, ItemLockMode, ItemStack, ItemTypes, Player, PlayerInventoryItemChangeAfterEvent, PlayerPlaceBlockAfterEvent, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
 import { getInventorySlot } from "../util/util";
 import { get } from "../util/database";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -124,6 +124,29 @@ function tickEvent (player: Player) {
         player.flag("IllegalItem", triggedCheck.type, "Equipment", triggedCheck.info);
     }
 }
+function placeCheck ({ player, block }: PlayerPlaceBlockAfterEvent) {
+    if (player.isOp() || !get("antiIllegalItemTriggerOnPlace")) return;
+    const container = block.getComponent("inventory")?.container;
+    if (!container || container.weight === 0) return;
+    if (get("antiIllegalItemBanPlaceWithData") && !block.typeId.endsWith("shulker_box") && container.weight > 0) {
+        container.clearAll();
+        player.flag("IllegalItem", "L", "Place", { block: block.typeId });
+        return;
+    }
+    let triggedCheck: { type: string; info?: { [key: string]: string | number } } | undefined;
+    for (let i = 0; i < container.size; i++) {
+        const item = container.getItem(i);
+        if (!item) continue;
+        const illegal = itemCheck(item);
+        if (illegal) {
+            container.setItem(i);
+            triggedCheck = illegal;
+        }
+    }
+    if (triggedCheck) {
+        player.flag("IllegalItem", triggedCheck.type, "Place", { block: block.typeId, ...triggedCheck.info });
+    }
+}
 function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key: string]: string | number }} {
     if (item.amount <= 0 || item.amount > item.maxAmount) return { type: "A", info: { item: item.typeId, amount: item.amount } };
     if (item.typeId.startsWith("minecraft:")) {
@@ -178,11 +201,13 @@ export default {
             ignoreQuantityChange: true,
         });
         world.afterEvents.playerSpawn.subscribe(onPlayerJoin);
+        world.afterEvents.playerPlaceBlock.subscribe(placeCheck);
         addCheckInterval("illegalItem", tickEvent);
     },
     disable() {
         world.afterEvents.playerInventoryItemChange.unsubscribe(inventoryChange);
         world.afterEvents.playerSpawn.unsubscribe(onPlayerJoin);
+        world.afterEvents.playerPlaceBlock.unsubscribe(placeCheck);
         removeCheckInterval("illegalItem");
     }
 }
