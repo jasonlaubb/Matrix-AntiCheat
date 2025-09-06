@@ -346,5 +346,21 @@ export default {
     antiIllegalItemBanPlaceWithData: {
         type: "boolean",
         value: true, // Placed block with item data with be removed (except shulker box)
+    },
+    antiGma: {
+        type: "boolean",
+        value: false,
+    },
+    antiGmc: {
+        type: "boolean",
+        value: false,
+    },
+    antiGms: {
+        type: "boolean",
+        value: false,
+    },
+    antiGmsp: {
+        type: "boolean",
+        value: false,
     }
 };
