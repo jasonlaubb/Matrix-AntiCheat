@@ -1,5 +1,7 @@
 import { world } from "@minecraft/server";
 import type { Command } from "../main";
+import { get } from "../util/database";
+import { disableAntiGameMode, enableAntiGameMode } from "../asset/antiGamemode";
 const GAMEMODES = ["adventure", "creative", "survival", "spectator"];
 export const antiGamemodeOption = [...GAMEMODES, "reset"];
 export const antiGameModeSetting = ["only", "and", "except", "toggle"];
@@ -21,6 +23,12 @@ function setExceptGamemode(gamemode: keyof typeof gmKey) {
     Object.entries(gmKey).forEach(([gm, key]) => {
         world.setDynamicProperty(key, gm !== gamemode);
     });
+}
+function switchGamemodeToggle() {
+    const enableAtleast1 = get("antiGma") || get("antiGmc") || get("antiGms") || get("antiGmsp");
+    if (enableAtleast1) {
+        enableAntiGameMode();
+    } else disableAntiGameMode();
 }
 export default {
     name: "antigamemode",
@@ -52,18 +60,22 @@ export default {
         switch (setting) {
             case "only":
                 setOnlyGamemode(option as keyof typeof gmKey);
+                switchGamemodeToggle();
                 return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to only detect ${option} mode.` };
             case "and":
                 world.setDynamicProperty(gmProperty, true);
+                switchGamemodeToggle();
                 return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode will now also detect ${option} mode.` };
 
             case "except":
                 setExceptGamemode(option as keyof typeof gmKey);
+                switchGamemodeToggle();
                 return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to detect the gamemode which is not ${option} mode.` };
             case "toggle":
             case undefined: {
-                const current = Boolean(world.getDynamicProperty(gmProperty));
+                const current = world.getDynamicProperty(gmProperty) as boolean;
                 world.setDynamicProperty(gmProperty, !current);
+                switchGamemodeToggle();
                 return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode ((${option} mode) has been ${!current ? "enabled" : "disabled"}.` };
             }
             default:

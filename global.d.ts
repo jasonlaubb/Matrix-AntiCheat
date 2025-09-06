@@ -108,6 +108,7 @@ declare module "@minecraft/server" {
         lockdown?: boolean;
         banItemEventRegistered?: boolean;
         educationalFeaturesEnabled?: boolean;
+        antiGamemodeEnabled?: boolean;
     }
 }
 interface Console {

@@ -1,10 +1,14 @@
 import { GameMode, PlayerGameModeChangeBeforeEvent, PlayerSpawnAfterEvent, world } from "@minecraft/server";
 import { get } from "../util/database";
 export function enableAntiGameMode () {
+    if (world.antiGamemodeEnabled) return;
+    world.antiGamemodeEnabled = true;
     world.beforeEvents.playerGameModeChange.subscribe(gamemodeChange);
     world.afterEvents.playerSpawn.subscribe(onJoin);
 }
 export function disableAntiGameMode () {
+    if (!world.antiGamemodeEnabled) return;
+    delete world.antiGamemodeEnabled;
     world.beforeEvents.playerGameModeChange.unsubscribe(gamemodeChange);
     world.afterEvents.playerSpawn.unsubscribe(onJoin);
 }
