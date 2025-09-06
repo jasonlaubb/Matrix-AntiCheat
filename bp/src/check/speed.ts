@@ -57,7 +57,7 @@ function tick(player: Player) {
         speedLevel > 3 ||
         isPlayerInSolid(player.location, player.getHeadLocation(), player.dimension);
 
-    const lastLocation = player.speedData.lastLocation;
+    const lastLocation = data.lastLocation;
     const distance = lastLocation ? pythag(player.location.x - lastLocation.x, player.location.z - lastLocation.z) : 0;
 
     if (ride !== data.lastRiding) {
