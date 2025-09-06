@@ -91,7 +91,7 @@ function onPlayerJoin ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     }
 }
 function tickEvent (player: Player) {
-    if (system.currentTick % 30 !== 0) return; // Check every second
+    if (system.currentTick % 30 !== 0) return; // Check every 1.5 seconds
     const equippable = player.getComponent("equippable")!;
     const values = Object.values(EquipmentSlot);
     const equipments = values.map((slot) => equippable.getEquipmentSlot(slot));
