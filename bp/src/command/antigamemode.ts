@@ -52,19 +52,19 @@ export default {
         switch (setting) {
             case "only":
                 setOnlyGamemode(option as keyof typeof gmKey);
-                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to only ${option} mode.` };
+                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to only detect ${option} mode.` };
             case "and":
                 world.setDynamicProperty(gmProperty, true);
-                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to include ${option} mode.` };
+                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode will now also detect ${option} mode.` };
 
             case "except":
                 setExceptGamemode(option as keyof typeof gmKey);
-                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to except ${option} mode.` };
+                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to detect the gamemode which is not ${option} mode.` };
             case "toggle":
             case undefined: {
                 const current = Boolean(world.getDynamicProperty(gmProperty));
                 world.setDynamicProperty(gmProperty, !current);
-                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode ${option} mode has been ${!current ? "enabled" : "disabled"}.` };
+                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode ((${option} mode) has been ${!current ? "enabled" : "disabled"}.` };
             }
             default:
                 return { status: 1, message: `§7[§aMatrix§7] §fInvalid setting! Must be one of: ${antiGameModeSetting.join(", ")}` };
