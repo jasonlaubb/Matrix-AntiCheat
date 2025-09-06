@@ -1,5 +1,5 @@
 import type { Command } from "../main";
-import { system, world } from "@minecraft/server";
+import { world } from "@minecraft/server";
 import { getInventorySlot } from "../util/util";
 export const banitem = {
     name: "banitem",
