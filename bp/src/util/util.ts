@@ -92,7 +92,7 @@ export function isRiding(player: Player) {
     return !!player.getComponent("minecraft:riding")?.entityRidingOn;
 }
 export function getSurround(block: Block) {
-    return Object.values(Direction).map((direction) => safeGetBlockNear(block, direction)).concat(block);
+    return Object.values(Direction).map((direction) => safeGetBlockNear(block, direction));
 }
 export function hasEducationalFeature() {
     return world.educationalFeaturesEnabled ?? false;

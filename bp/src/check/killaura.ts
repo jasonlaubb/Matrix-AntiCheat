@@ -3,6 +3,7 @@ import { calculateRelativeViewAngle, distance, lineDistance, distanceXZ } from "
 import { addHP, banAttack, isAlive, isFamily, isObstructedBetweenLocations } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { get } from "../util/database";
+import { deltaVector } from "../util/vectorUtil";
 export default {
     property: "antiKillauraEnable",
     enable: () => {
@@ -27,12 +28,9 @@ function recordPosition(entity: Entity) {
             system.clearRun(id);
             return;
         }
-        entity.antiReachRecords!.unshift(bottomLocation(entity.location));
+        entity.antiReachRecords!.unshift(deltaVector(entity.location, 0, 0.5, 0));
         if (entity.antiReachRecords!.length > 20) entity.antiReachRecords!.pop();
     });
-}
-function bottomLocation({ x, y, z }: Vector3) {
-    return { x, y: y + 0.5, z };
 }
 function recordHeadPosition(player: Player) {
     player.killauraHeadData = [];
@@ -166,13 +164,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (recoverDamage) addHP(hurtEntity, damage); // Recover the hp
 }
 function getTickPos(entity: Entity) {
-    const { x, y, z } = entity.location;
-    const v = entity.getVelocity();
-    return {
-        x: x - v.x,
-        y: y - v.y,
-        z: z - v.z,
-    };
+    const { x, y, z } = entity.getVelocity();
+    return deltaVector(entity.location, -x, -y, -z);
 }
 function aimCheck(player: Player) {
     const pitch = player.getRotation().x;
