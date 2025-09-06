@@ -33,7 +33,7 @@ import { warn, warnclear, warnlist, warnof, warnreset, warns } from "../command/
 import deviceinfo from "../command/deviceinfo";
 import itemui from "../command/itemui";
 import { gma, gmc, gms, gmsp } from "../command/gm";
-import { antiGamemodeOption, antiGameModeSetting } from "../command/antigamemode";
+import antigamemode, { antiGamemodeOption, antiGameModeSetting } from "../command/antigamemode";
 export const commands = [
     info,
     setBoolean,
@@ -95,7 +95,8 @@ export const commands = [
     gma,
     gmc,
     gms,
-    gmsp
+    gmsp,
+    antigamemode
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {
