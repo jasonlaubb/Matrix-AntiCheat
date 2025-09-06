@@ -72,6 +72,7 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
         if (item.typeId.startsWith("minecraft:") && !vanillaItems.has(item.typeId)) return { type: "F", info: { item: item.typeId } };
     }
     if (item.keepOnDeath || item.lockMode !== ItemLockMode.none || item.getLore().length > 0) return { type: "G" };
+    if (!get("antiIllegalItemEnchantmentCheck")) return undefined;
     const enchantable = item.getComponent("enchantable");
     if (enchantable) {
         const itemStack = new ItemStack(item.typeId, item.amount);
@@ -80,19 +81,25 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
         const enchantments = enchantable.getEnchantments();
         const set = new Set(enchantments);
         if (set.size !== enchantments.length) return { type: "I", info: { item: item.typeId } };
+        const useCustomLimit = get("antiIllegalItemUseCustomEnchantmentLimit");
+        if (useCustomLimit) {
+            const customLimit = get("antiIllegalItemCustomEnchantmentLimit");
+            const illegalEnchantment = enchantments.find(({ level, type: { maxLevel } }) => level < 1 || level > Math.max(customLimit, maxLevel));
+            if (illegalEnchantment) return { type: "J", info: { item: item.typeId, case: "levelOutOfBounds", enchantment: illegalEnchantment.type.id, level: illegalEnchantment.level } };
+        }
         try {
             stackEnchantable.addEnchantments(enchantments)
         } catch (error) {
             let illegalCase: string | undefined;
             if (error instanceof EnchantmentLevelOutOfBoundsError) {
-                illegalCase = "levelOutOfBounds";
+                illegalCase = useCustomLimit ? "ignore" : "levelOutOfBounds";
             } else if (error instanceof EnchantmentTypeNotCompatibleError) {
                 illegalCase = "notCompatibleWithItem";
             } else if (error instanceof EnchantmentTypeUnknownIdError) {
                 illegalCase = "unknownEnchantmentId";
             }
             if (!illegalCase) throw error; // Re-throw unknown error
-            return { type: "J", info: { item: item.typeId, case: illegalCase } };
+            if (illegalCase !== "ignore") return { type: "J", info: { item: item.typeId, case: illegalCase } };
         }
     }
     return undefined;

@@ -322,5 +322,13 @@ export default {
     antiIllegalItemComponentCheck: {
         type: "boolean",
         value: true, // Check for illegal item components that can modify item (including lore).
+    },
+    antiIllegalItemUseCustomEnchantmentLimit: {
+        type: "boolean",
+        value: false, // Use custom enchantment limit instead of vanilla limit (can be higher than vanilla limit)
+    },
+    antiIllegalItemCustomEnchantmentLimit: {
+        type: "number",
+        value: 10, // Custom enchantment limit, only works when antiIllegalItemUseCustomEnchantmentLimit is true
     }
 };
