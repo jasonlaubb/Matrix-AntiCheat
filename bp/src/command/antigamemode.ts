@@ -1,9 +1,9 @@
-import { world } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import type { Command } from "../main";
 import { get } from "../util/database";
 import { disableAntiGameMode, enableAntiGameMode } from "../asset/antiGamemode";
 const GAMEMODES = ["adventure", "creative", "survival", "spectator"];
-export const antiGamemodeOption = [...GAMEMODES, "reset"];
+export const antiGameModeOption = [...GAMEMODES, "reset"];
 export const antiGameModeSetting = ["only", "and", "except", "toggle"];
 const gmKey: Record<typeof GAMEMODES[number], string> = {
     adventure: "database:antiGma",
@@ -25,10 +25,12 @@ function setExceptGamemode(gamemode: keyof typeof gmKey) {
     });
 }
 function switchGamemodeToggle() {
-    const enableAtleast1 = get("antiGma") || get("antiGmc") || get("antiGms") || get("antiGmsp");
-    if (enableAtleast1) {
-        enableAntiGameMode();
-    } else disableAntiGameMode();
+    system.run(() => {
+        const enableAtleast1 = get("antiGma") || get("antiGmc") || get("antiGms") || get("antiGmsp");
+        if (enableAtleast1) {
+            enableAntiGameMode();
+        } else disableAntiGameMode();
+    });
 }
 export default {
     name: "antigamemode",
@@ -54,7 +56,7 @@ export default {
             return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode settings have been reset (all modes allowed)." };
         }
         if (!GAMEMODES.includes(option as any)) {
-            return { status: 1, message: `§7[§aMatrix§7] §fInvalid option! Must be one of: ${antiGamemodeOption.join(", ")}` };
+            return { status: 1, message: `§7[§aMatrix§7] §fInvalid option! Must be one of: ${antiGameModeOption.join(", ")}` };
         }
         const gmProperty = gmKey[option as keyof typeof gmKey];
         switch (setting) {
