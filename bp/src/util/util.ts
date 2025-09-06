@@ -64,29 +64,46 @@ export function stringXyz(location: Vector3) {
 }
 const surroundOffsets: [number, number, number][] = [
     // Layer below (-1)
-    [-1, -1, -1], [0, -1, -1], [1, -1, -1],
-    [-1, -1, 0],  [0, -1, 0],  [1, -1, 0],
-    [-1, -1, 1],  [0, -1, 1],  [1, -1, 1],
+    [-1, -1, -1],
+    [0, -1, -1],
+    [1, -1, -1],
+    [-1, -1, 0],
+    [0, -1, 0],
+    [1, -1, 0],
+    [-1, -1, 1],
+    [0, -1, 1],
+    [1, -1, 1],
     // Layer center (0)
-    [-1, 0, -1],  [0, 0, -1],  [1, 0, -1],
-    [-1, 0, 0],   [0, 0, 0],   [1, 0, 0],
-    [-1, 0, 1],   [0, 0, 1],   [1, 0, 1],
+    [-1, 0, -1],
+    [0, 0, -1],
+    [1, 0, -1],
+    [-1, 0, 0],
+    [0, 0, 0],
+    [1, 0, 0],
+    [-1, 0, 1],
+    [0, 0, 1],
+    [1, 0, 1],
     // Layer above (+1)
-    [-1, 1, -1],  [0, 1, -1],  [1, 1, -1],
-    [-1, 1, 0],   [0, 1, 0],   [1, 1, 0],
-    [-1, 1, 1],   [0, 1, 1],   [1, 1, 1],
+    [-1, 1, -1],
+    [0, 1, -1],
+    [1, 1, -1],
+    [-1, 1, 0],
+    [0, 1, 0],
+    [1, 1, 0],
+    [-1, 1, 1],
+    [0, 1, 1],
+    [1, 1, 1],
 ];
 
 export function fastSurround(centerLocation: Vector3, dimension: Dimension): (Block | undefined)[] | undefined {
-    return surroundOffsets
-        .map(([dx, dy, dz]) => {
-            const pos: Vector3 = {
-                x: centerLocation.x + dx,
-                y: centerLocation.y + dy,
-                z: centerLocation.z + dz,
-            };
-            return safeGetBlock(dimension, pos);
-        });
+    return surroundOffsets.map(([dx, dy, dz]) => {
+        const pos: Vector3 = {
+            x: centerLocation.x + dx,
+            y: centerLocation.y + dy,
+            z: centerLocation.z + dz,
+        };
+        return safeGetBlock(dimension, pos);
+    });
 }
 export function isRiding(player: Player) {
     return !!player.getComponent("minecraft:riding")?.entityRidingOn;

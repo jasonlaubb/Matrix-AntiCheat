@@ -1,5 +1,5 @@
 import { Block, Dimension, Direction, Vector3 } from "@minecraft/server";
-export function safeGetBlock (dimension: Dimension, pos: Vector3) {
+export function safeGetBlock(dimension: Dimension, pos: Vector3) {
     if (!isBlockLocationValid(dimension, pos)) return undefined;
     return dimension.getBlock(pos);
 }
@@ -33,21 +33,21 @@ export function deltaVector({ x, y, z }: Vector3, dx: number, dy: number, dz: nu
         x: x + dx,
         y: y + dy,
         z: z + dz,
-    }
+    };
 }
 export function floorVector({ x, y, z }: Vector3) {
     return {
         x: Math.floor(x),
         y: Math.floor(y),
-        z: Math.floor(z)
-    }
+        z: Math.floor(z),
+    };
 }
-export function correctY (pos: Vector3) {
+export function correctY(pos: Vector3) {
     const yDecimal = Math.abs(pos.y % 1);
     if (yDecimal > 0.999) pos.y = pos.y - yDecimal + 1;
     return pos;
 }
-function isBlockLocationValid (dimension: Dimension, pos: Vector3) {
+function isBlockLocationValid(dimension: Dimension, pos: Vector3) {
     const { max, min } = dimension.heightRange;
-    return pos.y >= min && pos.y < max// && dimension.isChunkLoaded(pos); --- We should add this next API version
+    return pos.y >= min && pos.y < max; // && dimension.isChunkLoaded(pos); --- We should add this next API version
 }

@@ -100,7 +100,7 @@ export function registerItemBanEvent() {
             inventory.setItem(slot);
             player.sendMessage(`§7[§aMatrix§7] §fBanned item §e${simplifyId(bannedItem.id)}§f has been removed from your inventory: §e${bannedItem.reason}§r`);
         }
-    })
+    });
 }
 function simplifyId(id: string) {
     let simplified = id.split(":").slice(1).join(":").replace("_", " ");

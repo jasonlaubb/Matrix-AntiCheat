@@ -14,9 +14,9 @@ export default {
     disable: () => {
         removeCheckInterval("phase");
         world.afterEvents.itemUse.unsubscribe(itemUse);
-    }
-}
-function tickEvent (player: Player): any {
+    },
+};
+function tickEvent(player: Player): any {
     if (player.getGameMode() === GameMode.Spectator) return delete player.phaseData; // Ignore out of boundary
     const fixedPos = correctY(player.location);
     const block = safeGetBlock(player.dimension, fixedPos);
@@ -29,15 +29,15 @@ function tickEvent (player: Player): any {
         lastReset: 0,
         lastFlag: 0,
         isResetDone: true,
-        lastThrowEnderpearl: 0
-    }
+        lastThrowEnderpearl: 0,
+    };
     const velocity = player.getVelocity();
     const now = Date.now();
     if (Math.abs(velocity.x) < 0.05 && Math.abs(velocity.z) < 0.05 && Math.abs(velocity.y) < 0.05 && simpleDistance(data.lastPos, player.location) >= 1) {
         data.lastReset = now;
         data.isResetDone = false;
     }
-    const isBlocked = block.isSolid || block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass");
+    const isBlocked = block.isSolid || (block.typeId.startsWith("minecraft:") && block.typeId.endsWith("glass"));
     let record = true;
     const flooredNonSolidPos = floorVector(data.lastNonSolidPos);
     const isNewSolid = locEqual(flooredNonSolidPos, block.location);
@@ -71,10 +71,10 @@ function tickEvent (player: Player): any {
     if (record) data.lastPos = fixedPos;
     player.phaseData = data;
 }
-function simpleDistance ({ x, y, z }: Vector3, { x: x1, y: y1, z: z1 }: Vector3) {
+function simpleDistance({ x, y, z }: Vector3, { x: x1, y: y1, z: z1 }: Vector3) {
     return Math.abs(x - x1) + Math.abs(z - z1) + Math.abs(y - y1);
 }
-function itemUse ({ itemStack, source }: ItemUseAfterEvent) {
+function itemUse({ itemStack, source }: ItemUseAfterEvent) {
     if (!source.phaseData || itemStack.typeId !== "minecraft:ender_pearl") return;
     source.phaseData.lastThrowEnderpearl = Date.now();
 }

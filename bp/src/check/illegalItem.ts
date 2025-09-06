@@ -1,4 +1,18 @@
-import { EnchantmentLevelOutOfBoundsError, EnchantmentTypeNotCompatibleError, EnchantmentTypeUnknownIdError, EquipmentSlot, ItemLockMode, ItemStack, ItemTypes, Player, PlayerInventoryItemChangeAfterEvent, PlayerPlaceBlockAfterEvent, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
+import {
+    EnchantmentLevelOutOfBoundsError,
+    EnchantmentTypeNotCompatibleError,
+    EnchantmentTypeUnknownIdError,
+    EquipmentSlot,
+    ItemLockMode,
+    ItemStack,
+    ItemTypes,
+    Player,
+    PlayerInventoryItemChangeAfterEvent,
+    PlayerPlaceBlockAfterEvent,
+    PlayerSpawnAfterEvent,
+    system,
+    world,
+} from "@minecraft/server";
 import { get } from "../util/database";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 // All vanila item stack (start with minecraft:)
@@ -17,7 +31,7 @@ const creativeOnlyItems = new Set([
     "minecraft:vault",
     "minecraft:bedrock",
     "minecraft:frog_spawn",
-    "minecraft:end_portal_frame"
+    "minecraft:end_portal_frame",
 ]);
 const unfairItems = new Set([
     "minecraft:command_block",
@@ -31,7 +45,7 @@ const unfairItems = new Set([
     "minecraft:allow",
     "minecraft:border_block",
     "minecraft:jigsaw",
-    "minecraft:player_head"
+    "minecraft:player_head",
 ]);
 const educationalItems = new Set([
     "minecraft:board",
@@ -53,16 +67,10 @@ const educationalItems = new Set([
     "minecraft:sparkler",
     "minecraft:glow_stick",
     "minecraft:compound",
-    "minecraft:balloon"
+    "minecraft:balloon",
 ]);
-const offHandItems = new Set([
-    "minecraft:shield",
-    "minecraft:totem_of_undying",
-    "minecraft:map",
-    "minecraft:arrow",
-    "minecraft:firework_rocket",
-]);
-function inventoryChange ({ player, itemStack: item, slot }: PlayerInventoryItemChangeAfterEvent) {
+const offHandItems = new Set(["minecraft:shield", "minecraft:totem_of_undying", "minecraft:map", "minecraft:arrow", "minecraft:firework_rocket"]);
+function inventoryChange({ player, itemStack: item, slot }: PlayerInventoryItemChangeAfterEvent) {
     if (!item || player.isOp()) return;
     initVanillaItems();
     const illegal = itemCheck(item);
@@ -72,16 +80,20 @@ function inventoryChange ({ player, itemStack: item, slot }: PlayerInventoryItem
         player.flag("IllegalItem", illegal.type, "Inventory", illegal.info);
     }
 }
-function onPlayerJoin ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
+function onPlayerJoin({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn || player.isOp() || !get("antiIllegalItemTriggerOnJoin")) return;
     initVanillaItems();
     const inventory = player.getComponent("inventory")!.container;
-    let triggedCheck: {
-        type: string;
-        info?: {
-            [key: string]: string | number;
-        } | undefined;
-    } | undefined;
+    let triggedCheck:
+        | {
+              type: string;
+              info?:
+                  | {
+                        [key: string]: string | number;
+                    }
+                  | undefined;
+          }
+        | undefined;
     for (let i = 0; i < 36; i++) {
         const item = inventory.getItem(i);
         if (!item) continue;
@@ -95,18 +107,22 @@ function onPlayerJoin ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
         player.flag("IllegalItem", triggedCheck.type, "Inventory", triggedCheck.info);
     }
 }
-function tickEvent (player: Player) {
+function tickEvent(player: Player) {
     if (system.currentTick % 30 !== 0) return; // Check every 1.5 seconds
     initVanillaItems();
     const equippable = player.getComponent("equippable")!;
     const values = Object.values(EquipmentSlot);
     const equipments = values.map((slot) => equippable.getEquipmentSlot(slot));
-    let triggedCheck: {
-        type: string;
-        info?: {
-            [key: string]: string | number;
-        } | undefined;
-    } | undefined;
+    let triggedCheck:
+        | {
+              type: string;
+              info?:
+                  | {
+                        [key: string]: string | number;
+                    }
+                  | undefined;
+          }
+        | undefined;
     equipments.forEach((slot, index) => {
         const item = slot.getItem();
         if (!item) return;
@@ -130,7 +146,7 @@ function tickEvent (player: Player) {
         player.flag("IllegalItem", triggedCheck.type, "Equipment", triggedCheck.info);
     }
 }
-function placeCheck ({ player, block }: PlayerPlaceBlockAfterEvent) {
+function placeCheck({ player, block }: PlayerPlaceBlockAfterEvent) {
     if (player.isOp() || !get("antiIllegalItemTriggerOnPlace")) return;
     initVanillaItems();
     const container = block.getComponent("inventory")?.container;
@@ -154,7 +170,7 @@ function placeCheck ({ player, block }: PlayerPlaceBlockAfterEvent) {
         player.flag("IllegalItem", triggedCheck.type, "Place", { block: block.typeId, ...triggedCheck.info });
     }
 }
-function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key: string]: string | number }} {
+function itemCheck(item: ItemStack): undefined | { type: string; info?: { [key: string]: string | number } } {
     if (item.amount <= 0 || item.amount > item.maxAmount) return { type: "A", info: { item: item.typeId, amount: item.amount } };
     if (item.typeId.startsWith("minecraft:")) {
         if (get("antiIllegalItemBanSpawnEgg") && item.typeId.endsWith("spawn_egg")) return { type: "B", info: { item: item.typeId } };
@@ -186,7 +202,7 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
          */
         if (!stackEnchantable) return { type: "J", info: { item: item.typeId } };
         const enchantments = enchantable.getEnchantments();
-        const set = new Set(enchantments.map(({ type: { id }}) => id));
+        const set = new Set(enchantments.map(({ type: { id } }) => id));
         if (set.size !== enchantments.length) return { type: "K", info: { item: item.typeId } };
         const useCustomLimit = get("antiIllegalItemUseCustomEnchantmentLimit");
         if (useCustomLimit) {
@@ -195,7 +211,7 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
             if (illegalEnchantment) return { type: "L", info: { item: item.typeId, case: "levelOutOfBounds", enchantment: illegalEnchantment.type.id, level: illegalEnchantment.level } };
         }
         try {
-            stackEnchantable.addEnchantments(enchantments)
+            stackEnchantable.addEnchantments(enchantments);
         } catch (error) {
             let illegalCase: string | undefined;
             if (error instanceof EnchantmentLevelOutOfBoundsError) {
@@ -226,5 +242,5 @@ export default {
         world.afterEvents.playerSpawn.unsubscribe(onPlayerJoin);
         world.afterEvents.playerPlaceBlock.unsubscribe(placeCheck);
         removeCheckInterval("illegalItem");
-    }
-}
+    },
+};

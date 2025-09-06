@@ -52,7 +52,7 @@ export const detectionList = {
     blockReach,
     invalidSprint,
     phase,
-    illegalItem
+    illegalItem,
 };
 export function initModules() {
     for (const toggle of Object.values(detectionList)) {

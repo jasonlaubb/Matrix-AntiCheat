@@ -5,14 +5,14 @@ import { disableAntiGameMode, enableAntiGameMode } from "../asset/antiGamemode";
 const GAMEMODES = ["adventure", "creative", "survival", "spectator"];
 export const antiGameModeOption = [...GAMEMODES, "reset"];
 export const antiGameModeSetting = ["only", "and", "except", "toggle"];
-const gmKey: Record<typeof GAMEMODES[number], string> = {
+const gmKey: Record<(typeof GAMEMODES)[number], string> = {
     adventure: "database:antiGma",
     creative: "database:antiGmc",
     survival: "database:antiGms",
     spectator: "database:antiGmsp",
 };
 function setAllGamemodes(state: boolean) {
-    Object.values(gmKey).forEach(key => world.setDynamicProperty(key, state));
+    Object.values(gmKey).forEach((key) => world.setDynamicProperty(key, state));
 }
 function setOnlyGamemode(gamemode: keyof typeof gmKey) {
     Object.entries(gmKey).forEach(([gm, key]) => {
@@ -40,13 +40,13 @@ export default {
         {
             name: "antiGameModeOption",
             type: "enum",
-        }
+        },
     ],
     optionalParameters: [
         {
             name: "antiGameModeSetting",
             type: "enum",
-        }
+        },
     ],
     execute: (_player, [optionRaw, settingRaw]) => {
         const option = optionRaw?.toLowerCase();
@@ -83,5 +83,5 @@ export default {
             default:
                 return { status: 1, message: `§7[§aMatrix§7] §fInvalid setting! Must be one of: ${antiGameModeSetting.join(", ")}` };
         }
-    }
+    },
 } as Command;

@@ -7,7 +7,7 @@ export const gma = {
     execute: (player) => {
         system.run(() => player.setGameMode(GameMode.Adventure));
         return { status: 0, message: "§7[§aMatrix§7] §fSwitched your gamemode to advanture." };
-    }
+    },
 } as Command;
 export const gmc = {
     requireOp: true,
@@ -16,7 +16,7 @@ export const gmc = {
     execute: (player) => {
         system.run(() => player.setGameMode(GameMode.Creative));
         return { status: 0, message: "§7[§aMatrix§7] §fSwitched your gamemode to creative." };
-    }
+    },
 } as Command;
 export const gms = {
     requireOp: true,
@@ -25,7 +25,7 @@ export const gms = {
     execute: (player) => {
         system.run(() => player.setGameMode(GameMode.Survival));
         return { status: 0, message: "§7[§aMatrix§7] §fSwitched your gamemode to survival." };
-    }
+    },
 } as Command;
 export const gmsp = {
     requireOp: true,
@@ -34,5 +34,5 @@ export const gmsp = {
     execute: (player) => {
         system.run(() => player.setGameMode(GameMode.Spectator));
         return { status: 0, message: "§7[§aMatrix§7] §fSwitched your gamemode to spectator." };
-    }
+    },
 } as Command;

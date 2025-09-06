@@ -96,7 +96,7 @@ export const commands = [
     gmc,
     gms,
     gmsp,
-    antigamemode
+    antigamemode,
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {

@@ -293,7 +293,7 @@ export default {
     },
     antiPhaseEnable: {
         type: "boolean",
-        value: false
+        value: false,
     },
     antiIllegalItemEnable: {
         type: "boolean",
@@ -362,5 +362,5 @@ export default {
     antiGmsp: {
         type: "boolean",
         value: false,
-    }
+    },
 };
