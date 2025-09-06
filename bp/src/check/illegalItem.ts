@@ -182,7 +182,7 @@ function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key:
         const stackEnchantable = itemStack.getComponent("enchantable");
         /**
          * This check might not work
-         * Minecraft assume enchantable component is always present on enchantable item, but it won't be present when the item is modified by nbt editing
+         * Minecraft assume that enchantable component is always present on enchantable item, but it won't be present when the item is modified by nbt editing
          */
         if (!stackEnchantable) return { type: "J", info: { item: item.typeId } };
         const enchantments = enchantable.getEnchantments();
