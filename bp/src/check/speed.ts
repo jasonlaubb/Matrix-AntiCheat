@@ -2,13 +2,14 @@ import { Dimension, EntityHitEntityAfterEvent, EquipmentSlot, GameMode, ItemUseA
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { pythag } from "../util/mathUtil";
 import { isRiding } from "../util/util";
+import { safeGetBlock } from "../util/vectorUtil";
+import type { SpeedData } from "../../../global";
 const VELOCITY_DELTA_THRESHOLD = 0.7;
 const FLAG_TIMESTAMP_THRESHOLD = 8000;
 const TYPE1_MAX_FLAG = 12;
 const TYPE2_MAX_FLAG = 2;
-
-function initPlayerData(player: Player) {
-    player.speedData = {
+function tick(player: Player) {
+    const data: SpeedData = player.speedData ?? {
         lastAttackTimestamp: 0,
         lastRidingEndTimestamp: 0,
         flagAmount: 0,
@@ -27,10 +28,6 @@ function initPlayerData(player: Player) {
         lastSpeedXZ: 0,
         lastVelocity: { x: 0, z: 0 },
     };
-}
-function tick(player: Player) {
-    if (!player.speedData) initPlayerData(player);
-    const data = player.speedData;
     const now = Date.now();
 
     const velocity = player.getVelocity();
@@ -133,23 +130,20 @@ function tick(player: Player) {
 
 function onPlayerAttack(event: EntityHitEntityAfterEvent) {
     const player = event.damagingEntity;
-    if (!(player instanceof Player)) return;
-    if (!player.speedData) initPlayerData(player);
+    if (!(player instanceof Player) || !player.speedData) return;
     player.speedData.lastAttackTimestamp = Date.now();
 }
 
-function itemUse(event: ItemUseAfterEvent) {
-    const { itemStack, source } = event;
+function itemUse({ itemStack, source }: ItemUseAfterEvent) {
     if (!(source instanceof Player)) return;
-    if (itemStack.typeId !== "minecraft:ender_peal") return;
-    if (!source.speedData) initPlayerData(source);
+    if (itemStack.typeId !== "minecraft:ender_peal" || !source.speedData) return;
     source.speedData.lastEnderPeal = Date.now();
 }
 
 function isPlayerInSolid(location: Vector3, headLocation: Vector3, dimension: Dimension) {
     try {
-        const bodyBlock = dimension.getBlock(location);
-        const headBlock = dimension.getBlock(headLocation);
+        const bodyBlock = safeGetBlock(dimension, location);
+        const headBlock = safeGetBlock(dimension, headLocation);
         return bodyBlock?.isSolid || headBlock?.isSolid;
     } catch {
         return false;
