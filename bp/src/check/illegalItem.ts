@@ -3,7 +3,11 @@ import { getInventorySlot } from "../util/util";
 import { get } from "../util/database";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 // All vanila item stack (start with minecraft:)
-const vanillaItems = new Set(ItemTypes.getAll().map(({ id }) => id));
+let vanillaItems: Set<string> = new Set();
+function initVanillaItems() {
+    if (vanillaItems.size > 0) return;
+    vanillaItems = new Set(ItemTypes.getAll().map(({ id }) => id));
+}
 const creativeOnlyItems = new Set([
     "minecraft:farmland",
     "minecraft:large_fern",
@@ -61,6 +65,7 @@ const offHandItems = new Set([
 ]);
 function inventoryChange ({ player, itemStack: item, inventoryType, slot }: PlayerInventoryItemChangeAfterEvent) {
     if (!item || player.isOp()) return;
+    initVanillaItems();
     const illegal = itemCheck(item);
     if (illegal) {
         const inventory = player.getComponent("inventory")!.container;
@@ -70,6 +75,7 @@ function inventoryChange ({ player, itemStack: item, inventoryType, slot }: Play
 }
 function onPlayerJoin ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn || player.isOp() || !get("antiIllegalItemTriggerOnJoin")) return;
+    initVanillaItems();
     const inventory = player.getComponent("inventory")!.container;
     let triggedCheck: {
         type: string;
@@ -92,6 +98,7 @@ function onPlayerJoin ({ player, initialSpawn }: PlayerSpawnAfterEvent) {
 }
 function tickEvent (player: Player) {
     if (system.currentTick % 30 !== 0) return; // Check every 1.5 seconds
+    initVanillaItems();
     const equippable = player.getComponent("equippable")!;
     const values = Object.values(EquipmentSlot);
     const equipments = values.map((slot) => equippable.getEquipmentSlot(slot));
@@ -126,6 +133,7 @@ function tickEvent (player: Player) {
 }
 function placeCheck ({ player, block }: PlayerPlaceBlockAfterEvent) {
     if (player.isOp() || !get("antiIllegalItemTriggerOnPlace")) return;
+    initVanillaItems();
     const container = block.getComponent("inventory")?.container;
     if (!container || container.weight === 0) return;
     if (get("antiIllegalItemBanPlaceWithData") && !block.typeId.endsWith("shulker_box")) {
