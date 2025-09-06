@@ -32,7 +32,7 @@ export const gmsp = {
     name: "gmsp",
     description: "Switch your gamemode to spectator mode",
     execute: (player) => {
-        system.run(() => player.setGameMode(GameMode.Creative));
+        system.run(() => player.setGameMode(GameMode.Spectator));
         return { status: 0, message: "§7[§aMatrix§7] §fSwitched your gamemode to spectator." };
     }
 } as Command;
