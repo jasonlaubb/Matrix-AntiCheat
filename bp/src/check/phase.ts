@@ -1,4 +1,4 @@
-    import { GameMode, ItemUseAfterEvent, Player, Vector3, world } from "@minecraft/server";
+import { GameMode, ItemUseAfterEvent, Player, Vector3, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import type { PhaseData } from "../../../global";
 import { isObstructedBetweenLocations, locEqual } from "../util/util";
