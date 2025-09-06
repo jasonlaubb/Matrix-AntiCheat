@@ -34,7 +34,7 @@ function switchGamemodeToggle() {
 }
 export default {
     name: "antigamemode",
-    description: "Adjust the settings of anti gamemode.",
+    description: "Adjust the settings of anti gamemode (Don't ban default gamemode!!!)",
     requireOp: true,
     parameters: [
         {
