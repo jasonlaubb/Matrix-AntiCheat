@@ -75,6 +75,7 @@ function tick(player: Player) {
             data.flagAmount++;
 
             if (data.flagAmount > TYPE1_MAX_FLAG) {
+                // Don't work on server with correct movement prediction instead of serverAuth
                 player.flag("Speed", "A", "Movement", { velocityDelta });
                 data.flagAmount = 0;
             }
