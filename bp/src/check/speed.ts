@@ -128,8 +128,7 @@ function tick(player: Player) {
     player.speedData = data;
 }
 
-function onPlayerAttack(event: EntityHitEntityAfterEvent) {
-    const player = event.damagingEntity;
+function onPlayerAttack({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     if (!(player instanceof Player) || !player.speedData) return;
     player.speedData.lastAttackTimestamp = Date.now();
 }
