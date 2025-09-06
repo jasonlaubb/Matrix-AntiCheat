@@ -1,4 +1,4 @@
-import { GameMode, PlayerGameModeChangeBeforeEvent, PlayerSpawnAfterEvent, world } from "@minecraft/server";
+import { GameMode, PlayerGameModeChangeBeforeEvent, PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
 import { get } from "../util/database";
 export function enableAntiGameMode () {
     if (world.antiGamemodeEnabled) return;
@@ -30,6 +30,9 @@ function gamemodeChange(event: PlayerGameModeChangeBeforeEvent) {
         case GameMode.Survival: {
             if (get("antiGms")) event.cancel = true;
         }
+    }
+    if (event.cancel) {
+        system.run(() => event.player.setGameMode());
     }
 }
 function onJoin({ player, initialSpawn }: PlayerSpawnAfterEvent) {
