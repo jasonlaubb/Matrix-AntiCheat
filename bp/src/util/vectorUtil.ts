@@ -49,5 +49,5 @@ export function correctY (pos: Vector3) {
 }
 function isBlockLocationValid (dimension: Dimension, pos: Vector3) {
     const { max, min } = dimension.heightRange;
-    return pos.y >= min && pos.y < max && dimension.isChunkLoaded(pos);
+    return pos.y >= min && pos.y < max// && dimension.isChunkLoaded(pos); --- We should add this next API version
 }

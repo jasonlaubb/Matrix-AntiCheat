@@ -65,7 +65,7 @@ function tick(player: Player) {
     }
 
     if (!bypass) {
-        const lastVelocity = player.speedData.lastVelocity ?? { x: 0, z: 0 };
+        const lastVelocity = data.lastVelocity ?? { x: 0, z: 0 };
         const velocityDelta = pythag(velocityX - lastVelocity.x, velocityZ - lastVelocity.z);
 
         if (velocityDelta > VELOCITY_DELTA_THRESHOLD) {
@@ -84,7 +84,7 @@ function tick(player: Player) {
                 player.teleport(data.lastStopLocation);
             }
         } else if (distance > 0.2 && !player.isInWater && !player.isSwimming && !data.previousSpeed.includes(distance)) {
-            const velocitySpeed = player.speedData.lastSpeedXZ ?? 0;
+            const velocitySpeed = data.lastSpeedXZ ?? 0;
             const normalDistance = distance * 0.5;
 
             const condition = player.isSprinting && !isSwiftSneak(player) ? normalDistance * 0.7 : normalDistance > velocitySpeed * 1.2 ** speedLevel;
