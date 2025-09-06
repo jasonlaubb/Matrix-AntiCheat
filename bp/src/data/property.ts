@@ -337,6 +337,6 @@ export default {
     },
     antiIllegalItemOffhandValidation: {
         type: "boolean",
-        value: true, // Check if the item in offhand is valid (e.g. shield in offhand when using sword in mainhand)
-    }
+        value: true, // Check if the item in offhand is valid (e.g. shield in offhand when using sword in mainhand),
+    },
 };
