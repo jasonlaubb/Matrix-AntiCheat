@@ -1,6 +1,5 @@
 import type { Command } from "../main";
 import { world } from "@minecraft/server";
-import { getInventorySlot } from "../util/util";
 export const banitem = {
     name: "banitem",
     description: "Ban an item from being given to players.",
@@ -79,7 +78,7 @@ export const banitemclear = {
 export function registerItemBanEvent() {
     if (world.banItemEventRegistered) return;
     world.banItemEventRegistered = true;
-    const event = world.afterEvents.playerInventoryItemChange.subscribe(({ player, itemStack: item, slot, inventoryType }) => {
+    const event = world.afterEvents.playerInventoryItemChange.subscribe(({ player, itemStack: item, slot }) => {
         if (!item || player.isOp()) return;
         const bannedItems = world
             .getDynamicPropertyIds()
@@ -98,7 +97,7 @@ export function registerItemBanEvent() {
         const bannedItem = bannedItems.find(({ id }) => id === item.typeId);
         if (bannedItem) {
             const inventory = player.getComponent("inventory")!.container;
-            inventory.setItem(getInventorySlot(inventoryType, slot));
+            inventory.setItem(slot);
             player.sendMessage(`§7[§aMatrix§7] §fBanned item §e${simplifyId(bannedItem.id)}§f has been removed from your inventory: §e${bannedItem.reason}§r`);
         }
     })
