@@ -125,9 +125,7 @@ function tickEvent (player: Player) {
     }
 }
 function itemCheck (item: ItemStack): undefined | { type: string, info?: { [key: string]: string | number }} {
-    if (item.amount <= 0 || item.amount > item.maxAmount) {
-        return { type: "A", info: { item: item.typeId, amount: item.amount } };
-    }
+    if (item.amount <= 0 || item.amount > item.maxAmount) return { type: "A", info: { item: item.typeId, amount: item.amount } };
     if (item.typeId.startsWith("minecraft:")) {
         if (get("antiIllegalItemBanSpawnEgg") && item.typeId.endsWith("spawn_egg")) return { type: "B", info: { item: item.typeId } };
         if (get("antiIllegalItemCheckImpossible") && creativeOnlyItems.has(item.typeId)) return { type: "C", info: { item: item.typeId } };
