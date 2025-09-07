@@ -17,7 +17,7 @@ export default {
     },
 };
 function tickEvent(player: Player): any {
-    if (player.getGameMode() === GameMode.Spectator) return delete player.phaseData; // Ignore out of boundary
+    if (player.getGameMode() === GameMode.Spectator || player.getComponent("riding")?.entityRidingOn) return delete player.phaseData; // Ignore out of boundary
     const fixedPos = correctY(player.location);
     const block = safeGetBlock(player.dimension, fixedPos);
     if (!block) return delete player.phaseData;
