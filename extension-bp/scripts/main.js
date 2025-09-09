@@ -1,26 +1,74 @@
 //@ts-check
-import { CustomCommandParamType, Player, PlayerPermissionLevel, system } from "@minecraft/server";
+import {
+    CustomCommandParamType,
+    Player,
+    PlayerPermissionLevel,
+    system
+} from "@minecraft/server";
+
+/**
+ * Checks if the origin is a valid player.
+ * @param {import("@minecraft/server").CustomCommandOrigin} origin
+ * @returns {Player | null}
+ */
+function getValidPlayer(origin) {
+    return origin?.sourceEntity instanceof Player ? origin.sourceEntity : null;
+}
+
+/**
+ * Triggers a player event safely.
+ * @param {Player} player
+ * @param {string} eventName
+ */
+function triggerPlayerEvent(player, eventName) {
+    system.run(() => {
+        if (player.isValid) {
+            player.triggerEvent(eventName);
+        }
+    });
+}
+
+/**
+ * Sends a formatted Matrix message to a player.
+ * @param {Player} player
+ * @param {string} message
+ */
+function sendMessage(player, message) {
+    player.sendMessage(`§7[§aMatrix§7] §f${message}`);
+}
+
 system.beforeEvents.startup.subscribe((event) => {
+    // Vanish Command
     event.customCommandRegistry.registerCommand({
         cheatsRequired: false,
         name: "matrix:vanish",
         permissionLevel: 1,
-        description: "Vanish yourself",
+        description: "Vanish yourself"
     }, (origin) => {
-        if (!origin?.sourceEntity || !(origin.sourceEntity instanceof Player)) return { status: 1 };
-        system.run(() => origin.sourceEntity?.triggerEvent("matrix:vanish"));
-        return { status: 0, message: "§7[§aMatrix§7] §fVanished!" }
+        const player = getValidPlayer(origin);
+        if (!player) return { status: 1 };
+
+        triggerPlayerEvent(player, "matrix:vanish");
+        sendMessage(player, "You are now vanished!");
+        return { status: 0 };
     });
+
+    // Unvanish Command
     event.customCommandRegistry.registerCommand({
         cheatsRequired: false,
         name: "matrix:unvanish",
         permissionLevel: 1,
-        description: "Unvanish yourself",
+        description: "Unvanish yourself"
     }, (origin) => {
-        if (!origin?.sourceEntity || !(origin.sourceEntity instanceof Player)) return { status: 1 };
-        system.run(() => origin.sourceEntity?.triggerEvent("matrix:unvanish"));
-        return { status: 0, message: "§7[§aMatrix§7] §fUnvanished!" }
+        const player = getValidPlayer(origin);
+        if (!player) return { status: 1 };
+
+        triggerPlayerEvent(player, "matrix:unvanish");
+        sendMessage(player, "You are now unvanished!");
+        return { status: 0 };
     });
+
+    // Tempkick Command
     event.customCommandRegistry.registerCommand({
         cheatsRequired: false,
         name: "matrix:tempkick",
@@ -33,10 +81,33 @@ system.beforeEvents.startup.subscribe((event) => {
             }
         ]
     }, (origin, players) => {
-        if (!origin?.sourceEntity || !(origin.sourceEntity instanceof Player)) return { status: 1 };
-        if (players.length === 0) return { status: 1, message: "§7[§aMatrix§7] §fYou should select at least a player." };
-        if (players.some(({ commandPermissionLevel, playerPermissionLevel }) => commandPermissionLevel >= 1 || playerPermissionLevel === PlayerPermissionLevel.Operator)) return { status: 1, message: "§7[§aMatrix§7] §fYou can't disconnect an operator!" };
-        system.run(() => players.forEach((player) => player?.triggerEvent("matrix:tempkick")));
-        return { status: 0, message: "§7[§aMatrix§7] §fDisconnected: " + players.join(", ") };
+        const executor = getValidPlayer(origin);
+        if (!executor) return { status: 1 };
+
+        if (players.length === 0) {
+            sendMessage(executor, "You must select at least one player.");
+            return { status: 1 };
+        }
+
+        const protectedPlayers = players.filter(p =>
+            p.commandPermissionLevel >= 1 ||
+            p.playerPermissionLevel === PlayerPermissionLevel.Operator
+        );
+
+        if (protectedPlayers.length > 0) {
+            sendMessage(executor, "You can't disconnect an operator!");
+            return { status: 1 };
+        }
+
+        system.run(() => {
+            players.forEach(player => {
+                if (player.isValid) {
+                    player.triggerEvent("matrix:tempkick");
+                }
+            });
+        });
+
+        sendMessage(executor, `Disconnected: ${players.map(p => p.name).join(", ")}`);
+        return { status: 0 };
     });
 });
