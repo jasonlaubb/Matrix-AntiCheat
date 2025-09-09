@@ -1,10 +1,10 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Matrix Anticheat Extension",
+        "name": "Matrix Anticheat Extension V2",
         "description": "§7§¶Allow admin to use vanish and tempkick command.\n§cPlayer.json required",
         "uuid": "0c4bdb76-5fb8-49ad-8d8f-1fa523cea6fc",
-        "version": [1, 0, 0],
+        "version": [2, 0, 0],
         "min_engine_version": [1, 21, 100]
     },
     "metadata": {
