@@ -6,17 +6,17 @@ const languageList: { [key: string]: typeof english } = {
 function updateLanguage () {
       currentLanguage = languageList[get("systemLanguage")] ?? languageList.english;
 }
-function text (key: keyof typeof english, ...args: string[]): string {
-      let string = currentLanguage[key];
-      const length = args.length;
-      if (length === 0) return;
-      for (let i = 0, i < length; i++) {
-          const arg = args[i];
-          if (i === 0) {
-              string = string.replace(/%s|%1/g, arg);
-              continue;
-          }
-          string = string.replaceAll("%" + i);
-      }
-      return string;
+function text(key: keyof typeof english, ...args: string[]): string {
+    let string = currentLanguage[key];
+    if (args.length === 0) return string;
+    args.forEach((arg, i) => {
+        // Replace %s or %1 for first arg, %2 for second, etc.
+        if (i === 0) {
+            string = string.replace(/%s|%1/g, arg);
+        } else {
+            const placeholder = "%" + (i + 1);
+            string = string.replaceAll(placeholder, arg);
+        }
+    });
+    return string;
 }
