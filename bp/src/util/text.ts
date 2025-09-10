@@ -16,7 +16,7 @@ function text (key: keyof typeof english, ...args: string[]): string {
               string = string.replace(/%s|%1/g, arg);
               continue;
           }
-          string = string.replaceAll("%" + i.toFixed(0));
+          string = string.replaceAll("%" + i);
       }
       return string;
 }
