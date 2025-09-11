@@ -35,7 +35,7 @@ import { initModules } from "./command/detection";
 import { registerItemBanEvent } from "./command/banItem";
 import { commands, enumRegistry } from "./data/commands";
 import { enableAntiGameMode } from "./asset/antiGamemode";
-import { TranslationKey } from "./util/text";
+import { text, TranslationKey } from "./util/text";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -125,7 +125,7 @@ system.beforeEvents.startup.subscribe((event) => {
                             if (tooLarge || tooSmall) {
                                 let message = "";
                                 if (param?.max && param.min) {
-                                    message = `§7[§aMatrix§7] §fParameter ${param.name} is out of range. Range: ${param.min} - ${param.max}`;
+                                    message = `§7[§aMatrix§7] §fParameter ${param.name} is out of range. Range: ${param.min} - ${param.max}` + text("commandNumberOutOfRange", param.name, param.min, param.max);
                                 } else if (tooLarge) {
                                     message = `§7[§aMatrix§7] §fParameter ${param.name} is too large. Max value: ${param.max}`;
                                 } else if (tooSmall) {
