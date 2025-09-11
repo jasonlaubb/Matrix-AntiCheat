@@ -24,5 +24,11 @@ export default {
     oreAlertFoundDiamondOre: "§e%1§f found §anew§f piece of §ediamond ore(s) §b[size=%2,interval=%3]",
     antiNamespoofKickReason: "Invalid name detected",
     flagDetected: "§e%1§f has been detected for unfair adventage",
-    flagUnfairAdvantage: "Unfair Advantage"
+    flagUnfairAdvantage: "Unfair Advantage",
+    punishmentBanned: "You are banned from this server!",
+    // Note: There is a ':' after these text in the code
+    punishmentReason: "Reason",
+    punishmentExecutor: "Executor",
+    punishmentExpire: "Expire", // Means the date and time when player's ban will be expired
+    punishmentDuration: "Duration",
 }

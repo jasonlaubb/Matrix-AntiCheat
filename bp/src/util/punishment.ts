@@ -1,4 +1,5 @@
 import { Player, system, world } from "@minecraft/server";
+import { text } from "./text";
 export interface BanData {
     name: string;
     reason: string;
@@ -54,11 +55,9 @@ export function checkPunish(player: Player) {
             world.setDynamicProperty("banData:" + player.id);
         } else {
             if (data.expire) {
-                player.kick(
-                    `§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: §e${convertDurationString(data.expire - now)}`
-                );
+                player.kick(`§7[§aMatrix§7] §f${text("punishmentBanned")}\n§g${text("punishmentReason")}: §e${data.reason}\n§g${text("punishmentExecutor")}: §e${data.executor}\n§g${text("punishmentExpire")}: §e${new Date(data.expire).toLocaleString()}\n§g${text("punishmentDuration")}: §e${convertDurationString(data.expire - now)}`);
             } else {
-                player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}`);
+                player.kick(`§7[§aMatrix§7] §f${text("punishmentBanned")}\n§g${text("punishmentReason")}: §e${data.reason}\n§g${text("punishmentExecutor")}: §e${data.executor}`);
             }
             return;
         }
@@ -72,11 +71,9 @@ export function checkPunish(player: Player) {
             ban(player, data.reason, data.executor, data.expire);
             world.setDynamicProperty("nameBanData:" + player.name);
             if (data.expire) {
-                player.kick(
-                    `§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}\n§gExpire: §e${new Date(data.expire).toLocaleString()}\n§gDuration: §e${convertDurationString(data.expire - now)}`
-                );
+                player.kick(`§7[§aMatrix§7] §f${text("punishmentBanned")}\n§g${text("punishmentReason")}: §e${data.reason}\n§g${text("punishmentExecutor")}: §e${data.executor}\n§g${text("punishmentExpire")}: §e${new Date(data.expire).toLocaleString()}\n§g${text("punishmentDuration")}: §e${convertDurationString(data.expire - now)}`);
             } else {
-                player.kick(`§7[§aMatrix§7] §fYou are banned from this server!\n§gReason: §e${data.reason}\n§gExecutor: §e${data.executor}`);
+                player.kick(`§7[§aMatrix§7] §f${text("punishmentBanned")}\n§g${text("punishmentReason")}: §e${data.reason}\n§g${text("punishmentExecutor")}: §e${data.executor}`);
             }
             return;
         }
