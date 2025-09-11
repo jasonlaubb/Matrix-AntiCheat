@@ -23,6 +23,5 @@ export default {
     oreAlertOreFound: "§e%1 §fhas just found and broken §e%2 §b[interval=%3]",
     oreAlertFoundDiamondOre: "§e%1§f found §anew§f piece of §ediamond ore(s) §b[size=%2,interval=%3]",
     antiNamespoofKickReason: "Invalid name detected",
-    // Note: If the name is in the last character, still need §f as there is other text after this language
     flagDetected: "§e%1§f has been detected for unfair adventage"
 }
