@@ -31,4 +31,16 @@ export default {
     punishmentExecutor: "Executor",
     punishmentExpire: "Expire", // Means the date and time when player's ban will be expired
     punishmentDuration: "Duration",
+    uiAdminGUI: "Admin GUI",
+    uiToggleDetection: "Enable/Disable detection",
+    uiChangeConfig: "Change configuration",
+    uiAction: "Action", // Button text of the Admin GUI 'Action' button
+    uiAntiCheatSettings: "AntiCheat Settings",
+    uiChooseToDisable: "Choose to disable",
+    uiChooseToEnable: "Choose to enable",
+    uiManageProperties: "Manage properties",
+    uiPropertyUIBody: "Select data type you want to change:",
+    uiBoolean: "Boolean", // True/false
+    uiString: "String",
+    uiNumber: "Number"
 }

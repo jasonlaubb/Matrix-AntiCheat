@@ -6,22 +6,23 @@ import property from "../data/property";
 import { getPropertyType } from "./propertyClassifier";
 import type { OptionType } from "../main";
 import { commands, enumRegistry } from "../data/commands";
+import { text } from "./text";
 export function openGeneralUI(player: Player) {
     new ActionFormData()
-        .title("Admin GUI")
-        .button("Enable/Disable detection")
-        .button("Change configuration")
-        .button("Action")
+        .title(text("uiAdminGUI"))
+        .button(text("uiToggleDetection"))
+        .button(text("uiChangeConfig"))
+        .button(text("uiAction"))
         //@ts-expect-error
         .show(player)
         .then((res) => {
             if (res.canceled) return;
             switch (res.selection) {
                 case 0: {
-                    const ui = new ActionFormData().title("AntiCheat Settings");
+                    const ui = new ActionFormData().title(text("uiAntiCheatSettings"));
                     const enableList = Object.entries(detectionList).map(([name, detection]) => {
                         const enabled = get(detection.property as keyof typeof property);
-                        ui.button(`${enabled ? "§2" : "§4"}${name}\n§8${enabled ? "Choose to disable" : "Choose to enable"}`);
+                        ui.button(`${enabled ? "§2" : "§4"}${name}\n§8${enabled ? text("uiChooseToDisable") : text("uiChooseToEnable")}`);
                         return enabled;
                     });
                     //@ts-expect-error
@@ -41,11 +42,11 @@ export function openGeneralUI(player: Player) {
                 }
                 case 1: {
                     new ActionFormData()
-                        .title("Manage properties")
-                        .body("Select data type you want to change:")
-                        .button("Boolean")
-                        .button("String")
-                        .button("Number")
+                        .title(text("uiManageProperties"))
+                        .body(text("uiPropertyUIBody"))
+                        .button(text("uiBoolean"))
+                        .button(text("uiString"))
+                        .button(text("uiNumber"))
                         //@ts-expect-error
                         .show(player)
                         .then((res) => {
