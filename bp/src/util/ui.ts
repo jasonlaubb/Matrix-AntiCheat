@@ -145,8 +145,8 @@ export function openGeneralUI(player: Player) {
                             }
                             const players = world.getAllPlayers().map(({ name }) => name);
                             const ui = new ModalFormData()
-                                .title("Action's option | " + upperCaseFirstChar(selectedCommand.name))
-                                .submitButton("Execute")
+                                .title(text("uiActionOption") + " | " + upperCaseFirstChar(selectedCommand.name))
+                                .submitButton(text("uiExecute"))
                                 .label(selectedCommand.description);
                             selectedCommand.parameters?.forEach(({ name, type, max, min }) => {
                                 addOption(ui, name, type, players, [min, max]);
@@ -246,13 +246,13 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
         }
         case "float":
         case "integer": {
-            let placeholder = `any ${type}`;
+            let  placeholder = type === "float" ? text("uiFloat") : text("uiInteger");
             if (range[0] && range[1]) {
-                placeholder = `${type} between ${range[0]} and ${range[1]}`;
+                placeholder = `${type} (${range[0]} - ${range[1]})`;
             } else if (range[0]) {
-                placeholder = `${type} at least ${range[0]}`;
+                placeholder = `${type} ≥ ${range[0]}`;
             } else if (range[1]) {
-                placeholder = `${type} at most ${range[1]}`;
+                placeholder = `${type} ≤ ${range[1]}`;
             }
             ui.textField(label, placeholder);
             break;
@@ -266,7 +266,7 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
         case "playerTarget":
         case "player": {
             if (optional) {
-                ui.dropdown(label, ["§4undefined", ...players]);
+                ui.dropdown(label, ["§4" + text("uiUndefined"), ...players]);
             } else {
                 ui.dropdown(label, players);
             }

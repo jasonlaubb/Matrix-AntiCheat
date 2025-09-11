@@ -60,5 +60,10 @@ export default {
     uiNotANumber: "Not a number!",
     uiChanged: "Successfully changed selected property.",
     uiPropertyReset: "Successfully reset selected property.",
-    uiNotChanged: "Target property has not been changed."
+    uiNotChanged: "Target property has not been changed.",
+    uiActionOption: "Action's option",
+    uiExecute: "Execute",
+    uiUndefined: "undefined",
+    uiFloat: "Floating-point number",
+    uiInteger: "Integer"
 }
