@@ -36,6 +36,7 @@ import { registerItemBanEvent } from "./command/banItem";
 import { commands, enumRegistry } from "./data/commands";
 import { enableAntiGameMode } from "./asset/antiGamemode";
 import { text, TranslationKey } from "./util/text";
+import { antiXrayOn } from "./asset/antiXray";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -233,6 +234,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (get("oreAlert")) oreAlertOn();
     if (get("endLock") || get("netherLock")) endNetherLockOn();
     if (get("antiGma") || get("antiGmc") || get("antiGms") || get("antiGmsp")) enableAntiGameMode();
+    if (!get("banXrayHandler") || get("antiXray")) antiXrayOn();
     const movementModule = get("antiSpeedEnable") || get("antiFlyEnable");
     const killauraModule = get("antiKillauraEnable");
     if (movementModule || killauraModule) world.afterEvents.itemReleaseUse.subscribe(riptide);

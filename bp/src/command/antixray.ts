@@ -2,6 +2,7 @@ import { system, world } from "@minecraft/server";
 import { MessageFormData } from "@minecraft/server-ui";
 import type { Command } from "../main";
 import { get } from "../util/database";
+import { antiXrayOn } from "../asset/antiXray";
 
 export default {
     name: "antixray",
@@ -22,6 +23,7 @@ export default {
                 .then((res) => {
                     if (res.canceled || res.selection === 1) return;
                     world.setDynamicProperty("database:antiXray", true);
+                    if (get("banXrayHandler")) system.run(() => antiXrayOn());
                     world.setDynamicProperty("database:banXrayHandler", false);
                     player.sendMessage(" §7[§aMatrix§7] §fEnabled Anti Xray. Use '/setboolean antiXray false' to disable");
                 });
