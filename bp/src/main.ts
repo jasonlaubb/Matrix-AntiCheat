@@ -35,6 +35,7 @@ import { initModules } from "./command/detection";
 import { registerItemBanEvent } from "./command/banItem";
 import { commands, enumRegistry } from "./data/commands";
 import { enableAntiGameMode } from "./asset/antiGamemode";
+import { TranslationKey } from "./util/text";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -48,6 +49,11 @@ export interface Command {
     requireOp: boolean;
     optionalParameters?: Option[];
     parameters?: Option[];
+    translationDef: {
+        actionName: TranslationKey,
+        options: TranslationKey[],
+        description: TranslationKey[],
+    }
     /** @warning Early execution, please add system.run if you want to do edit to world */
     execute: (player: Player, args: any[]) => CustomCommandResult;
 }
