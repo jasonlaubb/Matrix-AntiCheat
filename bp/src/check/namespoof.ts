@@ -1,5 +1,6 @@
 import { PlayerSpawnAfterEvent, world, system } from "@minecraft/server";
 import { get } from "../util/database";
+import { text } from "../util/text";
 export default {
     property: "antiNamespoofEnable",
     enable: () => {
@@ -26,6 +27,6 @@ function onPlayerJoin({ player, initialSpawn }: PlayerSpawnAfterEvent) {
         flagged = true;
     }
     if (flagged && !["kick", "ban"].includes(get("flagPunishmentType"))) {
-        system.run(() => player.kick("Invalid name detected"));
+        system.run(() => player.kick(text("antiNamespoofKickReason")));
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * @author jasonlaubb
+ * Language: English (source language)
+ */
 export default {
     commandNumberOutOfRange: "Parameter %1 is out of range. Range: %2 - %3",
     commandNumberTooLarge: "Parameter %1 is too large. Max value: %2",
@@ -16,4 +20,7 @@ export default {
     spawnEventLockdownKickReason: "Server is locked down by operator, please try again later",
     spawnEventAutoMuteMessage: "Use §e%s§f to unmute yourself.",
     antiAfkKickReason: "Afk is not allowed",
+    oreAlertOreFound: "§e%1 §fhas just found and broken §e%2 §b[interval=%3]",
+    oreAlertFoundDiamondOre: "§e%1§f found §anew§f piece of §ediamond ore(s) §b[size=%2,interval=%3]",
+    antiNamespoofKickReason: "Invalid name detected"
 }

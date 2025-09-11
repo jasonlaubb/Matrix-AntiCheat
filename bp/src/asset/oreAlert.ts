@@ -1,5 +1,6 @@
 import { BlockVolume, PlayerBreakBlockAfterEvent, world } from "@minecraft/server";
 import { get } from "../util/database";
+import { text } from "../util/text";
 export function oreAlertOn() {
     world.afterEvents.playerBreakBlock.subscribe(blockBreak);
 }
@@ -30,9 +31,7 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
         if (!event.player.lastOreFoundData[id] || now - event.player.lastOreFoundData[id] >= 6000) {
             world.getAllPlayers().forEach((player) => {
                 if (!player.isOp()) return;
-                player.sendMessage(
-                    `§7[§aOre Alert§7] §e${event.player.name} §fhas just found and broken §e${id.replace("minecraft:", "").replaceAll("_", " ")} §b[interval=${event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"}]`
-                );
+                player.sendMessage("§7[§aOre Alert§7] §f" + text("oreAlertOreFound", event.player.name, id.replace("minecraft:", "").replaceAll("_", ""), event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"));
             });
         }
         event.player.lastOreFoundData[id] = now;
@@ -56,9 +55,7 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
         }
         world.getAllPlayers().forEach((player) => {
             if (!player.isOp()) return;
-            player.sendMessage(
-                `§7[§aOre Alert§7] §e${event.player.name}§f found §anew§f piece of §ediamond ore(s) §b[size=${event.player.diamondFoundAmount + 1},interval=${event.player.lastDiamondOresFound ? Math.floor((now - event.player.lastDiamondOresFound) / 1000) + "s" : "none"}]`
-            );
+            player.sendMessage("§7[§aOre Alert§7] §f" + text("oreAlertFoundDiamondOre", event.player.name, event.player.diamondFoundAmount + 1, event.player.lastDiamondOresFound ? Math.floor((now - event.player.lastDiamondOresFound) / 1000) + "s" : "none"));
         });
         event.player.lastDiamondOresFound = now;
     }
