@@ -1,3 +1,4 @@
+import { languageList } from "../util/text"; // Not a command
 import { mute, unmute } from "../command/mute";
 import info from "../command/info";
 import { detection, detectionList, detectionlist } from "../command/detection";
@@ -111,4 +112,5 @@ export const enumRegistry: { [key: string]: string[] } = {
     punishmentType: punishmentType,
     antiGameModeOption,
     antiGameModeSetting,
+    language: Object.keys(languageList).sort(),
 };

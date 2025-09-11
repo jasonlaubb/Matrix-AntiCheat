@@ -119,8 +119,6 @@ interface Console {
 }
 declare global {
 	const console: Console;
-    /** @warn Type only, do not use it as a value */
-    type TranslationKey = typeof english;
 }
 interface SpeedData {
     lastAttackTimestamp: number,

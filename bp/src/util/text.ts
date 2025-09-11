@@ -1,7 +1,8 @@
 import english from "../data/languages/english";
 import { get } from "./database";
+export type TranslationKey = typeof english;
 let currentLanguage = english;
-const languageList: { [key: string]: TranslationKey } = {
+export const languageList: { [key: string]: TranslationKey } = {
     english,
 };
 export function updateLanguage () {
