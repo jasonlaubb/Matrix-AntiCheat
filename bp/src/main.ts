@@ -108,10 +108,7 @@ system.beforeEvents.startup.subscribe((event) => {
             (origin, ...args) => {
                 const player = origin.sourceEntity;
                 if (!player || !(player instanceof Player) || (requireOp && !player.isOp())) {
-                    return {
-                        status: 1,
-                        message: "Executor is not a player or command permission is invalid",
-                    };
+                    return { status: 1 }
                 }
                 const feedback = !player?.lastRunUICommand && world.gameRules.sendCommandFeedback;
                 if (player.lastRunUICommand) delete player.lastRunUICommand;
