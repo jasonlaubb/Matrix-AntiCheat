@@ -62,7 +62,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
                 try {
                     this.triggerEvent("matrix:tempkick");
                 } catch {
-                    console.warn("Extension is not enabled, failed to tempkick");
+                    console.warn("prototype (flag) :: Extension is not enabled, failed to tempkick");
                     this.kick(disconnectReason);
                 }
             }
