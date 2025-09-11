@@ -1,13 +1,14 @@
 import { Player, world, PlayerPermissionLevel, InputMode, PlatformType, system } from "@minecraft/server";
 import { get } from "../util/database";
 import { ban, checkPunish } from "../util/punishment";
+import { text } from "../util/text";
 export const messageTarget = ["any", "all", "operator", "admin", "exclude", "bypass", "tag"];
 export const punishmentType = ["none", "tempkick", "kick", "ban"];
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 1 || this.playerPermissionLevel === PlayerPermissionLevel.Operator;
 };
 Player.prototype.flag = function (id: string, type: string, category: string, data?: { [key: string]: string | number }) {
-    const flagMessage = `§7[§aMatrix§7] §e${this.name}§r§f has been detected for unfair adventage §7<${category}> §c[${id}/${type}]${data ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
+    const flagMessage = `§7[§aMatrix§7] §f${text("flagDetected", this.name + "§r")} §7<${category}> §c[${id}/${type}]${data ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
     const flagType = get("flagMessageTarget");
     let flagTarget: Player[] = [];
     switch (flagType) {
