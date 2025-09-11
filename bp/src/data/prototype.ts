@@ -47,7 +47,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
     }
     if (get("enablePunishmentIgnoreTag") && this.hasTag("matrix:ignore")) return;
     system.run(() => {
-        const disconnectReason = get("specificReasonOnPunishment") ? `Unfair Advantage [${id}/${type}]` : "Unfair Advantage";
+        const disconnectReason = get("specificReasonOnPunishment") ? `${text("flagUnfairAdvantage")} [${id}/${type}]` : text("flagUnfairAdvantage");
         switch (punishmentType) {
             case "kick": {
                 this.kick(disconnectReason);
