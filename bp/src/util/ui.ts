@@ -54,12 +54,12 @@ export function openGeneralUI(player: Player) {
                             const { booleanValue, stringValue, numberValue } = getPropertyType();
                             const selectedProperty = [booleanValue, stringValue, numberValue][res.selection!].sort();
                             if (selectedProperty.length === 0) {
-                                player.sendMessage("§7[§aMatrix§7] §fSorry, there hasn't been any valid property for that type yet!");
+                                console.warn("ui(57) :: Unexpected no selected property");
                                 return;
                             }
                             const ui = new ActionFormData()
-                                .title("Select property")
-                                .body("Select the property you want to view or change:");
+                                .title(text("uiSelectProperty"))
+                                .body(text("uiSelectPropertyBody"));
                             selectedProperty.forEach((value) => {
                                 ui.button("§9" + value + "\n§1" + get(value as keyof typeof property))
                             });
@@ -73,23 +73,24 @@ export function openGeneralUI(player: Player) {
                                     const { type, value } = property[selectedId as keyof typeof property];
                                     const dynamicValue = world.getDynamicProperty("database:" + selectedId) ?? "--";
                                     new ActionFormData()
-                                        .title("Property: " + selectedId)
-                                        .body(`§gType: §e${type}\n§gStatic data: §e${value}§r\n§gDynamic property: §e${dynamicValue}`)
-                                        .button("Modify value")
-                                        .button("Discard edit")
+                                        .title(text("uiProperty") + ": " + selectedId)
+                                        .body(`§g${text("uiType")}: §e${type}\n§g${text("uiStaticData")}: §e${value}§r\n§g${text("uiDynamicProperty")}: §e${dynamicValue}`)
+                                        .button(text("uiModifyValue"))
+                                        .button(text("uiDiscardEdit"))
                                         //@ts-expect-error
                                         .show(player)
                                         .then((res) => {
                                             if (res.canceled) return;
                                             if (res.selection! === 0) {
                                                 const ui = new ModalFormData().title("Editing: " + selectedId);
-                                                (type === "boolean" ? ui.toggle("New boolean state", { defaultValue: true }) : ui.textField(`New value (${type})`, "New value"))
+                                                const newValueText = text("uiNewValue");
+                                                (type === "boolean" ? ui.toggle(text("uiNewBooleanState"), { defaultValue: true }) : ui.textField(`${newValueText} (${type})`, newValueText))
                                                     //@ts-expect-error
                                                     .show(player)
                                                     .then((res) => {
                                                         if (res.canceled) return;
                                                         const value = res.formValues![0] as string;
-                                                        if (!value) return player.sendMessage("§7[§aMatrix§7] §fNew value cannot be empty. Please use /discard to reset a value.");
+                                                        if (!value) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiValueEmptyDisallow", "/discard"));
                                                         switch (type) {
                                                             case "string": {
                                                                 world.setDynamicProperty("database:" + selectedId, value);
@@ -97,7 +98,7 @@ export function openGeneralUI(player: Player) {
                                                             }
                                                             case "number": {
                                                                 const number = parseFloat(value);
-                                                                if (isNaN(number)) return player.sendMessage("§7[§aMatrix§7] §fNot a number!");
+                                                                if (isNaN(number)) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotANumber"));
                                                                 world.setDynamicProperty("database:" + selectedId, value);
                                                                 break;
                                                             }
@@ -107,13 +108,13 @@ export function openGeneralUI(player: Player) {
                                                                 break;
                                                             }
                                                         }
-                                                        player.sendMessage("§7[§aMatrix§7] §fSuccessfully changed selected property.");
+                                                        player.sendMessage("§7[§aMatrix§7] §f" + text("uiChanged"));
                                                     });
                                             } else {
                                                 if (world.getDynamicProperty("database:" + selectedId)) {
                                                     world.setDynamicProperty("database:" + selectedId);
-                                                    player.sendMessage("§7[§aMatrix§7] §fSuccessfully reset selected property.");
-                                                } else player.sendMessage("§7[§aMatrix§7] §fTarget property has not been changed.");
+                                                    player.sendMessage("§7[§aMatrix§7] §f" + text("uiPropertyReset"));
+                                                } else player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotChanged"));
                                             }
                                         });
                                 });

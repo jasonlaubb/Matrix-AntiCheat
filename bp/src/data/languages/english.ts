@@ -26,7 +26,7 @@ export default {
     flagDetected: "§e%1§f has been detected for unfair adventage",
     flagUnfairAdvantage: "Unfair Advantage",
     punishmentBanned: "You are banned from this server!",
-    // Note: There is a ':' after these text in the code
+    // Note: There is a ':' after these text in the code x4
     punishmentReason: "Reason",
     punishmentExecutor: "Executor",
     punishmentExpire: "Expire", // Means the date and time when player's ban will be expired
@@ -42,5 +42,23 @@ export default {
     uiPropertyUIBody: "Select data type you want to change:",
     uiBoolean: "Boolean", // True/false
     uiString: "String",
-    uiNumber: "Number"
+    uiNumber: "Number",
+    uiSelectProperty: "Select property",
+    uiSelectPropertyBody: "Select the property you want to view or change:",
+    // Note: There is a ':' after these text in the code x4
+    uiProperty: "Property",
+    uiType: "Type",
+    uiStaticData: "Static data (default)",
+    uiDynamicProperty: "Dynamic property (current)",
+    uiModifyValue: "Modify value",
+    uiDiscardEdit: "Discard edit",
+    // Note: There is a ':' after these text in the code
+    uiEditing: "Editing",
+    uiNewBooleanState: "New boolean state",
+    uiNewValue: "New value",
+    uiValueEmptyDisallow: "New value cannot be empty. Please use %s to reset a value.",
+    uiNotANumber: "Not a number!",
+    uiChanged: "Successfully changed selected property.",
+    uiPropertyReset: "Successfully reset selected property.",
+    uiNotChanged: "Target property has not been changed."
 }
