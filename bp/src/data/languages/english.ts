@@ -93,5 +93,14 @@ export default {
     commandAntiXrayInstruction: "Please read these before enabling anti xray\n1. §bPlacement of piston §fand §bexplosion §fwill be §ccancelled §fin overworld and nether\n2. You §eshould not remove addon §fdirectly after enabling anti xray, this will cause ore distribution to be bugged.\n3. It might causes the server to §clag§f.\n4. You §ccannot fully reverse§f this action.\n5. Anti Xray only works on the ores below a Y value.",
     commandAntiXrayYes: "Yes",
     commandAntiXrayNo: "No",
-    commandAntiXraySuccess: "Enabled Anti Xray. Use '/setboolean antiXray false' to disable."
+    commandAntiXraySuccess: "Enabled Anti Xray. Use '/setboolean antiXray false' to disable.",
+    commandAutoMute: "Toggle auto-mute",
+    commandAutoMuteDescription: "Automatically mute incoming player",
+    commandAutoMuteSuccess: "Successfully %s automute.",
+    commandAutoMuteEduOnly: "Enable Minecraft Education Edition to use this feature.",
+    commandEnterchat: "Enter chat",
+    commandEnterchatNotEnabled: "Automute is not enabled.",
+    commandEnterchatAlready: "You have already entered the chat.",
+    commandEnterchatMuted: "You are muted and cannot enter the chat.",
+    commandEnterchatSuccess: "You have entered the chat."
 }
