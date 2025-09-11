@@ -369,6 +369,10 @@ export default {
     },
     ignoreMessageWhileMoving: {
         type: "boolean",
-        value: true
-    }
+        value: true,
+    },
+    banInvseeHandler: {
+        type: "boolean",
+        value: false,
+    },
 };

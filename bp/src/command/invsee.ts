@@ -32,6 +32,7 @@ function createLargeChest(dimension: Dimension, location: Vector3, items: ItemSt
 function midPoint({ x, y, z }: Vector3, { x: x2, z: z2 }: Vector3) {
     return { x: (x + x2) * 0.5 + 0.5, y: y + 1, z: (z + z2) * 0.5 + 0.5 };
 }
+export function invseeHandler () {
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
     const block = event.block;
     if (block.type.id === "minecraft:chest") {
@@ -70,6 +71,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
     event.cancel = true;
     system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to open this chest."));
 });
+}
 export default {
     name: "invsee",
     description: "View a player inventory",
@@ -81,6 +83,7 @@ export default {
     ],
     requireOp: true,
     execute: (player, [target]) => {
+        if (get("banInvseeHandler")) return { status: 1, message: "Invsee handler is disabled." };
         const empty = new Array(54) as ItemStack[];
         const div = new ItemStack("matrix:divider");
         empty.fill(div, 27, 36);

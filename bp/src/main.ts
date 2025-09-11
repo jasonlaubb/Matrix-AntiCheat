@@ -24,8 +24,6 @@ import { classifyProperty } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
-import "./asset/antiXray";
-import "./command/invsee";
 import "./data/prototype";
 import { worldBorderOn } from "./asset/worldBorder";
 import { oreAlertOn } from "./asset/oreAlert";
@@ -35,8 +33,9 @@ import { initModules } from "./command/detection";
 import { registerItemBanEvent } from "./command/banItem";
 import { commands, enumRegistry } from "./data/commands";
 import { enableAntiGameMode } from "./asset/antiGamemode";
-import { text, TranslationKey } from "./util/text";
+import { text, type TranslationKey } from "./util/text";
 import { antiXrayOn } from "./asset/antiXray";
+import { invseeHandler } from './command/invsee";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -235,6 +234,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (get("endLock") || get("netherLock")) endNetherLockOn();
     if (get("antiGma") || get("antiGmc") || get("antiGms") || get("antiGmsp")) enableAntiGameMode();
     if (!get("banXrayHandler") || get("antiXray")) antiXrayOn();
+    if (!get("banInvseeHandler") invseeHandler();
     const movementModule = get("antiSpeedEnable") || get("antiFlyEnable");
     const killauraModule = get("antiKillauraEnable");
     if (movementModule || killauraModule) world.afterEvents.itemReleaseUse.subscribe(riptide);
