@@ -7,6 +7,10 @@
     }, <-- Don't remove this comma
 */
 export default {
+    systemLanguage: {
+        type: "string",
+        value: "NOT_SETTED"
+    },
     flagMessageTarget: {
         type: "string",
         value: "admin", // all, admin, exclude (send to all player exclude the cheater), tag (send to player with specfic tag)

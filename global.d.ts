@@ -1,4 +1,5 @@
 import * as Server from "@minecraft/server";
+import english from "./bp/src/data/languages/english";
 declare module "@minecraft/server" {
     interface Player {
         /**
@@ -118,6 +119,8 @@ interface Console {
 }
 declare global {
 	const console: Console;
+    /** @warn Type only, do not use it as a value */
+    type TranslationKey = typeof english;
 }
 interface SpeedData {
     lastAttackTimestamp: number,
@@ -204,4 +207,3 @@ interface AimAssistData {
         d: number;
     };
 }
-type Axis = "x" | "z" | undefined;

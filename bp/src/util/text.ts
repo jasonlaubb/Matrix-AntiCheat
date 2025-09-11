@@ -1,12 +1,13 @@
-import english from "../data/language/english";
-let currentLanguage: typeof english;
-const languageList: { [key: string]: typeof english } = {
+import english from "../data/languages/english";
+import { get } from "./database";
+let currentLanguage = english;
+const languageList: { [key: string]: TranslationKey } = {
     english,
 };
-function updateLanguage () {
+export function updateLanguage () {
       currentLanguage = languageList[get("systemLanguage")] ?? languageList.english;
 }
-function text(key: keyof typeof english, ...args: string[]): string {
+export function text(key: keyof typeof english, ...args: string[]): string {
     let string = currentLanguage[key];
     if (args.length === 0) return string;
     args.forEach((arg, i) => {
