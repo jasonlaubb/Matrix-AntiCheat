@@ -367,4 +367,8 @@ export default {
         type: "boolean",
         value: false,
     },
+    ignoreMessageWhileMoving: {
+        type: "boolean",
+        value: true
+    }
 };

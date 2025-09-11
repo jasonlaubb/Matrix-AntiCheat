@@ -1,4 +1,4 @@
-import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume, system } from "@minecraft/server";
+import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume, system, PlayerPlaceBlockBeforeEvent, ExplosionBeforeEvent, PlayerBreakBlockBeforeEvent } from "@minecraft/server";
 import { get } from "../util/database";
 import { addInterval } from "../util/tick";
 function fastSurround(block: Block) {
@@ -87,7 +87,7 @@ const includeTypes = [
     "minecraft:emerald_ore",
     "minecraft:deepslate_emerald_ore",
 ];
-export function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
+function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
     function* generator() {
         const endX = startX + 15,
             endZ = startZ + 15;
@@ -208,17 +208,17 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
 
     return generator();
 }
-world.beforeEvents.playerPlaceBlock.subscribe((event) => {
+function beforeBlockPlace (event: PlayerPlaceBlockBeforeEvent) {
     const id = event.permutationToPlace.type.id;
     if (get("banXrayHandler") || !["minecraft:piston", "minecraft:sticky_piston"].includes(id) || event.dimension.id === "minecraft:the_end") return;
     event.cancel = true;
     system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fSorry, piston's placement is disallowed in this server."));
-});
-world.beforeEvents.explosion.subscribe((event) => {
+};
+function beforeExplosion (event: ExplosionBeforeEvent) {
     if (event.dimension.id === "minecraft:the_end" || get("banXrayHandler")) return;
     event.setImpactedBlocks([]);
     return;
-});
+};
 function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
     const chunks: VectorXZ[] = [];
     for (let dx = -1; dx <= 1; dx++) {
@@ -233,9 +233,7 @@ function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
 }
 const netherXrayCooldown = new Map<string, number>();
 
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    if (event.dimension.id !== "minecraft:nether") return;
-
+function netherBlockBreakHandler (event: PlayerBreakBlockBeforeEvent) {
     const solid = event.block.isSolid;
     const chunk = getChunkOrigin(event.block.location);
     const now = Date.now();
@@ -281,12 +279,10 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
             saveChunkData(chunkPrefix, chunkData);
         }
     });
-});
+};
 const xrayCooldown = new Map<string, number>();
 
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    if (event.dimension.id !== "minecraft:overworld") return;
-
+function overworldBlockBreakHandler (event: PlayerBreakBlockBeforeEvent) {
     const solid = event.block.isSolid;
     const chunk = getChunkOrigin(event.block.location);
     const now = Date.now();
@@ -332,7 +328,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
             saveChunkData(chunkPrefix, chunkData);
         }
     });
-});
+};
 addInterval("xray", () => {
     if (get("banXrayHandler")) return;
     const silverfish = [
@@ -376,6 +372,19 @@ addInterval("xray", () => {
 function floorPos({ x, y, z }: Vector3) {
     return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
 }
-system.beforeEvents.watchdogTerminate.subscribe((event) => {
-    event.cancel = true;
-});
+function beforeBlockBreak (event: PlayerBreakBlockBeforeEvent) {
+    if (event.dimension.id === "minecraft:overworld") {
+        overworldBlockBreakHandler(event);
+    } else if (event.dimension.id === "minecraft:nether") netherBlockBreakHandler(event);
+}
+export function antiXrayOn () {
+    world.beforeEvents.playerBreakBlock.subscribe(beforeBlockBreak);
+    world.beforeEvents.playerPlaceBlock.subscribe(beforeBlockPlace);
+    world.beforeEvents.explosion.subscribe(beforeExplosion);
+}
+/* Unused
+export function antiXrayOff () {
+    world.beforeEvents.playerBreakBlock.unsubscribe(beforeBlockBreak);
+    world.beforeEvents.playerPlaceBlock.unsubscribe(beforeBlockPlace);
+    world.beforeEvents.explosion.unsubscribe(beforeExplosion);
+}*/

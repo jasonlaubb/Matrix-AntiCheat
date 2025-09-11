@@ -86,7 +86,7 @@ system.beforeEvents.startup.subscribe((event) => {
     for (const [name, value] of enums) {
         event.customCommandRegistry.registerEnum("matrix:" + name, value);
     }
-    commands.forEach(({ name, description, requireOp, optionalParameters, parameters, execute }) => {
+    commands.forEach(({ name, description, requireOp, optionalParameters, parameters, execute, translationDef }) => {
         event.customCommandRegistry.registerCommand(
             {
                 name: "matrix:" + name,
@@ -116,6 +116,7 @@ system.beforeEvents.startup.subscribe((event) => {
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
                     const param = parameters?.[i] ?? optionalParameters![i - (parameters?.length ?? 0)];
+                    const paramName = text(parameters?.[i] ? translationDef.param[i] : translationDef.optionalParam[i]);
                     if (param === undefined) continue;
                     switch (param.type) {
                         case "float":
@@ -125,11 +126,11 @@ system.beforeEvents.startup.subscribe((event) => {
                             if (tooLarge || tooSmall) {
                                 let message = "";
                                 if (param?.max && param.min) {
-                                    message = `§7[§aMatrix§7] §fParameter ${param.name} is out of range. Range: ${param.min} - ${param.max}` + text("commandNumberOutOfRange", param.name, param.min, param.max);
+                                    message = "§7[§aMatrix§7] §f" + text("commandNumberOutOfRange", paramName, param.min, param.max);
                                 } else if (tooLarge) {
-                                    message = `§7[§aMatrix§7] §fParameter ${param.name} is too large. Max value: ${param.max}`;
+                                    message = "§7[§aMatrix§7] §f" + text("commandNumberTooLarge", paramName, param.max!);
                                 } else if (tooSmall) {
-                                    message = `§7[§aMatrix§7] §fParameter ${param.name} is too small. Min value: ${param.min}`;
+                                    message = "§7[§aMatrix§7] §f" + text("commandNumberTooSmall", paramName, param.min!);
                                 }
 
                                 if (feedback) {
@@ -147,14 +148,14 @@ system.beforeEvents.startup.subscribe((event) => {
                         case "normalPlayerTarget": {
                             let message;
                             if (input.length === 0) {
-                                message = "§7[§aMatrix§7] §fNo match target";
+                                message = "§7[§aMatrix§7] §f" + text("commandNoMatchTarget");
                             } else if (input.length > 1) {
-                                message = "§7[§aMatrix§7] §fMultiple targets found. Command failed.";
+                                message = "§7[§aMatrix§7] §f" + text("commandTooMuchTarget");
                             } else if (param.type !== "player") {
                                 if (input[0].id === player.id) {
-                                    message = "§7[§aMatrix§7] §fYou cannot target yourself with this command.";
+                                    message = "§7[§aMatrix§7] §f" + text("commandSelfTargetDisallow");
                                 } else if (param.type === "playerTarget" && input[0].commandPermissionLevel >= player.commandPermissionLevel) {
-                                    message = "§7[§aMatrix§7] §fYou cannot target a player with higher or equal command permission level.";
+                                    message = "§7[§aMatrix§7] §f" + text("commandTargetIsOperator");
                                 }
                             }
 
@@ -173,7 +174,7 @@ system.beforeEvents.startup.subscribe((event) => {
 
                         case "string": {
                             if (param?.max && input.length > param.max) {
-                                const message = `§7[§aMatrix§7] §fParameter ${param.name} is too long. Max length: ${param.max}`;
+                                const message = `§7[§aMatrix§7] §f` + text("commandStringTooLong", paramName, param.max);
                                 if (feedback) {
                                     return { status: 1, message };
                                 } else {
@@ -198,14 +199,13 @@ system.beforeEvents.startup.subscribe((event) => {
                     if (commandRes.message) player.sendMessage(commandRes.message);
                     return { status: commandRes.status };
                 } catch (error) {
+                    const errorMessage = `§7[§aMatrix §cERROR§7] §f${text("commandThrowError")}:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`;
                     if (feedback)
                         return {
                             status: 1,
-                            message: `§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`,
+                            message: errorMessage,
                         };
-                    player.sendMessage(
-                        `§7[§aMatrix§7] §fAn unexpected error occurred while executing the command. Please report this bug to the developer:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`
-                    );
+                    player.sendMessage(errorMessage);
                     return { status: 1 };
                 }
             }
@@ -263,11 +263,13 @@ world.beforeEvents.chatSend.subscribe((event) => {
         event.cancel = true;
         return;
     }
-    const { x, y } = player.inputInfo.getMovementVector();
-    if (x !== 0 || y !== 0) {
-        event.cancel = true;
-        player.sendMessage("§7[§aMatrix§7] §fPlease do not chat while you're moving!");
-        return;
+    if (get("ignoreMessageWhileMoving")) {
+        const { x, y } = player.inputInfo.getMovementVector();
+        if (x !== 0 || y !== 0) {
+            event.cancel = true;
+            player.sendMessage("§7[§aMatrix§7] §f" + text("chatMovingMessage"));
+            return;
+        }
     }
     // Trash code for anti spam
     if (get("antiSpam") && !player.isOp()) {
@@ -277,7 +279,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
         if (now - player.lastMessage <= get("antiSpamFastDef")) {
             player.tooFastFlag++;
             if (player.tooFastFlag > get("antiSpamTooFastFlagLimit")) {
-                player.sendMessage("§7[§aMatrix§7] §fSlow down your message.");
+                player.sendMessage("§7[§aMatrix§7] §f" + text("chatRateLimit"));
                 player.lastMessage = now;
                 player.lastMessageRaw = event.message;
                 event.cancel = true;
@@ -285,7 +287,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
             }
         } else if (player.tooFastFlag > 0) player.tooFastFlag = 0;
         if (player.lastMessageRaw === event.message && now - player.lastMessage <= get("antiSpamRepeatDef")) {
-            player.sendMessage("§7[§aMatrix§7] §fPlease don't spam message.");
+            player.sendMessage("§7[§aMatrix§7] §f" + text("chatSpamming"));
             player.lastMessage = now;
             player.lastMessageRaw = event.message;
             event.cancel = true;
@@ -293,14 +295,14 @@ world.beforeEvents.chatSend.subscribe((event) => {
         }
         player.lastMessageRaw = event.message;
         if (longestContinuousChar(event.message) > get("antiSpamMaxRepeatedArgLength")) {
-            player.sendMessage("§7[§aMatrix§7] §fPlease don't spam message!"); // ! means it is worser than . (idk)
+            player.sendMessage("§7[§aMatrix§7] §f" + text("chatSpamming"));
             player.lastMessage = now;
             event.cancel = true;
             return;
         }
         player.lastMessage = now;
         if (event.message.length > get("antiSpamMessageMaxLength")) {
-            player.sendMessage("§7[§aMatrix§7] §fYour message is too long.");
+            player.sendMessage("§7[§aMatrix§7] §f" + text("chatMessageTooLong"));
             event.cancel = true;
             return;
         }
@@ -339,7 +341,7 @@ function longestContinuousChar(str: string) {
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (!initialSpawn) return;
     if (world?.lockdown && !player.isOp()) {
-        player.kick("Server is locked down by operator, please try again later");
+        player.kick(text("spawnEventLockdownKickReason"));
         return;
     }
     checkPunish(player);
@@ -349,7 +351,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
     }
     if (world.getDynamicProperty("automute") && !player.isOp()) {
-        player.sendMessage("§7[§aAutoMute§7] §fUse §e/enterchat §fto unmute yourself.");
+        player.sendMessage(text("spawnEventAutoMuteMessage", "/enterchat"));
         player.runCommand("ability @s mute true");
     }
     if (world?.educationalFeaturesEnabled === undefined) {
@@ -361,4 +363,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
             world.educationalFeaturesEnabled = false;
         }
     }
+});
+system.beforeEvents.watchdogTerminate.subscribe((event) => {
+    event.cancel = true;
 });
