@@ -24,7 +24,6 @@ import { classifyProperty } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI } from "./util/ui";
-import "./asset/antiXray";
 import "./command/invsee";
 import "./data/prototype";
 import { worldBorderOn } from "./asset/worldBorder";
