@@ -57,14 +57,18 @@ export function openGeneralUI(player: Player) {
                                 player.sendMessage("§7[§aMatrix§7] §fSorry, there hasn't been any valid property for that type yet!");
                                 return;
                             }
-                            new ModalFormData()
+                            const ui = new ActionFormData()
                                 .title("Select property")
-                                .dropdown("Select the property you want to view or change", selectedProperty, { defaultValueIndex: 0 })
+                                .body("Select the property you want to view or change:");
+                            selectedProperty.forEach((value) => {
+                                ui.button("§9" + value + "\n§1" + get(value as keyof typeof property))
+                            });
+                            ui
                                 //@ts-expect-error
                                 .show(player)
                                 .then((res) => {
                                     if (res.canceled) return;
-                                    const selection = res.formValues![0] as number;
+                                    const selection = res.selection!;
                                     const selectedId = selectedProperty[selection];
                                     const { type, value } = property[selectedId as keyof typeof property];
                                     const dynamicValue = world.getDynamicProperty("database:" + selectedId) ?? "--";
