@@ -83,6 +83,7 @@ export default {
     ],
     requireOp: true,
     execute: (player, [target]) => {
+        if (get("banInvseeHandler")) return { status: 1, message: "Invsee handler is disabled." };
         const empty = new Array(54) as ItemStack[];
         const div = new ItemStack("matrix:divider");
         empty.fill(div, 27, 36);
