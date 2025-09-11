@@ -50,9 +50,10 @@ export interface Command {
     optionalParameters?: Option[];
     parameters?: Option[];
     translationDef: {
-        actionName: TranslationKey,
-        options: TranslationKey[],
-        description: TranslationKey[],
+        actionName: TranslationKey;
+        param: TranslationKey[];
+        optionalParam: TranslationKey[];
+        description: TranslationKey[];
     }
     /** @warning Early execution, please add system.run if you want to do edit to world */
     execute: (player: Player, args: any[]) => CustomCommandResult;
