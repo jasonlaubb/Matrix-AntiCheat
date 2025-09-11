@@ -35,7 +35,7 @@ import { commands, enumRegistry } from "./data/commands";
 import { enableAntiGameMode } from "./asset/antiGamemode";
 import { text, type TranslationKey } from "./util/text";
 import { antiXrayOn } from "./asset/antiXray";
-import { invseeHandler } from './command/invsee";
+import { invseeHandler } from "./command/invsee";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -51,9 +51,9 @@ export interface Command {
     parameters?: Option[];
     translationDef: {
         actionName: TranslationKey;
-        param: TranslationKey[];
-        optionalParam: TranslationKey[];
-        description: TranslationKey[];
+        param?: TranslationKey[];
+        optionalParam?: TranslationKey[];
+        description: TranslationKey;
     }
     /** @warning Early execution, please add system.run if you want to do edit to world */
     execute: (player: Player, args: any[]) => CustomCommandResult;
@@ -116,7 +116,7 @@ system.beforeEvents.startup.subscribe((event) => {
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
                     const param = parameters?.[i] ?? optionalParameters![i - (parameters?.length ?? 0)];
-                    const paramName = text(parameters?.[i] ? translationDef.param[i] : translationDef.optionalParam[i]);
+                    const paramName = text(parameters?.[i] ? translationDef.param![i] : translationDef.optionalParam![i]);
                     if (param === undefined) continue;
                     switch (param.type) {
                         case "float":
@@ -234,7 +234,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (get("endLock") || get("netherLock")) endNetherLockOn();
     if (get("antiGma") || get("antiGmc") || get("antiGms") || get("antiGmsp")) enableAntiGameMode();
     if (!get("banXrayHandler") || get("antiXray")) antiXrayOn();
-    if (!get("banInvseeHandler") invseeHandler();
+    if (!get("banInvseeHandler")) invseeHandler();
     const movementModule = get("antiSpeedEnable") || get("antiFlyEnable");
     const killauraModule = get("antiKillauraEnable");
     if (movementModule || killauraModule) world.afterEvents.itemReleaseUse.subscribe(riptide);

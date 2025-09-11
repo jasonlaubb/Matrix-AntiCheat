@@ -259,7 +259,7 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
         }
         case "item":
         case "string": {
-            ui.textField(label, type === "item" ? "item ID" : "any string");
+            ui.textField(label, type === "item" ? text("uiItemID") : text("uiAnyString"));
             break;
         }
         case "normalPlayerTarget":

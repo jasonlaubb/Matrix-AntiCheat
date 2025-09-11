@@ -63,7 +63,11 @@ export default {
     uiNotChanged: "Target property has not been changed.",
     uiActionOption: "Action's option",
     uiExecute: "Execute",
-    uiUndefined: "undefined",
+    uiUndefined: "Undefined",
     uiFloat: "Floating-point number",
-    uiInteger: "Integer"
+    uiInteger: "Integer",
+    uiItemID: "Item ID",
+    uiAnyString: "Any string",
+    commandAntiAfk: "Toggle anti afk",
+    commandAntiAfkDescription: "Toggle anti afk"
 }

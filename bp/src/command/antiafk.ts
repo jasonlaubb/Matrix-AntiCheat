@@ -5,6 +5,10 @@ export default {
     name: "antiafk",
     requireOp: true,
     description: "Enable/disable anti AFK feature",
+    translationDef: {
+        actionName: "commandAntiAfk",
+        description: "commandAntiAfkDescription",
+    },
     execute: () => {
         const isEnabled = get("antiAfk");
         system.run(() => {
