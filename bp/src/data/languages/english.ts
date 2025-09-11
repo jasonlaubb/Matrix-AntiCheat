@@ -85,5 +85,13 @@ export default {
     commandAntiGMToggle: "Anti gamemode (%1 mode) has been %2",
     commandAntiSpam: "Toggle anti spam",
     commandAntiSpamDescription: "Enable/disable antispam feature",
-    commandAntiSpamSuccess: "Successfully %s anti spam feature. You can modify the pattern or other settings by slash command!"
+    commandAntiSpamSuccess: "Successfully %s anti spam feature. You can modify the pattern or other settings by slash command!",
+    commandAntiXray: "Enable anti xray",
+    commandAntiXrayDescription: "Turn anti xray on safely",
+    commandAntiXrayAlready: "Anti xray is already enabled. To disable, run '/setboolean antiXray false'",
+    commandAntiXrayAreYouSure: "Are you sure?",
+    commandAntiXrayInstruction: "Please read these before enabling anti xray\n1. §bPlacement of piston §fand §bexplosion §fwill be §ccancelled §fin overworld and nether\n2. You §eshould not remove addon §fdirectly after enabling anti xray, this will cause ore distribution to be bugged.\n3. It might causes the server to §clag§f.\n4. You §ccannot fully reverse§f this action.\n5. Anti Xray only works on the ores below a Y value.",
+    commandAntiXrayYes: "Yes",
+    commandAntiXrayNo: "No",
+    commandAntiXraySuccess: "Enabled Anti Xray. Use '/setboolean antiXray false' to disable."
 }
