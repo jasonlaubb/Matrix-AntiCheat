@@ -68,6 +68,22 @@ export default {
     uiInteger: "Integer",
     uiItemID: "Item ID",
     uiAnyString: "Any string",
+    commandToggleEnable: "enabled",
+    commandToggleDisable: "disabled",
     commandAntiAfk: "Toggle anti afk",
-    commandAntiAfkDescription: "Toggle anti afk"
+    commandAntiAfkDescription: "Enable/disable anti AFK feature",
+    commandAntiAfkSuccess: "Successfully %1 anti AFK feature.",
+    commandAntiGM: "Adjust anti gamemode",
+    commandAntiGMDescription: "Adjust the settings of anti gamemode (Don't ban default gamemode!!!)",
+    commandAntiGMAntiGameModeOption: "antiGameModeOption",
+    commandAntiGMAntiGameModeSetting: "antiGameModeSetting",
+    commandAntiGMReset: "Anti gamemode settings have been reset (all modes allowed).",
+    commandAntiGMInvalid: "Invalid option! Must be one of: %s",
+    commandAntiGMOnly: "Anti gamemode has been set to only detect %s mode.",
+    commandAntiGMAlso: "Anti gamemode will now also detect %s mode.",
+    commandAntiGMExcept: "Anti gamemode has been set to detect the gamemode which is not ${option} mode.",
+    commandAntiGMToggle: "Anti gamemode (%1 mode) has been %2",
+    commandAntiSpam: "Toggle anti spam",
+    commandAntiSpamDescription: "Enable/disable antispam feature",
+    commandAntiSpamSuccess: "Successfully %s anti spam feature. You can modify the pattern or other settings by slash command!"
 }

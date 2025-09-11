@@ -2,6 +2,8 @@ import { system, world } from "@minecraft/server";
 import type { Command } from "../main";
 import { get } from "../util/database";
 import { disableAntiGameMode, enableAntiGameMode } from "../asset/antiGamemode";
+import english from "../data/languages/english";
+import { text } from "../util/text";
 const GAMEMODES = ["adventure", "creative", "survival", "spectator"];
 export const antiGameModeOption = [...GAMEMODES, "reset"];
 export const antiGameModeSetting = ["only", "and", "except", "toggle"];
@@ -34,8 +36,14 @@ function switchGamemodeToggle() {
 }
 export default {
     name: "antigamemode",
-    description: "Adjust the settings of anti gamemode (Don't ban default gamemode!!!)",
+    description: english.commandAntiGM,
     requireOp: true,
+    translationDef: {
+        actionName: "commandAntiGM",
+        description: "commandAntiGMDescription",
+        param: ["commandAntiGMAntiGameModeOption"],
+        optionalParam: ["commandAntiGMAntiGameModeSetting"]
+    },
     parameters: [
         {
             name: "antiGameModeOption",
@@ -53,35 +61,35 @@ export default {
         const setting = settingRaw?.toLowerCase();
         if (option === "reset") {
             setAllGamemodes(false);
-            return { status: 0, message: "§7[§aMatrix§7] §fAnti gamemode settings have been reset (all modes allowed)." };
+            return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandAntiGMReset") };
         }
         if (!GAMEMODES.includes(option as any)) {
-            return { status: 1, message: `§7[§aMatrix§7] §fInvalid option! Must be one of: ${antiGameModeOption.join(", ")}` };
+            return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandAntiGMInvalid", antiGameModeOption.join(", ")) };
         }
         const gmProperty = gmKey[option as keyof typeof gmKey];
         switch (setting) {
             case "only":
                 setOnlyGamemode(option as keyof typeof gmKey);
                 switchGamemodeToggle();
-                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to only detect ${option} mode.` };
+                return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandAntiGMOnly", option) };
             case "and":
                 world.setDynamicProperty(gmProperty, true);
                 switchGamemodeToggle();
-                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode will now also detect ${option} mode.` };
+                return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandAntiGMAlso", option) };
 
             case "except":
                 setExceptGamemode(option as keyof typeof gmKey);
                 switchGamemodeToggle();
-                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode has been set to detect the gamemode which is not ${option} mode.` };
+                return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandAntiGMExcept", option) };
             case "toggle":
             case undefined: {
                 const current = world.getDynamicProperty(gmProperty) as boolean;
                 world.setDynamicProperty(gmProperty, !current);
                 switchGamemodeToggle();
-                return { status: 0, message: `§7[§aMatrix§7] §fAnti gamemode ((${option} mode) has been ${!current ? "enabled" : "disabled"}.` };
+                return { status: 0, message: `§7[§aMatrix§7] §f` + text("commandAntiGMToggle", option, current ? text("commandToggleDisable") : text("commandToggleEnable")) };
             }
             default:
-                return { status: 1, message: `§7[§aMatrix§7] §fInvalid setting! Must be one of: ${antiGameModeSetting.join(", ")}` };
+                return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandAntiGMInvalid", antiGameModeSetting.join(", ")) };
         }
     },
 } as Command;
