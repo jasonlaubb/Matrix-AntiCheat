@@ -2,11 +2,19 @@ import { system, world } from "@minecraft/server";
 import { Command } from "../main";
 import { ban, BanData, banName, checkPunish, isBanned } from "../util/punishment";
 import { parseTime } from "../util/util";
+import english from "../data/languages/english";
+import { text } from "../util/text";
 export const timeUnits = ["s", "second", "m", "minute", "h", "hour", "d", "day", "w", "week", "mo", "month", "y", "year"];
 export const banCmd = {
     name: "ban",
-    description: "Ban a player",
+    description: english.commandBanDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandBan",
+        description: "commandBanDescription",
+        param: ["commandPlayer"],
+        optionalParam: ["commandBanReason", "commandBanDuration", "commandBanTimeUnit"]
+    },
     parameters: [
         {
             name: "player",
@@ -29,19 +37,25 @@ export const banCmd = {
         },
     ],
     execute: (player, [target, reason, duration, timeUnit]) => {
-        if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §fYou need to type time unit if you want to set a duration." };
-        if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
+        if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanMissingUnit") };
+        if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanInvalidTimeUnit") };
         system.run(() => {
-            ban(target, reason ?? "No reason provided", player.name, duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
+            ban(target, reason ?? text("commandBanNoReason"), player.name, duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
             checkPunish(target);
         });
-        return { status: 0, message: "§7[§aMatrix§7] §fBanned player: " + target.name };
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandBanBanned", target.name) };
     },
 } as Command;
 export const banOffline = {
     name: "banoffline",
     description: "Ban a player who is offline",
     requireOp: true,
+    translationDef: {
+        actionName: "commandOfflineban",
+        description: "commandOfflinebanDescription",
+        param: ["commandBanPlayerName"],
+        optionalParam: ["commandBanReason", "commandBanDuration", "commandBanTimeUnit"]
+    },
     parameters: [
         {
             name: "playerName",
@@ -64,15 +78,15 @@ export const banOffline = {
         },
     ],
     execute: (player, [target, reason, duration, timeUnit]) => {
-        if (world.getDynamicProperty("nameBanData:" + target) || isBanned(target)) return { status: 1, message: "§7[§aMatrix§7] §fTarget player is already banned." };
-        if (world.getPlayers({ name: target })[0]) return { status: 1, message: "§7[§aMatrix§7] §fUse /ban instead of /banoffline if player is online!" };
-        if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §fYou need to type time unit if you want to set a duration." };
-        if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §fInvalid time unit!" };
+        if (world.getDynamicProperty("nameBanData:" + target) || isBanned(target)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandOfflinebanAlready") };
+        if (world.getPlayers({ name: target })[0]) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandOfflinebanOnline") };
+        if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanMissingUnit") };
+        if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanInvalidTimeUnit") };
         system.run(() => {
-            banName(target, reason ?? "No reason provided", player.name, duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
+            banName(target, reason ?? text("commandBanNoReason"), player.name, duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
             checkPunish(player);
         });
-        return { status: 0, message: "§7[§aMatrix§7] §fBanned player: " + target };
+        return { status: 0, message: "§7[§aMatrix§7] §f " + text("commandBanBanned", target) };
     },
 } as Command;
 export const unban = {
@@ -84,16 +98,21 @@ export const unban = {
             type: "string",
         },
     ],
+    translationDef: {
+        actionName: "commandUnban",
+        description: "commandUnbanDescription",
+        param: ["commandBanPlayerName"],
+    },
     requireOp: true,
     execute(_player, [target]) {
         const banned = isBanned(target);
         const nameBanned = world.getDynamicProperty("nameBanData:" + target);
-        if (!banned && !nameBanned) return { status: 1, message: "Target player is not banned." };
+        if (!banned && !nameBanned) return { status: 1, message: "§7[§aMatrix§7]" + text("commandUnbanNotBanned") };
         system.run(() => {
             if (banned) world.setDynamicProperty(banned!);
             if (nameBanned) world.setDynamicProperty("nameBanData:" + target);
         });
-        return { status: 0, message: "§7[§aMatrix§7] §fUnbanned player: " + target };
+        return { status: 0, message: "§7[§aMatrix§7] §f " + text("commandUnbanUnbanned", target) };
     },
 } as Command;
 export const banlist = {
