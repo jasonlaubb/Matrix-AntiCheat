@@ -139,7 +139,7 @@ export function openGeneralUI(player: Player) {
                                     const { name, message } = error as Error;
                                     if (error instanceof CommandError) {
                                         player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
-                                    } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
+                                    } else player.sendMessage(`§7[§aMatrix §cERROR§7] §f${name}: ${message}`);
                                 }
                                 return;
                             }
