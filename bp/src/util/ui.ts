@@ -80,7 +80,7 @@ export function openGeneralUI(player: Player) {
                                         .show(player)
                                         .then((res) => {
                                             if (res.canceled) return;
-                                            if (res.selection! === 0) {
+                                            if (res.selection === 0) {
                                                 const ui = new ModalFormData().title("Editing: " + selectedId);
                                                 const newValueText = text("uiNewValue");
                                                 (type === "boolean" ? ui.toggle(text("uiNewBooleanState"), { defaultValue: true }) : ui.textField(`${newValueText} (${type})`, newValueText))
@@ -162,8 +162,9 @@ export function openGeneralUI(player: Player) {
                                     const input: string[] = [];
                                     for (let i = 0; i < formValues.length; i++) {
                                         const isRequired = selectedCommand.parameters?.[i];
-                                        const option = isRequired ?? selectedCommand.optionalParameters?.[(selectedCommand.parameters?.length ?? 0) - i];
+                                        const option = isRequired ?? selectedCommand.optionalParameters?.[i - (selectedCommand.parameters?.length ?? 0)];
                                         let breaks = false;
+                                        console.log(i + " " + input.join(",") + " " + JSON.stringify(option));
                                         const value = formValues[i];
                                         switch (option?.type) {
                                             case "boolean": {
@@ -208,6 +209,7 @@ export function openGeneralUI(player: Player) {
                                         if (breaks) break;
                                     }
                                     const command = "matrix:" + selectedCommand.name.toLowerCase() + " " + input.join(" ");
+                                    console.log(`${formValues.length} ` + command);
                                     player.lastRunUICommand = true;
                                     try {
                                         player.runCommand(command);
