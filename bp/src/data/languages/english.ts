@@ -35,6 +35,7 @@ export default {
     uiToggleDetection: "Enable/Disable detection",
     uiChangeConfig: "Change configuration",
     uiAction: "Action", // Button text of the Admin GUI 'Action' button
+    uiLanguage: "Language",
     uiAntiCheatSettings: "AntiCheat Settings",
     uiChooseToDisable: "Choose to disable",
     uiChooseToEnable: "Choose to enable",

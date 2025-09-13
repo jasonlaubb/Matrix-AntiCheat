@@ -6,13 +6,14 @@ import property from "../data/property";
 import { getPropertyType } from "./propertyClassifier";
 import type { OptionType } from "../main";
 import { commands, enumRegistry } from "../data/commands";
-import { text } from "./text";
+import { languageList, text } from "./text";
 export function openGeneralUI(player: Player) {
     new ActionFormData()
         .title(text("uiAdminGUI"))
-        .button(text("uiToggleDetection"))
-        .button(text("uiChangeConfig"))
-        .button(text("uiAction"))
+        .button(text("uiToggleDetection"), "textures/items/diamond_sword.png")
+        .button(text("uiChangeConfig"), "ui/gear.png")
+        .button(text("uiAction"), "textures/ui/FriendsDiversity.png")
+        .button(text("uiLanguage"), "textures/gui/newgui/Language16.png")
         //@ts-expect-error
         .show(player)
         .then((res) => {
@@ -218,6 +219,28 @@ export function openGeneralUI(player: Player) {
                                     }
                                 });
                         });
+                    break;
+                }
+                case 3: {
+                    new ActionFormData()
+                        .title("Select your language / 请选择你的语言")
+                        .button("English")
+                        //@ts-expect-error
+                        .show(player)
+                        .then((res) => {
+                            if (res.canceled) return;
+                            const language = ["english"] as (keyof typeof languageList)[];
+                            player.lastRunUICommand = true;
+                            try {
+                                player.runCommand(`/matrix:language ${language}`);
+                            } catch (error) {
+                                const { name, message } = error as Error;
+                                if (error instanceof CommandError) {
+                                    player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
+                                } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
+                            }
+                        });
+                    break;
                 }
             }
         });
@@ -276,5 +299,4 @@ function upperCaseFirstChar(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 export function setupHelper (player: Player) {
-    player; // UNFINISHED
 }
