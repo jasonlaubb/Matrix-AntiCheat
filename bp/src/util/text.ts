@@ -5,8 +5,8 @@ let currentLanguage = english;
 export const languageList: { [key: string]: typeof english } = {
     english,
 };
-export function updateLanguage () {
-      currentLanguage = languageList[get("systemLanguage")] ?? languageList.english;
+export function updateLanguage() {
+    currentLanguage = languageList[get("systemLanguage")] ?? languageList.english;
 }
 export function text(key: TranslationKey, ...args: (string | number)[]): string {
     let string = currentLanguage[key];

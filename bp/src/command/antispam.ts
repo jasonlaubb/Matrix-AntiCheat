@@ -14,6 +14,6 @@ export default {
     execute: () => {
         const isEnabled = get("antiSpam");
         world.setDynamicProperty("database:antiSpam", !isEnabled);
-        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandAntiSpamSuccess", isEnabled ? text("commandToggleDisable") : text("commandToggleEnable"))};
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandAntiSpamSuccess", isEnabled ? text("commandToggleDisable") : text("commandToggleEnable")) };
     },
 } as Command;

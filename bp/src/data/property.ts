@@ -9,7 +9,7 @@
 export default {
     systemLanguage: {
         type: "string",
-        value: "NOT_SETTED"
+        value: "NOT_SETTED",
     },
     flagMessageTarget: {
         type: "string",

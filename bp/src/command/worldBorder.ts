@@ -10,7 +10,7 @@ export default {
     description: english.commandWorldBorderDescription,
     translationDef: {
         actionName: "commandWorldBorder",
-        description: "commandWorldBorderDescription"
+        description: "commandWorldBorderDescription",
     },
     execute: () => {
         const isEnabled = get("worldBorder");
@@ -26,7 +26,7 @@ export default {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandWorldBorderSuccess", isEnabled ? text("commandToggleDisable") : text("commandToggleEnable"))
+            message: "§7[§aMatrix§7] §f" + text("commandWorldBorderSuccess", isEnabled ? text("commandToggleDisable") : text("commandToggleEnable")),
         };
     },
 } as Command;

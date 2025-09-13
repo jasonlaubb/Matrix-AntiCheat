@@ -10,14 +10,10 @@ export const banitem = {
         actionName: "commandBanItem",
         description: "commandBanItemDescription",
         param: ["commandBanItemName"],
-        optionalParam: ["commandBanItemReason"]
+        optionalParam: ["commandBanItemReason"],
     },
-    parameters: [
-        { name: "item", type: "item" },
-    ],
-    optionalParameters: [
-        { name: "reason", type: "string" },
-    ],
+    parameters: [{ name: "item", type: "item" }],
+    optionalParameters: [{ name: "reason", type: "string" }],
     execute: (_player, [item, reason]) => {
         const isItemBanned = world.getDynamicProperty("banitem:" + item) as string;
         if (isItemBanned) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanItemAlready", item, isItemBanned) };
@@ -34,11 +30,9 @@ export const unbanitem = {
     translationDef: {
         actionName: "commandUnbanItem",
         description: "commandUnbanItemDescription",
-        param: ["commandBanItemName"]
+        param: ["commandBanItemName"],
     },
-    parameters: [
-        { name: "item", type: "item" },
-    ],
+    parameters: [{ name: "item", type: "item" }],
     execute: (_player, [item]) => {
         const isItemBanned = world.getDynamicProperty("banitem:" + item) as string;
         if (!isItemBanned) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandUnbanItemNotBanned", item) };
@@ -53,7 +47,7 @@ export const banitemlist = {
     requireOp: true,
     translationDef: {
         actionName: "commandBanItemList",
-        description: "commandBanItemListDescription"
+        description: "commandBanItemListDescription",
     },
     execute: () => {
         const bannedItems = world.getDynamicPropertyIds();
@@ -64,7 +58,7 @@ export const banitemlist = {
         if (banned.length === 0) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanItemListNone") };
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandBanItemListSuccess", banned.map((item) => `${item} - ${world.getDynamicProperty("banitem:" + item)}`).join(", "))
+            message: "§7[§aMatrix§7] §f" + text("commandBanItemListSuccess", banned.map((item) => `${item} - ${world.getDynamicProperty("banitem:" + item)}`).join(", ")),
         };
     },
 } as Command;
@@ -75,7 +69,7 @@ export const banitemclear = {
     requireOp: true,
     translationDef: {
         actionName: "commandBanItemClear",
-        description: "commandBanItemClearDescription"
+        description: "commandBanItemClearDescription",
     },
     execute: () => {
         const bannedItems = world.getDynamicPropertyIds();

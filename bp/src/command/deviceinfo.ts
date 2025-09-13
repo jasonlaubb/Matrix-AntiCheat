@@ -9,11 +9,9 @@ export default {
     translationDef: {
         actionName: "commandDeviceInfo",
         description: "commandDeviceInfoDescription",
-        param: ["commandDeviceInfoPlayer"]
+        param: ["commandDeviceInfoPlayer"],
     },
-    parameters: [
-        { name: "player", type: "player" },
-    ],
+    parameters: [{ name: "player", type: "player" }],
     execute: (_player, [target]) => {
         const player = target as Player;
         const { lastInputModeUsed, touchOnlyAffectsHotbar } = player.inputInfo;
@@ -30,7 +28,7 @@ export default {
 
         return {
             status: 0,
-            message: `§7[§aMatrix§7] §f` + text("commandDeviceInfoHeader", target.name) + "\n" + data
+            message: `§7[§aMatrix§7] §f` + text("commandDeviceInfoHeader", target.name) + "\n" + data,
         };
     },
 } as Command;

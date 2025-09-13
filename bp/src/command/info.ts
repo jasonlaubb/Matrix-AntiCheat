@@ -7,7 +7,7 @@ export default {
     requireOp: false,
     translationDef: {
         actionName: "commandInfo",
-        description: "commandInfoDescription"
+        description: "commandInfoDescription",
     },
     execute: () => {
         const version = "7.0.25";
@@ -20,12 +20,18 @@ export default {
 
         const message =
             "§7[§aMatrix§7]§7 §f" +
-            text("commandInfoVersion", version) + "\n" +
-            text("commandInfoAuthor", author) + "\n" +
-            text("commandInfoGitHub", github) + "\n" +
-            text("commandInfoCurseForge", curseforge) + "\n" +
-            text("commandInfoLicense", license) + "\n" +
-            text("commandInfoSupport") + "\n" +
+            text("commandInfoVersion", version) +
+            "\n" +
+            text("commandInfoAuthor", author) +
+            "\n" +
+            text("commandInfoGitHub", github) +
+            "\n" +
+            text("commandInfoCurseForge", curseforge) +
+            "\n" +
+            text("commandInfoLicense", license) +
+            "\n" +
+            text("commandInfoSupport") +
+            "\n" +
             text("commandInfoDiscordLinks", discordShort, discordFull);
 
         return { status: 0, message };

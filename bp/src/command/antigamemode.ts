@@ -42,7 +42,7 @@ export default {
         actionName: "commandAntiGM",
         description: "commandAntiGMDescription",
         param: ["commandAntiGMAntiGameModeOption"],
-        optionalParam: ["commandAntiGMAntiGameModeSetting"]
+        optionalParam: ["commandAntiGMAntiGameModeSetting"],
     },
     parameters: [
         {

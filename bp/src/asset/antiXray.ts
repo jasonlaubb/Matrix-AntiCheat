@@ -208,17 +208,17 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
 
     return generator();
 }
-function beforeBlockPlace (event: PlayerPlaceBlockBeforeEvent) {
+function beforeBlockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const id = event.permutationToPlace.type.id;
     if (get("banXrayHandler") || !["minecraft:piston", "minecraft:sticky_piston"].includes(id) || event.dimension.id === "minecraft:the_end") return;
     event.cancel = true;
     system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fSorry, piston's placement is disallowed in this server."));
-};
-function beforeExplosion (event: ExplosionBeforeEvent) {
+}
+function beforeExplosion(event: ExplosionBeforeEvent) {
     if (event.dimension.id === "minecraft:the_end" || get("banXrayHandler")) return;
     event.setImpactedBlocks([]);
     return;
-};
+}
 function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
     const chunks: VectorXZ[] = [];
     for (let dx = -1; dx <= 1; dx++) {
@@ -233,7 +233,7 @@ function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
 }
 const netherXrayCooldown = new Map<string, number>();
 
-function netherBlockBreakHandler (event: PlayerBreakBlockBeforeEvent) {
+function netherBlockBreakHandler(event: PlayerBreakBlockBeforeEvent) {
     const solid = event.block.isSolid;
     const chunk = getChunkOrigin(event.block.location);
     const now = Date.now();
@@ -279,10 +279,10 @@ function netherBlockBreakHandler (event: PlayerBreakBlockBeforeEvent) {
             saveChunkData(chunkPrefix, chunkData);
         }
     });
-};
+}
 const xrayCooldown = new Map<string, number>();
 
-function overworldBlockBreakHandler (event: PlayerBreakBlockBeforeEvent) {
+function overworldBlockBreakHandler(event: PlayerBreakBlockBeforeEvent) {
     const solid = event.block.isSolid;
     const chunk = getChunkOrigin(event.block.location);
     const now = Date.now();
@@ -328,7 +328,7 @@ function overworldBlockBreakHandler (event: PlayerBreakBlockBeforeEvent) {
             saveChunkData(chunkPrefix, chunkData);
         }
     });
-};
+}
 addInterval("xray", () => {
     if (get("banXrayHandler")) return;
     const silverfish = [
@@ -372,12 +372,12 @@ addInterval("xray", () => {
 function floorPos({ x, y, z }: Vector3) {
     return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
 }
-function beforeBlockBreak (event: PlayerBreakBlockBeforeEvent) {
+function beforeBlockBreak(event: PlayerBreakBlockBeforeEvent) {
     if (event.dimension.id === "minecraft:overworld") {
         overworldBlockBreakHandler(event);
     } else if (event.dimension.id === "minecraft:nether") netherBlockBreakHandler(event);
 }
-export function antiXrayOn () {
+export function antiXrayOn() {
     world.beforeEvents.playerBreakBlock.subscribe(beforeBlockBreak);
     world.beforeEvents.playerPlaceBlock.subscribe(beforeBlockPlace);
     world.beforeEvents.explosion.subscribe(beforeExplosion);

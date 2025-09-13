@@ -10,14 +10,10 @@ export const warn = {
         actionName: "commandWarn",
         description: "commandWarnDescription",
         param: ["commandWarnTarget"],
-        optionalParam: ["commandWarnAmount"]
+        optionalParam: ["commandWarnAmount"],
     },
-    parameters: [
-        { name: "player", type: "player" },
-    ],
-    optionalParameters: [
-        { name: "amount", type: "integer", max: 32767, min: -32767 },
-    ],
+    parameters: [{ name: "player", type: "player" }],
+    optionalParameters: [{ name: "amount", type: "integer", max: 32767, min: -32767 }],
     execute: (_player, [target, amount]) => {
         const warnAmount = amount ?? 1;
         const currentWarn = Math.min(32767, Math.max(0, ((world.getDynamicProperty("warn:" + target.name) as number) ?? 0) + warnAmount));
@@ -27,13 +23,13 @@ export const warn = {
             world.sendMessage(text("commandWarnBroadcast", target.name));
             return {
                 status: 0,
-                message: "§7[§aMatrix§7] §f" + text("commandWarnAdded", target.name, warnAmount, currentWarn)
+                message: "§7[§aMatrix§7] §f" + text("commandWarnAdded", target.name, warnAmount, currentWarn),
             };
         }
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandWarnRemoved", Math.abs(warnAmount), target.name, currentWarn)
+            message: "§7[§aMatrix§7] §f" + text("commandWarnRemoved", Math.abs(warnAmount), target.name, currentWarn),
         };
     },
 } as Command;
@@ -45,22 +41,20 @@ export const warnof = {
     translationDef: {
         actionName: "commandWarnOf",
         description: "commandWarnOfDescription",
-        param: ["commandWarnOfTarget"]
+        param: ["commandWarnOfTarget"],
     },
-    parameters: [
-        { name: "playerName", type: "string" },
-    ],
+    parameters: [{ name: "playerName", type: "string" }],
     execute: (_player, [name]) => {
         const data = world.getDynamicProperty("warn:" + name) as number;
         if (!data) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandWarnNone", name)
+                message: "§7[§aMatrix§7] §f" + text("commandWarnNone", name),
             };
         }
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandWarnTotal", name, data)
+            message: "§7[§aMatrix§7] §f" + text("commandWarnTotal", name, data),
         };
     },
 } as Command;
@@ -71,29 +65,27 @@ export const warns = {
     translationDef: {
         actionName: "commandWarns",
         description: "commandWarnsDescription",
-        optionalParam: ["commandWarnsTarget"]
+        optionalParam: ["commandWarnsTarget"],
     },
-    optionalParameters: [
-        { name: "player", type: "player" },
-    ],
+    optionalParameters: [{ name: "player", type: "player" }],
     execute: (player, [target]) => {
         if (target) {
             if (!player.isOp()) {
                 return {
                     status: 1,
-                    message: "§7[§aMatrix§7] §f" + text("commandWarnViewDenied")
+                    message: "§7[§aMatrix§7] §f" + text("commandWarnViewDenied"),
                 };
             }
             const data = world.getDynamicProperty("warn:" + target.name) as number;
             if (!data) {
                 return {
                     status: 1,
-                    message: "§7[§aMatrix§7] §f" + text("commandWarnNone", target.name)
+                    message: "§7[§aMatrix§7] §f" + text("commandWarnNone", target.name),
                 };
             }
             return {
                 status: 0,
-                message: "§7[§aMatrix§7] §f" + text("commandWarnTotal", target.name, data)
+                message: "§7[§aMatrix§7] §f" + text("commandWarnTotal", target.name, data),
             };
         }
 
@@ -101,13 +93,13 @@ export const warns = {
         if (!data || data === 0) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandWarnSelfNone")
+                message: "§7[§aMatrix§7] §f" + text("commandWarnSelfNone"),
             };
         }
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandWarnSelfTotal", data)
+            message: "§7[§aMatrix§7] §f" + text("commandWarnSelfTotal", data),
         };
     },
 } as Command;
@@ -119,23 +111,21 @@ export const warnreset = {
     translationDef: {
         actionName: "commandWarnReset",
         description: "commandWarnResetDescription",
-        param: ["commandWarnResetTarget"]
+        param: ["commandWarnResetTarget"],
     },
-    parameters: [
-        { name: "player", type: "player" },
-    ],
+    parameters: [{ name: "player", type: "player" }],
     execute: (_player, [target]) => {
         const data = world.getDynamicProperty("warn:" + target.name) as number;
         if (!data) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandWarnNone", target.name)
+                message: "§7[§aMatrix§7] §f" + text("commandWarnNone", target.name),
             };
         }
         world.setDynamicProperty("warn:" + target.name);
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandWarnResetSuccess", target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandWarnResetSuccess", target.name),
         };
     },
 } as Command;
@@ -146,7 +136,7 @@ export const warnclear = {
     requireOp: true,
     translationDef: {
         actionName: "commandWarnClear",
-        description: "commandWarnClearDescription"
+        description: "commandWarnClearDescription",
     },
     execute: (_player) => {
         let clearedAmount = 0;
@@ -159,13 +149,13 @@ export const warnclear = {
         if (clearedAmount === 0) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandWarnClearNone")
+                message: "§7[§aMatrix§7] §f" + text("commandWarnClearNone"),
             };
         }
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandWarnClearSuccess")
+            message: "§7[§aMatrix§7] §f" + text("commandWarnClearSuccess"),
         };
     },
 } as Command;
@@ -176,7 +166,7 @@ export const warnlist = {
     requireOp: true,
     translationDef: {
         actionName: "commandWarnList",
-        description: "commandWarnListDescription"
+        description: "commandWarnListDescription",
     },
     execute: (_player) => {
         let warnRecord: string[] = [];
@@ -189,13 +179,13 @@ export const warnlist = {
         if (warnRecord.length === 0) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandWarnClearNone")
+                message: "§7[§aMatrix§7] §f" + text("commandWarnClearNone"),
             };
         }
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandWarnListSuccess", warnRecord.length, warnRecord.join("\n"))
+            message: "§7[§aMatrix§7] §f" + text("commandWarnListSuccess", warnRecord.length, warnRecord.join("\n")),
         };
     },
 } as Command;

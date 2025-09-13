@@ -9,16 +9,14 @@ export default {
     translationDef: {
         actionName: "commandLanguage",
         description: "commandLanguageDescription",
-        param: ["commandLanguageValue"]
+        param: ["commandLanguageValue"],
     },
-    parameters: [
-        { name: "language", type: "enum" }
-    ],
+    parameters: [{ name: "language", type: "enum" }],
     execute: (_player, [language]) => {
         if (!Object.keys(languageList).includes(language)) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandLanguageInvalid", language)
+                message: "§7[§aMatrix§7] §f" + text("commandLanguageInvalid", language),
             };
         }
 
@@ -27,7 +25,7 @@ export default {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandLanguageSuccess", language)
+            message: "§7[§aMatrix§7] §f" + text("commandLanguageSuccess", language),
         };
-    }
+    },
 } as Command;

@@ -9,13 +9,13 @@ export const watchtp = {
     requireOp: true,
     translationDef: {
         actionName: "commandWatchTp",
-        description: "commandWatchTpDescription"
+        description: "commandWatchTpDescription",
     },
     execute: (player) => {
         if (!player?.isWatching || !player.watchTargetPos) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandWatchTpNotWatching")
+                message: "§7[§aMatrix§7] §f" + text("commandWatchTpNotWatching"),
             };
         }
 
@@ -37,7 +37,7 @@ export const watchtp = {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandWatchTpSuccess")
+            message: "§7[§aMatrix§7] §f" + text("commandWatchTpSuccess"),
         };
     },
 } as Command;
@@ -48,7 +48,7 @@ export default {
     translationDef: {
         actionName: "commandWatch",
         description: "commandWatchDescription",
-        optionalParam: ["commandWatchType", "commandWatchTarget"]
+        optionalParam: ["commandWatchType", "commandWatchTarget"],
     },
     optionalParameters: [
         { name: "viewType", type: "enum" },
@@ -60,13 +60,13 @@ export default {
                 player.cameraType = type;
                 return {
                     status: 0,
-                    message: "§7[§aMatrix§7] §f" + text("commandWatchSwitchType", type)
+                    message: "§7[§aMatrix§7] §f" + text("commandWatchSwitchType", type),
                 };
             } else {
                 player.isWatching = false;
                 return {
                     status: 0,
-                    message: "§7[§aMatrix§7] §f" + text("commandWatchExit")
+                    message: "§7[§aMatrix§7] §f" + text("commandWatchExit"),
                 };
             }
         }
@@ -74,7 +74,7 @@ export default {
         if (!target) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandWatchMissingTarget")
+                message: "§7[§aMatrix§7] §f" + text("commandWatchMissingTarget"),
             };
         }
 
@@ -86,7 +86,7 @@ export default {
         if (targetPlayer.dimension.id !== player.dimension.id) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandWatchDifferentDimension")
+                message: "§7[§aMatrix§7] §f" + text("commandWatchDifferentDimension"),
             };
         }
 

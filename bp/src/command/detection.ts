@@ -69,7 +69,7 @@ export const detection = {
     translationDef: {
         actionName: "commandDetection",
         description: "commandDetectionDescription",
-        param: ["commandDetectionName", "commandDetectionToggle"]
+        param: ["commandDetectionName", "commandDetectionToggle"],
     },
     parameters: [
         { name: "detectionName", type: "enum" },
@@ -80,7 +80,7 @@ export const detection = {
         if (!toggle) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandDetectionInvalid", Object.keys(detectionList).join(", "))
+                message: "§7[§aMatrix§7] §f" + text("commandDetectionInvalid", Object.keys(detectionList).join(", ")),
             };
         }
 
@@ -88,7 +88,7 @@ export const detection = {
         if (currentEnabled === enable) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandDetectionAlready", name, enable ? "enabled" : "disabled")
+                message: "§7[§aMatrix§7] §f" + text("commandDetectionAlready", name, enable ? "enabled" : "disabled"),
             };
         }
 
@@ -105,13 +105,13 @@ export const detection = {
         if (["speed", "killaura", "fly", "invalidSprint"].includes(name) && enable === true) {
             return {
                 status: 0,
-                message: "§7[§aMatrix§7] §f" + text("commandDetectionRestartRequired")
+                message: "§7[§aMatrix§7] §f" + text("commandDetectionRestartRequired"),
             };
         }
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandDetectionToggled", name, enable ? "enabled" : "disabled")
+            message: "§7[§aMatrix§7] §f" + text("commandDetectionToggled", name, enable ? "enabled" : "disabled"),
         };
     },
 } as Command;
@@ -121,7 +121,7 @@ export const detectionlist = {
     requireOp: true,
     translationDef: {
         actionName: "commandDetectionList",
-        description: "commandDetectionListDescription"
+        description: "commandDetectionListDescription",
     },
     execute: (_player) => {
         const list = Object.entries(detectionList)
@@ -133,7 +133,7 @@ export const detectionlist = {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandDetectionListHeader") + "\n" + list
+            message: "§7[§aMatrix§7] §f" + text("commandDetectionListHeader") + "\n" + list,
         };
     },
 } as Command;

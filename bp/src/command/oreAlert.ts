@@ -10,7 +10,7 @@ export default {
     description: english.commandOreAlertDescription,
     translationDef: {
         actionName: "commandOreAlert",
-        description: "commandOreAlertDescription"
+        description: "commandOreAlertDescription",
     },
     execute: () => {
         const isEnabled = get("oreAlert");
@@ -26,7 +26,7 @@ export default {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandOreAlertSuccess", isEnabled ? text("commandToggleDisable") : text("commandToggleEnable"))
+            message: "§7[§aMatrix§7] §f" + text("commandOreAlertSuccess", isEnabled ? text("commandToggleDisable") : text("commandToggleEnable")),
         };
     },
 } as Command;

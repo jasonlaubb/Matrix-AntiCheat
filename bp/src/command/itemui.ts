@@ -8,13 +8,13 @@ export default {
     requireOp: true,
     translationDef: {
         actionName: "commandItemUi",
-        description: "commandItemUiDescription"
+        description: "commandItemUiDescription",
     },
     execute: (player) => {
         system.run(() => player.getComponent("inventory")!.container.addItem(new ItemStack("matrix:ui_tool")));
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandItemUiSuccess")
+            message: "§7[§aMatrix§7] §f" + text("commandItemUiSuccess"),
         };
     },
 } as Command;

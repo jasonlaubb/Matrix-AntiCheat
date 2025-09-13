@@ -10,16 +10,14 @@ export default {
     translationDef: {
         actionName: "commandFlagMsgTarget",
         description: "commandFlagMsgTargetDescription",
-        param: ["commandFlagMsgTargetValue"]
+        param: ["commandFlagMsgTargetValue"],
     },
-    parameters: [
-        { name: "messageTarget", type: "enum" },
-    ],
+    parameters: [{ name: "messageTarget", type: "enum" }],
     execute: (_player, [newMessageTarget]) => {
         if (!messageTarget.includes(newMessageTarget)) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandFlagMsgTargetInvalid", newMessageTarget)
+                message: "§7[§aMatrix§7] §f" + text("commandFlagMsgTargetInvalid", newMessageTarget),
             };
         }
 
@@ -27,7 +25,7 @@ export default {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandFlagMsgTargetSuccess", newMessageTarget)
+            message: "§7[§aMatrix§7] §f" + text("commandFlagMsgTargetSuccess", newMessageTarget),
         };
     },
 } as Command;

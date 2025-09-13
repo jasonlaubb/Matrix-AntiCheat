@@ -11,11 +11,9 @@ export const freecam = {
     translationDef: {
         actionName: "commandFreecam",
         description: "commandFreecamDescription",
-        optionalParam: ["commandFreecamTarget"]
+        optionalParam: ["commandFreecamTarget"],
     },
-    optionalParameters: [
-        { name: "player", type: "player" },
-    ],
+    optionalParameters: [{ name: "player", type: "player" }],
     execute: (player, [target]) => {
         if (player?.freecamCameraPosition) {
             if (target) {
@@ -65,7 +63,7 @@ export const freecamtp = {
     requireOp: true,
     translationDef: {
         actionName: "commandFreecamTp",
-        description: "commandFreecamTpDescription"
+        description: "commandFreecamTpDescription",
     },
     execute: (player) => {
         if (!player?.freecamCameraPosition) {
@@ -90,11 +88,9 @@ export const freecamspeed = {
     translationDef: {
         actionName: "commandFreecamSpeed",
         description: "commandFreecamSpeedDescription",
-        optionalParam: ["commandFreecamSpeedValue"]
+        optionalParam: ["commandFreecamSpeedValue"],
     },
-    optionalParameters: [
-        { type: "integer", name: "speed", min: 1, max: 8 },
-    ],
+    optionalParameters: [{ type: "integer", name: "speed", min: 1, max: 8 }],
     execute: (player, [speed]) => {
         if (!speed) {
             const currentSpeed = player.getDynamicProperty("freecamSpeed") as number;

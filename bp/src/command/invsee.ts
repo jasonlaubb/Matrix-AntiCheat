@@ -35,45 +35,45 @@ function createLargeChest(dimension: Dimension, location: Vector3, items: ItemSt
 function midPoint({ x, y, z }: Vector3, { x: x2, z: z2 }: Vector3) {
     return { x: (x + x2) * 0.5 + 0.5, y: y + 1, z: (z + z2) * 0.5 + 0.5 };
 }
-export function invseeHandler () {
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    const block = event.block;
-    if (block.type.id === "minecraft:chest") {
-        const otherBlockPos = world.getDynamicProperty("invseeChest:" + stringXyz(block.location)) as Vector3;
-        if (otherBlockPos === undefined) return;
-        event.cancel = true;
-        if (!event.player.isOp()) {
-            event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeBreakDenied"));
-            return;
-        }
-        system.run(() => {
-            block.setType("air");
-            event.dimension.getBlock(otherBlockPos)!.setType("air");
-            world.setDynamicProperty("invseeChest:" + stringXyz(block.location));
-            world.setDynamicProperty("invseeChest:" + stringXyz(otherBlockPos));
-            event.dimension
-                .getEntities({
-                    location: midPoint(event.block.location, otherBlockPos),
-                    maxDistance: 2,
-                    type: "minecraft:item",
-                })
-                .forEach((entity) => entity.kill());
-        });
-    } else {
-        if (world.getDynamicProperty("invseeChest:" + stringXyz({ x: block.location.x, y: block.location.y + 1, z: block.location.z }))) {
+export function invseeHandler() {
+    world.beforeEvents.playerBreakBlock.subscribe((event) => {
+        const block = event.block;
+        if (block.type.id === "minecraft:chest") {
+            const otherBlockPos = world.getDynamicProperty("invseeChest:" + stringXyz(block.location)) as Vector3;
+            if (otherBlockPos === undefined) return;
             event.cancel = true;
-            event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeBlockProtected"));
+            if (!event.player.isOp()) {
+                event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeBreakDenied"));
+                return;
+            }
+            system.run(() => {
+                block.setType("air");
+                event.dimension.getBlock(otherBlockPos)!.setType("air");
+                world.setDynamicProperty("invseeChest:" + stringXyz(block.location));
+                world.setDynamicProperty("invseeChest:" + stringXyz(otherBlockPos));
+                event.dimension
+                    .getEntities({
+                        location: midPoint(event.block.location, otherBlockPos),
+                        maxDistance: 2,
+                        type: "minecraft:item",
+                    })
+                    .forEach((entity) => entity.kill());
+            });
+        } else {
+            if (world.getDynamicProperty("invseeChest:" + stringXyz({ x: block.location.x, y: block.location.y + 1, z: block.location.z }))) {
+                event.cancel = true;
+                event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeBlockProtected"));
+            }
         }
-    }
-});
-world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
-    const block = event.block;
-    if (block.type.id !== "minecraft:chest") return;
-    const data = world.getDynamicProperty("invseeChest:" + stringXyz(block.location));
-    if (!data || event.player.isOp()) return;
-    event.cancel = true;
-    event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeOpenDenied"));
-});
+    });
+    world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
+        const block = event.block;
+        if (block.type.id !== "minecraft:chest") return;
+        const data = world.getDynamicProperty("invseeChest:" + stringXyz(block.location));
+        if (!data || event.player.isOp()) return;
+        event.cancel = true;
+        event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeOpenDenied"));
+    });
 }
 export default {
     name: "invsee",
@@ -82,16 +82,14 @@ export default {
     translationDef: {
         actionName: "commandInvsee",
         description: "commandInvseeDescription",
-        param: ["commandInvseeTarget"]
+        param: ["commandInvseeTarget"],
     },
-    parameters: [
-        { name: "player", type: "player" },
-    ],
+    parameters: [{ name: "player", type: "player" }],
     execute: (player, [target]) => {
         if (get("banInvseeHandler")) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandInvseeDisabled")
+                message: "§7[§aMatrix§7] §f" + text("commandInvseeDisabled"),
             };
         }
 

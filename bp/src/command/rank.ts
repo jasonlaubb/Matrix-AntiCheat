@@ -11,28 +11,26 @@ export const rankadd = {
         actionName: "commandRankAdd",
         description: "commandRankAddDescription",
         param: ["commandRankAddTarget", "commandRankAddName"],
-        optionalParam: ["commandRankAddTier"]
+        optionalParam: ["commandRankAddTier"],
     },
     parameters: [
         { name: "player", type: "player" },
         { name: "rank", type: "string" },
     ],
-    optionalParameters: [
-        { name: "tier", type: "integer" },
-    ],
+    optionalParameters: [{ name: "tier", type: "integer" }],
     execute: (_player, [target, rank, tier]) => {
         if (rank.includes(":")) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandRankInvalidSymbol") };
         const tag = `${get("chatRankTagPrefix")}${rank}::${tier ?? 0}`;
         if (target.getTags().includes(tag)) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandRankAlreadyHas", rank)
+                message: "§7[§aMatrix§7] §f" + text("commandRankAlreadyHas", rank),
             };
         }
         system.run(() => target.addTag(tag));
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandRankAddSuccess", rank, tier ?? 0, target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandRankAddSuccess", rank, tier ?? 0, target.name),
         };
     },
 } as Command;
@@ -44,7 +42,7 @@ export const rankremove = {
     translationDef: {
         actionName: "commandRankRemove",
         description: "commandRankRemoveDescription",
-        param: ["commandRankRemoveTarget", "commandRankRemoveName"]
+        param: ["commandRankRemoveTarget", "commandRankRemoveName"],
     },
     parameters: [
         { name: "player", type: "player" },
@@ -55,13 +53,13 @@ export const rankremove = {
         if (targetTags.length === 0) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandRankNotFound", rank)
+                message: "§7[§aMatrix§7] §f" + text("commandRankNotFound", rank),
             };
         }
         system.run(() => targetTags.forEach((tag) => target.removeTag(tag)));
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandRankRemoveSuccess", rank, target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandRankRemoveSuccess", rank, target.name),
         };
     },
 } as Command;
@@ -73,11 +71,9 @@ export const ranklist = {
     translationDef: {
         actionName: "commandRankList",
         description: "commandRankListDescription",
-        param: ["commandRankListTarget"]
+        param: ["commandRankListTarget"],
     },
-    parameters: [
-        { name: "player", type: "player" },
-    ],
+    parameters: [{ name: "player", type: "player" }],
     execute: (_player, [target]) => {
         const rankPrefix = get("chatRankTagPrefix");
         const ranks = (target.getTags() as string[])
@@ -91,14 +87,14 @@ export const ranklist = {
         if (ranks.length === 0) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandRankListEmpty", target.name)
+                message: "§7[§aMatrix§7] §f" + text("commandRankListEmpty", target.name),
             };
         }
 
         const formatted = ranks.map(({ rank, tier }) => `§r${rank} §r§7(${tier})§r`).join(", ");
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandRankListSuccess", target.name, formatted)
+            message: "§7[§aMatrix§7] §f" + text("commandRankListSuccess", target.name, formatted),
         };
     },
 } as Command;
@@ -111,15 +107,13 @@ export const rankset = {
         actionName: "commandRankSet",
         description: "commandRankSetDescription",
         param: ["commandRankSetTarget", "commandRankSetName"],
-        optionalParam: ["commandRankSetTier"]
+        optionalParam: ["commandRankSetTier"],
     },
     parameters: [
         { name: "player", type: "player" },
         { name: "rank", type: "string" },
     ],
-    optionalParameters: [
-        { name: "tier", type: "integer" },
-    ],
+    optionalParameters: [{ name: "tier", type: "integer" }],
     execute: (_player, [target, rank, tier]) => {
         if (rank.includes(":")) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandRankInvalidSymbol") };
         const prefix = get("chatRankTagPrefix");
@@ -131,7 +125,7 @@ export const rankset = {
         });
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandRankSetSuccess", rank, tier ?? 0, target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandRankSetSuccess", rank, tier ?? 0, target.name),
         };
     },
 } as Command;
@@ -143,24 +137,22 @@ export const rankclear = {
     translationDef: {
         actionName: "commandRankClear",
         description: "commandRankClearDescription",
-        param: ["commandRankClearTarget"]
+        param: ["commandRankClearTarget"],
     },
-    parameters: [
-        { name: "player", type: "player" },
-    ],
+    parameters: [{ name: "player", type: "player" }],
     execute: (_player, [target]) => {
         const prefix = get("chatRankTagPrefix");
         const targetTags = (target.getTags() as string[]).filter((t) => t.startsWith(prefix));
         if (targetTags.length === 0) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandRankListEmpty", target.name)
+                message: "§7[§aMatrix§7] §f" + text("commandRankListEmpty", target.name),
             };
         }
         system.run(() => targetTags.forEach((tag) => target.removeTag(tag)));
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandRankClearSuccess", target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandRankClearSuccess", target.name),
         };
     },
 } as Command;

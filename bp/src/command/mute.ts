@@ -13,11 +13,9 @@ export const mute = {
         actionName: "commandMute",
         description: "commandMuteDescription",
         param: ["commandMuteTarget"],
-        optionalParam: ["commandMuteDuration", "commandMuteTimeUnit"]
+        optionalParam: ["commandMuteDuration", "commandMuteTimeUnit"],
     },
-    parameters: [
-        { name: "player", type: "playerTarget" },
-    ],
+    parameters: [{ name: "player", type: "playerTarget" }],
     optionalParameters: [
         { name: "duration", type: "float", min: 1 },
         { name: "timeUnit", type: "enum" },
@@ -26,28 +24,28 @@ export const mute = {
         if (!hasEducationalFeature()) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandMuteMissingEdu")
+                message: "§7[§aMatrix§7] §f" + text("commandMuteMissingEdu"),
             };
         }
 
         if (target.getDynamicProperty("muteData:" + target.id)) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandMuteAlready", target.name)
+                message: "§7[§aMatrix§7] §f" + text("commandMuteAlready", target.name),
             };
         }
 
         if (duration && !timeUnit) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandMuteMissingUnit")
+                message: "§7[§aMatrix§7] §f" + text("commandMuteMissingUnit"),
             };
         }
 
         if (duration && !timeUnits.includes(timeUnit)) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandMuteInvalidUnit", timeUnit)
+                message: "§7[§aMatrix§7] §f" + text("commandMuteInvalidUnit", timeUnit),
             };
         }
 
@@ -58,7 +56,7 @@ export const mute = {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandMuteSuccess", target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandMuteSuccess", target.name),
         };
     },
 } as Command;
@@ -69,23 +67,21 @@ export const unmute = {
     translationDef: {
         actionName: "commandUnmute",
         description: "commandUnmuteDescription",
-        param: ["commandUnmuteTarget"]
+        param: ["commandUnmuteTarget"],
     },
-    parameters: [
-        { name: "player", type: "playerTarget" },
-    ],
+    parameters: [{ name: "player", type: "playerTarget" }],
     execute: (_player, [target]) => {
         if (!hasEducationalFeature()) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandMuteMissingEdu")
+                message: "§7[§aMatrix§7] §f" + text("commandMuteMissingEdu"),
             };
         }
 
         if (!target.getDynamicProperty("muteData:" + target.id)) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandUnmuteNotMuted", target.name)
+                message: "§7[§aMatrix§7] §f" + text("commandUnmuteNotMuted", target.name),
             };
         }
 
@@ -96,7 +92,7 @@ export const unmute = {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandUnmuteSuccess", target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandUnmuteSuccess", target.name),
         };
     },
 } as Command;

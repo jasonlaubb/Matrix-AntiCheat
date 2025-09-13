@@ -12,7 +12,7 @@ export const setBoolean = {
     translationDef: {
         actionName: "commandSetBoolean",
         description: "commandSetBooleanDescription",
-        param: ["commandSetBooleanProperty", "commandSetBooleanValue"]
+        param: ["commandSetBooleanProperty", "commandSetBooleanValue"],
     },
     parameters: [
         { name: "booleanProperty", type: "enum" },
@@ -25,7 +25,7 @@ export const setBoolean = {
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandSetBooleanSuccess", id, value ? "true" : "false")
+            message: "§7[§aMatrix§7] §f" + text("commandSetBooleanSuccess", id, value ? "true" : "false"),
         };
     },
 } as Command;
@@ -37,7 +37,7 @@ export const setString = {
     translationDef: {
         actionName: "commandSetString",
         description: "commandSetStringDescription",
-        param: ["commandSetStringProperty", "commandSetStringValue"]
+        param: ["commandSetStringProperty", "commandSetStringValue"],
     },
     parameters: [
         { name: "stringProperty", type: "enum" },
@@ -50,7 +50,7 @@ export const setString = {
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandSetStringSuccess", id, value)
+            message: "§7[§aMatrix§7] §f" + text("commandSetStringSuccess", id, value),
         };
     },
 } as Command;
@@ -62,7 +62,7 @@ export const setNumber = {
     translationDef: {
         actionName: "commandSetNumber",
         description: "commandSetNumberDescription",
-        param: ["commandSetNumberProperty", "commandSetNumberValue"]
+        param: ["commandSetNumberProperty", "commandSetNumberValue"],
     },
     parameters: [
         { name: "numberProperty", type: "enum" },
@@ -75,7 +75,7 @@ export const setNumber = {
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandSetNumberSuccess", id, value)
+            message: "§7[§aMatrix§7] §f" + text("commandSetNumberSuccess", id, value),
         };
     },
 } as Command;
@@ -86,14 +86,14 @@ export const resetConfig = {
     requireOp: true,
     translationDef: {
         actionName: "commandResetConfig",
-        description: "commandResetConfigDescription"
+        description: "commandResetConfigDescription",
     },
     execute: (player) => {
         const matches = world.getDynamicPropertyIds().filter((id) => id.startsWith("database:"));
         if (matches.length === 0) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandResetConfigEmpty")
+                message: "§7[§aMatrix§7] §f" + text("commandResetConfigEmpty"),
             };
         }
         system.run(() => {
@@ -121,22 +121,20 @@ export const clearProperty = {
     translationDef: {
         actionName: "commandClearProperty",
         description: "commandClearPropertyDescription",
-        param: ["commandClearPropertyTarget"]
+        param: ["commandClearPropertyTarget"],
     },
-    parameters: [
-        { name: "property", type: "enum" },
-    ],
+    parameters: [{ name: "property", type: "enum" }],
     execute: (_player, [id]) => {
         if (!world.getDynamicProperty("database:" + id)) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandClearPropertyNotChanged")
+                message: "§7[§aMatrix§7] §f" + text("commandClearPropertyNotChanged"),
             };
         }
         system.run(() => world.setDynamicProperty("database:" + id));
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandClearPropertySuccess")
+            message: "§7[§aMatrix§7] §f" + text("commandClearPropertySuccess"),
         };
     },
 } as Command;
@@ -148,11 +146,9 @@ export const getProperty = {
     translationDef: {
         actionName: "commandGetProperty",
         description: "commandGetPropertyDescription",
-        param: ["commandGetPropertyTarget"]
+        param: ["commandGetPropertyTarget"],
     },
-    parameters: [
-        { name: "property", type: "enum" },
-    ],
+    parameters: [{ name: "property", type: "enum" }],
     execute: (_player, [id]) => {
         if (!Object.keys(property).includes(id)) {
             return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandInvalidProperty") };
@@ -161,7 +157,7 @@ export const getProperty = {
         const dynamic = world.getDynamicProperty("database:" + id) ?? "--";
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandGetPropertySuccess", id, type, "" + value, "" + dynamic)
+            message: "§7[§aMatrix§7] §f" + text("commandGetPropertySuccess", id, type, "" + value, "" + dynamic),
         };
     },
 } as Command;

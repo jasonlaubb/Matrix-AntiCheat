@@ -8,7 +8,7 @@ export default {
     requireOp: true,
     translationDef: {
         actionName: "commandUi",
-        description: "commandUiDescription"
+        description: "commandUiDescription",
     },
     execute: (player) => {
         system.run(() => openGeneralUI(player));

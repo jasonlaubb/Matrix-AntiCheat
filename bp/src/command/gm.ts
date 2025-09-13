@@ -8,7 +8,7 @@ export const gma = {
     description: english.commandGmaDescription,
     translationDef: {
         actionName: "commandGma",
-        description: "commandGmaDescription"
+        description: "commandGmaDescription",
     },
     execute: (player) => {
         system.run(() => player.setGameMode(GameMode.Adventure));
@@ -22,7 +22,7 @@ export const gmc = {
     description: english.commandGmcDescription,
     translationDef: {
         actionName: "commandGmc",
-        description: "commandGmcDescription"
+        description: "commandGmcDescription",
     },
     execute: (player) => {
         system.run(() => player.setGameMode(GameMode.Creative));
@@ -36,7 +36,7 @@ export const gms = {
     description: english.commandGmsDescription,
     translationDef: {
         actionName: "commandGms",
-        description: "commandGmsDescription"
+        description: "commandGmsDescription",
     },
     execute: (player) => {
         system.run(() => player.setGameMode(GameMode.Survival));
@@ -50,7 +50,7 @@ export const gmsp = {
     description: english.commandGmspDescription,
     translationDef: {
         actionName: "commandGmsp",
-        description: "commandGmspDescription"
+        description: "commandGmspDescription",
     },
     execute: (player) => {
         system.run(() => player.setGameMode(GameMode.Spectator));

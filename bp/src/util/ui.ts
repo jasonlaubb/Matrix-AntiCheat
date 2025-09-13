@@ -57,11 +57,9 @@ export function openGeneralUI(player: Player) {
                                 console.warn("ui(57) :: Unexpected no selected property");
                                 return;
                             }
-                            const ui = new ActionFormData()
-                                .title(text("uiSelectProperty"))
-                                .body(text("uiSelectPropertyBody"));
+                            const ui = new ActionFormData().title(text("uiSelectProperty")).body(text("uiSelectPropertyBody"));
                             selectedProperty.forEach((value) => {
-                                ui.button("§9" + value + "\n§1" + get(value as keyof typeof property))
+                                ui.button("§9" + value + "\n§1" + get(value as keyof typeof property));
                             });
                             ui
                                 //@ts-expect-error
@@ -246,7 +244,7 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
         }
         case "float":
         case "integer": {
-            let  placeholder = type === "float" ? text("uiFloat") : text("uiInteger");
+            let placeholder = type === "float" ? text("uiFloat") : text("uiInteger");
             if (range[0] && range[1]) {
                 placeholder = `${type} (${range[0]} - ${range[1]})`;
             } else if (range[0]) {

@@ -13,7 +13,7 @@ export const banCmd = {
         actionName: "commandBan",
         description: "commandBanDescription",
         param: ["commandPlayer"],
-        optionalParam: ["commandBanReason", "commandBanDuration", "commandBanTimeUnit"]
+        optionalParam: ["commandBanReason", "commandBanDuration", "commandBanTimeUnit"],
     },
     parameters: [
         {
@@ -54,7 +54,7 @@ export const banOffline = {
         actionName: "commandOfflineban",
         description: "commandOfflinebanDescription",
         param: ["commandBanPlayerName"],
-        optionalParam: ["commandBanReason", "commandBanDuration", "commandBanTimeUnit"]
+        optionalParam: ["commandBanReason", "commandBanDuration", "commandBanTimeUnit"],
     },
     parameters: [
         {

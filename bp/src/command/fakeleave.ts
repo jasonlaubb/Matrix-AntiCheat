@@ -9,7 +9,7 @@ export default {
     translationDef: {
         actionName: "commandFakeLeave",
         description: "commandFakeLeaveDescription",
-        optionalParam: ["commandFakeLeaveIsRealm", "commandFakeLeaveInvisibility"]
+        optionalParam: ["commandFakeLeaveIsRealm", "commandFakeLeaveInvisibility"],
     },
     optionalParameters: [
         { name: "isRealm", type: "boolean" },
@@ -32,7 +32,7 @@ export default {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandFakeLeaveSuccess")
+            message: "§7[§aMatrix§7] §f" + text("commandFakeLeaveSuccess"),
         };
     },
 } as Command;

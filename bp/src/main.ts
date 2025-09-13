@@ -54,7 +54,7 @@ export interface Command {
         param?: TranslationKey[];
         optionalParam?: TranslationKey[];
         description: TranslationKey;
-    }
+    };
     /** @warning Early execution, please add system.run if you want to do edit to world */
     execute: (player: Player, args: any[]) => CustomCommandResult;
 }
@@ -109,7 +109,7 @@ system.beforeEvents.startup.subscribe((event) => {
             (origin, ...args) => {
                 const player = origin.sourceEntity;
                 if (!player || !(player instanceof Player) || (requireOp && !player.isOp())) {
-                    return { status: 1 }
+                    return { status: 1 };
                 }
                 const feedback = !player?.lastRunUICommand && world.gameRules.sendCommandFeedback;
                 if (player.lastRunUICommand) delete player.lastRunUICommand;

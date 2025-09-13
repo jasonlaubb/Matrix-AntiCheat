@@ -9,11 +9,9 @@ export default {
     translationDef: {
         actionName: "commandInvCopy",
         description: "commandInvCopyDescription",
-        param: ["commandInvCopyTarget"]
+        param: ["commandInvCopyTarget"],
     },
-    parameters: [
-        { name: "player", type: "normalPlayerTarget" },
-    ],
+    parameters: [{ name: "player", type: "normalPlayerTarget" }],
     execute: (player, [target]) => {
         const targetPlayer = target as Player;
         system.run(() => {
@@ -24,14 +22,12 @@ export default {
             }
             const fromEquip = targetPlayer.getComponent("equippable")!;
             const toEquip = player.getComponent("equippable")!;
-            [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand].forEach((slot) =>
-                toEquip.setEquipment(slot, fromEquip.getEquipment(slot))
-            );
+            [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand].forEach((slot) => toEquip.setEquipment(slot, fromEquip.getEquipment(slot)));
         });
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandInvCopySuccess", target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandInvCopySuccess", target.name),
         };
     },
 } as Command;

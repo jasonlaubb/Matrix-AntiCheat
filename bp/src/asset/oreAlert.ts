@@ -31,7 +31,10 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
         if (!event.player.lastOreFoundData[id] || now - event.player.lastOreFoundData[id] >= 6000) {
             world.getAllPlayers().forEach((player) => {
                 if (!player.isOp()) return;
-                player.sendMessage("§7[§aOre Alert§7] §f" + text("oreAlertOreFound", event.player.name, id.replace("minecraft:", "").replaceAll("_", ""), event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none"));
+                player.sendMessage(
+                    "§7[§aOre Alert§7] §f" +
+                        text("oreAlertOreFound", event.player.name, id.replace("minecraft:", "").replaceAll("_", ""), event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none")
+                );
             });
         }
         event.player.lastOreFoundData[id] = now;
@@ -55,7 +58,9 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
         }
         world.getAllPlayers().forEach((player) => {
             if (!player.isOp()) return;
-            player.sendMessage("§7[§aOre Alert§7] §f" + text("oreAlertFoundDiamondOre", event.player.name, event.player.diamondFoundAmount + 1, event.player.lastDiamondOresFound ? Math.floor((now - event.player.lastDiamondOresFound) / 1000) + "s" : "none"));
+            player.sendMessage(
+                "§7[§aOre Alert§7] §f" + text("oreAlertFoundDiamondOre", event.player.name, event.player.diamondFoundAmount + 1, event.player.lastDiamondOresFound ? Math.floor((now - event.player.lastDiamondOresFound) / 1000) + "s" : "none")
+            );
         });
         event.player.lastDiamondOresFound = now;
     }

@@ -9,11 +9,9 @@ export default {
     translationDef: {
         actionName: "commandEchestWipe",
         description: "commandEchestWipeDescription",
-        param: ["commandEchestWipePlayer"]
+        param: ["commandEchestWipePlayer"],
     },
-    parameters: [
-        { name: "player", type: "player" },
-    ],
+    parameters: [{ name: "player", type: "player" }],
     execute: (_player, [target]) => {
         system.run(() => {
             for (let i = 0; i < 27; i++) {
@@ -22,7 +20,7 @@ export default {
         });
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandEchestWipeSuccess", target.name)
+            message: "§7[§aMatrix§7] §f" + text("commandEchestWipeSuccess", target.name),
         };
     },
 } as Command;

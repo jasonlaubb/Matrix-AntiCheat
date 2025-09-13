@@ -8,7 +8,7 @@ export default {
     requireOp: true,
     translationDef: {
         actionName: "commandList",
-        description: "commandListDescription"
+        description: "commandListDescription",
     },
     execute: () => {
         const helpHeader = text("commandListHeader");
@@ -29,7 +29,7 @@ export default {
 
         return {
             status: 0,
-            message: `§7[§aMatrix§7] §f${helpHeader}\n${helpBody}`
+            message: `§7[§aMatrix§7] §f${helpHeader}\n${helpBody}`,
         };
     },
 } as Command;

@@ -11,19 +11,15 @@ export default {
         actionName: "commandSetPunishment",
         description: "commandSetPunishmentDescription",
         param: ["commandSetPunishmentType"],
-        optionalParam: ["commandSetPunishmentDuration"]
+        optionalParam: ["commandSetPunishmentDuration"],
     },
-    parameters: [
-        { name: "punishmentType", type: "enum" },
-    ],
-    optionalParameters: [
-        { name: "banDurationInMs", type: "integer", min: 1000 },
-    ],
+    parameters: [{ name: "punishmentType", type: "enum" }],
+    optionalParameters: [{ name: "banDurationInMs", type: "integer", min: 1000 }],
     execute: (_player, [newPunishmentType, banDuration]) => {
         if (!punishmentType.includes(newPunishmentType)) {
             return {
                 status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandSetPunishmentInvalid", newPunishmentType)
+                message: "§7[§aMatrix§7] §f" + text("commandSetPunishmentInvalid", newPunishmentType),
             };
         }
 
@@ -33,13 +29,13 @@ export default {
             world.setDynamicProperty("database:flagBanDuration", banDuration);
             return {
                 status: 0,
-                message: "§7[§aMatrix§7] §f" + text("commandSetPunishmentSuccessWithDuration", newPunishmentType, banDuration)
+                message: "§7[§aMatrix§7] §f" + text("commandSetPunishmentSuccessWithDuration", newPunishmentType, banDuration),
             };
         }
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandSetPunishmentSuccess", newPunishmentType)
+            message: "§7[§aMatrix§7] §f" + text("commandSetPunishmentSuccess", newPunishmentType),
         };
     },
 } as Command;

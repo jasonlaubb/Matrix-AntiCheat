@@ -8,21 +8,21 @@ export default {
     requireOp: true,
     translationDef: {
         actionName: "commandLockdown",
-        description: "commandLockdownDescription"
+        description: "commandLockdownDescription",
     },
     execute: () => {
         if (world?.lockdown) {
             delete world.lockdown;
             return {
                 status: 0,
-                message: "§7[§aMatrix§7] §f" + text("commandLockdownDisabled")
+                message: "§7[§aMatrix§7] §f" + text("commandLockdownDisabled"),
             };
         }
 
         world.lockdown = true;
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text("commandLockdownEnabled")
+            message: "§7[§aMatrix§7] §f" + text("commandLockdownEnabled"),
         };
     },
 } as Command;

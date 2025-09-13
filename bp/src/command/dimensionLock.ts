@@ -10,7 +10,7 @@ export const endLock = {
     description: english.commandEndLockDescription,
     translationDef: {
         actionName: "commandEndLock",
-        description: "commandEndLockDescription"
+        description: "commandEndLockDescription",
     },
     execute: () => {
         const isEnabled = get("endLock");
@@ -29,7 +29,7 @@ export const endLock = {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text(isEnabled ? "commandEndLockDisabled" : "commandEndLockEnabled")
+            message: "§7[§aMatrix§7] §f" + text(isEnabled ? "commandEndLockDisabled" : "commandEndLockEnabled"),
         };
     },
 } as Command;
@@ -39,7 +39,7 @@ export const netherLock = {
     description: english.commandNetherLockDescription,
     translationDef: {
         actionName: "commandNetherLock",
-        description: "commandNetherLockDescription"
+        description: "commandNetherLockDescription",
     },
     execute: () => {
         const isEnabled = get("netherLock");
@@ -58,7 +58,7 @@ export const netherLock = {
 
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text(isEnabled ? "commandNetherLockDisabled" : "commandNetherLockEnabled")
+            message: "§7[§aMatrix§7] §f" + text(isEnabled ? "commandNetherLockDisabled" : "commandNetherLockEnabled"),
         };
     },
 } as Command;

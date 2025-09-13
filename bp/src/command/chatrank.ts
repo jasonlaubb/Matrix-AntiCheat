@@ -9,7 +9,7 @@ export default {
     description: english.commandChatRankDescription,
     translationDef: {
         actionName: "commandChatRank",
-        description: "commandChatRankDescription"
+        description: "commandChatRankDescription",
     },
     execute: () => {
         const isEnabled = get("chatRankEnable");
@@ -18,7 +18,7 @@ export default {
         });
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §f" + text(isEnabled ? "commandChatRankDisabled" : "commandChatRankEnabled")
+            message: "§7[§aMatrix§7] §f" + text(isEnabled ? "commandChatRankDisabled" : "commandChatRankEnabled"),
         };
     },
 } as Command;
