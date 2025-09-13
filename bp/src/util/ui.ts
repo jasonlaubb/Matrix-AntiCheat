@@ -241,13 +241,13 @@ async function languageSelectUI(player: Player) {
     return true;
 }
 function addOption(ui: ModalFormData, name: string, type: OptionType, players: string[], range: [undefined | number, undefined | number] = [undefined, undefined], optional = false) {
-    const label = optional ? name + " (Optional)" : name;
+    const label = optional ? name + ` (${text("uiOptional")})` : name;
     switch (type) {
         case "boolean": {
             if (optional) {
-                ui.dropdown(label, ["§4" + text("uiUndefined"), "true", "false"]);
+                ui.dropdown(label, ["§4" + text("uiUndefined"), text("uiTrue"), text("uiFalse")]);
             } else {
-                ui.dropdown(label, ["true", "false"]);
+                ui.dropdown(label, [text("uiTrue"), text("uiFalse")]);
             }
             break;
         }
