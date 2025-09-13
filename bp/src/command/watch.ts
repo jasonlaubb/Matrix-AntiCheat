@@ -1,12 +1,24 @@
 import { InputPermissionCategory, Player, system, Vector2, Vector3 } from "@minecraft/server";
 import type { Command } from "../main";
+import english from "../data/languages/english";
+import { text } from "../util/text";
 export const cameraTypes = ["down", "head", "behind"];
 export const watchtp = {
     name: "watchtp",
-    description: "Teleport to the camera (watch mode) position.",
+    description: english.commandWatchTpDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandWatchTp",
+        description: "commandWatchTpDescription"
+    },
     execute: (player) => {
-        if (!player?.isWatching || !player.watchTargetPos) return { status: 1, message: "§7[§aMatrix§7] §fYou're not watching anyone." };
+        if (!player?.isWatching || !player.watchTargetPos) {
+            return {
+                status: 1,
+                message: "§7[§aMatrix§7] §f" + text("commandWatchTpNotWatching")
+            };
+        }
+
         system.run(() => {
             delete player.isWatching;
             delete player.watchPlayerPos;
@@ -15,7 +27,6 @@ export const watchtp = {
             player.removeEffect("night_vision");
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
-            // Add effect & teleport
             player.addEffect("invisible", 100, { showParticles: false });
             player.removeEffect("night_vision");
             player.addEffect("night_vision", 1200, { showParticles: false });
@@ -23,50 +34,76 @@ export const watchtp = {
                 facingLocation: player.watchPlayerPos,
             });
         });
-        return { status: 0, message: "§7[§aMatrix§7] §fTeleported!" };
+
+        return {
+            status: 0,
+            message: "§7[§aMatrix§7] §f" + text("commandWatchTpSuccess")
+        };
     },
 } as Command;
 export default {
     name: "watch",
-    description: "Watch a player, you will not be seen by any method.",
+    description: english.commandWatchDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandWatch",
+        description: "commandWatchDescription",
+        optionalParam: ["commandWatchType", "commandWatchTarget"]
+    },
     optionalParameters: [
-        {
-            name: "viewType",
-            type: "enum",
-        },
-        {
-            name: "player",
-            type: "playerTarget",
-        },
+        { name: "viewType", type: "enum" },
+        { name: "player", type: "playerTarget" },
     ],
     execute: (player, [type, target]) => {
         if (player.isWatching) {
             if (type) {
                 player.cameraType = type;
-                return { status: 0, message: "§7[§aMatrix§7] §fSwitch camera type to §e" + type };
-            } else player.isWatching = false;
-            return { status: 0, message: "§7[§aMatrix§7] §fEscaped from watch mode." };
-        } else if (!target) {
-            return { status: 1, message: "§7[§aMatrix§7] §fPlease select a player!" };
+                return {
+                    status: 0,
+                    message: "§7[§aMatrix§7] §f" + text("commandWatchSwitchType", type)
+                };
+            } else {
+                player.isWatching = false;
+                return {
+                    status: 0,
+                    message: "§7[§aMatrix§7] §f" + text("commandWatchExit")
+                };
+            }
         }
+
+        if (!target) {
+            return {
+                status: 1,
+                message: "§7[§aMatrix§7] §f" + text("commandWatchMissingTarget")
+            };
+        }
+
         if (type) {
             player.cameraType = type;
         }
+
         const targetPlayer = target as Player;
-        if (targetPlayer.dimension.id !== player.dimension.id) return { status: 1, message: "§7[§aMatrix§7] §fYou need to locate in same dimension with watch target." };
+        if (targetPlayer.dimension.id !== player.dimension.id) {
+            return {
+                status: 1,
+                message: "§7[§aMatrix§7] §f" + text("commandWatchDifferentDimension")
+            };
+        }
+
         player.isWatching = true;
+
         system.run(() => {
-            player.addEffect("night_vision", 20000000, {
-                showParticles: false,
-            });
+            player.addEffect("night_vision", 20000000, { showParticles: false });
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false);
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false);
         });
+
         const id = system.runInterval(() => {
             if (!player || !player.isValid) return system.clearRun(id);
+
             const targetLeft = !targetPlayer || !targetPlayer.isValid;
             const dimensionChange = !targetLeft && targetPlayer.dimension.id !== player.dimension.id;
+
             if (targetLeft || dimensionChange || !player.isWatching) {
                 system.clearRun(id);
                 delete player.isWatching;
@@ -76,12 +113,15 @@ export default {
                 player.removeEffect("night_vision");
                 player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
                 player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
-                if (targetLeft) return player.sendMessage("§7[§aMatrix§7] §fTarget player has left the game.");
-                if (dimensionChange) return player.sendMessage("§7[§aMatrix§7] §fTarget player's dimension has been changed.");
+
+                if (targetLeft) return player.sendMessage("§7[§aMatrix§7] §f" + text("commandWatchTargetLeft"));
+                if (dimensionChange) return player.sendMessage("§7[§aMatrix§7] §f" + text("commandWatchTargetDimensionChanged"));
                 return;
             }
+
             const { x, y, z } = targetPlayer.location;
             player.watchPlayerPos = targetPlayer.getHeadLocation();
+
             switch (player.cameraType) {
                 case "head": {
                     const headPos = player.watchPlayerPos;
@@ -110,8 +150,10 @@ export default {
                     });
                 }
             }
-            player.onScreenDisplay.setActionBar(`§gWatching §e${targetPlayer.name} §7| §gRun §ewatch§g command to escape`);
+
+            player.onScreenDisplay.setActionBar(text("commandWatchActionBar", targetPlayer.name));
         });
+
         return { status: 0 };
     },
 } as Command;
