@@ -40,7 +40,7 @@ export async function languageSelectUI(player: Player) {
         //@ts-expect-error
         .show(player);
     if (res.canceled) return false;
-    const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplifed", "france"];
+    const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplifed", "french"];
     player.lastRunUICommand = true;
     player.runCommand(`matrix:language ${languages[res.selection!]}`);
     return true;
