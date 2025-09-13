@@ -11,7 +11,7 @@ export function openGeneralUI(player: Player) {
     new ActionFormData()
         .title(text("uiAdminGUI"))
         .button(text("uiToggleDetection"), "textures/items/diamond_sword.png")
-        .button(text("uiChangeConfig"), "ui/gear.png")
+        .button(text("uiChangeConfig"), "textures/ui/gear.png")
         .button(text("uiAction"), "textures/ui/FriendsDiversity.png")
         .button(text("uiLanguage"), "textures/gui/newgui/Language16.png")
         //@ts-expect-error
