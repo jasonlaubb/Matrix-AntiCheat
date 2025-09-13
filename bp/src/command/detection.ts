@@ -2,6 +2,8 @@ import { get } from "../util/database";
 import type property from "../data/property";
 import type { Command } from "../main";
 import { system, world } from "@minecraft/server";
+import { text } from "../util/text";
+import english from "../data/languages/english";
 import killaura from "../check/killaura";
 import autototem from "../check/autototem";
 import chestaura from "../check/chestaura";
@@ -62,27 +64,34 @@ export function initModules() {
 }
 export const detection = {
     name: "detection",
-    description: "Enable/disable detection of anticheat",
+    description: english.commandDetectionDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandDetection",
+        description: "commandDetectionDescription",
+        param: ["commandDetectionName", "commandDetectionToggle"]
+    },
     parameters: [
-        {
-            name: "detectionName",
-            type: "enum",
-        },
-        {
-            name: "enable",
-            type: "boolean",
-        },
+        { name: "detectionName", type: "enum" },
+        { name: "enable", type: "boolean" },
     ],
     execute: (_player, [name, enable]) => {
         const toggle = detectionList[name as keyof typeof detectionList];
         if (!toggle) {
-            return { status: 1, message: `§7[§aMatrix§7] §fInvalid detection... At least one of the following: ${Object.keys(detectionList).join(", ")}` };
+            return {
+                status: 1,
+                message: "§7[§aMatrix§7] §f" + text("commandDetectionInvalid", Object.keys(detectionList).join(", "))
+            };
         }
+
         const currentEnabled = get(toggle.property as keyof typeof property);
         if (currentEnabled === enable) {
-            return { status: 1, message: `§7[§aMatrix§7] §f${name} detection is already ${enable ? "enabled" : "disabled"}!` };
+            return {
+                status: 1,
+                message: "§7[§aMatrix§7] §f" + text("commandDetectionAlready", name, enable ? "enabled" : "disabled")
+            };
         }
+
         system.run(() => {
             if (enable) {
                 world.setDynamicProperty("database:" + toggle.property, true);
@@ -92,22 +101,39 @@ export const detection = {
                 world.setDynamicProperty("database:" + toggle.property, false);
             }
         });
+
         if (["speed", "killaura", "fly", "invalidSprint"].includes(name) && enable === true) {
-            return { status: 0, message: `§7[§aMatrix§7] §fTarget detection contains §apublic event handler§f. Please §crestart§f the server or run /reload to ensure no expected false positive will be given.` };
+            return {
+                status: 0,
+                message: "§7[§aMatrix§7] §f" + text("commandDetectionRestartRequired")
+            };
         }
-        return { status: 0, message: `§7[§aMatrix§7] §f${name} detection has been ${enable ? "enabled" : "disabled"}!` };
+
+        return {
+            status: 0,
+            message: "§7[§aMatrix§7] §f" + text("commandDetectionToggled", name, enable ? "enabled" : "disabled")
+        };
     },
 } as Command;
 export const detectionlist = {
     name: "detectionlist",
-    description: "List all detection including their status",
+    description: english.commandDetectionListDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandDetectionList",
+        description: "commandDetectionListDescription"
+    },
     execute: (_player) => {
+        const list = Object.entries(detectionList)
+            .map(([name, toggle]) => {
+                const status = get(toggle.property as keyof typeof property) ? text("commandDetectionEnabled") : text("commandDetectionDisabled");
+                return `§f- ${name}: ${status}`;
+            })
+            .join("\n");
+
         return {
             status: 0,
-            message: `§7[§aMatrix§7] §fDetection list:\n${Object.entries(detectionList)
-                .map(([name, toggle]) => `§f- ${name}: ${get(toggle.property as keyof typeof property) ? "§aEnabled" : "§cDisabled"}`)
-                .join("\n")}`,
+            message: "§7[§aMatrix§7] §f" + text("commandDetectionListHeader") + "\n" + list
         };
     },
 } as Command;

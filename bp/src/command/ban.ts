@@ -48,7 +48,7 @@ export const banCmd = {
 } as Command;
 export const banOffline = {
     name: "banoffline",
-    description: "Ban a player who is offline",
+    description: english.commandOfflinebanDescription,
     requireOp: true,
     translationDef: {
         actionName: "commandOfflineban",
@@ -91,7 +91,7 @@ export const banOffline = {
 } as Command;
 export const unban = {
     name: "unban",
-    description: "Unban a player",
+    description: english.commandUnbanDescription,
     parameters: [
         {
             name: "playerName",
@@ -119,6 +119,10 @@ export const banlist = {
     name: "banlist",
     description: "Show a list of banned player",
     requireOp: true,
+    translationDef: {
+        actionName: "commandBanList",
+        description: "commandBanListSuccess",
+    },
     execute() {
         const ids = world.getDynamicPropertyIds();
         const banned = [];
@@ -132,7 +136,7 @@ export const banlist = {
             }
         }
         if (banned.length > 0) {
-            return { status: 0, message: "§7[§aMatrix§7] §fBanned player list: §e" + banned.join(", ") };
-        } else return { status: 0, message: "§7[§aMatrix§7] §fThere is no banned player yet." };
+            return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandBanListSuccess", banned.join(", ")) };
+        } else return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandBanListNone") };
     },
 } as Command;

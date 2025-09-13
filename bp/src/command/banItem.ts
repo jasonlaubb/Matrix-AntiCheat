@@ -1,67 +1,82 @@
 import type { Command } from "../main";
 import { world } from "@minecraft/server";
+import english from "../data/languages/english";
+import { text } from "../util/text";
 export const banitem = {
     name: "banitem",
-    description: "Ban an item from being given to players.",
+    description: english.commandBanItemDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandBanItem",
+        description: "commandBanItemDescription",
+        param: ["commandBanItemName"],
+        optionalParam: ["commandBanItemReason"]
+    },
     parameters: [
-        {
-            name: "item",
-            type: "item",
-        },
+        { name: "item", type: "item" },
     ],
     optionalParameters: [
-        {
-            name: "reason",
-            type: "string",
-        },
+        { name: "reason", type: "string" },
     ],
     execute: (_player, [item, reason]) => {
         const isItemBanned = world.getDynamicProperty("banitem:" + item) as string;
-        if (isItemBanned) return { status: 1, message: `§7[§aMatrix§7] §fItem §e${item}§f is already banned for §e${isItemBanned}` };
-        world.setDynamicProperty("banitem:" + item, reason ?? "No reason");
+        if (isItemBanned) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanItemAlready", item, isItemBanned) };
+        world.setDynamicProperty("banitem:" + item, reason ?? text("commandBanItemNoReason"));
         if (!world?.banItemEventRegistered) registerItemBanEvent();
-        return { status: 0, message: `§7[§aMatrix§7] §fItem §e${item}§f has been banned successfully.` };
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandBanItemSuccess", item) };
     },
 } as Command;
+
 export const unbanitem = {
     name: "unbanitem",
-    description: "Unban an item from being given to players.",
+    description: english.commandUnbanItemDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandUnbanItem",
+        description: "commandUnbanItemDescription",
+        param: ["commandBanItemName"]
+    },
     parameters: [
-        {
-            name: "item",
-            type: "item",
-        },
+        { name: "item", type: "item" },
     ],
     execute: (_player, [item]) => {
         const isItemBanned = world.getDynamicProperty("banitem:" + item) as string;
-        if (!isItemBanned) return { status: 1, message: `§7[§aMatrix§7] §fItem §e${item}§f has not been banned yet.` };
+        if (!isItemBanned) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandUnbanItemNotBanned", item) };
         world.setDynamicProperty("banitem:" + item);
-        return { status: 0, message: `§7[§aMatrix§7] §fItem §e${item}§f has been unbanned successfully.` };
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandUnbanItemSuccess", item) };
     },
 } as Command;
+
 export const banitemlist = {
     name: "banitemlist",
-    description: "List all banned items.",
+    description: english.commandBanItemListDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandBanItemList",
+        description: "commandBanItemListDescription"
+    },
     execute: () => {
         const bannedItems = world.getDynamicPropertyIds();
         let banned: string[] = [];
         for (const id of bannedItems) {
             if (id.startsWith("banitem:")) banned.push(id.slice(8));
         }
-        if (banned.length === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo item is banned." };
+        if (banned.length === 0) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanItemListNone") };
         return {
             status: 0,
-            message: "§7[§aMatrix§7] §fBanned items:\n" + banned.map((item) => `§e${item}§f - ${world.getDynamicProperty("banitem:" + item)}`).join("\n"),
+            message: "§7[§aMatrix§7] §f" + text("commandBanItemListSuccess", banned.map((item) => `${item} - ${world.getDynamicProperty("banitem:" + item)}`).join(", "))
         };
     },
 } as Command;
+
 export const banitemclear = {
     name: "banitemclear",
-    description: "Clear all banned items.",
+    description: english.commandBanItemClearDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandBanItemClear",
+        description: "commandBanItemClearDescription"
+    },
     execute: () => {
         const bannedItems = world.getDynamicPropertyIds();
         let cleared = 0;
@@ -71,8 +86,8 @@ export const banitemclear = {
                 cleared++;
             }
         }
-        if (cleared === 0) return { status: 1, message: "§7[§aMatrix§7] §fNo items were banned." };
-        return { status: 0, message: `§7[§aMatrix§7] §fCleared ${cleared} banned item(s).` };
+        if (cleared === 0) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanItemClearNone") };
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandBanItemClearSuccess", cleared) };
     },
 } as Command;
 export function registerItemBanEvent() {
@@ -98,7 +113,7 @@ export function registerItemBanEvent() {
         if (bannedItem) {
             const inventory = player.getComponent("inventory")!.container;
             inventory.setItem(slot);
-            player.sendMessage(`§7[§aMatrix§7] §fBanned item §e${simplifyId(bannedItem.id)}§f has been removed from your inventory: §e${bannedItem.reason}§r`);
+            player.sendMessage("§7[§aMatrix§7] §f" + text("commandBanItemRemoved", simplifyId(bannedItem.id), bannedItem.reason));
         }
     });
 }

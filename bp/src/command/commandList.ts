@@ -1,24 +1,35 @@
 import { commands } from "../data/commands";
 import type { Command } from "../main";
+import { text } from "../util/text";
+import english from "../data/languages/english";
 export default {
     name: "commandlist",
-    description: "Show all of the slash commands of Matrix Anticheat available",
+    description: english.commandListDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandList",
+        description: "commandListDescription"
+    },
     execute: () => {
-            const helpMessage = "§7[§aMatrix§7] Showing all the slash commands of Matrix anticheat:\n" +
-            commands.sort(({ name: a }, { name: b }) => a.localeCompare(b))
-                .map(({ name, optionalParameters, parameters }, i, arr) => {
-                    const def = arr[i].translationDef;
-                    let text = `§f/${name}`;
-                    parameters?.forEach(({ name, type }, i) => {
-                        text += ` <${def.param[i]}: ${type.includes("player") ? "player" : type}>`;
-                    });
-                    optionalParameters?.forEach(({ name, type }) => {
-                        text += ` [${def.optionalParam[i]}: ${type.includes("player") ? "player" : type}]`;
-                    });
-                    return text + `§a ~ §f${def.description}`;
-                })
-                .join("\n");
-        return { status: 0, message: helpMessage };
+        const helpHeader = text("commandListHeader");
+        const helpBody = commands
+            .sort(({ name: a }, { name: b }) => a.localeCompare(b))
+            .map(({ name, optionalParameters, parameters }, i, arr) => {
+                const def = arr[i].translationDef;
+                let line = `§f/${name}`;
+                parameters?.forEach(({ type }, j) => {
+                    line += ` <${def.param?.[j]}: ${type.includes("player") ? "player" : type}>`;
+                });
+                optionalParameters?.forEach(({ type }, j) => {
+                    line += ` [${def.optionalParam?.[j]}: ${type.includes("player") ? "player" : type}]`;
+                });
+                return line + `§a ~ §f${text(def.description)}`;
+            })
+            .join("\n");
+
+        return {
+            status: 0,
+            message: `§7[§aMatrix§7] §f${helpHeader}\n${helpBody}`
+        };
     },
 } as Command;
