@@ -36,6 +36,7 @@ import itemui from "../command/itemui";
 import { gma, gmc, gms, gmsp } from "../command/gm";
 import antigamemode, { antiGameModeOption, antiGameModeSetting } from "../command/antigamemode";
 import language from "../command/language";
+import setup from "../command/setup";
 export const commands = [
     info,
     setBoolean,
@@ -100,6 +101,7 @@ export const commands = [
     gmsp,
     antigamemode,
     language,
+    setup
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {

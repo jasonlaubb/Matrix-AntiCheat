@@ -12,8 +12,8 @@ export default {
     requireOp: true,
     execute(player) {
         system.run(() => {
-            const item = new ItemStack("matrix:ui_tool");
-            item.nameTag = "§r" + text("itemAdminGUI");
+            const item = new ItemStack("matrix:setup_helper");
+            item.nameTag = "§r" + text("itemSetupHelper");
             item.keepOnDeath = true;
             player.getComponent("inventory")!.container.addItem(item);
         });
