@@ -27,7 +27,7 @@ function tickEvent(player: Player) {
     }
     player.breakData = {
         brokenBlocks: [],
-        brokenAmount: 0
+        brokenAmount: 0,
     };
 }
 function isTool(itemStack: ItemStack) {

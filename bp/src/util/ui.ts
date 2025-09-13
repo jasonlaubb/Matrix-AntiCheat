@@ -150,7 +150,7 @@ export function openGeneralUI(player: Player) {
                             selectedCommand.parameters?.forEach(({ type, max, min }, i) => {
                                 addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max]);
                             });
-                            selectedCommand.optionalParameters?.forEach(({  type, max, min }, i) => {
+                            selectedCommand.optionalParameters?.forEach(({ type, max, min }, i) => {
                                 addOption(ui, text(selectedCommand.translationDef.optionalParam![i]!), type, players, [min, max], true);
                             });
                             ui
@@ -332,7 +332,7 @@ export async function setupHelper(player: Player) {
                 .title(text("uiSetupHelper"))
                 .label(text("uiFlagLabel"))
                 .dropdown(text("uiFlagAction"), [text("uiNone"), text("uiKick"), text("uiBan"), text("uiTempkick")], { defaultValueIndex: 1, tooltip: text("uiFlagPunishment") })
-                .dropdown(text("uiFlagMessageTarget"), [text("uiOperatorOnly"), text("uiAll"), text("uiExclude"), text("uiNobody")], { tooltip: text("uiFlagMessageTips")})
+                .dropdown(text("uiFlagMessageTarget"), [text("uiOperatorOnly"), text("uiAll"), text("uiExclude"), text("uiNobody")], { tooltip: text("uiFlagMessageTips") })
                 //@ts-expect-error
                 .show(player);
             if (res.canceled) return;
