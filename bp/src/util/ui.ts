@@ -298,9 +298,9 @@ export async function setupHelper(player: Player) {
         new ActionFormData()
             .title(text("uiSetupHelper"))
             .body("§a" + text("uiSetupAlreadyBody"))
-            .button(text("uiOpenAdminGUI") + " §9(/ui)")
-            .button(text("uiGetUIItem") + " §9(/itemui)")
-            .button(text("uiCommandList") + " §9(/commandlist)")
+            .button(text("uiOpenAdminGUI") + " §9(/ui)", "textures/ui/gear.png")
+            .button(text("uiGetUIItem") + " §9(/itemui)", "textures/items/compass_item.png")
+            .button(text("uiCommandList") + " §9(/commandlist)", "textures/items/banner_pattern.png")
             //@ts-expect-error
             .show(player)
             .then((res) => {
@@ -345,7 +345,7 @@ export async function setupHelper(player: Player) {
         if (get("flagPunishmentType") === "NOT_SET" || get("flagMessageTarget") === "NOT_SET") {
             const res = await new ModalFormData()
                 .title(text("uiSetupHelper"))
-                .label("")
+                .label(text("uiFlagLabel"))
                 .dropdown(text("uiFlagAction"), [text("uiNone"), text("uiKick"), text("uiBan"), text("uiTempkick")], { defaultValueIndex: 1, tooltip: text("uiFlagPunishment") })
                 .dropdown(text("uiFlagMessageTarget"), [text("uiOperatorOnly"), text("uiAll"), text("uiExclude"), text("uiNobody")], { tooltip: text("uiFlagMessageTips")})
                 //@ts-expect-error
