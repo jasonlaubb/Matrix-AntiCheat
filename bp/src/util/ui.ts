@@ -164,7 +164,6 @@ export function openGeneralUI(player: Player) {
                                         const isRequired = selectedCommand.parameters?.[i];
                                         const option = isRequired ?? selectedCommand.optionalParameters?.[i - (selectedCommand.parameters?.length ?? 0)];
                                         let breaks = false;
-                                        console.log(i + " " + input.join(",") + " " + JSON.stringify(option));
                                         const value = formValues[i];
                                         switch (option?.type) {
                                             case "boolean": {
@@ -209,7 +208,6 @@ export function openGeneralUI(player: Player) {
                                         if (breaks) break;
                                     }
                                     const command = "matrix:" + selectedCommand.name.toLowerCase() + " " + input.join(" ");
-                                    console.log(`${formValues.length} ` + command);
                                     player.lastRunUICommand = true;
                                     try {
                                         player.runCommand(command);
