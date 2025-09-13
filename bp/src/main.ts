@@ -33,7 +33,7 @@ import { initModules } from "./command/detection";
 import { registerItemBanEvent } from "./command/banItem";
 import { commands, enumRegistry } from "./data/commands";
 import { enableAntiGameMode } from "./asset/antiGamemode";
-import { text, type TranslationKey } from "./util/text";
+import { text, updateLanguage, type TranslationKey } from "./util/text";
 import { antiXrayOn } from "./asset/antiXray";
 import { invseeHandler } from "./command/invsee";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
@@ -238,6 +238,7 @@ system.beforeEvents.startup.subscribe((event) => {
 system.runInterval(tick);
 world.afterEvents.worldLoad.subscribe(() => {
     initModules();
+    updateLanguage();
     if (get("worldBorder")) worldBorderOn();
     if (get("oreAlert")) oreAlertOn();
     if (get("endLock") || get("netherLock")) endNetherLockOn();
