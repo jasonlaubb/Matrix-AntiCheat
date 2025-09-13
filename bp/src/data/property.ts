@@ -375,4 +375,8 @@ export default {
         type: "boolean",
         value: false,
     },
+    setup: {
+        type: "boolean",
+        value: false
+    }
 };
