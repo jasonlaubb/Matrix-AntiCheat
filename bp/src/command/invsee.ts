@@ -1,6 +1,9 @@
 import { Dimension, EquipmentSlot, ItemStack, Player, system, Vector3, world } from "@minecraft/server";
 import { Command } from "../main";
 import { stringXyz } from "../util/util";
+import { get } from "../util/database";
+import english from "../data/languages/english";
+import { text } from "../util/text";
 /**
  * Places a large chest at the given location and fills it with optional items.
  * @param dimension The dimension to place the chest in (e.g., world.overworld)
@@ -40,7 +43,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
         if (otherBlockPos === undefined) return;
         event.cancel = true;
         if (!event.player.isOp()) {
-            system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to destroy this chest."));
+            event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeBreakDenied"));
             return;
         }
         system.run(() => {
@@ -59,7 +62,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     } else {
         if (world.getDynamicProperty("invseeChest:" + stringXyz({ x: block.location.x, y: block.location.y + 1, z: block.location.z }))) {
             event.cancel = true;
-            system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou cannot destroy this block."));
+            event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeBlockProtected"));
         }
     }
 });
@@ -69,60 +72,80 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
     const data = world.getDynamicProperty("invseeChest:" + stringXyz(block.location));
     if (!data || event.player.isOp()) return;
     event.cancel = true;
-    system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fYou don't have permission to open this chest."));
+    event.player.sendMessage("§7[§aMatrix§7] §f" + text("commandInvseeOpenDenied"));
 });
 }
 export default {
     name: "invsee",
-    description: "View a player inventory",
-    parameters: [
-        {
-            name: "player",
-            type: "player",
-        },
-    ],
+    description: english.commandInvseeDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandInvsee",
+        description: "commandInvseeDescription",
+        param: ["commandInvseeTarget"]
+    },
+    parameters: [
+        { name: "player", type: "player" },
+    ],
     execute: (player, [target]) => {
-        if (get("banInvseeHandler")) return { status: 1, message: "Invsee handler is disabled." };
+        if (get("banInvseeHandler")) {
+            return {
+                status: 1,
+                message: "§7[§aMatrix§7] §f" + text("commandInvseeDisabled")
+            };
+        }
+
         const empty = new Array(54) as ItemStack[];
         const div = new ItemStack("matrix:divider");
         empty.fill(div, 27, 36);
         empty[45] = new ItemStack("matrix:offhand_label");
         empty[53] = new ItemStack("matrix:armor_label");
         empty.fill(div, 47, 49);
+
         const targetPlayer = target as Player;
         const inv = targetPlayer.getComponent("inventory")!.container;
+
         for (let i = 0; i < 9; i++) {
             const item = inv.getItem(i);
-            if (!item) continue;
-            empty[i + 36] = item;
+            if (item) empty[i + 36] = item;
         }
+
         for (let i = 9; i < inv.size; i++) {
             const item = inv.getItem(i);
-            if (!item) continue;
-            empty[i - 9] = item;
+            if (item) empty[i - 9] = item;
         }
+
         const armor = targetPlayer.getComponent("equippable")!;
         const offhand = armor.getEquipment(EquipmentSlot.Offhand);
         if (offhand) empty[46] = offhand;
+
         const head = armor.getEquipment(EquipmentSlot.Head);
         if (head) empty[49] = head;
+
         const chest = armor.getEquipment(EquipmentSlot.Chest);
         if (chest) empty[50] = chest;
+
         const leg = armor.getEquipment(EquipmentSlot.Legs);
         if (leg) empty[51] = leg;
+
         const boot = armor.getEquipment(EquipmentSlot.Feet);
         if (boot) empty[52] = boot;
+
         system.run(() => {
             createLargeChest(player.dimension, player.location, empty);
-            player.onScreenDisplay.setActionBar("§fRight click the chest to view the inventory");
+            player.onScreenDisplay.setActionBar(text("commandInvseeActionBar"));
             player.tryTeleport(
-                { x: Math.floor(player.location.x) + 0.5, y: Math.floor(player.location.y) + 1, z: Math.floor(player.location.z) + 0.5 },
+                {
+                    x: Math.floor(player.location.x) + 0.5,
+                    y: Math.floor(player.location.y) + 1,
+                    z: Math.floor(player.location.z) + 0.5,
+                },
                 {
                     rotation: { x: 97, y: player.getRotation().y },
                 }
             );
         });
+
         return { status: 0 };
     },
 } as Command;

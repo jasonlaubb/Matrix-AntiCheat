@@ -1,16 +1,19 @@
 import { EquipmentSlot, system, type Player } from "@minecraft/server";
 import type { Command } from "../main";
-
+import english from "../data/languages/english";
+import { text } from "../util/text";
 export default {
     name: "invcopy",
-    description: "Copy a player's inventory",
-    parameters: [
-        {
-            name: "player",
-            type: "normalPlayerTarget",
-        },
-    ],
+    description: english.commandInvCopyDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandInvCopy",
+        description: "commandInvCopyDescription",
+        param: ["commandInvCopyTarget"]
+    },
+    parameters: [
+        { name: "player", type: "normalPlayerTarget" },
+    ],
     execute: (player, [target]) => {
         const targetPlayer = target as Player;
         system.run(() => {
@@ -21,8 +24,14 @@ export default {
             }
             const fromEquip = targetPlayer.getComponent("equippable")!;
             const toEquip = player.getComponent("equippable")!;
-            [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand].forEach((slot) => toEquip.setEquipment(slot, fromEquip.getEquipment(slot)));
+            [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand].forEach((slot) =>
+                toEquip.setEquipment(slot, fromEquip.getEquipment(slot))
+            );
         });
-        return { status: 0, message: `§7[§aMatrix§7] §fCopied ${target.name}'s inventory` };
+
+        return {
+            status: 0,
+            message: "§7[§aMatrix§7] §f" + text("commandInvCopySuccess", target.name)
+        };
     },
 } as Command;
