@@ -144,7 +144,7 @@ export function openGeneralUI(player: Player) {
                             }
                             const players = world.getAllPlayers().map(({ name }) => name);
                             const ui = new ModalFormData()
-                                .title(text("uiActionOption") + " | " + selectedCommand.translationDef.actionName)
+                                .title(text("uiActionOption") + " | " + text(selectedCommand.translationDef.actionName))
                                 .submitButton(text("uiExecute"))
                                 .label(text(selectedCommand.translationDef.description));
                             selectedCommand.parameters?.forEach(({ type, max, min }, i) => {
