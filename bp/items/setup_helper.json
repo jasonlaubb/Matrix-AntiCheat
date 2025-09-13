@@ -15,7 +15,7 @@
             "minecraft:icon": "book_written",
             "minecraft:max_stack_size": 1,
             "minecraft:can_destroy_in_creative": false,
-            "minecraft:custom_components": ["matrix:execute_helper_ui"],
+            "minecraft:custom_components": ["matrix:execute_setup_ui"],
             "minecraft:glint": true
         }
     }
