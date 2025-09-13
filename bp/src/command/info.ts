@@ -1,13 +1,33 @@
+import english from "../data/languages/english";
 import type { Command } from "../main";
+import { text } from "../util/text";
 export default {
     name: "info",
-    description: "Get information about the Matrix AntiCheat.",
+    description: english.commandInfoDescription,
     requireOp: false,
+    translationDef: {
+        actionName: "commandInfo",
+        description: "commandInfoDescription"
+    },
     execute: () => {
-        return {
-            status: 0,
-            message:
-                "§7[§aMatrix§7]§7 §fMatrix Anticheat Version 7.0.25\n§gAuthor: §ejasonlaubb (Discord: @uwu_the_great)\n§gGitHub: §ehttps://github.com/jasonlaubb/Matrix-AntiCheat\n§gCurseForge: §ehttps://www.curseforge.com/minecraft-bedrock/addons/matrix-anti\n§fThis project is §eopen source§f with §cAGPLv3§f license.\nPlease join our §bDiscord support server§f for more information.\n§gDiscord server links: §ebit.ly/matrix-dc §7|§e §ehttps://discord.gg/CqZGXeRKPJ",
-        };
+        const version = "7.0.25";
+        const author = "jasonlaubb (Discord: @uwu_the_great)";
+        const github = "https://github.com/jasonlaubb/Matrix-AntiCheat";
+        const curseforge = "https://www.curseforge.com/minecraft-bedrock/addons/matrix-anti";
+        const license = "AGPLv3";
+        const discordShort = "bit.ly/matrix-dc";
+        const discordFull = "https://discord.gg/CqZGXeRKPJ";
+
+        const message =
+            "§7[§aMatrix§7]§7 §f" +
+            text("commandInfoVersion", version) + "\n" +
+            text("commandInfoAuthor", author) + "\n" +
+            text("commandInfoGitHub", github) + "\n" +
+            text("commandInfoCurseForge", curseforge) + "\n" +
+            text("commandInfoLicense", license) + "\n" +
+            text("commandInfoSupport") + "\n" +
+            text("commandInfoDiscordLinks", discordShort, discordFull);
+
+        return { status: 0, message };
     },
 } as Command;
