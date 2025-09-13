@@ -15,14 +15,20 @@ function onBlockBreak({ player, brokenBlockPermutation, itemStackBeforeBreak: to
     }
 }
 function tickEvent(player: Player) {
-    player.breakData ??= DEFAULT_BREAK_DATA;
+    player.breakData ??= {
+        brokenBlocks: [],
+        brokenAmount: 0,
+    } as InstabreakData;
     if (player.breakData.brokenBlocks.length === 0) return;
     if (player.breakData.brokenAmount > MAX_BREAK_IN_TICK) {
         // Recover the blocks
         system.runJob(recoverBlocks(player.breakData.brokenBlocks, player.dimension));
         player.flag("Insteabreak", "A", "World", { breakAmount: player.breakData.brokenAmount });
     }
-    player.breakData = DEFAULT_BREAK_DATA;
+    player.breakData = {
+        brokenBlocks: [],
+        brokenAmount: 0
+    };
 }
 function isTool(itemStack: ItemStack) {
     TOOL_SET.has(itemStack.type.id);
@@ -118,10 +124,6 @@ const INSTA_BREAKABLE_SET = new Set([
     "minecraft:lapis_ore",
     "minecraft:ancient_debris",
 ]);
-const DEFAULT_BREAK_DATA = {
-    brokenBlocks: [],
-    brokenAmount: 0,
-} as InstabreakData;
 export default {
     property: "antiInstabreakEnable",
     enable: () => {
