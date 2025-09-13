@@ -15,7 +15,7 @@ export default {
             const item = new ItemStack("matrix:setup_helper");
             item.nameTag = "§r" + text("itemSetupHelper");
             item.keepOnDeath = true;
-            player.getComponent("inventory")!.container.addItem(item)
+            player.getComponent("inventory")!.container.addItem(item);
         });
         return {
             status: 0,

@@ -227,7 +227,7 @@ system.beforeEvents.startup.subscribe((event) => {
             } else {
                 source.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Mainhand)!.setItem();
             }
-        }
+        },
     });
     event.itemComponentRegistry.registerCustomComponent("matrix:label", {
         onUse: ({ source }) => {

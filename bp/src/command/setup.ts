@@ -15,8 +15,8 @@ export default {
             const item = new ItemStack("matrix:ui_tool");
             item.nameTag = "§r" + text("itemAdminGUI");
             item.keepOnDeath = true;
-            player.getComponent("inventory")!.container.addItem(item)
+            player.getComponent("inventory")!.container.addItem(item);
         });
-        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandSetupGainItem")};
-    }
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandSetupGainItem") };
+    },
 } as Command;

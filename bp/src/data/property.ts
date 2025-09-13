@@ -377,6 +377,6 @@ export default {
     },
     setup: {
         type: "boolean",
-        value: false
-    }
+        value: false,
+    },
 };

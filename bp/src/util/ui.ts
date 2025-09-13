@@ -222,26 +222,29 @@ export function openGeneralUI(player: Player) {
                     break;
                 }
                 case 3: {
-                    new ActionFormData()
-                        .title("Select your language / 请选择你的语言")
-                        .button("English")
-                        //@ts-expect-error
-                        .show(player)
-                        .then((res) => {
-                            if (res.canceled) return;
-                            const language = ["english"] as (keyof typeof languageList)[];
-                            player.lastRunUICommand = true;
-                            try {
-                                player.runCommand(`/matrix:language ${language}`);
-                            } catch (error) {
-                                const { name, message } = error as Error;
-                                if (error instanceof CommandError) {
-                                    player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
-                                } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
-                            }
-                        });
+                    languageSelectUI(player);
                     break;
                 }
+            }
+        });
+}
+function languageSelectUI(player: Player) {
+    new ActionFormData()
+        .title("Select your language / 请选择你的语言")
+        .button("English")
+        //@ts-expect-error
+        .show(player)
+        .then((res) => {
+            if (res.canceled) return;
+            const language = ["english"] as (keyof typeof languageList)[];
+            player.lastRunUICommand = true;
+            try {
+                player.runCommand(`/matrix:language ${language}`);
+            } catch (error) {
+                const { name, message } = error as Error;
+                if (error instanceof CommandError) {
+                    player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
+                } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
             }
         });
 }
@@ -298,5 +301,4 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
 function upperCaseFirstChar(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-export function setupHelper (player: Player) {
-}
+export function setupHelper(player: Player) {}
