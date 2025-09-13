@@ -78,6 +78,7 @@ export default {
     uiFlagPunishment: "Define our anticheat handle a cheater\n- No punishment: Anticheat will only notfiy admin\n- Kick: They will be kicked from world\n- Ban: they will be banned from this server\n- Temp-kick (disconnect), they will be tempourily disconnected (Requires extension)",
     uiFlagMessageTarget: "Flag message's target type",
     uiFlagMessageTips: "Define the target that the flag message will be sent to",
+    uiFlagLabel: "You can also change these settings by §e/flagmsgtarget§f and §e/setpunishment§f command later",
     uiNone: "No punishment",
     uiKick: "Kick",
     uiBan: "Ban",

@@ -331,12 +331,13 @@ export async function setupHelper(player: Player) {
         if (get("flagPunishmentType") === "NOT_SET" || get("flagMessageTarget") === "NOT_SET") {
             const res = await new ModalFormData()
                 .title(text("uiSetupHelper"))
+                .label("")
                 .dropdown(text("uiFlagAction"), [text("uiNone"), text("uiKick"), text("uiBan"), text("uiTempkick")], { defaultValueIndex: 1, tooltip: text("uiFlagPunishment") })
                 .dropdown(text("uiFlagMessageTarget"), [text("uiOperatorOnly"), text("uiAll"), text("uiExclude"), text("uiNobody")], { tooltip: text("uiFlagMessageTips")})
                 //@ts-expect-error
                 .show(player);
             if (res.canceled) return;
-            const [punishment, flagmsgtarget] = res.formValues! as number[];
+            const [punishment, flagmsgtarget] = res.formValues!.slice(1) as number[];
             world.setDynamicProperties({
                 "database:flagMessageTarget": ["operator", "all", "exclude", "none"][flagmsgtarget],
                 "database:flagPunishmentType": ["none", "kick", "ban", "tempkick"][punishment],
