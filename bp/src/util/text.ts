@@ -4,12 +4,14 @@ import chinese_traditional from "../data/languages/chinese_traditional";
 import english from "../data/languages/english";
 import { get } from "./database";
 import { ActionFormData } from "@minecraft/server-ui";
+import france from "../data/languages/france";
 export type TranslationKey = keyof typeof english;
 let currentLanguage = english;
 export const languageList = {
     english,
     chinese_simplifed,
     chinese_traditional,
+    france
 };
 export function updateLanguage() {
     currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;
@@ -34,10 +36,11 @@ export async function languageSelectUI(player: Player) {
         .button("English")
         .button("中文 (繁體)")
         .button("中文 (简体)")
+        .button("Français")
         //@ts-expect-error
         .show(player);
     if (res.canceled) return false;
-    const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplifed"];
+    const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplifed", "france"];
     player.lastRunUICommand = true;
     player.runCommand(`matrix:language ${languages[res.selection!]}`);
     return true;
