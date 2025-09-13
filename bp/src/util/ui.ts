@@ -122,8 +122,8 @@ export function openGeneralUI(player: Player) {
                 }
                 case 2: {
                     const commandList = commands.sort((a, b) => a.name.localeCompare(b.name));
-                    const ui = new ActionFormData().title("Action");
-                    commandList.forEach(({ name }) => ui.button(`§9${upperCaseFirstChar(name)}`));
+                    const ui = new ActionFormData().title(text("uiAction"));
+                    commandList.forEach(({ name, translationDef }) => ui.button(`§9/${name}\n§8${translationDef.actionName}`));
                     ui
                         //@ts-expect-error
                         .show(player)
@@ -144,14 +144,14 @@ export function openGeneralUI(player: Player) {
                             }
                             const players = world.getAllPlayers().map(({ name }) => name);
                             const ui = new ModalFormData()
-                                .title(text("uiActionOption") + " | " + upperCaseFirstChar(selectedCommand.name))
+                                .title(text("uiActionOption") + " | " + selectedCommand.translationDef.actionName)
                                 .submitButton(text("uiExecute"))
                                 .label(selectedCommand.description);
-                            selectedCommand.parameters?.forEach(({ name, type, max, min }) => {
-                                addOption(ui, name, type, players, [min, max]);
+                            selectedCommand.parameters?.forEach(({ type, max, min }, i) => {
+                                addOption(ui, selectedCommand.translationDef.param![i]!, type, players, [min, max]);
                             });
-                            selectedCommand.optionalParameters?.forEach(({ name, type, max, min }) => {
-                                addOption(ui, name, type, players, [min, max], true);
+                            selectedCommand.optionalParameters?.forEach(({  type, max, min }, i) => {
+                                addOption(ui, selectedCommand.translationDef.param![i]!, type, players, [min, max], true);
                             });
                             ui
                                 //@ts-expect-error
@@ -245,7 +245,7 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
     switch (type) {
         case "boolean": {
             if (optional) {
-                ui.dropdown(label, ["§4undefined", "true", "false"]);
+                ui.dropdown(label, ["§4" + text("uiUndefined"), "true", "false"]);
             } else {
                 ui.dropdown(label, ["true", "false"]);
             }
@@ -254,7 +254,7 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
         case "enum": {
             const value = enumRegistry[name];
             if (optional) {
-                ui.dropdown(label, ["§4undefined", ...value]);
+                ui.dropdown(label, ["§4" + text("uiUndefined"), ...value]);
             } else {
                 ui.dropdown(label, value);
             }
@@ -289,9 +289,6 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
             break;
         }
     }
-}
-function upperCaseFirstChar(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 export async function setupHelper(player: Player) {
     if (get("setup")) {
