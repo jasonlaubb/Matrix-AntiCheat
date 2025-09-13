@@ -3,7 +3,7 @@ import { get } from "../util/database";
 import { ban, checkPunish } from "../util/punishment";
 import { text } from "../util/text";
 export const messageTarget = ["any", "all", "operator", "admin", "exclude", "bypass", "tag"];
-export const punishmentType = ["none", "tempkick", "kick", "ban"];
+export const punishmentType = ["none", "kick", "ban", "tempkick"];
 Player.prototype.isOp = function () {
     return this.commandPermissionLevel >= 1 || this.playerPermissionLevel === PlayerPermissionLevel.Operator;
 };
@@ -17,6 +17,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
             flagTarget = world.getAllPlayers();
             break;
         }
+        case "NOT_SET":
         case "operator":
         case "admin": {
             flagTarget = world.getAllPlayers().filter((player) => player.isOp());

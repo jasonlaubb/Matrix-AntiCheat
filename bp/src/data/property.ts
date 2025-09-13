@@ -1,4 +1,4 @@
-/*
+/*NOT_SET
     Edit the config here!
     If you updated the value in-game, you can use `/discard <id>` to let anticheat follow this config...
     flagMessageTarget: {
@@ -9,11 +9,11 @@
 export default {
     systemLanguage: {
         type: "string",
-        value: "NOT_SETTED",
+        value: "NOT_SET",
     },
     flagMessageTarget: {
         type: "string",
-        value: "admin", // all, admin, exclude (send to all player exclude the cheater), tag (send to player with specfic tag)
+        value: "NOT_SET", // all, operator, exclude (send to all player exclude the cheater), tag (send to player with specfic tag)
     },
     notifyTag: {
         type: "string",
@@ -45,7 +45,7 @@ export default {
     },
     flagPunishmentType: {
         type: "string",
-        value: "kick", // none, kick, ban
+        value: "NOT_SET", // none, kick, ban, tempkick (extension required)
     },
     flagBanDuration: {
         type: "number",

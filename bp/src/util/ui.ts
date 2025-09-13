@@ -228,25 +228,17 @@ export function openGeneralUI(player: Player) {
             }
         });
 }
-function languageSelectUI(player: Player) {
-    new ActionFormData()
+async function languageSelectUI(player: Player) {
+    const res = await new ActionFormData()
         .title("Select your language / 请选择你的语言")
         .button("English")
         //@ts-expect-error
-        .show(player)
-        .then((res) => {
-            if (res.canceled) return;
-            const language = ["english"] as (keyof typeof languageList)[];
-            player.lastRunUICommand = true;
-            try {
-                player.runCommand(`/matrix:language ${language}`);
-            } catch (error) {
-                const { name, message } = error as Error;
-                if (error instanceof CommandError) {
-                    player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
-                } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
-            }
-        });
+        .show(player);
+    if (res.canceled) return false;
+    const languages: (keyof typeof languageList)[] = ["english"];
+    player.lastRunUICommand = true;
+    player.runCommand(`matrix:language ${languages[res.selection!]}`);
+    return true;
 }
 function addOption(ui: ModalFormData, name: string, type: OptionType, players: string[], range: [undefined | number, undefined | number] = [undefined, undefined], optional = false) {
     const label = optional ? name + " (Optional)" : name;
@@ -301,4 +293,56 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
 function upperCaseFirstChar(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-export function setupHelper(player: Player) {}
+export async function setupHelper(player: Player) {
+    if (get("setup")) {
+        new ActionFormData()
+            .title(text("uiSetupHelper"))
+            .body("§a" + text("uiSetupAlreadyBody"))
+            .button(text("uiOpenAdminGUI") + " §9(/ui)")
+            .button(text("uiGetUIItem") + " §9(/itemui)")
+            .button(text("uiCommandList") + " §9(/commandlist)")
+            //@ts-expect-error
+            .show(player)
+            .then((res) => {
+                if (res.canceled) return;
+                const selection = res.selection!;
+                switch (selection) {
+                    case 0: {
+                        openGeneralUI(player);
+                        break;
+                    }
+                    case 1: {
+                        player.lastRunUICommand = true;
+                        player.runCommand("matrix:itemui");
+                        break;
+                    }
+                    case 2: {
+                        player.lastRunUICommand = true;
+                        player.runCommand("matrix:commandlist");
+                        break;
+                    }
+                }
+            });
+    } else {
+        if (get("systemLanguage") === "NOT_SET") {
+            const res = await languageSelectUI(player);
+            if (!res) return;
+        }
+        if (get("flagPunishmentType") === "NOT_SET" || get("flagMessageTarget") === "NOT_SET") {
+            const res = await new ModalFormData()
+                .title(text("uiSetupHelper"))
+                .dropdown(text("uiFlagAction"), [text("uiNone"), text("uiKick"), text("uiBan"), text("uiTempkick")], { defaultValueIndex: 1, tooltip: text("uiFlagPunishment") })
+                .dropdown(text("uiFlagMessageTarget"), [text("uiOperatorOnly"), text("uiAll"), text("uiExclude"), text("uiNobody")], { tooltip: text("uiFlagMessageTips")})
+                //@ts-expect-error
+                .show(player);
+            if (res.canceled) return;
+            const [punishment, flagmsgtarget] = res.formValues! as number[];
+            world.setDynamicProperties({
+                "database:flagMessageTarget": ["operator", "all", "exclude", "none"][flagmsgtarget],
+                "database:flagPunishmentType": ["none", "kick", "ban", "tempkick"][punishment],
+            });
+        }
+        world.setDynamicProperty("database:setup", true);
+        setupHelper(player);
+    }
+}
