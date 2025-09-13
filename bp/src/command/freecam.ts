@@ -6,29 +6,33 @@ import english from "../data/languages/english";
 const BPT = 0.4;
 export const freecam = {
     name: "freecam",
-    description: "Move your camera around freely",
+    description: english.commandFreecamDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandFreecam",
+        description: "commandFreecamDescription",
+        optionalParam: ["commandFreecamTarget"]
+    },
     optionalParameters: [
-        {
-            name: "player",
-            type: "player",
-        },
+        { name: "player", type: "player" },
     ],
     execute: (player, [target]) => {
         if (player?.freecamCameraPosition) {
             if (target) {
                 player.freecamCameraPosition = target.location;
-                return { status: 0, message: "§7[§aMatrix§7] §fCamera teleported to target's location" };
+                return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandFreecamTeleport", target.name) };
             }
             delete player.freecamCameraPosition;
             system.run(() => {
                 player.camera.clear();
                 setMovement(player, true);
             });
-            return { status: 0, message: "§7[§aMatrix§7] §fEscaped from freecam mode." };
+            return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandFreecamExit") };
         }
-        target ? (player.freecamCameraPosition = target.location) : (player.freecamCameraPosition = player.location);
+
+        player.freecamCameraPosition = target ? target.location : player.location;
         system.run(() => setMovement(player, false));
+
         const event = system.runInterval(() => {
             if (!player || !player.isValid || !player?.freecamCameraPosition) return system.clearRun(event);
             const speed = (player.getDynamicProperty("freecamSpeed") as number) ?? 1;
@@ -45,13 +49,14 @@ export const freecam = {
                 y: cameraPos.y + y,
                 z: cameraPos.z + z,
             };
-            player.onScreenDisplay.setActionBar("§gType §e/freecam §gto exit freecam mode.");
+            player.onScreenDisplay.setActionBar(text("commandFreecamActionBar"));
             player.camera.setCamera("minecraft:free", {
                 rotation: rot,
                 location: player.freecamCameraPosition,
             });
         });
-        return { status: 0, message: "§7[§aMatrix§7] §fFreecam mode activated. Use WASD to move, Space to go up, and Shift to go down." };
+
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandFreecamActivated") };
     },
 } as Command;
 export const freecamtp = {
