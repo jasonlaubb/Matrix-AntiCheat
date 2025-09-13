@@ -6,7 +6,7 @@ import property from "../data/property";
 import { getPropertyType } from "./propertyClassifier";
 import type { OptionType } from "../main";
 import { commands, enumRegistry } from "../data/commands";
-import { languageList, text } from "./text";
+import { languageSelectUI, text } from "./text";
 export function openGeneralUI(player: Player) {
     new ActionFormData()
         .title(text("uiAdminGUI"))
@@ -227,18 +227,6 @@ export function openGeneralUI(player: Player) {
                 }
             }
         });
-}
-async function languageSelectUI(player: Player) {
-    const res = await new ActionFormData()
-        .title("Select your language / 请选择你的语言")
-        .button("English")
-        //@ts-expect-error
-        .show(player);
-    if (res.canceled) return false;
-    const languages: (keyof typeof languageList)[] = ["english"];
-    player.lastRunUICommand = true;
-    player.runCommand(`matrix:language ${languages[res.selection!]}`);
-    return true;
 }
 function addOption(ui: ModalFormData, name: string, type: OptionType, players: string[], range: [undefined | number, undefined | number] = [undefined, undefined], optional = false) {
     const label = optional ? name + ` (${text("uiOptional")})` : name;
