@@ -39,10 +39,11 @@ export async function languageSelectUI(player: Player) {
         .button("中文 (繁體)")
         .button("中文 (简体)")
         .button("Français")
+        .button("日本語 (日本)")
         //@ts-expect-error
         .show(player);
     if (res.canceled) return false;
-    const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplifed", "french"];
+    const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplifed", "french", "japanese"];
     player.lastRunUICommand = true;
     player.runCommand(`matrix:language ${languages[res.selection!]}`);
     return true;
