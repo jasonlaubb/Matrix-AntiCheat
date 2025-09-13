@@ -1,0 +1,22 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "matrix:setup_helper",
+            "menu_category": {
+                "category": "none",
+                "is_hidden_in_commands": true
+            }
+        },
+        "components": {
+            "minecraft:display_name": {
+                "value": "§g§lSetup Helper\n§r§7(Right-click to open the UI)"
+            },
+            "minecraft:icon": "book_written",
+            "minecraft:max_stack_size": 1,
+            "minecraft:can_destroy_in_creative": false,
+            "minecraft:custom_components": ["matrix:execute_helper_ui"],
+            "minecraft:glint": true
+        }
+    }
+}
