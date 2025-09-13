@@ -123,7 +123,7 @@ export function openGeneralUI(player: Player) {
                 case 2: {
                     const commandList = commands.sort((a, b) => a.name.localeCompare(b.name));
                     const ui = new ActionFormData().title(text("uiAction"));
-                    commandList.forEach(({ name, translationDef }) => ui.button(`§9/${name}\n§8${translationDef.actionName}`));
+                    commandList.forEach(({ name, translationDef }) => ui.button(`§9/${name}\n§8${text(translationDef.actionName)}`));
                     ui
                         //@ts-expect-error
                         .show(player)
@@ -151,7 +151,7 @@ export function openGeneralUI(player: Player) {
                                 addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max]);
                             });
                             selectedCommand.optionalParameters?.forEach(({  type, max, min }, i) => {
-                                addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max], true);
+                                addOption(ui, text(selectedCommand.translationDef.optionalParam![i]!), type, players, [min, max], true);
                             });
                             ui
                                 //@ts-expect-error
