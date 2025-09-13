@@ -1,4 +1,4 @@
-import { CommandError, Player, world } from "@minecraft/server";
+import { CommandError, Player, system, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { detectionList } from "../command/detection";
 import { get } from "./database";
@@ -343,6 +343,6 @@ export async function setupHelper(player: Player) {
             });
         }
         world.setDynamicProperty("database:setup", true);
-        setupHelper(player);
+        system.run(() => setupHelper(player));
     }
 }
