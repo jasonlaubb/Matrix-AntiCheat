@@ -146,12 +146,12 @@ export function openGeneralUI(player: Player) {
                             const ui = new ModalFormData()
                                 .title(text("uiActionOption") + " | " + selectedCommand.translationDef.actionName)
                                 .submitButton(text("uiExecute"))
-                                .label(selectedCommand.description);
+                                .label(text(selectedCommand.translationDef.description));
                             selectedCommand.parameters?.forEach(({ type, max, min }, i) => {
-                                addOption(ui, selectedCommand.translationDef.param![i]!, type, players, [min, max]);
+                                addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max]);
                             });
                             selectedCommand.optionalParameters?.forEach(({  type, max, min }, i) => {
-                                addOption(ui, selectedCommand.translationDef.param![i]!, type, players, [min, max], true);
+                                addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max], true);
                             });
                             ui
                                 //@ts-expect-error

@@ -18,10 +18,10 @@ export default {
                 const def = arr[i].translationDef;
                 let line = `§f/${name}`;
                 parameters?.forEach(({ type }, j) => {
-                    line += ` <${def.param?.[j]}: ${type.includes("player") ? "player" : type}>`;
+                    line += ` <${text(def.param![j]!)}: ${type.includes("player") ? "player" : type}>`;
                 });
                 optionalParameters?.forEach(({ type }, j) => {
-                    line += ` [${def.optionalParam?.[j]}: ${type.includes("player") ? "player" : type}]`;
+                    line += ` [${text(def.optionalParam![j]!)}: ${type.includes("player") ? "player" : type}]`;
                 });
                 return line + `§a ~ §f${text(def.description)}`;
             })
