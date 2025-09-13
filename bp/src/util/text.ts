@@ -4,14 +4,14 @@ import chinese_traditional from "../data/languages/chinese_traditional";
 import english from "../data/languages/english";
 import { get } from "./database";
 import { ActionFormData } from "@minecraft/server-ui";
-import france from "../data/languages/france";
+import french from "../data/languages/french";
 export type TranslationKey = keyof typeof english;
 let currentLanguage = english;
 export const languageList = {
     english,
     chinese_simplifed,
     chinese_traditional,
-    france
+    french,
 };
 export function updateLanguage() {
     currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;

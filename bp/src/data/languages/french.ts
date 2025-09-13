@@ -1,6 +1,6 @@
 /**
  * @author jasonlaubb
- * Language: France (Français)
+ * Language: French (Français)
  */
 export default {
 commandNumberOutOfRange: "Le paramètre %1 est hors de portée. Plage : %2 - %3",
