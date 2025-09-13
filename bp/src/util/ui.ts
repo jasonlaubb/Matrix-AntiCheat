@@ -1,5 +1,5 @@
 import { CommandError, Player, system, world } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { ActionFormData, FormCancelationReason, MessageFormData, ModalFormData } from "@minecraft/server-ui";
 import { detectionList } from "../command/detection";
 import { get } from "./database";
 import property from "../data/property";
@@ -327,6 +327,20 @@ export async function setupHelper(player: Player) {
         if (get("systemLanguage") === "NOT_SET") {
             const res = await languageSelectUI(player);
             if (!res) return;
+            const res2 = await new MessageFormData()
+                .title(text("commandAntiXrayAreYouSure"))
+                .body(text("uiConfirmLanguage"))
+                .button1("§l§2" + text("commandAntiXrayYes"))
+                .button2("§l§4" + text("commandAntiXrayNo"))
+                //@ts-expect-error
+                .show(player);
+            if (res2.canceled || res2.selection === 1) {
+                world.setDynamicProperty("database:systemLanguage");
+                if (res2.cancelationReason === FormCancelationReason.UserClosed || res2.selection === 1) {
+                    system.run(() => setupHelper(player));
+                }
+                return;
+            }
         }
         if (get("flagPunishmentType") === "NOT_SET" || get("flagMessageTarget") === "NOT_SET") {
             const res = await new ModalFormData()

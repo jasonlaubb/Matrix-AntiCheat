@@ -87,6 +87,7 @@ export default {
     uiAll: "Everyone",
     uiExclude: "Exclude cheater",
     uiNobody: "Nobody",
+    uiConfirmLanguage: "You can also change the language later by §e/language§f command",
     commandToggleEnable: "enabled",
     commandToggleDisable: "disabled",
     commandPlayer: "player",
