@@ -5,6 +5,7 @@ import english from "../data/languages/english";
 import { get } from "./database";
 import { ActionFormData } from "@minecraft/server-ui";
 import french from "../data/languages/french";
+import japanese from "../data/languages/japanese";
 export type TranslationKey = keyof typeof english;
 let currentLanguage = english;
 export const languageList = {
@@ -12,6 +13,7 @@ export const languageList = {
     chinese_simplifed,
     chinese_traditional,
     french,
+    japanese,
 };
 export function updateLanguage() {
     currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;
