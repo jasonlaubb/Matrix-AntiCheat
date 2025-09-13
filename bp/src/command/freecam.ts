@@ -1,6 +1,8 @@
 import { InputPermissionCategory, Player, system } from "@minecraft/server";
 import type { Command } from "../main";
 import { getXZVectorSpeed } from "../util/mathUtil";
+import { text } from "../util/text";
+import english from "../data/languages/english";
 const BPT = 0.4;
 export const freecam = {
     name: "freecam",
@@ -54,44 +56,52 @@ export const freecam = {
 } as Command;
 export const freecamtp = {
     name: "freecamtp",
-    description: "Teleport to the freecam position",
+    description: english.commandFreecamTpDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandFreecamTp",
+        description: "commandFreecamTpDescription"
+    },
     execute: (player) => {
-        if (!player?.freecamCameraPosition) return { status: 1, message: "§7[§aMatrix§7] §fYou are not in freecam mode." };
+        if (!player?.freecamCameraPosition) {
+            return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandFreecamTpNotInMode") };
+        }
+
         const cameraPos = player.freecamCameraPosition;
         system.run(() => {
             player.teleport(cameraPos);
             setMovement(player, true);
             player.camera.clear();
         });
+
         delete player.freecamCameraPosition;
-        return { status: 0, message: "§7[§aMatrix§7] §fTeleported to freecam position." };
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandFreecamTpSuccess") };
     },
 } as Command;
 export const freecamspeed = {
     name: "freecamspeed",
-    description: "Adjust the freecam speed",
-    optionalParameters: [
-        {
-            type: "integer",
-            name: "speed",
-            min: 1,
-            max: 8,
-        },
-    ],
+    description: english.commandFreecamSpeedDescription,
     requireOp: true,
+    translationDef: {
+        actionName: "commandFreecamSpeed",
+        description: "commandFreecamSpeedDescription",
+        optionalParam: ["commandFreecamSpeedValue"]
+    },
+    optionalParameters: [
+        { type: "integer", name: "speed", min: 1, max: 8 },
+    ],
     execute: (player, [speed]) => {
         if (!speed) {
             const currentSpeed = player.getDynamicProperty("freecamSpeed") as number;
             if (currentSpeed) {
                 player.setDynamicProperty("freecamSpeed");
-                return { status: 0, message: `§7[§aMatrix§7] §fFreecam speed reset to default.` };
+                return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandFreecamSpeedReset") };
             }
-            return { status: 1, message: `§7[§aMatrix§7] §fFreecam speed has not been adjusted.` };
-        } else {
-            player.setDynamicProperty("freecamSpeed", speed);
-            return { status: 0, message: `§7[§aMatrix§7] §fFreecam speed set to §e${speed}x§f sucessfully.` };
+            return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandFreecamSpeedNotSet") };
         }
+
+        player.setDynamicProperty("freecamSpeed", speed);
+        return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandFreecamSpeedSet", speed) };
     },
 } as Command;
 function setMovement(player: Player, value: boolean) {
