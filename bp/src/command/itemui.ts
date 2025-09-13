@@ -11,7 +11,12 @@ export default {
         description: "commandItemUiDescription",
     },
     execute: (player) => {
-        system.run(() => player.getComponent("inventory")!.container.addItem(new ItemStack("matrix:ui_tool")));
+        system.run(() => {
+            const item = new ItemStack("matrix:setup_helper");
+            item.nameTag = "§r" + text("itemSetupHelper");
+            item.keepOnDeath = true;
+            player.getComponent("inventory")!.container.addItem(item)
+        });
         return {
             status: 0,
             message: "§7[§aMatrix§7] §f" + text("commandItemUiSuccess"),

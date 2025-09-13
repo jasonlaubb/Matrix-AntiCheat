@@ -12,7 +12,10 @@ export default {
     requireOp: true,
     execute(player) {
         system.run(() => {
-            player.getComponent("inventory")?.container?.addItem(new ItemStack("matrix:setup_helper", 1));
+            const item = new ItemStack("matrix:ui_tool");
+            item.nameTag = "§r" + text("itemAdminGUI");
+            item.keepOnDeath = true;
+            player.getComponent("inventory")!.container.addItem(item)
         });
         return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandSetupGainItem")};
     }

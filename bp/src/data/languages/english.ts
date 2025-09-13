@@ -408,4 +408,6 @@ export default {
     commandWorldBorder: "World border",
     commandWorldBorderDescription: "Enable or disable the world border feature",
     commandWorldBorderSuccess: "Successfully %s §fworld border feature. To change the border size, use §e/setnumber worldBorderSize <size>",
+    itemSetupHelper: "§g§lSetup Helper\n§r§7(Right-click to open the UI)",
+    itemAdminGUI: "§e§lMatrix Admin GUI\n§r§7(Right-click to open the UI)",
 };
