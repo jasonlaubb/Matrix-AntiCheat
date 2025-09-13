@@ -147,11 +147,11 @@ export function openGeneralUI(player: Player) {
                                 .title(text("uiActionOption") + " | " + text(selectedCommand.translationDef.actionName))
                                 .submitButton(text("uiExecute"))
                                 .label(text(selectedCommand.translationDef.description));
-                            selectedCommand.parameters?.forEach(({ type, max, min }, i) => {
-                                addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max]);
+                            selectedCommand.parameters?.forEach(({ name, type, max, min }, i) => {
+                                addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max], false, name);
                             });
-                            selectedCommand.optionalParameters?.forEach(({ type, max, min }, i) => {
-                                addOption(ui, text(selectedCommand.translationDef.optionalParam![i]!), type, players, [min, max], true);
+                            selectedCommand.optionalParameters?.forEach(({ name, type, max, min }, i) => {
+                                addOption(ui, text(selectedCommand.translationDef.optionalParam![i]!), type, players, [min, max], true, name);
                             });
                             ui
                                 //@ts-expect-error
@@ -228,7 +228,7 @@ export function openGeneralUI(player: Player) {
             }
         });
 }
-function addOption(ui: ModalFormData, name: string, type: OptionType, players: string[], range: [undefined | number, undefined | number] = [undefined, undefined], optional = false) {
+function addOption(ui: ModalFormData, name: string, type: OptionType, players: string[], range: [undefined | number, undefined | number] = [undefined, undefined], optional: boolean, enumRegistryName: string) {
     const label = optional ? name + ` (${text("uiOptional")})` : name;
     switch (type) {
         case "boolean": {
@@ -240,7 +240,7 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
             break;
         }
         case "enum": {
-            const value = enumRegistry[name];
+            const value = enumRegistry[enumRegistryName];
             if (optional) {
                 ui.dropdown(label, ["§4" + text("uiUndefined"), ...value]);
             } else {
