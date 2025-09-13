@@ -275,3 +275,6 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
 function upperCaseFirstChar(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+export function setupHelper (player: Player) {
+    player; // UNFINISHED
+}

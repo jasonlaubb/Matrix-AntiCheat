@@ -23,7 +23,7 @@ import { tick } from "./util/tick";
 import { classifyProperty } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
-import { openGeneralUI } from "./util/ui";
+import { openGeneralUI, setupHelper } from "./util/ui";
 import "./data/prototype";
 import { worldBorderOn } from "./asset/worldBorder";
 import { oreAlertOn } from "./asset/oreAlert";
@@ -219,6 +219,15 @@ system.beforeEvents.startup.subscribe((event) => {
                 source.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Mainhand)!.setItem();
             }
         },
+    });
+    event.itemComponentRegistry.registerCustomComponent("matrix:execute_setup_ui", {
+        onUse: ({ source }) => {
+            if (source.isOp()) {
+                setupHelper(source);
+            } else {
+                source.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Mainhand)!.setItem();
+            }
+        }
     });
     event.itemComponentRegistry.registerCustomComponent("matrix:label", {
         onUse: ({ source }) => {
