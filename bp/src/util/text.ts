@@ -2,11 +2,11 @@ import english from "../data/languages/english";
 import { get } from "./database";
 export type TranslationKey = keyof typeof english;
 let currentLanguage = english;
-export const languageList: { [key: string]: typeof english } = {
+export const languageList = {
     english,
 };
 export function updateLanguage() {
-    currentLanguage = languageList[get("systemLanguage")] ?? languageList.english;
+    currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;
 }
 export function text(key: TranslationKey, ...args: (string | number)[]): string {
     let string = currentLanguage[key];
