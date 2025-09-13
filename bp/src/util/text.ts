@@ -19,6 +19,7 @@ export function updateLanguage() {
     currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;
 }
 export function text(key: TranslationKey, ...args: (string | number)[]): string {
+    console.log("Get: " + key + " | Result:" + currentLanguage[key])
     let string = currentLanguage[key];
     if (args.length === 0) return string;
     args.forEach((arg, i) => {
