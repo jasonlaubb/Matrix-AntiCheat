@@ -366,7 +366,7 @@ export default {
     commandGetProperty: "Get property",
     commandGetPropertyDescription: "View one config property",
     commandGetPropertyTarget: "property",
-    commandGetPropertySuccess: "The value of property §e%s§f:\nType: §e%s§f\nStatic data: §e%s§f\nDynamic property: §e%s",
+    commandGetPropertySuccess: "The value of property §e%1§f:\nType: §e%2§f\nStatic data: §e%3§f\nDynamic property: §e%4",
     commandInvalidProperty: "Invalid property id...",
     commandSetPunishment: "Set punishment",
     commandSetPunishmentDescription: "Change punishment on flag",
