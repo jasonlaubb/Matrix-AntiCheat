@@ -70,7 +70,7 @@ export default {
     uiItemID: "Item ID",
     uiAnyString: "Any string",
     uiSetupHelper: "Setup Helper",
-    uiSetupAlreadyBody: "congratulation! You have already set the anticheat up.",
+    uiSetupAlreadyBody: "Congratulation! You have already set the anticheat up.",
     uiOpenAdminGUI: "Open Admin GUI",
     uiGetUIItem: "Get UI Item",
     uiCommandList: "Command List",
