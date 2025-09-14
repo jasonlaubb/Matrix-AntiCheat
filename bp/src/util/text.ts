@@ -47,7 +47,7 @@ export function text(key: TranslationKey, ...args: (string | number)[]): string 
 export async function languageSelectUI(player: Player) {
     const res = await new ActionFormData()
         .title(text("uiLanguage"))
-        .body("Select your language\n请选择你的语言\n請選擇您的語言\nSélectionnez votre langue\n言語を選択してください\nSeleziona la tua lingua\nSeleccione su idioma\n언어를 선택하세요\nSelecione seu idioma\nВыберите язык\nChọn ngôn ngữ của bạ\n")
+        .body("Select your language\n请选择你的语言\n請選擇您的語言\nSélectionnez votre langue\n言語を選択してください\nSeleziona la tua lingua\nSeleccione su idioma\n언어를 선택하세요\nSelecione seu idioma\nВыберите язык\nChọn ngôn ngữ của bạ")
         .button("English")
         .button("中文 (繁體)")
         .button("中文 (简体)")
