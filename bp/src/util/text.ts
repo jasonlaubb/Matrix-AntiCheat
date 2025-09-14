@@ -1,5 +1,5 @@
 import { Player } from "@minecraft/server";
-import chinese_simplified from "../data/languages/chinese_simplified"
+import chinese_simplified from "../data/languages/chinese_simplified";
 import chinese_traditional from "../data/languages/chinese_traditional";
 import english from "../data/languages/english";
 import { get } from "./database";
@@ -25,7 +25,7 @@ export const languageList = {
     korean,
     portuguese,
     russkiy_yazyk,
-    vietnamese
+    vietnamese,
 };
 export function updateLanguage() {
     currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;
