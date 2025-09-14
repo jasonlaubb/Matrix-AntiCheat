@@ -379,8 +379,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         system.runTimeout(() => {
             if (!player.isValid) return;
             giveUITool(player);
-            setupHelper(player);
-        }, 100);
+        }, 50);
     }
 });
 function giveUITool (player: Player) {
@@ -396,6 +395,7 @@ function giveUITool (player: Player) {
     if (!itemFind) {
         player.lastRunUICommand = true;
         player.runCommand("matrix:setup");
+        setupHelper(player);
     }
 }
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
