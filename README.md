@@ -11,6 +11,20 @@ What we're special is we don't rely on player.json and compatible with different
 We have slash command and UI design, aim to provide a lite, easy-to-use anticheat.
 
 You can do `/commandlist` to gain anticheat's command list.
+<h1>Multi-languge Support</h1>
+We support different language to let anticheat display!
+- English (default)
+- Traditional Chinese
+- Simplified Chinese
+- French
+- Japanese
+- Italian
+- Spanish
+- Korean
+- Portuguese
+- Russkiy yazyk
+- Vietnamese
+You can use `/language` to adjust the language.
 <h1>Anti Xray (Experimental)</h1>
 We also developed a working anti-xray system (configurable). Without any resource pack or other custom block JSON.
 Do `/antixrayenable` to enable anti xray feature.
