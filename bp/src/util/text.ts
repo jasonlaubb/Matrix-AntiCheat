@@ -56,7 +56,8 @@ export async function languageSelectUI(player: Player) {
         .button("Español")
         .button("한국어")
         .button("Português")
-        .button("русский язык")
+        .button("Pyccкий язык")
+        .button("Vietnam")
         //@ts-expect-error
         .show(player);
     if (res.canceled) return false;
