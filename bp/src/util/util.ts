@@ -1,4 +1,4 @@
-import { Block, Dimension, Direction, Entity, Player, Vector3, world } from "@minecraft/server";
+import { Block, Dimension, Direction, Entity, HudElement, HudVisibility, Player, Vector3, world } from "@minecraft/server";
 import { get } from "./database";
 import { deltaVector, floorVector, safeGetBlock, safeGetBlockNear } from "./vectorUtil";
 
@@ -137,4 +137,10 @@ export function isObstructedBetweenLocations(start: Vector3, end: Vector3, dimen
         }
     }
     return false;
+}
+export function hideHud (player: Player) {
+    player.onScreenDisplay.setHudVisibility(HudVisibility.Hide, Object.values(HudElement) as HudElement[]);
+}
+export function showHud (player: Player) {
+    player.onScreenDisplay.setHudVisibility(HudVisibility.Reset, Object.values(HudElement) as HudElement[])
 }

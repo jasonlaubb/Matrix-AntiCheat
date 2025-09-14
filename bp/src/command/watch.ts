@@ -2,6 +2,7 @@ import { InputPermissionCategory, Player, system, Vector2, Vector3 } from "@mine
 import type { Command } from "../main";
 import english from "../data/languages/english";
 import { text } from "../util/text";
+import { hideHud, showHud } from "../util/util";
 export const cameraTypes = ["down", "head", "behind"];
 export const watchtp = {
     name: "watchtp",
@@ -30,6 +31,7 @@ export const watchtp = {
             player.addEffect("invisible", 100, { showParticles: false });
             player.removeEffect("night_vision");
             player.addEffect("night_vision", 1200, { showParticles: false });
+            showHud(player);
             player.teleport(player.watchTargetPos!, {
                 facingLocation: player.watchPlayerPos,
             });
@@ -94,6 +96,7 @@ export default {
 
         system.run(() => {
             player.addEffect("night_vision", 20000000, { showParticles: false });
+            hideHud(player);
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false);
             player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false);
         });
@@ -113,7 +116,7 @@ export default {
                 player.removeEffect("night_vision");
                 player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
                 player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, true);
-
+                showHud(player);
                 if (targetLeft) return player.sendMessage("§7[§aMatrix§7] §f" + text("commandWatchTargetLeft"));
                 if (dimensionChange) return player.sendMessage("§7[§aMatrix§7] §f" + text("commandWatchTargetDimensionChanged"));
                 return;
