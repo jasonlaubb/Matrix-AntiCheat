@@ -375,8 +375,9 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
             world.educationalFeaturesEnabled = false;
         }
     }
-    if (!get("setup")) {
+    if (!get("setup") && player.isOp()) {
         system.runTimeout(() => {
+            if (!player.isValid) return;
             giveUITool(player);
             setupHelper(player);
         }, 100);
@@ -384,14 +385,18 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 });
 function giveUITool (player: Player) {
     const container = player.getComponent("inventory")!.container!;
+    let itemFind = false;
     for (let i = 0; i < 36; i++) {
         const item = container.getItem(i);
         if (item && item.typeId === "matrix:setup_helper") {
-            player.lastRunUICommand = true;
-            player.runCommand("matrix:setup");
+            itemFind = true;
             break;
         }
-    } 
+    }
+    if (!itemFind) {
+        player.lastRunUICommand = true;
+        player.runCommand("matrix:setup");
+    }
 }
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
     event.cancel = true;
