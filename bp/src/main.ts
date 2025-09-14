@@ -375,7 +375,24 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
             world.educationalFeaturesEnabled = false;
         }
     }
+    if (!get("setup")) {
+        system.runTimeout(() => {
+            giveUITool(player);
+            setupHelper(player);
+        }, 100);
+    }
 });
+function giveUITool (player: Player) {
+    const container = player.getComponent("inventory")!.container!;
+    for (let i = 0; i < 36; i++) {
+        const item = container.getItem(i);
+        if (item && item.typeId === "matrix:setup_helper") {
+            player.lastRunUICommand = true;
+            player.runCommand("matrix:setup");
+            break;
+        }
+    } 
+}
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
     event.cancel = true;
 });
