@@ -321,10 +321,13 @@ export async function setupHelper(player: Player) {
                 .show(player);
             if (res2.canceled || res2.selection === 1) {
                 world.setDynamicProperty("database:systemLanguage");
-                updateLanguage();
-                if (res2.cancelationReason === FormCancelationReason.UserClosed || res2.selection === 1) {
-                    system.run(() => setupHelper(player));
-                }
+                system.run(() => {
+                    updateLanguage();
+                    if (!player.isValid) return;
+                    if (res2.cancelationReason === FormCancelationReason.UserClosed || res2.selection === 1) {
+                        setupHelper(player);
+                    }
+                });
                 return;
             }
         }
