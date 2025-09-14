@@ -138,9 +138,9 @@ export function isObstructedBetweenLocations(start: Vector3, end: Vector3, dimen
     }
     return false;
 }
-export function hideHud (player: Player) {
+export function hideHud(player: Player) {
     player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
 }
-export function showHud (player: Player) {
-    player.onScreenDisplay.setHudVisibility(HudVisibility.Reset)
+export function showHud(player: Player) {
+    player.onScreenDisplay.setHudVisibility(HudVisibility.Reset);
 }

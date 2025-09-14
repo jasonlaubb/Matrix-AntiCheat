@@ -382,7 +382,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         }, 100);
     }
 });
-function giveUITool (player: Player) {
+function giveUITool(player: Player) {
     const container = player.getComponent("inventory")!.container!;
     let itemFind = false;
     for (let i = 0; i < 36; i++) {
