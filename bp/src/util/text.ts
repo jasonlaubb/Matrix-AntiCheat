@@ -11,6 +11,7 @@ import spanish from "../data/languages/spanish";
 import korean from "../data/languages/korean";
 import portuguese from "../data/languages/portuguese";
 import russkiy_yazyk from "../data/languages/russkiy_yazyk";
+import vietnamese from "../data/languages/vietnamese";
 export type TranslationKey = keyof typeof english;
 let currentLanguage = english;
 export const languageList = {
@@ -24,6 +25,7 @@ export const languageList = {
     korean,
     portuguese,
     russkiy_yazyk,
+    vietnamese
 };
 export function updateLanguage() {
     currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;
