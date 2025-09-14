@@ -18,7 +18,7 @@ export const banitem = {
         const isItemBanned = world.getDynamicProperty("banitem:" + item) as string;
         if (isItemBanned) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanItemAlready", item, isItemBanned) };
         world.setDynamicProperty("banitem:" + item, reason ?? text("commandBanItemNoReason"));
-        if (!world?.banItemEventRegistered) registerItemBanEvent();
+        if (!world?.banItemEventRegistered) system.run(() => registerItemBanEvent());
         return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandBanItemSuccess", item) };
     },
 } as Command;
