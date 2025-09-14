@@ -379,7 +379,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         system.runTimeout(() => {
             if (!player.isValid) return;
             giveUITool(player);
-        }, 50);
+        }, 100);
     }
 });
 function giveUITool (player: Player) {
