@@ -9,6 +9,7 @@ import japanese from "../data/languages/japanese";
 import italian from "../data/languages/italian";
 import spanish from "../data/languages/spanish";
 import korean from "../data/languages/korean";
+import portuguese from "../data/languages/portuguese";
 export type TranslationKey = keyof typeof english;
 let currentLanguage = english;
 export const languageList = {
@@ -20,6 +21,7 @@ export const languageList = {
     italian,
     spanish,
     korean,
+    portuguese,
 };
 export function updateLanguage() {
     currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;
@@ -49,6 +51,7 @@ export async function languageSelectUI(player: Player) {
         .button("Italiano")
         .button("Español")
         .button("한국어")
+        .button("Português")
         //@ts-expect-error
         .show(player);
     if (res.canceled) return false;
