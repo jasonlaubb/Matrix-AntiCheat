@@ -329,7 +329,19 @@ function overworldBlockBreakHandler(event: PlayerBreakBlockBeforeEvent) {
         }
     });
 }
-addInterval("xray", () => {
+function floorPos({ x, y, z }: Vector3) {
+    return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
+}
+function beforeBlockBreak(event: PlayerBreakBlockBeforeEvent) {
+    if (event.dimension.id === "minecraft:overworld") {
+        overworldBlockBreakHandler(event);
+    } else if (event.dimension.id === "minecraft:nether") netherBlockBreakHandler(event);
+}
+export function antiXrayOn() {
+    world.beforeEvents.playerBreakBlock.subscribe(beforeBlockBreak);
+    world.beforeEvents.playerPlaceBlock.subscribe(beforeBlockPlace);
+    world.beforeEvents.explosion.subscribe(beforeExplosion);
+    addInterval("xray", () => {
     if (get("banXrayHandler")) return;
     const silverfish = [
         ...world.getDimension("minecraft:overworld").getEntities({
@@ -369,18 +381,6 @@ addInterval("xray", () => {
         }
     });
 });
-function floorPos({ x, y, z }: Vector3) {
-    return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
-}
-function beforeBlockBreak(event: PlayerBreakBlockBeforeEvent) {
-    if (event.dimension.id === "minecraft:overworld") {
-        overworldBlockBreakHandler(event);
-    } else if (event.dimension.id === "minecraft:nether") netherBlockBreakHandler(event);
-}
-export function antiXrayOn() {
-    world.beforeEvents.playerBreakBlock.subscribe(beforeBlockBreak);
-    world.beforeEvents.playerPlaceBlock.subscribe(beforeBlockPlace);
-    world.beforeEvents.explosion.subscribe(beforeExplosion);
 }
 /* Unused
 export function antiXrayOff () {
