@@ -10,6 +10,7 @@ import italian from "../data/languages/italian";
 import spanish from "../data/languages/spanish";
 import korean from "../data/languages/korean";
 import portuguese from "../data/languages/portuguese";
+import russkiy_yazyk from "../data/languages/russkiy_yazyk";
 export type TranslationKey = keyof typeof english;
 let currentLanguage = english;
 export const languageList = {
@@ -22,6 +23,7 @@ export const languageList = {
     spanish,
     korean,
     portuguese,
+    russkiy_yazyk,
 };
 export function updateLanguage() {
     currentLanguage = languageList[get("systemLanguage") as keyof typeof languageList] ?? languageList.english;
@@ -52,10 +54,11 @@ export async function languageSelectUI(player: Player) {
         .button("Español")
         .button("한국어")
         .button("Português")
+        .button("русский язык")
         //@ts-expect-error
         .show(player);
     if (res.canceled) return false;
-    const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplified", "french", "japanese", "italian", "spanish", "korean"];
+    const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplified", "french", "japanese", "italian", "spanish", "korean", "portuguese", "russkiy_yazyk"];
     player.lastRunUICommand = true;
     player.runCommand(`matrix:language ${languages[res.selection!]}`);
     return true;
