@@ -17,7 +17,7 @@ function interact(event: PlayerInteractWithBlockBeforeEvent) {
     const inventory = event.block.getComponent("inventory");
     if (!inventory || (inventory.container?.size ?? 0) < 27 || event.player.isOp() || distanceXZ(event.player.location, event.block.location) < 2) return;
     const angle = calculateRelativeViewAngle(event.player.location, event.block.center(), event.player.getRotation().y);
-    if (angle > (event.player.inputInfo.lastInputModeUsed === "Touch" ? 120 : 30)) {
+    if (angle > (event.player.inputInfo.lastInputModeUsed === "Touch" ? 120 : 45)) {
         event.cancel = true;
         system.run(() => event.player.flag("ChestAura", "A", "Player", { angle: angle.toFixed(2) }));
         return;
