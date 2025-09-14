@@ -24,6 +24,7 @@ We support different language to let anticheat display!
 - Portuguese
 - Russkiy yazyk
 - Vietnamese
+
 You can use `/language` to adjust the language.
 <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/mls.png" width="80%">
 <h1>Admin GUI</h1>
