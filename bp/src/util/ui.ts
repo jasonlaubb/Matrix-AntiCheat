@@ -6,7 +6,7 @@ import property from "../data/property";
 import { getPropertyType } from "./propertyClassifier";
 import type { OptionType } from "../main";
 import { commands, enumRegistry } from "../data/commands";
-import { languageSelectUI, text } from "./text";
+import { languageSelectUI, text, updateLanguage } from "./text";
 export function openGeneralUI(player: Player) {
     new ActionFormData()
         .title(text("uiAdminGUI"))
@@ -321,6 +321,7 @@ export async function setupHelper(player: Player) {
                 .show(player);
             if (res2.canceled || res2.selection === 1) {
                 world.setDynamicProperty("database:systemLanguage");
+                updateLanguage();
                 if (res2.cancelationReason === FormCancelationReason.UserClosed || res2.selection === 1) {
                     system.run(() => setupHelper(player));
                 }
