@@ -3,6 +3,7 @@ import type { Command } from "../main";
 import { getXZVectorSpeed } from "../util/mathUtil";
 import { text } from "../util/text";
 import english from "../data/languages/english";
+import { hideHud, showHud } from "../util/util";
 const BPT = 0.4;
 export const freecam = {
     name: "freecam",
@@ -23,13 +24,17 @@ export const freecam = {
             delete player.freecamCameraPosition;
             system.run(() => {
                 player.camera.clear();
+                showHud(player);
                 setMovement(player, true);
             });
             return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandFreecamExit") };
         }
 
         player.freecamCameraPosition = target ? target.location : player.location;
-        system.run(() => setMovement(player, false));
+        system.run(() => {
+            setMovement(player, false);
+            hideHud(player);
+        });
 
         const event = system.runInterval(() => {
             if (!player || !player.isValid || !player?.freecamCameraPosition) return system.clearRun(event);
@@ -74,6 +79,7 @@ export const freecamtp = {
         system.run(() => {
             player.teleport(cameraPos);
             setMovement(player, true);
+            showHud(player);
             player.camera.clear();
         });
 
