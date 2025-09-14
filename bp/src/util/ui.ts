@@ -252,11 +252,11 @@ function addOption(ui: ModalFormData, name: string, type: OptionType, players: s
         case "integer": {
             let placeholder = type === "float" ? text("uiFloat") : text("uiInteger");
             if (range[0] && range[1]) {
-                placeholder = `${type} (${range[0]} - ${range[1]})`;
+                placeholder = `${placeholder} (${range[0]} - ${range[1]})`;
             } else if (range[0]) {
-                placeholder = `${type} ≥ ${range[0]}`;
+                placeholder = `${placeholder} ≥ ${range[0]}`;
             } else if (range[1]) {
-                placeholder = `${type} ≤ ${range[1]}`;
+                placeholder = `${placeholder} ≤ ${range[1]}`;
             }
             ui.textField(label, placeholder);
             break;

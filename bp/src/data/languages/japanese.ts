@@ -1,6 +1,6 @@
 /**
  * @author jasonlaubb
- * Language: English (source language)
+ * Lanuage: Japanese
  */
 export default {
     commandNumberOutOfRange: "パラメーター %1 は範囲外です。許容範囲: %2 ～ %3",
