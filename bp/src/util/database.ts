@@ -1,5 +1,6 @@
 import { world } from "@minecraft/server";
 import property from "../data/property";
+import { detectionList } from "../command/detection";
 export function setUpProperty() {
     const propertyIds = world.getDynamicPropertyIds().filter((id) => id.startsWith("database:"));
     const keys = Object.keys(property);
@@ -10,6 +11,7 @@ export function setUpProperty() {
 export function get(id: keyof typeof property): any {
     return world.getDynamicProperty("database:" + id) ?? property[id].value;
 }
-export function isUnallowedValue () {
-    
+const detectionRelated = new Set(Object.values(detectionList).map(({ property }) => property));
+export function isReadonly (valueId: string) {
+    return detectionRelated.has(valueId);
 }
