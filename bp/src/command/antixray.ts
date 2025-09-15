@@ -17,6 +17,7 @@ export default {
     execute: (player) => {
         if (get("antiXray")) {
             world.setDynamicProperty("database:antiXray", false);
+            player.sendMessage("§7[§aMatrix§7] §f" + text("commandAntiXrayDisableSuccess"));
         } else {
         system.run(() => {
             new MessageFormData()
