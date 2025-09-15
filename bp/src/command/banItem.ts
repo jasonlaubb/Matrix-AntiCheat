@@ -1,5 +1,5 @@
 import type { Command } from "../main";
-import { world } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import english from "../data/languages/english";
 import { text } from "../util/text";
 export const banitem = {
