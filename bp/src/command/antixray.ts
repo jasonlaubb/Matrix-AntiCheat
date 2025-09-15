@@ -15,7 +15,9 @@ export default {
         description: "commandAntiXrayDescription",
     },
     execute: (player) => {
-        if (get("antiXray") === true) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandAntiXrayAlready") };
+        if (get("antiXray")) {
+            world.setDynamicProperty("database:antiXray", false);
+        } else {
         system.run(() => {
             new MessageFormData()
                 .title(text("commandAntiXrayAreYouSure"))
@@ -26,12 +28,15 @@ export default {
                 .show(player)
                 .then((res) => {
                     if (res.canceled || res.selection === 1) return;
-                    world.setDynamicProperty("database:antiXray", true);
-                    if (get("banXrayHandler")) system.run(() => antiXrayOn());
-                    world.setDynamicProperty("database:banXrayHandler", false);
+                    if (get("banXrayHandler") && !get("antiXray")) system.run(() => antiXrayOn());
+                    world.setDynamicProperties({
+                        "database:antiXray": true,
+                        "database:banXrayHandler": false,
+                    });
                     player.sendMessage("§7[§aMatrix§7] §f" + text("commandAntiXraySuccess"));
                 });
         });
+        }
         return { status: 0 };
     },
 } as Command;
