@@ -11,7 +11,7 @@ export function setUpProperty() {
 export function get(id: keyof typeof property): any {
     return world.getDynamicProperty("database:" + id) ?? property[id].value;
 }
-const detectionRelated = new Set(Object.values(detectionList).map(({ property }) => property).concat(["worldBorder", "oreAlert", "endLock", "netherLock", "antiGma", "antiGmc", "antiGms", "antiGmsp", "antiXray", "banXrayHandler"]));
+const readonlyProperty = new Set(Object.values(detectionList).map(({ property }) => property).concat(["worldBorder", "oreAlert", "endLock", "netherLock", "antiGma", "antiGmc", "antiGms", "antiGmsp", "antiXray", "banXrayHandler"]));
 export function isReadonly (valueId: string) {
-    return detectionRelated.has(valueId);
+    return readonlyProperty.has(valueId);
 }
