@@ -289,7 +289,7 @@ export default {
     },
     antiNamespoofIgnoreRepeatedId: {
         type: "boolean",
-        value: true, // Ignore the string like ..(2) which represent a repeated id.
+        value: true, // Ignore the string like ..(2) which represent a repeated id. But not (0) or (1000) which is invalid or too big.
     },
     antiBlockReachEnable: {
         type: "boolean",
