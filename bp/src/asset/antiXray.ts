@@ -1,11 +1,12 @@
 import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume, system, PlayerPlaceBlockBeforeEvent, ExplosionBeforeEvent, PlayerBreakBlockBeforeEvent } from "@minecraft/server";
 import { get } from "../util/database";
 import { addInterval } from "../util/tick";
+import { getSurround } from "../util/util";
 function fastSurround(block: Block) {
-    return [block.above(), block.below(), block.north(), block.east(), block.west(), block.south()].every((b) => b?.isSolid);
+    return getSurround(block).every((block) => block?.isValid);
 }
 function returnSurroundSolid(block: Block) {
-    return [block.above(), block.below(), block.north(), block.east(), block.west(), block.south()].filter((block) => block?.isSolid) as Block[];
+    return getSurround(block).filter((block) => block?.isSolid) as Block[];
 }
 function getChunkOrigin({ x, z }: VectorXZ) {
     const chunkX = Math.floor(x / 16) * 16;
@@ -102,20 +103,22 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
             const rawId = from.replace("minecraft:", "");
             chunkData[`${pos.x},${pos.y},${pos.z}`] = rawId;
         }
+        let amount = 0;
         for (const position of blocks) {
+            amount++;
             const block = dimension.getBlock(position);
             if (!block || !block.isValid) continue;
 
             const key = `${position.x},${position.y},${position.z}`;
             const raw = chunkData[key];
-
             if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
+                world.sendMessage("Reversed: " + key);
                 block.setType(`minecraft:${raw}`);
-                world.sendMessage("Reversed +1");
                 move++;
             }
 
             if ((raw && !block.isSolid) || isXrayDisabled) {
+                world.sendMessage("Skipped: " + key);
                 delete chunkData[key];
                 continue;
             }
@@ -125,6 +128,8 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
                     recordModification(position, block.typeId);
                     block.setType("minecraft:" + (block.typeId === "minecraft:deepslate" ? "deepslate_" : "") + randomOre());
                     move++;
+                } else {
+                    world.sendMessage("Failed: " + density + " and " + fastSurround(block));
                 }
             } else if (fastSurround(block)) {
                 recordModification(position, block.typeId);
@@ -137,6 +142,7 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
                 yield;
             }
         }
+        console.log("Amount:" + amount);
         saveChunkData(chunkPrefix, chunkData);
     }
 
