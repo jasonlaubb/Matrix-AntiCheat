@@ -71,58 +71,55 @@ export function openGeneralUI(player: Player) {
                                     const selectedId = selectedProperty[selection];
                                     const { type, value } = property[selectedId as keyof typeof property];
                                     const dynamicValue = world.getDynamicProperty("database:" + selectedId) ?? "--";
-                                    const ui = new ActionFormData()
-                                        .title(text("uiProperty") + ": " + selectedId)
-                                        .body(`§g${text("uiType")}: §e${type}\n§g${text("uiStaticData")}: §e${value}§r\n§g${text("uiDynamicProperty")}: §e${dynamicValue}`)
-                                        if (isReadonly(selectedId)) {
-                                            ui
-                                            .button("/")
+                                    const ui = new ActionFormData().title(text("uiProperty") + ": " + selectedId).body(`§g${text("uiType")}: §e${type}\n§g${text("uiStaticData")}: §e${value}§r\n§g${text("uiDynamicProperty")}: §e${dynamicValue}`);
+                                    if (isReadonly(selectedId)) {
+                                        ui.button("/")
                                             .button("/") // Value is readonly, then cannot be changed. (execept you reset the config)
                                             //@ts-expect-error
                                             .show(player);
-                                        } else {
+                                    } else {
                                         ui.button(text("uiModifyValue"))
-                                        .button(text("uiDiscardEdit"))
-                                        //@ts-expect-error
-                                        .show(player)
-                                        .then((res) => {
-                                            if (res.canceled) return;
-                                            if (res.selection === 0) {
-                                                const ui = new ModalFormData().title("Editing: " + selectedId);
-                                                const newValueText = text("uiNewValue");
-                                                (type === "boolean" ? ui.toggle(text("uiNewBooleanState"), { defaultValue: true }) : ui.textField(`${newValueText} (${type})`, newValueText))
-                                                    //@ts-expect-error
-                                                    .show(player)
-                                                    .then((res) => {
-                                                        if (res.canceled) return;
-                                                        const value = res.formValues![0] as string;
-                                                        if (!value) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiValueEmptyDisallow", "/discard"));
-                                                        switch (type) {
-                                                            case "string": {
-                                                                world.setDynamicProperty("database:" + selectedId, value);
-                                                                break;
+                                            .button(text("uiDiscardEdit"))
+                                            //@ts-expect-error
+                                            .show(player)
+                                            .then((res) => {
+                                                if (res.canceled) return;
+                                                if (res.selection === 0) {
+                                                    const ui = new ModalFormData().title("Editing: " + selectedId);
+                                                    const newValueText = text("uiNewValue");
+                                                    (type === "boolean" ? ui.toggle(text("uiNewBooleanState"), { defaultValue: true }) : ui.textField(`${newValueText} (${type})`, newValueText))
+                                                        //@ts-expect-error
+                                                        .show(player)
+                                                        .then((res) => {
+                                                            if (res.canceled) return;
+                                                            const value = res.formValues![0] as string;
+                                                            if (!value) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiValueEmptyDisallow", "/discard"));
+                                                            switch (type) {
+                                                                case "string": {
+                                                                    world.setDynamicProperty("database:" + selectedId, value);
+                                                                    break;
+                                                                }
+                                                                case "number": {
+                                                                    const number = parseFloat(value);
+                                                                    if (isNaN(number)) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotANumber"));
+                                                                    world.setDynamicProperty("database:" + selectedId, value);
+                                                                    break;
+                                                                }
+                                                                case "boolean": {
+                                                                    const boolean = res.formValues![0] as boolean;
+                                                                    world.setDynamicProperty("database:" + selectedId, boolean);
+                                                                    break;
+                                                                }
                                                             }
-                                                            case "number": {
-                                                                const number = parseFloat(value);
-                                                                if (isNaN(number)) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotANumber"));
-                                                                world.setDynamicProperty("database:" + selectedId, value);
-                                                                break;
-                                                            }
-                                                            case "boolean": {
-                                                                const boolean = res.formValues![0] as boolean;
-                                                                world.setDynamicProperty("database:" + selectedId, boolean);
-                                                                break;
-                                                            }
-                                                        }
-                                                        player.sendMessage("§7[§aMatrix§7] §f" + text("uiChanged"));
-                                                    });
-                                            } else {
-                                                if (world.getDynamicProperty("database:" + selectedId)) {
-                                                    world.setDynamicProperty("database:" + selectedId);
-                                                    player.sendMessage("§7[§aMatrix§7] §f" + text("uiPropertyReset"));
-                                                } else player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotChanged"));
-                                            }
-                                        });
+                                                            player.sendMessage("§7[§aMatrix§7] §f" + text("uiChanged"));
+                                                        });
+                                                } else {
+                                                    if (world.getDynamicProperty("database:" + selectedId)) {
+                                                        world.setDynamicProperty("database:" + selectedId);
+                                                        player.sendMessage("§7[§aMatrix§7] §f" + text("uiPropertyReset"));
+                                                    } else player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotChanged"));
+                                                }
+                                            });
                                     }
                                 });
                         });

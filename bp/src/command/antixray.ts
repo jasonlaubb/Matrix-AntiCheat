@@ -19,24 +19,24 @@ export default {
             world.setDynamicProperty("database:antiXray", false);
             player.sendMessage("§7[§aMatrix§7] §f" + text("commandAntiXrayDisableSuccess"));
         } else {
-        system.run(() => {
-            new MessageFormData()
-                .title(text("commandAntiXrayAreYouSure"))
-                .body(text("commandAntiXrayInstruction"))
-                .button1("§4§l" + text("commandAntiXrayYes"))
-                .button2("§2§l" + text("commandAntiXrayNo"))
-                //@ts-expect-error
-                .show(player)
-                .then((res) => {
-                    if (res.canceled || res.selection === 1) return;
-                    if (get("banXrayHandler") && !get("antiXray")) system.run(() => antiXrayOn());
-                    world.setDynamicProperties({
-                        "database:antiXray": true,
-                        "database:banXrayHandler": false,
+            system.run(() => {
+                new MessageFormData()
+                    .title(text("commandAntiXrayAreYouSure"))
+                    .body(text("commandAntiXrayInstruction"))
+                    .button1("§4§l" + text("commandAntiXrayYes"))
+                    .button2("§2§l" + text("commandAntiXrayNo"))
+                    //@ts-expect-error
+                    .show(player)
+                    .then((res) => {
+                        if (res.canceled || res.selection === 1) return;
+                        if (get("banXrayHandler") && !get("antiXray")) system.run(() => antiXrayOn());
+                        world.setDynamicProperties({
+                            "database:antiXray": true,
+                            "database:banXrayHandler": false,
+                        });
+                        player.sendMessage("§7[§aMatrix§7] §f" + text("commandAntiXraySuccess"));
                     });
-                    player.sendMessage("§7[§aMatrix§7] §f" + text("commandAntiXraySuccess"));
-                });
-        });
+            });
         }
         return { status: 0 };
     },
