@@ -1,5 +1,6 @@
 import { EntityHitBlockAfterEvent, InputMode, Player, PlayerBreakBlockBeforeEvent, PlayerHotbarSelectedSlotChangeAfterEvent, system, world } from "@minecraft/server";
 import { get } from "../util/database";
+import { text } from "../util/text";
 export default {
     property: "antiAutotoolEnable",
     enable: () => {
@@ -29,7 +30,13 @@ function blockBreak(event: PlayerBreakBlockBeforeEvent) {
         const now = Date.now();
         player.autotoolLastFlag ??= 0;
         const flagInterval = now - player.autotoolLastFlag;
-        if (flagInterval < 150000) system.run(() => player.flag("AutoTool", "A", "Player", { flagInterval }));
+        if (flagInterval < 150000) system.run(() => {
+            if (get("antiAutoToolKickOnly")) {
+                player.kick(text("flagUnfairAdvantage"));
+            } else {
+                player.flag("AutoTool", "A", "Player", { flagInterval });
+            }
+        });
         player.autotoolLastFlag = now;
     }
 }

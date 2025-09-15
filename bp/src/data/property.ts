@@ -93,7 +93,7 @@ export default {
     },
     antiAutotoolEnable: {
         type: "boolean",
-        value: true,
+        value: false,
     },
     antiAutoToolIgnoreKeyboardInput: {
         type: "boolean",
