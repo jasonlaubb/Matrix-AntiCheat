@@ -145,8 +145,8 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
 }
 const netherIncludeTypes = ["minecraft:nether_gold_ore", "minecraft:quartz_ore", "minecraft:netherrack", "minecraft:blackstone"];
 function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
-    const isXrayDisabled = !get("antiXray");
     function* generator() {
+        const isXrayDisabled = !get("antiXray");
         const endX = startX + 15,
             endZ = startZ + 15;
         const density = get("antiXrayGhostBlockDensity");
