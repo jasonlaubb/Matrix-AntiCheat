@@ -101,7 +101,7 @@ export default {
     },
     antiAutoToolKickOnly: {
         type: "boolean",
-        value: false,
+        value: true,
     },
     antiAutoToolMinFlagInterval: {
         type: "number",
