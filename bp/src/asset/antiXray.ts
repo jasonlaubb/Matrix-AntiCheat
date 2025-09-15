@@ -111,6 +111,7 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
 
             if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
                 block.setType(`minecraft:${raw}`);
+                world.sendMessage("Reversed +1");
                 move++;
             }
 
@@ -136,7 +137,6 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
                 yield;
             }
         }
-        console.log(move);
         saveChunkData(chunkPrefix, chunkData);
     }
 
@@ -329,7 +329,6 @@ function floorPos({ x, y, z }: Vector3) {
     return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
 }
 function beforeBlockBreak(event: PlayerBreakBlockBeforeEvent) {
-    world.sendMessage("Event trigged.");
     if (event.dimension.id === "minecraft:overworld") {
         overworldBlockBreakHandler(event);
     } else if (event.dimension.id === "minecraft:nether") netherBlockBreakHandler(event);
