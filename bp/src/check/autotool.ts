@@ -17,6 +17,7 @@ export default {
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     if (!(player instanceof Player) || player.isOp() || (get("antiAutoToolIgnoreKeyboardInput") && player.inputInfo.lastInputModeUsed === InputMode.KeyboardAndMouse)) return;
     const currentTick = system.currentTick;
+    player.autotoolLastSwitch ??= player.selectedSlotIndex; // Prevent special false positive
     system.runTimeout(() => {
         // Switch tool with low interval
         player.autotoolFlagged = Math.abs(currentTick - player.autotoolLastSwitch) <= 1;
