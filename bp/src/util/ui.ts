@@ -77,7 +77,7 @@ export function openGeneralUI(player: Player) {
                                         if (isReadonly(selectedId)) {
                                             ui
                                             .button("/")
-                                            .button("/")
+                                            .button("/") // Value is readonly, then cannot be changed. (execept you reset the config)
                                             //@ts-expect-error
                                             .show(player);
                                         } else {
