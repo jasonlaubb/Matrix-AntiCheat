@@ -13,6 +13,7 @@ We have slash command and UI design, aim to provide a lite, easy-to-use antichea
 You can do `/commandlist` to gain anticheat's command list.
 <h1>Multi-languges Support</h1>
 We support different language to let anticheat display!
+
 - English (default)
 - Traditional Chinese
 - Simplified Chinese
