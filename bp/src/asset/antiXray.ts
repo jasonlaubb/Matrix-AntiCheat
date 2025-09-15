@@ -286,7 +286,6 @@ function overworldBlockBreakHandler(event: PlayerBreakBlockBeforeEvent) {
     const solid = event.block.isSolid;
     const chunk = getChunkOrigin(event.block.location);
     const now = Date.now();
-
     if (get("antiXray")) {
         const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
 
@@ -333,6 +332,7 @@ function floorPos({ x, y, z }: Vector3) {
     return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
 }
 function beforeBlockBreak(event: PlayerBreakBlockBeforeEvent) {
+    world.sendMessage("Handling... overworld");
     if (event.dimension.id === "minecraft:overworld") {
         overworldBlockBreakHandler(event);
     } else if (event.dimension.id === "minecraft:nether") netherBlockBreakHandler(event);
