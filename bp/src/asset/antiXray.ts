@@ -236,25 +236,23 @@ function getSurroundingChunks(center: VectorXZ): VectorXZ[] {
 const netherXrayCooldown = new Map<string, number>();
 
 function netherBlockBreakHandler(event: PlayerBreakBlockBeforeEvent) {
+    if (get("banXrayHandler")) return;
     const solid = event.block.isSolid;
     const chunk = getChunkOrigin(event.block.location);
     const now = Date.now();
+    const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
 
-    if (get("antiXray")) {
-        const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
+    for (const targetChunk of targets) {
+        const key = posKeyXZ(targetChunk);
+        const cooldown = netherXrayCooldown.get(key) ?? 0;
 
-        for (const targetChunk of targets) {
-            const key = posKeyXZ(targetChunk);
-            const cooldown = netherXrayCooldown.get(key) ?? 0;
-
-            if (now - cooldown > get("antiXrayGenerateCooldown")) {
-                netherXrayCooldown.set(key, now);
-                system.runJob(replaceNetherArea(event.block.dimension, targetChunk));
-            }
+        if (now - cooldown > get("antiXrayGenerateCooldown")) {
+            netherXrayCooldown.set(key, now);
+            system.runJob(replaceNetherArea(event.block.dimension, targetChunk));
         }
     }
 
-    if (!solid || get("banXrayHandler")) return;
+    if (!solid) return;
 
     const surrounds = returnSurroundSolid(event.block);
 
@@ -285,24 +283,22 @@ function netherBlockBreakHandler(event: PlayerBreakBlockBeforeEvent) {
 const xrayCooldown = new Map<string, number>();
 
 function overworldBlockBreakHandler(event: PlayerBreakBlockBeforeEvent) {
+    if (get("banXrayHandler")) return;
     const solid = event.block.isSolid;
     const chunk = getChunkOrigin(event.block.location);
     const now = Date.now();
-    if (get("antiXray")) {
-        const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
+    const targets = get("antiXrayEnhancedGeneration") ? getSurroundingChunks(chunk) : [chunk];
+    for (const targetChunk of targets) {
+        const key = posKeyXZ(targetChunk);
+        const cooldown = xrayCooldown.get(key) ?? 0;
 
-        for (const targetChunk of targets) {
-            const key = posKeyXZ(targetChunk);
-            const cooldown = xrayCooldown.get(key) ?? 0;
-
-            if (now - cooldown > get("antiXrayGenerateCooldown")) {
-                xrayCooldown.set(key, now);
-                system.runJob(replaceArea(event.block.dimension, targetChunk));
-            }
+        if (now - cooldown > get("antiXrayGenerateCooldown")) {
+            xrayCooldown.set(key, now);
+            system.runJob(replaceArea(event.block.dimension, targetChunk));
         }
     }
 
-    if (!solid || get("banXrayHandler")) return;
+    if (!solid) return;
 
     const surrounds = returnSurroundSolid(event.block);
 
