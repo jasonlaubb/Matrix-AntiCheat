@@ -93,7 +93,7 @@ export default {
     },
     antiAutotoolEnable: {
         type: "boolean",
-        value: false,
+        value: true, // Positive to gain false positive (edge-case)
     },
     antiAutoToolIgnoreKeyboardInput: {
         type: "boolean",
