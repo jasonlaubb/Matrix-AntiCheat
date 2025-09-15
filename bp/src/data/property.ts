@@ -103,6 +103,10 @@ export default {
         type: "boolean",
         value: false,
     },
+    antiAutoToolMinFlagInterval: {
+        type: "number",
+        value: 150000,
+    },
     antiSpeedEnable: {
         type: "boolean",
         value: false,
