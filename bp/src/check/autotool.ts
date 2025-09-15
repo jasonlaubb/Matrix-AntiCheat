@@ -31,7 +31,7 @@ function blockBreak(event: PlayerBreakBlockBeforeEvent) {
         const now = Date.now();
         player.autotoolLastFlag ??= 0;
         const flagInterval = now - player.autotoolLastFlag;
-        if (flagInterval < 150000) system.run(() => {
+        if (flagInterval < get("antiAutoToolMinFlagInterval")) system.run(() => {
             if (get("antiAutoToolKickOnly")) {
                 player.kick(text("flagUnfairAdvantage"));
             } else {
