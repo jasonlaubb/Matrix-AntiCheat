@@ -431,4 +431,5 @@ export default {
     commandAntiXrayDisableSuccess: "Anti xray désactivé avec succès.",
     itemSetupHelper: "§g§lAssistant de configuration\n§r§7(Clic droit pour ouvrir l'interface)",
     itemAdminGUI: "§e§lInterface Admin Matrix\n§r§7(Clic droit pour ouvrir l'interface)",
+    antiXrayPiston: "Désolé, le placement de piston est interdit sur ce serveur.",
 };

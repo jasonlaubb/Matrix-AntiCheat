@@ -482,4 +482,5 @@ export default {
     commandAntiXrayDisableSuccess: "Đã tắt thành công tính năng chống xuyên tường.",
     itemSetupHelper: "§g§lTrợ lý thiết lập\n§r§7(Nhấn chuột phải để mở giao diện)",
     itemAdminGUI: "§e§lGiao diện quản trị Matrix\n§r§7(Nhấn chuột phải để mở giao diện)",
+    antiXrayPiston: "Xin lỗi, máy chủ này không cho phép đặt piston.",
 };

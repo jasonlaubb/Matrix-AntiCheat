@@ -435,4 +435,5 @@ export default {
     commandAntiXrayDisableSuccess: "Disabled anti xray successfully.",
     itemSetupHelper: "§g§lSetup Helper\n§r§7(Right-click to open the UI)",
     itemAdminGUI: "§e§lMatrix Admin GUI\n§r§7(Right-click to open the UI)",
+    antiXrayPiston: "Sorry, piston's placement is disallowed in this server.",
 };

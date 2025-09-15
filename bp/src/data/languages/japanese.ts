@@ -430,4 +430,5 @@ export default {
     commandAntiXrayDisableSuccess: "アンチ Xray を正常に無効化しました。",
     itemSetupHelper: "§g§lセットアップヘルパー\n§r§7（右クリックでUIを開く）",
     itemAdminGUI: "§e§lMatrix 管理GUI\n§r§7（右クリックでUIを開く）",
+    antiXrayPiston: "申し訳ありませんが、このサーバーではピストンの設置は禁止されています。",
 };

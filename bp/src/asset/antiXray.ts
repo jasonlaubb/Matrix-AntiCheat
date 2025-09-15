@@ -112,13 +112,11 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
             const key = `${position.x},${position.y},${position.z}`;
             const raw = chunkData[key];
             if (raw && block.typeId !== `minecraft:${raw}` && !block.isAir) {
-                world.sendMessage("Reversed: " + key);
                 block.setType(`minecraft:${raw}`);
                 move++;
             }
 
             if ((raw && !block.isSolid) || isXrayDisabled) {
-                world.sendMessage("Skipped: " + key);
                 delete chunkData[key];
                 continue;
             }
@@ -128,8 +126,6 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
                     recordModification(position, block.typeId);
                     block.setType("minecraft:" + (block.typeId === "minecraft:deepslate" ? "deepslate_" : "") + randomOre());
                     move++;
-                } else {
-                    world.sendMessage("Failed: " + density + " and " + fastSurround(block));
                 }
             } else if (fastSurround(block)) {
                 recordModification(position, block.typeId);

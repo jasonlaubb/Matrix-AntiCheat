@@ -430,4 +430,5 @@ export default {
     commandAntiXrayDisableSuccess: "안티 엑스레이가 성공적으로 비활성화되었습니다.",
     itemSetupHelper: "§g§l설정 도우미\n§r§7(우클릭하여 UI 열기)",
     itemAdminGUI: "§e§lMatrix 관리자 GUI\n§r§7(우클릭하여 UI 열기)",
+    antiXrayPiston: "죄송합니다. 이 서버에서는 피스톤 배치가 허용되지 않습니다.",
 };

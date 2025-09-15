@@ -430,4 +430,5 @@ export default {
     commandAntiXrayDisableSuccess: "成功禁用反透视。",
     itemSetupHelper: "§g§l设定助手\n§r§7（右键点击以开启介面）",
     itemAdminGUI: "§e§lMatrix 管理介面\n§r§7（右键点击以开启介面）",
+    antiXrayPiston: "抱歉，服务器禁止放置活塞。",
 };

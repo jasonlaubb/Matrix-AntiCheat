@@ -431,4 +431,5 @@ export default {
     commandAntiXrayDisableSuccess: "Анти-xray успешно отключен.",
     itemSetupHelper: "§g§lПомощник настройки\n§r§7(ПКМ для открытия интерфейса)",
     itemAdminGUI: "§e§lMatrix Admin GUI\n§r§7(ПКМ для открытия интерфейса)",
+    antiXrayPiston: "Извините, размещение поршней на этом сервере запрещено.",
 };
