@@ -19,7 +19,7 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     const currentTick = system.currentTick;
     system.runTimeout(() => {
         // Switch tool with low interval
-        player.autotoolFlagged = Math.abs(currentTick - player.autotoolLastSwitch) <= 2;
+        player.autotoolFlagged = Math.abs(currentTick - player.autotoolLastSwitch) <= 1;
     }, 1);
 }
 function blockBreak(event: PlayerBreakBlockBeforeEvent) {
