@@ -12,9 +12,12 @@ export default {
 };
 function onPlayerJoin({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn || player.isOp()) return;
-    const name = player.name;
+    let name = player.name;
+    if (get("antiNamespoofIgnoreRepeatedId") && name.endsWith(")")) {
+        name = name.replace(/\(\d+\)$/, "");
+    }
     let flagged = false;
-    if (name.length > 16 || name.length < 3) {
+    if (player.name.length > 16 || player.name.length < 3) {
         player.flag("Namespoof", "A", "Misc", { name });
         flagged = true;
     } else if (get("antiNamespoofASCIIOnly")) {
