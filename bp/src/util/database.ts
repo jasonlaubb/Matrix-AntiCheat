@@ -14,7 +14,7 @@ export function get(id: keyof typeof property): any {
 const readonlyProperty = new Set(
     Object.values(detectionList)
         .map(({ property }) => property)
-        .concat(["worldBorder", "oreAlert", "endLock", "netherLock", "antiGma", "antiGmc", "antiGms", "antiGmsp", "antiXray", "banXrayHandler"])
+        .concat(["antiAfk", "worldBorder", "oreAlert", "endLock", "netherLock", "antiGma", "antiGmc", "antiGms", "antiGmsp", "antiXray", "banXrayHandler"])
 );
 export function isReadonly(valueId: string) {
     return readonlyProperty.has(valueId);
