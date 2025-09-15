@@ -428,6 +428,8 @@ export default {
     commandWorldBorder: "Граница мира",
     commandWorldBorderDescription: "Включить или отключить функцию границы мира",
     commandWorldBorderSuccess: "Функция границы мира %s §fуспешно применена. Чтобы изменить размер границы, используйте §e/setnumber worldBorderSize <size>",
+    commandPropertyIsReadonly: "Выбранное свойство доступно только для чтения. Не следует изменять его напрямую.",
+    commandAntiXrayDisableSuccess: "Анти-xray успешно отключен.",
     itemSetupHelper: "§g§lПомощник настройки\n§r§7(ПКМ для открытия интерфейса)",
     itemAdminGUI: "§e§lMatrix Admin GUI\n§r§7(ПКМ для открытия интерфейса)",
 };

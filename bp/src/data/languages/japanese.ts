@@ -427,6 +427,8 @@ export default {
     commandWorldBorder: "ワールド境界線",
     commandWorldBorderDescription: "ワールド境界線機能を有効または無効にします",
     commandWorldBorderSuccess: "ワールド境界線機能を %s §f にしました。境界サイズを変更するには §e/setnumber worldBorderSize <サイズ>§f を使用してください。",
+    commandPropertyIsReadonly: "選択されたプロパティは読み取り専用です。直接変更しないでください。",
+    commandAntiXrayDisableSuccess: "アンチ Xray を正常に無効化しました。",
     itemSetupHelper: "§g§lセットアップヘルパー\n§r§7（右クリックでUIを開く）",
     itemAdminGUI: "§e§lMatrix 管理GUI\n§r§7（右クリックでUIを開く）",
 };

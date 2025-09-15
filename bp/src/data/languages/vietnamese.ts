@@ -476,11 +476,11 @@ export default {
     commandWatchTpDescription: "Dịch chuyển đến vị trí camera (chế độ theo dõi)",
     commandWatchTpNotWatching: "Bạn chưa theo dõi ai cả.",
     commandWatchTpSuccess: "Đã dịch chuyển đến vị trí theo dõi.",
-
     commandWorldBorder: "Ranh giới thế giới",
     commandWorldBorderDescription: "Bật hoặc tắt tính năng ranh giới thế giới",
     commandWorldBorderSuccess: "Đã %s §ftính năng ranh giới thế giới thành công. Để thay đổi kích thước ranh giới, dùng §e/setnumber worldBorderSize <size>",
-
+    commandPropertyIsReadonly: "Thuộc tính đã chọn là chỉ đọc. Bạn không nên sửa đổi trực tiếp.",
+    commandAntiXrayDisableSuccess: "Đã tắt thành công tính năng chống xuyên tường.",
     itemSetupHelper: "§g§lTrợ lý thiết lập\n§r§7(Nhấn chuột phải để mở giao diện)",
     itemAdminGUI: "§e§lGiao diện quản trị Matrix\n§r§7(Nhấn chuột phải để mở giao diện)",
 };

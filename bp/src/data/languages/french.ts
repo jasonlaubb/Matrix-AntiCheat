@@ -428,6 +428,8 @@ export default {
     commandWorldBorder: "Limite du monde",
     commandWorldBorderDescription: "Activer ou désactiver la fonctionnalité de limite du monde",
     commandWorldBorderSuccess: "Fonctionnalité de limite du monde %s §factivée avec succès. Pour modifier la taille de la limite, utilisez §e/setnumber worldBorderSize <taille>",
+    commandPropertyIsReadonly: "La propriété sélectionnée est en lecture seule. Vous ne devez pas la modifier directement.",
+    commandAntiXrayDisableSuccess: "Anti xray désactivé avec succès.",
     itemSetupHelper: "§g§lAssistant de configuration\n§r§7(Clic droit pour ouvrir l'interface)",
     itemAdminGUI: "§e§lInterface Admin Matrix\n§r§7(Clic droit pour ouvrir l'interface)",
 };

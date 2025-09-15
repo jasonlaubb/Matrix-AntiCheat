@@ -427,6 +427,8 @@ export default {
     commandWorldBorder: "월드 경계",
     commandWorldBorderDescription: "월드 경계 기능을 활성화하거나 비활성화합니다",
     commandWorldBorderSuccess: "월드 경계 기능이 %s §f성공적으로 설정되었습니다. 경계 크기를 변경하려면 §e/setnumber worldBorderSize <size>§f를 사용하세요",
+    commandPropertyIsReadonly: "선택한 속성은 읽기 전용입니다. 직접 수정하지 마세요.",
+    commandAntiXrayDisableSuccess: "안티 엑스레이가 성공적으로 비활성화되었습니다.",
     itemSetupHelper: "§g§l설정 도우미\n§r§7(우클릭하여 UI 열기)",
     itemAdminGUI: "§e§lMatrix 관리자 GUI\n§r§7(우클릭하여 UI 열기)",
 };

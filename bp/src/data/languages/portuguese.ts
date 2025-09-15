@@ -428,6 +428,8 @@ export default {
     commandWorldBorder: "Borda do mundo",
     commandWorldBorderDescription: "Ativar ou desativar o recurso de borda do mundo",
     commandWorldBorderSuccess: "Recurso de borda do mundo %s §fativado com sucesso. Para alterar o tamanho da borda, use §e/setnumber worldBorderSize <size>",
+    commandPropertyIsReadonly: "A propriedade selecionada é somente leitura. Você não deve modificá-la diretamente.",
+    commandAntiXrayDisableSuccess: "Anti xray desativado com sucesso.",
     itemSetupHelper: "§g§lAssistente de Configuração\n§r§7(Clique com o botão direito para abrir a interface)",
     itemAdminGUI: "§e§lInterface Admin do Matrix\n§r§7(Clique com o botão direito para abrir a interface)",
 };

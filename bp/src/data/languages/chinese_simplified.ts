@@ -427,6 +427,8 @@ export default {
     commandWorldBorder: "世界边界",
     commandWorldBorderDescription: "启用或停用世界边界功能",
     commandWorldBorderSuccess: "已成功 %s §f世界边界功能。如需变更边界大小，请使用 §e/setnumber worldBorderSize <size>",
+    commandPropertyIsReadonly: "所选属性为只读。请勿直接修改。",
+    commandAntiXrayDisableSuccess: "成功禁用反透视。",
     itemSetupHelper: "§g§l设定助手\n§r§7（右键点击以开启介面）",
     itemAdminGUI: "§e§lMatrix 管理介面\n§r§7（右键点击以开启介面）",
 };

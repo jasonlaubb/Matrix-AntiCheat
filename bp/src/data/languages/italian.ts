@@ -429,6 +429,8 @@ export default {
     commandWorldBorder: "Confine del mondo",
     commandWorldBorderDescription: "Attiva o disattiva la funzione di confine del mondo",
     commandWorldBorderSuccess: "Funzione confine del mondo %s §fattivata con successo. Per modificare la dimensione del confine, usa §e/setnumber worldBorderSize <size>",
+    commandPropertyIsReadonly: "La proprietà selezionata è di sola lettura. Non dovresti modificarla direttamente.",
+    commandAntiXrayDisableSuccess: "Anti xray disattivato con successo.",
     itemSetupHelper: "§g§lAssistente Configurazione\n§r§7(Clic destro per aprire l'interfaccia)",
     itemAdminGUI: "§e§lMatrix Admin GUI\n§r§7(Clic destro per aprire l'interfaccia)",
 };
