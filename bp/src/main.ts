@@ -36,6 +36,7 @@ import { enableAntiGameMode } from "./asset/antiGamemode";
 import { text, updateLanguage, type TranslationKey } from "./util/text";
 import { antiXrayOn } from "./asset/antiXray";
 import { invseeHandler } from "./command/invsee";
+import { antiAfkOn } from "./asset/antiAfk";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -245,6 +246,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (get("antiGma") || get("antiGmc") || get("antiGms") || get("antiGmsp")) enableAntiGameMode();
     if (!get("banXrayHandler") || get("antiXray")) antiXrayOn();
     if (!get("banInvseeHandler")) invseeHandler();
+    if (get("antiAfk")) antiAfkOn();
     const movementModule = get("antiSpeedEnable") || get("antiFlyEnable");
     const killauraModule = get("antiKillauraEnable");
     if (movementModule || killauraModule) world.afterEvents.itemReleaseUse.subscribe(riptide);
