@@ -1,7 +1,7 @@
 import { CommandError, Player, system, world } from "@minecraft/server";
 import { ActionFormData, FormCancelationReason, MessageFormData, ModalFormData } from "@minecraft/server-ui";
 import { detectionList } from "../command/detection";
-import { get } from "./database";
+import { get, isReadonly } from "./database";
 import property from "../data/property";
 import { getPropertyType } from "./propertyClassifier";
 import type { OptionType } from "../main";
@@ -71,10 +71,17 @@ export function openGeneralUI(player: Player) {
                                     const selectedId = selectedProperty[selection];
                                     const { type, value } = property[selectedId as keyof typeof property];
                                     const dynamicValue = world.getDynamicProperty("database:" + selectedId) ?? "--";
-                                    new ActionFormData()
+                                    const ui = new ActionFormData()
                                         .title(text("uiProperty") + ": " + selectedId)
                                         .body(`§g${text("uiType")}: §e${type}\n§g${text("uiStaticData")}: §e${value}§r\n§g${text("uiDynamicProperty")}: §e${dynamicValue}`)
-                                        .button(text("uiModifyValue"))
+                                        if (isReadonly(selectedId)) {
+                                            ui
+                                            .button("/")
+                                            .button("/")
+                                            //@ts-expect-error
+                                            .show(player);
+                                        } else {
+                                        ui.button(text("uiModifyValue"))
                                         .button(text("uiDiscardEdit"))
                                         //@ts-expect-error
                                         .show(player)
@@ -116,6 +123,7 @@ export function openGeneralUI(player: Player) {
                                                 } else player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotChanged"));
                                             }
                                         });
+                                    }
                                 });
                         });
                     break;
