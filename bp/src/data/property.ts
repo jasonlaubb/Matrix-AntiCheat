@@ -99,6 +99,10 @@ export default {
         type: "boolean",
         value: true, // Enable to prevent decimal cases falses by clicking both hotbar button & left-click for multiple times.
     },
+    antiAutoToolKickOnly: {
+        type: "boolean",
+        value: false,
+    },
     antiSpeedEnable: {
         type: "boolean",
         value: false,
