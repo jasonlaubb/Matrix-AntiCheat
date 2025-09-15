@@ -5,6 +5,7 @@ import property from "../data/property";
 import { MessageFormData } from "@minecraft/server-ui";
 import english from "../data/languages/english";
 import { text } from "../util/text";
+import { isReadonly } from "../util/database";
 export const setBoolean = {
     name: "setboolean",
     description: english.commandSetBooleanDescription,
@@ -22,6 +23,7 @@ export const setBoolean = {
         if (!getPropertyType().booleanValue.includes(id)) {
             return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandInvalidProperty") };
         }
+        if (isReadonly(id)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandPropertyIsReadonly") };
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
@@ -47,6 +49,7 @@ export const setString = {
         if (!getPropertyType().stringValue.includes(id)) {
             return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandInvalidProperty") };
         }
+        if (isReadonly(id)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandPropertyIsReadonly") };
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
@@ -72,6 +75,7 @@ export const setNumber = {
         if (!getPropertyType().numberValue.includes(id)) {
             return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandInvalidProperty") };
         }
+        if (isReadonly(id)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandPropertyIsReadonly") };
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
             status: 0,
@@ -131,6 +135,7 @@ export const clearProperty = {
                 message: "§7[§aMatrix§7] §f" + text("commandClearPropertyNotChanged"),
             };
         }
+        if (isReadonly(id)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandPropertyIsReadonly") };
         system.run(() => world.setDynamicProperty("database:" + id));
         return {
             status: 0,
