@@ -19,8 +19,8 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
     const currentTick = system.currentTick;
     player.autotoolLastSwitch ??= player.selectedSlotIndex; // Prevent special false positive
     system.runTimeout(() => {
-        // Switch tool with low interval
-        player.autotoolFlagged = Math.abs(currentTick - player.autotoolLastSwitch) <= 1;
+        // Switch tool in the same tick
+        player.autotoolFlagged = currentTick === player.autotoolLastSwitch;
     }, 1);
 }
 function blockBreak(event: PlayerBreakBlockBeforeEvent) {
