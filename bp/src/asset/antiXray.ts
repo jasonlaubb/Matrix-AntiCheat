@@ -90,6 +90,7 @@ const includeTypes = [
 function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
     function* generator() {
         const isXrayDisabled = !get("antiXray");
+        console.log("anti xray start.");
         const endX = startX + 15,
             endZ = startZ + 15;
         const density = get("antiXrayGhostBlockDensity");
