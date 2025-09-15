@@ -90,12 +90,12 @@ const includeTypes = [
 function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): Generator<void, void, void> {
     function* generator() {
         const isXrayDisabled = !get("antiXray");
-        console.log("anti xray start.");
         const endX = startX + 15,
             endZ = startZ + 15;
         const density = get("antiXrayGhostBlockDensity");
         const maxMove = get("antiXrayMaxChangeInTick");
         const blocks = dimension.getBlocks(new BlockVolume({ x: startX, y: -63, z: startZ }, { x: endX, y: 32, z: endZ }), { includeTypes }, true).getBlockLocationIterator();
+        console.log("anti xray start... " + Object.values(blocks).length);
         let move = 0;
         const chunkPrefix = `k:${Math.floor(startX / 16) * 16},${Math.floor(startZ / 16) * 16}`;
         const chunkData = loadChunkData(chunkPrefix);
@@ -116,7 +116,7 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
                 move++;
             }
 
-            if (raw && !block.isSolid || isXrayDisabled) {
+            if ((raw && !block.isSolid) || isXrayDisabled) {
                 delete chunkData[key];
                 continue;
             }
@@ -183,7 +183,7 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
                 move++;
             }
 
-            if (raw && !block.isSolid || isXrayDisabled) {
+            if ((raw && !block.isSolid) || isXrayDisabled) {
                 delete chunkData[key];
                 continue;
             }
@@ -331,6 +331,7 @@ function floorPos({ x, y, z }: Vector3) {
     return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
 }
 function beforeBlockBreak(event: PlayerBreakBlockBeforeEvent) {
+    world.sendMessage("Event trigged.");
     if (event.dimension.id === "minecraft:overworld") {
         overworldBlockBreakHandler(event);
     } else if (event.dimension.id === "minecraft:nether") netherBlockBreakHandler(event);
