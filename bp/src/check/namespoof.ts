@@ -14,7 +14,7 @@ function onPlayerJoin({ player, initialSpawn }: PlayerSpawnAfterEvent) {
     if (!initialSpawn || player.isOp()) return;
     let name = player.name;
     if (get("antiNamespoofIgnoreRepeatedId") && name.endsWith(")")) {
-        name = name.replace(/\(\d+\)$/, "");
+        name = name.replace(/\(\d{1,3}\)$/, "");
     }
     let flagged = false;
     if (player.name.length > 16 || player.name.length < 3) {

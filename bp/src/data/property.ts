@@ -287,6 +287,10 @@ export default {
         type: "boolean",
         value: true, // Enable to allow only ASCII characters in names, can false.
     },
+    antiNamespoofIgnoreRepeatedId: {
+        type: "boolean",
+        value: true, // Ignore the string like ..(2) which represent a repeated id.
+    },
     antiBlockReachEnable: {
         type: "boolean",
         value: false,
