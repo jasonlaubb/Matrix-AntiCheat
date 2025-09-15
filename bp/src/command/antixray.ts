@@ -34,7 +34,7 @@ export default {
                             "database:antiXray": true,
                             "database:banXrayHandler": false,
                         });
-                        player.sendMessage("§7[§aMatrix§7] §f" + text("commandAntiXraySuccess"));
+                        player.sendMessage("§7[§aMatrix§7] §f" + text("commandAntiXraySuccess", "/antixray"));
                     });
             });
         }
