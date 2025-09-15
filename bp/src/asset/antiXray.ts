@@ -95,11 +95,9 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
         const density = get("antiXrayGhostBlockDensity");
         const maxMove = get("antiXrayMaxChangeInTick");
         const blocks = dimension.getBlocks(new BlockVolume({ x: startX, y: -63, z: startZ }, { x: endX, y: 32, z: endZ }), { includeTypes }, true).getBlockLocationIterator();
-        console.log("anti xray start... " + Object.values(blocks).length);
         let move = 0;
         const chunkPrefix = `k:${Math.floor(startX / 16) * 16},${Math.floor(startZ / 16) * 16}`;
         const chunkData = loadChunkData(chunkPrefix);
-
         function recordModification(pos: Vector3, from: string) {
             const rawId = from.replace("minecraft:", "");
             chunkData[`${pos.x},${pos.y},${pos.z}`] = rawId;
@@ -138,7 +136,7 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
                 yield;
             }
         }
-
+        console.log(move);
         saveChunkData(chunkPrefix, chunkData);
     }
 
