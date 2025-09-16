@@ -6,7 +6,7 @@ import { safeGetBlock } from "../util/vectorUtil";
 import type { SpeedData } from "../../../global";
 const VELOCITY_DELTA_THRESHOLD = 0.7;
 const FLAG_TIMESTAMP_THRESHOLD = 8000;
-const TYPE1_MAX_FLAG = 12;
+const TYPE1_MAX_FLAG = 6;
 const TYPE2_MAX_FLAG = 2;
 function tick(player: Player) {
     const data: SpeedData = player.speedData ?? {
