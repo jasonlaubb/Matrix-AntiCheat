@@ -19,6 +19,10 @@ export default {
         type: "string",
         value: "flagNotify",
     },
+    shortenFlagMessage: {
+        type: "boolean",
+        value: false, // Shorten the flag message and provide less information.
+    },
     chatRankEnable: {
         type: "boolean",
         value: false,
