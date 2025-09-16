@@ -2,6 +2,7 @@ import { world, VectorXZ, Vector3, Block, Dimension, BlockVolume, system, Player
 import { get } from "../util/database";
 import { addInterval } from "../util/tick";
 import { getSurround } from "../util/util";
+import { text } from "../util/text";
 function fastSurround(block: Block) {
     return getSurround(block).every((block) => block?.isValid);
 }
@@ -138,7 +139,6 @@ function replaceArea(dimension: Dimension, { x: startX, z: startZ }: VectorXZ): 
                 yield;
             }
         }
-        console.log("Amount:" + amount);
         saveChunkData(chunkPrefix, chunkData);
     }
 
@@ -215,7 +215,7 @@ function beforeBlockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const id = event.permutationToPlace.type.id;
     if (get("banXrayHandler") || !["minecraft:piston", "minecraft:sticky_piston"].includes(id) || event.dimension.id === "minecraft:the_end") return;
     event.cancel = true;
-    system.run(() => event.player.sendMessage("§7[§aMatrix§7] §fSorry, piston's placement is disallowed in this server."));
+    system.run(() => event.player.sendMessage("§7[§aMatrix§7] §f" + text("antiXrayPiston")));
 }
 function beforeExplosion(event: ExplosionBeforeEvent) {
     if (event.dimension.id === "minecraft:the_end" || get("banXrayHandler")) return;
