@@ -1,5 +1,5 @@
 import type { Command } from "../main";
-import { punishmentType } from "../data/prototype";
+import { punishmentType } from "../util/extension";
 import { world } from "@minecraft/server";
 import { text } from "../util/text";
 import english from "../data/languages/english";

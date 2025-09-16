@@ -27,7 +27,7 @@ import { endLock, netherLock } from "../command/dimensionLock";
 import { Command } from "../main";
 import { getPropertyType } from "../util/propertyClassifier";
 import property from "./property";
-import { messageTarget, punishmentType } from "./prototype";
+import { messageTarget, punishmentType } from "../util/extension";
 import commandList from "../command/commandList";
 import fakeleave from "../command/fakeleave";
 import { warn, warnclear, warnlist, warnof, warnreset, warns } from "../command/warn";

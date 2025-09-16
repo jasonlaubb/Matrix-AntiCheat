@@ -1,5 +1,5 @@
 import type { Command } from "../main";
-import { messageTarget } from "../data/prototype";
+import { messageTarget } from "../util/extension";
 import { world } from "@minecraft/server";
 import { text } from "../util/text";
 import english from "../data/languages/english";
