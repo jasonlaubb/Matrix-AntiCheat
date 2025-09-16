@@ -10,7 +10,7 @@ export default {
         description: "commandInfoDescription",
     },
     execute: () => {
-        const version = "7.1.2-hotfix";
+        const version = "7.1.2";
         const author = "jasonlaubb (Discord: @uwu_the_great)";
         const github = "https://github.com/jasonlaubb/Matrix-AntiCheat";
         const curseforge = "https://www.curseforge.com/minecraft-bedrock/addons/matrix-anti";
