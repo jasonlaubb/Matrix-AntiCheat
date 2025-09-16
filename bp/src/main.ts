@@ -24,7 +24,6 @@ import { classifyProperty } from "./util/propertyClassifier";
 import { getPlayerRank } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI, setupHelper } from "./util/ui";
-import "./data/prototype";
 import { worldBorderOn } from "./asset/worldBorder";
 import { oreAlertOn } from "./asset/oreAlert";
 import { endNetherLockOn } from "./asset/endNetherLock";
@@ -37,6 +36,7 @@ import { text, updateLanguage, type TranslationKey } from "./util/text";
 import { antiXrayOn } from "./asset/antiXray";
 import { invseeHandler } from "./command/invsee";
 import { antiAfkOn } from "./asset/antiAfk";
+import "./util/extension";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
