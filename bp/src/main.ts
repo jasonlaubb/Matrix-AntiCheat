@@ -17,7 +17,7 @@
 扁　　　扁　　　　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　扁扁扁　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　　　　　　扁扁　　　扁　　　扁扁扁扁　　　　　　　　扁
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
-import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
+import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot} from "@minecraft/server";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import { classifyProperty } from "./util/propertyClassifier";
@@ -378,10 +378,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         }
     }
     if (!get("setup") && player.isOp()) {
-        system.runTimeout(() => {
-            if (!player.isValid) return;
-            giveUITool(player);
-        }, 100);
+        giveUITool(player);
     }
 });
 function giveUITool(player: Player) {
@@ -397,7 +394,14 @@ function giveUITool(player: Player) {
     if (!itemFind) {
         player.lastRunUICommand = true;
         player.runCommand("matrix:setup");
-        setupHelper(player);
+        const id = system.runInterval(() => {
+            if (!player.isValid) return system.clearRun(id);
+            const { x, y } = player.inputInfo.getMovementVector();
+            if (x !== 0 || y !== 0) {
+                setupHelper(player);
+                system.clearRun(id);
+            }
+        }, 5);
     }
 }
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
