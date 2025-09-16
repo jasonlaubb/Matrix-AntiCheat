@@ -4,7 +4,7 @@ import { addInterval } from "../util/tick";
 import { getSurround } from "../util/util";
 import { text } from "../util/text";
 function fastSurround(block: Block) {
-    return getSurround(block).every((block) => block?.isValid);
+    return getSurround(block).every((block) => block?.isSolid);
 }
 function returnSurroundSolid(block: Block) {
     return getSurround(block).filter((block) => block?.isSolid) as Block[];
