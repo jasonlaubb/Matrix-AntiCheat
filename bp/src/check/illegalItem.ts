@@ -172,7 +172,8 @@ function placeCheck({ player, block }: PlayerPlaceBlockAfterEvent) {
 }
 function itemCheck(item: ItemStack): undefined | { type: string; info?: { [key: string]: string | number } } {
     if (item.amount <= 0 || item.amount > item.maxAmount) return { type: "A", info: { item: item.typeId, amount: item.amount } };
-    if (item.typeId.startsWith("minecraft:")) {
+    const isWrittenBook = item.typeId === "minecraft:written_book";
+    if (!isWrittenBook && item.typeId.startsWith("minecraft:")) {
         if (get("antiIllegalItemBanSpawnEgg") && item.typeId.endsWith("spawn_egg")) return { type: "B", info: { item: item.typeId } };
         if (get("antiIllegalItemCheckImpossible") && creativeOnlyItems.has(item.typeId)) return { type: "C", info: { item: item.typeId } };
         if (get("antiIllegalItemCheckUnfair") && (item.typeId.startsWith("minecraft:light_block") || unfairItems.has(item.typeId))) return { type: "D", info: { item: item.typeId } };
@@ -183,7 +184,7 @@ function itemCheck(item: ItemStack): undefined | { type: string; info?: { [key: 
         if (item.keepOnDeath && !item.typeId.startsWith("matrix:")) return { type: "G", info: { item: item.typeId, keepOnDeath: "true" } };
         if (item.lockMode !== ItemLockMode.none) return { type: "H", info: { itemLockMode: item.lockMode } };
         const lore = item.getLore();
-        if (lore.length > 0 && !(lore.length === 1 && lore[0] === "(+DATA)")) return { type: "I", info: { lore: `${lore[0]}...` } };
+        if (isWrittenBook && lore.length > 0 && !(lore.length === 1 && lore[0] === "(+DATA)")) return { type: "I", info: { lore: `${lore[0]}...` } };
     }
     if (!get("antiIllegalItemEnchantmentCheck")) return undefined;
     const enchantable = item.getComponent("enchantable");
