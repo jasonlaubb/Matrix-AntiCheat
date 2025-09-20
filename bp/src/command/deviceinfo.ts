@@ -42,7 +42,7 @@ function getDevice(player: Player) {
         case "Mobile":
             return maxRenderDistance > 16 ? "Android" : "iOS";
         case "Console": {
-                switch (maxRenderDistance) {
+            switch (maxRenderDistance) {
                 case 12: return "Nintendo Switch";
                 case 16: return player.name.match(/[_-]/) ? "PS4" : "Xbox One";
                 case 18: return "PS4 Pro";
