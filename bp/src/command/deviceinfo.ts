@@ -33,7 +33,7 @@ export default {
     },
 } as Command;
 function getDevice(player: Player) {
-    const { platformType, memoryTier, maxRenderDistance } = player.clientSystemInfo;
+    const { platformType, maxRenderDistance } = player.clientSystemInfo;
 
     if (maxRenderDistance < 6 || maxRenderDistance > 96) return "Bot";
 
@@ -42,21 +42,14 @@ function getDevice(player: Player) {
         case "Mobile":
             return maxRenderDistance > 16 ? "Android" : "iOS";
         case "Console": {
-            switch (memoryTier) {
-                case 2:
-                    if (maxRenderDistance === 12) return "Nintendo Switch";
-                    break;
-                case 3:
-                    switch (maxRenderDistance) {
-                        case 16: return player.name.match(/[_-]/) ? "PS4" : "Xbox One";
-                        case 18: return "PS4 Pro";
-                        case 28: return "PS5";
-                        case 36: return "Xbox Series S";
-                    }
-                    break;
-                case 4:
-                    if (maxRenderDistance === 36) return "Xbox Series X";
+                switch (maxRenderDistance) {
+                case 12: return "Nintendo Switch";
+                case 16: return player.name.match(/[_-]/) ? "PS4" : "Xbox One";
+                case 18: return "PS4 Pro";
+                case 28: return "PS5";
+                case 36: return "Xbox Series";
             }
+            break;
         }
     }
     return platformType;
