@@ -64,7 +64,7 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && now - attacker.lastRiptide > 3000) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
     attacker.killauraHitList = attacker.killauraHitList.filter(({ time }) => now - time <= 100);
     // Hit more than 1 entity in a tick
-    if (attacker.killauraHitList.length >= 3 || attacker.killauraHitList.length >= 2 && attacker.killauraHitList.filter(({ time }) => now - time <= 70)) {
+    if (attacker.killauraHitList.length >= 3 || (attacker.killauraHitList.length >= 2 && attacker.killauraHitList.filter(({ time }) => now - time <= 70))) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
         // Only flag when player trigger this check twice in 12s to prevent spike lag false positive

@@ -38,16 +38,22 @@ function getDevice(player: Player) {
     if (maxRenderDistance < 6 || maxRenderDistance > 96) return "Bot";
 
     switch (platformType) {
-        case "Desktop": return "Desktop/Labtop";
+        case "Desktop":
+            return "Desktop/Labtop";
         case "Mobile":
             return maxRenderDistance > 16 ? "Android" : "iOS";
         case "Console": {
             switch (maxRenderDistance) {
-                case 12: return "Nintendo Switch";
-                case 16: return player.name.match(/[_-]/) ? "PS4" : "Xbox One";
-                case 18: return "PS4 Pro";
-                case 28: return "PS5";
-                case 36: return "Xbox Series";
+                case 12:
+                    return "Nintendo Switch";
+                case 16:
+                    return player.name.match(/[_-]/) ? "PS4" : "Xbox One";
+                case 18:
+                    return "PS4 Pro";
+                case 28:
+                    return "PS5";
+                case 36:
+                    return "Xbox Series";
             }
             break;
         }
