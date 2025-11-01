@@ -26,19 +26,8 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
     const { x, y, z } = event.block.location;
     const id = event.brokenBlockPermutation.type.id;
     const now = Date.now();
-    if (targetID.includes(id) && !(!get("antiXray") && id.endsWith("diamond_ore"))) {
-        event.player.lastOreFoundData ??= {};
-        if (!event.player.lastOreFoundData[id] || now - event.player.lastOreFoundData[id] >= 6000) {
-            world.getAllPlayers().forEach((player) => {
-                if (!player.isOp()) return;
-                player.sendMessage(
-                    "§7[§aOre Alert§7] §f" +
-                        text("oreAlertOreFound", event.player.name, id.replace("minecraft:", "").replaceAll("_", ""), event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none")
-                );
-            });
-        }
-        event.player.lastOreFoundData[id] = now;
-    } else if (id === "minecraft:diamond_ore") {
+    if (!targetID.includes(id)) return;
+    if (!get("antiXray") && id.endsWith("diamond_ore"))) {
         event.player.diamondFoundAmount ??= 0;
         if (event.player.diamondFoundAmount > 0) {
             event.player.diamondFoundAmount--;
@@ -48,7 +37,7 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
             .getBlocks(
                 new BlockVolume({ x: x + 3, y: y + 3, z: z + 3 }, { x: x - 3, y: y - 3, z: z - 3 }),
                 {
-                    includeTypes: ["minecraft:diamond_ore"],
+                    includeTypes: ["minecraft:diamond_ore", "minecraft:deepslate_diamond_ore"],
                 },
                 true
             )
@@ -63,5 +52,17 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
             );
         });
         event.player.lastDiamondOresFound = now;
+    } else {
+        event.player.lastOreFoundData ??= {};
+        if (!event.player.lastOreFoundData[id] || now - event.player.lastOreFoundData[id] >= 6000) {
+            world.getAllPlayers().forEach((player) => {
+                if (!player.isOp()) return;
+                player.sendMessage(
+                    "§7[§aOre Alert§7] §f" +
+                        text("oreAlertOreFound", event.player.name, id.replace("minecraft:", "").replaceAll("_", ""), event.player.lastOreFoundData[id] ? Math.floor((now - event.player.lastOreFoundData[id]) / 1000) + "s" : "none")
+                );
+            });
+        }
+        event.player.lastOreFoundData[id] = now;
     }
 }
