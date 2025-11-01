@@ -213,6 +213,7 @@ function replaceNetherArea(dimension: Dimension, { x: startX, z: startZ }: Vecto
 }
 function beforeBlockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const id = event.permutationToPlace.type.id;
+    if (!get("antiXrayForceDisablePiston")) return;
     if (get("banXrayHandler") || !["minecraft:piston", "minecraft:sticky_piston"].includes(id) || event.dimension.id === "minecraft:the_end") return;
     event.cancel = true;
     system.run(() => event.player.sendMessage("§7[§aMatrix§7] §f" + text("antiXrayPiston")));

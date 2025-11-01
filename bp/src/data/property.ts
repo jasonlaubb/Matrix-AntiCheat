@@ -29,7 +29,7 @@ export default {
     },
     chatRankMessageFormat: {
         type: "string",
-        value: "§7[§f{rank}§r§7] §e{player}: §f§r{message}",
+        value: "§7[§f{rank}§r§7] §f{player}: §f§r{message}",
     },
     chatRankDisplayOnNameTag: {
         type: "boolean",
@@ -170,6 +170,10 @@ export default {
     antiXrayMaxChangeInTick: {
         type: "number",
         value: 8, // High value of this might cause HIGH spike lag...
+    },
+    antiXrayForceDisablePiston: {
+        type: "boolean",
+        value: true, // Disable piston to prevent bug on anti xray. Set it to true might cause some clone bug.
     },
     worldBorder: {
         type: "boolean",
@@ -385,7 +389,7 @@ export default {
     },
     ignoreMessageWhileMoving: {
         type: "boolean",
-        value: true,
+        value: false,
     },
     banInvseeHandler: {
         type: "boolean",
