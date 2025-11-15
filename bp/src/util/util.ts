@@ -144,3 +144,36 @@ export function hideHud(player: Player) {
 export function showHud(player: Player) {
     player.onScreenDisplay.setHudVisibility(HudVisibility.Reset);
 }
+/** @description Send alert based on the flag mode (flagMessageTarget) */
+export function sendAlert(message: string, involvedPlayer?: Player) {
+    let flagTarget: Player[] = [];
+    const flagType = get("flagMessageTarget");
+    switch (flagType) {
+        case "any":
+        case "all": {
+            flagTarget = world.getAllPlayers();
+            break;
+        }
+        case "NOT_SET":
+        case "operator":
+        case "admin": {
+            flagTarget = world.getAllPlayers().filter((player) => player.isOp());
+            break;
+        }
+        case "exclude":
+        case "bypass": {
+            flagTarget = world.getPlayers({
+                excludeNames: involvedPlayer ? [involvedPlayer.name] : undefined,
+            });
+            break;
+        }
+        case "tag": {
+            const notifyTag = get("notifyTag");
+            flagTarget = world.getPlayers({ tags: [notifyTag] });
+            break;
+        }
+    }
+    if (flagTarget.length > 0) {
+        flagTarget.forEach((player) => player.sendMessage(message));
+    }
+}

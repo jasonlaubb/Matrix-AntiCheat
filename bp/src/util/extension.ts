@@ -2,6 +2,7 @@ import { Player, world, PlayerPermissionLevel, InputMode, PlatformType, system }
 import { get } from "../util/database";
 import { ban, checkPunish } from "../util/punishment";
 import { text } from "../util/text";
+import { sendAlert } from "./util";
 export const messageTarget = ["any", "all", "operator", "admin", "exclude", "bypass", "tag"];
 export const punishmentType = ["none", "kick", "ban", "tempkick"];
 Player.prototype.isOp = function () {
@@ -9,36 +10,7 @@ Player.prototype.isOp = function () {
 };
 Player.prototype.flag = function (id: string, type: string, category: string, data?: { [key: string]: string | number }) {
     const flagMessage = `§7[§aMatrix§7] §f${text("flagDetected", this.name + "§r")} §7<${category}> §c[${id}/${type}]${data && !get("shortenFlagMessage") ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
-    const flagType = get("flagMessageTarget");
-    let flagTarget: Player[] = [];
-    switch (flagType) {
-        case "any":
-        case "all": {
-            flagTarget = world.getAllPlayers();
-            break;
-        }
-        case "NOT_SET":
-        case "operator":
-        case "admin": {
-            flagTarget = world.getAllPlayers().filter((player) => player.isOp());
-            break;
-        }
-        case "exclude":
-        case "bypass": {
-            flagTarget = world.getPlayers({
-                excludeNames: [this.name],
-            });
-            break;
-        }
-        case "tag": {
-            const notifyTag = get("notifyTag");
-            flagTarget = world.getPlayers({ tags: [notifyTag] });
-            break;
-        }
-    }
-    if (flagTarget.length > 0) {
-        flagTarget.forEach((player) => player.sendMessage(flagMessage));
-    }
+    sendAlert(flagMessage, this);
     const punishmentType = get("flagPunishmentType");
     world.setDynamicProperty("flagrecord:" + Date.now(), `§7[${new Date(Date.now()).toUTCString()}] §f${this.name} §r§8| §f${id}/${type} §8| §f${punishmentType}`);
     const record = world.getDynamicPropertyIds().filter((id) => id.startsWith("flagrecord:"));
