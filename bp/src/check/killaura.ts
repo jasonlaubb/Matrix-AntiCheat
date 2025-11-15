@@ -1,8 +1,7 @@
-import { Dimension, Entity, EntityDieAfterEvent, EntityEquippableComponent, EntityHurtAfterEvent, EquipmentSlot, Player, PlayerSpawnAfterEvent, system, Vector3, world } from "@minecraft/server";
+import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, lineDistance, distanceXZ } from "../util/mathUtil";
-import { addHP, banAttack, isAlive, isFamily, isObstructedBetweenLocations } from "../util/util";
+import { addHP, banAttack, isAlive, isObstructedBetweenLocations } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
-import { get } from "../util/database";
 import { deltaVector } from "../util/vectorUtil";
 export default {
     property: "antiKillauraEnable",
@@ -10,12 +9,16 @@ export default {
         world.afterEvents.entityHurt.subscribe(entityHurt);
         world.afterEvents.entityDie.subscribe(entityDie);
         world.afterEvents.playerSpawn.subscribe(playerSpawn);
+        world.afterEvents.entityHitEntity.subscribe(entityHitEntity);
+        world.afterEvents.playerSwingStart.subscribe(playerSwing);
         addCheckInterval("killaura", aimCheck);
     },
     disable: () => {
         world.afterEvents.entityHurt.unsubscribe(entityHurt);
         world.afterEvents.entityDie.unsubscribe(entityDie);
         world.afterEvents.playerSpawn.unsubscribe(playerSpawn);
+        world.afterEvents.entityHitEntity.unsubscribe(entityHitEntity);
+        world.afterEvents.playerSwingStart.unsubscribe(playerSwing);
         removeCheckInterval("killaura");
     },
 };
@@ -53,6 +56,13 @@ function entityDie({ deadEntity }: EntityDieAfterEvent) {
 function playerSpawn({ player }: PlayerSpawnAfterEvent) {
     player.killauraLastReset = Date.now();
     player.killauraHasChangedPitch = false;
+}
+function entityHitEntity({ damagingEntity: player }: EntityHitEntityAfterEvent) {
+    if (!(player instanceof Player)) return;
+    player.killauraHitAt = Date.now();
+}
+function playerSwing({ player }: PlayerSwingStartAfterEvent) {
+    player.killauraSwingAt = Date.now();
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
     if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
@@ -133,14 +143,6 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             attacker.flag("Killaura", "E", "Combat (GhostHand)");
         }
     }
-    // Unused check
-    if (get("antiKillauraCriticalCheck") && damage > 0 && !(attacker.killauraLastInAir && now - attacker.killauraLastInAir < 200)) {
-        const expectedDamage = calculateExpectedBaseDamage(attacker, hurtEntity);
-        if (expectedDamage && damage > expectedDamage * 1.4) {
-            recoverDamage = true;
-            attacker.flag("Killaura", "I", "Combat (Criticals)");
-        }
-    }
     if (isAlive(attacker) && (yaw % 1 === 0 || pitch % 1 === 0)) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
@@ -179,6 +181,19 @@ function aimCheck(player: Player) {
         player.killauraLastAttack = 0;
         banAttack(player, 100);
         player.flag("Killaura", "G", "Combat", { pitch });
+    }
+    if (player.killauraHitAt) {
+        player.killauraSwingAt ??= now;
+        const difference = Math.abs(player.killauraHitAt - player.killauraSwingAt);
+        if (difference > 1000) {
+            player.killauraNoSwingFlag ??= 0;
+            player.killauraNoSwingFlag++;
+            delete player.killauraHitAt;
+            if (player.killauraNoSwingFlag >= 3) {
+                player.flag("Killaura", "I", "Combat (No Swing)", { difference });
+                player.killauraNoSwingFlag = 0;
+            }
+        } else player.killauraNoSwingFlag = 0;
     }
     // Wait 1.5s before checck for changed pitch
     if (!player.killauraHasChangedPitch && now - player.killauraLastReset > 1500 && pitch !== 0) {
@@ -233,105 +248,4 @@ function hasClearPathBetweenEntities(dimension: Dimension, attacker: Vector3, ta
     }
 
     return false; // All paths obstructed
-}
-function calculateExpectedBaseDamage(attacker: Player, target: Entity): number | undefined {
-    const weaponBaseDamage: Record<string, number> = {
-        // Swords
-        "minecraft:wooden_sword": 4,
-        "minecraft:stone_sword": 5,
-        "minecraft:copper_sword": 6,
-        "minecraft:iron_sword": 6,
-        "minecraft:golden_sword": 4,
-        "minecraft:diamond_sword": 7,
-        "minecraft:netherite_sword": 8,
-
-        // Axes
-        "minecraft:wooden_axe": 3,
-        "minecraft:stone_axe": 4,
-        "minecraft:copper_axe": 5,
-        "minecraft:iron_axe": 5,
-        "minecraft:golden_axe": 3,
-        "minecraft:diamond_axe": 6,
-        "minecraft:netherite_axe": 7,
-
-        // Pickaxes
-        "minecraft:wooden_pickaxe": 2,
-        "minecraft:stone_pickaxe": 3,
-        "minecraft:iron_pickaxe": 4,
-        "minecraft:copper_pickaxe": 4,
-        "minecraft:golden_pickaxe": 2,
-        "minecraft:diamond_pickaxe": 5,
-        "minecraft:netherite_pickaxe": 6,
-
-        // Shovels
-        "minecraft:wooden_shovel": 1,
-        "minecraft:stone_shovel": 2,
-        "minecraft:copper_shovel": 3,
-        "minecraft:iron_shovel": 3,
-        "minecraft:golden_shovel": 1,
-        "minecraft:diamond_shovel": 4,
-        "minecraft:netherite_shovel": 5,
-
-        // Hoes
-        "minecraft:wooden_hoe": 1,
-        "minecraft:stone_hoe": 1,
-        "minecraft:iron_hoe": 1,
-        "minecraft:copper_hoe": 1,
-        "minecraft:golden_hoe": 1,
-        "minecraft:diamond_hoe": 1,
-        "minecraft:netherite_hoe": 1,
-
-        "minecraft:trident": 8,
-        // Fist
-        "minecraft:air": 0,
-    };
-
-    const weapon = attacker.getComponent("equippable")?.getEquipment(EquipmentSlot.Mainhand);
-    const weaponId = weapon?.typeId ?? "minecraft:air";
-    if (!weaponId.startsWith("minecraft:") || weaponId === "minecraft:mace") return undefined;
-    let baseDamage = (weaponBaseDamage[weaponId] ?? 0) + 1;
-    const strength = attacker.getEffect("minecraft:strength")?.amplifier;
-    if (strength) {
-        const level = strength + 1;
-        baseDamage = 1.3 ** level * baseDamage + (1.3 ** level - 1) / 0.3;
-    }
-    const weakness = attacker.getEffect("minecraft:weakness")?.amplifier;
-    if (weakness) {
-        const level = weakness + 1;
-        baseDamage = Math.max(0, 0.8 ** level * baseDamage + (0.8 ** level - 1) / 0.4);
-    }
-    const enchantments = weapon?.getComponent("enchantable");
-    const sharpnessLevel = enchantments?.getEnchantment("minecraft:sharpness")?.level ?? 0;
-    if (sharpnessLevel > 0) {
-        const extraDamage = 1.25 * sharpnessLevel;
-        baseDamage = Math.floor(baseDamage + extraDamage); // Floor down the damage
-    }
-    const smiteLevel = enchantments?.getEnchantment("minecraft:smite")?.level ?? 0;
-    if (smiteLevel && isFamily(target, "undead")) {
-        const extraDamage = 2.5 * smiteLevel;
-        baseDamage = Math.floor(baseDamage + extraDamage);
-    }
-    const baneOfArthropodsLevel = enchantments?.getEnchantment("minecraft:bane_of_arthropods")?.level ?? 0;
-    if (baneOfArthropodsLevel > 0 && isFamily(target, "arthropod")) {
-        const extraDamage = 2.5 * baneOfArthropodsLevel;
-        baseDamage = Math.floor(baseDamage + extraDamage);
-    }
-    const armor = target.getComponent("equippable")!;
-    const totalReduction = armor ? Math.min(1, 1 - Math.min(0.8, Math.max(0.008 * armor.totalArmor, 0.04 * armor.totalArmor - baseDamage / (50 + 6.25 * armor.totalToughness)))) : 1;
-    const protectionLevel = getProtectionLevel(armor);
-    let expectedDamage = baseDamage * totalReduction * (1 - 0.04 * protectionLevel);
-    const resistance = target.getEffect("minecraft:resistance")?.amplifier;
-    if (resistance) expectedDamage *= 1 - (resistance + 1) * 0.2;
-    return expectedDamage;
-}
-function getProtectionLevel(component: EntityEquippableComponent) {
-    const armor = [component?.getEquipment(EquipmentSlot.Head), component?.getEquipment(EquipmentSlot.Chest), component?.getEquipment(EquipmentSlot.Legs), component?.getEquipment(EquipmentSlot.Feet)];
-    let protectionLevel = 0;
-    armor.forEach((item) => {
-        if (!item) return;
-        const enchant = item.getComponent("enchantable");
-        if (!enchant) return;
-        protectionLevel += enchant.getEnchantment("minecraft:protection")?.level ?? 0;
-    });
-    return protectionLevel;
 }

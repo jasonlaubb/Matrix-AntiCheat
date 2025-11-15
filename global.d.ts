@@ -59,6 +59,9 @@ declare module "@minecraft/server" {
         killauraLastPos: number;
         killauraLastReset: number;
         killauraHasChangedPitch: boolean;
+        killauraSwingAt: number;
+        killauraHitAt?: number;
+        killauraNoSwingFlag: number;
         nofallLastFallState: boolean;
         nofallLastOnGroundLocation: Server.Vector3;
         autototemLastItem: [boolean, boolean];
