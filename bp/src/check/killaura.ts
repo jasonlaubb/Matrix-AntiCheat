@@ -185,6 +185,7 @@ function aimCheck(player: Player) {
     if (player.killauraHitAt) {
         player.killauraSwingAt ??= now;
         const difference = Math.abs(player.killauraHitAt - player.killauraSwingAt);
+        // No swing detected within 1s of hit
         if (difference > 1000) {
             player.killauraNoSwingFlag ??= 0;
             player.killauraNoSwingFlag++;
