@@ -1,4 +1,4 @@
-import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world } from "@minecraft/server";
+import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world, EquipmentSlot } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP, banAttack, isAlive, isObstructedBetweenLocations } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
