@@ -2,7 +2,7 @@ import english from "../data/languages/english";
 import type { Command } from "../main";
 import { text } from "../util/text";
 export default {
-    name: "info",
+    name: "acinfo",
     description: english.commandInfoDescription,
     requireOp: false,
     translationDef: {
