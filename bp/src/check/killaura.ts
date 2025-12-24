@@ -1,4 +1,4 @@
-import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world } from "@minecraft/server";
+import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world, EquipmentSlot } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, lineDistance, distanceXZ } from "../util/mathUtil";
 import { addHP, banAttack, isAlive, isObstructedBetweenLocations } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -71,7 +71,9 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
     attacker.killauraLastFlag ??= 0;
     attacker.killauraHitList ??= [];
     attacker.killauraLastAttack = now;
-    if (!attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && now - attacker.lastRiptide > 3000) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
+    const itemHeld = attacker.getComponent("equippable").getEquipment(EquipmentSlot.Mainhand)?.typeId ?? "air";
+    // skip spear to prevent false positive
+    if (!(itemHeld.startsWith("minecraft:") && itemHeld.endsWith("_spear")) && !attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && now - attacker.lastRiptide > 3000) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
     attacker.killauraHitList = attacker.killauraHitList.filter(({ time }) => now - time <= 100);
     // Hit more than 1 entity in a tick
     if (attacker.killauraHitList.length >= 3 || (attacker.killauraHitList.length >= 2 && attacker.killauraHitList.filter(({ time }) => now - time <= 70))) {
