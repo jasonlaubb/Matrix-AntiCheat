@@ -14,7 +14,13 @@ export function checkStaffChatCommand (player: Player, message: string) {
         player.sendMessage(`§7[§aMatrix§7] §c${text("staffcmdNoPerm")}`);
         return true;
     }
-    if (!roleData.split(";").some((allowedCmd) => command.split(" ")[0] === allowedCmd)) {
+    const selectedCommand = command.split(" ")[0];
+    if (selectedCommand === "help") {
+        const roleCommands = roleData.split(";").sort();
+        player.sendMessage(`§7[§aMatrix§7] §a${text("staffcmdHelp")}: §f${roleCommands.join(", ")}`);
+        return true;
+    }
+    if (!roleData.split(";").includes(selectedCommand)) {
         return true;
     }
     player.lastRunUICommand = true; // Show feedback in command output

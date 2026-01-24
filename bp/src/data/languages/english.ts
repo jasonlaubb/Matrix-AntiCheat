@@ -438,6 +438,7 @@ export default {
     antiXrayPiston: "Sorry, piston's placement is disallowed in this server.",
     // 7.3.0 additions
     staffcmdNoPerm: "You have not been granted permission to use this command. If you believe this is a mistake, please contact your server administrator.",
+    staffcmdHelp: "Staff command available",
     commandStaff: "Manage staffs",
     commandStaffDescription: "Manage server staffs' permissions. Allow them to use staff commands.",
     commandStaffManageAction: "staffManageAction",
