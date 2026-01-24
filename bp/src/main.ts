@@ -17,11 +17,11 @@
 扁　　　扁　　　　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　扁扁扁　　扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁　　　　　　　　扁扁　　　扁　　　扁扁扁扁　　　　　　　　扁
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
-import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot } from "@minecraft/server";
+import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot, CustomCommandSource } from "@minecraft/server";
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import { classifyProperty } from "./util/propertyClassifier";
-import { getPlayerRank } from "./util/util";
+import { getPlayerRank, removeColor } from "./util/util";
 import { checkPunish } from "./util/punishment";
 import { openGeneralUI, setupHelper } from "./util/ui";
 import { worldBorderOn } from "./asset/worldBorder";
@@ -37,6 +37,7 @@ import { antiXrayOn } from "./asset/antiXray";
 import { invseeHandler } from "./command/invsee";
 import { antiAfkOn } from "./asset/antiAfk";
 import "./util/extension";
+import { checkStaffChatCommand } from "./asset/staffManager";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -107,13 +108,13 @@ system.beforeEvents.startup.subscribe((event) => {
                 }),
                 cheatsRequired: false,
             },
-            (origin, ...args) => {
-                const player = origin.sourceEntity;
-                if (!player || !(player instanceof Player) || (requireOp && !player.isOp())) {
-                    return { status: 1 };
+            ({ sourceEntity: player, sourceType }, ...args) => {
+                const isConsole = sourceType === CustomCommandSource.Server;
+                if (!(player instanceof Player) && !isConsole) {
+                    return { status: 1, message: "Error: Unsupported command source." }; // Safeguard
                 }
-                const feedback = !player?.lastRunUICommand && world.gameRules.sendCommandFeedback;
-                if (player.lastRunUICommand) delete player.lastRunUICommand;
+                const feedback = isConsole || (!(player as Player)?.lastRunUICommand && world.gameRules.sendCommandFeedback);
+                if ((player as Player)?.lastRunUICommand) delete (player as Player).lastRunUICommand;
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
                     const param = parameters?.[i] ?? optionalParameters![i - (parameters?.length ?? 0)];
@@ -137,7 +138,7 @@ system.beforeEvents.startup.subscribe((event) => {
                                 if (feedback) {
                                     return { status: 1, message };
                                 } else {
-                                    player.sendMessage(message);
+                                    (player as Player).sendMessage(message);
                                     return { status: 1 };
                                 }
                             }
@@ -153,9 +154,9 @@ system.beforeEvents.startup.subscribe((event) => {
                             } else if (input.length > 1) {
                                 message = "§7[§aMatrix§7] §f" + text("commandTooMuchTarget");
                             } else if (param.type !== "player") {
-                                if (input[0].id === player.id) {
+                                if (!isConsole && input[0].id === (player as Player).id) {
                                     message = "§7[§aMatrix§7] §f" + text("commandSelfTargetDisallow");
-                                } else if (param.type === "playerTarget" && input[0].commandPermissionLevel >= player.commandPermissionLevel) {
+                                } else if (param.type === "playerTarget" && (input[0] as Player).isStaff()) {
                                     message = "§7[§aMatrix§7] §f" + text("commandTargetIsOperator");
                                 }
                             }
@@ -164,7 +165,7 @@ system.beforeEvents.startup.subscribe((event) => {
                                 if (feedback) {
                                     return { status: 1, message };
                                 } else {
-                                    player.sendMessage(message);
+                                    (player as Player).sendMessage(message);
                                     return { status: 1 };
                                 }
                             }
@@ -179,7 +180,7 @@ system.beforeEvents.startup.subscribe((event) => {
                                 if (feedback) {
                                     return { status: 1, message };
                                 } else {
-                                    player.sendMessage(message);
+                                    (player as Player).sendMessage(message);
                                     return { status: 1 };
                                 }
                             }
@@ -193,20 +194,20 @@ system.beforeEvents.startup.subscribe((event) => {
                     }
                 }
                 try {
-                    const commandRes = execute(player, args);
+                    const commandRes = execute(player as Player, args);
                     if (feedback) {
-                        return commandRes;
+                        return isConsole ? { status: commandRes.status, message: removeColor(commandRes.message) } : commandRes;
                     }
-                    if (commandRes.message) player.sendMessage(commandRes.message);
+                    if (commandRes.message) (player as Player).sendMessage(commandRes.message);
                     return { status: commandRes.status };
                 } catch (error) {
                     const errorMessage = `§7[§aMatrix §cERROR§7] §f${text("commandThrowError")}:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`;
                     if (feedback)
                         return {
                             status: 1,
-                            message: errorMessage,
+                            message: isConsole ? removeColor(errorMessage) : errorMessage,
                         };
-                    player.sendMessage(errorMessage);
+                    (player as Player).sendMessage(errorMessage);
                     return { status: 1 };
                 }
             }
@@ -273,6 +274,7 @@ world.afterEvents.worldLoad.subscribe(() => {
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const player = event.sender;
+    if (player.isStaff() && checkStaffChatCommand(player, event.message)) return;
     if (world.getDynamicProperty("automute") && !player?.chatEntered && !player.isOp()) {
         event.cancel = true;
         return;

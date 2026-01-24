@@ -177,3 +177,6 @@ export function sendAlert(message: string, involvedPlayer?: Player) {
         flagTarget.forEach((player) => player.sendMessage(message));
     }
 }
+export function removeColor(input?: any) {
+    return typeof input === "string" ? input.replace(/§[0-9a-z]/g, "") : input;
+}

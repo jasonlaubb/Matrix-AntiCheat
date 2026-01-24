@@ -4,9 +4,16 @@ declare module "@minecraft/server" {
     interface Player {
         /**
          * Checks if the player has operator permissions.
-         * @returns {boolean}
          */
         isOp: () => boolean;
+        /**
+         * Checks if the player has higher permissions than normal player, includes operator.
+         */
+        isStaff: () => boolean;
+        /**
+         * Checks if the player can bypass the anti-cheat checks.
+         */
+        canBypass: () => boolean;
         flag: (id: string, type: string, category: string, data?: { [key: string]: string | number }) => void;
         kick: (reason: string) => void;
 	    /**

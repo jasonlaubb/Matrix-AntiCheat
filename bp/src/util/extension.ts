@@ -48,6 +48,12 @@ Player.prototype.kick = function (reason: string) {
 Player.prototype.isSafeDevice = function () {
     return this.inputInfo.lastInputModeUsed === InputMode.Gamepad && this.clientSystemInfo.platformType === PlatformType.Console;
 };
+Player.prototype.canBypass = function () {
+    return this.isStaff();
+};
+Player.prototype.isStaff = function () {
+    return this.isOp() || !!this.getDynamicProperty("staff"); // To reduce ram usage, we do not actually check everytime whether the role is exist
+};
 // Intitalize some property for tick event
 Player.prototype.killauraLastAttack = 0;
 Player.prototype.killauraLastReset = 0;

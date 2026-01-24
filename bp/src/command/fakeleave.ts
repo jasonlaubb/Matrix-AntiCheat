@@ -26,7 +26,7 @@ export default {
             ],
         });
 
-        if (invisibility) {
+        if (invisibility && player) {
             system.run(() => player.addEffect("invisibility", 20000000, { showParticles: false }));
         }
 
