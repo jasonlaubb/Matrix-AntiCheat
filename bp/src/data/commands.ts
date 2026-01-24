@@ -37,7 +37,7 @@ import { gma, gmc, gms, gmsp } from "../command/gm";
 import antigamemode, { antiGameModeOption, antiGameModeSetting } from "../command/antigamemode";
 import language from "../command/language";
 import setup from "../command/setup";
-import { staffManageAction, staffRoleManageAction } from "../command/staff";
+import { rolePreset, staffManageAction, staffRoleManageAction } from "../command/staff";
 export const commands = [
     info,
     setBoolean,
@@ -120,4 +120,5 @@ export const enumRegistry: { [key: string]: string[] } = {
     language: Object.keys(languageList).sort(),
     staffManageAction,
     staffRoleManageAction,
+    rolePreset,
 };

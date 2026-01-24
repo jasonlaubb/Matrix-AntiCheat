@@ -195,6 +195,8 @@ system.beforeEvents.startup.subscribe((event) => {
                         case "enum": {
                             const allowedValues = enumRegistry[param.name];
                             if (!allowedValues.includes(input)) {
+                                let allowedValuesText = allowedValues.join(", ");
+                                allowedValuesText = allowedValuesText.length > 120 ? allowedValuesText.slice(0, 117) + "..." : allowedValuesText; // Prevent too long message
                                 const message = `§7[§aMatrix§7] §f` + text("commandEnumInvalid", paramName, allowedValues.join(", "));
                                 if (feedback) {
                                     return { status: 1, message: isConsole ? removeColor(message) : message };

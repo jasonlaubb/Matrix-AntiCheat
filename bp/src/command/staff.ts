@@ -2,7 +2,8 @@ import { world } from "@minecraft/server";
 import type { Command } from "../main";
 import { text } from "../util/text";
 export const staffManageAction = ["add", "remove", "list"];
-export const staffRoleManageAction = ["add", "remove", "list", "manage"];
+export const staffRoleManageAction = ["create", "delete", "list", "manage"];
+export const rolePreset = ["admin", "moderator", "helper", "builder", "trusted"];
 export const staff = {
     name: "staff",
     requireOp: true,
@@ -115,8 +116,92 @@ export const staffrole = {
         },
         {
             type: "enum",
-            name: "rolePreset",
-            options: ["admin", "moderator", "helper"],
+            name: "rolePreset"
         }
-    ]
+    ],
+    execute: (_player, [action, roleName, rolePreset]) => {
+        switch (action) {
+            case "create": {
+                if (!roleName) return {
+                    status: 1,
+                    message: `§7[§aMatrix§7] §f${text("commandStaffRoleMissingParam")}`,
+                }
+                if (world.getDynamicProperty(`role:${roleName}`) !== undefined) {
+                    return {
+                        status: 1,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffRoleAlreadyExists", roleName)}`,
+                    };
+                }
+                if (roleName.includes(";")) {
+                    return {
+                        status: 1,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffRoleInvalid", roleName)}`,
+                    };
+                }
+                world.setDynamicProperty(`role:${roleName}`, rolePreset ? getRoleCommandsByPreset(rolePreset) : "");
+                return {
+                    status: 0,
+                    message: `§7[§aMatrix§7] §f${text("commandStaffRoleCreateSuccess", roleName)}`,
+                };
+            }
+            case "delete": {
+                if (!roleName) return {
+                    status: 1,
+                    message: `§7[§aMatrix§7] §f${text("commandStaffRoleMissingParam")}`,
+                }
+                if (world.getDynamicProperty(`role:${roleName}`) === undefined) {
+                    return {
+                        status: 1,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffUnknownRole", roleName)}`,
+                    };
+                }
+                world.setDynamicProperty(`role:${roleName}`);
+                return {
+                    status: 0,
+                    message: `§7[§aMatrix§7] §f${text("commandStaffRoleDeleteSuccess", roleName)}`,
+                };
+            }
+            case "list": {
+                const id = world.getDynamicPropertyIds();
+                const roleList: string[] = [];
+                id.forEach((propId) => {
+                    if (propId.startsWith("role:")) {
+                        const roleName = propId.slice(5);
+                        roleList.push(`§a- ${roleName}§r`);
+                    }
+                });
+                if (roleList.length === 0) {
+                    return {
+                        status: 0,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffRoleListEmpty")}`,
+                    };
+                }
+                return {
+                    status: 0,
+                    message: `§7[§aMatrix§7] §f${text("commandStaffRoleListHeader")}\n${roleList.join("\n")}`,
+                };
+            }
+        }
+        return;
+    }
 } as Command;
+function getRoleCommandsByPreset (preset: string) {
+    switch (preset) {
+        case "admin": {
+            return "commandlist;ban;banoffline;unban;banlist;deviceinfo;lockdown;mute;unmute;rankadd;rankremove;ranklist;rankclear;warn;watch;watchtp;invsee;invcopy;echestwipe;freecam;fakeleave;gma;gmc;gms;gmsp;flaglog;gamemode;kill;tp;fill;clone;setblock;summon;effect;give;clear;xp;tag;scoreboard";
+        }
+        case "moderator": {
+            return "commandlist;ban;banoffline;unban;banlist;deviceinfo;mute;unmute;rankadd;rankremove;ranklist;rankclear;warn;watch;watchtp;invsee;invcopy;echestwipe;freecam;fakeleave;gma;gmc;gms;gmsp;flaglog;kill;gamemode;tp";
+        }
+        case "helper": {
+            return "gma;gmc;gms;gmsp;give;tp;rankadd;rankremove;ranklist;rankclear";
+        }
+        case "builder": {
+            return "gma;gmc;gms;gmsp;tp;fill;clone;setblock";
+        }
+        case "trusted": {
+            return "";
+        }
+    }
+    return "";
+}

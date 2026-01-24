@@ -1,5 +1,4 @@
 import type { Command } from "../main";
-import { messageTarget } from "../util/extension";
 import { world } from "@minecraft/server";
 import { text } from "../util/text";
 import english from "../data/languages/english";
@@ -14,13 +13,6 @@ export default {
     },
     parameters: [{ name: "messageTarget", type: "enum" }],
     execute: (_player, [newMessageTarget]) => {
-        if (!messageTarget.includes(newMessageTarget)) {
-            return {
-                status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandFlagMsgTargetInvalid", newMessageTarget),
-            };
-        }
-
         world.setDynamicProperty("database:flagMessageTarget", newMessageTarget);
 
         return {

@@ -455,4 +455,11 @@ export default {
     commandStaffRoleDescription: "Manage roles for staffs. Define what commands they can use.",
     commandStaffRolePreset: "rolePreset",
     commandEnumInvalid: "Invalid value for %1. Must be one of: %2",
+    commandStaffRoleMissingParam: "Please provide role name.",
+    commandStaffRoleAlreadyExists: "Role %1 already exists.",
+    commandStaffRoleInvalid: "Invalid role name: %1, ';' in the name is not supported.",
+    commandStaffRoleCreateSuccess: "Successfully created role %1.",
+    commandStaffRoleDeleteSuccess: "Successfully deleted role %1.",
+    commandStaffRoleListEmpty: "No roles have been created yet.",
+    commandStaffRoleListHeader: "Role list:",
 };

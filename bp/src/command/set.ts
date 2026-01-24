@@ -46,9 +46,6 @@ export const setString = {
         { name: "value", type: "string" },
     ],
     execute: (_player, [id, value]) => {
-        if (!getPropertyType().stringValue.includes(id)) {
-            return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandInvalidProperty") };
-        }
         if (isReadonly(id)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandPropertyIsReadonly") };
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
@@ -72,9 +69,6 @@ export const setNumber = {
         { name: "value", type: "float" },
     ],
     execute: (_player, [id, value]) => {
-        if (!getPropertyType().numberValue.includes(id)) {
-            return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandInvalidProperty") };
-        }
         if (isReadonly(id)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandPropertyIsReadonly") };
         system.run(() => world.setDynamicProperty("database:" + id, value));
         return {
@@ -155,9 +149,6 @@ export const getProperty = {
     },
     parameters: [{ name: "property", type: "enum" }],
     execute: (_player, [id]) => {
-        if (!Object.keys(property).includes(id)) {
-            return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandInvalidProperty") };
-        }
         const { type, value } = property[id as keyof typeof property];
         const dynamic = world.getDynamicProperty("database:" + id) ?? "--";
         return {

@@ -1,5 +1,4 @@
 import { system } from "@minecraft/server";
-import { timeUnits } from "./ban";
 import type { Command } from "../main";
 import { parseTime, hasEducationalFeature } from "../util/util";
 import { checkPunish } from "../util/punishment";
@@ -39,13 +38,6 @@ export const mute = {
             return {
                 status: 1,
                 message: "§7[§aMatrix§7] §f" + text("commandMuteMissingUnit"),
-            };
-        }
-
-        if (duration && !timeUnits.includes(timeUnit)) {
-            return {
-                status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandMuteInvalidUnit", timeUnit),
             };
         }
 

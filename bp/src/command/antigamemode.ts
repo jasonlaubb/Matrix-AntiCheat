@@ -63,9 +63,6 @@ export default {
             setAllGamemodes(false);
             return { status: 0, message: "§7[§aMatrix§7] §f" + text("commandAntiGMReset") };
         }
-        if (!GAMEMODES.includes(option as any)) {
-            return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandAntiGMInvalid", antiGameModeOption.join(", ")) };
-        }
         const gmProperty = gmKey[option as keyof typeof gmKey];
         switch (setting) {
             case "only":

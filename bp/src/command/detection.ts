@@ -77,13 +77,6 @@ export const detection = {
     ],
     execute: (_player, [name, enable]) => {
         const toggle = detectionList[name as keyof typeof detectionList];
-        if (!toggle) {
-            return {
-                status: 1,
-                message: "§7[§aMatrix§7] §f" + text("commandDetectionInvalid", Object.keys(detectionList).join(", ")),
-            };
-        }
-
         const currentEnabled = get(toggle.property as keyof typeof property);
         if (currentEnabled === enable) {
             return {

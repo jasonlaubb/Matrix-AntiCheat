@@ -14,7 +14,7 @@ export function checkStaffChatCommand (player: Player, message: string) {
         player.sendMessage(`§7[§aMatrix§7] §c${text("staffcmdNoPerm")}`);
         return true;
     }
-    if (!roleData.split(";").some((allowedCmd) => command.startsWith(allowedCmd))) {
+    if (!roleData.split(";").some((allowedCmd) => command.split(" ")[0] === allowedCmd)) {
         return true;
     }
     player.lastRunUICommand = true; // Show feedback in command output

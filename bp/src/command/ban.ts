@@ -38,7 +38,6 @@ export const banCmd = {
     ],
     execute: (player, [target, reason, duration, timeUnit]) => {
         if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanMissingUnit") };
-        if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanInvalidTimeUnit") };
         system.run(() => {
             ban(target, reason ?? text("commandBanNoReason"), player.name, duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
             checkPunish(target);
@@ -81,7 +80,6 @@ export const banOffline = {
         if (world.getDynamicProperty("nameBanData:" + target) || isBanned(target)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandOfflinebanAlready") };
         if (world.getPlayers({ name: target })[0]) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandOfflinebanOnline") };
         if (duration && !timeUnit) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanMissingUnit") };
-        if (duration && !timeUnits.includes(timeUnit)) return { status: 1, message: "§7[§aMatrix§7] §f" + text("commandBanInvalidTimeUnit") };
         system.run(() => {
             banName(target, reason ?? text("commandBanNoReason"), player.name, duration ? Date.now() + parseTime(timeUnit, duration) : undefined);
             checkPunish(player);
