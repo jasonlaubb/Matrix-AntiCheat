@@ -199,9 +199,6 @@ function getRoleCommandsByPreset (preset: string) {
         case "builder": {
             return "gma;gmc;gms;gmsp;tp;fill;clone;setblock";
         }
-        case "trusted": {
-            return "";
-        }
     }
     return "";
 }
