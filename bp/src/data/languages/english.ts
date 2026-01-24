@@ -438,4 +438,17 @@ export default {
     antiXrayPiston: "Sorry, piston's placement is disallowed in this server.",
     // 7.3.0 additions
     staffcmdNoPerm: "You have not been granted permission to use this command. If you believe this is a mistake, please contact your server administrator.",
+    commandStaff: "Manage staffs",
+    commandStaffDescription: "Manage server staffs' permissions. Allow them to use staff commands.",
+    commandStaffManageAction: "staffManageAction",
+    commandStaffRoleName: "roleName",
+    commandStaffMissingParam1: "Please provide player name and the role name.",
+    commandStaffMissingParam2: "Please provide player name.",
+    commandStaffUnknownAction: "Unknown action: %s",
+    commandStaffUnknownRole: "Unknown role name: %1, use '%2' to add a new role.",
+    commandStaffAddSuccess: "Successfully added %1 to role %2.",
+    commandStaffNoRoleAssigned: "%1 has no role assigned.",
+    commandStaffRemoveSuccess: "Successfully removed %1 from staff list.",
+    commandStaffListEmpty: "No staffs have been assigned yet.",
+    commandStaffListHeader: "Staff list:",
 };
