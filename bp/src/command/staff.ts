@@ -89,6 +89,9 @@ export const staff = {
                     message: `§7[§aMatrix§7] §f${text("commandStaffListHeader")}\n${staffList.join("\n")}`,
                 };
             }
+            case "manage": {
+                return { status: 0, message: "§7[§aMatrix§7] §fComming soon ( • ̀ω•́ )" };
+            }
         }
         return;
     }
