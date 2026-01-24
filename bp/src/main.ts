@@ -291,7 +291,7 @@ world.afterEvents.worldLoad.subscribe(() => {
 world.beforeEvents.chatSend.subscribe((event) => {
     const player = event.sender;
     if (player.isStaff() && checkStaffChatCommand(player, event.message)) return;
-    if (world.getDynamicProperty("automute") && !player?.chatEntered && !player.isOp()) {
+    if (world.getDynamicProperty("automute") && !player?.chatEntered && !player.isStaff()) {
         event.cancel = true;
         return;
     }
@@ -304,7 +304,7 @@ world.beforeEvents.chatSend.subscribe((event) => {
         }
     }
     // Trash code for anti spam
-    if (get("antiSpam") && !player.isOp()) {
+    if (get("antiSpam") && !player.canBypass()) {
         player.lastMessage ??= 0;
         player.tooFastFlag ??= 0;
         const now = Date.now();
@@ -372,7 +372,7 @@ function longestContinuousChar(str: string) {
 }
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (!initialSpawn) return;
-    if (world?.lockdown && !player.isOp()) {
+    if (world?.lockdown && !player.canBypass()) {
         player.kick(text("spawnEventLockdownKickReason"));
         return;
     }
@@ -382,7 +382,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         const format = get("chatRankNameTagFormat");
         player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);
     }
-    if (world.getDynamicProperty("automute") && !player.isOp()) {
+    if (world.getDynamicProperty("automute") && !player.isStaff()) {
         player.sendMessage(text("spawnEventAutoMuteMessage", "/enterchat"));
         player.runCommand("ability @s mute true");
     }
