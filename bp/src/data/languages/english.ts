@@ -451,4 +451,8 @@ export default {
     commandStaffRemoveSuccess: "Successfully removed %1 from staff list.",
     commandStaffListEmpty: "No staffs have been assigned yet.",
     commandStaffListHeader: "Staff list:",
+    commandStaffRole: "Manage roles for staffs",
+    commandStaffRoleDescription: "Manage roles for staffs. Define what commands they can use.",
+    commandStaffRolePreset: "rolePreset",
+    commandEnumInvalid: "Invalid value for %1. Must be one of: %2",
 };

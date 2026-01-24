@@ -2,6 +2,7 @@ import { world } from "@minecraft/server";
 import type { Command } from "../main";
 import { text } from "../util/text";
 export const staffManageAction = ["add", "remove", "list"];
+export const staffRoleManageAction = ["add", "remove", "list", "manage"];
 export const staff = {
     name: "staff",
     requireOp: true,
@@ -33,12 +34,12 @@ export const staff = {
             case "add": {
                 if (!targetPlayer || !roleName) return {
                     status: 1,
-                    message: `§7[§aMatrix§7] §c${text("commandStaffMissingParam1")}`,
+                    message: `§7[§aMatrix§7] §f${text("commandStaffMissingParam1")}`,
                 }
                 if (world.getDynamicProperty(`role:${roleName}`) === undefined) {
                     return {
                         status: 1,
-                        message: `§7[§aMatrix§7] §c${text("commandStaffUnknownRole", roleName, `/staffrole add "${roleName}"`)}`,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffUnknownRole", roleName, `/staffrole add "${roleName}"`)}`,
                     };
                 }
                 targetPlayer.setDynamicProperty("staff", roleName);
@@ -51,12 +52,12 @@ export const staff = {
             case "remove": {
                 if (!targetPlayer) return {
                     status: 1,
-                    message: `§7[§aMatrix§7] §c${text("commandStaffMissingParam2")}`,
+                    message: `§7[§aMatrix§7] §f${text("commandStaffMissingParam2")}`,
                 }
                 if (!targetPlayer.getDynamicProperty("staff")) {
                     return {
                         status: 1,
-                        message: `§7[§aMatrix§7] §c${text("commandStaffNoRoleAssigned", targetPlayer.name)}`,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffNoRoleAssigned", targetPlayer.name)}`,
                     };
                 }
                 targetPlayer.setDynamicProperty("staff");
@@ -87,12 +88,35 @@ export const staff = {
                     message: `§7[§aMatrix§7] §f${text("commandStaffListHeader")}\n${staffList.join("\n")}`,
                 };
             }
-            default: {
-                return {
-                    status: 1,
-                    message: `§7[§aMatrix§7] §c${text("commandStaffUnknownAction", action)}`,
-                };
-            }
         }
+        return;
     }
+} as Command;
+export const staffrole = {
+    name: "staffrole",
+    requireOp: true,
+    description: "Manage staff roles.",
+    translationDef: {
+        actionName: "commandStaffRole",
+        description: "commandStaffRoleDescription",
+        param: ["commandStaffManageAction"],
+        optionalParam: ["commandStaffRoleName", "commandStaffRolePreset"],
+    },
+    parameters: [
+        {
+            type: "enum",
+            name: "staffManageAction",
+        }
+    ],
+    optionalParameters: [
+        {
+            type: "string",
+            name: "roleName",
+        },
+        {
+            type: "enum",
+            name: "rolePreset",
+            options: ["admin", "moderator", "helper"],
+        }
+    ]
 } as Command;

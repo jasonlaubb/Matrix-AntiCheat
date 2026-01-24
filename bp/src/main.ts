@@ -136,7 +136,7 @@ system.beforeEvents.startup.subscribe((event) => {
                                 }
 
                                 if (feedback) {
-                                    return { status: 1, message };
+                                    return { status: 1, message: isConsole ? removeColor(message) : message };
                                 } else {
                                     (player as Player).sendMessage(message);
                                     return { status: 1 };
@@ -163,7 +163,7 @@ system.beforeEvents.startup.subscribe((event) => {
 
                             if (message) {
                                 if (feedback) {
-                                    return { status: 1, message };
+                                    return { status: 1, message: isConsole ? removeColor(message) : message };
                                 } else {
                                     (player as Player).sendMessage(message);
                                     return { status: 1 };
@@ -178,7 +178,7 @@ system.beforeEvents.startup.subscribe((event) => {
                             if (param?.max && input.length > param.max) {
                                 const message = `§7[§aMatrix§7] §f` + text("commandStringTooLong", paramName, param.max);
                                 if (feedback) {
-                                    return { status: 1, message };
+                                    return { status: 1, message: isConsole ? removeColor(message) : message };
                                 } else {
                                     (player as Player).sendMessage(message);
                                     return { status: 1 };
@@ -189,6 +189,20 @@ system.beforeEvents.startup.subscribe((event) => {
 
                         case "item": {
                             args[i] = input.id;
+                            break;
+                        }
+
+                        case "enum": {
+                            const allowedValues = enumRegistry[param.name];
+                            if (!allowedValues.includes(input)) {
+                                const message = `§7[§aMatrix§7] §f` + text("commandEnumInvalid", paramName, allowedValues.join(", "));
+                                if (feedback) {
+                                    return { status: 1, message: isConsole ? removeColor(message) : message };
+                                } else {
+                                    (player as Player).sendMessage(message);
+                                    return { status: 1 };
+                                }
+                            }
                             break;
                         }
                     }
