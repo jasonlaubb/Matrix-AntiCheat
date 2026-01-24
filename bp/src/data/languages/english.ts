@@ -436,4 +436,6 @@ export default {
     itemSetupHelper: "§g§lSetup Helper\n§r§7(Right-click to open the UI)",
     itemAdminGUI: "§e§lMatrix Admin GUI\n§r§7(Right-click to open the UI)",
     antiXrayPiston: "Sorry, piston's placement is disallowed in this server.",
+    // 7.3.0 additions
+    staffcmdNoPerm: "You have not been granted permission to use this command. If you believe this is a mistake, please contact your server administrator.",
 };
