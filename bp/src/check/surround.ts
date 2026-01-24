@@ -9,7 +9,7 @@ export default {
     },
 };
 function blockPlace({ player, block }: PlayerPlaceBlockAfterEvent) {
-    if (block.typeId === "minecraft:obsidian" && player.isOnGround && !player.isOp()) {
+    if (block.typeId === "minecraft:obsidian" && player.isOnGround && !player.canBypass()) {
         const now = Date.now();
         const { x, y, z } = floorPos(player.location);
         const { x: x2, y: y2, z: z2 } = block.location;

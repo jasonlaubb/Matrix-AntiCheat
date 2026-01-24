@@ -65,7 +65,7 @@ function playerSwing({ player }: PlayerSwingStartAfterEvent) {
     player.killauraSwingAt = Date.now();
 }
 function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
-    if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.isOp() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
+    if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.canBypass() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
     const now = Date.now();
     attacker.killauraFlag ??= 0;
     attacker.killauraLastFlag ??= 0;

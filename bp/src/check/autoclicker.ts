@@ -3,7 +3,7 @@ import { get } from "../util/database";
 import { banAttack } from "../util/util";
 
 function onEntityHit({ damagingEntity: player }: EntityHitEntityAfterEvent) {
-    if (!(player instanceof Player) || player.isOp()) return;
+    if (!(player instanceof Player) || player.canBypass()) return;
     // Delay 1 tick
     system.run(() => {
         player.autoclickerCpsCount ??= 0;
@@ -24,7 +24,7 @@ function onEntityHit({ damagingEntity: player }: EntityHitEntityAfterEvent) {
                     if (get("antiAutoClickerWarning")) {
                         player.sendMessage("§c§lHey!§r§7 Slow down your clicking");
                         world.getAllPlayers().forEach((target) => {
-                            if (!target.isOp()) return;
+                            if (!target.canBypass()) return;
                             target.sendMessage(`§7[§aMatrix§7] §e${player.name} §fhas triggered auto-clicker flag.`);
                         });
                     }
@@ -38,7 +38,7 @@ function onEntityHit({ damagingEntity: player }: EntityHitEntityAfterEvent) {
     });
 }
 function onEntityHurt({ damageSource: { damagingEntity, damagingProjectile, cause } }: EntityHurtAfterEvent) {
-    if (!damagingEntity || cause !== EntityDamageCause.entityAttack || damagingProjectile || !(damagingEntity instanceof Player) || damagingEntity.isOp()) return;
+    if (!damagingEntity || cause !== EntityDamageCause.entityAttack || damagingProjectile || !(damagingEntity instanceof Player) || damagingEntity.canBypass()) return;
     const now = Date.now();
     if (!damagingEntity.autoclickerAttackDuration || (damagingEntity.autoclickerInitTimestamp && now - damagingEntity.autoclickerInitTimestamp > 12000)) {
         damagingEntity.autoclickerAttackDuration = 0;

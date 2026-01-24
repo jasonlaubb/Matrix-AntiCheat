@@ -12,7 +12,7 @@ export default {
 function blockPlace(event: PlayerPlaceBlockBeforeEvent) {
     const { block, player } = event;
     const height = block.location.y - player.location.y;
-    if (player.isOp() || height < 1.8 || height > 2 || player.getGameMode() === GameMode.Creative) return;
+    if (player.canBypass() || height < 1.8 || height > 2 || player.getGameMode() === GameMode.Creative) return;
     const now = Date.now();
     player.ziplineLastPlace ??= 0;
     if (player.ziplineLastLoc && now - player.ziplineLastPlace < 400 && player.inputInfo.getMovementVector().y > 0) {

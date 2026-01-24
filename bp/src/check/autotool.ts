@@ -15,7 +15,7 @@ export default {
     },
 };
 function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
-    if (!(player instanceof Player) || player.isOp() || (get("antiAutoToolIgnoreKeyboardInput") && player.inputInfo.lastInputModeUsed === InputMode.KeyboardAndMouse)) return;
+    if (!(player instanceof Player) || player.canBypass() || (get("antiAutoToolIgnoreKeyboardInput") && player.inputInfo.lastInputModeUsed === InputMode.KeyboardAndMouse)) return;
     const currentTick = system.currentTick;
     player.autotoolLastSwitch ??= player.selectedSlotIndex; // Prevent special false positive
     system.runTimeout(() => {
@@ -25,7 +25,7 @@ function hitBlock({ damagingEntity: player }: EntityHitBlockAfterEvent) {
 }
 function blockBreak(event: PlayerBreakBlockBeforeEvent) {
     const player = event.player;
-    if (player.autotoolFlagged && player.isOp()) {
+    if (player.autotoolFlagged && player.canBypass()) {
         event.cancel = true;
         player.autotoolFlagged = false;
         const now = Date.now();

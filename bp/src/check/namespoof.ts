@@ -11,7 +11,7 @@ export default {
     },
 };
 function onPlayerJoin({ player, initialSpawn }: PlayerSpawnAfterEvent) {
-    if (!initialSpawn || player.isOp()) return;
+    if (!initialSpawn || player.canBypass()) return;
     let name = player.name;
     if (get("antiNamespoofIgnoreRepeatedId") && name.endsWith(")")) {
         name = name.replace(/\(\d{1,3}\)$/, "");

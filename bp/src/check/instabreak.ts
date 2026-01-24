@@ -7,7 +7,7 @@ const MAX_BREAK_IN_TICK = 6;
  * @description The module against insteabreak hack. These types of hack is not working on the realm and bds server.
  */
 function onBlockBreak({ player, brokenBlockPermutation, itemStackBeforeBreak: tool, block }: PlayerBreakBlockAfterEvent) {
-    if (player.isOp() || brokenBlockPermutation.type.id === "minecraft:air" || brokenBlockPermutation.type.id === "minecraft:netherrack") return;
+    if (player.canBypass() || brokenBlockPermutation.type.id === "minecraft:air" || brokenBlockPermutation.type.id === "minecraft:netherrack") return;
     player.breakData.brokenBlocks.push({ blockPermutation: brokenBlockPermutation, blockPosition: block.location });
     const usingTool = tool && isTool(tool);
     if (!(player.getEffect("minecraft:haste") && usingTool) || (usingTool && (tool.getComponent("enchantable")?.getEnchantment("minecraft:efficiency")?.level ?? 0) >= 2 && INSTA_BREAKABLE_SET.has(brokenBlockPermutation.type.id))) {

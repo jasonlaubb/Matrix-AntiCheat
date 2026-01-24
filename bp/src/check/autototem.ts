@@ -10,7 +10,7 @@ export default {
     property: "antiAutototemEnable",
 };
 function tickEvent(player: Player) {
-    if (player.isOp()) return;
+    if (player.canBypass()) return;
     const offhand = player.getComponent("equippable")!.getEquipmentSlot(EquipmentSlot.Offhand);
     const hasItem = offhand.getItem();
     player.autototemLastItem ??= [true, true];

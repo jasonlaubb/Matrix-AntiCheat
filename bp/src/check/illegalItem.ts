@@ -71,7 +71,7 @@ const educationalItems = new Set([
 ]);
 const offHandItems = new Set(["minecraft:shield", "minecraft:totem_of_undying", "minecraft:map", "minecraft:arrow", "minecraft:firework_rocket"]);
 function inventoryChange({ player, itemStack: item, slot }: PlayerInventoryItemChangeAfterEvent) {
-    if (!item || player.isOp()) return;
+    if (!item || player.canBypass()) return;
     initVanillaItems();
     const illegal = itemCheck(item);
     if (illegal) {
@@ -81,7 +81,7 @@ function inventoryChange({ player, itemStack: item, slot }: PlayerInventoryItemC
     }
 }
 function onPlayerJoin({ player, initialSpawn }: PlayerSpawnAfterEvent) {
-    if (!initialSpawn || player.isOp() || !get("antiIllegalItemTriggerOnJoin")) return;
+    if (!initialSpawn || player.canBypass() || !get("antiIllegalItemTriggerOnJoin")) return;
     initVanillaItems();
     const inventory = player.getComponent("inventory")!.container;
     let triggedCheck:
@@ -147,7 +147,7 @@ function tickEvent(player: Player) {
     }
 }
 function placeCheck({ player, block }: PlayerPlaceBlockAfterEvent) {
-    if (player.isOp() || !get("antiIllegalItemTriggerOnPlace")) return;
+    if (player.canBypass() || !get("antiIllegalItemTriggerOnPlace")) return;
     initVanillaItems();
     const container = block.getComponent("inventory")?.container;
     if (!container || container.weight === 0) return;

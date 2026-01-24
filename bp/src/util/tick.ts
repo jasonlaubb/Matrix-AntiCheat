@@ -13,7 +13,7 @@ export function tick() {
     players.forEach((player) => {
         loop.forEach((f) => f.callback());
         loopForEach.forEach((f) => f.callback(player));
-        if (!player.isOp()) loopForCheck.forEach((f) => f.callback(player));
+        if (!player.canBypass()) loopForCheck.forEach((f) => f.callback(player));
         if (chatRankDisplayOnNameTag) {
             const playerRank = getPlayerRank(player);
             player.nameTag = format.replace("{rank}", playerRank).replace("{player}", player.name);

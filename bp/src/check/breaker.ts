@@ -12,7 +12,7 @@ export default {
     },
 };
 function interactOrBreak(event: PlayerBreakBlockBeforeEvent | PlayerInteractWithBlockBeforeEvent) {
-    if (event.block.isAir || event.player.isOp()) return;
+    if (event.block.isAir || event.player.canBypass()) return;
     const now = Date.now();
     // To prevent false positive, stop checking breaker when player has jusr broken block
     if (!event.player.breakerLastBreak || now - event.player.breakerLastBreak > 100)

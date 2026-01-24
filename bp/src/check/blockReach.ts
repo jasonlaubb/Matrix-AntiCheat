@@ -13,7 +13,7 @@ export default {
 };
 function blockEvent(event: PlayerBreakBlockBeforeEvent | PlayerPlaceBlockBeforeEvent) {
     const { player, block } = event;
-    if (player.isOp() || player.getGameMode() === GameMode.Creative) return;
+    if (player.canBypass() || player.getGameMode() === GameMode.Creative) return;
     const pos = block.center();
     const reach = distance(pos, player.location);
     const reachLimit = player.isFalling && player.location.y < block.location.y ? 7 : 8;
