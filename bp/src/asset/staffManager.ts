@@ -17,7 +17,7 @@ export function checkStaffChatCommand (player: Player, message: string) {
     const selectedCommand = command.split(" ")[0];
     if (selectedCommand === "help") {
         const roleCommands = roleData.split(";").sort();
-        player.sendMessage(`§7[§aMatrix§7] §a${text("staffcmdHelp")}: §f${roleCommands.join(", ")}`);
+        player.sendMessage(`§7[§aMatrix§7] §a${text("staffcmdHelp")}: §f${roleCommands.length > 0 ? roleCommands.join(", ") : "--"}`);
         return true;
     }
     if (!roleData.split(";").includes(selectedCommand)) {
