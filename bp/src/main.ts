@@ -115,7 +115,6 @@ system.beforeEvents.startup.subscribe((event) => {
                 if (!(player instanceof Player) && !isConsole) {
                     return { status: 1, message: "Error: Unsupported command source." }; // Safeguard
                 }
-                if ((player as Player)?.lastRunUICommand) delete (player as Player).lastRunUICommand;
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
                     const param = parameters?.[i] ?? optionalParameters![i - (parameters?.length ?? 0)];
@@ -408,7 +407,6 @@ function giveUITool(player: Player) {
         }
     }
     if (!itemFind) {
-        player.lastRunUICommand = true;
         player.runCommand("matrix:setup");
         const id = system.runInterval(() => {
             if (!player.isValid) return system.clearRun(id);

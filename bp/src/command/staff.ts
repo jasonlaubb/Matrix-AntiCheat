@@ -231,7 +231,6 @@ export const staffcmd = {
         if (!roleData.split(";").includes(selectedCommand)) {
             return { status: 1, message: `§7[§aMatrix§7] §f${text("commandStaffCmdUnknownCommand", selectedCommand)}` };
         }
-        player.lastRunUICommand = true; // Show feedback in command output
         system.run(() => {
             try {
                 player.runCommand(command);

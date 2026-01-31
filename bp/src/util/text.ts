@@ -62,7 +62,6 @@ export async function languageSelectUI(player: Player) {
         .show(player);
     if (res.canceled) return false;
     const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplified", "french", "japanese", "italian", "spanish", "korean", "portuguese", "russkiy_yazyk", "vietnamese"];
-    player.lastRunUICommand = true;
     player.runCommand(`matrix:language ${languages[res.selection!]}`);
     return true;
 }

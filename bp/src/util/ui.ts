@@ -130,7 +130,6 @@ export function openGeneralUI(player: Player) {
                             if (res.canceled) return;
                             const selectedCommand = commandList[res.selection!];
                             if ((selectedCommand.parameters?.length ?? 0) === 0 && (selectedCommand.optionalParameters?.length ?? 0) === 0) {
-                                player.lastRunUICommand = true;
                                 try {
                                     player.runCommand("matrix:" + selectedCommand.name.toLowerCase());
                                 } catch (error) {
@@ -206,7 +205,6 @@ export function openGeneralUI(player: Player) {
                                         if (breaks) break;
                                     }
                                     const command = "matrix:" + selectedCommand.name.toLowerCase() + " " + input.join(" ");
-                                    player.lastRunUICommand = true;
                                     try {
                                         player.runCommand(command);
                                     } catch (error) {
@@ -298,12 +296,10 @@ export async function setupHelper(player: Player) {
                         break;
                     }
                     case 1: {
-                        player.lastRunUICommand = true;
                         player.runCommand("matrix:itemui");
                         break;
                     }
                     case 2: {
-                        player.lastRunUICommand = true;
                         player.runCommand("matrix:commandlist");
                         break;
                     }
@@ -371,7 +367,6 @@ export function staffManageUI(player: Player) {
                         .then((res2) => {
                             if (res2.canceled) return;
                             const roleName = res2.formValues![0] as string;
-                            player.lastRunUICommand = true;
                             player.runCommand(`matrix:staffrole create "${roleName}" ${["admin", "moderator", "helper", "builder", "trusted"][res2.formValues![1] as number]}`);
                         });
                     break;
@@ -390,7 +385,6 @@ export function staffManageUI(player: Player) {
                         if (res2.canceled) return;
                         const selection = res2.selection!;
                         const roleName = roleList[selection];
-                        player.lastRunUICommand = true;
                         player.runCommand(`matrix:staffrole delete "${roleName}"`);
                     });
                     break;
