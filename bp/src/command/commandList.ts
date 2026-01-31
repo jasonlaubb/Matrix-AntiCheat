@@ -10,12 +10,11 @@ export default {
         actionName: "commandList",
         description: "commandListDescription",
     },
-    execute: () => {
+    execute: (player) => {
         const helpHeader = text("commandListHeader");
         const helpBody = commands
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(({ name, optionalParameters, parameters }, i, arr) => {
-                console.log(arr[i].translationDef); //?????
                 const def = arr[i].translationDef;
                 let line = `§f/${name}`;
                 parameters?.forEach(({ type }, j) => {
@@ -27,10 +26,7 @@ export default {
                 return line + `§a ~ §f${text(def.description)}`;
             })
             .join("\n");
-
-        return {
-            status: 0,
-            message: `§7[§aMatrix§7] §f${helpHeader}\n${helpBody}`,
-        };
+        player.sendMessage(`§7[§aMatrix§7] §f${helpHeader}\n${helpBody}`);
+        return { status: 0 };
     },
 } as Command;
