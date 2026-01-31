@@ -61,62 +61,58 @@ export function openGeneralUI(player: Player) {
                             selectedProperty.forEach((value) => {
                                 ui.button("§9" + value + "\n§1" + get(value as keyof typeof property));
                             });
-                            ui
-                                .show(player)
-                                .then((res) => {
-                                    if (res.canceled) return;
-                                    const selection = res.selection!;
-                                    const selectedId = selectedProperty[selection];
-                                    const { type, value } = property[selectedId as keyof typeof property];
-                                    const dynamicValue = world.getDynamicProperty("database:" + selectedId) ?? "--";
-                                    const ui = new ActionFormData().title(text("uiProperty") + ": " + selectedId).body(`§g${text("uiType")}: §e${type}\n§g${text("uiStaticData")}: §e${value}§r\n§g${text("uiDynamicProperty")}: §e${dynamicValue}`);
-                                    if (isReadonly(selectedId)) {
-                                        ui.button("/")
-                                            .button("/") // Value is readonly, then cannot be changed. (execept you reset the config)
-                                            .show(player);
-                                    } else {
-                                        ui.button(text("uiModifyValue"))
-                                            .button(text("uiDiscardEdit"))
-                                            .show(player)
-                                            .then((res) => {
-                                                if (res.canceled) return;
-                                                if (res.selection === 0) {
-                                                    const ui = new ModalFormData().title("Editing: " + selectedId);
-                                                    const newValueText = text("uiNewValue");
-                                                    (type === "boolean" ? ui.toggle(text("uiNewBooleanState"), { defaultValue: true }) : ui.textField(`${newValueText} (${type})`, newValueText))
-                                                        .show(player)
-                                                        .then((res) => {
-                                                            if (res.canceled) return;
-                                                            const value = res.formValues![0] as string;
-                                                            if (!value) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiValueEmptyDisallow", "/discard"));
-                                                            switch (type) {
-                                                                case "string": {
-                                                                    world.setDynamicProperty("database:" + selectedId, value);
-                                                                    break;
-                                                                }
-                                                                case "number": {
-                                                                    const number = parseFloat(value);
-                                                                    if (isNaN(number)) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotANumber"));
-                                                                    world.setDynamicProperty("database:" + selectedId, value);
-                                                                    break;
-                                                                }
-                                                                case "boolean": {
-                                                                    const boolean = res.formValues![0] as boolean;
-                                                                    world.setDynamicProperty("database:" + selectedId, boolean);
-                                                                    break;
-                                                                }
-                                                            }
-                                                            player.sendMessage("§7[§aMatrix§7] §f" + text("uiChanged"));
-                                                        });
-                                                } else {
-                                                    if (world.getDynamicProperty("database:" + selectedId)) {
-                                                        world.setDynamicProperty("database:" + selectedId);
-                                                        player.sendMessage("§7[§aMatrix§7] §f" + text("uiPropertyReset"));
-                                                    } else player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotChanged"));
-                                                }
-                                            });
-                                    }
-                                });
+                            ui.show(player).then((res) => {
+                                if (res.canceled) return;
+                                const selection = res.selection!;
+                                const selectedId = selectedProperty[selection];
+                                const { type, value } = property[selectedId as keyof typeof property];
+                                const dynamicValue = world.getDynamicProperty("database:" + selectedId) ?? "--";
+                                const ui = new ActionFormData().title(text("uiProperty") + ": " + selectedId).body(`§g${text("uiType")}: §e${type}\n§g${text("uiStaticData")}: §e${value}§r\n§g${text("uiDynamicProperty")}: §e${dynamicValue}`);
+                                if (isReadonly(selectedId)) {
+                                    ui.button("/")
+                                        .button("/") // Value is readonly, then cannot be changed. (execept you reset the config)
+                                        .show(player);
+                                } else {
+                                    ui.button(text("uiModifyValue"))
+                                        .button(text("uiDiscardEdit"))
+                                        .show(player)
+                                        .then((res) => {
+                                            if (res.canceled) return;
+                                            if (res.selection === 0) {
+                                                const ui = new ModalFormData().title("Editing: " + selectedId);
+                                                const newValueText = text("uiNewValue");
+                                                (type === "boolean" ? ui.toggle(text("uiNewBooleanState"), { defaultValue: true }) : ui.textField(`${newValueText} (${type})`, newValueText)).show(player).then((res) => {
+                                                    if (res.canceled) return;
+                                                    const value = res.formValues![0] as string;
+                                                    if (!value) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiValueEmptyDisallow", "/discard"));
+                                                    switch (type) {
+                                                        case "string": {
+                                                            world.setDynamicProperty("database:" + selectedId, value);
+                                                            break;
+                                                        }
+                                                        case "number": {
+                                                            const number = parseFloat(value);
+                                                            if (isNaN(number)) return player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotANumber"));
+                                                            world.setDynamicProperty("database:" + selectedId, value);
+                                                            break;
+                                                        }
+                                                        case "boolean": {
+                                                            const boolean = res.formValues![0] as boolean;
+                                                            world.setDynamicProperty("database:" + selectedId, boolean);
+                                                            break;
+                                                        }
+                                                    }
+                                                    player.sendMessage("§7[§aMatrix§7] §f" + text("uiChanged"));
+                                                });
+                                            } else {
+                                                if (world.getDynamicProperty("database:" + selectedId)) {
+                                                    world.setDynamicProperty("database:" + selectedId);
+                                                    player.sendMessage("§7[§aMatrix§7] §f" + text("uiPropertyReset"));
+                                                } else player.sendMessage("§7[§aMatrix§7] §f" + text("uiNotChanged"));
+                                            }
+                                        });
+                                }
+                            });
                         });
                     break;
                 }
@@ -124,97 +120,93 @@ export function openGeneralUI(player: Player) {
                     const commandList = commands.sort((a, b) => a.name.localeCompare(b.name));
                     const ui = new ActionFormData().title(text("uiAction"));
                     commandList.forEach(({ name, translationDef }) => ui.button(`§9/${name}\n§8${text(translationDef.actionName)}`));
-                    ui
-                        .show(player)
-                        .then((res) => {
-                            if (res.canceled) return;
-                            const selectedCommand = commandList[res.selection!];
-                            if ((selectedCommand.parameters?.length ?? 0) === 0 && (selectedCommand.optionalParameters?.length ?? 0) === 0) {
-                                try {
-                                    player.runCommand("matrix:" + selectedCommand.name.toLowerCase());
-                                } catch (error) {
-                                    const { name, message } = error as Error;
-                                    if (error instanceof CommandError) {
-                                        player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
-                                    } else player.sendMessage(`§7[§aMatrix §cERROR§7] §f${name}: ${message}`);
-                                }
-                                return;
+                    ui.show(player).then((res) => {
+                        if (res.canceled) return;
+                        const selectedCommand = commandList[res.selection!];
+                        if ((selectedCommand.parameters?.length ?? 0) === 0 && (selectedCommand.optionalParameters?.length ?? 0) === 0) {
+                            try {
+                                player.runCommand("matrix:" + selectedCommand.name.toLowerCase());
+                            } catch (error) {
+                                const { name, message } = error as Error;
+                                if (error instanceof CommandError) {
+                                    player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
+                                } else player.sendMessage(`§7[§aMatrix §cERROR§7] §f${name}: ${message}`);
                             }
-                            const players = world.getAllPlayers().map(({ name }) => name);
-                            const ui = new ModalFormData()
-                                .title(text("uiActionOption") + " | " + text(selectedCommand.translationDef.actionName))
-                                .submitButton(text("uiExecute"))
-                                .label(text(selectedCommand.translationDef.description));
-                            selectedCommand.parameters?.forEach(({ name, type, max, min }, i) => {
-                                addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max], false, name);
-                            });
-                            selectedCommand.optionalParameters?.forEach(({ name, type, max, min }, i) => {
-                                addOption(ui, text(selectedCommand.translationDef.optionalParam![i]!), type, players, [min, max], true, name);
-                            });
-                            ui
-                                .show(player)
-                                .then((res) => {
-                                    if (res.canceled) return;
-                                    const formValues = res.formValues!.slice(1);
-                                    const input: string[] = [];
-                                    for (let i = 0; i < formValues.length; i++) {
-                                        const isRequired = selectedCommand.parameters?.[i];
-                                        const option = isRequired ?? selectedCommand.optionalParameters?.[i - (selectedCommand.parameters?.length ?? 0)];
-                                        let breaks = false;
-                                        const value = formValues[i];
-                                        switch (option?.type) {
-                                            case "boolean": {
-                                                if (!isRequired && value === 0) {
-                                                    breaks = true;
-                                                    break;
-                                                }
-                                                input.push(["true", "false"][isRequired ? (value as number) : (value as number) - 1]);
-                                                break;
-                                            }
-                                            case "enum": {
-                                                if (!isRequired && value === 0) {
-                                                    breaks = true;
-                                                    break;
-                                                }
-                                                input.push(enumRegistry[option.name][isRequired ? (value as number) : (value as number) - 1]);
-                                                break;
-                                            }
-                                            case "float":
-                                            case "integer":
-                                            case "string":
-                                            case "item": {
-                                                if (value === undefined) {
-                                                    breaks = true;
-                                                    break;
-                                                }
-                                                input.push((value as string).includes(" ") ? `"${value}"` : (value as string));
-                                                break;
-                                            }
-                                            case "player":
-                                            case "normalPlayerTarget":
-                                            case "playerTarget": {
-                                                if (!isRequired && value === 0) {
-                                                    breaks = true;
-                                                    break;
-                                                }
-                                                const targetPlayerName = players[isRequired ? (value as number) : (value as number) - 1];
-                                                input.push(targetPlayerName.includes(" ") ? `"${targetPlayerName}"` : targetPlayerName);
-                                                break;
-                                            }
-                                        }
-                                        if (breaks) break;
-                                    }
-                                    const command = "matrix:" + selectedCommand.name.toLowerCase() + " " + input.join(" ");
-                                    try {
-                                        player.runCommand(command);
-                                    } catch (error) {
-                                        const { name, message } = error as Error;
-                                        if (error instanceof CommandError) {
-                                            player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
-                                        } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
-                                    }
-                                });
+                            return;
+                        }
+                        const players = world.getAllPlayers().map(({ name }) => name);
+                        const ui = new ModalFormData()
+                            .title(text("uiActionOption") + " | " + text(selectedCommand.translationDef.actionName))
+                            .submitButton(text("uiExecute"))
+                            .label(text(selectedCommand.translationDef.description));
+                        selectedCommand.parameters?.forEach(({ name, type, max, min }, i) => {
+                            addOption(ui, text(selectedCommand.translationDef.param![i]!), type, players, [min, max], false, name);
                         });
+                        selectedCommand.optionalParameters?.forEach(({ name, type, max, min }, i) => {
+                            addOption(ui, text(selectedCommand.translationDef.optionalParam![i]!), type, players, [min, max], true, name);
+                        });
+                        ui.show(player).then((res) => {
+                            if (res.canceled) return;
+                            const formValues = res.formValues!.slice(1);
+                            const input: string[] = [];
+                            for (let i = 0; i < formValues.length; i++) {
+                                const isRequired = selectedCommand.parameters?.[i];
+                                const option = isRequired ?? selectedCommand.optionalParameters?.[i - (selectedCommand.parameters?.length ?? 0)];
+                                let breaks = false;
+                                const value = formValues[i];
+                                switch (option?.type) {
+                                    case "boolean": {
+                                        if (!isRequired && value === 0) {
+                                            breaks = true;
+                                            break;
+                                        }
+                                        input.push(["true", "false"][isRequired ? (value as number) : (value as number) - 1]);
+                                        break;
+                                    }
+                                    case "enum": {
+                                        if (!isRequired && value === 0) {
+                                            breaks = true;
+                                            break;
+                                        }
+                                        input.push(enumRegistry[option.name][isRequired ? (value as number) : (value as number) - 1]);
+                                        break;
+                                    }
+                                    case "float":
+                                    case "integer":
+                                    case "string":
+                                    case "item": {
+                                        if (value === undefined) {
+                                            breaks = true;
+                                            break;
+                                        }
+                                        input.push((value as string).includes(" ") ? `"${value}"` : (value as string));
+                                        break;
+                                    }
+                                    case "player":
+                                    case "normalPlayerTarget":
+                                    case "playerTarget": {
+                                        if (!isRequired && value === 0) {
+                                            breaks = true;
+                                            break;
+                                        }
+                                        const targetPlayerName = players[isRequired ? (value as number) : (value as number) - 1];
+                                        input.push(targetPlayerName.includes(" ") ? `"${targetPlayerName}"` : targetPlayerName);
+                                        break;
+                                    }
+                                }
+                                if (breaks) break;
+                            }
+                            const command = "matrix:" + selectedCommand.name.toLowerCase() + " " + input.join(" ");
+                            try {
+                                player.runCommand(command);
+                            } catch (error) {
+                                const { name, message } = error as Error;
+                                if (error instanceof CommandError) {
+                                    player.sendMessage(`§7[§aMatrix§7] §f${message.split(":").slice(1).join(":").trim()}`);
+                                } else player.sendMessage(`§7[§aMatrix§7] §f${name}: ${message}`);
+                            }
+                        });
+                    });
                     break;
                 }
                 case 3: {
@@ -346,138 +338,133 @@ export async function setupHelper(player: Player) {
     }
 }
 export function staffManageUI(player: Player) {
-    const ui = new ActionFormData()
-        .title(text("uiStaffManagement"))
-        .button(text("uiAddStaffRole"), "textures/ui/color_plus.png")
+    const ui = new ActionFormData().title(text("uiStaffManagement")).button(text("uiAddStaffRole"), "textures/ui/color_plus.png");
     if (world.getDynamicPropertyIds().some((prop) => prop.startsWith("role:"))) {
         // Only show them when role are found!
-        ui.button(text("uiRemoveStaffRole"), "textures/ui/book_trash_default.png")
-            .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
+        ui.button(text("uiRemoveStaffRole"), "textures/ui/book_trash_default.png").button(text("uiEditStaffRole"), "textures/items/book_writable.png");
     }
-    ui.show(player)
-        .then((res) => {
-            if (res.canceled) return;
-            switch (res.selection) {
-                case 0: {
-                    new ModalFormData()
-                        .title(text("uiAddStaffRole"))
-                        .textField(text("commandStaffRoleName"), text("uiStaffRoleNamePlaceholder"))
-                        .dropdown(text("commandStaffRolePreset"), [text("uiAdmin"), text("uiModerator"), text("uiHelper"), text("uiBuilder"), text("uiTrusted")], { defaultValueIndex: 4 })
-                        .show(player)
-                        .then((res2) => {
-                            if (res2.canceled) return;
-                            const roleName = res2.formValues![0] as string;
-                            player.runCommand(`matrix:staffrole create "${roleName}" ${["admin", "moderator", "helper", "builder", "trusted"][res2.formValues![1] as number]}`);
-                        });
-                    break;
-                }
-                case 1: {
-                    const ui = new ActionFormData().title(text("uiRemoveStaffRole"));
-                    const roleList: string[] = [];
-                    world.getDynamicPropertyIds().forEach((prop) => {
-                        if (prop.startsWith("role:")) {
-                            const roleName = prop.slice(5);
-                            roleList.push(roleName);
-                            ui.button(roleName);
-                        }
-                    });
-                    ui.show(player).then((res2) => {
+    ui.show(player).then((res) => {
+        if (res.canceled) return;
+        switch (res.selection) {
+            case 0: {
+                new ModalFormData()
+                    .title(text("uiAddStaffRole"))
+                    .textField(text("commandStaffRoleName"), text("uiStaffRoleNamePlaceholder"))
+                    .dropdown(text("commandStaffRolePreset"), [text("uiAdmin"), text("uiModerator"), text("uiHelper"), text("uiBuilder"), text("uiTrusted")], { defaultValueIndex: 4 })
+                    .show(player)
+                    .then((res2) => {
                         if (res2.canceled) return;
-                        const selection = res2.selection!;
-                        const roleName = roleList[selection];
-                        player.runCommand(`matrix:staffrole delete "${roleName}"`);
+                        const roleName = res2.formValues![0] as string;
+                        player.runCommand(`matrix:staffrole create "${roleName}" ${["admin", "moderator", "helper", "builder", "trusted"][res2.formValues![1] as number]}`);
                     });
-                    break;
-                }
-                case 2: {
-                    const ui = new ActionFormData().title(text("uiEditStaffRole"));
-                    const roleList: string[] = [];
-                    world.getDynamicPropertyIds().forEach((prop) => {
-                        if (prop.startsWith("role:")) {
-                            const roleName = prop.slice(5);
-                            roleList.push(roleName);
-                            ui.button(roleName);
-                        }
-                    });
-                    ui.show(player).then((res2) => {
-                        if (res2.canceled) return;
-                        const selection = res2.selection!;
-                        const roleName = roleList[selection];
-                        let roleData = (world.getDynamicProperty(`role:${roleName}`) as string).split(";").sort();
-                        const ui = new ActionFormData()
-                            .title(text("uiEditStaffRole") + ": " + roleName)
-                            .button(text("uiModifyCmdOfMatrix"), "textures/items/book_writable.png")
-                            .button(text("uiAddCommand"), "textures/ui/color_plus.png");
-                        if (roleData.length > 0) ui.button(text("uiRemoveCommand"), "textures/ui/book_trash_default.png");
-                        ui.show(player)
-                            .then((res3) => {
-                                if (res3.canceled) return;
-                                switch (res3.selection) {
-                                    case 0: {
-                                        const commandList = commands
-                                            .map(({ name }) => name)
-                                            .filter((name) => !bannedMatrixCmds.includes(name))
-                                            .sort((a, b) => a.localeCompare(b));
-                                        const ui = new ModalFormData().title(text("uiModifyCmdOfMatrix") + ": " + roleName);
-                                        commandList.forEach((cmd) => {
-                                            ui.toggle(`/${cmd}`, { defaultValue: roleData.includes(cmd) });
-                                        });
-                                        ui.show(player).then((res4) => {
-                                            if (res4.canceled) return;
-                                            commandList.forEach((cmd, i) => {
-                                                const enabled = res4.formValues![i] as boolean;
-                                                if (enabled && !roleData.includes(cmd)) {
-                                                    roleData.push(cmd);
-                                                } else if (!enabled && roleData.includes(cmd)) {
-                                                    roleData = roleData.filter((c) => c !== cmd);
-                                                }
-                                            });
-                                            world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
-                                            player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandChanged"));
-                                        });
-                                        break;
-                                    }
-                                    case 1: {
-                                        const ui = new ModalFormData().title(text("uiAddCommand") + ": " + roleName);
-                                        const roleDataMessage = roleData.length === 0 ? "" : roleData.map((cmd) => `✔ /${cmd}`).join("\n") + "\n";
-                                        ui.textField(roleDataMessage + text("uiCommandName"), text("uiCommandNamePlaceholder"));
-                                        ui.show(player).then((res5) => {
-                                            if (res5.canceled) return;
-                                            const cmdName = res5.formValues![0] as string;
-                                            if (bannedMatrixCmds.includes(cmdName)) {
-                                                player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandNotAllowed", cmdName));
-                                                return;
-                                            }
-                                            if (roleData.includes(cmdName)) {
-                                                player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandAlreadyExists", cmdName));
-                                                return;
-                                            }
-                                            roleData.push(cmdName);
-                                            world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
-                                            player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandAdded", cmdName));
-                                        });
-                                        break;
-                                    }
-                                    case 2: {
-                                        const ui = new ActionFormData().title(text("uiRemoveCommand") + ": " + roleName);
-                                        roleData.forEach((cmd) => {
-                                            ui.button(`/${cmd}`);
-                                        });
-                                        ui.show(player).then((res4) => {
-                                            if (res4.canceled) return;
-                                            const selection = res4.selection!;
-                                            const cmdName = roleData[selection];
-                                            roleData = roleData.filter((c) => c !== cmdName);
-                                            world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
-                                            player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandRemoved", cmdName));
-                                        });
-                                        break;
-                                    }
-                                }
-                            });
-                    });
-                    break;
-                }
+                break;
             }
-        });
+            case 1: {
+                const ui = new ActionFormData().title(text("uiRemoveStaffRole"));
+                const roleList: string[] = [];
+                world.getDynamicPropertyIds().forEach((prop) => {
+                    if (prop.startsWith("role:")) {
+                        const roleName = prop.slice(5);
+                        roleList.push(roleName);
+                        ui.button(roleName);
+                    }
+                });
+                ui.show(player).then((res2) => {
+                    if (res2.canceled) return;
+                    const selection = res2.selection!;
+                    const roleName = roleList[selection];
+                    player.runCommand(`matrix:staffrole delete "${roleName}"`);
+                });
+                break;
+            }
+            case 2: {
+                const ui = new ActionFormData().title(text("uiEditStaffRole"));
+                const roleList: string[] = [];
+                world.getDynamicPropertyIds().forEach((prop) => {
+                    if (prop.startsWith("role:")) {
+                        const roleName = prop.slice(5);
+                        roleList.push(roleName);
+                        ui.button(roleName);
+                    }
+                });
+                ui.show(player).then((res2) => {
+                    if (res2.canceled) return;
+                    const selection = res2.selection!;
+                    const roleName = roleList[selection];
+                    let roleData = (world.getDynamicProperty(`role:${roleName}`) as string).split(";").sort();
+                    const ui = new ActionFormData()
+                        .title(text("uiEditStaffRole") + ": " + roleName)
+                        .button(text("uiModifyCmdOfMatrix"), "textures/items/book_writable.png")
+                        .button(text("uiAddCommand"), "textures/ui/color_plus.png");
+                    if (roleData.length > 0) ui.button(text("uiRemoveCommand"), "textures/ui/book_trash_default.png");
+                    ui.show(player).then((res3) => {
+                        if (res3.canceled) return;
+                        switch (res3.selection) {
+                            case 0: {
+                                const commandList = commands
+                                    .map(({ name }) => name)
+                                    .filter((name) => !bannedMatrixCmds.includes(name))
+                                    .sort((a, b) => a.localeCompare(b));
+                                const ui = new ModalFormData().title(text("uiModifyCmdOfMatrix") + ": " + roleName);
+                                commandList.forEach((cmd) => {
+                                    ui.toggle(`/${cmd}`, { defaultValue: roleData.includes(cmd) });
+                                });
+                                ui.show(player).then((res4) => {
+                                    if (res4.canceled) return;
+                                    commandList.forEach((cmd, i) => {
+                                        const enabled = res4.formValues![i] as boolean;
+                                        if (enabled && !roleData.includes(cmd)) {
+                                            roleData.push(cmd);
+                                        } else if (!enabled && roleData.includes(cmd)) {
+                                            roleData = roleData.filter((c) => c !== cmd);
+                                        }
+                                    });
+                                    world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
+                                    player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandChanged"));
+                                });
+                                break;
+                            }
+                            case 1: {
+                                const ui = new ModalFormData().title(text("uiAddCommand") + ": " + roleName);
+                                const roleDataMessage = roleData.length === 0 ? "" : roleData.map((cmd) => `✔ /${cmd}`).join("\n") + "\n";
+                                ui.textField(roleDataMessage + text("uiCommandName"), text("uiCommandNamePlaceholder"));
+                                ui.show(player).then((res5) => {
+                                    if (res5.canceled) return;
+                                    const cmdName = res5.formValues![0] as string;
+                                    if (bannedMatrixCmds.includes(cmdName)) {
+                                        player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandNotAllowed", cmdName));
+                                        return;
+                                    }
+                                    if (roleData.includes(cmdName)) {
+                                        player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandAlreadyExists", cmdName));
+                                        return;
+                                    }
+                                    roleData.push(cmdName);
+                                    world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
+                                    player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandAdded", cmdName));
+                                });
+                                break;
+                            }
+                            case 2: {
+                                const ui = new ActionFormData().title(text("uiRemoveCommand") + ": " + roleName);
+                                roleData.forEach((cmd) => {
+                                    ui.button(`/${cmd}`);
+                                });
+                                ui.show(player).then((res4) => {
+                                    if (res4.canceled) return;
+                                    const selection = res4.selection!;
+                                    const cmdName = roleData[selection];
+                                    roleData = roleData.filter((c) => c !== cmdName);
+                                    world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
+                                    player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandRemoved", cmdName));
+                                });
+                                break;
+                            }
+                        }
+                    });
+                });
+                break;
+            }
+        }
+    });
 }
