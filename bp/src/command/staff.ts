@@ -110,7 +110,7 @@ export const staffrole = {
     parameters: [
         {
             type: "enum",
-            name: "staffManageAction",
+            name: "staffRoleManageAction",
         },
     ],
     optionalParameters: [
