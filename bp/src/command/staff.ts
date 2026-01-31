@@ -1,6 +1,7 @@
 import { Player, system, world } from "@minecraft/server";
 import type { Command } from "../main";
 import { text } from "../util/text";
+import { staffManageUI } from "../util/ui";
 export const staffManageAction = ["add", "remove", "list"];
 export const staffRoleManageAction = ["create", "delete", "list", "manage"];
 export const rolePreset = ["admin", "moderator", "helper", "builder", "trusted"];
@@ -122,7 +123,7 @@ export const staffrole = {
             name: "rolePreset",
         },
     ],
-    execute: (_player, [action, roleName, rolePreset]) => {
+    execute: (player, [action, roleName, rolePreset]) => {
         switch (action) {
             case "create": {
                 if (!roleName)
@@ -187,7 +188,10 @@ export const staffrole = {
                 };
             }
             case "manage": {
-                return { status: 0, message: "§7[§aMatrix§7] §fComming soon ( • ̀ω•́ )" };
+                system.run(() => {
+                    staffManageUI(player);
+                });
+                break;
             }
         }
         return;
