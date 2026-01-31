@@ -59,7 +59,6 @@ export async function languageSelectUI(player: Player) {
         .button("Português")
         .button("Pyccкий язык")
         .button("Vietnam")
-        //@ts-expect-error
         .show(player);
     if (res.canceled) return false;
     const languages: (keyof typeof languageList)[] = ["english", "chinese_traditional", "chinese_simplified", "french", "japanese", "italian", "spanish", "korean", "portuguese", "russkiy_yazyk", "vietnamese"];

@@ -16,7 +16,6 @@ export function openGeneralUI(player: Player) {
         .button(text("uiAction"), "textures/ui/FriendsDiversity.png")
         .button(text("uiLanguage"), "textures/gui/newgui/Language16.png")
         .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
-        //@ts-expect-error
         .show(player)
         .then((res) => {
             if (res.canceled) return;
@@ -28,7 +27,6 @@ export function openGeneralUI(player: Player) {
                         ui.button(`${enabled ? "§2" : "§4"}${name}\n§8${enabled ? text("uiChooseToDisable") : text("uiChooseToEnable")}`);
                         return enabled;
                     });
-                    //@ts-expect-error
                     ui.show(player).then((res) => {
                         if (res.canceled) return;
                         const selection = res.selection!;
@@ -50,7 +48,6 @@ export function openGeneralUI(player: Player) {
                         .button(text("uiBoolean"))
                         .button(text("uiString"))
                         .button(text("uiNumber"))
-                        //@ts-expect-error
                         .show(player)
                         .then((res) => {
                             if (res.canceled) return;
@@ -65,7 +62,6 @@ export function openGeneralUI(player: Player) {
                                 ui.button("§9" + value + "\n§1" + get(value as keyof typeof property));
                             });
                             ui
-                                //@ts-expect-error
                                 .show(player)
                                 .then((res) => {
                                     if (res.canceled) return;
@@ -77,12 +73,10 @@ export function openGeneralUI(player: Player) {
                                     if (isReadonly(selectedId)) {
                                         ui.button("/")
                                             .button("/") // Value is readonly, then cannot be changed. (execept you reset the config)
-                                            //@ts-expect-error
                                             .show(player);
                                     } else {
                                         ui.button(text("uiModifyValue"))
                                             .button(text("uiDiscardEdit"))
-                                            //@ts-expect-error
                                             .show(player)
                                             .then((res) => {
                                                 if (res.canceled) return;
@@ -90,7 +84,6 @@ export function openGeneralUI(player: Player) {
                                                     const ui = new ModalFormData().title("Editing: " + selectedId);
                                                     const newValueText = text("uiNewValue");
                                                     (type === "boolean" ? ui.toggle(text("uiNewBooleanState"), { defaultValue: true }) : ui.textField(`${newValueText} (${type})`, newValueText))
-                                                        //@ts-expect-error
                                                         .show(player)
                                                         .then((res) => {
                                                             if (res.canceled) return;
@@ -132,7 +125,6 @@ export function openGeneralUI(player: Player) {
                     const ui = new ActionFormData().title(text("uiAction"));
                     commandList.forEach(({ name, translationDef }) => ui.button(`§9/${name}\n§8${text(translationDef.actionName)}`));
                     ui
-                        //@ts-expect-error
                         .show(player)
                         .then((res) => {
                             if (res.canceled) return;
@@ -161,7 +153,6 @@ export function openGeneralUI(player: Player) {
                                 addOption(ui, text(selectedCommand.translationDef.optionalParam![i]!), type, players, [min, max], true, name);
                             });
                             ui
-                                //@ts-expect-error
                                 .show(player)
                                 .then((res) => {
                                     if (res.canceled) return;
@@ -297,7 +288,6 @@ export async function setupHelper(player: Player) {
             .button(text("uiOpenAdminGUI") + " §9(/ui)", "textures/ui/gear.png")
             .button(text("uiGetUIItem") + " §9(/itemui)", "textures/items/compass_item.png")
             .button(text("uiCommandList") + " §9(/commandlist)", "textures/items/banner_pattern.png")
-            //@ts-expect-error
             .show(player)
             .then((res) => {
                 if (res.canceled) return;
@@ -328,7 +318,6 @@ export async function setupHelper(player: Player) {
                 .body(text("uiConfirmLanguage"))
                 .button1("§l§2" + text("commandAntiXrayYes"))
                 .button2("§l§4" + text("commandAntiXrayNo"))
-                //@ts-expect-error
                 .show(player);
             if (res2.canceled || res2.selection === 1) {
                 world.setDynamicProperty("database:systemLanguage");
@@ -348,7 +337,6 @@ export async function setupHelper(player: Player) {
                 .label(text("uiFlagLabel"))
                 .dropdown(text("uiFlagAction"), [text("uiNone"), text("uiKick"), text("uiBan"), text("uiTempkick")], { defaultValueIndex: 1, tooltip: text("uiFlagPunishment") })
                 .dropdown(text("uiFlagMessageTarget"), [text("uiOperatorOnly"), text("uiAll"), text("uiExclude"), text("uiNobody")], { tooltip: text("uiFlagMessageTips") })
-                //@ts-expect-error
                 .show(player);
             if (res.canceled) return;
             const [punishment, flagmsgtarget] = res.formValues!.slice(1) as number[];
@@ -367,7 +355,6 @@ export function staffManageUI(player: Player) {
         .button(text("uiAddStaffRole"), "textures/ui/color_plus.png")
         .button(text("uiRemoveStaffRole"), "textures/ui/book_trash_default.png")
         .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
-        //@ts-expect-error
         .show(player)
         .then((res) => {
             if (res.canceled) return;
@@ -377,7 +364,6 @@ export function staffManageUI(player: Player) {
                         .title(text("uiAddStaffRole"))
                         .textField(text("commandStaffRoleName"), text("uiStaffRoleNamePlaceholder"))
                         .dropdown(text("commandStaffRolePreset"), [text("uiAdmin"), text("uiModerator"), text("uiHelper"), text("uiBuilder"), text("uiTrusted")], { defaultValueIndex: 4 })
-                        //@ts-expect-error
                         .show(player)
                         .then((res2) => {
                             if (res2.canceled) return;
@@ -397,7 +383,6 @@ export function staffManageUI(player: Player) {
                             ui.button(roleName);
                         }
                     });
-                    //@ts-expect-error
                     ui.show(player).then((res2) => {
                         if (res2.canceled) return;
                         const selection = res2.selection!;
@@ -417,7 +402,6 @@ export function staffManageUI(player: Player) {
                             ui.button(roleName);
                         }
                     });
-                    //@ts-expect-error
                     ui.show(player).then((res2) => {
                         if (res2.canceled) return;
                         const selection = res2.selection!;
@@ -428,7 +412,6 @@ export function staffManageUI(player: Player) {
                             .button(text("uiModifyCmdOfMatrix"), "textures/items/book_writable.png")
                             .button(text("uiAddCommand"), "textures/ui/color_plus.png")
                             .button(text("uiRemoveCommand"), "textures/ui/book_trash_default.png")
-                            //@ts-expect-error
                             .show(player)
                             .then((res3) => {
                                 if (res3.canceled) return;
@@ -442,7 +425,6 @@ export function staffManageUI(player: Player) {
                                         commandList.forEach((cmd) => {
                                             ui.toggle(`/${cmd}`, { defaultValue: roleData.includes(cmd) });
                                         });
-                                        //@ts-expect-error
                                         ui.show(player).then((res4) => {
                                             if (res4.canceled) return;
                                             commandList.forEach((cmd, i) => {
@@ -462,7 +444,6 @@ export function staffManageUI(player: Player) {
                                         const ui = new ModalFormData().title(text("uiAddCommand") + ": " + roleName);
                                         const roleDataMessage = roleData.length === 0 ? "" : roleData.map((cmd) => `✔ /${cmd}`).join("\n") + "\n";
                                         ui.textField(roleDataMessage + text("uiCommandName"), text("uiCommandNamePlaceholder"));
-                                        //@ts-expect-error
                                         ui.show(player).then((res5) => {
                                             if (res5.canceled) return;
                                             const cmdName = res5.formValues![0] as string;
@@ -485,7 +466,6 @@ export function staffManageUI(player: Player) {
                                         roleData.forEach((cmd) => {
                                             ui.button(`/${cmd}`);
                                         });
-                                        //@ts-expect-error
                                         ui.show(player).then((res4) => {
                                             if (res4.canceled) return;
                                             const selection = res4.selection!;

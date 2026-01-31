@@ -100,7 +100,6 @@ export const resetConfig = {
                 .body(text("commandResetConfigConfirmBody"))
                 .button1(text("commandResetConfigConfirmYes"))
                 .button2(text("commandResetConfigConfirmNo"))
-                //@ts-expect-error
                 .show(player)
                 .then((res) => {
                     if (res.canceled || res.selection === 1) return;

@@ -25,7 +25,6 @@ export default {
                     .body(text("commandAntiXrayInstruction"))
                     .button1("§4§l" + text("commandAntiXrayYes"))
                     .button2("§2§l" + text("commandAntiXrayNo"))
-                    //@ts-expect-error
                     .show(player)
                     .then((res) => {
                         if (res.canceled || res.selection === 1) return;
