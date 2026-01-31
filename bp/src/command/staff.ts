@@ -205,7 +205,7 @@ export const staffcmd = {
     ],
     execute: (player, [message]) => {
         if (!(player instanceof Player)) return { status: 1, message: "[Matrix] Sorry! Console is not supported for this command." };
-        const command = (message as string).replace(/^\//, "").trim();
+        const command = (message as string).trim().replace(/^\//, "");
         const role = player.getDynamicProperty("staff") as string;
         const roleData = world.getDynamicProperty(`role:${role}`) as string;
         if (!roleData) {
@@ -243,7 +243,7 @@ function getRoleCommandsByPreset (preset: string) {
             return "gma;gmc;gms;gmsp;give;tp;rankadd;rankremove;ranklist;rankclear";
         }
         case "builder": {
-            return "gma;gmc;gms;gmsp;tp;fill;clone;setblock";
+            return "gma;gmc;gms;gmsp;tp;fill;clone;setblock;give";
         }
     }
     return "";
