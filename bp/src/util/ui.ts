@@ -355,3 +355,57 @@ export async function setupHelper(player: Player) {
         system.run(() => setupHelper(player));
     }
 }
+export function staffManageUI (player: Player) {
+    new ActionFormData()
+        .title(text("uiStaffManagement"))
+        .button(text("uiAddStaffRole"), "textures/ui/Plus.png")
+        .button(text("uiRemoveStaffRole"), "textures/ui/Minus.png")
+        .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
+        //@ts-expect-error
+        .show(player)
+        .then((res) => {
+            if (res.canceled) return;
+            switch (res.selection) {
+                case 0: {
+                    new ModalFormData()
+                        .title(text("uiAddStaffRole"))
+                        .textField(text("commandStaffRoleName"), text("uiStaffRoleNamePlaceholder"))
+                        .dropdown(text("commandStaffRolePreset"), [text("uiAdmin"), text("uiModerator"), text("uiHelper"), text("uiBuilder"), text("uiTrusted")], { defaultValueIndex: 4 })
+                        //@ts-expect-error
+                        .show(player)
+                        .then((res2) => {
+                            if (res2.canceled) return;
+                            const roleName = res2.formValues![0] as string;
+                            player.lastRunUICommand = true;
+                            player.runCommand(`matrix:staffrole add "${roleName}" ${["admin", "moderator", "helper", "builder", "trusted"][res2.formValues![1] as number]}`);
+                        });
+                    break;
+                }
+                case 1: {
+                    const ui = new ActionFormData()
+                        .title(text("uiRemoveStaffRole"));
+                    const roleList: string[] = [];
+                    world.getDynamicPropertyIds().forEach((prop) => {
+                        if (prop.startsWith("role:")) {
+                            const roleName = prop.slice(5);
+                            roleList.push(roleName);
+                            ui.button(roleName);
+                        }
+                    });
+                    //@ts-expect-error
+                    ui.show(player).then((res2) => {
+                        if (res2.canceled) return;
+                        const selection = res2.selection!;
+                        const roleName = roleList[selection];
+                        player.lastRunUICommand = true;
+                        player.runCommand(`matrix:staffrole remove "${roleName}"`);
+                    });
+                    break;
+                }
+                case 2: {
+                    player.runCommand("matrix:staff role edit");
+                    break;
+                }
+            }
+        });
+}
