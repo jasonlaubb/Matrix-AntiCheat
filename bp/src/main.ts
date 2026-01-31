@@ -37,7 +37,6 @@ import { antiXrayOn } from "./asset/antiXray";
 import { invseeHandler } from "./command/invsee";
 import { antiAfkOn } from "./asset/antiAfk";
 import "./util/extension";
-import { checkStaffChatCommand } from "./asset/staffManager";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -290,7 +289,6 @@ world.afterEvents.worldLoad.subscribe(() => {
 });
 world.beforeEvents.chatSend.subscribe((event) => {
     const player = event.sender;
-    if (player.isStaff() && checkStaffChatCommand(player, event.message)) return;
     if (world.getDynamicProperty("automute") && !player?.chatEntered && !player.isStaff()) {
         event.cancel = true;
         return;

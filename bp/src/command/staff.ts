@@ -1,4 +1,4 @@
-import { world } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import type { Command } from "../main";
 import { text } from "../util/text";
 export const staffManageAction = ["add", "remove", "list"];
@@ -186,6 +186,48 @@ export const staffrole = {
             }
         }
         return;
+    }
+} as Command;
+export const staffcmd = {
+    name: "staffcmd",
+    requireOp: false,
+    description: "Execute a command as a staff member.",
+    translationDef: {
+        actionName: "commandStaffCmd",
+        description: "commandStaffCmdDescription",
+        param: ["commandStaffCmdCommand"],
+    },
+    parameters: [
+        {
+            type: "string",
+            name: "command",
+        }
+    ],
+    execute: (player, [message]) => {
+        const command = (message as string).replace(/^\//, "").trim();
+        const role = player.getDynamicProperty("staff") as string;
+        const roleData = world.getDynamicProperty(`role:${role}`) as string;
+        if (!roleData) {
+            return { status: 1, message: `§7[§aMatrix§7] §f${text("commandStaffCmdNoPerm")}` };
+        }
+        const selectedCommand = command.split(" ")[0];
+        if (selectedCommand === "help") {
+            const roleCommands = roleData.split(";").sort();
+            return { status: 0, message: `§7[§aMatrix§7] §a${text("commandStaffCmdHelp")}: §f${roleCommands.length > 0 ? roleCommands.join(", ") : "--"}` };
+        }
+        if (!roleData.split(";").includes(selectedCommand)) {
+            return { status: 1, message: `§7[§aMatrix§7] §f${text("commandStaffCmdUnknownCommand", selectedCommand)}` };
+        }
+        player.lastRunUICommand = true; // Show feedback in command output
+        system.run(() => {
+            try {
+                player.runCommand(command);
+            } catch (error) {
+                const { name, message } = error as Error;
+                player.sendMessage(`§7[§aMatrix§7] §c${name}: ${message}`);
+            }
+        });
+        return { status: 0 };
     }
 } as Command;
 function getRoleCommandsByPreset (preset: string) {
