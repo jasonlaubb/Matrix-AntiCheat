@@ -19,7 +19,7 @@ export const staff = {
         {
             type: "enum",
             name: "staffManageAction",
-        }
+        },
     ],
     optionalParameters: [
         {
@@ -29,15 +29,16 @@ export const staff = {
         {
             type: "string",
             name: "roleName",
-        }
+        },
     ],
     execute: (_player, [action, targetPlayer, roleName]) => {
         switch (action) {
             case "add": {
-                if (!targetPlayer || !roleName) return {
-                    status: 1,
-                    message: `§7[§aMatrix§7] §f${text("commandStaffMissingParam1")}`,
-                }
+                if (!targetPlayer || !roleName)
+                    return {
+                        status: 1,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffMissingParam1")}`,
+                    };
                 if (world.getDynamicProperty(`role:${roleName}`) === undefined) {
                     return {
                         status: 1,
@@ -52,10 +53,11 @@ export const staff = {
                 };
             }
             case "remove": {
-                if (!targetPlayer) return {
-                    status: 1,
-                    message: `§7[§aMatrix§7] §f${text("commandStaffMissingParam2")}`,
-                }
+                if (!targetPlayer)
+                    return {
+                        status: 1,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffMissingParam2")}`,
+                    };
                 if (!targetPlayer.getDynamicProperty("staff")) {
                     return {
                         status: 1,
@@ -92,7 +94,7 @@ export const staff = {
             }
         }
         return;
-    }
+    },
 } as Command;
 export const staffrole = {
     name: "staffrole",
@@ -108,7 +110,7 @@ export const staffrole = {
         {
             type: "enum",
             name: "staffManageAction",
-        }
+        },
     ],
     optionalParameters: [
         {
@@ -117,16 +119,17 @@ export const staffrole = {
         },
         {
             type: "enum",
-            name: "rolePreset"
-        }
+            name: "rolePreset",
+        },
     ],
     execute: (_player, [action, roleName, rolePreset]) => {
         switch (action) {
             case "create": {
-                if (!roleName) return {
-                    status: 1,
-                    message: `§7[§aMatrix§7] §f${text("commandStaffRoleMissingParam")}`,
-                }
+                if (!roleName)
+                    return {
+                        status: 1,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffRoleMissingParam")}`,
+                    };
                 if (world.getDynamicProperty(`role:${roleName}`) !== undefined) {
                     return {
                         status: 1,
@@ -146,10 +149,11 @@ export const staffrole = {
                 };
             }
             case "delete": {
-                if (!roleName) return {
-                    status: 1,
-                    message: `§7[§aMatrix§7] §f${text("commandStaffRoleMissingParam")}`,
-                }
+                if (!roleName)
+                    return {
+                        status: 1,
+                        message: `§7[§aMatrix§7] §f${text("commandStaffRoleMissingParam")}`,
+                    };
                 if (world.getDynamicProperty(`role:${roleName}`) === undefined) {
                     return {
                         status: 1,
@@ -187,7 +191,7 @@ export const staffrole = {
             }
         }
         return;
-    }
+    },
 } as Command;
 export const staffcmd = {
     name: "staffcmd",
@@ -202,7 +206,7 @@ export const staffcmd = {
         {
             type: "string",
             name: "command",
-        }
+        },
     ],
     execute: (player, [message]) => {
         if (!(player instanceof Player)) return { status: 1, message: "[Matrix] Sorry! Console is not supported for this command." };
@@ -233,9 +237,9 @@ export const staffcmd = {
             }
         });
         return { status: 0 };
-    }
+    },
 } as Command;
-function getRoleCommandsByPreset (preset: string) {
+function getRoleCommandsByPreset(preset: string) {
     switch (preset) {
         case "admin": {
             return "commandlist;ban;banoffline;unban;banlist;deviceinfo;lockdown;mute;unmute;rankadd;rankremove;ranklist;rankclear;warn;watch;watchtp;invsee;invcopy;echestwipe;freecam;fakeleave;gma;gmc;gms;gmsp;flaglog;gamemode;kill;tp;fill;clone;setblock;summon;effect;give;clear;xp;tag;scoreboard";

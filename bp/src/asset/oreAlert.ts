@@ -32,24 +32,17 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
     const antiXrayEnabled = get("antiXray");
     if (!antiXrayEnabled && isDiamondOre) {
         event.player.diamondFoundAmount ??= 0;
-        const timeSinceLast = event.player.lastDiamondOresFound
-            ? Math.floor((now - event.player.lastDiamondOresFound) / 1000)
-            : -1;
-        if (event.player.diamondFoundAmount > 0 && timeSinceLast < 60000) { // Do not alert repeatedly within 60 seconds (max)
+        const timeSinceLast = event.player.lastDiamondOresFound ? Math.floor((now - event.player.lastDiamondOresFound) / 1000) : -1;
+        if (event.player.diamondFoundAmount > 0 && timeSinceLast < 60000) {
+            // Do not alert repeatedly within 60 seconds (max)
             event.player.diamondFoundAmount--;
             return;
         }
         const diamondBlocks = event.dimension
             .getBlocks(
-                new BlockVolume(
-                    { x: x + 3, y: y + 3, z: z + 3 },
-                    { x: x - 3, y: y - 3, z: z - 3 }
-                ),
+                new BlockVolume({ x: x + 3, y: y + 3, z: z + 3 }, { x: x - 3, y: y - 3, z: z - 3 }),
                 {
-                    includeTypes: [
-                        "minecraft:diamond_ore",
-                        "minecraft:deepslate_diamond_ore",
-                    ],
+                    includeTypes: ["minecraft:diamond_ore", "minecraft:deepslate_diamond_ore"],
                 },
                 true
             )
@@ -68,18 +61,8 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
         if (timeSinceLast >= 6000) {
             world.getAllPlayers().forEach((player) => {
                 if (!player.isOp()) return;
-                const timeAgo = lastFoundTime
-                    ? Math.floor(timeSinceLast / 1000) + "s"
-                    : "none";
-                player.sendMessage(
-                    `§7[§aOre Alert§7] §f` +
-                        text(
-                            "oreAlertOreFound",
-                            event.player.name,
-                            blockId.replace("minecraft:", "").replaceAll("_", ""),
-                            timeAgo
-                        )
-                );
+                const timeAgo = lastFoundTime ? Math.floor(timeSinceLast / 1000) + "s" : "none";
+                player.sendMessage(`§7[§aOre Alert§7] §f` + text("oreAlertOreFound", event.player.name, blockId.replace("minecraft:", "").replaceAll("_", ""), timeAgo));
             });
         }
         event.player.lastOreFoundData[blockId] = now;

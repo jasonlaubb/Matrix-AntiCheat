@@ -356,7 +356,7 @@ export async function setupHelper(player: Player) {
         system.run(() => setupHelper(player));
     }
 }
-export function staffManageUI (player: Player) {
+export function staffManageUI(player: Player) {
     new ActionFormData()
         .title(text("uiStaffManagement"))
         .button(text("uiAddStaffRole"), "textures/ui/color_plus.png")
@@ -383,8 +383,7 @@ export function staffManageUI (player: Player) {
                     break;
                 }
                 case 1: {
-                    const ui = new ActionFormData()
-                        .title(text("uiRemoveStaffRole"));
+                    const ui = new ActionFormData().title(text("uiRemoveStaffRole"));
                     const roleList: string[] = [];
                     world.getDynamicPropertyIds().forEach((prop) => {
                         if (prop.startsWith("role:")) {
@@ -404,8 +403,7 @@ export function staffManageUI (player: Player) {
                     break;
                 }
                 case 2: {
-                    const ui = new ActionFormData()
-                        .title(text("uiEditStaffRole"));
+                    const ui = new ActionFormData().title(text("uiEditStaffRole"));
                     const roleList: string[] = [];
                     world.getDynamicPropertyIds().forEach((prop) => {
                         if (prop.startsWith("role:")) {
@@ -431,7 +429,10 @@ export function staffManageUI (player: Player) {
                                 if (res3.canceled) return;
                                 switch (res3.selection) {
                                     case 0: {
-                                        const commandList = commands.map(({ name }) => name).filter(name => !bannedMatrixCmds.includes(name)).sort((a, b) => a.localeCompare(b));
+                                        const commandList = commands
+                                            .map(({ name }) => name)
+                                            .filter((name) => !bannedMatrixCmds.includes(name))
+                                            .sort((a, b) => a.localeCompare(b));
                                         const ui = new ModalFormData().title(text("uiModifyCmdOfMatrix") + ": " + roleName);
                                         commandList.forEach((cmd) => {
                                             ui.toggle(`/${cmd}`, { defaultValue: roleData.includes(cmd) });
@@ -444,9 +445,9 @@ export function staffManageUI (player: Player) {
                                                 if (enabled && !roleData.includes(cmd)) {
                                                     roleData.push(cmd);
                                                 } else if (!enabled && roleData.includes(cmd)) {
-                                                    roleData = roleData.filter(c => c !== cmd);
+                                                    roleData = roleData.filter((c) => c !== cmd);
                                                 }
-                                            })
+                                            });
                                             world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
                                             player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandChanged"));
                                         });
@@ -483,7 +484,7 @@ export function staffManageUI (player: Player) {
                                             if (res4.canceled) return;
                                             const selection = res4.selection!;
                                             const cmdName = roleData[selection];
-                                            roleData = roleData.filter(c => c !== cmdName);
+                                            roleData = roleData.filter((c) => c !== cmdName);
                                             world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
                                             player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandRemoved", cmdName));
                                         });
