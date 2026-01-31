@@ -18,6 +18,9 @@
 扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁扁
  */
 import { CustomCommandResult, CustomCommandParamType, Player, system, world, EquipmentSlot, CustomCommandSource } from "@minecraft/server";
+system.beforeEvents.watchdogTerminate.subscribe((event) => {
+    event.cancel = true; // I think it's quite useless but still add >:D
+});
 import { get } from "./util/database";
 import { tick } from "./util/tick";
 import { classifyProperty } from "./util/propertyClassifier";
@@ -420,6 +423,3 @@ function giveUITool(player: Player) {
         }, 5);
     }
 }
-system.beforeEvents.watchdogTerminate.subscribe((event) => {
-    event.cancel = true;
-});
