@@ -10,7 +10,7 @@ export default {
         actionName: "commandList",
         description: "commandListDescription",
     },
-    execute: (player) => {
+    execute: () => {
         const helpHeader = text("commandListHeader");
         const helpBody = commands
             .sort((a, b) => a.name.localeCompare(b.name))
@@ -26,7 +26,6 @@ export default {
                 return line + `§a ~ §f${text(def.description)}`;
             })
             .join("\n");
-        player.sendMessage(`§7[§aMatrix§7] §f${helpHeader}\n${helpBody}`);
-        return { status: 0 };
+        return { status: 0, message: `§7[§aMatrix§7] §f${helpHeader}\n${helpBody}` };
     },
 } as Command;

@@ -115,7 +115,6 @@ system.beforeEvents.startup.subscribe((event) => {
                 if (!(player instanceof Player) && !isConsole) {
                     return { status: 1, message: "Error: Unsupported command source." }; // Safeguard
                 }
-                const feedback = isConsole || (!(player as Player)?.lastRunUICommand && world.gameRules.sendCommandFeedback);
                 if ((player as Player)?.lastRunUICommand) delete (player as Player).lastRunUICommand;
                 for (let i = 0; i < args.length; i++) {
                     const input = args[i];
@@ -137,8 +136,8 @@ system.beforeEvents.startup.subscribe((event) => {
                                     message = "§7[§aMatrix§7] §f" + text("commandNumberTooSmall", paramName, param.min!);
                                 }
 
-                                if (feedback) {
-                                    return { status: 1, message: isConsole ? removeColor(message) : message };
+                                if (isConsole) {
+                                    return { status: 1, message: removeColor(message) };
                                 } else {
                                     (player as Player).sendMessage(message);
                                     return { status: 1 };
@@ -164,8 +163,8 @@ system.beforeEvents.startup.subscribe((event) => {
                             }
 
                             if (message) {
-                                if (feedback) {
-                                    return { status: 1, message: isConsole ? removeColor(message) : message };
+                                if (isConsole) {
+                                    return { status: 1, message: removeColor(message) };
                                 } else {
                                     (player as Player).sendMessage(message);
                                     return { status: 1 };
@@ -179,8 +178,8 @@ system.beforeEvents.startup.subscribe((event) => {
                         case "string": {
                             if (param?.max && input.length > param.max) {
                                 const message = `§7[§aMatrix§7] §f` + text("commandStringTooLong", paramName, param.max);
-                                if (feedback) {
-                                    return { status: 1, message: isConsole ? removeColor(message) : message };
+                                if (isConsole) {
+                                    return { status: 1, message: removeColor(message) };
                                 } else {
                                     (player as Player).sendMessage(message);
                                     return { status: 1 };
@@ -200,8 +199,8 @@ system.beforeEvents.startup.subscribe((event) => {
                                 let allowedValuesText = allowedValues.join(", ");
                                 allowedValuesText = allowedValuesText.length > 120 ? allowedValuesText.slice(0, 117) + "..." : allowedValuesText; // Prevent too long message
                                 const message = `§7[§aMatrix§7] §f` + text("commandEnumInvalid", paramName, allowedValues.join(", "));
-                                if (feedback) {
-                                    return { status: 1, message: isConsole ? removeColor(message) : message };
+                                if (isConsole) {
+                                    return { status: 1, message: removeColor(message) };
                                 } else {
                                     (player as Player).sendMessage(message);
                                     return { status: 1 };
@@ -213,18 +212,16 @@ system.beforeEvents.startup.subscribe((event) => {
                 }
                 try {
                     const commandRes = execute(player as Player, args);
-                    if (feedback) {
-                        return isConsole ? { status: commandRes.status, message: removeColor(commandRes.message) } : commandRes;
+                    if (isConsole) {
+                        return { status: commandRes.status, message: removeColor(commandRes.message) };
                     }
                     if (commandRes.message) (player as Player).sendMessage(commandRes.message);
                     return { status: commandRes.status };
                 } catch (error) {
                     const errorMessage = `§7[§aMatrix §cERROR§7] §f${text("commandThrowError")}:§e\n${(error as Error).name}: ${(error as Error).message}\n${(error as Error).stack ?? "-- Stack is undefined --"}`;
-                    if (feedback)
-                        return {
-                            status: 1,
-                            message: isConsole ? removeColor(errorMessage) : errorMessage,
-                        };
+                    if (isConsole) {
+                        return { status: 1, message: removeColor(errorMessage) };
+                    }
                     (player as Player).sendMessage(errorMessage);
                     return { status: 1 };
                 }
