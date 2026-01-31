@@ -15,7 +15,6 @@ export default {
         const helpBody = commands
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(({ name, optionalParameters, parameters }, i, arr) => {
-                console.log(arr[i].translationDef);
                 const def = arr[i].translationDef;
                 let line = `§f/${name}`;
                 parameters?.forEach(({ type }, j) => {

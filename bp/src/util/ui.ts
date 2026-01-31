@@ -410,12 +410,12 @@ export function staffManageUI(player: Player) {
                         const selection = res2.selection!;
                         const roleName = roleList[selection];
                         let roleData = (world.getDynamicProperty(`role:${roleName}`) as string).split(";").sort();
-                        new ActionFormData()
+                        const ui = new ActionFormData()
                             .title(text("uiEditStaffRole") + ": " + roleName)
                             .button(text("uiModifyCmdOfMatrix"), "textures/items/book_writable.png")
-                            .button(text("uiAddCommand"), "textures/ui/color_plus.png")
-                            .button(text("uiRemoveCommand"), "textures/ui/book_trash_default.png")
-                            .show(player)
+                            .button(text("uiAddCommand"), "textures/ui/color_plus.png");
+                        if (roleData.length > 0) ui.button(text("uiRemoveCommand"), "textures/ui/book_trash_default.png");
+                        ui.show(player)
                             .then((res3) => {
                                 if (res3.canceled) return;
                                 switch (res3.selection) {
