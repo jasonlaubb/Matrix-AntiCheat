@@ -37,7 +37,7 @@ import { gma, gmc, gms, gmsp } from "../command/gm";
 import antigamemode, { antiGameModeOption, antiGameModeSetting } from "../command/antigamemode";
 import language from "../command/language";
 import setup from "../command/setup";
-import { rolePreset, staffManageAction, staffRoleManageAction } from "../command/staff";
+import { rolePreset, staff, staffcmd, staffManageAction, staffrole, staffRoleManageAction } from "../command/staff";
 export const commands = [
     info,
     setBoolean,
@@ -103,6 +103,9 @@ export const commands = [
     antigamemode,
     language,
     setup,
+    staff,
+    staffrole,
+    staffcmd,
 ] as Command[];
 const { stringValue, booleanValue, numberValue } = getPropertyType();
 export const enumRegistry: { [key: string]: string[] } = {

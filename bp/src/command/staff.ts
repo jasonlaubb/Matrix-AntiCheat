@@ -205,12 +205,15 @@ export const staffcmd = {
     ],
     execute: (player, [message]) => {
         if (!(player instanceof Player)) return { status: 1, message: "[Matrix] Sorry! Console is not supported for this command." };
-        const command = (message as string).trim().replace(/^\//, "");
         const role = player.getDynamicProperty("staff") as string;
+        if (!role) {
+            return { status: 1, message: `§7[§aMatrix§7] §f${text("commandStaffCmdNoPerm")}` };
+        }
         const roleData = world.getDynamicProperty(`role:${role}`) as string;
         if (!roleData) {
             return { status: 1, message: `§7[§aMatrix§7] §f${text("commandStaffCmdNoPerm")}` };
         }
+        const command = (message as string).trim().replace(/^\//, "");
         const selectedCommand = command.split(" ")[0];
         if (selectedCommand === "help") {
             const roleCommands = roleData.split(";").sort();
