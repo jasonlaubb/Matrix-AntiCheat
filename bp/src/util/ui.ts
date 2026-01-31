@@ -15,6 +15,7 @@ export function openGeneralUI(player: Player) {
         .button(text("uiChangeConfig"), "textures/ui/gear.png")
         .button(text("uiAction"), "textures/ui/FriendsDiversity.png")
         .button(text("uiLanguage"), "textures/gui/newgui/Language16.png")
+        .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
         //@ts-expect-error
         .show(player)
         .then((res) => {
@@ -229,6 +230,10 @@ export function openGeneralUI(player: Player) {
                 }
                 case 3: {
                     languageSelectUI(player);
+                    break;
+                }
+                case 4: {
+                    staffManageUI(player);
                     break;
                 }
             }
