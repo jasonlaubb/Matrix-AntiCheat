@@ -1,3 +1,5 @@
+import ui from "../../command/ui";
+
 /**
  * @author jasonlaubb
  * Language: English (source language)
@@ -477,4 +479,14 @@ export default {
     uiTrusted: "Trusted",
     uiRemoveStaffRole: "Select a staff role to remove",
     uiEditStaffRole: "Edit staff role",
+    uiModifyCmdOfMatrix: "Manage permissions for Matrix commands",
+    uiAddCommand: "Add Command",
+    uiRemoveCommand: "Remove Command",
+    uiCommandName: "Command",
+    uiCommandNamePlaceholder: "Type the command name here!",
+    uiCommandNotAllowed: "This command is not allowed to be added.",
+    uiCommandAlreadyExists: "This command already exists in the role.",
+    uiCommandAdded: "Successfully added the command to the role.",
+    uiCommandRemoved: "Successfully removed the command from the role.",
+    uiCommandChanged: "Successfully changed the commands of the role.",
 };

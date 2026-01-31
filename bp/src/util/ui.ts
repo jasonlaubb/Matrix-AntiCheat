@@ -7,6 +7,7 @@ import { getPropertyType } from "./propertyClassifier";
 import type { OptionType } from "../main";
 import { commands, enumRegistry } from "../data/commands";
 import { languageSelectUI, text, updateLanguage } from "./text";
+import { bannedMatrixCmds } from "../command/staff";
 export function openGeneralUI(player: Player) {
     new ActionFormData()
         .title(text("uiAdminGUI"))
@@ -358,8 +359,8 @@ export async function setupHelper(player: Player) {
 export function staffManageUI (player: Player) {
     new ActionFormData()
         .title(text("uiStaffManagement"))
-        .button(text("uiAddStaffRole"), "textures/ui/Plus.png")
-        .button(text("uiRemoveStaffRole"), "textures/ui/Minus.png")
+        .button(text("uiAddStaffRole"), "textures/ui/color_plus.png")
+        .button(text("uiRemoveStaffRole"), "textures/ui/book_trash_default.png")
         .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
         //@ts-expect-error
         .show(player)
@@ -403,7 +404,94 @@ export function staffManageUI (player: Player) {
                     break;
                 }
                 case 2: {
-                    player.runCommand("matrix:staff role edit");
+                    const ui = new ActionFormData()
+                        .title(text("uiEditStaffRole"));
+                    const roleList: string[] = [];
+                    world.getDynamicPropertyIds().forEach((prop) => {
+                        if (prop.startsWith("role:")) {
+                            const roleName = prop.slice(5);
+                            roleList.push(roleName);
+                            ui.button(roleName);
+                        }
+                    });
+                    //@ts-expect-error
+                    ui.show(player).then((res2) => {
+                        if (res2.canceled) return;
+                        const selection = res2.selection!;
+                        const roleName = roleList[selection];
+                        let roleData = (world.getDynamicProperty(`role:${roleName}`) as string).split(";").sort();
+                        new ActionFormData()
+                            .title(text("uiEditStaffRole") + ": " + roleName)
+                            .button(text("uiModifyCmdOfMatrix"), "textures/items/book_writable.png")
+                            .button(text("uiAddCommand"), "textures/ui/color_plus.png")
+                            .button(text("uiRemoveCommand"), "textures/ui/book_trash_default.png")
+                            //@ts-expect-error
+                            .show(player)
+                            .then((res3) => {
+                                if (res3.canceled) return;
+                                switch (res3.selection) {
+                                    case 0: {
+                                        const commandList = commands.map(({ name }) => name).filter(name => !bannedMatrixCmds.includes(name)).sort((a, b) => a.localeCompare(b));
+                                        const ui = new ModalFormData().title(text("uiModifyCmdOfMatrix") + ": " + roleName);
+                                        commandList.forEach((cmd) => {
+                                            ui.toggle(`/${cmd}`, { defaultValue: roleData.includes(cmd) });
+                                        });
+                                        //@ts-expect-error
+                                        ui.show(player).then((res4) => {
+                                            if (res4.canceled) return;
+                                            commandList.forEach((cmd, i) => {
+                                                const enabled = res4.formValues![i] as boolean;
+                                                if (enabled && !roleData.includes(cmd)) {
+                                                    roleData.push(cmd);
+                                                } else if (!enabled && roleData.includes(cmd)) {
+                                                    roleData = roleData.filter(c => c !== cmd);
+                                                }
+                                            })
+                                            world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
+                                            player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandChanged"));
+                                        });
+                                        break;
+                                    }
+                                    case 1: {
+                                        const ui = new ModalFormData().title(text("uiAddCommand") + ": " + roleName);
+                                        ui.textField(text("uiCommandName"), text("uiCommandNamePlaceholder"));
+                                        //@ts-expect-error
+                                        ui.show(player).then((res5) => {
+                                            if (res5.canceled) return;
+                                            const cmdName = res5.formValues![0] as string;
+                                            if (bannedMatrixCmds.includes(cmdName)) {
+                                                player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandNotAllowed", cmdName));
+                                                return;
+                                            }
+                                            if (roleData.includes(cmdName)) {
+                                                player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandAlreadyExists", cmdName));
+                                                return;
+                                            }
+                                            roleData.push(cmdName);
+                                            world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
+                                            player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandAdded", cmdName));
+                                        });
+                                        break;
+                                    }
+                                    case 2: {
+                                        const ui = new ActionFormData().title(text("uiRemoveCommand") + ": " + roleName);
+                                        roleData.forEach((cmd) => {
+                                            ui.button(`/${cmd}`);
+                                        });
+                                        //@ts-expect-error
+                                        ui.show(player).then((res4) => {
+                                            if (res4.canceled) return;
+                                            const selection = res4.selection!;
+                                            const cmdName = roleData[selection];
+                                            roleData = roleData.filter(c => c !== cmdName);
+                                            world.setDynamicProperty(`role:${roleName}`, roleData.join(";"));
+                                            player.sendMessage("§7[§aMatrix§7] §f" + text("uiCommandRemoved", cmdName));
+                                        });
+                                        break;
+                                    }
+                                }
+                            });
+                    });
                     break;
                 }
             }

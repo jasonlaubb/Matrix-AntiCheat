@@ -4,6 +4,7 @@ import { text } from "../util/text";
 export const staffManageAction = ["add", "remove", "list"];
 export const staffRoleManageAction = ["create", "delete", "list", "manage"];
 export const rolePreset = ["admin", "moderator", "helper", "builder", "trusted"];
+export const bannedMatrixCmds = ["info", "staff", "staffrole", "staffcmd", "setboolean", "setstring", "setnumber", "resetconfig", "discard", "kick", "execute"];
 export const staff = {
     name: "staff",
     requireOp: true,
