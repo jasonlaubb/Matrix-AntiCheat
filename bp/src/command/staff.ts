@@ -1,4 +1,4 @@
-import { system, world } from "@minecraft/server";
+import { Player, system, world } from "@minecraft/server";
 import type { Command } from "../main";
 import { text } from "../util/text";
 export const staffManageAction = ["add", "remove", "list"];
@@ -204,6 +204,7 @@ export const staffcmd = {
         }
     ],
     execute: (player, [message]) => {
+        if (!(player instanceof Player)) return { status: 1, message: "[Matrix] Sorry! Console is not supported for this command." };
         const command = (message as string).replace(/^\//, "").trim();
         const role = player.getDynamicProperty("staff") as string;
         const roleData = world.getDynamicProperty(`role:${role}`) as string;
