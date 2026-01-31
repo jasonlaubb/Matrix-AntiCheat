@@ -350,12 +350,15 @@ export async function setupHelper(player: Player) {
     }
 }
 export function staffManageUI(player: Player) {
-    new ActionFormData()
+    const ui = new ActionFormData()
         .title(text("uiStaffManagement"))
         .button(text("uiAddStaffRole"), "textures/ui/color_plus.png")
-        .button(text("uiRemoveStaffRole"), "textures/ui/book_trash_default.png")
-        .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
-        .show(player)
+    if (world.getDynamicPropertyIds().some((prop) => prop.startsWith("role:"))) {
+        // Only show them when role are found!
+        ui.button(text("uiRemoveStaffRole"), "textures/ui/book_trash_default.png")
+            .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
+    }
+    ui.show(player)
         .then((res) => {
             if (res.canceled) return;
             switch (res.selection) {
@@ -369,7 +372,7 @@ export function staffManageUI(player: Player) {
                             if (res2.canceled) return;
                             const roleName = res2.formValues![0] as string;
                             player.lastRunUICommand = true;
-                            player.runCommand(`matrix:staffrole add "${roleName}" ${["admin", "moderator", "helper", "builder", "trusted"][res2.formValues![1] as number]}`);
+                            player.runCommand(`matrix:staffrole create "${roleName}" ${["admin", "moderator", "helper", "builder", "trusted"][res2.formValues![1] as number]}`);
                         });
                     break;
                 }
@@ -388,7 +391,7 @@ export function staffManageUI(player: Player) {
                         const selection = res2.selection!;
                         const roleName = roleList[selection];
                         player.lastRunUICommand = true;
-                        player.runCommand(`matrix:staffrole remove "${roleName}"`);
+                        player.runCommand(`matrix:staffrole delete "${roleName}"`);
                     });
                     break;
                 }
