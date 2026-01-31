@@ -455,7 +455,8 @@ export function staffManageUI(player: Player) {
                                     }
                                     case 1: {
                                         const ui = new ModalFormData().title(text("uiAddCommand") + ": " + roleName);
-                                        ui.textField(text("uiCommandName"), text("uiCommandNamePlaceholder"));
+                                        const roleDataMessage = roleData.length === 0 ? "" : roleData.map((cmd) => `✔ /${cmd}`).join("\n") + "\n";
+                                        ui.textField(roleDataMessage + text("uiCommandName"), text("uiCommandNamePlaceholder"));
                                         //@ts-expect-error
                                         ui.show(player).then((res5) => {
                                             if (res5.canceled) return;
