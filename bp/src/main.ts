@@ -40,6 +40,7 @@ import { antiXrayOn } from "./asset/antiXray";
 import { invseeHandler } from "./command/invsee";
 import { antiAfkOn } from "./asset/antiAfk";
 import "./util/extension";
+import { writeGateLog } from "./util/log";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
@@ -392,10 +393,14 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
             world.educationalFeaturesEnabled = false;
         }
     }
+    writeGateLog(player.name, true);
     if (!get("setup") && player.isOp()) {
         giveUITool(player);
     }
 });
+world.afterEvents.playerLeave.subscribe(({ playerName }) => {
+    writeGateLog(playerName, false);
+})
 function giveUITool(player: Player) {
     const container = player.getComponent("inventory")!.container!;
     let itemFind = false;

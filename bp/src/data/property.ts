@@ -411,4 +411,20 @@ export default {
         type: "number",
         value: 0,
     },
+    pauseJoinLeaveLog: {
+        type: "boolean",
+        value: false,
+    },
+    pauseFlagLog: {
+        type: "boolean",
+        value: false,
+    },
+    pauseCommandBlockLog: {
+        type: "boolean",
+        value: false,
+    },
+    pauseStaffCommandLog: {
+        type: "boolean",
+        value: false,
+    },
 };
