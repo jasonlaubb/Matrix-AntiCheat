@@ -571,7 +571,7 @@ export async function logUI(player: Player) {
                         [x = "", y = "", z = ""] = coords;
                     }
 
-                    const action = place === "true" ? text("uiPlaced") : text("uiBroken");
+                    const action = place === "true" ? text("uiPlaced") : text("uiDestroyed");
                     // Ensure single-line and compact coordinates
                     msg = `§7[${timeStr}] §e${playerName} §7| §a${action} §7| §9(${x},${y},${z}) §7| §e${dimension}`;
                     break;
@@ -587,11 +587,11 @@ export async function logUI(player: Player) {
         const hasNext = (currentPage + 1) * pageSize < allLogs.length;
 
         // Build UI: title + body + conditional buttons
-        const ui = new ActionFormData().title(text("uiLogs", logType)).body(logBody.join("\n"));
+        const ui = new ActionFormData().title(text("uiLogs")).body(logBody.join("\n"));
 
-        if (hasPrev) ui.button("§a« " + text("uiPreviousPage"));
-        if (hasNext) ui.button("§a» " + text("uiNextPage"));
-        if (!hasPrev && !hasNext) ui.button("§c" + text("uiClose"));
+        if (hasPrev) ui.button(text("uiPreviousPage"), "textures/ui/arrow_right_white.png");
+        if (hasNext) ui.button(text("uiNextPage"), "textures/ui/arrow_left_white.png");
+        if (!hasPrev && !hasNext) ui.button("§c" + text("uiGoBack"), "textures/ui/crossout.png");
 
         const res2 = await ui.show(player);
         if (res2.canceled) return;

@@ -497,4 +497,12 @@ export default {
     uiViewCommandLogs: "View Staff Command Logs",
     uiViewCommandBlockLogs: "View Command Block Logs",
     uiNoMoreLogs: "No log available.",
+    uiJoined: "Joined",
+    uiLeft: "Left",
+    uiPlaced: "Placed",
+    uiDestroyed: "Destroyed",
+    uiLogs: "Logs",
+    uiPreviousPage: "Previous Page",
+    uiNextPage: "Next Page",
+    uiGoBack: "Go back",
 };
