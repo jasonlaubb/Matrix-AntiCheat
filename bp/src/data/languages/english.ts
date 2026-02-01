@@ -491,4 +491,10 @@ export default {
     uiTimezoneAdjust: "Timezone Adjustment",
     uiTimezoneAdjustDesc: "Please set timezone used to display correct time information",
     uiNeverShowUTCUI: "Never show this UI again",
+    uiLogMenu: "Log Menu",
+    uiViewFlagLogs: "View Flag Logs",
+    uiViewGateLogs: "View Join/Leave Logs",
+    uiViewCommandLogs: "View Staff Command Logs",
+    uiViewCommandBlockLogs: "View Command Block Logs",
+    uiNoMoreLogs: "No log available.",
 };

@@ -410,5 +410,5 @@ export default {
     timezoneOffset: {
         type: "number",
         value: 0,
-    }
+    },
 };

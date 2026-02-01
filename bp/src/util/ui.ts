@@ -468,7 +468,7 @@ export function staffManageUI(player: Player) {
         }
     });
 }
-export async function logUI (player: Player) {
+export async function logUI(player: Player) {
     if (get("timezoneAdjustUI")) {
         const currentTimezone: number = get("timezoneOffset");
         const res = await new ModalFormData()
@@ -486,12 +486,152 @@ export async function logUI (player: Player) {
     }
     const res1 = await new ActionFormData()
         .title(text("uiLogMenu"))
-        .button(text("uiViewFlagLogs", ), "textures/items/diamond_sword.png")
+        .button(text("uiViewFlagLogs"), "textures/items/diamond_sword.png")
         .button(text("uiViewGateLogs"), "textures/ui/NetherPortal.png")
         .button(text("uiViewCommandLogs"), "textures/blocks/command_block.png")
         .button(text("uiViewCommandBlockLogs"), "textures/ui/hammer_l.png")
         .show(player);
     if (res1.canceled) return;
-    const logType = ["flag", "gate", "command", "commandblock"][res1.selection!];
-    const allLogs = world.getDynamicPropertyIds().filter((id) => id.startsWith(`log:${logType}:`)).sort().reverse();
+    const logType = ["flag", "gate", "cmd", "cmdbk"][res1.selection!];
+    const allLogs = world
+        .getDynamicPropertyIds()
+        .filter((id) => id.startsWith(`log:${logType}:`))
+        .sort()
+        .reverse();
+
+    const pageSize = 20;
+    let currentPage = 0;
+
+    while (true) {
+        const start = currentPage * pageSize;
+        const pagedLogs = allLogs.slice(start, start + pageSize);
+
+        if (pagedLogs.length === 0) {
+            player.sendMessage("§7[§aMatrix§7] §f" + text("uiNoMoreLogs"));
+            return;
+        }
+
+        // Build one-line-per-log body with timestamp
+        const logBody: string[] = pagedLogs.map((logId) => {
+            // Extract timestamp from id: "log:<type>:<timestamp>"
+            const parts = logId.split(":");
+            const ts = Number(parts[2]) || 0;
+            const timeStr = formatTimestamp(ts);
+
+            const logData = (world.getDynamicProperty(logId) as string).split(";");
+            let msg = "";
+
+            switch (logType) {
+                case "flag": {
+                    const [playerName, detection, type] = logData;
+                    msg = `§7[${timeStr}] §e${playerName} §7| §c${detection} §7| §9${type}`;
+                    break;
+                }
+                case "gate": {
+                    const [join, playerName] = logData;
+                    msg = `§7[${timeStr}] §e${playerName} §7| §a${join === "true" ? text("uiJoined") : text("uiLeft")}`;
+                    break;
+                }
+                case "cmd": {
+                    const [playerName, command] = logData;
+                    // keep command short: show leading slash and first part if very long
+                    const shortCmd = command.length > 40 ? command.slice(0, 37) + "..." : command;
+                    msg = `§7[${timeStr}] §e${playerName} §7| §9/${shortCmd}`;
+                    break;
+                }
+                case "cmdbk": {
+                    // New storage: place; x,y,z; dimension; player
+                    // Backwards-compatible with older variants (space-separated coords or separate x,y,z tokens)
+                    const [place, ...rest] = logData;
+                    let x = "",
+                        y = "",
+                        z = "",
+                        dimension = "",
+                        playerName = "";
+
+                    if (rest.length === 3) {
+                        // Expected: [coordsString, dimension, player]
+                        const coordsStr = rest[0] || "";
+                        const coords = coordsStr.includes(",") ? coordsStr.split(",") : coordsStr.split(" ");
+                        [x = "", y = "", z = ""] = coords;
+                        dimension = rest[1] || "";
+                        playerName = rest[2] || "";
+                    } else if (rest.length >= 4) {
+                        // Possible older format: [x, y, z, dimension, player]
+                        [x = "", y = "", z = "", dimension = "", playerName = ""] = rest as any;
+                    } else {
+                        // Fallback: try to salvage whatever we have
+                        const joined = rest.join(";");
+                        // try to extract last two tokens as dimension and player
+                        const maybeParts = joined.split(";");
+                        playerName = maybeParts.pop() || "";
+                        dimension = maybeParts.pop() || "";
+                        const coordsPart = maybeParts.join(";") || "";
+                        const coords = coordsPart.includes(",") ? coordsPart.split(",") : coordsPart.split(" ");
+                        [x = "", y = "", z = ""] = coords;
+                    }
+
+                    const action = place === "true" ? text("uiPlaced") : text("uiBroken");
+                    // Ensure single-line and compact coordinates
+                    msg = `§7[${timeStr}] §e${playerName} §7| §a${action} §7| §9(${x},${y},${z}) §7| §e${dimension}`;
+                    break;
+                }
+            }
+
+            // Ensure single-line (remove newlines) and trim to reasonable length for PE UI
+            return msg.replace(/\r?\n/g, " ").slice(0, 120);
+        });
+
+        // Determine navigation availability
+        const hasPrev = currentPage > 0;
+        const hasNext = (currentPage + 1) * pageSize < allLogs.length;
+
+        // Build UI: title + body + conditional buttons
+        const ui = new ActionFormData().title(text("uiLogs", logType)).body(logBody.join("\n"));
+
+        if (hasPrev) ui.button("§a« " + text("uiPreviousPage"));
+        if (hasNext) ui.button("§a» " + text("uiNextPage"));
+        if (!hasPrev && !hasNext) ui.button("§c" + text("uiClose"));
+
+        const res2 = await ui.show(player);
+        if (res2.canceled) return;
+
+        // Map selection index to action depending on which buttons were added
+        let prevIndex = -1;
+        let nextIndex = -1;
+        if (hasPrev && hasNext) {
+            prevIndex = 0;
+            nextIndex = 1;
+        } else if (hasPrev && !hasNext) {
+            prevIndex = 0;
+        } else if (!hasPrev && hasNext) {
+            nextIndex = 0;
+        } else {
+            // only Close button -> exit
+            return;
+        }
+
+        if (res2.selection === prevIndex) {
+            // Previous page
+            currentPage--;
+        } else if (res2.selection === nextIndex) {
+            // Next page
+            if ((currentPage + 1) * pageSize < allLogs.length) currentPage++;
+        } else {
+            // Unexpected selection (safety): exit
+            return;
+        }
+    }
+}
+function pad(n: number) {
+    return String(n).padStart(2, "0");
+}
+function formatTimestamp(ms: number) {
+    const d = new Date(ms);
+    const m = pad(d.getMonth() + 1);
+    const day = pad(d.getDate());
+    const hh = pad(d.getHours());
+    const mm = pad(d.getMinutes());
+    // Compact but readable: "MM-DD HH:MM"
+    return `${m}-${day} ${hh}:${mm}`;
 }
