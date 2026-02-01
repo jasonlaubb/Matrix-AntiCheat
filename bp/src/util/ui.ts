@@ -468,3 +468,20 @@ export function staffManageUI(player: Player) {
         }
     });
 }
+export async function logUI (player: Player) {
+    if (get("timezoneAdjustUI")) {
+        const currentTimezone: number = get("timezoneOffset");
+        const res = await new ModalFormData()
+            .title(text("uiTimezoneAdjust"))
+            .slider(text("uiTimezoneAdjustDesc"), -12, 14, {
+                defaultValue: currentTimezone,
+                valueStep: 1,
+            })
+            .toggle(text("uiNeverShowUTCUI"), { defaultValue: false })
+            .show(player);
+        if (res.canceled) return;
+        const [offset, neverShow] = res.formValues!.slice(1) as [number, boolean];
+        if (offset !== currentTimezone) world.setDynamicProperty("database:timezoneOffset", offset);
+        if (neverShow) world.setDynamicProperty("database:timezoneAdjustUI", false);
+    }
+}

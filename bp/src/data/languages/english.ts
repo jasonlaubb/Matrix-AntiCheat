@@ -487,4 +487,8 @@ export default {
     uiCommandAdded: "Successfully added the command to the role.",
     uiCommandRemoved: "Successfully removed the command from the role.",
     uiCommandChanged: "Successfully changed the commands of the role.",
+    // 7.3.1
+    uiTimezoneAdjust: "Timezone Adjustment",
+    uiTimezoneAdjustDesc: "Please set timezone used to display correct time information",
+    uiNeverShowUTCUI: "Never show this UI again",
 };

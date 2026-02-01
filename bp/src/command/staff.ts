@@ -2,6 +2,7 @@ import { Player, system, world } from "@minecraft/server";
 import type { Command } from "../main";
 import { text } from "../util/text";
 import { staffManageUI } from "../util/ui";
+import { writeCommandLog } from "../util/log";
 export const staffManageAction = ["add", "remove", "list"];
 export const staffRoleManageAction = ["create", "delete", "list", "manage"];
 export const rolePreset = ["admin", "moderator", "helper", "builder", "trusted"];
@@ -231,6 +232,7 @@ export const staffcmd = {
         if (!roleData.split(";").includes(selectedCommand)) {
             return { status: 1, message: `§7[§aMatrix§7] §f${text("commandStaffCmdUnknownCommand", selectedCommand)}` };
         }
+        writeCommandLog(player.name, command);
         system.run(() => {
             try {
                 player.runCommand(command);

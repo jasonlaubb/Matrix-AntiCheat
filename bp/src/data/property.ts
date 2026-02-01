@@ -399,8 +399,16 @@ export default {
         type: "boolean",
         value: false,
     },
-    chatCommandPrefix: {
-        type: "string",
-        value: "mac.", // Although we recommend using slash command, you can still use chat command with this prefix (especially for non-op staff >w<).
+    enbaleJoinAndLeaveLog: {
+        type: "boolean",
+        value: true,
     },
+    timezoneAdjustUI: {
+        type: "boolean",
+        value: true,
+    },
+    timezoneOffset: {
+        type: "number",
+        value: 0,
+    }
 };

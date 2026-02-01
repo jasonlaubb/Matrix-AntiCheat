@@ -3,6 +3,7 @@ import { get } from "../util/database";
 import { ban, checkPunish } from "../util/punishment";
 import { text } from "../util/text";
 import { sendAlert } from "./util";
+import { writeFlagLog } from "./log";
 export const messageTarget = ["any", "all", "operator", "admin", "exclude", "bypass", "tag"];
 export const punishmentType = ["none", "kick", "ban", "tempkick"];
 Player.prototype.isOp = function () {
@@ -12,7 +13,7 @@ Player.prototype.flag = function (id: string, type: string, category: string, da
     const flagMessage = `§7[§aMatrix§7] §f${text("flagDetected", this.name + "§r")} §7<${category}> §c[${id}/${type}]${data && !get("shortenFlagMessage") ? ` §9(${Object.entries(data).map(([k, v]) => `${k}=${v}§r§9`)})` : ""}`;
     sendAlert(flagMessage, this);
     const punishmentType = get("flagPunishmentType");
-    world.setDynamicProperty("flagrecord:" + Date.now(), `§7[${new Date(Date.now()).toUTCString()}] §f${this.name} §r§8| §f${id}/${type} §8| §f${punishmentType}`);
+    writeFlagLog(this.name, id, type);
     const record = world.getDynamicPropertyIds().filter((id) => id.startsWith("flagrecord:"));
     if (record.length > get("maxRecordAmount")) {
         const deleteId = record.sort()[0];
