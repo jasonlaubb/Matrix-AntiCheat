@@ -1,6 +1,6 @@
 import { languageList } from "../util/text"; // Not a command
 import { mute, unmute } from "../command/mute";
-import info from "../command/info";
+import acinfo from "../command/acinfo";
 import { detection, detectionList, detectionlist } from "../command/detection";
 import { setBoolean, setNumber, setString, resetConfig, clearProperty, getProperty } from "../command/set";
 import { rankadd, rankclear, ranklist, rankremove, rankset } from "../command/rank";
@@ -39,7 +39,7 @@ import language from "../command/language";
 import setup from "../command/setup";
 import { rolePreset, staff, staffcmd, staffManageAction, staffrole, staffRoleManageAction } from "../command/staff";
 export const commands = [
-    info,
+    acinfo,
     setBoolean,
     setNumber,
     setString,
