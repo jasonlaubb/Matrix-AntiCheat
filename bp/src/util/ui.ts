@@ -484,4 +484,14 @@ export async function logUI (player: Player) {
         if (offset !== currentTimezone) world.setDynamicProperty("database:timezoneOffset", offset);
         if (neverShow) world.setDynamicProperty("database:timezoneAdjustUI", false);
     }
+    const res1 = await new ActionFormData()
+        .title(text("uiLogMenu"))
+        .button(text("uiViewFlagLogs", ), "textures/items/diamond_sword.png")
+        .button(text("uiViewGateLogs"), "textures/ui/NetherPortal.png")
+        .button(text("uiViewCommandLogs"), "textures/blocks/command_block.png")
+        .button(text("uiViewCommandBlockLogs"), "textures/ui/hammer_l.png")
+        .show(player);
+    if (res1.canceled) return;
+    const logType = ["flag", "gate", "command", "commandblock"][res1.selection!];
+    const allLogs = world.getDynamicPropertyIds().filter((id) => id.startsWith(`log:${logType}:`)).sort().reverse();
 }
