@@ -16,6 +16,7 @@ export function openGeneralUI(player: Player) {
         .button(text("uiAction"), "textures/ui/FriendsDiversity.png")
         .button(text("uiLanguage"), "textures/gui/newgui/Language16.png")
         .button(text("uiEditStaffRole"), "textures/items/book_writable.png")
+        .button(text("commandLog"), "textures/items/book_written.png")
         .show(player)
         .then((res) => {
             if (res.canceled) return;
@@ -215,6 +216,10 @@ export function openGeneralUI(player: Player) {
                 }
                 case 4: {
                     staffManageUI(player);
+                    break;
+                }
+                case 5: {
+                    logUI(player);
                     break;
                 }
             }
@@ -529,7 +534,7 @@ export async function logUI(player: Player) {
                 }
                 case "gate": {
                     const [join, playerName] = logData;
-                    msg = `§7[${timeStr}] §e${playerName} §7| §a${join === "true" ? text("uiJoined") : text("uiLeft")}`;
+                    msg = `§7[${timeStr}] §e${playerName} §7| ${join === "true" ? "§a" + text("uiJoined") : "§c" + text("uiLeft")}`;
                     break;
                 }
                 case "cmd": {
@@ -571,9 +576,9 @@ export async function logUI(player: Player) {
                         [x = "", y = "", z = ""] = coords;
                     }
 
-                    const action = place === "true" ? text("uiPlaced") : text("uiDestroyed");
+                    const action = place === "true" ? "§a" + text("uiPlaced") : "§c" + text("uiDestroyed");
                     // Ensure single-line and compact coordinates
-                    msg = `§7[${timeStr}] §e${playerName} §7| §a${action} §7| §9(${x},${y},${z}) §7| §e${dimension}`;
+                    msg = `§7[${timeStr}] §e${playerName} §7| ${action} §7| §9(${x},${y},${z}) §7| §e${dimension}`;
                     break;
                 }
             }
