@@ -80,7 +80,7 @@ function tick(player: Player) {
     const maxAmount = Math.max(...data.velocityYList);
     const bdsPrediction = calculateBdsPrediction(data.velocityYList);
 
-    if (levitationWithInAllowRange && pistonNotPushed && playerStarted && isPlayerNotCreative && !player.isOnGround && data.velocityYList.length >= 60 && bdsPrediction >= MAX_BDS_PREDICTION && !isRiding(player)) {
+    if (levitationWithInAllowRange && pistonNotPushed && playerStarted && isPlayerNotCreative && !player.isOnGround && !player.isGliding && data.velocityYList.length >= 60 && bdsPrediction >= MAX_BDS_PREDICTION && !isRiding(player)) {
         const { highestRepeatedVelocity, highestRepeatedAmount } = repeatChecks(data.velocityYList);
 
         if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y && minAmount <= -MAX_VELOCITY_Y && maxAmount < HIGH_VELOCITY_Y) {
