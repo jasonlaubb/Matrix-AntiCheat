@@ -1,4 +1,4 @@
-import { Dimension, EquipmentSlot, GameMode, PistonActivateAfterEvent, Player, Vector3, world } from "@minecraft/server";
+import { Dimension, EquipmentSlot, GameMode, ItemUseAfterEvent, PistonActivateAfterEvent, Player, Vector3, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { fastSurround, isRiding } from "../util/util";
 
@@ -148,14 +148,21 @@ function isSurroundedByAir(centerLocation: Vector3, dimension: Dimension): boole
     if (!surroundedBlocks) return !!surroundedBlocks;
     return surroundedBlocks.every((block) => block?.isAir);
 }
+function itemUse({ source: player, itemStack: { typeId: id  } }: ItemUseAfterEvent) {
+    if (id.startsWith("minecraft:") && id.endsWith("_spear")) {
+        player.lastKnockback = Date.now();
+    }
+}
 export default {
     property: "antiFlyEnable",
     enable: () => {
         addCheckInterval("fly", tick);
         world.afterEvents.pistonActivate.subscribe(onPistonPush);
+        world.afterEvents.itemUse.subscribe(itemUse);
     },
     disable: () => {
         removeCheckInterval("fly");
         world.afterEvents.pistonActivate.unsubscribe(onPistonPush);
+        world.afterEvents.itemUse.unsubscribe(itemUse);
     },
 };
