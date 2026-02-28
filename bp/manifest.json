@@ -2,7 +2,7 @@
     "format_version": 2,
     "header": {
         "name": "Matrix Anticheat V7.4.0",
-        "description": "§7§¶The Supreme Anti-Cheat Solution for Minecraft Bedrock Edition.\n§cBeta API required",
+        "description": "pack.description",
         "uuid": "4420fb30-1a77-4628-9c93-26680fbd38c4",
         "version": [7, 4, 0],
         "min_engine_version": [1, 26, 0]
