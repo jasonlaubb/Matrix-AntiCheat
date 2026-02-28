@@ -39,8 +39,9 @@ import { text, updateLanguage, type TranslationKey } from "./util/text";
 import { antiXrayOn } from "./asset/antiXray";
 import { invseeHandler } from "./command/invsee";
 import { antiAfkOn } from "./asset/antiAfk";
-import "./util/extension";
 import { writeGateLog } from "./util/log";
+import "./util/extension";
+import "./util/log";
 export type OptionType = "string" | "integer" | "float" | "boolean" | "enum" | "item" | "player" | "playerTarget" | "normalPlayerTarget";
 interface Option {
     name: string;
