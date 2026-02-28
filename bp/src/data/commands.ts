@@ -9,7 +9,7 @@ import antixray from "../command/antixray";
 import { banCmd, banOffline, banlist, timeUnits, unban } from "../command/ban";
 import worldBorder from "../command/worldBorder";
 import invsee from "../command/invsee";
-import flaglog from "../command/flaglog";
+import log from "../command/log";
 import chatrank from "../command/chatrank";
 import antispam from "../command/antispam";
 import antiafk from "../command/antiafk";
@@ -67,7 +67,7 @@ export const commands = [
     netherLock,
     mute,
     unmute,
-    flaglog,
+    log,
     chatrank,
     antispam,
     antiafk,

@@ -487,7 +487,7 @@ export default {
     uiCommandAdded: "Successfully added the command to the role.",
     uiCommandRemoved: "Successfully removed the command from the role.",
     uiCommandChanged: "Successfully changed the commands of the role.",
-    // 7.3.1
+    // 7.4.0
     uiTimezoneAdjust: "Timezone Adjustment",
     uiTimezoneAdjustDesc: "Please set timezone used to display correct time information",
     uiNeverShowUTCUI: "Never show this UI again",
@@ -505,4 +505,7 @@ export default {
     uiPreviousPage: "Previous Page",
     uiNextPage: "Next Page",
     uiGoBack: "Go back",
+    commandLog: "View anticheat logs",
+    commandLogDescription: "View logs recorded by the anticheat system",
+    commandLogOpen: "Opened log menu successfully.",
 };
