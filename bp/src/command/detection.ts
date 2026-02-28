@@ -19,7 +19,6 @@ import entityFly from "../check/entityFly";
 import elytraFly from "../check/elytraFly";
 import autoclicker from "../check/autoclicker";
 import xp from "../check/xp";
-import freecam from "../check/freecam";
 import shulkerBoxNesting from "../check/shulkerBoxNesting";
 import surround from "../check/surround";
 import fastThrow from "../check/fastThrow";
@@ -45,7 +44,6 @@ export const detectionList = {
     elytraFly,
     autoclicker,
     xp,
-    freecam,
     shulkerBoxNesting,
     surround,
     fastThrow,
