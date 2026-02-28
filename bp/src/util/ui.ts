@@ -506,7 +506,7 @@ export async function logUI(player: Player) {
 
     const pageSize = 20;
     let currentPage = 0;
-
+    const currentTimezoneOffset = get("timezoneOffset") * 3600000;
     while (true) {
         const start = currentPage * pageSize;
         const pagedLogs = allLogs.slice(start, start + pageSize);
@@ -521,7 +521,7 @@ export async function logUI(player: Player) {
             // Extract timestamp from id: "log:<type>:<timestamp>"
             const parts = logId.split(":");
             const ts = Number(parts[2]) || 0;
-            const timeStr = formatTimestamp(ts + get("timezoneOffset") * 3600000);
+            const timeStr = formatTimestamp(ts + currentTimezoneOffset);
 
             const logData = (world.getDynamicProperty(logId) as string).split(";");
             let msg = "";
