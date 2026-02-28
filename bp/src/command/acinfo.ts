@@ -2,7 +2,7 @@ import english from "../data/languages/english";
 import type { Command } from "../main";
 import { text } from "../util/text";
 export default {
-    name: "acinfo",
+    name: "ac",
     description: english.commandInfoDescription,
     requireOp: false,
     translationDef: {
@@ -10,7 +10,7 @@ export default {
         description: "commandInfoDescription",
     },
     execute: () => {
-        const version = "7.3.1";
+        const version = "7.4.0";
         const author = "jasonlaubb (Discord: @uwu_the_great)";
         const github = "https://github.com/jasonlaubb/Matrix-AntiCheat";
         const curseforge = "https://www.curseforge.com/minecraft-bedrock/addons/matrix-anti";

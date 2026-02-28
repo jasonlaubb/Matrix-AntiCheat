@@ -19,11 +19,11 @@ export default {
         const memoryTier = text(("commandDeviceInfoMemoryTier" + memoryLevel) as TranslationKey); // e.g. commandDeviceInfoMemoryTier0
 
         const data = [
-            text("commandDeviceInfoLastInput", lastInputModeUsed),
-            text("commandDeviceInfoTouchHotbar", touchOnlyAffectsHotbar ? "true" : "false"),
-            text("commandDeviceInfoMemoryTier", memoryTier),
-            text("commandDeviceInfoRenderDistance", maxRenderDistance),
-            text("commandDeviceInfoPlatform", getDevice(player)),
+            "§g" + text("commandDeviceInfoLastInput", lastInputModeUsed),
+            "§g" + text("commandDeviceInfoTouchHotbar", touchOnlyAffectsHotbar ? "true" : "false"),
+            "§g" + text("commandDeviceInfoMemoryTier", memoryTier),
+            "§g" + text("commandDeviceInfoRenderDistance", maxRenderDistance),
+            "§g" + text("commandDeviceInfoPlatform", getDevice(player)),
         ].join("\n");
 
         return {

@@ -88,7 +88,7 @@ export function registerItemBanEvent() {
     if (world.banItemEventRegistered) return;
     world.banItemEventRegistered = true;
     const event = world.afterEvents.playerInventoryItemChange.subscribe(({ player, itemStack: item, slot }) => {
-        if (!item || player.isOp()) return;
+        if (!item || player.isStaff()) return;
         const bannedItems = world
             .getDynamicPropertyIds()
             .filter((id) => id.startsWith("banitem:"))
