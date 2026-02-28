@@ -1,5 +1,5 @@
 import { get } from "../util/database";
-import type property from "../data/property";
+import type property from "../data/config";
 import type { Command } from "../main";
 import { system, world } from "@minecraft/server";
 import { text } from "../util/text";

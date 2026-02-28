@@ -1,5 +1,5 @@
 import { world } from "@minecraft/server";
-import property from "../data/property";
+import property from "../data/config";
 import { detectionList } from "../command/detection";
 export function setUpProperty() {
     const propertyIds = world.getDynamicPropertyIds().filter((id) => id.startsWith("database:"));

@@ -427,4 +427,8 @@ export default {
         type: "boolean",
         value: false,
     },
+    combatCheckBanAttackDuration: {
+        type: "number",
+        value: 20000, // in ms, player that is detected by combat check will not able to hurt other entities for this duration.
+    },
 };

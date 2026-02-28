@@ -1,4 +1,4 @@
-import property from "../data/property";
+import property from "../data/config";
 const stringValue: string[] = [];
 const numberValue: string[] = [];
 const booleanValue: string[] = [];

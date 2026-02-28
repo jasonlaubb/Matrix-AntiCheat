@@ -2,7 +2,7 @@ import { CommandError, Player, system, world } from "@minecraft/server";
 import { ActionFormData, FormCancelationReason, MessageFormData, ModalFormData } from "@minecraft/server-ui";
 import { detectionList } from "../command/detection";
 import { get, isReadonly } from "./database";
-import property from "../data/property";
+import property from "../data/config";
 import { getPropertyType } from "./propertyClassifier";
 import type { OptionType } from "../main";
 import { commands, enumRegistry } from "../data/commands";

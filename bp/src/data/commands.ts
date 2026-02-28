@@ -26,7 +26,7 @@ import ui from "../command/ui";
 import { endLock, netherLock } from "../command/dimensionLock";
 import { Command } from "../main";
 import { getPropertyType } from "../util/propertyClassifier";
-import property from "./property";
+import property from "./config";
 import { messageTarget, punishmentType } from "../util/extension";
 import commandList from "../command/commandList";
 import fakeleave from "../command/fakeleave";

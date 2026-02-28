@@ -1,12 +1,13 @@
-import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world, EquipmentSlot } from "@minecraft/server";
+import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world, EquipmentSlot, EntityHurtBeforeEvent } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, lineDistance, distanceXZ } from "../util/mathUtil";
-import { addHP, banAttack, isAlive, isObstructedBetweenLocations } from "../util/util";
+import { banAttack, isAlive, isObstructedBetweenLocations } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { deltaVector } from "../util/vectorUtil";
+import { get } from "../util/database";
 export default {
     property: "antiKillauraEnable",
     enable: () => {
-        world.afterEvents.entityHurt.subscribe(entityHurt);
+        world.beforeEvents.entityHurt.subscribe(entityHurt);
         world.afterEvents.entityDie.subscribe(entityDie);
         world.afterEvents.playerSpawn.subscribe(playerSpawn);
         world.afterEvents.entityHitEntity.subscribe(entityHitEntity);
@@ -14,7 +15,7 @@ export default {
         addCheckInterval("killaura", aimCheck);
     },
     disable: () => {
-        world.afterEvents.entityHurt.unsubscribe(entityHurt);
+        world.beforeEvents.entityHurt.unsubscribe(entityHurt);
         world.afterEvents.entityDie.unsubscribe(entityDie);
         world.afterEvents.playerSpawn.unsubscribe(playerSpawn);
         world.afterEvents.entityHitEntity.unsubscribe(entityHitEntity);
@@ -64,7 +65,9 @@ function entityHitEntity({ damagingEntity: player }: EntityHitEntityAfterEvent) 
 function playerSwing({ player }: PlayerSwingStartAfterEvent) {
     player.killauraSwingAt = Date.now();
 }
-function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause }, damage }: EntityHurtAfterEvent) {
+function entityHurt(event: EntityHurtBeforeEvent) {
+    const { hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause } } = event;
+    let cancel = false;
     if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.canBypass() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
     const now = Date.now();
     attacker.killauraFlag ??= 0;
@@ -79,14 +82,15 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
         // Only flag when player trigger this check twice in 12s to prevent spike lag false positive
-        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "A", "Combat (Multi-aura)");
+        if (attacker.killauraFlag >= 2) system.run(() => attacker.flag("Killaura", "A", "Combat (Multi-aura)"));
+        cancel = true;
         attacker.killauraHitList = [];
-        addHP(hurtEntity, damage);
+        
     }
     if (attacker.killauraFlag > 0 && now - attacker.killauraLastFlag > 12000) {
         attacker.killauraFlag = 0;
     }
-    if (attacker.isSafeDevice()) return; // No gonna finish other checks if player is safe device
+    if (!attacker.isSafeDevice()) {
     hurtEntity.antiReachRecordTime = now + 12000;
     attacker.antiReachRecordTime = now + 12000;
     if (!attacker?.killauraHeadRecording) recordHeadPosition(attacker);
@@ -105,11 +109,11 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
                 // reachDistance, the min distance between the attacker and hurtEntity (it can be distance between current-pos and 1s-before pos)
                 const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
                 if (reachDistance > (absPitch < 50 && Math.abs(height) >= 2 ? 4.6 : 3.6)) {
-                    attacker.flag("Killaura", "B", "Combat (Reach)", {
+                    system.run(() => attacker.flag("Killaura", "B", "Combat (Reach)", {
                         attackDistance: attackDistance.toFixed(2),
                         reachDistance: reachDistance.toFixed(2),
-                    });
-                    recoverDamage = true;
+                    }));
+                    cancel = true;
                 }
             }
         }
@@ -118,8 +122,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
         if (distanceH > 3 && Math.abs(pitch) > 60) {
             attacker.killauraFlag++;
             attacker.killauraLastFlag = now;
-            if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch });
-            recoverDamage = true;
+            if (attacker.killauraFlag >= 3) system.run(() => attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch }));
+            cancel = true;
         }
         // To prevent false positive, only check if the attack is formed horizontally
         if (distanceH > 2.5) {
@@ -128,8 +132,8 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" && !attacker.inputInfo.touchOnlyAffectsHotbar ? 160 : 50)) {
                 attacker.killauraFlag++;
                 attacker.killauraLastFlag = now;
-                if (attacker.killauraFlag >= 3) attacker.flag("Killaura", "D", "Combat (HitBox)", { angle });
-                recoverDamage = true;
+                if (attacker.killauraFlag >= 3) system.run(() => attacker.flag("Killaura", "D", "Combat (HitBox)", { angle }));
+                cancel = true;
             }
         }
         if (
@@ -140,31 +144,37 @@ function entityHurt({ hurtEntity, damageSource: { damagingEntity: attacker, dama
             !hasClearPathBetweenEntities(attacker.dimension, attacker.location, hurtEntity.location) &&
             !hasClearPathBetweenEntities(hurtEntity.dimension, getTickPos(attacker), getTickPos(hurtEntity))
         ) {
-            recoverDamage = true;
-            attacker.flag("Killaura", "E", "Combat (GhostHand)");
+            cancel = true;
+            system.run(() => attacker.flag("Killaura", "E", "Combat (GhostHand)"));
         }
     }
     if (isAlive(attacker) && (yaw % 1 === 0 || pitch % 1 === 0)) {
         attacker.killauraFlag++;
         attacker.killauraLastFlag = now;
-        if (attacker.killauraFlag >= 2) attacker.flag("Killaura", "F", "Combat", { yaw, pitch });
-        recoverDamage = true;
+        if (attacker.killauraFlag >= 2) system.run(() => attacker.flag("Killaura", "F", "Combat", { yaw, pitch }));
+        cancel = true;
     }
-    if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500) {
-        attacker.flag("Killaura", "J", "Combat");
-        recoverDamage = true;
+    if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500 && !isHoldingSpear(attacker)) {
+        system.run(() => attacker.flag("Killaura", "J", "Combat"));
+        cancel = true;
     }
     // Hitting entity while they were sleeping lol
     if (attacker.isSleeping) {
-        attacker.flag("Killaura", "K", "Combat");
-        recoverDamage = true;
+        system.run(() => attacker.flag("Killaura", "K", "Combat"));
+        cancel = true;
     }
     // Some bad* client can do this (even horion doesn't do)
     if (attacker.id === hurtEntity.id) {
-        attacker.flag("Killaura", "L", "Combat");
-        recoverDamage = true;
+        system.run(() => attacker.flag("Killaura", "L", "Combat"));
+        cancel = true;
     }
-    if (recoverDamage) addHP(hurtEntity, damage); // Recover the hp
+    }
+    if (cancel) {
+        event.cancel = true;
+        attacker.combatCheckLastCancel = now;
+    } else if (attacker.combatCheckLastCancel && now - attacker.combatCheckLastCancel < get("combatCheckBanAttackDuration")) {
+        event.cancel = true;
+    }
 }
 function isHoldingSpear(player: Player) {
     const itemHeld = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Mainhand)?.typeId ?? "air";

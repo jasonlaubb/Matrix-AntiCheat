@@ -10,7 +10,7 @@ async function bundleJS() {
     fs.unlink("dist/tsconfig.tsbuildinfo", (_error) => {});
     const bundle = await rollup({
         input: path.resolve("dist/main.js"),
-        external: ["@minecraft/server", "@minecraft/server-ui", "../data/property", "./data/property"],
+        external: ["@minecraft/server", "@minecraft/server-ui", "../data/property", "./data/config"],
         plugins: [terser({
             sourceMap: false,
             compress: true,

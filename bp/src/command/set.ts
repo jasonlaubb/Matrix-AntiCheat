@@ -1,7 +1,7 @@
 import type { Command } from "../main";
 import { world, system } from "@minecraft/server";
 import { getPropertyType } from "../util/propertyClassifier";
-import property from "../data/property";
+import property from "../data/config";
 import { MessageFormData } from "@minecraft/server-ui";
 import english from "../data/languages/english";
 import { text } from "../util/text";

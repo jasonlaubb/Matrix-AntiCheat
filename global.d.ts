@@ -106,6 +106,7 @@ declare module "@minecraft/server" {
         invalidSprintStopUseAt: number;
         scaffoldData: ScaffoldData;
         phaseData?: PhaseData;
+        combatCheckLastCancel: number;
     }
     interface Entity {
         // Detection data

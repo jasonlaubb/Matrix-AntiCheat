@@ -1,12 +1,6 @@
 import { Block, Dimension, Direction, Entity, HudVisibility, Player, Vector3, world } from "@minecraft/server";
 import { get } from "./database";
 import { deltaVector, floorVector, safeGetBlock, safeGetBlockNear } from "./vectorUtil";
-
-export function addHP(entity: Entity, hp: number): void {
-    if (!entity.isValid) return;
-    const health = entity.getComponent("health");
-    if (health) health.setCurrentValue(Math.min(health.currentValue + hp, health.effectiveMax));
-}
 export function banAttack(player: Player, duration: number) {
     player.addEffect("minecraft:weakness", duration, { amplifier: 150, showParticles: false });
 }
