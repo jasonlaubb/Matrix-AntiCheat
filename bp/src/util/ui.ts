@@ -485,7 +485,7 @@ export async function logUI(player: Player) {
             .toggle(text("uiNeverShowUTCUI"), { defaultValue: false })
             .show(player);
         if (res.canceled) return;
-        const [offset, neverShow] = res.formValues!.slice(1) as [number, boolean];
+        const [offset, neverShow] = res.formValues! as [number, boolean];
         if (offset !== currentTimezone) world.setDynamicProperty("database:timezoneOffset", offset);
         if (neverShow) world.setDynamicProperty("database:timezoneAdjustUI", false);
     }
@@ -578,7 +578,7 @@ export async function logUI(player: Player) {
 
                     const action = place === "true" ? "§a" + text("uiPlaced") : "§c" + text("uiDestroyed");
                     // Ensure single-line and compact coordinates
-                    msg = `§7[${timeStr}] §e${playerName} §7| ${action} §7| §9(${x},${y},${z}) §7| §e${dimension}`;
+                    msg = `§7[${timeStr}] §e${playerName} §7| ${action} §7| §9${x},${y},${z} §7| §e${dimension.replace("minecraft:", "")}`;
                     break;
                 }
             }

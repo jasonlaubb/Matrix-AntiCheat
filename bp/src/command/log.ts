@@ -14,5 +14,5 @@ export default {
     execute: (player) => {
         system.run(() => logUI(player));
         return { status: 0, message: "§7[§aMatrix§7]§7 §f" + text("commandLogOpen") };
-    }
+    },
 } as Command;

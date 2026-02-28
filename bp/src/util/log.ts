@@ -16,13 +16,19 @@ function writeCommandBlockLog(player: string, place: boolean, commandblock: Vect
     if (get("pauseCommandBlockLog")) return;
     world.setDynamicProperty("log:cmdbk:" + Date.now(), `${place};${Object.values(commandblock).join(",")};${dimension};${player}`);
 }
-world.afterEvents.playerPlaceBlock.subscribe(({ player, block }) => {
-    writeCommandBlockLog(player.name, true, block.location, block.dimension.id);
-}, {
-    blockTypes: ["minecraft:command_block", "minecraft:chain_command_block", "minecraft:repeating_command_block"],
-});
-world.afterEvents.playerBreakBlock.subscribe(({ player, block }) => {
-    writeCommandBlockLog(player.name, false, block.location, block.dimension.id);
-}, {
-    blockTypes: ["minecraft:command_block", "minecraft:chain_command_block", "minecraft:repeating_command_block"],
-});
+world.afterEvents.playerPlaceBlock.subscribe(
+    ({ player, block }) => {
+        writeCommandBlockLog(player.name, true, block.location, block.dimension.id);
+    },
+    {
+        blockTypes: ["minecraft:command_block", "minecraft:chain_command_block", "minecraft:repeating_command_block"],
+    }
+);
+world.afterEvents.playerBreakBlock.subscribe(
+    ({ player, block }) => {
+        writeCommandBlockLog(player.name, false, block.location, block.dimension.id);
+    },
+    {
+        blockTypes: ["minecraft:command_block", "minecraft:chain_command_block", "minecraft:repeating_command_block"],
+    }
+);

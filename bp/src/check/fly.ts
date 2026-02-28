@@ -148,7 +148,7 @@ function isSurroundedByAir(centerLocation: Vector3, dimension: Dimension): boole
     if (!surroundedBlocks) return !!surroundedBlocks;
     return surroundedBlocks.every((block) => block?.isAir);
 }
-function itemUse({ source: player, itemStack: { typeId: id  } }: ItemUseAfterEvent) {
+function itemUse({ source: player, itemStack: { typeId: id } }: ItemUseAfterEvent) {
     if (id.startsWith("minecraft:") && id.endsWith("_spear")) {
         player.lastKnockback = Date.now();
     }

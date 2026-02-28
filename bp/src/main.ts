@@ -401,7 +401,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
 });
 world.afterEvents.playerLeave.subscribe(({ playerName }) => {
     writeGateLog(playerName, false);
-})
+});
 function giveUITool(player: Player) {
     const container = player.getComponent("inventory")!.container!;
     let itemFind = false;

@@ -66,7 +66,10 @@ function playerSwing({ player }: PlayerSwingStartAfterEvent) {
     player.killauraSwingAt = Date.now();
 }
 function entityHurt(event: EntityHurtBeforeEvent) {
-    const { hurtEntity, damageSource: { damagingEntity: attacker, damagingProjectile, cause } } = event;
+    const {
+        hurtEntity,
+        damageSource: { damagingEntity: attacker, damagingProjectile, cause },
+    } = event;
     let cancel = false;
     if (cause !== "entityAttack" || damagingProjectile || !attacker || !(attacker instanceof Player) || attacker.canBypass() || attacker.getGameMode() === "Creative" || !attacker.getComponent("health")?.currentValue) return;
     const now = Date.now();
@@ -85,88 +88,89 @@ function entityHurt(event: EntityHurtBeforeEvent) {
         if (attacker.killauraFlag >= 2) system.run(() => attacker.flag("Killaura", "A", "Combat (Multi-aura)"));
         cancel = true;
         attacker.killauraHitList = [];
-        
     }
     if (attacker.killauraFlag > 0 && now - attacker.killauraLastFlag > 12000) {
         attacker.killauraFlag = 0;
     }
     if (!attacker.isSafeDevice()) {
-    hurtEntity.antiReachRecordTime = now + 12000;
-    attacker.antiReachRecordTime = now + 12000;
-    if (!attacker?.killauraHeadRecording) recordHeadPosition(attacker);
-    if (!hurtEntity?.antiReachRecording) recordPosition(hurtEntity);
-    const { x: pitch, y: yaw } = attacker.getRotation();
-    const absPitch = Math.abs(pitch);
-    const attackDistance = distance(attacker.location, hurtEntity.location);
-    const isPlayer = hurtEntity instanceof Player;
-    if (isPlayer || hurtEntity.typeId.includes("villager")) {
-        const height = attacker.location.y - hurtEntity.location.y;
-        if (attacker?.killauraHeadData && attacker.killauraHeadData.length >= 20 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 20) {
-            const attackerRecords = attacker.killauraHeadData;
-            const hurtEntityRecords = hurtEntity.antiReachRecords;
-            if (attackDistance > 2) {
-                // reachDistance, the min distance between the attacker and hurtEntity (it can be distance between current-pos and 1s-before pos)
-                const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                if (reachDistance > (absPitch < 50 && Math.abs(height) >= 2 ? 4.6 : 3.6)) {
-                    system.run(() => attacker.flag("Killaura", "B", "Combat (Reach)", {
-                        attackDistance: attackDistance.toFixed(2),
-                        reachDistance: reachDistance.toFixed(2),
-                    }));
+        hurtEntity.antiReachRecordTime = now + 12000;
+        attacker.antiReachRecordTime = now + 12000;
+        if (!attacker?.killauraHeadRecording) recordHeadPosition(attacker);
+        if (!hurtEntity?.antiReachRecording) recordPosition(hurtEntity);
+        const { x: pitch, y: yaw } = attacker.getRotation();
+        const absPitch = Math.abs(pitch);
+        const attackDistance = distance(attacker.location, hurtEntity.location);
+        const isPlayer = hurtEntity instanceof Player;
+        if (isPlayer || hurtEntity.typeId.includes("villager")) {
+            const height = attacker.location.y - hurtEntity.location.y;
+            if (attacker?.killauraHeadData && attacker.killauraHeadData.length >= 20 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 20) {
+                const attackerRecords = attacker.killauraHeadData;
+                const hurtEntityRecords = hurtEntity.antiReachRecords;
+                if (attackDistance > 2) {
+                    // reachDistance, the min distance between the attacker and hurtEntity (it can be distance between current-pos and 1s-before pos)
+                    const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
+                    if (reachDistance > (absPitch < 50 && Math.abs(height) >= 2 ? 4.6 : 3.6)) {
+                        system.run(() =>
+                            attacker.flag("Killaura", "B", "Combat (Reach)", {
+                                attackDistance: attackDistance.toFixed(2),
+                                reachDistance: reachDistance.toFixed(2),
+                            })
+                        );
+                        cancel = true;
+                    }
+                }
+            }
+            const distanceH = distanceXZ(attacker.location, hurtEntity.location);
+            // Looking down or up while hitting an entity horizontally
+            if (distanceH > 3 && Math.abs(pitch) > 60) {
+                attacker.killauraFlag++;
+                attacker.killauraLastFlag = now;
+                if (attacker.killauraFlag >= 3) system.run(() => attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch }));
+                cancel = true;
+            }
+            // To prevent false positive, only check if the attack is formed horizontally
+            if (distanceH > 2.5) {
+                const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
+                // Hit entity out of view
+                if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" && !attacker.inputInfo.touchOnlyAffectsHotbar ? 160 : 50)) {
+                    attacker.killauraFlag++;
+                    attacker.killauraLastFlag = now;
+                    if (attacker.killauraFlag >= 3) system.run(() => attacker.flag("Killaura", "D", "Combat (HitBox)", { angle }));
                     cancel = true;
                 }
             }
-        }
-        const distanceH = distanceXZ(attacker.location, hurtEntity.location);
-        // Looking down or up while hitting an entity horizontally
-        if (distanceH > 3 && Math.abs(pitch) > 60) {
-            attacker.killauraFlag++;
-            attacker.killauraLastFlag = now;
-            if (attacker.killauraFlag >= 3) system.run(() => attacker.flag("Killaura", "C", "Combat", { distanceH: distanceH.toFixed(2), pitch }));
-            cancel = true;
-        }
-        // To prevent false positive, only check if the attack is formed horizontally
-        if (distanceH > 2.5) {
-            const angle = calculateRelativeViewAngle(attacker.getHeadLocation(), hurtEntity.location, yaw);
-            // Hit entity out of view
-            if (angle > (attacker.inputInfo.lastInputModeUsed === "Touch" && !attacker.inputInfo.touchOnlyAffectsHotbar ? 160 : 50)) {
-                attacker.killauraFlag++;
-                attacker.killauraLastFlag = now;
-                if (attacker.killauraFlag >= 3) system.run(() => attacker.flag("Killaura", "D", "Combat (HitBox)", { angle }));
+            if (
+                isAlive(hurtEntity) &&
+                !hurtEntity.isSwimming &&
+                !attacker.isSwimming &&
+                !hurtEntity.isSleeping &&
+                !hasClearPathBetweenEntities(attacker.dimension, attacker.location, hurtEntity.location) &&
+                !hasClearPathBetweenEntities(hurtEntity.dimension, getTickPos(attacker), getTickPos(hurtEntity))
+            ) {
                 cancel = true;
+                system.run(() => attacker.flag("Killaura", "E", "Combat (GhostHand)"));
             }
         }
-        if (
-            isAlive(hurtEntity) &&
-            !hurtEntity.isSwimming &&
-            !attacker.isSwimming &&
-            !hurtEntity.isSleeping &&
-            !hasClearPathBetweenEntities(attacker.dimension, attacker.location, hurtEntity.location) &&
-            !hasClearPathBetweenEntities(hurtEntity.dimension, getTickPos(attacker), getTickPos(hurtEntity))
-        ) {
+        if (isAlive(attacker) && (yaw % 1 === 0 || pitch % 1 === 0)) {
+            attacker.killauraFlag++;
+            attacker.killauraLastFlag = now;
+            if (attacker.killauraFlag >= 2) system.run(() => attacker.flag("Killaura", "F", "Combat", { yaw, pitch }));
             cancel = true;
-            system.run(() => attacker.flag("Killaura", "E", "Combat (GhostHand)"));
         }
-    }
-    if (isAlive(attacker) && (yaw % 1 === 0 || pitch % 1 === 0)) {
-        attacker.killauraFlag++;
-        attacker.killauraLastFlag = now;
-        if (attacker.killauraFlag >= 2) system.run(() => attacker.flag("Killaura", "F", "Combat", { yaw, pitch }));
-        cancel = true;
-    }
-    if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500 && !isHoldingSpear(attacker)) {
-        system.run(() => attacker.flag("Killaura", "J", "Combat"));
-        cancel = true;
-    }
-    // Hitting entity while they were sleeping lol
-    if (attacker.isSleeping) {
-        system.run(() => attacker.flag("Killaura", "K", "Combat"));
-        cancel = true;
-    }
-    // Some bad* client can do this (even horion doesn't do)
-    if (attacker.id === hurtEntity.id) {
-        system.run(() => attacker.flag("Killaura", "L", "Combat"));
-        cancel = true;
-    }
+        if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500 && !isHoldingSpear(attacker)) {
+            system.run(() => attacker.flag("Killaura", "J", "Combat"));
+            cancel = true;
+        }
+        // Hitting entity while they were sleeping lol
+        if (attacker.isSleeping) {
+            system.run(() => attacker.flag("Killaura", "K", "Combat"));
+            cancel = true;
+        }
+        // Some bad* client can do this (even horion doesn't do)
+        if (attacker.id === hurtEntity.id) {
+            system.run(() => attacker.flag("Killaura", "L", "Combat"));
+            cancel = true;
+        }
     }
     if (cancel) {
         event.cancel = true;
