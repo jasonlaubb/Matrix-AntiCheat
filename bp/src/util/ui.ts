@@ -521,7 +521,7 @@ export async function logUI(player: Player) {
             // Extract timestamp from id: "log:<type>:<timestamp>"
             const parts = logId.split(":");
             const ts = Number(parts[2]) || 0;
-            const timeStr = formatTimestamp(ts);
+            const timeStr = formatTimestamp(ts + get("timezoneOffset") * 3600000);
 
             const logData = (world.getDynamicProperty(logId) as string).split(";");
             let msg = "";
