@@ -23,7 +23,7 @@ export default {
     oreAlertOreFound: "§e%1 §fhas just found and broken §e%2 §b[interval=%3]",
     oreAlertFoundDiamondOre: "§e%1§f found §anew§f piece of §ediamond ore(s) §b[size=%2,interval=%3]",
     antiNamespoofKickReason: "Invalid name detected",
-    flagDetected: "§e%1§f has been detected for unfair adventage",
+    flagDetected: "§e%1§f has been detected for unfair advantage",
     flagUnfairAdvantage: "Unfair Advantage",
     punishmentBanned: "You are banned from this server!",
     // Note: There is a ':' after these text in the code x4

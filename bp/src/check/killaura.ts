@@ -1,4 +1,4 @@
-import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, EntityHurtAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world, EquipmentSlot, EntityHurtBeforeEvent } from "@minecraft/server";
+import { Dimension, Entity, EntityDieAfterEvent, EntityHitEntityAfterEvent, Player, PlayerSpawnAfterEvent, PlayerSwingStartAfterEvent, system, Vector3, world, EquipmentSlot, EntityHurtBeforeEvent } from "@minecraft/server";
 import { calculateRelativeViewAngle, distance, lineDistance, distanceXZ } from "../util/mathUtil";
 import { banAttack, isAlive, isObstructedBetweenLocations } from "../util/util";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
@@ -99,7 +99,6 @@ function entityHurt(event: EntityHurtBeforeEvent) {
     const absPitch = Math.abs(pitch);
     const attackDistance = distance(attacker.location, hurtEntity.location);
     const isPlayer = hurtEntity instanceof Player;
-    let recoverDamage = false;
     if (isPlayer || hurtEntity.typeId.includes("villager")) {
         const height = attacker.location.y - hurtEntity.location.y;
         if (attacker?.killauraHeadData && attacker.killauraHeadData.length >= 20 && hurtEntity?.antiReachRecords && hurtEntity.antiReachRecords.length >= 20) {

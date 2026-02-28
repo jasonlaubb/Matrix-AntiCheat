@@ -25,7 +25,10 @@ function tick(player: Player) {
     if (!player.flyData) initPlayerData(player);
     const data = player.flyData;
     const now = Date.now();
-
+    if (player.isGliding) {
+        data.velocityYList = new Array(60).fill(0);
+        return;
+    }
     const velocityY = player.getVelocity().y;
     const surroundAir = !player.isOnGround && isSurroundedByAir(player.location, player.dimension);
     const playerStarted = now - data.hasStarted > START_SKIP_CHECK;
@@ -45,7 +48,6 @@ function tick(player: Player) {
         (previousVelY < 0 || (previousVelY < 0 && velocityY === 0) || (velocityY > 0 && previousVelY / velocityY > 4 && previousVelY > 2.5 && Math.abs((player.flyData.lastVelocityY ?? 0) - velocityY) < 0.5)) &&
         !isRiding(player) &&
         !player.isFlying &&
-        !player.isGliding &&
         !player.isInWater &&
         isPlayerNotCreative &&
         levitationWithInAllowRange &&
@@ -67,7 +69,7 @@ function tick(player: Player) {
         data.flagAmount -= 0.05;
     }
 
-    if (pistonNotPushed && playerStarted && velocityY > HIGH_VELOCITY_Y && now - (player.lastKnockback ?? 0) > 2000 && !player.isGliding && jumpBoost <= 205) {
+    if (pistonNotPushed && playerStarted && velocityY > HIGH_VELOCITY_Y && now - (player.lastKnockback ?? 0) > 2000 && jumpBoost <= 205) {
         player.teleport(data.lastOnGroundLocation);
         player.flag("Fly", "B", "Movement", { velocityY });
     }
@@ -80,7 +82,7 @@ function tick(player: Player) {
     const maxAmount = Math.max(...data.velocityYList);
     const bdsPrediction = calculateBdsPrediction(data.velocityYList);
 
-    if (levitationWithInAllowRange && pistonNotPushed && playerStarted && isPlayerNotCreative && !player.isOnGround && !player.isGliding && data.velocityYList.length >= 60 && bdsPrediction >= MAX_BDS_PREDICTION && !isRiding(player)) {
+    if (levitationWithInAllowRange && pistonNotPushed && playerStarted && isPlayerNotCreative && !player.isOnGround && data.velocityYList.length >= 60 && bdsPrediction >= MAX_BDS_PREDICTION && !isRiding(player)) {
         const { highestRepeatedVelocity, highestRepeatedAmount } = repeatChecks(data.velocityYList);
 
         if (highestRepeatedAmount >= MIN_REQUIRED_REPEAT_AMOUNT && highestRepeatedVelocity > MAX_VELOCITY_Y && minAmount <= -MAX_VELOCITY_Y && maxAmount < HIGH_VELOCITY_Y) {
@@ -88,7 +90,7 @@ function tick(player: Player) {
             player.flag("Fly", "C", "Movement", { hrA: highestRepeatedAmount, hrV: highestRepeatedVelocity, minAmount, maxAmount });
         }
     }
-    if (player.isGliding && now - data.lastFlagTimestamp > 500) {
+    if (now - data.lastFlagTimestamp > 500) {
         const item = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Chest);
         if (!item || item.typeId !== "minecraft:elytra") {
             data.lastFlagTimestamp = now;

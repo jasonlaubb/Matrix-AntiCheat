@@ -39,7 +39,7 @@ function getDevice(player: Player) {
 
     switch (platformType) {
         case "Desktop":
-            return "Desktop/Labtop";
+            return "Desktop/Laptop";
         case "Mobile":
             return maxRenderDistance > 16 ? "Android" : "iOS";
         case "Console": {
