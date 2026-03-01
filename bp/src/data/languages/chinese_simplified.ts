@@ -503,4 +503,7 @@ export default {
     commandLog: "查看反作弊日志",
     commandLogDescription: "查看反作弊系统记录的日志",
     commandLogOpen: "成功打开日志菜单。",
+    // 7.4.1
+    uiFound: "发现",
+uiViewOreLogs: "查看采矿警报日志",
 };

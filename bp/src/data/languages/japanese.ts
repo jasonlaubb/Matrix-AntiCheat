@@ -504,4 +504,7 @@ export default {
     commandLog: "アンチチートログを表示",
     commandLogDescription: "アンチチートシステムが記録したログを表示",
     commandLogOpen: "ログメニューを正常に開きました。",
+    // 7.4.1
+    uiFound: "発見",
+uiViewOreLogs: "採掘アラートログを表示",
 };

@@ -555,4 +555,7 @@ export default {
     commandLog: "Xem nhật ký anticheat",
     commandLogDescription: "Xem nhật ký được ghi lại bởi hệ thống anticheat",
     commandLogOpen: "Mở menu nhật ký thành công.",
+    // 7.4.1
+    uiFound: "Đã tìm thấy",
+uiViewOreLogs: "Xem nhật ký cảnh báo khai thác",
 };

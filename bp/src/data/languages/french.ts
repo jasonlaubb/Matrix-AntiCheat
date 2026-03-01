@@ -505,4 +505,7 @@ export default {
     commandLog: "Voir les journaux anticheat",
     commandLogDescription: "Voir les journaux enregistrés par le système anticheat",
     commandLogOpen: "Menu des journaux ouvert avec succès.",
+    // 7.4.1
+    uiFound: "Trouvé",
+uiViewOreLogs: "Voir les journaux d'alerte minière",
 };

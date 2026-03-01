@@ -505,4 +505,7 @@ export default {
     commandLog: "Просмотр журналов античита",
     commandLogDescription: "Просмотр журналов, записанных системой античита",
     commandLogOpen: "Меню журналов успешно открыто.",
+    // 7.4.1
+    uiFound: "Encontrado",
+uiViewOreLogs: "Ver registros de alerta de minería",
 };

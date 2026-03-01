@@ -503,4 +503,6 @@ export default {
     commandLog: "안티치트 로그 보기",
     commandLogDescription: "안티치트 시스템이 기록한 로그 보기",
     commandLogOpen: "로그 메뉴를 성공적으로 열었습니다.",
+    uiFound: "발견",
+uiViewOreLogs: "채굴 알림 로그 보기",
 };

@@ -504,4 +504,7 @@ export default {
     commandLog: "Ver registros anticheat",
     commandLogDescription: "Ver registros gravados pelo sistema anticheat",
     commandLogOpen: "Menu de registros aberto com sucesso.",
+    // 7.4.1
+    uiFound: "Encontrado",
+uiViewOreLogs: "Ver registros de alerta de mineração",
 };
