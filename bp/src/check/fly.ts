@@ -90,7 +90,7 @@ function tick(player: Player) {
             player.flag("Fly", "C", "Movement", { hrA: highestRepeatedAmount, hrV: highestRepeatedVelocity, minAmount, maxAmount });
         }
     }
-    if (now - data.lastFlagTimestamp > 500) {
+    if (now - data.lastFlagTimestamp > 500 && player.isGliding) {
         const item = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Chest);
         if (!item || item.typeId !== "minecraft:elytra") {
             data.lastFlagTimestamp = now;
