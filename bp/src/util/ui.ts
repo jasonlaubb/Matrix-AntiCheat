@@ -497,7 +497,7 @@ export async function logUI(player: Player) {
         .button(text("uiViewCommandBlockLogs"), "textures/ui/hammer_l.png")
         .show(player);
     if (res1.canceled) return;
-    const logType = res1.selection!;
+    const logType = ["flag", "gate", "cmd", "cmdbk"][res1.selection!];
     const allLogs = world
         .getDynamicPropertyIds()
         .filter((id) => id.startsWith(`log:${logType}:`))
@@ -527,24 +527,24 @@ export async function logUI(player: Player) {
             let msg = "";
 
             switch (logType) {
-                case 0: {
+                case "flag": {
                     const [playerName, detection, type] = logData;
                     msg = `§7[${timeStr}] §e${playerName} §7| §c${detection} §7| §9${type}`;
                     break;
                 }
-                case 1: {
+                case "gate": {
                     const [join, playerName] = logData;
                     msg = `§7[${timeStr}] §e${playerName} §7| ${join === "true" ? "§a" + text("uiJoined") : "§c" + text("uiLeft")}`;
                     break;
                 }
-                case 2: {
+                case "cmd": {
                     const [playerName, command] = logData;
                     // keep command short: show leading slash and first part if very long
                     const shortCmd = command.length > 40 ? command.slice(0, 37) + "..." : command;
                     msg = `§7[${timeStr}] §e${playerName} §7| §9/${shortCmd}`;
                     break;
                 }
-                case 3: {
+                case "cmdbk": {
                     // New storage: place; x,y,z; dimension; player
                     // Backwards-compatible with older variants (space-separated coords or separate x,y,z tokens)
                     const [place, ...rest] = logData;
@@ -581,9 +581,9 @@ export async function logUI(player: Player) {
                     msg = `§7[${timeStr}] §e${playerName} §7| ${action} §7| §9${x},${y},${z} §7| §e${dimension.replace("minecraft:", "")}`;
                     break;
                 }
-                case 4: {
+                case "ore": {
                     const [playerName, oreAlert] = logData;
-                    msg = `§7[${timeStr}] §e${playerName} §7| §c${oreAlert}`;
+                    msg = `§7[${timeStr}] §e${playerName} §7| §9${oreAlert}`;
                     break;
                 }
             }
