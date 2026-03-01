@@ -1,4 +1,4 @@
-import { Dimension, EquipmentSlot, GameMode, ItemUseAfterEvent, PistonActivateAfterEvent, Player, Vector3, world } from "@minecraft/server";
+import { Dimension, EquipmentSlot, GameMode, ItemUseAfterEvent, PistonActivateAfterEvent, Player, system, Vector3, world } from "@minecraft/server";
 import { addCheckInterval, removeCheckInterval } from "../util/tick";
 import { fastSurround, isRiding } from "../util/util";
 
@@ -94,7 +94,9 @@ function tick(player: Player) {
         const item = player.getComponent("equippable")!.getEquipment(EquipmentSlot.Chest);
         if (!item || item.typeId !== "minecraft:elytra") {
             data.lastFlagTimestamp = now;
-            player.flag("Fly", "D", "Movement (GlideTag)");
+            system.runTimeout(() => {
+                if (player.isGliding) player.flag("Fly", "D", "Movement (GlideTag)");
+            }, 1);
         }
     }
     data.lastVelocityY = velocityY;
