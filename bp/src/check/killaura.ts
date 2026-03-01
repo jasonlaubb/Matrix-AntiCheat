@@ -158,7 +158,7 @@ function entityHurt(event: EntityHurtBeforeEvent) {
             if (attacker.killauraFlag >= 2) system.run(() => attacker.flag("Killaura", "F", "Combat", { yaw, pitch }));
             cancel = true;
         }
-        if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500 && !isHoldingSpear(attacker)) {
+        if (attacker.itemStartUse && now - attacker.itemStartUse > 150 && now - attacker.lastRiptide > 500 && !spear) {
             system.run(() => attacker.flag("Killaura", "J", "Combat"));
             cancel = true;
         }
