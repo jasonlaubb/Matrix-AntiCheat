@@ -1,10 +1,10 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Matrix Anticheat V7.4.0",
+        "name": "Matrix Anticheat V7.4.1",
         "description": "pack.description",
         "uuid": "4420fb30-1a77-4628-9c93-26680fbd38c4",
-        "version": [7, 4, 0],
+        "version": [7, 4, 1],
         "min_engine_version": [1, 26, 0]
     },
     "metadata": {
