@@ -77,8 +77,9 @@ function entityHurt(event: EntityHurtBeforeEvent) {
     attacker.killauraLastFlag ??= 0;
     attacker.killauraHitList ??= [];
     attacker.killauraLastAttack = now;
+    const spear = isHoldingSpear(attacker);
     // skip spear to prevent false positive
-    if (isHoldingSpear(attacker) && !attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && now - attacker.lastRiptide > 3000) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
+    if (!spear && !attacker.killauraHitList.map(({ id }) => id).includes(hurtEntity.id) && now - attacker.lastRiptide > 3000) attacker.killauraHitList.push({ id: hurtEntity.id, time: now });
     attacker.killauraHitList = attacker.killauraHitList.filter(({ time }) => now - time <= 100);
     // Hit more than 1 entity in a tick
     if (attacker.killauraHitList.length >= 3 || (attacker.killauraHitList.length >= 2 && attacker.killauraHitList.filter(({ time }) => now - time <= 70))) {
@@ -109,7 +110,7 @@ function entityHurt(event: EntityHurtBeforeEvent) {
                 if (attackDistance > 2) {
                     // reachDistance, the min distance between the attacker and hurtEntity (it can be distance between current-pos and 1s-before pos)
                     const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                    if (reachDistance > (absPitch < 50 && Math.abs(height) >= 2 ? 4.6 : 3.6)) {
+                    if (reachDistance > (absPitch < 50 && Math.abs(height) >= 2 ? (spear ? 5.3 : 4.6) : (spear ? 4.3 : 3.6)) {
                         system.run(() =>
                             attacker.flag("Killaura", "B", "Combat (Reach)", {
                                 attackDistance: attackDistance.toFixed(2),
@@ -140,7 +141,7 @@ function entityHurt(event: EntityHurtBeforeEvent) {
                 }
             }
             if (
-                isAlive(hurtEntity) &&
+                isAlive(attacker) &&
                 !hurtEntity.isSwimming &&
                 !attacker.isSwimming &&
                 !hurtEntity.isSleeping &&
