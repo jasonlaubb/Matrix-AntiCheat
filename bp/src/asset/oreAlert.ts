@@ -54,7 +54,7 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
         }
         event.player.diamondFoundAmount = nearbyDiamondCount;
         sendAlert(`§7[§aOre Alert§7] §f` + text("oreAlertFoundDiamondOre", event.player.name, nearbyDiamondCount + 1, timeSinceLast));
-        writeOreAlertLog(event.player.name, `§bFound;§9(${blockId.replace("minecraft:", "").replaceAll("_", " ")},Size=${nearbyDiamondCount + 1},Last=${timeSinceLast >= 0 ? timeSinceLast + "s" : "none"})`);
+        writeOreAlertLog(event.player.name, `found;§9(${blockId.replace("minecraft:", "").replaceAll("_", " ")},Size=${nearbyDiamondCount + 1},Last=${timeSinceLast >= 0 ? timeSinceLast + "s" : "none"})`);
         event.player.lastDiamondOresFound = now;
     } else {
         event.player.lastOreFoundData ??= {};
@@ -62,7 +62,7 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
         const timeSinceLast = lastFoundTime ? now - lastFoundTime : Infinity;
         if (timeSinceLast >= 6000) {
             sendAlert(`§7[§aOre Alert§7] §f` + text("oreAlertOreFound", event.player.name, blockId.replace("minecraft:", "").replaceAll("_", ""), timeSinceLast !== Infinity ? Math.floor(timeSinceLast / 1000) + "s" : "none"));
-            writeOreAlertLog(event.player.name, `§eBreak;§9(${blockId.replace("minecraft:", "").replaceAll("_", " ")},Last=${timeSinceLast !== Infinity ? Math.floor(timeSinceLast / 1000) + "s" : "none"})`);
+            writeOreAlertLog(event.player.name, `break;§9(${blockId.replace("minecraft:", "").replaceAll("_", " ")},Last=${timeSinceLast !== Infinity ? Math.floor(timeSinceLast / 1000) + "s" : "none"})`);
         }
         event.player.lastOreFoundData[blockId] = now;
     }

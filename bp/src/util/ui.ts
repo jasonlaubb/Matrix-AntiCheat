@@ -583,6 +583,7 @@ export async function logUI(player: Player) {
                 }
                 case "ore": {
                     const [playerName, action, details] = logData;
+                    const actionText = action === "break" ? "§e" + text("uiDestroyed") : "§b" + text("uiFound");
                     msg = `§7[${timeStr}] §e${playerName} §7| ${action} §7| ${details}`;
                     break;
                 }

@@ -508,4 +508,6 @@ export default {
     commandLog: "View anticheat logs",
     commandLogDescription: "View logs recorded by the anticheat system",
     commandLogOpen: "Opened log menu successfully.",
+    // 7.4.1
+    uiFound: "Found",
 };
