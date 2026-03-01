@@ -510,4 +510,5 @@ export default {
     commandLogOpen: "Opened log menu successfully.",
     // 7.4.1
     uiFound: "Found",
+    uiViewOreLogs: "View Ore Alert Logs",
 };

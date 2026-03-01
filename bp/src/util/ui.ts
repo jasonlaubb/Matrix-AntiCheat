@@ -495,9 +495,10 @@ export async function logUI(player: Player) {
         .button(text("uiViewGateLogs"), "textures/ui/NetherPortal.png")
         .button(text("uiViewCommandLogs"), "textures/blocks/command_block.png")
         .button(text("uiViewCommandBlockLogs"), "textures/ui/hammer_l.png")
+        .button(text("uiViewOreLogs"), "textures/blocks/diamond_ore.png")
         .show(player);
     if (res1.canceled) return;
-    const logType = ["flag", "gate", "cmd", "cmdbk"][res1.selection!];
+    const logType = ["flag", "gate", "cmd", "cmdbk", "ore"][res1.selection!];
     const allLogs = world
         .getDynamicPropertyIds()
         .filter((id) => id.startsWith(`log:${logType}:`))
@@ -584,7 +585,7 @@ export async function logUI(player: Player) {
                 case "ore": {
                     const [playerName, action, details] = logData;
                     const actionText = action === "break" ? "§e" + text("uiDestroyed") : "§b" + text("uiFound");
-                    msg = `§7[${timeStr}] §e${playerName} §7| ${action} §7| ${details}`;
+                    msg = `§7[${timeStr}] §e${playerName} §7| ${actionText} §7| ${details}`;
                     break;
                 }
             }
