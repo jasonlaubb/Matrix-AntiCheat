@@ -488,7 +488,7 @@ export default {
     uiTimezoneAdjustDesc: "請設定用於顯示正確時間資訊的時區",
     uiNeverShowUTCUI: "不再顯示此介面",
     uiLogMenu: "日誌選單",
-    uiViewFlagLogs: "查看旗幟日誌",
+    uiViewFlagLogs: "查看標記日誌",
     uiViewGateLogs: "查看加入/離開日誌",
     uiViewCommandLogs: "查看工作人員指令日誌",
     uiViewCommandBlockLogs: "查看指令方塊日誌",
