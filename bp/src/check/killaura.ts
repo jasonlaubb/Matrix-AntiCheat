@@ -110,7 +110,7 @@ function entityHurt(event: EntityHurtBeforeEvent) {
                 if (attackDistance > 2) {
                     // reachDistance, the min distance between the attacker and hurtEntity (it can be distance between current-pos and 1s-before pos)
                     const reachDistance = lineDistance(attackerRecords, hurtEntityRecords);
-                    if (reachDistance > (absPitch < 50 && Math.abs(height) >= 2 ? (spear ? 5.3 : 4.6) : (spear ? 4.3 : 3.6))) {
+                    if (reachDistance > (absPitch < 50 && Math.abs(height) >= 2 ? (spear ? 5.3 : 4.6) : spear ? 4.3 : 3.6)) {
                         system.run(() =>
                             attacker.flag("Killaura", "B", "Combat (Reach)", {
                                 attackDistance: attackDistance.toFixed(2),

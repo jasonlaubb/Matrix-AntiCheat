@@ -507,5 +507,5 @@ export default {
     commandLogOpen: "Menu des journaux ouvert avec succès.",
     // 7.4.1
     uiFound: "Trouvé",
-uiViewOreLogs: "Voir les journaux d'alerte minière",
+    uiViewOreLogs: "Voir les journaux d'alerte minière",
 };

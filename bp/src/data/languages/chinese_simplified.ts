@@ -505,5 +505,5 @@ export default {
     commandLogOpen: "成功打开日志菜单。",
     // 7.4.1
     uiFound: "发现",
-uiViewOreLogs: "查看采矿警报日志",
+    uiViewOreLogs: "查看采矿警报日志",
 };

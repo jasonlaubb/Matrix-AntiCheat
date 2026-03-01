@@ -505,5 +505,5 @@ export default {
     commandLogDescription: "查看反作弊系統記錄的日誌",
     commandLogOpen: "成功打開日誌選單。",
     uiFound: "發現",
-uiViewOreLogs: "查看採礦警報日誌",
+    uiViewOreLogs: "查看採礦警報日誌",
 };

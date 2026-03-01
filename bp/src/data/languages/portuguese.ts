@@ -506,5 +506,5 @@ export default {
     commandLogOpen: "Menu de registros aberto com sucesso.",
     // 7.4.1
     uiFound: "Encontrado",
-uiViewOreLogs: "Ver registros de alerta de mineração",
+    uiViewOreLogs: "Ver registros de alerta de mineração",
 };

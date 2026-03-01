@@ -557,5 +557,5 @@ export default {
     commandLogOpen: "Mở menu nhật ký thành công.",
     // 7.4.1
     uiFound: "Đã tìm thấy",
-uiViewOreLogs: "Xem nhật ký cảnh báo khai thác",
+    uiViewOreLogs: "Xem nhật ký cảnh báo khai thác",
 };
