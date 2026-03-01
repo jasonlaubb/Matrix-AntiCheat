@@ -2,6 +2,7 @@ import { BlockVolume, PlayerBreakBlockAfterEvent, world } from "@minecraft/serve
 import { get } from "../util/database";
 import { text } from "../util/text";
 import { sendAlert } from "../util/util";
+import { writeOreAlertLog } from "../util/log";
 export function oreAlertOn() {
     world.afterEvents.playerBreakBlock.subscribe(blockBreak);
 }
@@ -53,17 +54,15 @@ function blockBreak(event: PlayerBreakBlockAfterEvent) {
         }
         event.player.diamondFoundAmount = nearbyDiamondCount;
         sendAlert(`§7[§aOre Alert§7] §f` + text("oreAlertFoundDiamondOre", event.player.name, nearbyDiamondCount + 1, timeSinceLast));
+        writeOreAlertLog(event.player.name, `§bFound;§9(${blockId.replace("minecraft:", "").replaceAll("_", " ")},Size=${nearbyDiamondCount + 1},Last=${timeSinceLast >= 0 ? timeSinceLast + "s" : "none"})`);
         event.player.lastDiamondOresFound = now;
     } else {
         event.player.lastOreFoundData ??= {};
         const lastFoundTime = event.player.lastOreFoundData[blockId];
         const timeSinceLast = lastFoundTime ? now - lastFoundTime : Infinity;
         if (timeSinceLast >= 6000) {
-            world.getAllPlayers().forEach((player) => {
-                if (!player.isOp()) return;
-                const timeAgo = lastFoundTime ? Math.floor(timeSinceLast / 1000) + "s" : "none";
-                player.sendMessage(`§7[§aOre Alert§7] §f` + text("oreAlertOreFound", event.player.name, blockId.replace("minecraft:", "").replaceAll("_", ""), timeAgo));
-            });
+            sendAlert(`§7[§aOre Alert§7] §f` + text("oreAlertOreFound", event.player.name, blockId.replace("minecraft:", "").replaceAll("_", ""), timeSinceLast !== Infinity ? Math.floor(timeSinceLast / 1000) + "s" : "none"));
+            writeOreAlertLog(event.player.name, `§eBreak;§9(${blockId.replace("minecraft:", "").replaceAll("_", " ")},Last=${timeSinceLast !== Infinity ? Math.floor(timeSinceLast / 1000) + "s" : "none"})`);
         }
         event.player.lastOreFoundData[blockId] = now;
     }

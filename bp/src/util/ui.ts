@@ -582,8 +582,8 @@ export async function logUI(player: Player) {
                     break;
                 }
                 case "ore": {
-                    const [playerName, oreAlert] = logData;
-                    msg = `§7[${timeStr}] §e${playerName} §7| §9${oreAlert}`;
+                    const [playerName, action, details] = logData;
+                    msg = `§7[${timeStr}] §e${playerName} §7| ${action} §7| ${details}`;
                     break;
                 }
             }

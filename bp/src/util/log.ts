@@ -16,6 +16,9 @@ function writeCommandBlockLog(player: string, place: boolean, commandblock: Vect
     if (get("pauseCommandBlockLog")) return;
     world.setDynamicProperty("log:cmdbk:" + Date.now(), `${place};${Object.values(commandblock).join(",")};${dimension};${player}`);
 }
+export function writeOreAlertLog(player: string, oreAlert: string) {
+    world.setDynamicProperty("log:ore:" + Date.now(), `${player};${oreAlert}`);
+}
 world.afterEvents.playerPlaceBlock.subscribe(
     ({ player, block }) => {
         writeCommandBlockLog(player.name, true, block.location, block.dimension.id);
