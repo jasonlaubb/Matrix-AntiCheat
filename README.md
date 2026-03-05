@@ -106,3 +106,6 @@ Click the **screaming peach** to join the support server ->
 <a href="https://discord.gg/CqZGXeRKPJ" target="_blank" rel="nofollow">
     <img src="https://raw.githubusercontent.com/jasonlaubb/Matrix-AntiCheat/full/docs/resources/screaming-peach.gif" width="20%">
 </a>
+# Discontinued
+
+We have created the Nexus Anticheat (a better version). And it will be a new project. Everything go to the long river of history.
